@@ -12,6 +12,7 @@ import { ReactElement } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/theme.css';
+import { logErrorBoundary } from 'utils/errors/logErrorBoundary';
 import { logException } from 'utils/errors/logException';
 import { initDayjsLocale } from 'utils/formaters/formatDate';
 
@@ -58,6 +59,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
             fallbackRender={({ error, resetErrorBoundary }) =>
                 error ? <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} /> : null
             }
+            onError={logErrorBoundary}
         >
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
