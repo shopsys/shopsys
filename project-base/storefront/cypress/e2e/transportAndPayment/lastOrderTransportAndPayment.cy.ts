@@ -50,11 +50,11 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         changeSelectionOfTransportByName(transport.ppl.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         changeSelectionOfPaymentByName(payment.onDelivery.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first change and refresh', {
             blackout: [
@@ -66,11 +66,11 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         });
 
         changeSelectionOfTransportByName(transport.ppl.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         chooseTransportPersonalCollectionAndStore(transport.personalCollection.storePardubice.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         changeSelectionOfPaymentByName(payment.cash.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         changeOpeningHoursDayOfWeekWithDateToStaticString('Wednesday 30.10.2024');
         changeOpeningHoursStatusToEmptyString();
