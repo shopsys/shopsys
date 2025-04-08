@@ -10,7 +10,6 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         middlewarePrefetch: 'strict',
-        instrumentationHook: true,
     },
     reactStrictMode: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
@@ -102,17 +101,35 @@ const nextConfig = {
     },
 };
 
-const SentryWebpackPluginOptions = {
+/**
+ * @type {import('@sentry/nextjs/build/types/config/types').SentryBuildOptions}
+ */
+const sentryConfig = {
     authToken: process.env.SENTRY_AUTH_TOKEN,
-    disableServerWebpackPlugin: process.env.APP_ENV === 'development',
-    disableClientWebpackPlugin: process.env.APP_ENV === 'development',
-    hideSourceMaps: true,
+    telemetry: false,
+    unstable_sentryWebpackPluginOptions: {
+        disable: process.env.APP_ENV === 'development',
+        errorHandler: (err) => {
+            // eslint-disable-next-line no-console
+            console.warn('Sentry CLI Plugin: ' + err.message);
+        },
+    },
     sourcemaps: {
         deleteSourcemapsAfterUpload: true,
     },
-    errorHandler: (err, _invokeErr, compilation) => {
-        compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
+
+    widenClientFileUpload: true,
+    reactComponentAnnotation: {
+        enabled: true,
+    },
+    disableLogger: true,
+    bundleSizeOptimizations: {
+        excludeDebugStatements: true,
+        // all bellow - remove (set false) if you want to use replays
+        excludeReplayShadowDom: true,
+        excludeReplayIframe: true,
+        excludeReplayWorker: true,
     },
 };
 
-module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(nextConfig), SentryWebpackPluginOptions));
+module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(nextConfig), sentryConfig));
