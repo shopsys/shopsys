@@ -13,7 +13,6 @@ const nextConfig = {
         instrumentationHook: true,
     },
     reactStrictMode: true,
-    swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     images: {
         loader: 'custom',
