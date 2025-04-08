@@ -78,6 +78,7 @@ class Order
      * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ExcludeLog]
     protected $orderPaymentStatusPageValidFrom;
 
     /**
@@ -315,6 +316,7 @@ class Order
      * @var string|null
      * @ORM\Column(type="guid", nullable=true)
      */
+    #[ExcludeLog]
     protected $orderPaymentStatusPageValidityHash;
 
     /**
