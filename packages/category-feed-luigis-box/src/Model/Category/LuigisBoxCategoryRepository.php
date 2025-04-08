@@ -30,7 +30,8 @@ class LuigisBoxCategoryRepository
     ): iterable {
         $queryBuilder = $this->categoryRepository->getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainConfig->getId(), $domainConfig->getLocale())
             ->andWhere('cd.visible = TRUE')
-            ->setMaxResults($maxResults);
+            ->setMaxResults($maxResults)
+            ->orderBy('c.id');
 
         if ($lastSeekId !== null) {
             $queryBuilder->andWhere('c.id > :lastCategoryId')->setParameter('lastCategoryId', $lastSeekId);

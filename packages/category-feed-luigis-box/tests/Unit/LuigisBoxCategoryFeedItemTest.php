@@ -19,15 +19,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class LuigisBoxCategoryFeedItemTest extends TestCase
 {
-    private const CATEGORY_NAME = 'category name';
-
-    private const CATEGORY_ID = 1;
-
-    private const CATEGORY_IDENTITY = 'category-1';
-
-    private const CATEGORY_URL = 'https://example.com/category-1';
-
-    private const CATEGORY_IMAGE_URL = 'https://example.com/img/category/1';
+    private const string CATEGORY_NAME = 'category name';
+    private const int CATEGORY_ID = 1;
+    private const string CATEGORY_IDENTITY = 'category-1';
+    private const string CATEGORY_URL = 'https://example.com/category-1';
+    private const string CATEGORY_IMAGE_URL = 'https://example.com/img/category/1';
 
     private LuigisBoxCategoryFeedItemFactory $luigisBoxCategoryFeedItemFactory;
 
