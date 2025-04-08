@@ -32,7 +32,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
-            onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
+            onMouseUp={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
         >
             <div className="flex w-20 shrink-0">
                 <ProductListItemImage
