@@ -14,7 +14,7 @@ final class NamingHelper
      */
     public static function convertEntityNameToTableName(string $entityName): string
     {
-        return Str::asSnakeCase(Str::singularCamelCaseToPluralCamelCase($entityName));
+        return Str::asSnakeCase(Str::singularCamelCaseToPluralCamelCase(Str::getShortClassName($entityName)));
     }
 
     /**

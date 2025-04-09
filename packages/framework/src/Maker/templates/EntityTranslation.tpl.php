@@ -8,7 +8,7 @@ namespace <?= $namespace; ?>;
 <?= $use_statements; ?>
 
 /**
- * @ORM\Table(name="<?= $entity_config->tableName . '_translations' ?>")
+ * @ORM\Table(name="<?= $table_name ?>")
  * @ORM\Entity
  */
 class <?= $class_name; ?> extends AbstractTranslation

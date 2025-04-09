@@ -13,6 +13,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum;
+use Shopsys\FrameworkBundle\Maker\Utils\NamingHelper;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -259,6 +260,7 @@ class EntityMaker extends BaseMaker
                     'Prezent\Doctrine\Translatable\Annotation as Prezent',
                     AbstractTranslation::class,
                 ]),
+                'table_name' => NamingHelper::convertEntityNameToTableName($this->entityConfig->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION)),
             ],
         );
         $generator->writeChanges();
@@ -288,6 +290,7 @@ class EntityMaker extends BaseMaker
             [
                 'entity_config' => $this->entityConfig,
                 'use_statements' => new UseStatementGenerator($useStatements),
+                'table_name' => NamingHelper::convertEntityNameToTableName($this->entityConfig->getEntityFullyQualifiedName(EntityTypeEnum::DOMAIN)),
             ],
         );
         $generator->writeChanges();
