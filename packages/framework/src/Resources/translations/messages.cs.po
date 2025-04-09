@@ -355,6 +355,9 @@ msgstr "Aplikovat na vybrané kategorie"
 msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
 
+msgid "Approved with zero amount"
+msgstr "Schváleno s nulovou částkou"
+
 msgid "Area"
 msgstr "Plocha"
 
@@ -447,6 +450,18 @@ msgstr "Barva pozadí"
 
 msgid "Bank account number"
 msgstr "Číslo bankovního účtu"
+
+msgid "Bank account payment declined"
+msgstr "Bankovní platba byla zamítnuta"
+
+msgid "Bank payment confirmed by advice"
+msgstr "Bankovní platba potvrzena avízem"
+
+msgid "Bank payment confirmed by statement"
+msgstr "Bankovní platba potvrzena výpisem"
+
+msgid "Bank transfer not completed"
+msgstr "Bankovní platba nebyla potvrzena"
 
 msgid "Banner"
 msgstr "Banner"
@@ -621,6 +636,9 @@ msgstr "Soubor nelze načíst."
 
 msgid "Canonical URL"
 msgstr "Kanonická URL"
+
+msgid "Cardholder canceled the payment"
+msgstr "Držitel platební karty zrušil platbu"
 
 msgid "Cart manipulation and order creation"
 msgstr "Manipulace s košíkem a vytváření objednávky"
@@ -907,6 +925,9 @@ msgstr "Zkopírováno do schránky!"
 msgid "Copy administrator role group"
 msgstr "Zkopírovat skupinu práv administrátora"
 
+msgid "Could not reach authorization centre"
+msgstr "Nastal technický problém spojený s autorizačním centrem banky zákazníka"
+
 msgid "Countries"
 msgstr "Státy"
 
@@ -1144,6 +1165,9 @@ msgstr "Zákazník nemá žádné doručovací adresy."
 msgid "Customer has no orders so far."
 msgstr "Zákazník prozatím nemá žádné objednávky."
 
+msgid "Customer has not given PSD2 consent"
+msgstr "Zákazník neudělil souhlas s provedením PSD2 platby"
+
 msgid "Customer last name"
 msgstr "Příjmení zákazníka"
 
@@ -1233,6 +1257,42 @@ msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint
 
 msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
 msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} s preferovaným způsobem vyřešení {complaint_resolution} se zpracovává. Pro více informací navštivte <a href=\"{complaint_detail_url}\">detail reklamace</a>.<br /><br />Potřebujete cokoliv jiného? Navštivte naše <a href=\"{url}\">webové stránky</a>."
+
+msgid "Declined by issuer - account error"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu problémů na účtu platební karty"
+
+msgid "Declined by issuer - card blocked"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu zablokované platební karty"
+
+msgid "Declined by issuer - card expired"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu expirované platební karty"
+
+msgid "Declined by issuer - insufficient funds"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu nedostatku peněžních prostředků na platební kartě"
+
+msgid "Declined by issuer - invalid CVV"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu zamítnutí CVV/CVC kódu"
+
+msgid "Declined by issuer - limit reached"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu dosažení limitů na platební kartě"
+
+msgid "Declined by issuer - payment card error"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu problému na straně vydavatele platební karty"
+
+msgid "Declined by issuer - payment not allowed"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka, platba nebyla povolena na platební kartě zákazníka"
+
+msgid "Declined by issuer - problem at issuer's side"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu problémů na straně vydavatele platební karty"
+
+msgid "Declined by issuer - technical issues"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu technických problémů v autorizačním centru banky zákazníka"
+
+msgid "Declined by issuer - wrong card number"
+msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu chybného zadání čísla platební karty"
+
+msgid "Declined in the 3DS server"
+msgstr "Zamítnutí platby v systému 3D Secure banky zákazníka"
 
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
@@ -1533,6 +1593,12 @@ msgstr "Zde přetáhněte své soubory"
 
 msgid "Duplicate"
 msgstr "Duplikovat"
+
+msgid "Duplicate transaction"
+msgstr "Duplicitní transakce"
+
+msgid "Duplicate transaction reversal"
+msgstr "Duplicitní reversal transakce"
 
 msgid "Duration (mm:ss)"
 msgstr "Trvání (mm:ss)"
@@ -3157,6 +3223,12 @@ msgstr "Původní překlad"
 msgid "Overwrite Price list"
 msgstr "Přepsat ceník"
 
+msgid "PSD2 payment declined"
+msgstr "PSD2 platba zamítnuta"
+
+msgid "PSD2 requested account not found"
+msgstr "PSD2 požadovaný účet nenalezen"
+
 msgid "Package tracking"
 msgstr "Sledování zásilky"
 
@@ -3280,6 +3352,9 @@ msgstr "Platba předautorizována"
 msgid "Payment canceled"
 msgstr "Platba zrušena"
 
+msgid "Payment canceled by customer"
+msgstr "Platba zrušena uživatelem"
+
 msgid "Payment created"
 msgstr "Platba vytvořena"
 
@@ -3295,11 +3370,38 @@ msgstr "Obsah stránky při platbě čekající na potvrzení"
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 
+msgid "Payment is being processed in the Bitcoin network"
+msgstr "Platba byla přijata - Platba bude připsána po zpracování v síti Bitcoin"
+
+msgid "Payment made after expiration"
+msgstr "Platba byla provedena po splatnosti"
+
 msgid "Payment method chosen"
 msgstr "Platební metoda vybrána"
 
 msgid "Payment method name"
 msgstr "Název platební metody"
+
+msgid "Payment not completed"
+msgstr "Platba nebyla provedena"
+
+msgid "Payment not completed - Customer is not authorized to perform transaction"
+msgstr "Platba nebyla provedena - Uživatel není oprávněn k provedení operace"
+
+msgid "Payment not completed - Duplicate payment"
+msgstr "Platba nebyla provedena z důvodu opakovaného zadání platby"
+
+msgid "Payment not completed - Reason was shown to customer"
+msgstr "Platba nebyla provedena - Konkrétní důvod zamítnutí je sdělen přímo zákazníkovi"
+
+msgid "Payment not completed - Sum of credited amounts exceeded total amount"
+msgstr "Platba nebyla provedena - Součet kreditovaných částek překročil uhrazenou částku"
+
+msgid "Payment not completed - User not authorized"
+msgstr "Platba nebyla provedena - Uživatel není oprávněn k provedení operace"
+
+msgid "Payment not completed yet"
+msgstr "Platba zatím nebyla provedena"
 
 msgid "Payment paid"
 msgstr "Platba zaplacena"
@@ -3318,6 +3420,9 @@ msgstr "Platební transakce"
 
 msgid "Payment type"
 msgstr "Typ platby"
+
+msgid "Payment was not paid in full"
+msgstr "Platba nebyla uhrazena v plné výši"
 
 msgid "Payments"
 msgstr "Platby"
@@ -3759,6 +3864,9 @@ msgstr "SEO stránka"
 
 msgid "SEO pages"
 msgstr "SEO stránky"
+
+msgid "SMS was sent but not delivered yet"
+msgstr "SMS byla odeslána - Zatím se ji nepodařilo doručit"
 
 msgid "Sales including/excluding VAT settings"
 msgstr "Nastavení prodeje s/bez DPH"
@@ -4249,6 +4357,9 @@ msgstr "Systémové údaje"
 msgid "Tax number"
 msgstr "DIČ"
 
+msgid "Technical error on issuer's side"
+msgstr "Při platbě nastal technický problém na straně banky"
+
 msgid "Telephone"
 msgstr "Telefon"
 
@@ -4495,6 +4606,9 @@ msgstr "Nelze přidat"
 msgid "Unable to add product"
 msgstr "Zboží se nepodařilo vložit"
 
+msgid "Unable to deliver SMS"
+msgstr "SMS se nepodařilo doručit"
+
 msgid "Unable to load list of language constants"
 msgstr "Nepodařilo se načíst přehled jazykových konstant"
 
@@ -4525,8 +4639,14 @@ msgstr "Měrné jednotky - vše"
 msgid "Units - view"
 msgstr "Měrné jednotky - zobrazení"
 
+msgid "Unknown configuration"
+msgstr "Neznámá konfigurace"
+
 msgid "Unlimited"
 msgstr "Neomezeně"
+
+msgid "Unsupported payment card region"
+msgstr "Platební karta je vydaná v regionu, ve kterém nejsou podporovány platby kartou"
 
 msgid "Unsupported two factor authentication method"
 msgstr "Nepodporovaná metoda dvoufaktorového ověření"
@@ -4683,6 +4803,12 @@ msgstr "Viditelnost pro neregistrované zákazníky"
 
 msgid "Visible on homepage"
 msgstr "Viditelný na domovské stránce"
+
+msgid "Waiting for an offline transfer to be finished"
+msgstr "Čekáme na provedení offline platby"
+
+msgid "Waiting for an online bank transfer to be completed"
+msgstr "Čekáme na provedení online platby"
 
 msgid "Warehouse"
 msgstr "Sklad"

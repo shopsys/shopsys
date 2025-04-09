@@ -90,7 +90,7 @@ class GoPayOrderStatus
             PaymentSubStatus::_5025 => t('Payment not completed - Reason was shown to customer'),
             PaymentSubStatus::_5026 => t('Payment not completed - Sum of credited amounts exceeded total amount'),
             PaymentSubStatus::_5027 => t('Payment not completed - User not authorized'),
-            PaymentSubStatus::_5028 => t('Payment not completed. Customer is not authorized to perform transaction'),
+            PaymentSubStatus::_5028 => t('Payment not completed - Customer is not authorized to perform transaction'),
             PaymentSubStatus::_5029 => t('Payment not completed yet'),
             PaymentSubStatus::_5030 => t('Payment not completed - Duplicate payment'),
             PaymentSubStatus::_5031 => t('Technical error on issuer\'s side'),
