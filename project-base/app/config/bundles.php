@@ -43,7 +43,6 @@ return [
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
     Shopsys\AdministrationBundle\ShopsysAdministrationBundle::class => ['all' => true],
-    Shopsys\ConvertimBundle\ShopsysConvertimBundle::class => ['all' => true],
     Becklyn\OrderedFormBundle\BecklynOrderedFormBundle::class => ['all' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],

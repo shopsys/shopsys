@@ -76,7 +76,6 @@
         "shopsys/plugin-interface": "17.0.x-dev",
         "shopsys/brand-feed-luigis-box": "17.0.x-dev",
         "shopsys/category-feed-luigis-box": "17.0.x-dev",
-        "shopsys/convertim": "17.0.x-dev",
         "shopsys/product-feed-google": "17.0.x-dev",
         "shopsys/product-feed-mergado": "17.0.x-dev",
         "shopsys/product-feed-heureka": "17.0.x-dev",
