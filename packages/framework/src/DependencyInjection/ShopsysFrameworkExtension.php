@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProvider
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Payment\AbstractPaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\AbstractTransportTypeEnum;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
@@ -67,6 +68,9 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(AbstractTransportTypeEnum::class)
             ->addTag('shopsys.transport_type_enum');
+
+        $container->registerForAutoconfiguration(AbstractPaymentTypeEnum::class)
+            ->addTag('shopsys.payment_type_enum');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);

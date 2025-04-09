@@ -10,6 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 
 class GoPayRepository
@@ -39,7 +40,7 @@ class GoPayRepository
             ->orderBy('o.createdAt', 'ASC')
             ->setParameter('fromDate', $fromDate)
             ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
-            ->setParameter('type', Payment::TYPE_GOPAY);
+            ->setParameter('type', PaymentTypeEnum::TYPE_GOPAY);
 
         return $queryBuilder->getQuery()->execute();
     }

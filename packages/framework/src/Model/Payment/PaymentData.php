@@ -89,6 +89,6 @@ class PaymentData
         $this->vatsIndexedByDomainId = [];
         $this->goPayPaymentMethodByDomainId = [];
         $this->hiddenByGoPay = [];
-        $this->type = Payment::TYPE_BASIC;
+        $this->type = PaymentTypeEnum::TYPE_BASIC;
     }
 }

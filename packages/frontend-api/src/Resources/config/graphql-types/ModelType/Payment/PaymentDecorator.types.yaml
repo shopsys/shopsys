@@ -50,7 +50,7 @@ PaymentDecorator:
                 type: "GoPayPaymentMethod"
                 description: "Additional data for GoPay payment"
             type:
-                type: "String!"
+                type: "PaymentTypeEnum!"
                 description: "Type of payment"
             vatPercent:
                 type: "String!"

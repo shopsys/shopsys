@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainExcepti
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Service\Exception\PaymentServiceFacadeNotRegisteredException;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Exception\PaymentTransactionHasNoAssignedPayment;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
@@ -48,7 +48,7 @@ class PaymentServiceFacade
         protected readonly PaymentSetupCreationDataFactory $paymentSetupCreationDataFactory,
     ) {
         $this->paymentServices = [];
-        $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;
+        $this->paymentServices[PaymentTypeEnum::TYPE_GOPAY] = $goPayFacade;
     }
 
     /**

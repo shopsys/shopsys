@@ -7,7 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
 use GoPay\Definition\Response\PaymentStatus;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -59,7 +59,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $this->assertTrue($content['isPaid']);
         $this->assertSame(2, $content['paymentTransactionsCount']);
-        $this->assertSame(Payment::TYPE_GOPAY, $content['payment']['type']);
+        $this->assertSame(PaymentTypeEnum::TYPE_GOPAY, $content['payment']['type']);
 
 
         $this->em->clear();

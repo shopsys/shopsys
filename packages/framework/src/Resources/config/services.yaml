@@ -692,6 +692,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
 
+    Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider:
+        arguments:
+            $paymentTypeEnums: !tagged shopsys.payment_type_enum
+
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
