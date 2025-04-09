@@ -194,7 +194,7 @@ class GetArticlesTest extends GraphQlTestCase
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
-                ) . '</div>',
+                ) . '|||[gjc-comp-ProductList&#61;9177759,91765223,9176522,91765782,8981537,8981538,9176578]|||</div>',
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,
