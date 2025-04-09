@@ -1,0 +1,5 @@
+arrange:
+  - index.md
+  - creating-a-new-crud-controller.md
+  - configure-list-page.md
+  - extending-existing-crud-controller.md

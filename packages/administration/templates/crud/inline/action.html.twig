@@ -1,0 +1,8 @@
+<a href="{{ action_url(actionRoute, data) }}"
+    {{ attributes|raw }}
+>
+    {% if icon is not null %}
+        {{ ux_icon(icon) }}
+    {% endif %}
+    {{ label }}
+</a>

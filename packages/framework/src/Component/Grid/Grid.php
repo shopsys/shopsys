@@ -25,7 +25,7 @@ class Grid
     protected array $columnsById = [];
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\ActionColumn[]
+     * @var array<\Shopsys\FrameworkBundle\Component\Grid\ActionColumn|\Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface>
      */
     protected array $actionColumns = [];
 
@@ -113,20 +113,28 @@ class Grid
     }
 
     /**
+     * TODO: Use OptionResolver instead of array
+     *
      * @param string $id
      * @param string $sourceColumnName
      * @param string $title
      * @param bool $sortable
+     * @param array{template?: string, help?: string }&array<string, mixed> $options
      * @return \Shopsys\FrameworkBundle\Component\Grid\Column
      */
-    public function addColumn(string $id, string $sourceColumnName, string $title, bool $sortable = false): Column
-    {
+    public function addColumn(
+        string $id,
+        string $sourceColumnName,
+        string $title,
+        bool $sortable = false,
+        array $options = [],
+    ): Column {
         if (array_key_exists($id, $this->columnsById)) {
             throw new DuplicateColumnIdException(
                 'Duplicate column id "' . $id . '" in grid "' . $this->id . '"',
             );
         }
-        $column = new Column($id, $sourceColumnName, $title, $sortable);
+        $column = new Column($id, $sourceColumnName, $title, $sortable, $options);
         $this->columnsById[$id] = $column;
 
         return $column;
@@ -200,6 +208,17 @@ class Grid
             $bindingRouteParams,
             $additionalRouteParams,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface $rowAction
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface
+     */
+    public function addRowAction(GridRowActionInterface $rowAction): GridRowActionInterface
+    {
+        $this->actionColumns[] = $rowAction;
+
+        return $rowAction;
     }
 
     /**
@@ -355,7 +374,7 @@ class Grid
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn[]
+     * @return array<\Shopsys\FrameworkBundle\Component\Grid\ActionColumn|\Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface>
      */
     public function getActionColumns(): array
     {
@@ -660,6 +679,10 @@ class Grid
      */
     public function getValueFromRowBySourceColumnName(array $row, string $sourceColumnName): mixed
     {
+        if (array_key_exists($sourceColumnName, $row)) {
+            return $row[$sourceColumnName];
+        }
+
         $sourceColumnNameParts = explode('.', $sourceColumnName);
 
         if (count($sourceColumnNameParts) === 1) {

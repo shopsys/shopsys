@@ -1,0 +1,194 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\AdministrationBundle\Component\Action;
+
+use Closure;
+use InvalidArgumentException;
+use function sprintf;
+
+abstract class AbstractAction
+{
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $attributes = [
+        'class' => 'btn wrap-bar__btn',
+    ];
+
+    /**
+     * @var null|\Closure(mixed): bool
+     */
+    protected ?Closure $displayIf = null;
+
+    /**
+     * Set name of action that will be shown to the users
+     *
+     * @param string $label
+     * @return $this
+     */
+    public function setLabel(string $label): self
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Set icon of action that will be shown next to label
+     *
+     * @param string $icon
+     * @return $this
+     */
+    public function setIcon(string $icon): self
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Set function that will determine if action should be displayed
+     *
+     * @param \Closure(): bool $function Function must return boolean value. If function returns false, action will not be displayed
+     * @return $this
+     */
+    public function displayIf(Closure $function): self
+    {
+        $this->displayIf = $function;
+
+        return $this;
+    }
+
+    /**
+     * Set attribute that will be passed to the template. This can be used to set for example `data-` attributes or change CSS classes.
+     * If value is null, attribute will be removed.
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param bool $append If true, value will be appended to existing value. If false, existing value will be replaced.
+     * @return $this
+     */
+    public function setAttribute(string $name, mixed $value, bool $append = false): self
+    {
+        if (array_key_exists($name, $this->getForbiddenAttributes())) {
+            throw new InvalidArgumentException(sprintf('Attribute "%s" is forbidden to set. %s', $name, $this->getForbiddenAttributes()[$name]));
+        }
+
+        if ($value === null) {
+            unset($this->attributes[$name]);
+
+            return $this;
+        }
+
+        if ($append && array_key_exists($name, $this->attributes) === true) {
+            $this->attributes[$name] .= ' ' . $value;
+        } else {
+            $this->attributes[$name] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string $label
+     * @param string|null $icon
+     * @return $this
+     */
+    abstract public static function create(string $name, string $label, ?string $icon): self;
+
+    /**
+     * @param string $name
+     * @param string $label
+     * @param string|null $icon
+     */
+    protected function __construct(protected string $name, protected string $label, protected ?string $icon = null)
+    {
+    }
+
+    /**
+     * @return string
+     */
+    abstract protected function getTemplate(): string;
+
+    /**
+     * @return array<string, mixed>
+     */
+    abstract protected function getTemplateParameters(): array;
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Forbidden attributes that can not be set by user. If user tries to set them, exception will be thrown.
+     * Key is attribute name, value is message that will be shown in exception.
+     *
+     * @return array<string, string|null>
+     */
+    protected function getForbiddenAttributes(): array
+    {
+        return [];
+    }
+
+    /**
+     * Validate action configuration before rendering
+     *
+     * @param mixed $data
+     * @return bool
+     */
+    public function validate(mixed $data): bool
+    {
+        return $this->displayIf === null || call_user_func($this->displayIf, $data) !== false;
+    }
+
+    /**
+     * @return array
+     */
+    final public function renderData(): ?array
+    {
+        return [
+            'template' => $this->getTemplate(),
+            'parameters' => [
+                ...$this->getTemplateParameters(),
+                'attributes' => $this->parseAttributesToHTML(),
+            ],
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    private function parseAttributesToHTML(): string
+    {
+        $html = '';
+
+        foreach ($this->attributes as $key => $value) {
+            if ($value === null || $value === false) {
+                continue;
+            }
+
+            if ($value === true && str_starts_with($key, 'aria-') === true) {
+                $html = sprintf('%s %s="%s"', $html, $key, 'true');
+
+                continue;
+            }
+
+            if ($value === true) {
+                $html = "{$html} {$key}";
+
+                continue;
+            }
+
+            $html = sprintf('%s %s="%s"', $html, $key, htmlspecialchars((string)$value, ENT_QUOTES));
+        }
+
+        return $html;
+    }
+}

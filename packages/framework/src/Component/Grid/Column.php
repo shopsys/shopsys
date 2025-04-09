@@ -18,13 +18,18 @@ class Column
 
     protected string $orderSourceColumnName;
 
+    protected ?string $template;
+
+    protected ?string $help;
+
     /**
      * @param string $id
      * @param string $sourceColumnName
      * @param string $title
      * @param bool $sortable
+     * @param array{ template?: string, help?: string }&array<string, mixed> $options
      */
-    public function __construct($id, $sourceColumnName, $title, $sortable)
+    public function __construct($id, $sourceColumnName, $title, $sortable, $options = [])
     {
         $this->id = $id;
         $this->sourceColumnName = $sourceColumnName;
@@ -32,6 +37,8 @@ class Column
         $this->sortable = $sortable;
         $this->classAttribute = '';
         $this->orderSourceColumnName = $sourceColumnName;
+        $this->template = $options['template'] ?? null;
+        $this->help = $options['help'] ?? null;
     }
 
     /**
@@ -91,5 +98,21 @@ class Column
     public function getOrderSourceColumnName()
     {
         return $this->orderSourceColumnName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTemplate(): ?string
+    {
+        return $this->template;
     }
 }

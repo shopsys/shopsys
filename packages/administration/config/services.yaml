@@ -7,4 +7,28 @@ services:
     Shopsys\AdministrationBundle\:
         exclude:
             - '../src/DependencyInjection/'
+            - '../src/Controller/'
         resource: '../src/'
+
+    Shopsys\AdministrationBundle\Component\Menu\CrudMenuSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry:
+        arguments:
+            - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
+            - '%shopsys.admin.crud_controllers%'
+
+    Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry:
+        arguments:
+            $crudControllerExtensions: '%shopsys.admin.crud_controllers_extensions%'
+
+    Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader:
+        arguments:
+            - '@Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry'
+        tags:
+            - { name: routing.loader }
+
+    Shopsys\AdministrationBundle\Controller\:
+        resource: '../src/Controller/'
+        tags: [ 'controller.service_arguments' ]

@@ -109,9 +109,30 @@
                     <span class="in-sort-arrows__item in-sort-arrows__item--up"></span>
                 {% endif %}
             {% endif %}
+            {% if column.help is not null %}
+                <span title="{{ column.help }}"
+                    class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    {% if grid.orderSourceColumnName == column.id %}
+                        style="margin-left: 20px;"
+                    {% endif %}
+                >
+                    {{ ux_icon('info') }}
+                </span>
+            {% endif %}
         </a>
     {% else %}
         {{ column.title }}
+        {% if column.help is not null %}
+            <span title="{{ column.help }}"
+                class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
+                data-toggle="tooltip"
+                data-placement="bottom"
+            >
+                {{ ux_icon('info') }}
+            </span>
+        {% endif %}
     {% endif %}
 {% endblock %}
 
@@ -373,6 +394,10 @@
 
 {% block grid_value_cell_type_DateTimeImmutable %}
     {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_value_cell_id_domainId %}
+    {{ domainIcon(value, 'small') }}
 {% endblock %}
 
 {% block grid_value_cell_type_Shopsys_FrameworkBundle_Component_Money_Money %}

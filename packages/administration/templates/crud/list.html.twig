@@ -1,0 +1,13 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% import '@ShopsysAdministration/crud/inline/actions.html.twig' as actions %}
+
+{% block title %}- {{ title }}{% endblock %}
+{% block h1 %}{{ title }}{% endblock %}
+
+{% block btn %}
+    {{ actions.render(topActions) }}
+{% endblock %}
+
+{% block main_content %}
+    {{ grid.render }}
+{% endblock %}
