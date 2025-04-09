@@ -774,6 +774,10 @@ services:
         arguments:
             - '@monolog.logger.cron'
 
+    Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider:
+        arguments:
+            $transportTypeEnums: !tagged shopsys.transport_type_enum
+
     Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail: ~
 
     Shopsys\FrameworkBundle\Twig\CKEditorExtension:
