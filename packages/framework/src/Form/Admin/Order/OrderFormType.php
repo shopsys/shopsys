@@ -77,7 +77,6 @@ class OrderFormType extends AbstractType
                 'order' => $order,
             ])
             ->add($this->createPaymentTransactionsGroup($builder, $order))
-
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_order_list',
                 'entity' => $options['order'],
@@ -211,6 +210,11 @@ class OrderFormType extends AbstractType
 
             if ($goPayPaymentTransaction !== null) {
                 $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus($goPayPaymentTransaction->getExternalPaymentStatus());
+                $translatedGoPaySubStatus = GoPayOrderStatus::getTranslatedGoPaySubStatus($goPayPaymentTransaction->getExternalPaymentSubStatus());
+
+                if ($translatedGoPaySubStatus !== null) {
+                    $translatedGoPayStatus .= ' - ' . $translatedGoPaySubStatus;
+                }
             } else {
                 $translatedGoPayStatus = t('Order has not been sent to GoPay');
             }

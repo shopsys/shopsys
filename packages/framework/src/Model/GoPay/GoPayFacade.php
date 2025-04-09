@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\GoPay;
 
 use DateTime;
 use GoPay\Definition\Response\PaymentStatus;
+use Nette\Utils\Arrays;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPaySendPaymentException;
@@ -50,6 +51,7 @@ class GoPayFacade implements PaymentServiceInterface
                 'embedJs' => $goPayClient->urlToEmbedJs(),
                 'goPayId' => $response->json['id'],
                 'state' => $response->json['state'],
+                'subState' => Arrays::get($response->json, 'sub_state', null),
             ];
         }
 
@@ -68,8 +70,10 @@ class GoPayFacade implements PaymentServiceInterface
             $paymentTransactionData->order,
             $paymentTransactionData->order->getGoPayBankSwift(),
         );
+
         $paymentTransactionData->externalPaymentIdentifier = (string)$goPayCreatePaymentSetup['goPayId'];
         $paymentTransactionData->externalPaymentStatus = (string)$goPayCreatePaymentSetup['state'];
+        $paymentTransactionData->externalPaymentSubStatus = (string)$goPayCreatePaymentSetup['subState'];
 
         $paymentSetupCreationData->setGoPayCreatePaymentSetup($goPayCreatePaymentSetup);
     }
@@ -86,6 +90,7 @@ class GoPayFacade implements PaymentServiceInterface
 
         if (array_key_exists('state', (array)$goPayStatusResponse->json)) {
             $paymentTransactionData->externalPaymentStatus = (string)$goPayStatusResponse->json['state'];
+            $paymentTransactionData->externalPaymentSubStatus = Arrays::get($goPayStatusResponse->json, 'sub_state', null);
 
             if ($paymentTransactionData->externalPaymentStatus === PaymentStatus::REFUNDED) {
                 $paymentTransactionData->refundedAmount = $paymentTransactionData->paidAmount;

@@ -69,6 +69,12 @@ class PaymentTransaction
     protected $refundedAmount;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $externalPaymentSubStatus;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      */
     public function __construct(PaymentTransactionData $paymentTransactionData)
@@ -86,6 +92,7 @@ class PaymentTransaction
         $this->paidAmount = $paymentTransactionData->paidAmount;
         $this->externalPaymentIdentifier = $paymentTransactionData->externalPaymentIdentifier;
         $this->externalPaymentStatus = $paymentTransactionData->externalPaymentStatus;
+        $this->externalPaymentSubStatus = $paymentTransactionData->externalPaymentSubStatus;
         $this->refundedAmount = $paymentTransactionData->refundedAmount;
     }
 
@@ -215,5 +222,13 @@ class PaymentTransaction
         }
 
         return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PAYMENT_METHOD_CHOSEN;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExternalPaymentSubStatus()
+    {
+        return $this->externalPaymentSubStatus;
     }
 }

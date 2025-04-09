@@ -35,4 +35,9 @@ class PaymentTransactionData
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public $refundedAmount;
+
+    /**
+     * @var string|null
+     */
+    public $externalPaymentSubStatus;
 }
