@@ -45,7 +45,7 @@
 
     h1,
     .h1 {
-        @apply mb-5 text-2xl lg:text-4xl;
+        @apply text-2xl lg:text-4xl;
     }
 
     h2,

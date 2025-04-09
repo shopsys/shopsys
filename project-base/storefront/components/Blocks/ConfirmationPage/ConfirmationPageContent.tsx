@@ -1,4 +1,5 @@
 import { TIDs } from 'cypress/tids';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ConfirmationPageContentProps = {
     heading: string;
@@ -13,8 +14,8 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
     children,
 }) => {
     return (
-        <div className="mt-1 lg:mt-6">
-            <h1 className={headingClassName}>{heading}</h1>
+        <>
+            <h1 className={twMergeCustom('mt-1 mb-4 lg:mt-6', headingClassName)}>{heading}</h1>
 
             {!!content && (
                 <>
@@ -25,6 +26,6 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                     {children}
                 </>
             )}
-        </div>
+        </>
     );
 };

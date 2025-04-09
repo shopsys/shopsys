@@ -44,8 +44,9 @@ export const ResetPasswordContent: FC = () => {
     );
 
     return (
-        <Webline className="flex flex-col items-center">
-            <h1 className="w-full max-w-3xl">{t('Forgotten password')}</h1>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('Forgotten password')}</h1>
+
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex w-full justify-center"

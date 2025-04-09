@@ -41,7 +41,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
         );
 
     return (
-        <div className="bg-background vl:mb-8 my-6 flex flex-col gap-4">
+        <>
             <OrderRowWrapper className="flex items-center justify-between gap-4">
                 <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
                     <OrderItemColumnInfo
@@ -126,7 +126,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     <div className="font-bold">{order.note}</div>
                 </OrderRowWrapper>
             )}
-        </div>
+        </>
     );
 };
 

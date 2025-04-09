@@ -20,8 +20,9 @@ export const LastVisitedProducts: FC<LastVisitedProductsProps> = ({ currentProdu
     }
 
     return (
-        <Webline className="my-10">
-            <h3 className="mb-4">{t('Last visited products')}</h3>
+        <Webline>
+            <h5 className="mb-3">{t('Last visited products')}</h5>
+
             <LastVisitedProductsContent productsCatnums={lastVisitedProductsWithoutCurrentProduct} />
         </Webline>
     );

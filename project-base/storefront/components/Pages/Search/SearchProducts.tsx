@@ -24,7 +24,7 @@ export const SearchProducts: FC = () => {
 
     return (
         <>
-            <h5 className="mt-5 mb-2 lg:my-9">{t('Found products')}</h5>
+            <h5>{t('Found products')}</h5>
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel

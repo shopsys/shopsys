@@ -28,16 +28,18 @@ export const Navigation: FC<NavigationProps> = ({ navigation, skeletonType }) =>
     };
 
     return (
-        <ul className="relative hidden w-full lg:flex" onMouseLeave={handleEnableAnimation}>
-            {navigation.map((navigationItem, index) => (
-                <NavigationItem
-                    key={index}
-                    handleAnimations={handleAnimations}
-                    isAnimationDisabled={isAnimationDisabled}
-                    navigationItem={navigationItem}
-                    skeletonType={skeletonType}
-                />
-            ))}
-        </ul>
+        <nav>
+            <ul className="relative hidden w-full lg:flex" onMouseLeave={handleEnableAnimation}>
+                {navigation.map((navigationItem, index) => (
+                    <NavigationItem
+                        key={index}
+                        handleAnimations={handleAnimations}
+                        isAnimationDisabled={isAnimationDisabled}
+                        navigationItem={navigationItem}
+                        skeletonType={skeletonType}
+                    />
+                ))}
+            </ul>
+        </nav>
     );
 };

@@ -51,8 +51,6 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
     return (
         <FormProvider {...formProviderMethods}>
-            <div className="h2 mb-3">{t('User consent')}</div>
-
             <p>
                 <Trans
                     defaultTrans="To learn more, you can read our <link>consent and tracking policy</link>"

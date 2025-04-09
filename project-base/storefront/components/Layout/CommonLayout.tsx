@@ -45,7 +45,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
     return (
-        <div className="flex h-full min-h-screen flex-col">
+        <>
             <SeoMeta
                 canonicalQueryParams={canonicalQueryParams}
                 defaultDescription={description}
@@ -55,42 +55,46 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 ogType={ogType}
             />
 
-            <NotificationBars />
+            <div className="flex h-full min-h-screen flex-col">
+                <NotificationBars />
 
-            <Webline
-                className="relative"
-                wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
-            >
-                <Header />
-                <DeferredNavigation />
-            </Webline>
+                <header>
+                    <Webline
+                        className="relative"
+                        wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
+                    >
+                        <Header />
+                        <DeferredNavigation />
+                    </Webline>
+                </header>
 
-            <Webline className="relative mb-4" />
+                <main className="mt-4 mb-10 flex flex-col">
+                    <Adverts withWebline className="mb-4" positionName="header" />
 
-            <Adverts withGapBottom withWebline positionName="header" />
+                    {!!breadcrumbs && !isPageLoading && !isFetchingData && (
+                        <Webline className="mb-4">
+                            <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
+                        </Webline>
+                    )}
 
-            {!!breadcrumbs && !isPageLoading && !isFetchingData && (
-                <Webline className="mb-4">
-                    <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
-                </Webline>
-            )}
+                    <SkeletonManager
+                        isFetchingData={isFetchingData}
+                        isPageLoading={isPageLoading}
+                        pageTypeOverride={pageTypeOverride}
+                    >
+                        {children}
+                    </SkeletonManager>
 
-            <SkeletonManager
-                isFetchingData={isFetchingData}
-                isPageLoading={isPageLoading}
-                pageTypeOverride={pageTypeOverride}
-            >
-                {children}
-            </SkeletonManager>
+                    <Adverts withWebline className="mt-10" positionName="footer" />
+                </main>
 
-            <Adverts withGapBottom withGapTop withWebline positionName="footer" />
-
-            <Webline className="relative mb-4" />
-
-            <Webline wrapperClassName="mt-auto h-fit bg-backgroundAccentLess">
-                <DeferredNewsletterForm />
-                <DeferredFooter />
-            </Webline>
-        </div>
+                <footer className="mt-auto h-fit">
+                    <Webline wrapperClassName="bg-backgroundAccentLess">
+                        <DeferredNewsletterForm />
+                        <DeferredFooter />
+                    </Webline>
+                </footer>
+            </div>
+        </>
     );
 };

@@ -8,7 +8,7 @@ type StoreListProps = {
 
 export const StoreList: FC<StoreListProps> = ({ stores, selectedStoreUuid }) => {
     return (
-        <div className="flex flex-col gap-2.5">
+        <div className="mt-2.5 flex flex-col gap-2.5">
             {stores.map((store) => (
                 <StoreListItem
                     key={store.identifier}

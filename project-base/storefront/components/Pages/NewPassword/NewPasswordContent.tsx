@@ -4,7 +4,6 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
@@ -88,7 +87,8 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
 
     if (hash === '' || email === '') {
         return (
-            <SimpleLayout heading={t('Set new password')}>
+            <Webline width="lg">
+                <h1 className="mb-4">{t('Set new password')}</h1>
                 <Trans
                     defaultTrans="An error occurred while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
                     i18nKey="ResendRecoveryLink"
@@ -97,13 +97,14 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                         lnk1: <Link href={resetPasswordUrl} />,
                     }}
                 />
-            </SimpleLayout>
+            </Webline>
         );
     }
 
     return (
-        <Webline className="flex flex-col items-center">
-            <h1 className="w-full max-w-3xl">{t('Set new password')}</h1>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('Set new password')}</h1>
+
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex w-full justify-center"

@@ -3,9 +3,12 @@ import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageContactInformation: FC = () => (
     <Webline>
-        <Skeleton className="mx-auto mt-1 mb-5 h-11 w-full max-w-[840px] lg:mt-6 lg:mb-10" containerClassName="flex" />
+        <Skeleton
+            className="vl:h-11 mx-auto mt-1 mb-5 h-16 w-full max-w-[840px] lg:mt-6 lg:mb-10"
+            containerClassName="flex"
+        />
 
-        <div className="vl:mb-16 vl:flex-row mb-24 flex w-full flex-col flex-wrap">
+        <div className="vl:flex-row flex w-full flex-col flex-wrap">
             <div className="vl:mb-0 vl:min-h-[61vh] vl:flex-1 vl:pr-10 mb-16 w-full">
                 <Skeleton className="mb-3 h-14 w-full lg:w-[65%]" />
                 <Skeleton className="h-20 w-full lg:h-16" />

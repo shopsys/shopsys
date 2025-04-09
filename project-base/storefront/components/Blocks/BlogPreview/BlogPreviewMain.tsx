@@ -1,4 +1,5 @@
 import { ArticleLink } from './BlogPreviewElements';
+import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
@@ -41,12 +42,10 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                                 </>
                             ) : (
                                 <>
-                                    <span
-                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
+                                    <ArticleDate
+                                        date={formatDate(article.publishDate, 'l')}
                                         tid={TIDs.blog_article_publication_date}
-                                    >
-                                        {formatDate(article.publishDate, 'l')}
-                                    </span>
+                                    />
 
                                     {article.blogCategories.map((blogPreviewCategory) => {
                                         if (!blogPreviewCategory.parent) {

@@ -1,4 +1,5 @@
 import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -10,13 +11,14 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
     const { t } = useTranslation();
 
     return (
-        <div className="mb-8 flex flex-wrap items-center gap-5">
+        <Webline className="flex flex-wrap items-center gap-5">
             <h6>{t('You might be interested')}</h6>
+
             {readyCategorySeoMixLinks.map((item, index) => (
                 <LabelLink key={index} className="bg-backgroundAccentLess text-text" href={item.slug} type="category">
                     {item.name}
                 </LabelLink>
             ))}
-        </div>
+        </Webline>
     );
 };

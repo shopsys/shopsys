@@ -2,6 +2,7 @@ import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -59,69 +60,42 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
     const filesTabIndex = files.length ? ++tabIndex : -1;
 
     return (
-        <Tabs
-            className="flex flex-col gap-4 lg:gap-0"
-            selectedIndex={selectedTab}
-            onSelect={(index) => {
-                setSkipInitialAnimation(false);
-                setSelectedTab(index);
-            }}
-        >
-            <TabsList>
-                <TabsListItem>{t('Overview')}</TabsListItem>
-
-                {!!parameters.length && <TabsListItem>{t('Parameters')}</TabsListItem>}
-
-                {!!relatedProducts.length && <TabsListItem>{t('Related Products')}</TabsListItem>}
-
-                {!!files.length && <TabsListItem>{t('Files')}</TabsListItem>}
-            </TabsList>
-
-            <TabsContent
-                headingTextMobile={t('Overview')}
-                isActive={selectedTab === 0}
-                skipInitialAnimation={skipInitialAnimation}
+        <Webline>
+            <Tabs
+                className="flex flex-col gap-4 lg:gap-0"
+                selectedIndex={selectedTab}
+                onSelect={(index) => {
+                    setSkipInitialAnimation(false);
+                    setSelectedTab(index);
+                }}
             >
-                {description && <UserText htmlContent={description} />}
-            </TabsContent>
+                <TabsList>
+                    <TabsListItem>{t('Overview')}</TabsListItem>
 
-            {!!parameters.length && (
-                <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === parametersTabIndex}>
-                    <div className="mx-auto max-w-[700px]">
-                        {sortedGroupParameters.map(({ groupName, groupParameters }) => (
-                            <Fragment key={groupName}>
-                                <h4 className="py-5">{groupName}</h4>
-                                <Table>
-                                    {groupParameters.map((parameter) => (
-                                        <Row
-                                            key={parameter.uuid}
-                                            className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
-                                        >
-                                            <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
-                                                <h6 className="leading-5">{parameter.name}</h6>
-                                            </Cell>
-                                            <Cell className="px-5 py-2.5 text-sm">
-                                                <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
-                                                {parameter.values.map((value, index) =>
-                                                    formatParameterValue(
-                                                        value.text +
-                                                            (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                                        index,
-                                                    ),
-                                                )}
-                                            </Cell>
-                                        </Row>
-                                    ))}
-                                </Table>
-                            </Fragment>
-                        ))}
+                    {!!parameters.length && <TabsListItem>{t('Parameters')}</TabsListItem>}
 
-                        {sortedIndividualParameters.length > 0 && (
-                            <Fragment key="other-parameters">
-                                {!!sortedGroupParameters.length && <h4 className="py-5">{t('Other parameters')}</h4>}
-                                <Table>
-                                    {sortedIndividualParameters.map((parameter) => (
-                                        <Fragment key={parameter.uuid}>
+                    {!!relatedProducts.length && <TabsListItem>{t('Related Products')}</TabsListItem>}
+
+                    {!!files.length && <TabsListItem>{t('Files')}</TabsListItem>}
+                </TabsList>
+
+                <TabsContent
+                    headingTextMobile={t('Overview')}
+                    isActive={selectedTab === 0}
+                    skipInitialAnimation={skipInitialAnimation}
+                >
+                    {description && <UserText htmlContent={description} />}
+                </TabsContent>
+
+                {!!parameters.length && (
+                    <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === parametersTabIndex}>
+                        <div className="mx-auto max-w-[700px]">
+                            {sortedGroupParameters.map(({ groupName, groupParameters }) => (
+                                <Fragment key={groupName}>
+                                    <h4 className="py-5">{groupName}</h4>
+
+                                    <Table>
+                                        {groupParameters.map((parameter) => (
                                             <Row
                                                 key={parameter.uuid}
                                                 className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
@@ -129,8 +103,10 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                 <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
                                                     <h6 className="leading-5">{parameter.name}</h6>
                                                 </Cell>
+
                                                 <Cell className="px-5 py-2.5 text-sm">
                                                     <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
+
                                                     {parameter.values.map((value, index) =>
                                                         formatParameterValue(
                                                             value.text +
@@ -142,41 +118,79 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                     )}
                                                 </Cell>
                                             </Row>
-                                        </Fragment>
-                                    ))}
-                                </Table>
-                            </Fragment>
-                        )}
-                    </div>
-                </TabsContent>
-            )}
+                                        ))}
+                                    </Table>
+                                </Fragment>
+                            ))}
 
-            {!!relatedProducts.length && (
-                <TabsContent
-                    headingTextMobile={t('Related Products')}
-                    isActive={selectedTab === relatedProductsTabIndex}
-                >
-                    <ProductDetailRelatedProductsTab relatedProducts={relatedProducts} />
-                </TabsContent>
-            )}
+                            {sortedIndividualParameters.length > 0 && (
+                                <Fragment key="other-parameters">
+                                    {!!sortedGroupParameters.length && (
+                                        <h4 className="py-5">{t('Other parameters')}</h4>
+                                    )}
 
-            {!!files.length && (
-                <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === filesTabIndex}>
-                    <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-                        {files.map((file) => (
-                            <li key={file.url} className="">
-                                <a
-                                    className="bg-backgroundMore flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
-                                    href={file.url}
-                                >
-                                    <DownloadIcon className="size-6" />
-                                    <h4>{file.anchorText}</h4>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </TabsContent>
-            )}
-        </Tabs>
+                                    <Table>
+                                        {sortedIndividualParameters.map((parameter) => (
+                                            <Fragment key={parameter.uuid}>
+                                                <Row
+                                                    key={parameter.uuid}
+                                                    className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                                >
+                                                    <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
+                                                        <h6 className="leading-5">{parameter.name}</h6>
+                                                    </Cell>
+
+                                                    <Cell className="px-5 py-2.5 text-sm">
+                                                        <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
+
+                                                        {parameter.values.map((value, index) =>
+                                                            formatParameterValue(
+                                                                value.text +
+                                                                    (parameter.unit?.name
+                                                                        ? ` (${parameter.unit.name})`
+                                                                        : ''),
+                                                                index,
+                                                            ),
+                                                        )}
+                                                    </Cell>
+                                                </Row>
+                                            </Fragment>
+                                        ))}
+                                    </Table>
+                                </Fragment>
+                            )}
+                        </div>
+                    </TabsContent>
+                )}
+
+                {!!relatedProducts.length && (
+                    <TabsContent
+                        headingTextMobile={t('Related Products')}
+                        isActive={selectedTab === relatedProductsTabIndex}
+                    >
+                        <ProductDetailRelatedProductsTab relatedProducts={relatedProducts} />
+                    </TabsContent>
+                )}
+
+                {!!files.length && (
+                    <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === filesTabIndex}>
+                        <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+                            {files.map((file) => (
+                                <li key={file.url} className="">
+                                    <a
+                                        className="bg-backgroundMore flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
+                                        href={file.url}
+                                    >
+                                        <DownloadIcon className="size-6" />
+
+                                        <h4>{file.anchorText}</h4>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </TabsContent>
+                )}
+            </Tabs>
+        </Webline>
     );
 };

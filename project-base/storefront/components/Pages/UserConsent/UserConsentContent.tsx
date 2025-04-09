@@ -1,5 +1,5 @@
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -15,8 +15,9 @@ export const UserConsentContent: FC = () => {
     }, [push, t]);
 
     return (
-        <SimpleLayout heading={t('User consent')}>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('User consent')}</h1>
             <UserConsentForm onSetCallback={onSetCallback} />
-        </SimpleLayout>
+        </Webline>
     );
 };

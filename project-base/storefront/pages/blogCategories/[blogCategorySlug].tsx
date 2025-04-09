@@ -1,5 +1,4 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { DEFAULT_BLOG_PAGE_SIZE, DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -53,7 +52,6 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
             title={seoTitle}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
-            <LastVisitedProducts />
         </CommonLayout>
     );
 };

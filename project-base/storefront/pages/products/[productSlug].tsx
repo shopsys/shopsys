@@ -1,4 +1,3 @@
-import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { SkeletonPageProductDetail } from 'components/Blocks/Skeleton/SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from 'components/Blocks/Skeleton/SkeletonPageProductDetailMainVariant';
 import { CommonLayout } from 'components/Layout/CommonLayout';
@@ -45,6 +44,7 @@ const ProductDetailMainVariantContent = dynamic(
         loading: () => <SkeletonPageProductDetailMainVariant />,
     },
 );
+
 const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
     const [{ data: productData, fetching: isProductFetching }] = useProductDetailQuery({
@@ -77,8 +77,6 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
                 {product?.__typename === 'MainVariant' && (
                     <ProductDetailMainVariantContent isProductDetailFetching={isProductFetching} product={product} />
                 )}
-
-                <DeferredLastVisitedProducts currentProductCatnum={product?.catalogNumber} />
             </CommonLayout>
         </PageDefer>
     );

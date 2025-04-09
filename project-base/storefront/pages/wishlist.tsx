@@ -1,6 +1,4 @@
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -23,11 +21,7 @@ const WishlistPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Wishlist')}>
-            <Webline>
-                <Wishlist />
-            </Webline>
-
-            <LastVisitedProducts />
+            <Wishlist />
         </CommonLayout>
     );
 };

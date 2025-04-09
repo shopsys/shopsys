@@ -28,7 +28,8 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
 
     return (
         <>
-            <Adverts withGapBottom positionName="cartPreview" />
+            <Adverts className="mb-4" positionName="cartPreview" />
+
             <div className="vl:max-w-md w-full">
                 <h4 className="mb-3">{t('Your order')}</h4>
 

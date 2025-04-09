@@ -1,30 +1,26 @@
 import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
-import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
+import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
-import { ProductDetailUsps } from './ProductDetailUsps';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
-import { Popup } from 'components/Layout/Popup/Popup';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum, TypeRecommendationType } from 'graphql/types';
+import { TypeRecommendationType } from 'graphql/types';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailContentProps = {
@@ -35,7 +31,6 @@ type ProductDetailContentProps = {
 export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, isProductDetailFetching }) => {
     const { t } = useTranslation();
     const router = useRouter();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const { isLuigisBoxActive } = useDomainConfig();
 
@@ -48,8 +43,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
         <>
             <ProductMetadata product={product} />
 
-            <Webline className="flex flex-col gap-8">
-                <div className="flex flex-col gap-6 lg:flex-row">
+            <VerticalStack gap="md">
+                <Webline className="flex flex-col flex-wrap gap-6 lg:flex-row xl:flex-row">
                     <ProductDetailGallery
                         flags={product.flags}
                         images={product.images}
@@ -59,58 +54,26 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     />
 
                     <div className="flex w-full flex-1 flex-col gap-4">
-                        <div className="flex flex-col">
-                            {product.namePrefix && <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>}
-
-                            <ProductDetailHeading>
-                                {product.name} {product.nameSuffix}
-                            </ProductDetailHeading>
-
-                            <div className="flex items-center gap-5 text-sm">
-                                {product.brand && (
-                                    <div>
-                                        <span>{t('Brand')}: </span>
-                                        <ExtendedNextLink className="text-sm" href={product.brand.slug} type="brand">
-                                            {product.brand.name}
-                                        </ExtendedNextLink>
-                                    </div>
-                                )}
-
-                                <div>
-                                    {t('Code')}: {product.catalogNumber}
-                                </div>
-                            </div>
-                        </div>
-
-                        {product.shortDescription && <div className="text-sm">{product.shortDescription}</div>}
-
-                        {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
+                        <ProductDetailInfo
+                            brand={product.brand}
+                            catalogNumber={product.catalogNumber}
+                            name={product.name}
+                            namePrefix={product.namePrefix}
+                            nameSuffix={product.nameSuffix}
+                            shortDescription={product.shortDescription}
+                            usps={product.usps}
+                        />
 
                         <div className="bg-backgroundMore flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                             <ProductDetailPrice productPrice={product.price} />
 
-                            {!product.isSellingDenied && (
-                                <ProductAvailability
-                                    availability={product.availability}
-                                    availableStoresCount={product.availableStoresCount}
-                                    isInquiryType={product.isInquiryType}
-                                    className={twJoin(
-                                        'font-secondary mr-1 flex items-center',
-                                        product.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                            'cursor-pointer',
-                                    )}
-                                    onClick={() =>
-                                        product.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                        updatePortalContent(
-                                            <Popup contentClassName="overflow-scroll">
-                                                <ProductDetailAvailabilityList
-                                                    storeAvailabilities={product.storeAvailabilities}
-                                                />
-                                            </Popup>,
-                                        )
-                                    }
-                                />
-                            )}
+                            <ProductDetailAvailability
+                                availability={product.availability}
+                                availableStoresCount={product.availableStoresCount}
+                                isInquiryType={product.isInquiryType}
+                                isSellingDenied={product.isSellingDenied}
+                                storeAvailabilities={product.storeAvailabilities}
+                            />
 
                             <WatchDogButton
                                 availability={product.availability}
@@ -125,7 +88,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             <DeferredComparisonAndWishlistButtons product={product} />
                         </div>
                     </div>
-                </div>
+                </Webline>
 
                 <ProductDetailTabs
                     description={product.description}
@@ -139,16 +102,18 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         itemUuids={[product.uuid]}
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (
-                            <div>
-                                <div className="text-xl font-bold">{t('Recommended for you')}</div>
+                            <section>
+                                <h5 className="mb-3">{t('Recommended for you')}</h5>
                                 {recommendedProductsContent}
-                            </div>
+                            </section>
                         )}
                     />
                 )}
 
                 <DeferredProductDetailAccessories accessories={product.accessories} />
-            </Webline>
+
+                <DeferredLastVisitedProducts currentProductCatnum={product.catalogNumber} />
+            </VerticalStack>
         </>
     );
 };

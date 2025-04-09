@@ -3,8 +3,9 @@ import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDe
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
-import { Webline } from 'components/Layout/Webline/Webline';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -15,7 +16,6 @@ type BrandDetailContentProps = {
 };
 
 export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
-    const scrollTargetRef = useRef<HTMLDivElement>(null);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
@@ -24,15 +24,13 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     brand.products.productFilterOptions.brands = null;
 
     return (
-        <Webline>
-            <h1 ref={scrollTargetRef}>{title}</h1>
-
+        <VerticalStack gap="md">
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}
                 description={brand.description}
                 imageName={brand.mainImage?.name || brand.name}
                 imageUrl={brand.mainImage?.url}
-                scrollTargetRef={scrollTargetRef}
+                title={title}
             />
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
@@ -58,6 +56,8 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     <BrandDetailProductsWrapper brand={brand} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </FilteredProductsWrapper>
-        </Webline>
+
+            <LastVisitedProducts />
+        </VerticalStack>
     );
 };

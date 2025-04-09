@@ -8,22 +8,12 @@ type PositionNameType = 'footer' | 'header' | 'cartPreview' | 'productListSecond
 
 type AdvertsProps = {
     positionName: PositionNameType;
-    withGapBottom?: boolean;
-    withGapTop?: boolean;
     withWebline?: boolean;
     currentCategory?: TypeCategoryDetailFragment;
     isSingle?: boolean;
 };
 
-export const Adverts: FC<AdvertsProps> = ({
-    positionName,
-    withGapBottom,
-    withGapTop,
-    withWebline,
-    currentCategory,
-    className,
-    isSingle,
-}) => {
+export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCategory, className, isSingle }) => {
     const [{ data: advertsData }] = useAdvertsQuery({
         variables: {
             categoryUuid: currentCategory?.uuid || null,
@@ -37,7 +27,7 @@ export const Adverts: FC<AdvertsProps> = ({
             : advertsForPosition;
 
     const content = !!displayedAdverts.length && (
-        <div className={twJoin(withGapBottom && 'mb-8', withGapTop && 'mt-8', !withWebline && className)}>
+        <div className={twJoin(!withWebline && className)}>
             {displayedAdverts.map((advert) => {
                 if (advert.__typename === 'AdvertImage') {
                     return <AdvertImage key={advert.uuid} advert={advert} />;

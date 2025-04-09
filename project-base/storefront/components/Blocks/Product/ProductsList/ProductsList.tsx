@@ -24,7 +24,7 @@ type ProductsListProps = {
 };
 
 export const productListTwClass = twJoin(
-    'relative mb-5 grid gap-2.5 sm:gap-x-5 sm:gap-y-6 pt-5',
+    'relative grid gap-2.5 sm:gap-x-5 sm:gap-y-6',
     'grid-cols-1',
     'xs:grid-cols-2',
     'lg:grid-cols-3',
@@ -59,7 +59,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     {category && (
                         <Adverts
                             isSingle
-                            className="col-span-full row-start-2 mx-auto justify-center pl-2"
+                            className="col-span-full row-start-2 mx-auto justify-center"
                             currentCategory={category}
                             positionName="productListSecondRow"
                         />

@@ -2,8 +2,9 @@ import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
-import { Webline } from 'components/Layout/Webline/Webline';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
@@ -20,7 +21,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     flag.products.productFilterOptions.flags = null;
 
     return (
-        <Webline>
+        <VerticalStack gap="md">
             <h1>{title}</h1>
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
@@ -46,6 +47,8 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     <FlagDetailProductsWrapper flag={flag} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </FilteredProductsWrapper>
-        </Webline>
+
+            <LastVisitedProducts />
+        </VerticalStack>
     );
 };

@@ -7,7 +7,11 @@ export const BrandsContent: FC = () => {
     const [{ data: brandsData, fetching: areBrandsFetching }] = useBrandsQuery();
 
     if (areBrandsFetching) {
-        return <SkeletonPageBrandsOverview />;
+        return (
+            <Webline>
+                <SkeletonPageBrandsOverview />
+            </Webline>
+        );
     }
 
     if (!brandsData) {

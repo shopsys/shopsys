@@ -1,4 +1,3 @@
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
@@ -48,7 +47,6 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
         >
             {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
-            <LastVisitedProducts />
         </CommonLayout>
     );
 };

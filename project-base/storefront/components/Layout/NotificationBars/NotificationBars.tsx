@@ -42,7 +42,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
     return (
         <>
             {activeNotificationBars?.map((item, index) => (
-                <div key={index} className="py-2" style={{ backgroundColor: item.rgbColor }}>
+                <section key={index} className="py-2" style={{ backgroundColor: item.rgbColor }}>
                     <Webline>
                         <div
                             className={twJoin(
@@ -67,10 +67,10 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                             )}
                         </div>
                     </Webline>
-                </div>
+                </section>
             ))}
             {loggedAsUserEmail && (
-                <div className="bg-backgroundError py-2">
+                <section className="bg-backgroundError py-2">
                     <Webline>
                         <div className="text-text flex items-center justify-center text-center text-sm font-bold">
                             <Trans
@@ -91,7 +91,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                             />
                         </div>
                     </Webline>
-                </div>
+                </section>
             )}
         </>
     );

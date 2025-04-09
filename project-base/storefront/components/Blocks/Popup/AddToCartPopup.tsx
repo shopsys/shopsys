@@ -77,10 +77,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     itemUuids={[product.uuid]}
                     recommendationType={TypeRecommendationType.BasketPopup}
                     render={(recommendedProductsContent) => (
-                        <div className="mb-6">
-                            <div className="h2 mb-3">{t('Recommended for you')}</div>
+                        <section>
+                            <h3 className="mb-3">{t('Recommended for you')}</h3>
                             {recommendedProductsContent}
-                        </div>
+                        </section>
                     )}
                 />
             )}

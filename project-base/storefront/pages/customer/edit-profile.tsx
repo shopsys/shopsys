@@ -27,6 +27,7 @@ const EditProfilePage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <CustomerLayout
                 breadcrumbs={breadcrumbs}
                 breadcrumbsType="account"

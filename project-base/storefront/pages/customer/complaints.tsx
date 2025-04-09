@@ -49,6 +49,7 @@ const ComplaintsPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <CustomerLayout
                 breadcrumbs={breadcrumbs}
                 breadcrumbsType="account"
@@ -56,7 +57,7 @@ const ComplaintsPage: FC = () => {
                 title={t('My complaints')}
             >
                 {canCreateComplaint && (
-                    <>
+                    <div className="flex gap-y-2">
                         <LinkButton
                             size="small"
                             type="complaintNew"
@@ -73,19 +74,17 @@ const ComplaintsPage: FC = () => {
                             style={{ marginLeft: '10px' }}
                             tid={TIDs.complaints_list_create_complaint_manually_button}
                         />
-                    </>
+                    </div>
                 )}
 
-                <div className="my-5">
-                    <SearchInput
-                        className="border-inputBorder w-full border"
-                        label={t('Search for a product you complained about')}
-                        shouldShowSpinnerInInput={complaintsDataFetching}
-                        value={searchQueryValue}
-                        onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
-                        onClear={() => setSearchQueryValue('')}
-                    />
-                </div>
+                <SearchInput
+                    className="border-inputBorder w-full border"
+                    label={t('Search for a product you complained about')}
+                    shouldShowSpinnerInInput={complaintsDataFetching}
+                    value={searchQueryValue}
+                    onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
+                    onClear={() => setSearchQueryValue('')}
+                />
 
                 <ComplaintsContent
                     isFetching={complaintsDataFetching}

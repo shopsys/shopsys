@@ -1,6 +1,7 @@
 import { BlogPreviewProps } from './BlogPreview';
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -15,7 +16,7 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
     const blogItems = useMemo(() => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles), [blogArticles]);
 
     return (
-        <div className="z-above relative mx-auto w-full max-w-7xl px-5">
+        <Webline className="z-above relative mx-auto w-full px-0" width="xxl">
             <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-textInverted">{t('Magazine')}</h3>
 
@@ -39,6 +40,6 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
             >
                 {!!blogItems && <BlogPreviewMain isPlaceholder articles={blogItems} />}
             </div>
-        </div>
+        </Webline>
     );
 };

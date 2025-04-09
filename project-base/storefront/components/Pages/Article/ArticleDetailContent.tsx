@@ -1,6 +1,7 @@
-import { ArticleTitle } from './ArticleTitle';
+import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeArticleDetailFragment } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
@@ -13,16 +14,18 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
     const { formatDate } = useFormatDate();
 
     return (
-        <Webline>
-            <ArticleTitle>{article.seoH1 || article.articleName}</ArticleTitle>
-            <p className="text-textDisabled mb-2 px-5 text-left text-xs font-semibold">
-                {formatDate(article.createdAt)}
-            </p>
+        <VerticalStack gap="sm">
+            <Webline>
+                <h1 className="mb-4">{article.seoH1 || article.articleName}</h1>
+
+                <ArticleDate date={formatDate(article.createdAt)} />
+            </Webline>
+
             {article.text !== null && (
-                <div className="order-2 mb-16 flex w-full flex-col">
+                <Webline className="flex w-full flex-col">
                     <GrapesJsParser text={article.text} visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE} />
-                </div>
+                </Webline>
             )}
-        </Webline>
+        </VerticalStack>
     );
 };
