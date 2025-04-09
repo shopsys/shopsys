@@ -131,7 +131,8 @@
         "sspooky13/yaml-standards": "^9.0",
         "symfony/maker-bundle": "^1.62" ,
         "symfony/process": "^6.4",
-        "symfony/var-dumper": "^6.4"
+        "symfony/var-dumper": "^6.4",
+        "symfony/yaml": "^6.4"
     },
     "extra": {
         "symfony": {

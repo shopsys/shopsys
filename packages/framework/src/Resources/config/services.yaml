@@ -531,6 +531,13 @@ services:
     Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator:
         arguments:
             $managerRegistry: '@doctrine'
+
+    Shopsys\FrameworkBundle\Maker\FrontendApiTypeMaker:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    Shopsys\FrameworkBundle\Maker\Utils\EntityChoiceHelper:
+        arguments:
             $entityExtensionMap: '%shopsys.entity_extension.map%'
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~

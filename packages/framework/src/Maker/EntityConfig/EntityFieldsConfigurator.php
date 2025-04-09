@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Maker\EntityConfig;
 
 use Doctrine\DBAL\Types\Type;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionProperty;
+use Shopsys\FrameworkBundle\Maker\Utils\EntityChoiceHelper;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Bundle\MakerBundle\Validator;
@@ -22,13 +22,11 @@ class EntityFieldsConfigurator
 {
     /**
      * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param array<string, string> $entityExtensionMap
+     * @param \Shopsys\FrameworkBundle\Maker\Utils\EntityChoiceHelper $entityChoicesHelper
      */
     public function __construct(
         private readonly ManagerRegistry $managerRegistry,
-        protected readonly EntityManagerInterface $em,
-        protected readonly array $entityExtensionMap,
+        private readonly EntityChoiceHelper $entityChoicesHelper,
     ) {
     }
 
@@ -379,23 +377,7 @@ class EntityFieldsConfigurator
         string $newFieldName,
         EntityTypeEnum $entityType,
     ): RelationProperty {
-        $targetEntityClass = null;
-        $entities = $this->getAllAvailableEntitiesChoices();
-
-        while ($targetEntityClass === null) {
-            $question = new Question('What class should this entity be related to?');
-            $question->setValidator(Validator::notBlank(...));
-
-            $question->setAutocompleterValues($entities);
-
-            $answeredEntityClass = $this->convertAutocompleteFormatToFqcn($io->askQuestion($question));
-
-            if (class_exists($answeredEntityClass)) {
-                $targetEntityClass = $answeredEntityClass;
-            } else {
-                $io->error(sprintf('Unknown class "%s"', $answeredEntityClass));
-            }
-        }
+        $targetEntityClass = $this->entityChoicesHelper->askForEntity($io, 'What class should this entity be related to?');
 
         if ($type === 'relation') {
             $type = $this->askRelationType($io, $generatedEntityClass, $targetEntityClass);
@@ -517,45 +499,5 @@ class EntityFieldsConfigurator
         });
 
         return $io->askQuestion($question);
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getAllAvailableEntitiesChoices(): array
-    {
-        $allEntityNames = $this->em->getConfiguration()->getMetadataDriverImpl()?->getAllClassNames() ?? [];
-        $allEntityNames = array_combine($allEntityNames, $allEntityNames);
-
-        $array = array_values(array_diff_key($allEntityNames, array_flip(array_keys($this->entityExtensionMap))));
-
-        return array_map($this->convertFqcnToAutocompleteFormat(...), $array);
-    }
-
-    /**
-     * Converts a fully qualified class name to a format suitable for autocompletion.
-     * E.g. "Shopsys\FrameworkBundle\Model\Store\Store" -> "Store (Shopsys\FrameworkBundle\Model\Store\Store)"
-     *
-     * @param string $fqcn
-     * @return string
-     */
-    private function convertFqcnToAutocompleteFormat(string $fqcn): string
-    {
-        $className = Str::getShortClassName($fqcn);
-
-        return sprintf('%s (%s)', $className, $fqcn);
-    }
-
-    /**
-     * @param string $autocompleteFormat
-     * @return string
-     */
-    private function convertAutocompleteFormatToFqcn(string $autocompleteFormat): string
-    {
-        if (preg_match('/\((.*?)\)$/', $autocompleteFormat, $matches)) {
-            return $matches[1];
-        }
-
-        return $autocompleteFormat;
     }
 }
