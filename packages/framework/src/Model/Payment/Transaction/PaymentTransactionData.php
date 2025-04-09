@@ -39,5 +39,10 @@ class PaymentTransactionData
     /**
      * @var string|null
      */
+    public $externalPaymentUrl;
+
+    /**
+     * @var string|null
+     */
     public $externalPaymentSubStatus;
 }

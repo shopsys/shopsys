@@ -74,6 +74,7 @@ class GoPayFacade implements PaymentServiceInterface
         $paymentTransactionData->externalPaymentIdentifier = (string)$goPayCreatePaymentSetup['goPayId'];
         $paymentTransactionData->externalPaymentStatus = (string)$goPayCreatePaymentSetup['state'];
         $paymentTransactionData->externalPaymentSubStatus = (string)$goPayCreatePaymentSetup['subState'];
+        $paymentTransactionData->externalPaymentUrl = (string)$goPayCreatePaymentSetup['gatewayUrl'];
 
         $paymentSetupCreationData->setGoPayCreatePaymentSetup($goPayCreatePaymentSetup);
     }
@@ -91,6 +92,7 @@ class GoPayFacade implements PaymentServiceInterface
         if (array_key_exists('state', (array)$goPayStatusResponse->json)) {
             $paymentTransactionData->externalPaymentStatus = (string)$goPayStatusResponse->json['state'];
             $paymentTransactionData->externalPaymentSubStatus = Arrays::get($goPayStatusResponse->json, 'sub_state', null);
+            $paymentTransactionData->externalPaymentUrl = Arrays::get($goPayStatusResponse->json, 'gw_url', null);
 
             if ($paymentTransactionData->externalPaymentStatus === PaymentStatus::REFUNDED) {
                 $paymentTransactionData->refundedAmount = $paymentTransactionData->paidAmount;

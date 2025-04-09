@@ -442,7 +442,7 @@ class Order
     {
         $lastTransaction = $this->paymentTransactions->last();
 
-        if ($lastTransaction->getPayment()?->isGoPay()) {
+        if ($lastTransaction && $lastTransaction->getPayment()?->isGoPay()) {
             return $lastTransaction;
         }
 
@@ -507,6 +507,14 @@ class Order
     public function getPaymentTransactionsCount(): int
     {
         return $this->paymentTransactions->count();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLastExternalPaymentUrl(): ?string
+    {
+        return $this->getLastGoPayTransaction()?->getExternalPaymentUrl();
     }
 
     /**
@@ -1281,6 +1289,14 @@ class Order
     public function resetOrderPaymentStatusPageValidityHash(): void
     {
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
+    }
+
+    /**
+     * @param string $orderPaymentStatusPageValidityHash
+     */
+    public function setOrderPaymentStatusPageValidityHash($orderPaymentStatusPageValidityHash): void
+    {
+        $this->orderPaymentStatusPageValidityHash = $orderPaymentStatusPageValidityHash;
     }
 
     /**

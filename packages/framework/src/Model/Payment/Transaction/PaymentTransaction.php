@@ -72,6 +72,12 @@ class PaymentTransaction
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    protected $externalPaymentUrl;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     protected $externalPaymentSubStatus;
 
     /**
@@ -94,6 +100,7 @@ class PaymentTransaction
         $this->externalPaymentStatus = $paymentTransactionData->externalPaymentStatus;
         $this->externalPaymentSubStatus = $paymentTransactionData->externalPaymentSubStatus;
         $this->refundedAmount = $paymentTransactionData->refundedAmount;
+        $this->externalPaymentUrl = $paymentTransactionData->externalPaymentUrl;
     }
 
     /**
@@ -230,5 +237,13 @@ class PaymentTransaction
     public function getExternalPaymentSubStatus()
     {
         return $this->externalPaymentSubStatus;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExternalPaymentUrl()
+    {
+        return $this->externalPaymentUrl;
     }
 }
