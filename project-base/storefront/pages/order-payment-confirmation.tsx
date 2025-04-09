@@ -4,6 +4,7 @@ import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCust
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentStatus } from 'components/Pages/Order/PaymentConfirmation/PaymentStatus';
+import { ShowPaymentInstructionButton } from 'components/Pages/Order/PaymentConfirmation/ShowPaymentInstructionButton';
 import {
     getPaymentSessionExpiredErrorMessage,
     useUpdatePaymentStatus,
@@ -130,6 +131,18 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         inProcessContentData={inProcessContentData}
                     />
 
+                    {inProcessContentData &&
+                        paymentStatusData?.UpdatePaymentStatus.hasPaymentInProcess &&
+                        orderData.order.retryLastPaymentTransactionUrl && (
+                            <div className="mt-4">
+                                <ShowPaymentInstructionButton
+                                    href={orderData.order.retryLastPaymentTransactionUrl}
+                                    orderPaymentStatusPageValidityHash={orderPaymentStatusPageValidityHashParam}
+                                    orderUuid={orderUuid}
+                                />
+                            </div>
+                        )}
+
                     <OrderConfirmationStepper
                         flow={
                             order.hasPaymentInProcess ? FlowTypesEnum.PaymentInProcess :
@@ -153,6 +166,10 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                                     orderUuid={orderUuid}
                                     paymentTransactionCount={order.paymentTransactionsCount}
                                 />
+                            )}
+
+                            {inProcessContentData && order.hasPaymentInProcess && (
+                                <OrderCustomerInfo order={order} />
                             )}
 
                             {successContentData && order.isPaid && (

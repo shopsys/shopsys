@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
@@ -12,6 +13,7 @@ use App\Model\Order\OrderFacade;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -122,6 +124,46 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         $errors = $this->getErrorsFromResponse($response);
 
         self::assertEquals("Order with UUID '4c0e44a5-74fc-4df3-b868-c4900b36adbf' not found.", $errors[0]['message']);
+    }
+
+    public function testMakeOrderSentPageAccessibleByHash(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $orderUuid = $order->getUuid();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
+            'orderUuid' => $orderUuid,
+        ]);
+
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertEquals(
+            'order-sent-page-not-available',
+            $errors[0]['extensions']['userCode'],
+        );
+
+        $validityHash = Uuid::uuid4();
+
+        $this->getResponseContentForGql(__DIR__ . '/graphql/SetOrderPaymentStatusPageValidityHashMutation.graphql', [
+            'orderUuid' => $orderUuid,
+            'orderPaymentStatusPageValidityHash' => $validityHash,
+        ]);
+
+        $this->getResponseContentForGql(
+            __DIR__ . '/../Payment/graphql/UpdatePaymentStatusMutation.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderPaymentStatusPageValidityHash' => $validityHash,
+            ],
+        );
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
+            'orderUuid' => $orderUuid,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
+
+        $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_SUCCESSFUL), $responseData['status']);
+        $this->assertSame($this->orderContentPageFacade->getPaymentSuccessfulPageContent($order), $responseData['content']);
     }
 
     /**
