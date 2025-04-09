@@ -1,0 +1,12 @@
+parameters:
+    treatPhpDocTypesAsCertain: false
+
+    excludePaths:
+        # Exclude template files for generating code via maker commands
+        - %currentWorkingDirectory%/templates/*
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/shopsys/coding-standards/extension.neon

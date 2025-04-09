@@ -53,6 +53,7 @@ If you are interested, you can read more about the monorepo approach here - http
 - [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
 - [shopsys/administration](https://github.com/shopsys/administration)
 - [shopsys/convertim](https://github.com/shopsys/convertim)
+- [shopsys/maker](https://github.com/shopsys/maker)
 
 !!! note
 

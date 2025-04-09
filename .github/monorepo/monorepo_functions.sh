@@ -37,6 +37,7 @@ get_all_packages() {
         coding-standards \
         http-smoke-testing \
         form-types-bundle \
+        maker \
         migrations \
         monorepo-tools \
         php-image \

@@ -69,7 +69,7 @@ parameters:
         # Exclude coding standards for generated files
         - %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/*
         # Exclude template files for generating code via maker commands
-        - %currentWorkingDirectory%/packages/framework/src/Maker/templates/*
+        - %currentWorkingDirectory%/packages/maker/templates/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

@@ -1,0 +1,29 @@
+on: [push]
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+name: "Checks and tests"
+jobs:
+    checks-and-tests:
+        name: Run checks and tests
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: Sleep for 15 seconds to ensure that split packages has been promoted to packagist.org
+                run: sleep 15s
+                shell: bash
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Install PHP, extensions and tools
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.3'
+                    extensions: bcmath, gd, intl, pdo_pgsql, redis, pgsql, zip
+                    tools: composer
+            -   name: Install Composer dependencies
+                run: composer install --optimize-autoloader --no-interaction
+            -   name: Run PHPUnit
+                run: php vendor/bin/phpunit tests
+            -   name: Run PHPStan level 5
+                run: php vendor/bin/phpstan analyze -c ./phpstan.neon ./src --level=5

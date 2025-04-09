@@ -19,8 +19,6 @@ parameters:
     excludePaths:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/tests/Unit/Component/ClassExtension/Source/*
-        # Exclude template files for generating code via maker commands
-        - %currentWorkingDirectory%/src/Maker/templates/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
