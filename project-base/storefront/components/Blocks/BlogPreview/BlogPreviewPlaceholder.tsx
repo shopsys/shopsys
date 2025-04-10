@@ -16,7 +16,7 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
     const blogItems = useMemo(() => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles), [blogArticles]);
 
     return (
-        <Webline className="z-above relative mx-auto w-full px-0" width="xxl">
+        <Webline className="z-above relative">
             <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-textInverted">{t('Magazine')}</h3>
 

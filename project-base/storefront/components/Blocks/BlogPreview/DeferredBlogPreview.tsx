@@ -28,12 +28,12 @@ export const DeferredBlogPreview: FC = () => {
     }
 
     const bgImageTwClass = twJoin(
-        'xl:rounded-xl py-16 bg-cover bg-center',
+        'xl:rounded-xl py-16 bg-cover bg-center relative',
         "after:content-[''] after:block after:absolute after:inset-0 after:bg-backgroundDark/80 after:xl:rounded-xl",
     );
 
     return (
-        <Webline className="relative px-0" width="xxl">
+        <Webline width="xxl">
             <div
                 className={bgImageTwClass}
                 style={{ backgroundImage: `url(${blogData?.mainBlogCategoryMainImage?.url})` }}

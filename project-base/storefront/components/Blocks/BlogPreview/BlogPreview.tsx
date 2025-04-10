@@ -2,6 +2,7 @@ import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -26,7 +27,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     const isDesktop = useMediaMin('vl');
 
     return (
-        <div className="z-above xxl:px-[100px] relative mx-auto w-full px-5">
+        <Webline className="z-above relative">
             <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-textInverted">{t('Magazine')}</h3>
 
@@ -61,6 +62,6 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
                     )}
                 </div>
             )}
-        </div>
+        </Webline>
     );
 };
