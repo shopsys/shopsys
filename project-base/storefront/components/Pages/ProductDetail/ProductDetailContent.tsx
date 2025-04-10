@@ -44,7 +44,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
             <ProductMetadata product={product} />
 
             <VerticalStack gap="md">
-                <Webline className="flex flex-col flex-wrap gap-6 lg:flex-row xl:flex-row">
+                <Webline className="vl:flex-row flex flex-col gap-6">
                     <ProductDetailGallery
                         flags={product.flags}
                         images={product.images}
