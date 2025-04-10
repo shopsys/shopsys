@@ -119,12 +119,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                     <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
                         <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
                             {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Failed &&
-                                order.hasExternalPayment && (
-                                    <PaymentsInOrderSelect
-                                        orderUuid={orderUuid}
-                                        paymentTransactionCount={order.paymentTransactionsCount}
-                                    />
-                                )}
+                                order.hasExternalPayment && <PaymentsInOrderSelect orderUuid={orderUuid} />}
 
                             {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.InProcess && (
                                 <OrderCustomerInfo order={order} />

@@ -102,12 +102,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 )}
             </div>
 
-            {canCreateOrder && notPaid && (
-                <PaymentsInOrderSelect
-                    orderUuid={order.uuid}
-                    paymentTransactionCount={order.paymentTransactionsCount}
-                />
-            )}
+            {canCreateOrder && notPaid && <PaymentsInOrderSelect orderUuid={order.uuid} />}
 
             {orderTransport && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>

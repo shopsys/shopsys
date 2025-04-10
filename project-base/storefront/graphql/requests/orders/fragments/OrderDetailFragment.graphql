@@ -64,7 +64,6 @@ fragment OrderDetailFragment on Order {
     totalPrice {
         ...PriceFragment
     }
-    paymentTransactionsCount
     isPaid
     hasExternalPayment
     hasPaymentInProcess

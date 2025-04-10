@@ -26,10 +26,25 @@ class OrderPaymentsConfigFactory
     {
         $payments = $this->paymentFacade->getVisibleForOrder($order);
 
-        $currentPayment = $order->getPayment();
+        $currentPayment = $order->isMaxTransactionCountReached() ? null : $order->getPayment();
+
+        if ($currentPayment !== null && !in_array($currentPayment, $payments, true)) {
+            $currentPayment = null;
+        }
+
         $availablePayments = array_filter(
             $payments,
-            static fn (Payment $payment) => $payment->getId() !== $currentPayment->getId(),
+            static function (Payment $payment) use ($order, $currentPayment) {
+                if ($payment->getId() === $currentPayment?->getId()) {
+                    return false;
+                }
+
+                if ($order->isMaxTransactionCountReached()) {
+                    return !$payment->isGatewayPayment();
+                }
+
+                return true;
+            },
         );
 
         return new OrderPaymentsConfig($currentPayment, $availablePayments);
