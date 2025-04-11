@@ -664,6 +664,15 @@ msgstr "Kategorie <strong>{{ name }}</strong> byla smazána"
 msgid "Category description"
 msgstr "Popis kategorie"
 
+msgid "Category is hidden on all domains"
+msgstr "Kategorie je skrytá na všech doménách"
+
+msgid "Category is visible on all domains"
+msgstr "Kategorie je viditelná na všech doménách"
+
+msgid "Category is visible on some domains"
+msgstr "Kategorie je viditelná na některých doménách"
+
 msgid "Category name"
 msgstr "Název kategorie"
 

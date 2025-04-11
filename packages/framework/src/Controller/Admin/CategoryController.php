@@ -136,11 +136,13 @@ class CategoryController extends AdminBaseController
     {
         $domainFilterNamespace = 'category';
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
+        $visibilityOfCategoriesIndexedById = null;
 
         if ($selectedDomainId === null) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
                 $this->localization->getCurrentLocaleForTranslatableEntities(),
             );
+            $visibilityOfCategoriesIndexedById = $this->getVisibleCategoryIdsForAllDomains();
         } else {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
                 $selectedDomainId,
@@ -154,6 +156,7 @@ class CategoryController extends AdminBaseController
             'domainFilterNamespace' => $domainFilterNamespace,
             'disabledFormFields' => $this->formBuilderHelper->hasFormDisabledFields(),
             'allCategoryIdsInSeoMixes' => $this->categorySeoMixFacade->getAllCategoryIdsInSeoMixes(),
+            'visibilityOfCategoriesIndexedById' => $visibilityOfCategoriesIndexedById,
         ]);
     }
 
@@ -226,5 +229,15 @@ class CategoryController extends AdminBaseController
         }
 
         return $this->json($categoriesData);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getVisibleCategoryIdsForAllDomains(): array
+    {
+        $domainsCount = count($this->domain->getAll());
+
+        return $this->categoryFacade->getVisibilityOfCategoriesIndexedById($domainsCount);
     }
 }

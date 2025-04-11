@@ -664,6 +664,15 @@ msgstr ""
 msgid "Category description"
 msgstr ""
 
+msgid "Category is hidden on all domains"
+msgstr ""
+
+msgid "Category is visible on all domains"
+msgstr ""
+
+msgid "Category is visible on some domains"
+msgstr ""
+
 msgid "Category name"
 msgstr ""
 

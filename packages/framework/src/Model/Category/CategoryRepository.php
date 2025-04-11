@@ -622,4 +622,27 @@ class CategoryRepository extends NestedTreeRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    /**
+     * @param int $domainCount
+     * @return array<int, string>
+     */
+    public function getVisibilityOfCategoriesIndexedById(int $domainCount): array
+    {
+        $visibilityOfCategoriesIndexedById = [];
+
+        $result = $this->getAllQueryBuilder()
+            ->select('c.id, COUNT(cd.id) AS domainCount')
+            ->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = c.id')
+            ->andWhere('cd.visible = TRUE')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach ($result as $row) {
+            $visibilityOfCategoriesIndexedById[$row['id']] = $row['domainCount'] === $domainCount ? 'all' : 'partial';
+        }
+
+        return $visibilityOfCategoriesIndexedById;
+    }
 }
