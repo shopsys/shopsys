@@ -20,4 +20,9 @@ class ProductParameterValuesLocalizedData
      * @var string|null
      */
     public $numericValue;
+
+    /**
+     * @var string|null
+     */
+    public $rgbHex;
 }

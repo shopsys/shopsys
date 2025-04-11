@@ -52,6 +52,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
             }
 
             $normData[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
+            $normData[$parameterId]->rgbHex = $productParameterValueData->parameterValueData->rgbHex;
 
             if ($productParameterValueData->parameter->isSlider()) {
                 $normData[$parameterId]->numericValue = $productParameterValueData->parameterValueData->text;
@@ -78,6 +79,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
                         $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
                         $parameterValueData = $this->parameterValueDataFactory->create();
                         $parameterValueData->text = $valueText;
+                        $parameterValueData->rgbHex = $productParameterValuesLocalizedData->rgbHex;
 
                         if ($productParameterValuesLocalizedData->parameter->isSlider()) {
                             $parameterValueData->numericValue = $valueText;
