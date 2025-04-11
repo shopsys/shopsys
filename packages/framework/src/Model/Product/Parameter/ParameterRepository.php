@@ -196,25 +196,27 @@ class ParameterRepository
     }
 
     /**
-     * @param string $valueText
-     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
-    {
+    public function findOrCreateParameterValueByParameterValueData(
+        ParameterValueData $parameterValueData,
+    ): ParameterValue {
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
-            'text' => $valueText,
-            'locale' => $locale,
+            'text' => $parameterValueData->text,
+            'locale' => $parameterValueData->locale,
         ]);
 
         if ($parameterValue === null) {
-            $parameterValueData = $this->parameterValueDataFactory->create();
-            $parameterValueData->text = $valueText;
-            $parameterValueData->locale = $locale;
             $parameterValue = $this->parameterValueFactory->create($parameterValueData);
             $this->em->persist($parameterValue);
             // Doctrine's identity map is not cache.
             // We have to flush now, so that next findOneBy() finds new ParameterValue.
+            $this->em->flush();
+        }
+
+        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
+            $parameterValue->edit($parameterValueData);
             $this->em->flush();
         }
 
