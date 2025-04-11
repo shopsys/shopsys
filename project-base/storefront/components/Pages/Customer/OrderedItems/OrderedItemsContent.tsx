@@ -31,7 +31,7 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ isFetching, 
 
     return (
         <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-            <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-5">
                 {items.map((item) => (
                     <OrderedItem key={item.uuid} orderedItem={item} />
                 ))}

@@ -2,6 +2,7 @@ import { OrderItem } from './OrderItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
+import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -11,9 +12,10 @@ type OrdersContentProps = {
     areOrdersFetching: boolean;
     orders: TypeListedOrderFragment[] | undefined;
     totalCount: number | undefined;
+    hasNextPage: boolean | undefined;
 };
 
-export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, orders, totalCount }) => {
+export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, orders, totalCount, hasNextPage }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { t } = useTranslation();
@@ -32,19 +34,22 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
     }
 
     return (
-        <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-            <div className="flex flex-col gap-7">
-                {orders.map((order, index) => (
-                    <OrderItem
-                        key={order.uuid}
-                        addOrderItemsToEmptyCart={addOrderItemsToEmptyCart}
-                        listIndex={index}
-                        order={order}
-                    />
-                ))}
-            </div>
+        <div className="flex scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
+            {orders.map((order, index) => (
+                <OrderItem
+                    key={order.uuid}
+                    addOrderItemsToEmptyCart={addOrderItemsToEmptyCart}
+                    listIndex={index}
+                    order={order}
+                />
+            ))}
 
-            <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
+            <Pagination
+                hasNextPage={hasNextPage}
+                pageSize={DEFAULT_ORDERS_SIZE}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                totalCount={totalCount || 0}
+            />
         </div>
     );
 };

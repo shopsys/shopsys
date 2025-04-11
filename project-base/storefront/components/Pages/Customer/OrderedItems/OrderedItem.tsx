@@ -47,7 +47,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                 <Image
                     priority
                     alt={orderedItem.product?.mainImage?.name || ''}
-                    className="h-[80px] max-h-full w-[80px] object-contain"
+                    className="h-[80px] max-h-full w-[80px] object-contain mix-blend-multiply"
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     src={orderedItem.product?.mainImage?.url}

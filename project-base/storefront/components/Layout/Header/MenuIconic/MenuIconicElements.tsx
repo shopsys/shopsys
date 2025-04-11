@@ -20,11 +20,21 @@ type MenuIconicItemLinkProps = {
     type?: PageType;
     onClick?: () => void;
     onTouchEnd?: (e: ReactTouchEvent<HTMLDivElement>) => void;
+    isActive?: boolean;
 };
 
-export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
-    const menuIconicSubItemLinkTwClass =
-        'flex items-center px-3 py-4 text-sm text-text no-underline font-semibold hover:no-underline gap-5 hover:text-text';
+export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
+    children,
+    href,
+    onClick,
+    type,
+    tid,
+    isActive = false,
+}) => {
+    const menuIconicSubItemLinkTwClass = twJoin(
+        'flex items-center px-3 py-4 text-sm text-text no-underline font-semibold hover:no-underline gap-5 hover:text-text',
+        isActive && 'text-textAccent',
+    );
 
     if (href) {
         return (
@@ -84,11 +94,18 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
 
 MenuIconicItemLink.displayName = 'MenuIconicItemLink';
 
-export const MenuIconicItemUserAuthenticatedContentListItem: FC = ({ children }) => (
+type MenuIconicItemUserAuthenticatedContentListItemProps = {
+    isActive?: boolean;
+};
+
+export const MenuIconicItemUserAuthenticatedContentListItem: FC<
+    MenuIconicItemUserAuthenticatedContentListItemProps
+> = ({ children, isActive = false }) => (
     <li
-        className={twJoin(
+        className={twMergeCustom(
             'border-background bg-backgroundMore h-14 rounded-xl border',
             'hover:border-borderAccentLess hover:bg-background',
+            isActive && 'border-borderAccentLess bg-background',
         )}
     >
         {children}

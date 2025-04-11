@@ -1,6 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -51,7 +52,11 @@ const OrderDetailByHashPage: FC = () => {
                     breadcrumbs={breadcrumbs}
                     title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
                 >
-                    {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
+                    {!!orderData?.order && (
+                        <Webline width="lg">
+                            <OrderDetailContent order={orderData.order} />
+                        </Webline>
+                    )}
                 </CommonLayout>
             </PageGuard>
         </>

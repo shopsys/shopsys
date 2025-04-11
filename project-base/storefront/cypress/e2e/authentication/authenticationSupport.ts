@@ -23,7 +23,7 @@ export const submitLoginForm = () => {
 };
 
 export const logoutFromCustomerPage = () => {
-    cy.getByTID([TIDs.customer_page_logout]).click();
+    cy.getByTID([TIDs.user_menu_logout]).click();
 };
 
 export const loginFromHeader = (email: string | undefined, password: string) => {
@@ -40,7 +40,7 @@ export const logoutFromHeader = () => {
     cy.getByTID([TIDs.my_account_link])
         .should('be.visible')
         .realHover()
-        .then(() => cy.getByTID([TIDs.header_logout]).should('be.visible').click());
+        .then(() => cy.getByTID([TIDs.user_menu_logout]).should('be.visible').click());
 };
 
 export const fillInEmailAndPasswordInLoginPopup = (email: string | undefined, password: string) => {

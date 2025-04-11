@@ -136,7 +136,7 @@ export const goToEditProfileFromHeader = () => {
     cy.getByTID([TIDs.my_account_link])
         .should('be.visible')
         .realHover()
-        .then(() => cy.getByTID([TIDs.header_edit_profile_link]).should('be.visible').click());
+        .then(() => cy.getByTID([TIDs.user_menu_edit_profile_link]).should('be.visible').click());
     checkUrl(url.customer.editProfile);
     cy.waitForStableAndInteractiveDOM();
 };

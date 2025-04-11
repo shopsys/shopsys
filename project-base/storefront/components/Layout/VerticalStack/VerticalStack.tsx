@@ -6,7 +6,7 @@ type VerticalStackProps = {
 
 export const VerticalStack: FC<VerticalStackProps> = ({ gap, children }) => {
     const gapClasses = {
-        sm: 'gap-4',
+        sm: 'gap-5',
         md: 'gap-5 xl:gap-8',
         lg: 'gap-6 xl:gap-10',
     };

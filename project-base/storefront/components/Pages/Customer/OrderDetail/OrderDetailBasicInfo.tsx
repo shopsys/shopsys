@@ -1,17 +1,22 @@
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
 import { Button } from 'components/Forms/Button/Button';
-import { OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItem';
+import { ElementWithImage, OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
+import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
+import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import { ReactNode } from 'react';
+import { twJoin } from 'tailwind-merge';
+import { PaymentTypeEnum } from 'types/payment';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
-import { twMergeCustom } from 'utils/twMerge';
 
 type OrderDetailBasicInfoProps = {
     order: TypeOrderDetailFragment;
@@ -40,99 +45,165 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
         );
 
+    const notPaid = order.payment.type === PaymentTypeEnum.GoPay && !order.isPaid && !order.hasPaymentInProcess;
+
     return (
         <>
-            <OrderRowWrapper className="flex items-center justify-between gap-4">
-                <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
-                    <OrderItemColumnInfo
-                        tid={TIDs.order_detail_number}
-                        title={t('Order number')}
-                        value={order.number}
-                    />
-                    <OrderItemColumnInfo
-                        tid={TIDs.order_detail_creation_date}
-                        title={t('Date of order')}
-                        value={formatDate(order.creationDate)}
-                    />
-                    {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <OrderItemColumnInfo
-                            title={t('Price')}
-                            value={formatPrice(order.totalPrice.priceWithVat)}
-                            valueClassName="text-textAccent"
+            <div className="bg-backgroundMore vl:flex-row flex flex-col flex-wrap justify-between gap-5 rounded-xl p-5">
+                <OrderItemColumnInfo title={t('Order number')}>
+                    <span tid={TIDs.order_detail_number}>{order.number}</span>
+                </OrderItemColumnInfo>
+
+                <OrderItemColumnInfo title={t('Date of order')}>
+                    <span tid={TIDs.order_detail_creation_date}>{formatDate(order.creationDate)}</span>
+                </OrderItemColumnInfo>
+
+                {isPriceVisible(order.totalPrice.priceWithVat) && (
+                    <OrderItemColumnInfo title={t('Price')}>
+                        {formatPrice(order.totalPrice.priceWithVat)}
+
+                        <OrderPaymentStatusBar
+                            orderHasPaymentInProcess={order.hasPaymentInProcess}
+                            orderIsPaid={order.isPaid}
+                            orderPaymentType={order.payment.type}
                         />
-                    )}
-                    <OrderItemColumnInfo title={t('Status')} value={order.status} />
-                </div>
-                {showRepeatOrderButton && (
-                    <Button
-                        size="small"
-                        tid={TIDs.order_detail_repeat_order_button}
-                        variant="inverted"
-                        onClick={() => addOrderItemsToEmptyCart(order.uuid)}
-                    >
-                        {t('Repeat order')}
-                    </Button>
+                    </OrderItemColumnInfo>
                 )}
-            </OrderRowWrapper>
+
+                <OrderItemColumnInfo title={t('Status')}>{order.status}</OrderItemColumnInfo>
+
+                {showRepeatOrderButton && !notPaid && (
+                    <div className="flex shrink-0 gap-4">
+                        <Button
+                            tid={TIDs.order_detail_repeat_order_button}
+                            variant="inverted"
+                            onClick={() => addOrderItemsToEmptyCart(order.uuid)}
+                        >
+                            {t('Repeat order')}
+                        </Button>
+                    </div>
+                )}
+
+                {notPaid && (
+                    <div className="flex flex-col items-center justify-start gap-2.5 xl:flex-row xl:gap-5">
+                        <div
+                            className={twJoin(
+                                'flex size-8 items-center justify-center rounded-full sm:size-11',
+                                'bg-backgroundError text-textInverted',
+                            )}
+                        >
+                            <WalletIcon className="size-4 sm:size-6" />
+                        </div>
+
+                        <h5 className={twJoin('text-center text-xs sm:text-sm lg:text-base', 'text-textError')}>
+                            {t('Payment failed')}
+                        </h5>
+                    </div>
+                )}
+            </div>
+
+            {canCreateOrder && notPaid && (
+                <PaymentsInOrderSelect
+                    orderUuid={order.uuid}
+                    paymentTransactionCount={order.paymentTransactionsCount}
+                />
+            )}
+
             {orderTransport && (
-                <OrderRowWrapper className="flex flex-col gap-4" tid={TIDs.order_detail_transport}>
-                    <div className="flex gap-4">
-                        {t('Transport')} - {orderTransport.name}
+                <OrderDetailRowInfo tid={TIDs.order_detail_transport} title={t('Transport')}>
+                    <div className="flex w-full items-center justify-between">
+                        <div className="flex flex-col gap-2">
+                            <ElementWithImage image={order.transport.mainImage?.url} name={orderTransport.name} />
+
+                            {order.trackingUrl && (
+                                <div>
+                                    {t('Tracking package')}
+                                    {' - '}
+                                    <ExtendedNextLink href={order.trackingUrl} target="_blank">
+                                        {order.trackingNumber}
+                                    </ExtendedNextLink>
+                                </div>
+                            )}
+                        </div>
+
                         {isPriceVisible(order.totalPrice.priceWithVat) && (
                             <span className="font-bold">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
                         )}
                     </div>
-                    {order.trackingUrl && (
-                        <div>
-                            {t('Tracking package')}
-                            {' - '}
-                            <ExtendedNextLink href={order.trackingUrl} target="_blank">
-                                {order.trackingNumber}
-                            </ExtendedNextLink>
-                        </div>
-                    )}
-                </OrderRowWrapper>
+                </OrderDetailRowInfo>
             )}
+
             {orderPayment && (
-                <OrderRowWrapper className="flex gap-4" tid={TIDs.order_detail_payment}>
-                    {t('Payment')} - {orderPayment.name}
-                    {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
-                    )}
-                </OrderRowWrapper>
+                <OrderDetailRowInfo tid={TIDs.order_detail_payment} title={t('Payment')}>
+                    <div className="flex w-full justify-between">
+                        <ElementWithImage image={order.payment.mainImage?.url} name={orderPayment.name} />
+
+                        {isPriceVisible(order.totalPrice.priceWithVat) && (
+                            <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
+                        )}
+                    </div>
+                </OrderDetailRowInfo>
             )}
+
             {orderRounding && (
-                <OrderRowWrapper className="flex gap-4">
-                    {t('Rounding')}
+                <OrderDetailRowInfo title={t('Rounding')}>
                     {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <span className="font-bold">{formatPrice(orderRounding.totalPrice.priceWithVat)}</span>
+                        <span className="block w-full text-right font-bold">
+                            {formatPrice(orderRounding.totalPrice.priceWithVat)}
+                        </span>
                     )}
-                </OrderRowWrapper>
+                </OrderDetailRowInfo>
             )}
-            <div className="border-borderLess bg-background rounded-md border-[5px] p-7" tid={TIDs.order_detail_items}>
-                {filteredOrderItems.map((orderItem) => (
-                    <OrderDetailOrderItem
-                        key={orderItem.name}
-                        isDiscount={orderItem.type === TypeOrderItemTypeEnum.Discount}
-                        orderItem={orderItem}
-                        orderUuid={order.uuid}
-                    />
-                ))}
+
+            <div className="bg-backgroundMore rounded-xl p-5">
+                <div tid={TIDs.order_detail_items}>
+                    {filteredOrderItems.map((orderItem) => (
+                        <OrderDetailOrderItem
+                            key={orderItem.name}
+                            isDiscount={orderItem.type === TypeOrderItemTypeEnum.Discount}
+                            orderItem={orderItem}
+                            orderUuid={order.uuid}
+                        />
+                    ))}
+                </div>
+
+                <p className="font-secondary mt-8 mb-2 text-lg font-semibold">{t('Order summary')}</p>
+
+                <div className="font-secondary flex items-start justify-between text-sm font-semibold">
+                    <span className="mr-4 inline-flex items-end">{t('Total price')}</span>
+
+                    <div className="flex flex-col items-end gap-2">
+                        <strong className="text-price text-lg">{formatPrice(order.totalPrice.priceWithVat)}</strong>
+
+                        <span className="text-priceBefore text-sm">
+                            {formatPrice(order.totalPrice.priceWithoutVat)} {t('without VAT')}
+                        </span>
+                    </div>
+                </div>
             </div>
+
             {!!order.note && (
-                <OrderRowWrapper className="flex gap-2" tid={TIDs.order_detail_note}>
-                    <div>{t('Note')}</div>
-                    {' - '}
-                    <div className="font-bold">{order.note}</div>
-                </OrderRowWrapper>
+                <OrderDetailRowInfo tid={TIDs.order_detail_note} title={t('Note')}>
+                    {order.note}
+                </OrderDetailRowInfo>
             )}
         </>
     );
 };
 
-export const OrderRowWrapper: FC = ({ children, className, tid }) => {
+type OrderDetailRowInfoProps = {
+    tid?: string;
+    title: string;
+    children: ReactNode;
+};
+
+export const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
-        <div className={twMergeCustom('bg-backgroundMore vl:px-6 vl:py-4 rounded-md px-4 py-3', className)} tid={tid}>
+        <div
+            className="vl:flex-row vl:gap-3 vl:items-center bg-backgroundMore flex flex-col gap-1 rounded-xl p-5 text-sm"
+            tid={tid}
+        >
+            <span className="text-textSubtle font-secondary min-w-[100px] font-semibold">{title}</span>
             {children}
         </div>
     );

@@ -1,8 +1,8 @@
 import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
-import { MenuIconicItemUserAuthenticatedContent } from './MenuIconicItemUserAuthenticatedContent';
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -41,11 +41,11 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 </MenuIconicItemLink>
 
                 <Drawer isActive={isActive} setIsActive={setIsActive} title={t('My account')}>
-                    <MenuIconicItemUserAuthenticatedContent />
+                    <UserMenu />
                 </Drawer>
 
                 <MenuIconicItemUserPopover isAuthenticated isHovered={isActiveDelayed}>
-                    <MenuIconicItemUserAuthenticatedContent />
+                    <UserMenu />
                 </MenuIconicItemUserPopover>
             </div>
 

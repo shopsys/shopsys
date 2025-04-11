@@ -16,7 +16,6 @@ type TransportAndPaymentSelectItemLabelProps = {
     description?: string | null;
     image?: TypeImageFragment | null;
     pickupPlaceDetail?: StoreOrPacketeryPoint;
-    isSelected: boolean;
 };
 
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
@@ -26,24 +25,32 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     description,
     image,
     pickupPlaceDetail,
-    isSelected,
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (
-        <div className="flex w-full flex-row items-center gap-5">
+        <div className="flex w-full flex-row items-center gap-2">
             <div
-                className={twJoin('flex h-12 w-12 items-center', !image && 'hidden')}
                 tid={TIDs.transport_and_payment_list_item_image}
+                className={twJoin(
+                    'bg-backgroundMore flex h-12 w-20 items-center justify-center rounded-xl',
+                    !image && 'hidden',
+                )}
             >
-                <Image alt={image?.name ?? name} className="max-h-12 w-auto" height={48} src={image?.url} width={48} />
+                <Image
+                    alt={image?.name ?? name}
+                    className="aspect-video h-7 object-contain object-center mix-blend-multiply"
+                    height={28}
+                    src={image?.url}
+                    width={60}
+                />
             </div>
 
-            <div className="flex flex-1 flex-col lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
+            <div className="flex flex-1 items-center justify-between gap-2">
                 <div>
                     <div
-                        className={twJoin(isSelected && 'font-bold', pickupPlaceDetail && 'lg:w-32')}
+                        className={twJoin('font-semibold', pickupPlaceDetail && 'lg:w-32')}
                         tid={TIDs.pages_order_selectitem_label_name}
                     >
                         {name}
@@ -77,7 +84,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
             </div>
 
             {price && isPriceVisible(price.priceWithVat) && (
-                <div className="hidden shrink-0 text-right text-sm font-bold lg:block lg:basis-20">
+                <div className="text-text hidden shrink-0 text-right text-sm font-bold lg:block lg:basis-20">
                     {formatPrice(price.priceWithVat)}
                 </div>
             )}

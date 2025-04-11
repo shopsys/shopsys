@@ -169,6 +169,5 @@
     --text-zero: [0, 0];
     --keyframes-fadeIn: fadeIn 0.2s ease-in-out;
     --animation-fadeIn: fadeIn 0.2s ease-in-out;
-    --spacing-5.5: 1.375rem;
     --aspect-16/11: 16 / 11;
 }

@@ -39,7 +39,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                 <div className="flex h-12 w-20 shrink-0">
                     <Image
                         alt={complaintItem.productName}
-                        className="object-contain"
+                        className="object-contain mix-blend-multiply"
                         height={48}
                         src={complaintItem.product?.mainImage?.url}
                         width={80}
@@ -106,14 +106,16 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                             )}
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}
                         >
-                            <Image
-                                alt={file.anchorText || `${complaintItem.productName}-${index}`}
-                                className="bg-backgroundMore aspect-square max-h-full rounded-md object-contain p-1 mix-blend-multiply"
-                                hash={file.url.split('?')[1]}
-                                height={90}
-                                src={file.url.split('?')[0]}
-                                width={90}
-                            />
+                            <div className="bg-backgroundMore size-full rounded-md p-1">
+                                <Image
+                                    alt={file.anchorText || `${complaintItem.productName}-${index}`}
+                                    className="aspect-square max-h-full object-contain mix-blend-multiply"
+                                    hash={file.url.split('?')[1]}
+                                    height={90}
+                                    src={file.url.split('?')[0]}
+                                    width={90}
+                                />
+                            </div>
 
                             {isWithAdditionalImages && (
                                 <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">

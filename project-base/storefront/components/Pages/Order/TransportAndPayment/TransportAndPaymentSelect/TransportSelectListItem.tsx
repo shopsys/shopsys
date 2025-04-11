@@ -24,7 +24,7 @@ const TransportListItemComp: FC<TransportListItemProps> = ({
     changeTransport,
     pickupPlace,
 }) => (
-    <TransportAndPaymentListItem key={transport.uuid} isActive={isActive}>
+    <TransportAndPaymentListItem key={transport.uuid}>
         <Radiobutton
             checked={isActive}
             id={transport.uuid}
@@ -35,7 +35,6 @@ const TransportListItemComp: FC<TransportListItemProps> = ({
                     daysUntilDelivery={transport.daysUntilDelivery}
                     description={transport.description}
                     image={transport.mainImage}
-                    isSelected={isActive}
                     name={transport.name}
                     pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}
                     price={transport.price}

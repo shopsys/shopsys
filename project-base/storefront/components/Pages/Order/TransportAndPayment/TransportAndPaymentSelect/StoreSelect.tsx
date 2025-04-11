@@ -18,10 +18,7 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, o
     return (
         <ul className="max-h-fit overflow-y-auto">
             {mappedStores?.map((pickupPlace) => (
-                <TransportAndPaymentListItem
-                    key={pickupPlace.identifier}
-                    isActive={selectedStoreUuid === pickupPlace.identifier}
-                >
+                <TransportAndPaymentListItem key={pickupPlace.identifier}>
                     <Radiobutton
                         checked={selectedStoreUuid === pickupPlace.identifier}
                         id={pickupPlace.identifier}
@@ -29,7 +26,6 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, o
                         value={pickupPlace.identifier}
                         label={
                             <TransportAndPaymentSelectItemLabel
-                                isSelected={selectedStoreUuid === pickupPlace.identifier}
                                 name={pickupPlace.name}
                                 pickupPlaceDetail={pickupPlace}
                             />

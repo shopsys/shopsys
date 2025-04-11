@@ -1,3 +1,5 @@
+import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
+import { VerticalStack } from './VerticalStack/VerticalStack';
 import { UserNavigation } from 'components/Blocks/UserNavigation/UserNavigation';
 import { CommonLayout, CommonLayoutProps } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -8,14 +10,17 @@ type CustomerLayoutProps = {
 
 export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children, breadcrumbs, ...props }) => {
     return (
-        <CommonLayout {...props} breadcrumbs={breadcrumbs} breadcrumbsType={props.breadcrumbsType}>
-            <Webline className="flex flex-col gap-4 lg:flex-row">
-                <UserNavigation />
+        <CommonLayout {...props}>
+            <Breadcrumbs key="breadcrumb" breadcrumbs={breadcrumbs ?? []} type={props.breadcrumbsType} />
 
-                <div className="flex w-full flex-col gap-4">
-                    {pageHeading && <h1>{pageHeading}</h1>}
+            <Webline>
+                <div className="grid grid-cols-1 gap-5 lg:grid-cols-[auto_1fr] lg:gap-10">
+                    <UserNavigation />
 
-                    {children}
+                    <VerticalStack gap="sm">
+                        {pageHeading && <h1>{pageHeading}</h1>}
+                        {children}
+                    </VerticalStack>
                 </div>
             </Webline>
         </CommonLayout>

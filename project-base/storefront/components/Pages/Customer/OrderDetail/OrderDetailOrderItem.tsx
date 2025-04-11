@@ -1,15 +1,18 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { CreateComplaintPopupButton } from 'components/Blocks/Complaint/CreateComplaintPopupButton';
+import { CreateComplaintPopup } from 'components/Blocks/Popup/CreateComplaintPopup';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { isPriceVisible } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import { twMergeCustom } from 'utils/twMerge';
 
 type OrderDetailOrderItemProps = {
     orderItem: TypeOrderDetailItemFragment;
@@ -23,58 +26,89 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canCreateComplaint } = useAuthorization();
 
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const openCreateComplaintPopup = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        orderUuid?: string,
+        orderItem?: TypeOrderDetailItemFragment,
+    ) => {
+        e.stopPropagation();
+        updatePortalContent(<CreateComplaintPopup orderItem={orderItem} orderUuid={orderUuid} />);
+    };
+
+    if (isDiscount) {
+        return (
+            <div className="flex items-center justify-between gap-2 pb-5">
+                <span className="text-sm font-semibold">{orderItem.name}</span>
+
+                <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
+                    {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div
             className={twJoin(
-                'vl:gap-5 flex items-center gap-3 first:border-none first:pt-0 last:pb-0',
-                isDiscount ? 'pb-5' : 'border-t-borderAccentLess border-t py-5',
+                'vl:gap-5 font-secondary flex items-center gap-3 font-semibold first:border-none first:pt-0 last:pb-0',
+                'border-t-borderAccent border-t py-5',
             )}
         >
-            {isDiscount ? (
-                <div className="min-w-[60px]" />
-            ) : (
-                <div className="flex h-12 w-20 shrink-0">
-                    <Image
-                        alt={orderItem.name}
-                        className="object-contain"
-                        height={48}
-                        src={orderItem.product?.mainImage?.url}
-                        width={80}
-                    />
+            <div
+                className={twMergeCustom(
+                    'vl:grid vl:grid-cols-[3fr_2fr_1fr_2fr] vl:gap-5 flex w-full flex-wrap items-center justify-between gap-3 border-b last:border-none',
+                )}
+            >
+                <div className="vl:w-auto flex w-full items-center gap-2.5">
+                    <div className="flex h-20 w-20 shrink-0 items-center">
+                        <Image
+                            alt={orderItem.name}
+                            className="object-contain mix-blend-multiply"
+                            height={48}
+                            src={orderItem.product?.mainImage?.url}
+                            width={80}
+                        />
+                    </div>
+
+                    {orderItem.product?.isVisible ? (
+                        <div className="flex flex-col gap-2">
+                            <ExtendedNextLink
+                                className="vl:w-fit text-text hover:text-hover w-full text-sm no-underline hover:underline"
+                                href={orderItem.product.slug}
+                                skeletonType="product"
+                            >
+                                {orderItem.name}
+                            </ExtendedNextLink>
+
+                            {canCreateComplaint &&
+                                isUserLoggedIn &&
+                                orderItem.type === TypeOrderItemTypeEnum.Product && (
+                                    <button
+                                        className="text-link hover:text-linkHovered cursor-pointer self-baseline text-sm whitespace-nowrap underline outline-none"
+                                        tid={TIDs.order_detail_create_complaint_button}
+                                        onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
+                                    >
+                                        <FillIcon className="mr-2 size-6" />
+                                        {t('Create complaint')}
+                                    </button>
+                                )}
+                        </div>
+                    ) : (
+                        <span className="text-text text-sm">{orderItem.name}</span>
+                    )}
                 </div>
-            )}
-            <div className="border-b-borderLess vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] vl:gap-5 flex w-full flex-wrap items-center justify-between gap-3 border-b last:border-none">
-                {isDiscount ? (
-                    <span>{orderItem.name}</span>
-                ) : orderItem.product?.isVisible ? (
-                    <ExtendedNextLink className="vl:w-fit w-full" href={orderItem.product.slug} skeletonType="product">
-                        {orderItem.name}
-                    </ExtendedNextLink>
-                ) : (
-                    orderItem.name
-                )}
-                {isDiscount ? (
-                    <div />
-                ) : (
-                    <span className="text-right">
-                        {orderItem.quantity}
-                        {orderItem.unit}
-                    </span>
-                )}
+
+                <span className="text-textSubtle vl:w-auto w-full text-sm">
+                    {t('Code')}: {orderItem.product?.catalogNumber}
+                </span>
+
+                <span>
+                    {orderItem.quantity} {orderItem.unit}
+                </span>
+
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
                     <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
-                )}
-
-                {canCreateComplaint && isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
-                    <CreateComplaintPopupButton
-                        className="whitespace-nowrap"
-                        label={t('Create complaint')}
-                        orderItem={orderItem}
-                        orderUuid={orderUuid}
-                        size="small"
-                        tid={TIDs.order_detail_create_complaint_button}
-                        variant="inverted"
-                    />
                 )}
             </div>
         </div>

@@ -167,7 +167,7 @@ export const order = {
             helloKitty: {
                 ...products.helloKitty,
                 price: '€139.96',
-                quantity: '1pcs',
+                quantity: '1 pcs',
                 promoCode: 'Promo code -10%',
             },
         },

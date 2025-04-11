@@ -1,23 +1,34 @@
-import { MenuIconicItemUserAuthenticatedContentListItem, MenuIconicSubItemLink } from './MenuIconicElements';
-import { SalesRepresentative } from './SalesRepresentative';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
+import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import {
+    MenuIconicItemUserAuthenticatedContentListItem,
+    MenuIconicSubItemLink,
+} from 'components/Layout/Header/MenuIconic/MenuIconicElements';
+import { SalesRepresentative } from 'components/Layout/Header/MenuIconic/SalesRepresentative';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
+import { usePathname } from 'next/navigation';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'utils/twMerge';
 import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
-export const MenuIconicItemUserAuthenticatedContent: FC = () => {
+type UserMenuProps = {
+    className?: string;
+};
+
+export const UserMenu: FC<UserMenuProps> = ({ className }) => {
     const { t } = useTranslation();
+    const pathname = usePathname();
     const logout = useLogout();
     const user = useCurrentCustomerData();
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
@@ -27,6 +38,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
         customerOrdersUrl,
         customerComplaintsUrl,
         customerEditProfileUrl,
+        wishlistUrl,
         customerChangePasswordUrl,
         customerUsersUrl,
     ] = getInternationalizedStaticUrls(
@@ -34,6 +46,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
             '/customer/orders',
             '/customer/complaints',
             '/customer/edit-profile',
+            '/wishlist',
             '/customer/change-password',
             '/customer/users',
         ],
@@ -42,8 +55,8 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
     const userProfileSectionLabel = useUserProfileSectionLabel();
 
     return (
-        <>
-            <div className="bg-backgroundAccentLess mb-2 flex flex-col gap-1 rounded-xl px-3 py-4">
+        <div className={twMergeCustom('flex flex-col gap-3', className)}>
+            <div className="bg-backgroundAccentLess flex flex-col gap-1 rounded-xl px-3 py-4">
                 <h5>
                     {user?.firstName} {user?.lastName}
                 </h5>
@@ -57,12 +70,14 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                     {user?.email}
                 </span>
             </div>
+
             <ul className="flex max-h-[87dvh] flex-col gap-2">
                 {(canCreateOrder || canViewCompanyOrders) && (
-                    <MenuIconicItemUserAuthenticatedContentListItem>
+                    <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerOrdersUrl}>
                         <MenuIconicSubItemLink
                             href={customerOrdersUrl}
-                            tid={TIDs.header_my_orders_link}
+                            isActive={pathname === customerOrdersUrl}
+                            tid={TIDs.user_menu_my_orders_link}
                             type="orderList"
                         >
                             <SearchListIcon className="size-6" />
@@ -72,10 +87,11 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                 )}
 
                 {(canCreateComplaint || canViewCompanyComplaints) && (
-                    <MenuIconicItemUserAuthenticatedContentListItem>
+                    <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerComplaintsUrl}>
                         <MenuIconicSubItemLink
                             href={customerComplaintsUrl}
-                            tid={TIDs.header_my_complaints_link}
+                            isActive={pathname === customerComplaintsUrl}
+                            tid={TIDs.user_menu_my_complaints_link}
                             type="complaintList"
                         >
                             <ComplaintsIcon className="size-6" />
@@ -85,18 +101,23 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                 )}
 
                 {canManageUsers && (
-                    <MenuIconicItemUserAuthenticatedContentListItem>
-                        <MenuIconicSubItemLink href={customerUsersUrl} type="customer-users">
-                            <UserIcon className="max-h-5.5 w-6" />
+                    <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerUsersUrl}>
+                        <MenuIconicSubItemLink
+                            href={customerUsersUrl}
+                            isActive={pathname === customerUsersUrl}
+                            type="customer-users"
+                        >
+                            <UserIcon className="size-6" />
                             {t('Customer users')}
                         </MenuIconicSubItemLink>
                     </MenuIconicItemUserAuthenticatedContentListItem>
                 )}
 
-                <MenuIconicItemUserAuthenticatedContentListItem>
+                <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerEditProfileUrl}>
                     <MenuIconicSubItemLink
                         href={customerEditProfileUrl}
-                        tid={TIDs.header_edit_profile_link}
+                        isActive={pathname === customerEditProfileUrl}
+                        tid={TIDs.user_menu_edit_profile_link}
                         type="editProfile"
                     >
                         <EditIcon className="size-6" />
@@ -104,10 +125,18 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                     </MenuIconicSubItemLink>
                 </MenuIconicItemUserAuthenticatedContentListItem>
 
-                <MenuIconicItemUserAuthenticatedContentListItem>
+                <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === wishlistUrl}>
+                    <MenuIconicSubItemLink href={wishlistUrl} isActive={pathname === wishlistUrl} type="wishlist">
+                        <HeartIcon className="size-6" />
+                        {t('Wishlist')}
+                    </MenuIconicSubItemLink>
+                </MenuIconicItemUserAuthenticatedContentListItem>
+
+                <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerChangePasswordUrl}>
                     <MenuIconicSubItemLink
                         href={customerChangePasswordUrl}
-                        tid={TIDs.header_change_password_link}
+                        isActive={pathname === customerChangePasswordUrl}
+                        tid={TIDs.user_menu_change_password_link}
                         type="changePassword"
                     >
                         <LockCheckIcon className="size-6" />
@@ -116,14 +145,14 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                 </MenuIconicItemUserAuthenticatedContentListItem>
 
                 <MenuIconicItemUserAuthenticatedContentListItem>
-                    <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
+                    <MenuIconicSubItemLink tid={TIDs.user_menu_logout} onClick={logout}>
                         <ExitIcon className="size-6" />
                         {t('Logout')}
                     </MenuIconicSubItemLink>
                 </MenuIconicItemUserAuthenticatedContentListItem>
-
-                <SalesRepresentative />
             </ul>
-        </>
+
+            <SalesRepresentative />
+        </div>
     );
 };

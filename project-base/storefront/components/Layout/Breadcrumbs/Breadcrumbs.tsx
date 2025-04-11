@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -28,7 +29,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
     const lastBreadcrumb = breadcrumbs[lastIndex];
 
     return (
-        <>
+        <Webline className="mb-4">
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
             <div className={twMergeCustom(breadcrumbsTwClass, className)}>
@@ -56,7 +57,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                     {lastBreadcrumb.name}
                 </span>
             </div>
-        </>
+        </Webline>
     );
 };
 

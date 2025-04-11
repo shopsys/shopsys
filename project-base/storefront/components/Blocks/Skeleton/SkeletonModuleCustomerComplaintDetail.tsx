@@ -3,8 +3,8 @@ import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonModuleCustomerComplaintDetail: FC = () => (
     <SkeletonModuleCustomer>
-        <div className="flex w-full flex-col gap-4">
-            <Skeleton className="mb-5 h-11 w-80" />
+        <div className="flex flex-1 flex-col gap-4">
+            <Skeleton className="mb-5 h-11" containerClassName="w-80" />
             <Skeleton className="h-16 w-full" />
             <Skeleton className="h-80 w-full" />
 

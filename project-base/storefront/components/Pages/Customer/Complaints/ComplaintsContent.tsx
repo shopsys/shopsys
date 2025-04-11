@@ -31,7 +31,7 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({ isFetching, item
 
     return (
         <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-            <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-5">
                 {items.map((item) => (
                     <ComplaintItem key={item.uuid} complaintItem={item} />
                 ))}
