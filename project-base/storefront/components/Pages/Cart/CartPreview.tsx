@@ -21,25 +21,8 @@ export const CartPreview: FC = () => {
         error: t('There was an error while removing the promo code from the order.'),
     });
 
-    const buttonContinue = (
-        <Button
-            className="mt-4"
-            size="xlarge"
-            tid={TIDs.blocks_orderaction_next}
-            variant="primary"
-            onClick={goToNextStepFromCartPage}
-        >
-            {t('Continue with order')}
-            <ArrowSecondaryIcon className="size-4 -rotate-90" />
-        </Button>
-    );
-
     if (!cart?.items.length) {
         return null;
-    }
-
-    if (!isPriceVisible(cart.totalItemsPrice.priceWithVat)) {
-        return buttonContinue;
     }
 
     return (
@@ -64,33 +47,49 @@ export const CartPreview: FC = () => {
                         </div>
                     </div>
 
-                    {mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
-                        <div className="flex items-center justify-between" tid={TIDs.pages_cart_cartpreview_discount}>
-                            <p>{t('The amount of discounts')}</p>
+                    {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
+                        mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
+                            <div
+                                className="flex items-center justify-between"
+                                tid={TIDs.pages_cart_cartpreview_discount}
+                            >
+                                <p>{t('The amount of discounts')}</p>
 
-                            <span className="text-priceDiscounted whitespace-nowrap">
-                                {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
-                            </span>
-                        </div>
-                    )}
+                                <span className="text-priceDiscounted whitespace-nowrap">
+                                    {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
+                                </span>
+                            </div>
+                        )}
                 </div>
             )}
 
-            <div className="flex flex-col justify-between gap-2" tid={TIDs.pages_cart_cartpreview_total}>
-                <div className="flex items-center justify-between">
-                    <p>{t('Total')}</p>
+            {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
+                isPriceVisible(cart.totalItemsPrice.priceWithoutVat) && (
+                    <div className="flex flex-col justify-between gap-2" tid={TIDs.pages_cart_cartpreview_total}>
+                        <div className="flex items-center justify-between">
+                            <p>{t('Total')}</p>
 
-                    <span className="text-price text-lg whitespace-nowrap sm:text-2xl">
-                        {formatPrice(cart.totalItemsPrice.priceWithVat)}
-                    </span>
-                </div>
+                            <span className="text-price text-lg whitespace-nowrap sm:text-2xl">
+                                {formatPrice(cart.totalItemsPrice.priceWithVat)}
+                            </span>
+                        </div>
 
-                <span className="text-priceBefore text-right text-sm whitespace-nowrap">
-                    {formatPrice(cart.totalItemsPrice.priceWithoutVat)} {t('without VAT')}
-                </span>
-            </div>
+                        <span className="text-priceBefore text-right text-sm whitespace-nowrap">
+                            {formatPrice(cart.totalItemsPrice.priceWithoutVat)} {t('without VAT')}
+                        </span>
+                    </div>
+                )}
 
-            {buttonContinue}
+            <Button
+                className="mt-4"
+                size="xlarge"
+                tid={TIDs.blocks_orderaction_next}
+                variant="primary"
+                onClick={goToNextStepFromCartPage}
+            >
+                {t('Continue with order')}
+                <ArrowSecondaryIcon className="size-4 -rotate-90" />
+            </Button>
         </div>
     );
 };

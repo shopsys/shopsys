@@ -1,5 +1,6 @@
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { ElementWithImage, OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
@@ -138,20 +139,18 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     <div className="flex w-full justify-between">
                         <ElementWithImage image={order.payment.mainImage?.url} name={orderPayment.name} />
 
-                        {isPriceVisible(order.totalPrice.priceWithVat) && (
+                        {isPriceVisible(orderPayment.totalPrice.priceWithVat) && (
                             <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
             )}
 
-            {orderRounding && (
+            {orderRounding && isPriceVisible(orderRounding.totalPrice.priceWithVat) && (
                 <OrderDetailRowInfo title={t('Rounding')}>
-                    {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <span className="block w-full text-right font-bold">
-                            {formatPrice(orderRounding.totalPrice.priceWithVat)}
-                        </span>
-                    )}
+                    <span className="block w-full text-right font-bold">
+                        {formatPrice(orderRounding.totalPrice.priceWithVat)}
+                    </span>
                 </OrderDetailRowInfo>
             )}
 
@@ -167,18 +166,39 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     ))}
                 </div>
 
-                <p className="font-secondary mt-8 mb-2 text-lg font-semibold">{t('Order summary')}</p>
+                <div className="font-secondary mt-8 flex flex-col gap-2 text-sm font-semibold">
+                    <span className="text-lg">{t('Order summary')}</span>
 
-                <div className="font-secondary flex items-start justify-between text-sm font-semibold">
-                    <span className="mr-4 inline-flex items-end">{t('Total price')}</span>
+                    {order.promoCode && (
+                        <div
+                            className={twJoin(
+                                'flex items-center justify-between gap-2',
+                                isPriceVisible(order.totalPrice.priceWithVat) &&
+                                    isPriceVisible(order.totalPrice.priceWithoutVat) &&
+                                    'border-borderAccentLess border-b-[3px] pb-4',
+                            )}
+                        >
+                            {t('Promo code')}
+                            <Flag type="discount">{order.promoCode}</Flag>
+                        </div>
+                    )}
 
-                    <div className="flex flex-col items-end gap-2">
-                        <strong className="text-price text-lg">{formatPrice(order.totalPrice.priceWithVat)}</strong>
+                    {isPriceVisible(order.totalPrice.priceWithVat) &&
+                        isPriceVisible(order.totalPrice.priceWithoutVat) && (
+                            <div className="flex items-baseline justify-between gap-2">
+                                {t('Total price')}
 
-                        <span className="text-priceBefore text-sm">
-                            {formatPrice(order.totalPrice.priceWithoutVat)} {t('without VAT')}
-                        </span>
-                    </div>
+                                <div className="flex flex-col items-end gap-2">
+                                    <strong className="text-price text-lg">
+                                        {formatPrice(order.totalPrice.priceWithVat)}
+                                    </strong>
+
+                                    <span className="text-priceBefore text-sm">
+                                        {formatPrice(order.totalPrice.priceWithoutVat)} {t('without VAT')}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
                 </div>
             </div>
 

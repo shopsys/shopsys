@@ -15,7 +15,7 @@ export const ErrorLayout: FC = ({ children }) => (
 
         <main className="mt-4 mb-10 flex flex-col gap-4">{children}</main>
 
-        <footer>
+        <footer className="mt-auto h-fit">
             <Webline wrapperClassName="bg-backgroundAccentLess">
                 <Footer simpleFooter />
             </Webline>

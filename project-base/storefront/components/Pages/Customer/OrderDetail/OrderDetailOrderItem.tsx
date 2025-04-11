@@ -37,13 +37,19 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     };
 
     if (isDiscount) {
+        if (!isPriceVisible(orderItem.totalPrice.priceWithVat)) {
+            return null;
+        }
+
         return (
             <div className="flex items-center justify-between gap-2 pb-5">
                 <span className="text-sm font-semibold">{orderItem.name}</span>
 
-                <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
-                    {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
-                </div>
+                {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
+                    <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
+                        {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
+                    </div>
+                )}
             </div>
         );
     }
