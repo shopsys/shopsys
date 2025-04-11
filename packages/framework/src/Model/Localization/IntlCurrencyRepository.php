@@ -18,7 +18,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'AFN',
         'ALL',
         'AMD',
-        'ANG',
         'AOA',
         'ARS',
         'AUD',
@@ -38,15 +37,14 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'BTN',
         'BWP',
         'BYN',
-        'BYR',
         'BZD',
         'CAD',
         'CDF',
+        'CHF',
         'CLP',
         'CNY',
         'COP',
         'CRC',
-        'CUC',
         'CUP',
         'CVE',
         'CZK',
@@ -72,7 +70,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'HNL',
         'HTG',
         'HUF',
-        'CHF',
         'IDR',
         'ILS',
         'INR',
@@ -104,7 +101,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'MMK',
         'MNT',
         'MOP',
-        'MRO',
         'MRU',
         'MUR',
         'MVR',
@@ -142,7 +138,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'SOS',
         'SRD',
         'SSP',
-        'STD',
         'STN',
         'SVC',
         'SYP',
@@ -162,7 +157,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'UYU',
         'UYW',
         'UZS',
-        'VEF',
+        'VED',
         'VES',
         'VND',
         'VUV',
@@ -174,7 +169,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'YER',
         'ZAR',
         'ZMW',
-        'ZWL',
     ];
 
     /**
@@ -189,13 +183,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
 
         try {
             return parent::get($currencyCode, $locale);
-        } catch (UnknownCurrencyException $ex) {
-            $legacyCurrencies = $this->getLegacyCurrenciesIndexedByCurrencyCodes();
-
-            if (array_key_exists($currencyCode, $legacyCurrencies)) {
-                return $legacyCurrencies[$currencyCode];
-            }
-
+        } catch (UnknownCurrencyException) {
             throw new UndefinedLegacyCurrencyException($currencyCode);
         }
     }
@@ -221,7 +209,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
             }
         }
 
-        return array_merge($this->getLegacyCurrenciesIndexedByCurrencyCodes(), $supportedCurrencies);
+        return $supportedCurrencies;
     }
 
     /**
@@ -231,38 +219,5 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
     public function isSupportedCurrency(string $currencyCode): bool
     {
         return in_array($currencyCode, self::SUPPORTED_CURRENCY_CODES, true);
-    }
-
-    /**
-     * @return \CommerceGuys\Intl\Currency\Currency[]
-     */
-    protected function getLegacyCurrenciesIndexedByCurrencyCodes(): array
-    {
-        return [
-            'BYR' => new Currency([
-                'currency_code' => 'BYR',
-                'name' => 'Belarusian Ruble (2000–2016)',
-                'locale' => 'en',
-                'numeric_code' => '974',
-            ]),
-            'MRO' => new Currency([
-                'currency_code' => 'MRO',
-                'name' => 'Mauritanian Ouguiya',
-                'locale' => 'en',
-                'numeric_code' => '478',
-            ]),
-            'STD' => new Currency([
-                'currency_code' => 'STD',
-                'name' => 'São Tomé & Príncipe Dobra',
-                'locale' => 'en',
-                'numeric_code' => '678',
-            ]),
-            'VEF' => new Currency([
-                'currency_code' => 'VEF',
-                'name' => 'Venezuelan Bolívar',
-                'locale' => 'en',
-                'numeric_code' => '937',
-            ]),
-        ];
     }
 }
