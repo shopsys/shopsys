@@ -55,4 +55,35 @@ class ProductParameterValueDataFactory
             $productParameterValue->getValue(),
         );
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData $productParameterValuesLocalizedData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
+     */
+    public function createMultipleFromProductParameterValuesLocalizedData(
+        ProductParameterValuesLocalizedData $productParameterValuesLocalizedData,
+    ): array {
+        $productParameterValuesData = [];
+
+        foreach ($productParameterValuesLocalizedData->valueTextsByLocale as $locale => $valueText) {
+            if ($valueText !== null) {
+                $productParameterValueData = $this->create();
+                $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
+                $parameterValueData = $this->parameterValueDataFactory->create();
+                $parameterValueData->text = $valueText;
+                $parameterValueData->rgbHex = $productParameterValuesLocalizedData->rgbHex;
+
+                if ($productParameterValuesLocalizedData->parameter->isSlider()) {
+                    $parameterValueData->numericValue = $valueText;
+                }
+
+                $parameterValueData->locale = $locale;
+                $productParameterValueData->parameterValueData = $parameterValueData;
+
+                $productParameterValuesData[] = $productParameterValueData;
+            }
+        }
+
+        return $productParameterValuesData;
+    }
 }
