@@ -66,7 +66,7 @@ class ParameterValue
         $this->text = $parameterData->text;
         $this->numericValue = $parameterData->numericValue;
         $this->locale = $parameterData->locale;
-        $this->uuid = $parameterData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = Uuid::uuid4()->toString();
         $this->rgbHex = $parameterData->rgbHex;
         $this->colourIcon = $parameterData->colourIcon;
     }

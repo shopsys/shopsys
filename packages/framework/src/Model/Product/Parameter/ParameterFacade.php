@@ -312,7 +312,6 @@ class ParameterFacade
             $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
             $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
 
-            $parameterValueData->uuid = null;
             $parameterValueData->text = $parameterValueConversionData->newValueText;
             $parameterValueData->numericValue = $parameterValueConversionData->newValueText;
 
