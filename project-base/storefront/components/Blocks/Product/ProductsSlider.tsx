@@ -163,7 +163,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     ])}
                     productItemProps={{
                         className: twMergeCustom(
-                            'snap-center md:snap-start mr-2 md:mr-4 last:mr-0',
+                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
                             productItemProps?.className,
                         ),
                         ...productItemProps,
