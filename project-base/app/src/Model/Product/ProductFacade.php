@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
@@ -37,19 +36,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
  */
 class ProductFacade extends BaseProductFacade
 {
-    /**
-     * @param string $productCatnum
-     * @return \App\Model\Product\Product|null
-     */
-    public function findOneByCatnumExcludeMainVariants($productCatnum): ?BaseProduct
-    {
-        try {
-            return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
-        } catch (ProductNotFoundException $exception) {
-            return null;
-        }
-    }
-
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
