@@ -207,10 +207,10 @@ class OrderFormType extends AbstractType
             ]);
 
         if ($order->getPayment()->isGoPay() === true) {
-            $goPayPaymentTransactions = $order->getGoPayTransactions();
+            $goPayPaymentTransaction = $order->getLastGoPayTransaction();
 
-            if (count($goPayPaymentTransactions) > 0) {
-                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus(end($goPayPaymentTransactions)->getExternalPaymentStatus());
+            if ($goPayPaymentTransaction !== null) {
+                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus($goPayPaymentTransaction->getExternalPaymentStatus());
             } else {
                 $translatedGoPayStatus = t('Order has not been sent to GoPay');
             }

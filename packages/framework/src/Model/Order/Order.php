@@ -434,6 +434,20 @@ class Order
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction|null
+     */
+    public function getLastGoPayTransaction(): ?PaymentTransaction
+    {
+        $lastTransaction = $this->paymentTransactions->last();
+
+        if ($lastTransaction->getPayment()?->isGoPay()) {
+            return $lastTransaction;
+        }
+
+        return null;
+    }
+
+    /**
      * @return bool
      */
     public function isMaxTransactionCountReached(): bool
