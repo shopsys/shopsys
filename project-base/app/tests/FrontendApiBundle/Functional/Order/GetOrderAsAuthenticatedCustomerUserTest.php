@@ -49,9 +49,6 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             $this->assertArrayHasKey('trackingUrl', $responseData);
             $this->assertSame($expectedOrderData['trackingUrl'], $responseData['trackingUrl']);
 
-            $this->assertArrayHasKey('paymentTransactionsCount', $responseData);
-            $this->assertSame($expectedOrderData['paymentTransactionsCount'], $responseData['paymentTransactionsCount']);
-
             $this->assertArrayHasKey('isPaid', $responseData);
             $this->assertSame($expectedOrderData['isPaid'], $responseData['isPaid']);
 
@@ -120,7 +117,6 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     'promoCode' => $order->getPromoCode(),
                     'trackingNumber' => $order->getTrackingNumber(),
                     'trackingUrl' => $order->getTrackingUrl(),
-                    'paymentTransactionsCount' => $order->getPaymentTransactionsCount(),
                     'isPaid' => $order->isPaid(),
                 ],
             ];

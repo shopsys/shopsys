@@ -58,7 +58,6 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                     'code' => 'SK',
                 ],
                 'note' => 'Thank You',
-                'paymentTransactionsCount' => 0,
                 'isPaid' => false,
                 'heurekaAgreement' => true,
             ],

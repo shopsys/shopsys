@@ -2,7 +2,6 @@ fragment ChangePaymentInOrderFragment on Order {
     __typename
     urlHash
     number
-    paymentTransactionsCount
     payment {
         ...SimplePaymentFragment
     }

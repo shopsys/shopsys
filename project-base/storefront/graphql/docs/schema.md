@@ -6618,15 +6618,6 @@ Payment method applied to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="order.paymenttransactionscount">paymentTransactionsCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Count of the payment transactions related to the order
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="order.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7088,7 +7079,7 @@ All available payment methods for the order (excluding the current one)
 <td valign="top"><a href="#payment">Payment</a>!</td>
 <td>
 
-Current payment method used in the order
+Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count.
 
 </td>
 </tr>

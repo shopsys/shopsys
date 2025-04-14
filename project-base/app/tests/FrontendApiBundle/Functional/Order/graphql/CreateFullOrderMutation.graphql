@@ -106,7 +106,6 @@ mutation CreateFullOrder(
                 code
             }
             note
-            paymentTransactionsCount
             isPaid
             heurekaAgreement
         }

@@ -9,7 +9,6 @@ query GetOrder($uuid: Uuid, $orderNumber: String, $urlHash: String) {
         promoCode
         trackingNumber
         trackingUrl
-        paymentTransactionsCount
         isPaid
         customerUser {
             email
