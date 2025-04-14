@@ -138,16 +138,16 @@ class SideMenuBuilder
         );
         $menu->setExtra('icon', 'person-public');
 
-        $menu->addChild('customers_overview', [
+        $customersOverview = $menu->addChild('customers_overview', [
             'route' => 'admin_customer_list',
             'label' => t('Customers overview'),
         ]);
-        $menu->addChild('new', [
+        $customersOverview->addChild('new', [
             'route' => 'admin_customer_new',
             'label' => t('New customer'),
             'display' => false,
         ]);
-        $customerEdit = $menu->addChild(
+        $customerEdit = $customersOverview->addChild(
             'edit',
             [
                 'route' => 'admin_customer_edit',
