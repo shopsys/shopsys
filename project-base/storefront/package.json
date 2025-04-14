@@ -52,7 +52,6 @@
         "react-error-boundary": "~4.1.2",
         "react-hook-form": "~7.35.0",
         "react-infinite-scroll-component": "~6.1.0",
-        "react-loading-skeleton": "~3.5.0",
         "react-merge-refs": "~2.1.1",
         "react-remove-scroll": "^2.6.3",
         "react-swipeable": "~7.0.2",

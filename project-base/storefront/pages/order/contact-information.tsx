@@ -22,6 +22,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <OrderLayout page="contact-information">
                 <ContactInformationWrapper />
             </OrderLayout>

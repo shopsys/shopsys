@@ -1,36 +1,63 @@
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
+import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
+import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageProductDetailMainVariant: FC = () => (
-    <Webline>
+    <>
         <SkeletonModuleBreadcrumbs count={3} />
 
-        <div className="vl:flex-row flex flex-col gap-y-6">
-            <Skeleton className="h-[460px] w-[460px]" containerClassName="flex justify-center vl:order-2 w-full" />
+        <Webline>
+            <VerticalStack gap="md">
+                <div className="vl:flex-row vl:items-start flex flex-col-reverse items-center gap-y-6">
+                    <div className="vl:flex-col flex w-full flex-row gap-3.5 sm:w-auto">
+                        {createEmptyArray(5).map((_, index) => (
+                            <Skeleton key={index} className="size-16 rounded-lg last:hidden md:last:block" />
+                        ))}
+                    </div>
 
-            <div className="vl:flex-col vl:justify-start flex justify-center gap-2">
-                {createEmptyArray(5).map((_, index) => (
-                    <Skeleton
-                        key={index}
-                        className="h-16 w-16 rounded-none"
-                        containerClassName="last:hidden vl:last:block"
-                    />
-                ))}
-            </div>
-        </div>
+                    <div className="flex w-full flex-col items-center justify-center gap-6">
+                        <Skeleton className="h-[300px] w-full sm:size-[300px] md:size-[500px]" />
+                    </div>
+                </div>
 
-        <Skeleton className="mt-8 h-14 w-[460px]" containerClassName="flex vl:order-2 w-full" />
+                <div>
+                    <Skeleton className="mb-1 h-8 w-3/6 lg:h-10" />
+                    <Skeleton className="h-4 w-32 rounded-sm" />
+                </div>
 
-        <div className="divide-borderAccent mt-8 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
-            {createEmptyArray(8).map((_, index) => (
-                <Skeleton key={index} className="h-96 w-full lg:h-16" containerClassName="p-2" />
-            ))}
-        </div>
+                <div className="flex flex-col gap-2">
+                    {createEmptyArray(5).map((_, index) => (
+                        <Skeleton key={index} className="h-20" />
+                    ))}
+                </div>
 
-        <Skeleton className="mt-8 h-14 w-full lg:h-8 lg:w-[460px]" containerClassName="flex vl:order-2 w-full" />
+                <div className="flex flex-col gap-4">
+                    <div className="hidden flex-row lg:flex lg:gap-5">
+                        <Skeleton className="h-9 w-20 rounded-full" />
+                        <Skeleton className="h-9 w-24 rounded-full" />
+                        <Skeleton className="h-9 w-28 rounded-full" />
+                    </div>
 
-        <Skeleton className="mt-4 h-14 w-full lg:mt-12" containerClassName="flex vl:order-2 w-full" />
-    </Webline>
+                    <div className="hidden flex-col gap-2 lg:flex">
+                        <Skeleton className="mb- h-5" />
+                        <Skeleton className="mb- h-5" />
+                        <Skeleton className="mb- h-5 w-5/6" />
+                        <Skeleton className="mb- h-5 w-4/6" />
+                    </div>
+
+                    <Skeleton className="block h-11 lg:hidden" />
+                    <Skeleton className="block h-11 lg:hidden" />
+                    <Skeleton className="block h-11 lg:hidden" />
+                </div>
+
+                <SkeletonModuleProductSlider />
+
+                <SkeletonModuleLastVisitedProducts />
+            </VerticalStack>
+        </Webline>
+    </>
 );

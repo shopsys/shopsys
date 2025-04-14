@@ -17,6 +17,7 @@ import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDeta
 import { SkeletonPageCustomerOrderList } from './SkeletonPageCustomerOrderList';
 import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageFlag } from './SkeletonPageFlag';
+import { SkeletonPageForgotPassword } from './SkeletonPageForgotPassword';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
@@ -29,6 +30,7 @@ import { SkeletonPageWishlist } from './SkeletonPageWishlist';
 import { useEffect } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
+import { SkeletonEnum } from 'types/skeletons';
 
 type SkeletonManagerProps = {
     isFetchingData?: boolean;
@@ -63,63 +65,65 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     }
 
     switch (pageType) {
-        case 'article':
+        case SkeletonEnum.Article:
             return <SkeletonPageArticle />;
-        case 'blogArticle':
+        case SkeletonEnum.BlogArticle:
             return <SkeletonPageBlogArticle />;
-        case 'blogCategory':
+        case SkeletonEnum.BlogCategory:
             return <SkeletonPageBlogCategory />;
-        case 'brand':
+        case SkeletonEnum.Brand:
             return <SkeletonPageBrand />;
-        case 'brandsOverview':
+        case SkeletonEnum.BrandsOverview:
             return <SkeletonPageBrandsOverview />;
-        case 'cart':
+        case SkeletonEnum.Cart:
             return <SkeletonPageCart />;
-        case 'category':
+        case SkeletonEnum.Category:
             return <SkeletonPageProductsList />;
-        case 'comparison':
+        case SkeletonEnum.Comparison:
             return <SkeletonPageComparison />;
-        case 'contact':
+        case SkeletonEnum.Contact:
             return <SkeletonPageContact />;
-        case 'contact-information':
+        case SkeletonEnum.ContactInformation:
             return <SkeletonPageContactInformation />;
-        case 'complaintNew':
+        case SkeletonEnum.ComplaintNew:
             return <SkeletonPageCustomerComplaintNew />;
-        case 'complaintDetail':
+        case SkeletonEnum.ComplaintDetail:
             return <SkeletonPageCustomerComplaintDetail />;
-        case 'complaintList':
+        case SkeletonEnum.ComplaintList:
             return <SkeletonPageCustomerComplaintList />;
-        case 'customer-users':
+        case SkeletonEnum.CustomerUsers:
             return <SkeletonPageCustomerUsers />;
-        case 'orderList':
+        case SkeletonEnum.OrderList:
             return <SkeletonPageCustomerOrderList />;
-        case 'orderDetail':
+        case SkeletonEnum.OrderDetail:
             return <SkeletonPageCustomerOrderDetail />;
-        case 'editProfile':
+        case SkeletonEnum.EditProfile:
             return <SkeletonPageCustomerEditProfile />;
-        case 'changePassword':
+        case SkeletonEnum.ChangePassword:
             return <SkeletonPageCustomerChangePassword />;
-        case 'flag':
+        case SkeletonEnum.Flag:
             return <SkeletonPageFlag />;
-        case 'homepage':
+        case SkeletonEnum.ForgotPassword:
+            return <SkeletonPageForgotPassword />;
+        case SkeletonEnum.Homepage:
             return <SkeletonPageHome />;
-        case 'order-confirmation':
+        case SkeletonEnum.OrderConfirmation:
             return <SkeletonPageConfirmation />;
-        case 'product':
+        case SkeletonEnum.Product:
             return <SkeletonPageProductDetail />;
-        case 'productMainVariant':
+        case SkeletonEnum.ProductMainVariant:
             return <SkeletonPageProductDetailMainVariant />;
-        case 'registration':
+        case SkeletonEnum.Registration:
             return <SkeletonPageRegistration />;
-        case 'seo_category':
+        case SkeletonEnum.SeoCategory:
             return <SkeletonPageProductsList />;
-        case 'store':
+        case SkeletonEnum.Store:
             return <SkeletonPageStore />;
-        case 'stores':
+        case SkeletonEnum.Stores:
             return <SkeletonPageStores />;
-        case 'transport-and-payment':
+        case SkeletonEnum.TransportAndPayment:
             return <SkeletonPageTransportAndPayment />;
-        case 'wishlist':
+        case SkeletonEnum.Wishlist:
             return <SkeletonPageWishlist />;
         default:
             return null;

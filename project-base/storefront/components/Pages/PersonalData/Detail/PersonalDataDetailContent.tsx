@@ -26,13 +26,11 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
     return (
         <VerticalStack gap="md">
-            <Webline>
-                <h1 className="mb-4">{t('Personal data')}</h1>
+            <h1>{t('Personal data')}</h1>
 
-                <Link isButton isExternal href={exportLink} size="small">
-                    {t('Download as XML')}
-                </Link>
-            </Webline>
+            <Link isButton isExternal href={exportLink} size="small">
+                {t('Download as XML')}
+            </Link>
 
             {!!userData && (
                 <Webline>

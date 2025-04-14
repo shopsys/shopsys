@@ -43,7 +43,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     totalCount={brand.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 flex-col gap-5">
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={brand.products.productFilterOptions} />
 

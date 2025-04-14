@@ -89,6 +89,7 @@ const NewComplaintPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
                 <CustomerLayout
                     breadcrumbs={breadcrumbs}
@@ -96,16 +97,15 @@ const NewComplaintPage: FC = () => {
                     pageHeading={t('New complaint')}
                     title={t('New complaint')}
                 >
-                    <div className="mb-5">
-                        <SearchInput
-                            className="border-inputBorder w-full border"
-                            label={t('Search for a product you want to complain about')}
-                            shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
-                            value={searchQueryValue}
-                            onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
-                            onClear={() => setSearchQueryValue('')}
-                        />
-                    </div>
+                    <SearchInput
+                        className="border-inputBorder w-full border"
+                        label={t('Search for a product you want to complain about')}
+                        shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
+                        value={searchQueryValue}
+                        onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
+                        onClear={() => setSearchQueryValue('')}
+                    />
+
                     <OrderedItemsContent
                         isFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
                         items={mappedOrderedItems}

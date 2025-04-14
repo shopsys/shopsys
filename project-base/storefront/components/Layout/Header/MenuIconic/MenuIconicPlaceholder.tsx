@@ -3,9 +3,9 @@ import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
-import Skeleton from 'react-loading-skeleton';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -38,7 +38,7 @@ export const MenuIconicPlaceholder: FC = () => {
 
             <li className={twMergeCustom(placeholderItemTwClass, 'lg:w-[72px]')}>
                 <UserIcon className="size-6" />
-                <Skeleton className="w-full" containerClassName="w-16 max-lg:hidden" />
+                <Skeleton className="h-4 w-16 rounded-sm max-lg:hidden" />
             </li>
         </ul>
     );

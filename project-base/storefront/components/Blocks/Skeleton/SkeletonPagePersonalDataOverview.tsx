@@ -1,9 +1,20 @@
+import { SkeletonModuleCustomerComplaints } from './SkeletonModuleCustomerComplaints';
+import { SkeletonModuleCustomerOrders } from './SkeletonModuleCustomerOrders';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPagePersonalDataOverview: FC = () => (
     <Webline>
-        <Skeleton className="mb-8 h-36 w-100" />
-        <Skeleton className="h-96 w-100" />
+        <VerticalStack gap="sm">
+            <Skeleton className="h-8 w-72 lg:h-10" />
+            <Skeleton className="h-9 w-36" />
+
+            <Skeleton className="h-8 w-72 lg:h-10" />
+            <SkeletonModuleCustomerOrders />
+
+            <Skeleton className="h-8 w-72 lg:h-10" />
+            <SkeletonModuleCustomerComplaints />
+        </VerticalStack>
     </Webline>
 );

@@ -1,29 +1,33 @@
 import { SkeletonModuleArticleBlog } from './SkeletonModuleArticleBlog';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
-import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageBlogCategory: FC = () => (
-    <Webline>
+    <>
         <SkeletonModuleBreadcrumbs count={2} />
-        <div className="scroll-mt-5">
-            <div className="mb-6 md:mb-10">
-                <Skeleton className="h-48 w-full rounded-xl" />
-            </div>
-            <div className="vl:flex-row mb-16 flex flex-col gap-3 md:gap-10 xl:gap-28">
-                <div className="vl:order-1 vl:flex-1 order-2 flex w-full flex-col">
-                    <div className="mb-16 flex flex-col gap-y-5">
-                        {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (
-                            <SkeletonModuleArticleBlog key={index} />
-                        ))}
+
+        <div className="flex flex-col gap-6 xl:gap-10">
+            <Webline width="xxl">
+                <Skeleton className="h-48 rounded-xl" />
+            </Webline>
+
+            <Webline>
+                <div className="flex flex-col-reverse gap-3 md:gap-10 xl:flex-row xl:gap-[60px]">
+                    <div className="flex w-full flex-col gap-4 xl:max-w-[840px] xl:flex-1">
+                        <VerticalStack gap="sm">
+                            {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (
+                                <SkeletonModuleArticleBlog key={index} />
+                            ))}
+                        </VerticalStack>
                     </div>
+
+                    <Skeleton className="vl:h-[450px] h-11 rounded-xl xl:w-[300px]" />
                 </div>
-                <div className="vl:order-2 vl:w-[300px] order-1 w-full">
-                    <Skeleton className="vl:h-[450px] vl:w-[400px] h-11 rounded-xl" containerClassName="flex" />
-                </div>
-            </div>
+            </Webline>
         </div>
-    </Webline>
+    </>
 );

@@ -1,17 +1,17 @@
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
-import Skeleton from 'react-loading-skeleton';
+import { SkeletonModuleHeadline } from './SkeletonModuleHeadline';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleCustomerComplaintDetail: FC = () => (
     <SkeletonModuleCustomer>
-        <div className="flex flex-1 flex-col gap-4">
-            <Skeleton className="mb-5 h-11" containerClassName="w-80" />
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-80 w-full" />
+        <SkeletonModuleHeadline />
 
-            <div className="vl:grid vl:grid-cols-3 my-6 flex w-full flex-col gap-6">
-                <Skeleton className="h-24 w-full" />
-                <Skeleton className="h-24 w-full" />
-            </div>
+        <Skeleton className="h-20 rounded-xl" />
+        <Skeleton className="h-56 rounded-xl" />
+
+        <div className="bg-backgroundMore vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
+            <Skeleton className="h-44 rounded-xl" />
+            <Skeleton className="h-44 rounded-xl" />
         </div>
     </SkeletonModuleCustomer>
 );

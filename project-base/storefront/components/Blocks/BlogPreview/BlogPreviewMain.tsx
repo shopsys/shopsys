@@ -2,9 +2,9 @@ import { ArticleLink } from './BlogPreviewElements';
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import Skeleton from 'react-loading-skeleton';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type MainProps = {

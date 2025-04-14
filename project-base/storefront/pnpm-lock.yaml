@@ -95,9 +95,6 @@ importers:
       react-infinite-scroll-component:
         specifier: ~6.1.0
         version: 6.1.0(react@18.2.0)
-      react-loading-skeleton:
-        specifier: ~3.5.0
-        version: 3.5.0(react@18.2.0)
       react-merge-refs:
         specifier: ~2.1.1
         version: 2.1.1
@@ -4757,11 +4754,6 @@ packages:
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
-
-  react-loading-skeleton@3.5.0:
-    resolution: {integrity: sha512-gxxSyLbrEAdXTKgfbpBEFZCO/P153DnqSCQau2+o6lNy1jgMRr2MmRmOzMmyrwSaSYLRB8g7b0waYPmUjz7IhQ==}
-    peerDependencies:
-      react: '>=16.8.0'
 
   react-merge-refs@2.1.1:
     resolution: {integrity: sha512-jLQXJ/URln51zskhgppGJ2ub7b2WFKGq3cl3NYKtlHoTG+dN2q7EzWrn3hN3EgPsTMvpR9tpq5ijdp7YwFZkag==}
@@ -10946,10 +10938,6 @@ snapshots:
   react-is@17.0.2: {}
 
   react-is@18.3.1: {}
-
-  react-loading-skeleton@3.5.0(react@18.2.0):
-    dependencies:
-      react: 18.2.0
 
   react-merge-refs@2.1.1: {}
 

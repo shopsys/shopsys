@@ -1,7 +1,7 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import InfiniteScroll, { Props as InfiniteScrollProps } from 'react-infinite-scroll-component';
-import Skeleton from 'react-loading-skeleton';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { SelectOptionType } from 'types/selectOptions';

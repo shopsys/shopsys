@@ -1,5 +1,5 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { productListTwClass, ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
@@ -35,7 +35,7 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
 
     if (areSearchProductsFetching) {
         return (
-            <div className="relative mb-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 gap-y-6 pt-6">
+            <div className={productListTwClass}>
                 {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
                     <SkeletonModuleProductListItem key={index} />
                 ))}

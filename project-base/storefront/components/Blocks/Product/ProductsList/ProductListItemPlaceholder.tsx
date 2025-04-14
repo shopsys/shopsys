@@ -1,10 +1,10 @@
 import { PREDEFINED_VISIBLE_ITEMS_CONFIGS, ProductItemProps } from './ProductListItem';
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import Skeleton from 'react-loading-skeleton';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -61,7 +61,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
 
             {(visibleItemsConfig.addToCart || visibleItemsConfig.productListButtons) && (
                 <div className="flex w-full items-center justify-between gap-1 sm:justify-normal sm:gap-2.5">
-                    {visibleItemsConfig.addToCart && <Skeleton className="h-9" containerClassName="w-1/2" />}
+                    {visibleItemsConfig.addToCart && <Skeleton className="h-9 w-1/2" />}
 
                     {visibleItemsConfig.productListButtons && (
                         <>

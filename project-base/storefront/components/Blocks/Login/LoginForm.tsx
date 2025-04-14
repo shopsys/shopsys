@@ -102,7 +102,9 @@ export const LoginForm: FC<LoginFormProps> = ({
                             </FormButtonWrapper>
 
                             <div className="mb-4 whitespace-nowrap">
-                                <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
+                                <ExtendedNextLink href={resetPasswordUrl} skeletonType="forgot-password">
+                                    {t('Lost your password?')}
+                                </ExtendedNextLink>
                             </div>
 
                             {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&

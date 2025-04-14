@@ -37,7 +37,9 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
     return (
         <Popup className="w-11/12 max-w-4xl" contentClassName="overflow-y-auto">
             <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
+
             {isFetchingTransportStores && <SkeletonModuleTransportStores />}
+
             {transportStoresData?.transport?.stores && (
                 <StoreSelect
                     selectedStoreUuid={selectedStoreUuid}
@@ -45,8 +47,10 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                     onSelectStoreCallback={onSelectStoreHandler}
                 />
             )}
+
             <div className="bg-background sticky -inset-4 flex justify-between p-4">
                 <Button onClick={() => updatePortalContent(null)}>{t('Close')}</Button>
+
                 <Button
                     isDisabled={selectedStoreUuid === ''}
                     tid={TIDs.pages_order_pickupplace_popup_confirm}

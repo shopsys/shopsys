@@ -1,7 +1,6 @@
 import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailContentProps = {
@@ -29,33 +28,33 @@ export const ProductDetailInfo: FC<ProductDetailContentProps> = ({
     const { t } = useTranslation();
 
     return (
-        <Webline>
-            <div className="flex flex-col">
+        <>
+            <div>
                 {namePrefix && <ProductDetailPrefix>{namePrefix}</ProductDetailPrefix>}
 
                 <ProductDetailHeading>
                     {name} {nameSuffix}
                 </ProductDetailHeading>
+            </div>
 
-                <div className="flex items-center gap-5 text-sm">
-                    {brand && (
-                        <div>
-                            <span>{t('Brand')}: </span>
-                            <ExtendedNextLink className="text-sm" href={brand.slug} type="brand">
-                                {brand.name}
-                            </ExtendedNextLink>
-                        </div>
-                    )}
-
+            <div className="flex items-center gap-5 text-sm">
+                {brand && (
                     <div>
-                        {t('Code')}: {catalogNumber}
+                        <span>{t('Brand')}: </span>
+                        <ExtendedNextLink className="text-sm" href={brand.slug} type="brand">
+                            {brand.name}
+                        </ExtendedNextLink>
                     </div>
+                )}
+
+                <div>
+                    {t('Code')}: {catalogNumber}
                 </div>
             </div>
 
             {shortDescription && <div className="text-sm">{shortDescription}</div>}
 
             {usps && !!usps.length && <ProductDetailUsps usps={usps} />}
-        </Webline>
+        </>
     );
 };

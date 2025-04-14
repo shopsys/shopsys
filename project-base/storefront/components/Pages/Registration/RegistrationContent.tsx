@@ -8,6 +8,7 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
@@ -50,55 +51,57 @@ export const RegistrationContent: FC = () => {
 
     return (
         <Webline width="lg">
-            <h1 className="mb-4">{t('New customer registration')}</h1>
+            <VerticalStack gap="sm">
+                <h1>{t('New customer registration')}</h1>
 
-            <FormProvider {...formProviderMethods}>
-                <Form
-                    className="flex w-full max-w-3xl justify-center"
-                    onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
-                >
-                    <FormContentWrapper>
-                        <RegistrationUser />
+                <FormProvider {...formProviderMethods}>
+                    <Form
+                        className="flex w-full max-w-3xl justify-center"
+                        onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
+                    >
+                        <FormContentWrapper>
+                            <RegistrationUser />
 
-                        <AnimatePresence initial={false}>
-                            {customerValue === 'companyCustomer' && (
-                                <AnimateCollapseDiv className="!flex flex-col" keyName="registration-company-data">
-                                    <RegistrationCompany />
-                                </AnimateCollapseDiv>
-                            )}
-                        </AnimatePresence>
+                            <AnimatePresence initial={false}>
+                                {customerValue === 'companyCustomer' && (
+                                    <AnimateCollapseDiv className="!flex flex-col" keyName="registration-company-data">
+                                        <RegistrationCompany />
+                                    </AnimateCollapseDiv>
+                                )}
+                            </AnimatePresence>
 
-                        <RegistrationPassword />
+                            <RegistrationPassword />
 
-                        <RegistrationAddress />
+                            <RegistrationAddress />
 
-                        <FormBlockWrapper>
-                            <CheckboxControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.gdprAgreement.name}
-                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                checkboxProps={{
-                                    label: formMeta.fields.gdprAgreement.label,
-                                    required: true,
-                                }}
-                            />
-                            <CheckboxControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newsletterSubscription.name}
-                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                checkboxProps={{
-                                    label: formMeta.fields.newsletterSubscription.label,
-                                }}
-                            />
-                            <FormButtonWrapper>
-                                <SubmitButton tid={TIDs.registration_submit_button}>{t('Sign up')}</SubmitButton>
-                            </FormButtonWrapper>
-                        </FormBlockWrapper>
-                    </FormContentWrapper>
-                </Form>
-            </FormProvider>
+                            <FormBlockWrapper>
+                                <CheckboxControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.gdprAgreement.name}
+                                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                    checkboxProps={{
+                                        label: formMeta.fields.gdprAgreement.label,
+                                        required: true,
+                                    }}
+                                />
+                                <CheckboxControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.newsletterSubscription.name}
+                                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                    checkboxProps={{
+                                        label: formMeta.fields.newsletterSubscription.label,
+                                    }}
+                                />
+                                <FormButtonWrapper>
+                                    <SubmitButton tid={TIDs.registration_submit_button}>{t('Sign up')}</SubmitButton>
+                                </FormButtonWrapper>
+                            </FormBlockWrapper>
+                        </FormContentWrapper>
+                    </Form>
+                </FormProvider>
+            </VerticalStack>
         </Webline>
     );
 };

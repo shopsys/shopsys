@@ -1,5 +1,8 @@
-import Skeleton from 'react-loading-skeleton';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleProductDetailAddToCart: FC = () => (
-    <Skeleton className="h-[52px]" containerClassName="w-full h-[52px]" />
+    <div className="flex items-center gap-2">
+        <Skeleton className="h-14 w-32" />
+        <Skeleton className="h-14 w-36" />
+    </div>
 );

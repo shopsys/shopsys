@@ -1,9 +1,3 @@
-import Skeleton from 'react-loading-skeleton';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
-export const SkeletonModuleArticleBlog: FC = () => (
-    <div className="flex h-64 w-full gap-4">
-        <div className="h-full w-full">
-            <Skeleton className="block h-full rounded-xl" />
-        </div>
-    </div>
-);
+export const SkeletonModuleArticleBlog: FC = () => <Skeleton className="h-64 rounded-xl" />;
