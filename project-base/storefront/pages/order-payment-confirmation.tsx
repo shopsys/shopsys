@@ -16,16 +16,8 @@ import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/Ord
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
-import {
-    useOrderPaymentFailedContentQuery,
-} from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
-import {
-    useOrderPaymentInProcessContentQuery,
-} from 'graphql/requests/orders/queries/OrderPaymentInProcessContentQuery.generated';
-import {
-    useOrderPaymentSuccessfulContentQuery,
-} from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
-import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
+import { useOrderPaymentPageContentQuery } from 'graphql/requests/orders/queries/OrderPaymentPageContentQuery.generated';
+import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentContentPageStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
@@ -58,44 +50,21 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const order = orderData?.order;
 
     const [
-        { data: failedContentData, fetching: isOrderPaymentFailedContentFetching, error: isOrderPaymentFailedError },
-    ] = useOrderPaymentFailedContentQuery({
-        variables: { orderUuid },
-        pause: !order || order.isPaid || order.hasPaymentInProcess,
-    });
-    const [
         {
-            data: successContentData,
-            fetching: isOrderPaymentSuccessfulContentFetching,
-            error: isOrderPaymentSuccessError,
+            data: orderPaymentPageContentData,
+            fetching: isOrderPaymentPageContentFetching,
+            error: isOrderPaymentPageContentError,
         },
-    ] = useOrderPaymentSuccessfulContentQuery({
-        variables: { orderUuid },
-        pause: !order || !order.isPaid,
+    ] = useOrderPaymentPageContentQuery({
+        variables: { orderUuid: orderUuid! },
+        pause: !paymentStatusData,
     });
-    const [
-        {
-            data: inProcessContentData,
-            fetching: isOrderPaymentInProcessContentFetching,
-            error: isOrderPaymentInProcessError,
-        }
-    ] = useOrderPaymentInProcessContentQuery({
-            variables: { orderUuid },
-            pause: !order || !order.hasPaymentInProcess,
-        });
 
-    const paymentSessionExpiredErrorMessage = getPaymentSessionExpiredErrorMessage(
-        t,
-        isOrderPaymentFailedError,
-        isOrderPaymentSuccessError,
-        isOrderPaymentInProcessError
-    );
+    const orderPaymentPageStatus = orderPaymentPageContentData?.orderPaymentPageContent.status;
 
-    const isFetchingData =
-        isOrderFetching ||
-        isOrderPaymentFailedContentFetching ||
-        isOrderPaymentSuccessfulContentFetching ||
-        isOrderPaymentInProcessContentFetching;
+    const paymentSessionExpiredErrorMessage = getPaymentSessionExpiredErrorMessage(t, isOrderPaymentPageContentError);
+
+    const isFetchingData = isOrderFetching || isOrderPaymentPageContentFetching;
 
     if (paymentSessionExpiredErrorMessage) {
         return (
@@ -124,19 +93,13 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
 
             <CommonLayout isFetchingData={isFetchingData} pageTypeOverride="order-confirmation" title={t('Order sent')}>
                 <Webline>
-                    <PaymentStatus
-                        failedContentData={failedContentData}
-                        orderData={orderData}
-                        successContentData={successContentData}
-                        inProcessContentData={inProcessContentData}
-                    />
+                    <PaymentStatus orderData={orderData} orderPaymentPageContentData={orderPaymentPageContentData} />
 
-                    {inProcessContentData &&
-                        paymentStatusData?.UpdatePaymentStatus.hasPaymentInProcess &&
-                        orderData.order.retryLastPaymentTransactionUrl && (
+                    {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.InProcess &&
+                        order.lastExternalPaymentUrl && (
                             <div className="mt-4">
                                 <ShowPaymentInstructionButton
-                                    href={orderData.order.retryLastPaymentTransactionUrl}
+                                    href={order.lastExternalPaymentUrl}
                                     orderPaymentStatusPageValidityHash={orderPaymentStatusPageValidityHashParam}
                                     orderUuid={orderUuid}
                                 />
@@ -145,13 +108,14 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
 
                     <OrderConfirmationStepper
                         flow={
-                            order.hasPaymentInProcess ? FlowTypesEnum.PaymentInProcess :
-                            successContentData && order.isPaid
-                                ? FlowTypesEnum.PaymentSuccess
-                                : FlowTypesEnum.PaymentFailed
+                            order.hasPaymentInProcess
+                                ? FlowTypesEnum.PaymentInProcess
+                                : orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Successful && order.isPaid
+                                  ? FlowTypesEnum.PaymentSuccess
+                                  : FlowTypesEnum.PaymentFailed
                         }
                     />
-                    {order.isPaid && successContentData && (
+                    {order.isPaid && orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Successful && (
                         <RegistrationAfterOrder
                             orderEmail={orderEmail as string | undefined}
                             orderUrlHash={orderUrlHash as string | undefined}
@@ -161,18 +125,19 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
 
                     <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
                         <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
-                            {failedContentData && order.hasExternalPayment && (
-                                <PaymentsInOrderSelect
-                                    orderUuid={orderUuid}
-                                    paymentTransactionCount={order.paymentTransactionsCount}
-                                />
-                            )}
+                            {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Failed &&
+                                order.hasExternalPayment && (
+                                    <PaymentsInOrderSelect
+                                        orderUuid={orderUuid}
+                                        paymentTransactionCount={order.paymentTransactionsCount}
+                                    />
+                                )}
 
-                            {inProcessContentData && order.hasPaymentInProcess && (
+                            {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.InProcess && (
                                 <OrderCustomerInfo order={order} />
                             )}
 
-                            {successContentData && order.isPaid && (
+                            {orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Successful && (
                                 <>
                                     <OrderCustomerInfo order={order} />
 

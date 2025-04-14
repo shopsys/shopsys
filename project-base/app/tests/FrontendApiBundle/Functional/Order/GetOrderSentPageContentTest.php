@@ -13,8 +13,13 @@ use App\Model\Order\OrderFacade;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use GoPay\Definition\Response\PaymentStatus;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFactory;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageStatusEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetOrderSentPageContentTest extends GraphQlTestCase
@@ -30,6 +35,16 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
      * @inject
      */
     private OrderFacade $orderFacade;
+
+    /**
+     * @inject
+     */
+    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
+
+    /**
+     * @inject
+     */
+    private PaymentTransactionFactory $paymentTransactionFactory;
 
     public function testGetOrderSentPageContent(): void
     {
@@ -49,15 +64,16 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         );
     }
 
-    public function testGetPaymentSuccessfulPageContents(): void
+    public function testGetPaymentPageContents(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
 
         $order = $this->createOrder($product, $transport, $payment);
+        $orderUuid = $order->getUuid();
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentSuccessfulPageContentQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
             'orderUuid' => $order->getUuid(),
         ]);
 
@@ -68,51 +84,71 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
             $errors[0]['extensions']['userCode'],
         );
 
-        $order = $this->orderFacade->getByUuid($order->getUuid());
+        $order = $this->orderFacade->getByUuid($orderUuid);
         $order->setOrderPaymentStatusPageValidFromNow();
         $this->em->flush();
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentSuccessfulPageContentQuery.graphql', [
+        // simulate payment failure
+        $order = $this->orderFacade->getByUuid($orderUuid);
+        $paymentTransaction = $this->createPaymentTransaction($order, PaymentStatus::CANCELED);
+        $order->addPaymentTransaction($paymentTransaction);
+        $this->em->flush();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
             'orderUuid' => $order->getUuid(),
         ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
 
-        $this->assertEquals(
-            $this->orderContentPageFacade->getPaymentSuccessfulPageContent($order),
-            $response['data']['orderPaymentSuccessfulContent'],
-        );
+        $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_FAILED), $responseData['status']);
+        $this->assertSame($this->orderContentPageFacade->getPaymentFailedPageContent($order), $responseData['content']);
+
+        // simulate payment in process
+        $order = $this->orderFacade->getByUuid($orderUuid);
+        $paymentTransaction = $this->createPaymentTransaction($order, PaymentStatus::PAYMENT_METHOD_CHOSEN);
+        $order->addPaymentTransaction($paymentTransaction);
+        $this->em->flush();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
+            'orderUuid' => $order->getUuid(),
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
+
+        $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_IN_PROCESS), $responseData['status']);
+        $this->assertSame($this->orderContentPageFacade->getPaymentInProcessPageContent($order), $responseData['content']);
+
+        // simulate paid payment
+        $order = $this->orderFacade->getByUuid($orderUuid);
+        $paymentTransaction = $this->createPaymentTransaction($order, PaymentStatus::PAID);
+        $order->addPaymentTransaction($paymentTransaction);
+        $this->em->flush();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentPageContentQuery.graphql', [
+            'orderUuid' => $order->getUuid(),
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orderPaymentPageContent');
+
+        $this->assertSame(strtoupper(PaymentContentPageStatusEnum::STATUS_SUCCESSFUL), $responseData['status']);
+        $this->assertSame($this->orderContentPageFacade->getPaymentSuccessfulPageContent($order), $responseData['content']);
     }
 
-    public function testGetPaymentFailedPageContents(): void
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param string $externalStatus
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction
+     */
+    public function createPaymentTransaction(Order $order, string $externalStatus): PaymentTransaction
     {
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
+        $paymentTransactionData = $this->paymentTransactionDataFactory->create();
+        $paymentTransactionData->order = $order;
+        $paymentTransactionData->payment = $order->getPayment();
+        $paymentTransactionData->paidAmount = $order->getTotalPriceWithVat();
+        $paymentTransactionData->externalPaymentIdentifier = (string)random_int(11111, 99999);
+        $paymentTransactionData->externalPaymentStatus = $externalStatus;
 
-        $order = $this->createOrder($product, $transport, $payment);
+        $paymentTransaction = $this->paymentTransactionFactory->create($paymentTransactionData);
+        $this->em->persist($paymentTransaction);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentFailedPageContentQuery.graphql', [
-            'orderUuid' => $order->getUuid(),
-        ]);
-
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertEquals(
-            'order-sent-page-not-available',
-            $errors[0]['extensions']['userCode'],
-        );
-
-        $order = $this->orderFacade->getByUuid($order->getUuid());
-        $order->setOrderPaymentStatusPageValidFromNow();
-        $this->em->flush();
-
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentFailedPageContentQuery.graphql', [
-            'orderUuid' => $order->getUuid(),
-        ]);
-
-        $this->assertEquals(
-            $this->orderContentPageFacade->getPaymentFailedPageContent($order),
-            $response['data']['orderPaymentFailedContent'],
-        );
+        return $paymentTransaction;
     }
 
     public function testGetOrderSentPageContentForNonExistingOrder(): void

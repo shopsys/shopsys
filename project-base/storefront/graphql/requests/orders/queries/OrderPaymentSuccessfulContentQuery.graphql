@@ -1,3 +1,0 @@
-query OrderPaymentSuccessfulContentQuery ($orderUuid: Uuid!) {
-    orderPaymentSuccessfulContent (orderUuid: $orderUuid)
-}

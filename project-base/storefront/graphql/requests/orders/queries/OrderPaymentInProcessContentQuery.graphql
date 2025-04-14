@@ -1,3 +1,0 @@
-query OrderPaymentInProcessContentQuery($orderUuid: Uuid!) {
-    orderPaymentInProcessContent(orderUuid: $orderUuid)
-}
