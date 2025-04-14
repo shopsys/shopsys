@@ -3332,8 +3332,6 @@ export type TypeSettings = {
   heurekaEnabled: Scalars['Boolean']['output'];
   /** Main blog category URL and background image */
   mainBlogCategoryData: TypeMainBlogCategoryData;
-  /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
-  maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */

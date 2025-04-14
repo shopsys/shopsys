@@ -2608,8 +2608,6 @@ type Settings {
   heurekaEnabled: Boolean!
   "Main blog category URL and background image"
   mainBlogCategoryData: MainBlogCategoryData!
-  "Max allowed payment transactions (how many times is user allowed to try the same payment)"
-  maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
   pricing: PricingSetting!
   "Returns privacy policy article's url"

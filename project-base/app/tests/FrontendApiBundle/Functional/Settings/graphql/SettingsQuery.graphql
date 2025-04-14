@@ -3,7 +3,6 @@ query SettingsQuery {
         seo {
             robotsTxtContent
         }
-        maxAllowedPaymentTransactions
         termsAndConditionsArticleUrl
         privacyPolicyArticleUrl
         userConsentPolicyArticleUrl

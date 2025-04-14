@@ -9049,15 +9049,6 @@ Main blog category URL and background image
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="settings.maxallowedpaymenttransactions">maxAllowedPaymentTransactions</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Max allowed payment transactions (how many times is user allowed to try the same payment)
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="settings.pricing">pricing</strong></td>
 <td valign="top"><a href="#pricingsetting">PricingSetting</a>!</td>
 <td>
