@@ -42,14 +42,33 @@ endef
 prepare-data-for-acceptance-tests:
 	$(call prepare-data-for-acceptance-tests)
 
-define run_acceptance_tests
-	$(call prepare-data-for-acceptance-tests)
+define cypress-prepare
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
-	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress;
+endef
+
+.PHONY: cypress-prepare
+cypress-prepare:
+	$(call cypress-prepare)
+
+define cypress-cleanup
+  docker compose stop storefront-cypress
 	docker compose rm -f storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+endef
+
+.PHONY: cypress-cleanup
+cypress-cleanup:
+	$(call cypress-cleanup)
+
+define run_acceptance_tests
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
+	@echo "▶️ Running acceptance tests of type $(1)..."
+	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress || true
+	@echo "✅ Acceptance tests of type $(1) finished."
+	$(call cypress-cleanup)
 endef
 
 .PHONY: run-acceptance-tests-base
@@ -62,12 +81,11 @@ run-acceptance-tests-actual:
 
 define selected_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
-	docker compose stop storefront
-	docker compose up -d --wait storefront-cypress --force-recreate
-	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected cypress;
-	docker compose rm -f storefront-cypress
-	docker compose up -d storefront
-	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+	$(call cypress-prepare)
+	@echo "▶️ Running selected acceptance tests of type $(1)..."
+	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected cypress || true
+	@echo "✅ Selected acceptance tests of type $(1) finished."
+	$(call cypress-cleanup)
 endef
 
 .PHONY: selected-acceptance-tests-base
@@ -88,17 +106,15 @@ endif
 
 define open_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
-	docker compose stop storefront
-	docker compose up -d --wait storefront-cypress --force-recreate
+	$(call cypress-prepare)
 	@if [ "$(IS_WSL)" = "" ]; then \
 		xhost + $(get_ip); \
 	fi
-	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress;
-	docker compose rm -f storefront-cypress
-	docker compose up -d storefront
-	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+	@echo "▶️ Opening acceptance tests of type $(1)..."
+	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress || true
+	@echo "✅ Acceptance tests of type $(1) finished."
+	$(call cypress-cleanup)
 endef
-
 
 .PHONY: open-acceptance-tests-base
 open-acceptance-tests-base:
@@ -109,9 +125,18 @@ open-acceptance-tests-actual:
 	$(call open_acceptance_tests,actual)
 
 generate-snapshots-info-table:
-	docker compose stop storefront
-	docker compose up -d --wait storefront-cypress --force-recreate
-	-docker compose run --rm -e TYPE=null -e COMMAND=generate cypress;
-	docker compose rm -f storefront-cypress
-	docker compose up -d storefront
-	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
+	@echo "▶️ Generating snapshots info table..."
+	-docker compose exec storefront-cypress npm run generate-snapshots-table --prefix cypress || true
+	@echo "✅ Snapshots info table generation finished."
+	$(call cypress-cleanup)
+
+.PHONY: run-smoke-tests
+run-smoke-tests:
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
+	@echo "▶️ Running smoke tests..."
+	-docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress || true
+	@echo "✅ Smoke tests finished."
+	$(call cypress-cleanup)

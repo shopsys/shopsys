@@ -54,7 +54,7 @@ const markdownLines = ['# Snapshots Info Lookup Table', ''];
 
 const groupedData = {};
 
-for (let fileName in fileNames) {
+for (let fileName of fileNames) {
     const content = fs.readFileSync(fileName, 'utf8'); // Read the file content
 
     // Find the SUBGROUP_INDEX constant
@@ -79,12 +79,13 @@ for (let fileName in fileNames) {
 
     // Find all occurrences of it('...',)
     const testMatches = Array.from(content.matchAll(/it\(['"`](.*?)['"`],/g));
-    testMatches.forEach((match) => {
+
+    testMatches.forEach((match, index) => {
         const testName = match[1];
 
-        // Find all takeSnapshotAndCompare calls in this test
-        const testContent = content.substring(match.index);
-        const snapshotMatches = [...testContent.matchAll(/takeSnapshotAndCompare\((.*?)['"`]([^'"`]+)['"`],/g)];
+        // Find all takeSnapshotAndCompare calls in this test up to the next it() block
+        const testContent = content.substring(match.index, testMatches[index + 1]?.index);
+        const snapshotMatches = [...testContent.matchAll(/takeSnapshotAndCompare\(\s*(.*?),\s*['"`]([^'"`]+)['"`]/gs)];
         snapshotMatches.forEach((snapshotMatch) => {
             groupedData[snapshotGroupName].push({
                 snapshotId: getSnapshotFullIndexAsString(),
