@@ -22,6 +22,7 @@
     },
     "require": {
         "php": "^8.3",
+        "shopsys/form-types-bundle": "17.0.x-dev",
         "shopsys/framework": "17.0.x-dev",
         "shopsys/frontend-api": "17.0.x-dev",
         "shopsys/migrations": "17.0.x-dev",
