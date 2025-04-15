@@ -333,6 +333,15 @@
     "nikic/php-parser": {
         "version": "v4.2.5"
     },
+    "openai-php/symfony": {
+        "version": "0.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.3",
+            "ref": "23b35dfd25adb2c5c467a50239a9ef0aa16f9328"
+        }
+    },
     "overblog/dataloader-bundle": {
         "version": "v0.5.2"
     },
@@ -370,6 +379,18 @@
     },
     "phar-io/version": {
         "version": "2.0.1"
+    },
+    "php-http/discovery": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "project-base/app/config/packages/http_discovery.yaml"
+        ]
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.1"
