@@ -704,6 +704,11 @@ class SideMenuBuilder
         $heurekaMenu = $integrationsMenu->addChild('heureka', ['label' => t('Heureka')]);
         $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
 
+        $aiMenu = $integrationsMenu->addChild('ai', ['label' => t('Ai')]);
+        $agentMenu = $aiMenu->addChild('agents', ['route' => 'admin_agent_list', 'label' => t('Agents')]);
+        $agentMenu->addChild('new_agent', ['route' => 'admin_agent_new', 'display' => false, 'label' => t('New agent')]);
+        $agentMenu->addChild('edit_agent', ['route' => 'admin_agent_edit', 'display' => false, 'label' => t('Agent detail')]);
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INTEGRATIONS, $integrationsMenu);
 
         return $integrationsMenu;

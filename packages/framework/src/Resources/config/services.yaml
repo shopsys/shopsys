@@ -378,6 +378,8 @@ services:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
+    Shopsys\FrameworkBundle\Component\OpenAi\OpenAiClient: ~
+
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryClient: ~
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryConfig:
