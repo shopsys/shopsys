@@ -62,8 +62,8 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
 
     return (
         <NextLink
+            prefetch
             as={isDynamic ? href : as}
-            prefetch={false}
             href={
                 isDynamic
                     ? {
