@@ -167,7 +167,7 @@ class StoreRepository
      */
     public function getStoresByIds(array $storeIds): array
     {
-        $queryBuilder = $this->getQueryBuilder()
+        $queryBuilder = $this->getAllStoresQueryBuilder()
             ->select('s')
             ->where('s.id IN (:storeIds)')
             ->setParameter('storeIds', $storeIds);
