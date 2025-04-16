@@ -5,32 +5,33 @@ import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
 
 export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
-    const [isActive, setIsActive] = useState(false);
-    const isActiveDelayed = useDebounce(isActive, 200);
+    const isUserMenuOpen = useSessionStore((s) => s.isUserMenuOpen);
+    const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+    const isActiveDelayed = useDebounce(isUserMenuOpen, 200);
     const isDesktop = useMediaMin('vl');
 
     return (
         <>
             <div
-                className={twMergeCustom('group lg:relative lg:flex', isActive && 'z-aboveOverlay')}
+                className={twMergeCustom('group lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
-                onMouseEnter={() => isDesktop && setIsActive(true)}
-                onMouseLeave={() => isDesktop && setIsActive(false)}
+                onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
+                onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
             >
                 <MenuIconicItemLink
                     className="cursor-pointer rounded-t text-nowrap transition-all"
                     type="account"
-                    onClick={() => !isDesktop && setIsActive(!isActive)}
+                    onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
                     onTouchEnd={(e) => {
                         e.preventDefault();
-                        setIsActive(!isActive);
+                        setIsUserMenuOpen(!isUserMenuOpen);
                     }}
                 >
                     <div className="relative">
@@ -40,7 +41,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                     <span className="hidden lg:inline-block">{t('My account')}</span>
                 </MenuIconicItemLink>
 
-                <Drawer isActive={isActive} setIsActive={setIsActive} title={t('My account')}>
+                <Drawer isActive={isUserMenuOpen} setIsActive={setIsUserMenuOpen} title={t('My account')}>
                     <UserMenu />
                 </Drawer>
 
@@ -49,7 +50,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 </MenuIconicItemUserPopover>
             </div>
 
-            <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />
+            <Overlay isActive={isActiveDelayed} onClick={() => setIsUserMenuOpen(false)} />
         </>
     );
 };

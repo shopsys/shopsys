@@ -16,6 +16,7 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { usePathname } from 'next/navigation';
+import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -31,6 +32,8 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
     const pathname = usePathname();
     const logout = useLogout();
     const user = useCurrentCustomerData();
+    const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
         useAuthorization();
     const { url } = useDomainConfig();
@@ -79,6 +82,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                             isActive={pathname === customerOrdersUrl}
                             tid={TIDs.user_menu_my_orders_link}
                             type="orderList"
+                            onClick={() => setIsUserMenuOpen(false)}
                         >
                             <SearchListIcon className="size-6" />
                             {t('My orders')}
@@ -93,6 +97,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                             isActive={pathname === customerComplaintsUrl}
                             tid={TIDs.user_menu_my_complaints_link}
                             type="complaintList"
+                            onClick={() => setIsUserMenuOpen(false)}
                         >
                             <ComplaintsIcon className="size-6" />
                             {t('My complaints')}
@@ -106,6 +111,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                             href={customerUsersUrl}
                             isActive={pathname === customerUsersUrl}
                             type="customer-users"
+                            onClick={() => setIsUserMenuOpen(false)}
                         >
                             <UserIcon className="size-6" />
                             {t('Customer users')}
@@ -119,6 +125,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                         isActive={pathname === customerEditProfileUrl}
                         tid={TIDs.user_menu_edit_profile_link}
                         type="editProfile"
+                        onClick={() => setIsUserMenuOpen(false)}
                     >
                         <EditIcon className="size-6" />
                         {userProfileSectionLabel}
@@ -126,7 +133,12 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                 </MenuIconicItemUserAuthenticatedContentListItem>
 
                 <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === wishlistUrl}>
-                    <MenuIconicSubItemLink href={wishlistUrl} isActive={pathname === wishlistUrl} type="wishlist">
+                    <MenuIconicSubItemLink
+                        href={wishlistUrl}
+                        isActive={pathname === wishlistUrl}
+                        type="wishlist"
+                        onClick={() => setIsUserMenuOpen(false)}
+                    >
                         <HeartIcon className="size-6" />
                         {t('Wishlist')}
                     </MenuIconicSubItemLink>
@@ -138,6 +150,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                         isActive={pathname === customerChangePasswordUrl}
                         tid={TIDs.user_menu_change_password_link}
                         type="changePassword"
+                        onClick={() => setIsUserMenuOpen(false)}
                     >
                         <LockCheckIcon className="size-6" />
                         {t('Change password')}
