@@ -167,6 +167,16 @@ class ParameterFacade
     }
 
     /**
+     * @param string $valueText
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
+     */
+    public function findParameterValueByValueTextAndLocale(string $valueText, string $locale): ?ParameterValue
+    {
+        return $this->parameterRepository->findParameterValueByValueTextAndLocale($valueText, $locale);
+    }
+
+    /**
      * @param int[] $parameterValueIdsByParameterId
      * @return string[]
      */

@@ -27,7 +27,6 @@ class ProductParameterValuesLocalizedDataFactory
 
         $productParameterValuesLocalizedData->valueTextsByLocale[$parameterValueData->locale] = $parameterValueData->text;
         $productParameterValuesLocalizedData->parameter = $parameter;
-        $productParameterValuesLocalizedData->rgbHex = $parameterValueData->rgbHex;
 
         if ($parameter->isSlider()) {
             $productParameterValuesLocalizedData->numericValue = $parameterValueData->text;

@@ -8,9 +8,12 @@ class ProductParameterValueDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
-    public function __construct(protected readonly ParameterValueDataFactory $parameterValueDataFactory)
-    {
+    public function __construct(
+        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
+        protected readonly ParameterFacade $parameterFacade,
+    ) {
     }
 
     /**
@@ -69,9 +72,15 @@ class ProductParameterValueDataFactory
             if ($valueText !== null) {
                 $productParameterValueData = $this->create();
                 $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
-                $parameterValueData = $this->parameterValueDataFactory->create();
+
+                $parameterValue = $this->parameterFacade->findParameterValueByValueTextAndLocale($valueText, $locale);
+
+                if ($parameterValue === null) {
+                    $parameterValueData = $this->parameterValueDataFactory->create();
+                } else {
+                    $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
+                }
                 $parameterValueData->text = $valueText;
-                $parameterValueData->rgbHex = $productParameterValuesLocalizedData->rgbHex;
 
                 if ($productParameterValuesLocalizedData->parameter->isSlider()) {
                     $parameterValueData->numericValue = $valueText;
