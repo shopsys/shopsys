@@ -1,7 +1,5 @@
-'use client';
-
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.ssr';
 
 type BlogCategoryHeaderProps = {
     title: string | null | undefined;

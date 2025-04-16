@@ -1,8 +1,8 @@
 import { GrapesJsParser } from 'app/_components/Basic/UserText/GrapesJsParser';
+import { ArticleTitle } from 'app/_components/Blocks/Article/ArticleTitle';
 import { getArticleDetailQuery } from 'app/_queries/getArticleDetailQuery';
 import { getFormatDate } from 'app/_utils/formatting/getFormatDate';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ArticleTitle } from 'app/_components/Blocks/Article/ArticleTitle';
 import { notFound } from 'next/navigation';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'utils/productSlider';
 
@@ -23,9 +23,7 @@ const ArticleDetailPage = async ({ params: { articleSlug } }: { params: { articl
     return (
         <Webline>
             <ArticleTitle>{article.seoH1 || article.articleName}</ArticleTitle>
-            <p className="text-textDisabled mb-2 text-left text-xs font-semibold">
-                {formatDate(article.createdAt)}
-            </p>
+            <p className="text-textDisabled mb-2 text-left text-xs font-semibold">{formatDate(article.createdAt)}</p>
             {article.text !== null && (
                 <div className="order-2 mb-16 flex w-full flex-col">
                     <GrapesJsParser text={article.text} visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE} />

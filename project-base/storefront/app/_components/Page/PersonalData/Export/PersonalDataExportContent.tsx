@@ -1,6 +1,6 @@
 import { PersonalDataExportForm } from './PersonalDataExportForm';
-import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { UserText } from 'app/_components/Basic/UserText/UserText';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 
 type PersonalDataExportContentProps = {

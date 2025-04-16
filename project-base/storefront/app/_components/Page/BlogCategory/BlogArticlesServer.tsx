@@ -1,28 +1,36 @@
-'use client';
-
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
-import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { Fragment } from 'react';
+import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.ssr';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
+import { defaultLocale } from 'i18n';
+import { notFound } from 'next/navigation';
 import { twJoin } from 'tailwind-merge';
-import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 
-type BlogArticlesListProps = {
-    blogArticles: TypeListedBlogArticleFragment[];
-    isLoadingMoreBlogCategoryArticles: boolean;
+export type BlogArticlesProps = {
+    blogArticlesPromise: Promise<TypeBlogArticleConnectionFragment | undefined>;
 };
 
-export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLoadingMoreBlogCategoryArticles }) => {
-    const { defaultLocale } = useDomainConfig();
+export const BlogArticlesServer = async ({ blogArticlesPromise }: BlogArticlesProps) => {
+    const t = await getTranslation();
+    const blogArticleConnection = await blogArticlesPromise;
+
+    if (!blogArticleConnection) {
+        return notFound();
+    }
+
+    const mappedArticles = mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticleConnection.edges);
+
+    if (!mappedArticles?.length) {
+        return <div>{t('Sorry, there are no articles in this category at the moment.')}</div>;
+    }
 
     return (
-        <ul className="flex w-full flex-col gap-y-5">
-            {blogArticles.map((blogArticle) => (
+        <>
+            {mappedArticles.map((blogArticle) => (
                 <li key={blogArticle.uuid} className="w-full xl:max-w-[784px]">
                     <ExtendedNextLink
                         href={blogArticle.link}
@@ -80,14 +88,6 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                     </ExtendedNextLink>
                 </li>
             ))}
-
-            {isLoadingMoreBlogCategoryArticles && (
-                <div className="flex flex-col gap-y-5">
-                    {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (
-                        <SkeletonModuleArticleBlog key={index} />
-                    ))}
-                </div>
-            )}
-        </ul>
+        </>
     );
 };

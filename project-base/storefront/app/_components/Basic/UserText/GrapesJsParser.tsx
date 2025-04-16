@@ -1,6 +1,6 @@
-import { getProductsByCatnumsQuery } from 'app/_queries/getProductsByCatnumsQuery';
 import { GrapesJsProducts } from './GrapesJsProducts';
 import { UserText } from './UserText';
+import { getProductsByCatnumsQuery } from 'app/_queries/getProductsByCatnumsQuery';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { Suspense } from 'react';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';

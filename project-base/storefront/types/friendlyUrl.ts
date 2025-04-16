@@ -41,7 +41,7 @@ export const FriendlyPagesTypes = {
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
     article: '/articles',
     blogArticle: '/blogArticles',
-    blogCategory: '/blogCategories/[blogCategorySlug]',
+    blogCategory: '/blogCategories',
     brand: '/brands/[brandSlug]',
     brandsOverview: '/brands-overview',
     category: '/categories',
