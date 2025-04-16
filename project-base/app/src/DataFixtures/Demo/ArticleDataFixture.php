@@ -86,7 +86,148 @@ class ArticleDataFixture extends AbstractReferenceFixture
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $locale,
-                ),
+                ) . '
+                    <div class="gjs-products" data-products="9177759,9176508,5965879P,532564,1532564,5960453">
+                        <div data-product="9177759" data-product-name="22\" Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div>
+                        <div data-product="9176508" data-product-name="32\" Philips 32PFL4308" class="gjs-product"></div>
+                        <div data-product="5965879P" data-product-name="47\" LG 47LA790V (FHD)" class="gjs-product"></div>
+                        <div data-product="532564" data-product-name="Canon EOS 700D" class="gjs-product"></div>
+                        <div data-product="1532564" data-product-name="Canon EH-22M" class="gjs-product"></div>
+                        <div data-product="5960453" data-product-name="A4tech mouse X-710BK, OSCAR Game, 2000DPI, black," class="gjs-product"></div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="gjs-text-ckeditor" data-gjs-type="text" id="ic192p" style="text-align: center">
+                                Eius distinctio numquam doloremque quas debitis. Nam unde, et quos nesciunt mollitia nostrum molestiae
+                                incidunt offic.
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="gjs-text-ckeditor" data-gjs-type="text" id="itv9uf" style="text-align: center">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, esse! Eius distinctio numquam doloremque
+                                quas debitis. Nam unde, et quos nesciunt mollitia nostrum molestiae incidunt officiis dolorum similique ab
+                                nihil?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="iv009r" class="column" style="text-align: center">
+                            <div class="gjs-text-ckeditor">Integer id pretium quam, id placerat nulla.</div>
+                        </div>
+                        <div id="idyvqa" class="column" style="text-align: center">
+                            <div class="gjs-text-ckeditor">Nam auctor neque quis tincidunt tempus</div>
+                        </div>
+                        <div id="i0updc" class="column" style="text-align: center">
+                            <div class="gjs-text-ckeditor">Praesent tristique lorem mi, eget varius quam aliquam eget.</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="gjs-text-ckeditor">
+                                <h2 id="i75nl3" draggable="true">H2 Integer id pretium quam, id placerat nulla.</h2>
+                            </div>
+                            <div class="gjs-text-with-image">
+                                <div
+                                    data-image-position="left"
+                                    data-image-type="outside-layout"
+                                    class="gjs-text-with-image-inner gjs-text-with-image-float-left gjs-text-with-image-type-outside-layout"
+                                >
+                                    <img
+                                        data-image-position="left"
+                                        src="/content/images/blogArticle/default/600.jpg"
+                                        class="image"
+                                    />
+                                    <div class="gjs-text-ckeditor text" data-gjs-type="text">
+                                        Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed
+                                        placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a
+                                        arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor
+                                        neque quis tincidunt tempus
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="gjs-text-ckeditor" data-gjs-type="text">
+                                <h3 id="i41lfa" draggable="true" style="margin: 0px 0px 0px 0px">H3 Id placerat nulla.</h3>
+                            </div>
+                            <div
+                                class="gjs-table-custom"
+                                rows="2"
+                                columns="2"
+                                variant="default"
+                                id="ifvoxk"
+                                style="margin: 20px 0px 20px 0px"
+                            >
+                                <table class="default">
+                                    <tbody>
+                                        <tr>
+                                            <td><div class="gjs-text-ckeditor text" data-gjs-type="text">1st row 1st column</div></td>
+                                            <td><div class="gjs-text-ckeditor text" data-gjs-type="text">1st row 2th column</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="gjs-text-ckeditor text" data-gjs-type="text">2nd row 1st column</div></td>
+                                            <td><div class="gjs-text-ckeditor text" data-gjs-type="text">2nd row 2nd columns</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="gjs-text-ckeditor text" data-gjs-type="text">3rd row 1st column</div></td>
+                                            <td><div class="gjs-text-ckeditor text" data-gjs-type="text">3nd row 2nd columns</div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="gjs-text-ckeditor" data-gjs-type="text">
+                                <h4 id="ioawsm" draggable="true">H4 Vidson</h4>
+                            </div>
+                            <video
+                                allowfullscreen="allowfullscreen"
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+"
+                                controls="controls"
+                                id="ijwm64"
+                                style="margin: 0px 0px 0 0px"
+                            ></video>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="gjs-text-ckeditor" data-gjs-type="text">
+                                <h5 id="i4utlb" draggable="true">H5 Mapson</h5>
+                            </div>
+                            <iframe
+                                frameborder="0"
+                                id="in1zyi"
+                                src="https://maps.google.com/maps?&z=1&t=q&output=embed"
+                                style="height: 350px; width: 100%"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="gjs-text-ckeditor" data-gjs-type="text">
+                                <h6 id="i1dz5h" draggable="true">H6 Imegson</h6>
+                            </div>
+                            <img
+                                data-image-position="left"
+                                src="/content/images/blogArticle/default/601.jpg"
+                                class="image-position-left"
+                            />
+                        </div>
+                    </div>
+                    <a
+                        data-link-position="center"
+                        backgroundcolor="#00C8B7"
+                        class="gjs-button-link button-link-position-center"
+                        title="More products"
+                        href="/electronics"
+                    >
+                        <div class="gjs-text-ckeditor text" data-gjs-type="text">More products</div>
+                    </a>
+            ',
                 self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_FOOTER_1,
             ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'Goods care',
