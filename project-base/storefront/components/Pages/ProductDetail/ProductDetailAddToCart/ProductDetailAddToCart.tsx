@@ -84,7 +84,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
     return (
         <div className="flex items-center gap-2">
-            <Spinbox defaultValue={1} id={product.uuid} min={1} ref={spinboxRef} step={1} />
+            <Spinbox defaultValue={1} id={product.uuid} min={1} ref={spinboxRef} size="xlarge" step={1} />
 
             <div className="relative">
                 {isAddingToCart && (

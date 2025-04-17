@@ -98,7 +98,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                     id={uuid}
                     min={1}
                     ref={spinboxRef}
-                    size="small"
+                    size="large"
                     step={1}
                     onChangeValueCallback={setSpinboxValue}
                 />

@@ -22,8 +22,9 @@ type ProductActionProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     listIndex: number;
     isWithSpinbox?: boolean;
-    buttonSize?: 'small' | 'medium' | 'large';
+    buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonVariant?: 'primary' | 'inverted';
+    showResponsiveCartIcon?: boolean;
 };
 
 export const ProductAction: FC<ProductActionProps> = ({
@@ -34,6 +35,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     isWithSpinbox = false,
     buttonSize,
     buttonVariant = 'primary',
+    showResponsiveCartIcon = false,
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -77,6 +79,7 @@ export const ProductAction: FC<ProductActionProps> = ({
             listIndex={listIndex}
             minQuantity={1}
             productUuid={product.uuid}
+            showResponsiveCartIcon={showResponsiveCartIcon}
         />
     );
 };
