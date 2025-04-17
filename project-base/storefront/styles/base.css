@@ -180,4 +180,22 @@
     .lg-outer .lg-thumb-item img {
         @apply !h-auto max-h-full !w-auto max-w-full;
     }
+
+    /* accessibility */
+
+    input[type='checkbox']:focus + label > div:first-child {
+        @apply outline-inputBorderActive outline-2 outline-offset-2;
+    }
+
+    input[type='radio']:focus + label > div:first-child {
+        @apply outline-inputBorderActive outline-2 outline-offset-2;
+    }
+
+    .order-confirmation-page-text-wrapper a {
+        @apply rounded-md focus-visible:ring-2 focus-visible:ring-offset-2;
+    }
+
+    .advert-wrapper a {
+        @apply inline-block rounded-md focus-visible:ring-2 focus-visible:ring-offset-2;
+    }
 }

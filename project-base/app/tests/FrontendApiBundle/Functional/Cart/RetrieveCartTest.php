@@ -352,7 +352,7 @@ class RetrieveCartTest extends GraphQlTestCase
             'flags' => [
                 [
                     'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'rgbColor' => '#ee1c25',
+                    'rgbColor' => '#e8111c',
                 ],
             ],
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),

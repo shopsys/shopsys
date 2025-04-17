@@ -133,6 +133,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 href={href}
                 className={twJoin(
                     'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
+                    'focus-visible:ring-actionInvertedBorder focus-visible:ring-2 focus-visible:ring-offset-1',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',
                     isActive
                         ? 'border-button-inverted-border-active bg-button-inverted-bg-active text-button-inverted-text-active'

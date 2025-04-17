@@ -33,6 +33,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
         >
             <input
                 // class "peer" is used for styling in LabelWrapper
+                aria-checked={value}
                 checked={value}
                 className={twMergeCustom('peer sr-only', className)}
                 disabled={disabled}

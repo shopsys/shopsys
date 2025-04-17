@@ -88,6 +88,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                         availableStoresCount={product.availableStoresCount}
                         className="xs:w-44 flex-1"
                         isInquiryType={product.isInquiryType}
+                        tabIndex={-1}
                     />
                 </div>
             </div>

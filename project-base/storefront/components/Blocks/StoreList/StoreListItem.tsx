@@ -21,7 +21,7 @@ type StoreListItemProps = {
 export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
-    const itemRef = useRef<HTMLDivElement>(null);
+    const itemRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         setIsExpanded(isSelected);
@@ -43,11 +43,14 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
     }, [isExpanded]);
 
     return (
-        <div
+        <button
+            aria-expanded={isExpanded}
             ref={itemRef}
+            title={isExpanded ? t('Collapse store info') : t('Expand store info')}
+            type="button"
             className={twMergeCustom(
-                'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5',
-                isExpanded && 'border-border-default',
+                'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5 text-left',
+                isExpanded && 'border-border-less',
             )}
             onClick={() => {
                 setIsExpanded((isExpanded) => !isExpanded);
@@ -79,7 +82,6 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                     <ArrowIcon className={`size-5 transform ${isExpanded ? 'rotate-180' : ''}`} />
                 </div>
             </div>
-
             <AnimatePresence initial={false}>
                 {isExpanded && (
                     <AnimateCollapseDiv className="mt-2.5 !block" keyName="store-info">
@@ -111,7 +113,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                     </AnimateCollapseDiv>
                 )}
             </AnimatePresence>
-        </div>
+        </button>
     );
 };
 

@@ -55,13 +55,13 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             className={twMergeCustom(
                 'hover:bg-input-bg-hovered list-none font-semibold focus-visible:outline-hidden',
                 option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
-                'focus:bg-input-bg-hovered',
+                'focus-visible:bg-input-bg-hovered',
             )}
             onClick={!option.isDisabled ? () => onSelectOption(option) : undefined}
+            onFocus={() => setFocusedIndex(index)}
             onKeyDown={(e) => handleKeyDown(e)}
         >
-            <button
-                type="button"
+            <div
                 className={twJoin(
                     'font-secondary hover:text-input-text-hovered hover:bg-fill-accent-less flex w-full cursor-pointer items-center justify-between gap-2 p-3',
                     option.value === activeOption?.value && 'text-input-text-active',
@@ -77,7 +77,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                         ({option.count})
                     </span>
                 )}
-            </button>
+            </div>
 
             {itemAfterText && itemAfterText}
         </li>

@@ -2,6 +2,7 @@ import { MenuItem } from './MobileMenuContent';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
+import useTranslation from 'next-translate/useTranslation';
 
 type DropdownMenuListProps = {
     navigationItem: MenuItem;
@@ -10,6 +11,7 @@ type DropdownMenuListProps = {
 };
 
 export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem, onExpand, onNavigate }) => {
+    const { t } = useTranslation();
     const isWithChildren = !!navigationItem.children?.length;
 
     return (
@@ -26,6 +28,8 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
             {isWithChildren && (
                 <button
                     className="text-text-default flex w-10 cursor-pointer items-center justify-end"
+                    title={t('Expand menu')}
+                    type="button"
                     onClick={onExpand}
                 >
                     <ArrowIcon className="size-5 -rotate-90" />

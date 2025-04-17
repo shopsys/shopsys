@@ -37,8 +37,10 @@ export const SearchInput: FC<SearchInputProps> = ({
     return (
         <div className="border-border-default relative w-full rounded-md border">
             <input
+                aria-label={label}
                 autoComplete="off"
                 placeholder={label}
+                role="searchbox"
                 tid={TIDs.layout_header_search_autocomplete_input}
                 type="search"
                 value={value}
@@ -58,24 +60,29 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
-                className="gjs-template-header-search-button absolute top-1/2 left-3 flex -translate-y-1/2 items-center"
+                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center"
                 title={t('Search')}
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="text-icon-less hover:text-icon-accent w-4" />
+                <SearchIcon className="text-icon-less hover:text-icon-accent size-4" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (
-                <div
+                <button
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
+                    title={t('Clear search')}
+                    type="button"
                     onClick={onClear}
                 >
-                    <CloseIcon className="text-icon-less hover:text-icon-accent w-4" />
-                </div>
+                    <CloseIcon className="text-icon-less hover:text-icon-accent size-4" />
+                </button>
             )}
             {shouldShowSpinnerInInput && (
-                <SpinnerIcon className="text-icon-less absolute top-1/2 right-3 w-5 -translate-y-1/2" />
+                <SpinnerIcon
+                    aria-label={t('Loading search results')}
+                    className="text-icon-less absolute top-1/2 right-3 size-5 -translate-y-1/2"
+                />
             )}
         </div>
     );

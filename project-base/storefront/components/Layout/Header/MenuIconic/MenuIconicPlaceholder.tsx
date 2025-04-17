@@ -33,7 +33,7 @@ export const MenuIconicPlaceholder: FC = () => {
 
             <li className={placeholderItemTwClass}>
                 <HeartIcon className="size-6" />
-                <span className="max-lg:hidden">{t('Favorites')}</span>
+                <span className="max-lg:hidden">{t('Wishlist')}</span>
             </li>
 
             <li className={twMergeCustom(placeholderItemTwClass, 'lg:w-[72px]')}>

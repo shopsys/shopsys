@@ -5,6 +5,7 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
@@ -101,13 +102,18 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
 
 type ContentArrowProps = { onClick: () => void; isActive: boolean; isRight?: boolean; isShowed?: boolean };
 
-const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onClick }) => (
-    <Button
-        className={twMergeCustom('p-3', isShowed ? 'flex' : 'hidden')}
-        isDisabled={!isActive}
-        variant="inverted"
-        onClick={onClick}
-    >
-        <ArrowIcon className={twJoin('size-5', isRight ? '-rotate-90' : 'rotate-90')} />
-    </Button>
-);
+const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onClick }) => {
+    const { t } = useTranslation();
+
+    return (
+        <Button
+            className={twMergeCustom('p-3', isShowed ? 'flex' : 'hidden')}
+            isDisabled={!isActive}
+            title={isRight ? t('Next product') : t('Previous product')}
+            variant="inverted"
+            onClick={onClick}
+        >
+            <ArrowIcon className={twJoin('size-5', isRight ? '-rotate-90' : 'rotate-90')} />
+        </Button>
+    );
+};

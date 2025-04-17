@@ -29,10 +29,10 @@ export const FooterContact: FC = () => {
 
             <div className="mt-4 flex flex-wrap justify-center gap-5">
                 <FooterContactLangsItem href="#" text={t('Czechia')}>
-                    <IconImage alt={t('Czechia')} height={16} icon="cz" width={24} />
+                    <IconImage alt={t('Czechia flag')} height={16} icon="cz" width={24} />
                 </FooterContactLangsItem>
                 <FooterContactLangsItem href="#" text={t('Slovakia')}>
-                    <IconImage alt={t('Slovakia')} height={16} icon="sk" width={24} />
+                    <IconImage alt={t('Slovakia flag')} height={16} icon="sk" width={24} />
                 </FooterContactLangsItem>
             </div>
         </>

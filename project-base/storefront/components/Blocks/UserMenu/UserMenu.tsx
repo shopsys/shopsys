@@ -159,7 +159,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className }) => {
                 </MenuIconicItemUserAuthenticatedContentListItem>
 
                 <MenuIconicItemUserAuthenticatedContentListItem>
-                    <MenuIconicSubItemLink tid={TIDs.user_menu_logout} onClick={logout}>
+                    <MenuIconicSubItemLink tid={TIDs.user_menu_logout} title={t('Logout')} onClick={logout}>
                         <ExitIcon className="size-6" />
                         {t('Logout')}
                     </MenuIconicSubItemLink>

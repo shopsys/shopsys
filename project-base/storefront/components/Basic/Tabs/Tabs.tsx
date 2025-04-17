@@ -42,11 +42,13 @@ export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
     <TabList className="z-above hidden flex-row lg:flex lg:gap-5">{children}</TabList>
 );
 
-export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
+export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, tabIndex, ...props }) => (
     <Tab
         selectedClassName="isActive"
+        tabIndex={tabIndex}
         className={twJoin(
-            'bg-background-more hover:bg-background-most font-secondary [&.isActive]:bg-text-inverted border-border-success flex cursor-pointer items-center rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors select-none [&.isActive]:border-2',
+            'bg-background-more hover:bg-background-most font-secondary outline-border-success [&.isActive]:bg-background-default cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
+            'focus-visible:outline-2 focus-visible:outline-offset-2',
             className,
         )}
         {...props}
@@ -73,15 +75,17 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             selectedClassName="isActive"
             {...props}
         >
-            <div
+            <button
+                aria-expanded={isActiveOnMobile}
                 className="bg-background-more font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
+                type="button"
                 onClick={mobileTab}
             >
                 {headingTextMobile}
                 <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
                     <ArrowIcon className={twJoin('text-text-default size-4 rotate-0 transition')} />
                 </AnimateRotateDiv>
-            </div>
+            </button>
 
             <AnimatePresence initial={false}>
                 {(isActiveOnMobile || (isActive && isLg)) && (

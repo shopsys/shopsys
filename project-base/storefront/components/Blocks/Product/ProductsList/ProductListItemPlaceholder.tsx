@@ -55,6 +55,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                         availableStoresCount={product.availableStoresCount}
                         className="xs:min-h-[60px] min-h-10 sm:min-h-10"
                         isInquiryType={product.isInquiryType}
+                        tabIndex={-1}
                     />
                 )}
             </ExtendedNextLink>

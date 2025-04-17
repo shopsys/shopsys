@@ -98,30 +98,32 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     const imagePosition = index > 4 ? index + 1 : index;
 
                     return (
-                        <li
-                            key={index}
-                            className={twJoin(
-                                'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
-                                isWithAdditionalImages && 'relative',
-                            )}
-                            onClick={() => setSelectedGalleryItemIndex(imagePosition)}
-                        >
-                            <div className="bg-background-more size-full rounded-md p-1">
-                                <Image
-                                    alt={file.anchorText || `${complaintItem.productName}-${index}`}
-                                    className="aspect-square max-h-full object-contain mix-blend-multiply"
-                                    hash={file.url.split('?')[1]}
-                                    height={90}
-                                    src={file.url.split('?')[0]}
-                                    width={90}
-                                />
-                            </div>
-
-                            {isWithAdditionalImages && (
-                                <div className="bg-overlay-image absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
-                                    +{galleryAdditionalItemsCount}
+                        <li key={index}>
+                            <button
+                                title={t('View product image')}
+                                className={twJoin(
+                                    'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
+                                    isWithAdditionalImages && 'relative',
+                                )}
+                                onClick={() => setSelectedGalleryItemIndex(imagePosition)}
+                            >
+                                <div className="bg-background-more size-full rounded-md p-1">
+                                    <Image
+                                        alt={file.anchorText || `${complaintItem.productName}-${index}`}
+                                        className="aspect-square max-h-full object-contain mix-blend-multiply"
+                                        hash={file.url.split('?')[1]}
+                                        height={90}
+                                        src={file.url.split('?')[0]}
+                                        width={90}
+                                    />
                                 </div>
-                            )}
+
+                                {isWithAdditionalImages && (
+                                    <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
+                                        +{galleryAdditionalItemsCount}
+                                    </div>
+                                )}
+                            </button>
                         </li>
                     );
                 })}

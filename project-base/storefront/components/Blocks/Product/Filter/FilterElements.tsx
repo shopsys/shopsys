@@ -3,6 +3,7 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 export const FilterGroupWrapper: FC = ({ children }) => <div className="vl:py-5 py-4">{children}</div>;
@@ -12,18 +13,24 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
     title,
     onClick,
     isActive,
-}) => (
-    <div
-        className="font-secondary text-text-default flex cursor-pointer items-center justify-between font-semibold uppercase"
-        onClick={onClick}
-    >
-        <h6 className="flex items-center gap-2.5">
-            {title}
-            {isActive && <div className="bg-text-success vl:hidden size-2 rounded-full" />}
-        </h6>
-        <ArrowIcon className={twJoin('size-5 rotate-0 text-xs transition select-none', isOpen && 'rotate-180')} />
-    </div>
-);
+}) => {
+    const { t } = useTranslation();
+
+    return (
+        <button
+            className="font-secondary text-text-default flex w-full cursor-pointer items-center justify-between font-semibold uppercase"
+            title={t('Toggle filter group')}
+            type="button"
+            onClick={onClick}
+        >
+            <h6 className="flex items-center gap-2.5">
+                {title}
+                {isActive && <div className="bg-background-success vl:hidden size-2 rounded-full" />}
+            </h6>
+            <ArrowIcon className={twJoin('size-5 rotate-0 text-xs transition select-none', isOpen && 'rotate-180')} />
+        </button>
+    );
+};
 
 export const FilterGroupContent: FC<{ keyName?: string }> = ({ children, keyName }) => (
     <AnimateCollapseDiv className="!block" keyName={keyName}>

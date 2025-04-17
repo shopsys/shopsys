@@ -1,11 +1,14 @@
+import { twJoin } from 'tailwind-merge';
+
 type ArticleDate = {
     date: string;
     tid?: string;
+    className?: string;
 };
 
-export const ArticleDate: FC<ArticleDate> = ({ date, tid }) => {
+export const ArticleDate: FC<ArticleDate> = ({ date, tid, className }) => {
     return (
-        <time className="font-secondary text-text-less text-sm font-semibold" tid={tid}>
+        <time className={twJoin('font-secondary text-text-less text-sm font-semibold', className)} tid={tid}>
             {date}
         </time>
     );

@@ -21,23 +21,23 @@ export const UpsList: FC = () => {
         >
             <UpsListItem>
                 <UpsFirstIcon className="text-icon-accent size-14" />
-                <h6>{t('The most reliable online store in the Czech Republic')}</h6>
+                <span className="h6">{t('The most reliable online store in the Czech Republic')}</span>
             </UpsListItem>
             <UpsListItem>
                 <UpsSecondIcon className="text-icon-accent size-14" />
-                <h6>{t('We will deliver the goods on the day of ordering')}</h6>
+                <span className="h6">{t('We will deliver the goods on the day of ordering')}</span>
             </UpsListItem>
             <UpsListItem>
                 <UpsThirdIcon className="text-icon-accent size-14" />
-                <h6>{t('24/7 customer support')}</h6>
+                <span className="h6">{t('24/7 customer support')}</span>
             </UpsListItem>
             <UpsListItem>
                 <UpsFourthIcon className="text-icon-accent size-14" />
-                <h6>{t('We have 98% of all goods in stock')}</h6>
+                <span className="h6">{t('We have 98% of all goods in stock')}</span>
             </UpsListItem>
             <UpsListItem>
                 <UpsFifthIcon className="text-icon-accent size-14" />
-                <h6>{t('Stores and collection points throughout the Czech Republic')}</h6>
+                <span className="h6">{t('Stores and collection points throughout the Czech Republic')}</span>
             </UpsListItem>
         </Webline>
     );

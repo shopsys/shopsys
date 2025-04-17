@@ -43,6 +43,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                 label={label}
             >
                 <input
+                    aria-checked={checked}
                     checked={checked}
                     className="peer sr-only"
                     disabled={disabled}

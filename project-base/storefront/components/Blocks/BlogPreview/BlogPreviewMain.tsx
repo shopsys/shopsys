@@ -20,7 +20,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
             {articles.map((article) => (
                 <ArticleLink
                     key={article.uuid}
-                    className="flex max-w-80 snap-start flex-col gap-5 no-underline hover:no-underline"
+                    className="focus-visible:bg-backgroundMore/10 flex max-w-80 snap-start flex-col gap-5 rounded-xl no-underline hover:no-underline focus-visible:ring-0"
                     href={article.link}
                 >
                     <Image

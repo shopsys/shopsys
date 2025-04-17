@@ -1,4 +1,5 @@
 import { ArticleLink } from './BlogPreviewElements';
+import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
@@ -20,7 +21,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
             {articles.map((article) => (
                 <ArticleLink
                     key={article.uuid}
-                    className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5 no-underline hover:no-underline"
+                    className="vl:flex-row focus-visible:bg-backgroundMore/10 flex max-w-[410px] min-w-96 snap-start flex-col gap-5 no-underline hover:no-underline focus-visible:ring-0"
                     href={article.link}
                 >
                     <Image
@@ -42,12 +43,11 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                                 </>
                             ) : (
                                 <>
-                                    <span
-                                        className="font-secondary text-input-placeholder-default mr-4 text-sm font-semibold"
+                                    <ArticleDate
+                                        className="mr-4"
+                                        date={formatDate(article.publishDate, 'l')}
                                         tid={TIDs.blog_article_publication_date}
-                                    >
-                                        {formatDate(article.publishDate, 'l')}
-                                    </span>
+                                    />
 
                                     {article.blogCategories.map((blogPreviewCategory) => {
                                         if (!blogPreviewCategory.parent) {

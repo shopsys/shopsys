@@ -3,6 +3,7 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { AnimatePresence } from 'framer-motion';
+import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
@@ -55,6 +56,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     externalSetIsSelectOpen,
     listClassName,
 }: SelectProps<T> & FunctionComponentProps) => {
+    const { t } = useTranslation();
     const wrapperRef = useRef(null);
     const additionalItemRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -116,6 +118,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             className="w-full cursor-pointer px-3 pt-5 text-left focus-visible:outline-hidden"
                             disabled={isDisabled}
                             id={tid}
+                            tabIndex={-1}
                             tid={tid}
                             type="button"
                             onClick={() => onSelectToggleOpenHandler(!isOpen)}
@@ -154,8 +157,9 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     <button
-                        className="cursor-pointer pr-3 focus-visible:outline-hidden"
+                        className="focus-visible:ring-input-border-active rounded-md pr-3 focus-visible:ring-2 focus-visible:outline-hidden"
                         disabled={isDisabled}
+                        title={t('Open select')}
                         type="button"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}
                     >

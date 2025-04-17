@@ -49,6 +49,7 @@ export const CartInHeader: FC = ({ className }) => {
             <div
                 className={twMergeCustom('vl:flex group relative', isActive && 'z-aboveOverlay', className)}
                 tid={TIDs.header_cart}
+                title={t('Cart')}
                 onClick={() => !isDesktop && setIsActive(!isActive)}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={() => isDesktop && setIsActive(false)}
@@ -96,20 +97,18 @@ export const CartInHeader: FC = ({ className }) => {
                     )}
                 </ExtendedNextLink>
 
-                <div className="vl:hidden flex cursor-pointer items-center justify-center text-lg outline-hidden">
-                    <div
-                        className={twJoin(
-                            'relative flex h-full w-full items-center justify-center rounded-md border p-3 no-underline transition-colors hover:no-underline',
-                            'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
-                            isActiveDelayed &&
-                                'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
-                            'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
-                        )}
-                        onClick={() => setIsActive(!isActive)}
-                    >
-                        <CartIcon className="w-6" />
-                        <CartCount>{cart?.items.length ?? 0}</CartCount>
-                    </div>
+                <div
+                    className={twJoin(
+                        'vl:hidden flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
+                        'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
+                        isActiveDelayed &&
+                            'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
+                        'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
+                    )}
+                    onClick={() => setIsActive(!isActive)}
+                >
+                    <CartIcon className="size-6" />
+                    <CartCount>{cart?.items.length ?? 0}</CartCount>
                 </div>
 
                 <Drawer isActive={isActive} setIsActive={setIsActive} title={t('Cart')}>

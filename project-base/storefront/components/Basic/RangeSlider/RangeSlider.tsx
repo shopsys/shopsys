@@ -28,6 +28,7 @@ type RangeSliderProps = {
     setMinValueCallback: (value: number) => void;
     setMaxValueCallback: (value: number) => void;
     isDisabled?: boolean;
+    title: string;
 };
 
 const DELIMITER_REGEXP = /[,.]/;
@@ -48,6 +49,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     setMinValueCallback,
     setMaxValueCallback,
     isDisabled,
+    title,
 }) => {
     const { t } = useTranslation();
     const step = useMemo(() => getStep(min, max), [min, max]);
@@ -135,7 +137,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         <>
             <div className="relative flex h-4 w-full items-center justify-center">
                 <RangeSliderThumb
-                    aria-label={t('from')}
+                    aria-label={t('Minimum value')}
                     className="pr-4"
                     disabled={isDisabled}
                     max={max}
@@ -148,7 +150,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMinValueThumbCallback}
                 />
                 <RangeSliderThumb
-                    aria-label={t('to')}
+                    aria-label={t('Maximum value')}
                     className="pl-4"
                     disabled={isDisabled}
                     max={max}
@@ -171,7 +173,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 <div className="w-1/2">
                     <TextInput
                         disabled={isDisabled}
-                        id="basic-rangeslider-left-value"
+                        id={`${title} - from`}
                         label={t('from')}
                         type="number"
                         value={minValueInput}
@@ -183,7 +185,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 <div className="w-1/2">
                     <TextInput
                         disabled={isDisabled}
-                        id="basic-rangeslider-right-value"
+                        id={`${title} - to`}
                         label={t('to')}
                         type="number"
                         value={maxValueInput}
@@ -224,6 +226,7 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...p
     return (
         <input
             disabled={disabled}
+            tabIndex={-1}
             type="range"
             className={twJoin(
                 'pointer-events-none absolute top-[9px] z-[3] h-0 w-full appearance-none outline-hidden',

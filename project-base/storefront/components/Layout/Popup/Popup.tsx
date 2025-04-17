@@ -2,7 +2,7 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import { twMergeCustom } from 'utils/twMerge';
@@ -34,6 +34,13 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
         }
     }, [windowDimensions, children]);
 
+    // Focus the popup when it appears
+    useEffect(() => {
+        if (popupRef.current) {
+            popupRef.current.focus();
+        }
+    }, []);
+
     return (
         <div key={key}>
             <RemoveScroll>
@@ -41,11 +48,12 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                 <AnimatePresence>
                     <m.div
                         key="popup"
-                        aria-modal
                         animate={{ opacity: 1, scale: 1 }}
+                        aria-modal="true"
                         exit={{ opacity: 0, scale: 0.8 }}
                         ref={popupRef}
                         role="dialog"
+                        tabIndex={-1}
                         tid={TIDs.layout_popup}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
@@ -68,14 +76,12 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         }}
                     >
                         {!hideCloseButton && (
-                            <div className="flex h-9 items-center justify-end">
-                                <button
-                                    className="text-text-accent flex size-9 cursor-pointer items-center justify-center rounded-full border-0 text-xs no-underline outline-hidden"
-                                    onClick={() => updatePortalContent(null)}
-                                >
-                                    <RemoveIcon className="w-6" />
-                                </button>
-                            </div>
+                            <button
+                                className="text-icon-less hover:text-icon-accent focus-visible:outline-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm focus-visible:outline-2"
+                                onClick={() => updatePortalContent(null)}
+                            >
+                                <RemoveIcon className="size-6" />
+                            </button>
                         )}
                         <div className={twMergeCustom('p-4', contentClassName)}>{children}</div>
                     </m.div>

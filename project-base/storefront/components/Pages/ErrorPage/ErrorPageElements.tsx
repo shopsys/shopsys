@@ -1,5 +1,4 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 
@@ -25,7 +24,7 @@ export const ErrorPageButtonLink: FC<{ href: string; skeletonType?: PageType }> 
     children,
     skeletonType,
 }) => (
-    <ExtendedNextLink href={href} skeletonType={skeletonType}>
-        <Button className="mt-5">{children}</Button>
-    </ExtendedNextLink>
+    <LinkButton className="mt-5" href={href} skeletonType={skeletonType}>
+        {children}
+    </LinkButton>
 );

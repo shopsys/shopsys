@@ -149,7 +149,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 </div>
             )}
 
-            <div ref={sliderRef}>
+            <div ref={sliderRef} tabIndex={-1}>
                 <ProductsListContent
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
@@ -178,7 +178,7 @@ type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabl
 
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
     <button
-        className="text-text-default hover:text-text-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto"
+        className="text-text-default hover:text-text-accent disabled:text-text-disabled focus-visible:ring-offset-background-default focus-visible:ring-background-accent cursor-pointer rounded-sm border-none p-1 outline-hidden transition focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-auto"
         disabled={isDisabled}
         title={title}
         onClick={onClick}

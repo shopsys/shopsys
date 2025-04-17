@@ -1,5 +1,6 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimatePresence, m } from 'framer-motion';
+import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
@@ -11,7 +12,7 @@ type DrawerProps = {
 
 export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children, className }) => {
     const isDesktop = useMediaMin('vl');
-
+    const { t } = useTranslation();
     if (isDesktop) {
         return null;
     }
@@ -31,10 +32,13 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                 >
                     <div className="flex flex-row justify-between">
                         <span className="w-full text-center text-base">{title}</span>
-                        <RemoveIcon
-                            className="text-border-default w-4 cursor-pointer"
+                        <button
+                            className="text-icon-less focus-visible:ring-primary flex cursor-pointer items-center justify-center p-1 focus-visible:ring-2 focus-visible:outline-none"
+                            title={t('Close')}
                             onClick={() => setIsActive(false)}
-                        />
+                        >
+                            <RemoveIcon className="size-4" />
+                        </button>
                     </div>
                     {children}
                 </m.div>

@@ -70,13 +70,23 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 }}
             >
                 <TabsList>
-                    <TabsListItem>{t('Overview')}</TabsListItem>
+                    <TabsListItem tabIndex={selectedTab === 0 ? '-1' : '0'}>{t('Overview')}</TabsListItem>
 
-                    {!!parameters.length && <TabsListItem>{t('Parameters')}</TabsListItem>}
+                    {!!parameters.length && (
+                        <TabsListItem tabIndex={selectedTab === parametersTabIndex ? '-1' : '0'}>
+                            {t('Parameters')}
+                        </TabsListItem>
+                    )}
 
-                    {!!relatedProducts.length && <TabsListItem>{t('Related Products')}</TabsListItem>}
+                    {!!relatedProducts.length && (
+                        <TabsListItem tabIndex={selectedTab === relatedProductsTabIndex ? '-1' : '0'}>
+                            {t('Related Products')}
+                        </TabsListItem>
+                    )}
 
-                    {!!files.length && <TabsListItem>{t('Files')}</TabsListItem>}
+                    {!!files.length && (
+                        <TabsListItem tabIndex={selectedTab === filesTabIndex ? '-1' : '0'}>{t('Files')}</TabsListItem>
+                    )}
                 </TabsList>
 
                 <TabsContent

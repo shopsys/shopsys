@@ -28,7 +28,7 @@ export const DeferredBlogPreview: FC = () => {
     }
 
     const bgImageTwClass = twJoin(
-        'xl:rounded-xl py-16 bg-cover bg-center relative',
+        'xl:rounded-xl py-16 bg-cover bg-center relative bg-background-dark/80',
         "after:content-[''] after:block after:absolute after:inset-0 after:bg-background-dark/80 after:xl:rounded-xl",
     );
 
