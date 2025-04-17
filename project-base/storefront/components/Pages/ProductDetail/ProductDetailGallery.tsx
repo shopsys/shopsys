@@ -55,12 +55,15 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                     <Image
                         priority
                         alt={mainImage?.name || productName}
-                        className="vl:size-[500px] h-[320px] w-full object-contain lg:h-[500px]"
                         height={500}
                         sizes="50vw"
                         src={mainImage?.url}
                         width={500}
-                        onClickCapture={() => setSelectedGalleryItemIndex(0)}
+                        className={twJoin(
+                            'vl:size-[500px] h-[320px] w-full object-contain lg:h-[500px]',
+                            !!galleryItems.length && 'cursor-pointer',
+                        )}
+                        onClickCapture={() => !!galleryItems.length && setSelectedGalleryItemIndex(0)}
                     />
 
                     <ProductFlags
@@ -72,7 +75,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                 </div>
 
                 {!!galleryItems.length && (
-                    <ul className="vl:order-none vl:w-16 vl:flex-col mx-auto flex w-full max-w-lg items-center justify-center gap-2 lg:relative">
+                    <ul className="vl:flex-col flex gap-1.5 sm:mx-auto sm:max-w-lg sm:gap-2">
                         {galleryItems.map((galleryItem, index) => {
                             const isImage = galleryItem.__typename === 'Image';
                             const isVideo = galleryItem.__typename === 'VideoToken';
@@ -86,46 +89,53 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                             }
 
                             return (
-                                <li
-                                    key={index}
-                                    className={twJoin(
-                                        'outline-borderAccent bg-backgroundMore vl:w-auto flex size-16 cursor-pointer items-center justify-center rounded-lg hover:outline-1',
-                                        (isWithAdditionalImages || isVideo) && 'relative',
-                                    )}
-                                    onClick={() => setSelectedGalleryItemIndex(index + 1)}
-                                >
-                                    {isImage && (
-                                        <Image
-                                            alt={galleryItem.name || `${productName}-${index}`}
-                                            className="aspect-square object-contain object-center p-1 mix-blend-multiply"
-                                            height={60}
-                                            src={galleryItemThumbnail?.url}
-                                            tid={TIDs.product_gallery_image}
-                                            width={60}
-                                        />
-                                    )}
-
-                                    {isVideo && (
-                                        <>
+                                <>
+                                    <li
+                                        key={index}
+                                        className={twJoin(
+                                            'outline-borderAccent bg-backgroundMore flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
+                                            (isWithAdditionalImages || isVideo) && 'relative',
+                                        )}
+                                        onClick={() => setSelectedGalleryItemIndex(index + 1)}
+                                    >
+                                        {isImage && (
                                             <Image
-                                                alt={galleryItem.description ?? t('Product Video')}
-                                                className="max-h-full rounded-md"
-                                                height={90}
-                                                src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
-                                                width={90}
+                                                alt={galleryItem.name || `${productName}-${index}`}
+                                                className="aspect-square object-contain object-center p-1 mix-blend-multiply"
+                                                height={64}
+                                                src={galleryItemThumbnail?.url}
+                                                tid={TIDs.product_gallery_image}
+                                                width={64}
                                             />
-                                            <div className="bg-imageOverlay absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
-                                                <PlayIcon className="text-textInverted h-8 w-8 rounded-full" />
-                                            </div>
-                                        </>
-                                    )}
+                                        )}
+
+                                        {isVideo && (
+                                            <>
+                                                <Image
+                                                    alt={galleryItem.description ?? t('Product Video')}
+                                                    className="aspect-square object-contain object-center p-1 mix-blend-multiply"
+                                                    height={64}
+                                                    src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                                    width={64}
+                                                />
+                                                <div className="bg-imageOverlay absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
+                                                    <PlayIcon className="text-textInverted h-8 w-8 rounded-full" />
+                                                </div>
+                                            </>
+                                        )}
+                                    </li>
 
                                     {isWithAdditionalImages && (
-                                        <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
-                                            +{galleryAdditionalItemsCount}
-                                        </div>
+                                        <li
+                                            className="outline-borderAccent bg-backgroundMore flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
+                                            onClick={() => setSelectedGalleryItemIndex(index + 2)}
+                                        >
+                                            <span className="text-textAccent font-secondary text-sm font-semibold">
+                                                +{galleryAdditionalItemsCount}
+                                            </span>
+                                        </li>
                                     )}
-                                </li>
+                                </>
                             );
                         })}
                     </ul>
