@@ -63,8 +63,8 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                         src={itemImage.url}
                                         sizes={
                                             isFirstItemLarge
-                                                ? '(max-width: 768px) 60px, (max-width: 1024px) 100px, 500px'
-                                                : '(max-width: 768px) 60px, (max-width: 1024px) 100px, 180px'
+                                                ? '(max-width: 768px) 60px, (max-width: 1023px) 100px, 500px'
+                                                : '(max-width: 768px) 60px, (max-width: 1023px) 100px, 180px'
                                         }
                                     />
                                 </div>

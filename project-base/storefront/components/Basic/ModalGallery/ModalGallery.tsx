@@ -92,7 +92,6 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                                     alt={selectedGalleryItem.name || `${galleryName}-${selectedIndex}`}
                                     className="max-h-full object-contain"
                                     draggable={false}
-                                    sizes="(max-width: 768px) 100vw, 1200px"
                                     src={selectedGalleryItem.url}
                                     onLoad={() => setIsLoaded(true)}
                                 />
@@ -132,7 +131,6 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                                     className="max-h-full object-contain"
                                     draggable={false}
                                     hash={selectedGalleryItem.url.split('?')[1]}
-                                    sizes="(max-width: 768px) 100vw, 1200px"
                                     src={selectedGalleryItem.url.split('?')[0]}
                                     onLoad={() => setIsLoaded(true)}
                                 />

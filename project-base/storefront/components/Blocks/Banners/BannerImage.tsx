@@ -21,9 +21,8 @@ export const BannerImage: FC<BannerImageProps> = ({
             fill
             alt={desktopAlt}
             className="vl:block hidden h-full w-full object-cover"
-            loader={({ src }) => `${src}?width=936`}
             priority={isFirst}
-            sizes="(max-width: 1023px) 100vw, 1400px"
+            sizes="(max-width: 1023px) 0px, (max-width: 1400px) 100vw, 1400px"
             src={desktopSrc}
             onDragStart={(e) => e.preventDefault()}
         />
@@ -31,9 +30,8 @@ export const BannerImage: FC<BannerImageProps> = ({
             fill
             alt={mobileAlt}
             className="vl:hidden block h-full w-full object-cover"
-            loader={({ src }) => `${src}?width=991`}
             priority={isFirst}
-            sizes="(max-width: 1023px) 100vw, 50vw"
+            sizes="(max-width: 1023px) 95vw, 0px"
             src={mobileSrc}
             onDragStart={(e) => e.preventDefault()}
         />
