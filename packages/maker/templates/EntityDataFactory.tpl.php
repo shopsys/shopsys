@@ -18,7 +18,7 @@ class <?= $class_name; ?>
 
     public function create(): <?= $entity_config->entityName; ?>Data
     {
-        $<?= lcfirst($entity_config->entityName); ?>Data = $this->createInstance();
+        $<?= lcfirst($entity_config->entityName); ?>Data = new <?= $entity_config->entityName; ?>Data();
         $this->fillNew($<?= lcfirst($entity_config->entityName); ?>Data);
 
         return $<?= lcfirst($entity_config->entityName); ?>Data;
@@ -26,40 +26,10 @@ class <?= $class_name; ?>
 
     public function createFrom<?= $entity_config->entityName; ?>(<?= $entity_config->entityName; ?> $<?= lcfirst($entity_config->entityName); ?>): <?= $entity_config->entityName; ?>Data
     {
-        $<?= lcfirst($entity_config->entityName); ?>Data = $this->createInstance();
-
-        <?php if ($entity_config->hasUuid): ?>
-            $<?= lcfirst($entity_config->entityName); ?>Data->uuid = $<?= lcfirst($entity_config->entityName); ?>->getUuid();
-        <?php endif; ?>
-
-        <?php if ($entity_config->isTranslatable): ?>
-            $translations = $<?= lcfirst($entity_config->entityName); ?>->getTranslations();
-
-            foreach ($translations as $translate) {
-                <?php foreach ($entity_config->getTranslationPropertiesOnly() as $translationProperty): ?>
-                    $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$translate->getLocale()] = $translate-><?= $translationProperty->getGetterName(); ?>();
-                <?php endforeach; ?>
-            }
-        <?php endif; ?>
-
-        <?php if ($entity_config->isMultiDomain): ?>
-            foreach ($this->domain->getAllIds() as $domainId) {
-            <?php foreach ($entity_config->getDomainPropertiesOnly() as $domainProperty): ?>
-                $<?= lcfirst($entity_config->entityName); ?>Data-><?= $domainProperty->propertyName; ?>[$domainId] = $<?= lcfirst($entity_config->entityName); ?>-><?= $domainProperty->getGetterName(); ?>($domainId);
-            <?php endforeach; ?>
-            }
-        <?php endif; ?>
-
-        <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
-            $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>-><?= $property->getGetterName(); ?>();
-        <?php endforeach; ?>
+        $<?= lcfirst($entity_config->entityName); ?>Data = new <?= $entity_config->entityName; ?>Data();
+        $this->fillFrom<?= $entity_config->entityName; ?>($<?= lcfirst($entity_config->entityName); ?>Data, $<?= lcfirst($entity_config->entityName); ?>);
 
         return $<?= lcfirst($entity_config->entityName); ?>Data;
-    }
-
-    private function createInstance(): <?= $entity_config->entityName; ?>Data
-    {
-        return new <?= $entity_config->entityName; ?>Data();
     }
 
     private function fillNew(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): void
@@ -80,5 +50,34 @@ class <?= $class_name; ?>
             <?php endforeach; ?>
             }
         <?php endif; ?>
+    }
+
+    private function fillFrom<?= $entity_config->entityName; ?>(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data, <?= $entity_config->entityName; ?> $<?= lcfirst($entity_config->entityName); ?>): void
+    {
+        <?php if ($entity_config->hasUuid): ?>
+            $<?= lcfirst($entity_config->entityName); ?>Data->uuid = $<?= lcfirst($entity_config->entityName); ?>->getUuid();
+        <?php endif; ?>
+
+        <?php if ($entity_config->isTranslatable): ?>
+            $translations = $<?= lcfirst($entity_config->entityName); ?>->getTranslations();
+
+            foreach ($translations as $translate) {
+            <?php foreach ($entity_config->getTranslationPropertiesOnly() as $translationProperty): ?>
+                $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$translate->getLocale()] = $translate-><?= $translationProperty->getGetterName(); ?>();
+            <?php endforeach; ?>
+            }
+        <?php endif; ?>
+
+        <?php if ($entity_config->isMultiDomain): ?>
+            foreach ($this->domain->getAllIds() as $domainId) {
+            <?php foreach ($entity_config->getDomainPropertiesOnly() as $domainProperty): ?>
+                $<?= lcfirst($entity_config->entityName); ?>Data-><?= $domainProperty->propertyName; ?>[$domainId] = $<?= lcfirst($entity_config->entityName); ?>-><?= $domainProperty->getGetterName(); ?>($domainId);
+            <?php endforeach; ?>
+            }
+        <?php endif; ?>
+
+        <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
+            $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>-><?= $property->getGetterName(); ?>();
+        <?php endforeach; ?>
     }
 }
