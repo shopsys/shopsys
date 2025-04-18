@@ -137,6 +137,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 moveToSlide={moveToSlide}
                                 slideInterval={SLIDER_AUTOMATIC_SLIDE_INTERVAL}
                                 sliderItem={sliderItem}
+                                totalItems={sliderItems.length}
                             />
                         );
                     })}
