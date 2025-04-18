@@ -17,7 +17,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
 
     return (
         <>
-            <div className="bg-background-default vl:px-6 vl:py-4 flex items-center justify-between gap-4 rounded-md px-4 py-3">
+            <div className="bg-background-more vl:px-6 vl:py-4 flex items-center justify-between gap-4 rounded-md px-4 py-3">
                 <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
                     <ComplaintItemColumnInfo
                         tid={TIDs.complaint_detail_number}
@@ -45,7 +45,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     )}
                 </div>
             </div>
-            <div className="border-border-less bg-background-default rounded-md border-[5px] p-7">
+            <div className="bg-background-more rounded-xl p-5">
                 {complaint.items.map((complaintItem, index) => (
                     <ComplaintDetailComplaintItem key={index} complaint={complaint} complaintItem={complaintItem} />
                 ))}
@@ -70,13 +70,11 @@ export const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
     tid,
 }) => {
     return (
-        <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
-            <div className="flex flex-col gap-1">
-                <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('leading-none font-bold', valueClassName)} tid={tid}>
-                    {value}
-                </span>
-            </div>
+        <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
+            <span className="text-sm">{title}</span>
+            <span className={twMergeCustom('font-bold', valueClassName)} tid={tid}>
+                {value}
+            </span>
         </div>
     );
 };

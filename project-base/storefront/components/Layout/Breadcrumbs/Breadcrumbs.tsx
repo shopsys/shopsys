@@ -33,7 +33,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
             <div className={twMergeCustom(breadcrumbsTwClass, className)}>
-                <ArrowIcon className="text-border-default size-4 rotate-90 lg:hidden" />
+                <ArrowIcon className="text-icon-less size-4 rotate-90 lg:hidden" />
 
                 <BreadcrumbsLink href="/" skeletonType="homepage">
                     {t('Home page')}

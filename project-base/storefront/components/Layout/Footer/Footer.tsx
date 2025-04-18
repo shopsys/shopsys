@@ -40,7 +40,11 @@ export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
                 <FooterCopyright />
 
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
-                    <ExtendedNextLink className="self-center transition" href={userConsentUrl}>
+                    <ExtendedNextLink
+                        className="self-center transition"
+                        href={userConsentUrl}
+                        skeletonType="user-consent"
+                    >
                         {t('User consent update')}
                     </ExtendedNextLink>
                 )}

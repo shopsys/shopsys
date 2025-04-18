@@ -43,7 +43,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 <div
                     tid={TIDs.transport_and_payment_list_item_image}
                     className={twJoin(
-                        'bg-backgroundMore flex h-12 w-20 items-center justify-center rounded-xl',
+                        'bg-background-more flex h-12 w-20 items-center justify-center rounded-xl',
                         !image && 'hidden',
                     )}
                 >

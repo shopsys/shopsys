@@ -42,7 +42,7 @@
             }
 
             th {
-                @apply text-table-text-default text-left leading-[26px] font-bold;
+                @apply text-text-default text-left leading-[26px] font-bold;
                 @apply lg:text-xl;
             }
 

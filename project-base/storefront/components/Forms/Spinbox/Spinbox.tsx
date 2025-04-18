@@ -175,7 +175,7 @@ type SpinboxButtonProps = {
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, ...props }) => (
     <button
         className={twMergeCustom([
-            'text-input-border-default hover:text-input-border-hovered flex cursor-pointer justify-center border-none outline-none',
+            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center border-none outline-none',
             size === 'xlarge' ? 'w-10' : 'w-7',
 
             disabled && 'text-input-border-disabled pointer-events-none',

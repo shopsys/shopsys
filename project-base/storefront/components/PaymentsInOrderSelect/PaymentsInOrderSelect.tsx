@@ -119,7 +119,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             />
                         ) : (
                             <>
-                                <span className="text-text-subtle text-xs">
+                                <span className="text-text-less text-xs">
                                     {t('The price of your order may change by the price of the payment')}
                                 </span>
 

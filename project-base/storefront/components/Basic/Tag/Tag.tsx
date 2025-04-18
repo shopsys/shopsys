@@ -28,7 +28,7 @@ type TagProps = {
 
 export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, className, render, onClick }) => {
     const TagTwClassName = twMergeCustom(
-        'px-4 py-1 rounded-full no-underline transition-all flex justify-center items-center font-semibold font-secondary',
+        'px-4 py-1 rounded-full no-underline transition-all flex justify-center items-center font-semibold font-secondary cursor-pointer',
         'bg-tag-bg-default text-tag-text-default border-tag-border-default text-sm',
         'hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:border-tag-border-hovered hover:no-underline hover:cursor-pointer',
         isDisabled && 'bg-tag-bg-disabled text-tag-text-disabled border-tag-border-disabled',

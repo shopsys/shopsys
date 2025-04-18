@@ -61,7 +61,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 <header>
                     <Webline
                         className="relative"
-                        wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-to-background-brand-less"
+                        wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-background-brand-less"
                     >
                         <Header />
                         <DeferredNavigation />

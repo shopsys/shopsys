@@ -17,7 +17,7 @@ import { twJoin } from 'tailwind-merge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
 /**
- * In background-defaultof styled tab parts we are using - react-tabs components
+ * In background-default of styled tab parts we are using - react-tabs components
  * https://github.com/reactjs/react-tabs
  */
 type TabsContentProps = {
@@ -46,7 +46,7 @@ export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children,
     <Tab
         selectedClassName="isActive"
         className={twJoin(
-            'bg-background-more font-secondary outline-border-accent-success [&.isActive]:bg-text-inverted cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
+            'bg-background-more hover:bg-background-most font-secondary [&.isActive]:bg-text-inverted border-border-success flex cursor-pointer items-center rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors select-none [&.isActive]:border-2',
             className,
         )}
         {...props}

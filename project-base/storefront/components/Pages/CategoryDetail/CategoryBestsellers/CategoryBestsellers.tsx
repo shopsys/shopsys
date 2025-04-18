@@ -30,7 +30,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
                 {t('Do not want to choose? Choose certainty')}
             </div>
 
-            <div className="divide-border-accent-less mb-3 flex flex-col divide-y">
+            <div className="divide-border-less mb-3 flex flex-col divide-y">
                 <AnimatePresence initial={false}>
                     {shownProducts.map((product, index) => (
                         <AnimateCollapseDiv key={product.uuid} className={twJoin('!block')} keyName={product.uuid}>

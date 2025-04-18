@@ -102,11 +102,9 @@ const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
     wrapperClassName,
 }) => {
     return (
-        <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
-            <div className="flex flex-col gap-1">
-                <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('leading-none font-bold', valueClassName)}>{value}</span>
-            </div>
+        <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
+            <span className="text-sm">{title}</span>
+            <span className={twMergeCustom('font-bold', valueClassName)}>{value}</span>
         </div>
     );
 };

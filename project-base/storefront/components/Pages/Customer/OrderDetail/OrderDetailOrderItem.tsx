@@ -46,7 +46,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                 <span className="text-sm font-semibold">{orderItem.name}</span>
 
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
+                    <div className="font-secondary text-price-discounted font-bold whitespace-nowrap">
                         {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
                     </div>
                 )}
@@ -80,7 +80,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                     {orderItem.product?.isVisible ? (
                         <div className="flex flex-col gap-2">
                             <ExtendedNextLink
-                                className="vl:w-fit text-text hover:text-hover w-full text-sm no-underline hover:underline"
+                                className="vl:w-fit text-text-default hover:text-text-hovered w-full text-sm no-underline hover:underline"
                                 href={orderItem.product.slug}
                                 skeletonType="product"
                             >
@@ -91,7 +91,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                 isUserLoggedIn &&
                                 orderItem.type === TypeOrderItemTypeEnum.Product && (
                                     <button
-                                        className="text-link hover:text-linkHovered cursor-pointer self-baseline text-sm whitespace-nowrap underline outline-none"
+                                        className="text-link-default hover:text-link-hovered cursor-pointer self-baseline text-sm whitespace-nowrap underline outline-none"
                                         tid={TIDs.order_detail_create_complaint_button}
                                         onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
                                     >
@@ -105,7 +105,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                     )}
                 </div>
 
-                <span className="text-textSubtle vl:w-auto w-full text-sm">
+                <span className="text-text-less vl:w-auto w-full text-sm">
                     {t('Code')}: {orderItem.product?.catalogNumber}
                 </span>
 

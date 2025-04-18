@@ -40,7 +40,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     (inputType === 'checkbox' || inputType === 'radio') && [
                         'group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
                         checked
-                            ? 'text-input-text-active hover:text-input-text-active'
+                            ? 'text-link-default hover:text-link-hovered'
                             : 'text-input-text-default hover:text-input-text-hovered',
                         disabled && 'text-input-text-disabled hover:text-input-text-disabled cursor-no-drop opacity-60',
                     ],
@@ -74,7 +74,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         {inputType === 'checkbox' ? (
                             <CheckmarkIcon
                                 className={twMergeCustom(
-                                    'text-input-text-inverted h-full opacity-0 transition',
+                                    'text-icon-inverted h-full opacity-0 transition',
                                     checked && 'opacity-100',
                                     disabled && 'text-input-text-disabled',
                                 )}
@@ -82,7 +82,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         ) : (
                             <span
                                 className={twMergeCustom(
-                                    'bg-input-text-inverted h-full w-full rounded-full opacity-0 transition',
+                                    'bg-icon-inverted h-full w-full rounded-full opacity-0 transition',
                                     checked && 'opacity-100',
                                 )}
                             />

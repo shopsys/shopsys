@@ -89,7 +89,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         <div
                             className={twJoin(
                                 'flex size-8 items-center justify-center rounded-full sm:size-11',
-                                'bg-backgroundError text-textInverted',
+                                'bg-backgroundError text-text-inverted',
                             )}
                         >
                             <WalletIcon className="size-4 sm:size-6" />
@@ -174,7 +174,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 'flex items-center justify-between gap-2',
                                 isPriceVisible(order.totalPrice.priceWithVat) &&
                                     isPriceVisible(order.totalPrice.priceWithoutVat) &&
-                                    'border-border-accent-less border-b-[3px] pb-4',
+                                    'border-border-less border-b-[3px] pb-4',
                             )}
                         >
                             {t('Promo code')}
@@ -222,7 +222,7 @@ export const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, ch
             className="vl:flex-row vl:gap-3 vl:items-center bg-background-more flex flex-col gap-1 rounded-xl p-5 text-sm"
             tid={tid}
         >
-            <span className="text-text-suble font-secondary min-w-[100px] font-semibold">{title}</span>
+            <span className="text-text-less font-secondary min-w-[100px] font-semibold">{title}</span>
             {children}
         </div>
     );

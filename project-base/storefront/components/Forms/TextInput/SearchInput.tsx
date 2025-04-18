@@ -63,7 +63,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="text-input-placeholder-default w-4" />
+                <SearchIcon className="text-icon-less hover:text-icon-accent w-4" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (
@@ -71,11 +71,11 @@ export const SearchInput: FC<SearchInputProps> = ({
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
                     onClick={onClear}
                 >
-                    <CloseIcon className="text-input-text-disabled w-4" />
+                    <CloseIcon className="text-icon-less hover:text-icon-accent w-4" />
                 </div>
             )}
             {shouldShowSpinnerInInput && (
-                <SpinnerIcon className="text-input-text-default absolute top-1/2 right-3 w-5 -translate-y-1/2" />
+                <SpinnerIcon className="text-icon-less absolute top-1/2 right-3 w-5 -translate-y-1/2" />
             )}
         </div>
     );

@@ -69,13 +69,13 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
             )}
 
             {isPriceVisible(totalPrice.priceWithVat) && isPriceVisible(totalPrice.priceWithoutVat) && (
-                <div className="border-border-accent-less flex items-center justify-between gap-4 border-t-[3px] pt-4">
+                <div className="border-border-less flex items-center justify-between gap-4 border-t-[3px] pt-4">
                     <span>{t('Total')}</span>
                     <div className="flex flex-col gap-2">
                         <span className="text-price-default text-lg font-bold">
                             {formatPrice(totalPrice.priceWithVat)}
                         </span>
-                        <span className="text-text-subtle text-sm font-semibold tracking-wide whitespace-nowrap">
+                        <span className="text-text-less text-sm font-semibold tracking-wide whitespace-nowrap">
                             {formatPrice(totalPrice.priceWithoutVat)} {t('without VAT')}
                         </span>
                     </div>

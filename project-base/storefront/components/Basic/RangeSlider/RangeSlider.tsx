@@ -181,9 +181,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMaxValueThumbCallback}
                 />
                 <div className="relative w-full">
-                    <div className="bg-border-accent-less absolute z-[1] h-[2px] w-full rounded-sm" />
+                    <div className="bg-border-less absolute z-[1] h-[2px] w-full rounded-sm" />
                     <div className="relative mx-auto flex w-[calc(100%-32px)]">
-                        <div className="bg-input-text-active absolute z-[2] h-[2px]" ref={range} />
+                        <div className="bg-input-fill absolute z-[2] h-[2px]" ref={range} />
                     </div>
                 </div>
             </div>
@@ -228,11 +228,11 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...p
         '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:size-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-fill-upper]:pointer-events-none';
 
     const webkitBgClass =
-        '[&::-webkit-slider-thumb]:bg-input-bg-default [&::-webkit-slider-thumb]:hover:bg-input-border-active [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-input-fill [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:hover:border-input-border-active';
+        '[&::-webkit-slider-thumb]:bg-input-bg-default hover:[&::-webkit-slider-thumb]:bg-input-fill [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-input-fill [&::-webkit-slider-thumb]:border-solid';
     const mozBgClass =
-        '[&::-moz-range-thumb]:bg-input-bg-default [&::-moz-range-thumb]:hover:bg-input-border-active [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-input-fill [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:hover:border-input-border-active';
+        '[&::-moz-range-thumb]:bg-input-bg-default hover:[&::-moz-range-thumb]:bg-input-fill [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-input-fill [&::-moz-range-thumb]:border-solid';
     const msBgClass =
-        '[&::-ms-thumb]:bg-input-bg-default [&::-ms-thumb]:hover:bg-input-border-active [&::-ms-thumb]:border-2 [&::-ms-thumb]:border-input-fill [&::-ms-thumb]:border-solid [&::-ms-thumb]:hover:border-input-border-active';
+        '[&::-ms-thumb]:bg-input-bg-default hover:[&::-ms-thumb]:bg-input-fill [&::-ms-thumb]:border-2 [&::-ms-thumb]:border-input-fill [&::-ms-thumb]:border-solid';
 
     let bgClass = twJoin(mozBgClass, msBgClass, webkitBgClass);
 

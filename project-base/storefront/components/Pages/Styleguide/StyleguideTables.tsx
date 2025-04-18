@@ -40,7 +40,7 @@ export const StyleguideTables: FC = () => {
                 <Table className="max-w-96">
                     <Row className="flex flex-col md:flex-row">
                         <Cell className="flex-1">
-                            <div className="border-border-default text-table-text-default border-b-2 p-4 pl-0 text-lg">
+                            <div className="border-border-default text-text-default border-b-2 p-4 pl-0 text-lg">
                                 Title of the section
                             </div>
 

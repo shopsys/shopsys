@@ -1,7 +1,7 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { Flag } from 'components/Basic/Flag/Flag';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
-import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -110,10 +110,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                             key={checkedFlag.flag.uuid}
                                             onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
                                         >
-                                            <ProductFlag
-                                                name={checkedFlag.flag.name}
-                                                rgbColor={checkedFlag.flag.rgbColor}
-                                            />
+                                            <Flag className="py-0.5" rgbBgColor={checkedFlag.flag.rgbColor}>
+                                                {checkedFlag.flag.name}
+                                            </Flag>
                                             <SelectedParametersIcon />
                                         </SelectedParametersListItem>
                                     ))}

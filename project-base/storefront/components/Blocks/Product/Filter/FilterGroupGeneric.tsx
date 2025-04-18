@@ -6,7 +6,7 @@ import {
     ShowAllButton,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
-import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
+import { Flag } from 'components/Basic/Flag/Flag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
@@ -81,7 +81,9 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
                                     const optionLabel =
                                         filterField === 'flags' ? (
-                                            <ProductFlag name={option.name} rgbColor={option.rgbColor ?? ''} />
+                                            <Flag className="py-0.5" rgbBgColor={option.rgbColor}>
+                                                {option.name}
+                                            </Flag>
                                         ) : (
                                             option.name
                                         );

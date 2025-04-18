@@ -32,7 +32,7 @@ type OrderItemColumnInfoProps = {
 export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({ title, children }) => {
     return (
         <div className="font-secondary flex min-w-[100px] flex-col gap-1 text-sm font-semibold">
-            <span className="text-textSubtle">{title}</span>
+            <span className="text-text-less">{title}</span>
             {children}
         </div>
     );
@@ -46,7 +46,7 @@ type OrderItemRowInfoProps = {
 export const OrderItemRowInfo: FC<OrderItemRowInfoProps> = ({ title, children }) => {
     return (
         <div className="vl:flex-row vl:gap-3 vl:items-center flex flex-col gap-1 text-sm">
-            <span className="text-textSubtle font-secondary min-w-[100px] font-semibold">{title}</span>
+            <span className="text-text-less font-secondary min-w-[100px] font-semibold">{title}</span>
             {children}
         </div>
     );

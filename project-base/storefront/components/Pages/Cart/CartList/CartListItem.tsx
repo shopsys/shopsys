@@ -78,7 +78,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                             {product.fullName}
                         </ExtendedNextLink>
 
-                        <div className="text-text-subtle text-sm">
+                        <div className="text-text-less text-sm">
                             {t('Code')}: {product.catalogNumber}
                         </div>
                     </div>
@@ -106,7 +106,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 {isPriceVisible(product.price.priceWithVat) && (
                     <div className="font-secondary vl:w-40 whitespace-nowrap">
                         <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
-                        <span className="text-text-subtle text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
+                        <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
                     </div>
                 )}
             </div>

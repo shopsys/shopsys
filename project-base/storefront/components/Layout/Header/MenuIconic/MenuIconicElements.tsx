@@ -22,9 +22,18 @@ type MenuIconicItemLinkProps = {
     isActive?: boolean;
 };
 
-export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
-    const menuIconicSubItemLinkTwClass =
-        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default';
+export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
+    children,
+    href,
+    onClick,
+    type,
+    tid,
+    isActive = false,
+}) => {
+    const menuIconicSubItemLinkTwClass = twMergeCustom(
+        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default',
+        isActive && 'text-text-accent',
+    );
 
     if (href) {
         return (
@@ -51,7 +60,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, className, tid, href, title, type, onClick, onTouchEnd }, _) => {
         const menuIconicItemLinkTwClass =
-            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-link-inverted no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
         if (href) {
             return (
@@ -94,8 +103,8 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
     <li
         className={twMergeCustom(
             'border-background-default bg-background-more h-14 rounded-xl border',
-            'hover:border-border-accent-less hover:bg-background-default',
-            isActive && 'border-border-accent-less bg-background-default',
+            'hover:border-border-less hover:bg-background-default',
+            isActive && 'border-border-less bg-background-default',
         )}
     >
         {children}

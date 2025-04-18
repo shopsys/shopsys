@@ -14,25 +14,33 @@ type ToggleSwitchProps = NativeProps & {
 
 export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
     ({ id, name, onChange, value, onBlur }, toggleSwitchForwardedRef) => (
-        <div className="relative">
+        <div className="relative h-6">
             <input
+                aria-checked={value}
                 checked={value}
-                className="z-above peer h-6 w-11 rounded"
                 id={id}
                 name={name}
                 ref={toggleSwitchForwardedRef}
                 type="checkbox"
+                className={twJoin(
+                    'z-above peer h-6 w-11 rounded-full outline-none',
+                    'focus-visible:ring-inputBorderActive focus-visible:ring-2 focus-visible:ring-offset-2',
+                )}
                 onBlur={onBlur}
                 onChange={onChange}
             />
             <label
                 htmlFor={id}
                 className={twJoin(
-                    "absolute top-0 left-0 h-6 w-11 cursor-pointer rounded-sm after:my-[2px] after:ml-[2px] after:block after:h-5 after:w-5 after:rounded-sm after:shadow-xs after:transition-all after:content-[''] peer-checked:after:ml-5 peer-checked:after:block",
-                    'bg-input-border-default after:bg-input-text-inverted',
-                    'peer-checked:bg-input-border-active',
+                    'absolute top-0 left-0 h-6 w-11 cursor-pointer rounded-full',
+                    "after:my-0.5 after:ml-0.5 after:block after:size-5 after:rounded-full after:transition-all after:content-['']",
+                    'peer-checked:after:ml-5.5 peer-checked:after:block',
+                    'bg-icon-less after:bg-icon-inverted',
+                    'peer-checked:bg-icon-accent',
                 )}
-            />
+            >
+                <span className="sr-only">{name}</span>
+            </label>
         </div>
     ),
 );

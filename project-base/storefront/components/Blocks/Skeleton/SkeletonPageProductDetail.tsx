@@ -43,7 +43,7 @@ export const SkeletonPageProductDetail: FC = () => (
                             <Skeleton className="h-4 w-2/4" />
                         </div>
 
-                        <div className="bg-backgroundMore flex h-56 flex-col gap-4 rounded-xl p-3 sm:p-6">
+                        <div className="bg-skeleton-less flex h-56 flex-col gap-4 rounded-xl p-3 sm:p-6">
                             <Skeleton className="h-8 w-20" />
                             <Skeleton className="h-5 w-2/6" />
 

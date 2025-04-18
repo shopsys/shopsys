@@ -12,7 +12,7 @@ export const SkeletonModuleCustomerOrderDetail: FC = () => (
 
         <Skeleton className="h-64" />
 
-        <div className="bg-backgroundMore vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
+        <div className="bg-skeleton-less vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
             <Skeleton className="h-44 rounded-xl" />
             <Skeleton className="h-44 rounded-xl" />
             <Skeleton className="h-44 rounded-xl" />

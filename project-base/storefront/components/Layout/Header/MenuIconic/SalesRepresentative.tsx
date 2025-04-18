@@ -36,7 +36,7 @@ export const SalesRepresentative: FC = () => {
                 )}
                 <div>
                     {fullName && <h5>{fullName}</h5>}
-                    <h6 className="text-text-subtle">{t('Your sales representative')}</h6>
+                    <h6 className="text-text-less">{t('Your sales representative')}</h6>
                 </div>
             </div>
             {telephone && (

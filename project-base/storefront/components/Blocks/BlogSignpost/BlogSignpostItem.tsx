@@ -34,9 +34,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
 
     const level1WrapperTwClassName = [
         'rounded-xl',
-        hasChildren &&
-            isActive &&
-            'flex flex-col bg-background-default  shadow-[inset_0_0_0_1px] shadow-border-accent-less',
+        hasChildren && isActive && 'flex flex-col bg-background-default  shadow-[inset_0_0_0_1px] shadow-border-less',
         'max-vl:max-h-[400px] max-vl:overflow-auto vl:overflow-hidden',
     ];
 
@@ -49,10 +47,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
         'flex items-center rounded-md py-2 px-2 bg-background-more',
         isActive && 'bg-background-accent-less',
     ];
-    const level3ItemTwClassName = [
-        'py-3 px-5 border-l border-border-accent-less',
-        isActive && 'border-background-accent',
-    ];
+    const level3ItemTwClassName = ['py-3 px-5 border-l border-border-less', isActive && 'border-background-accent'];
 
     const level1LinkTwClassName = ['font-semibold', isActive && 'text-link-default'];
     const level2LinkTwClassName = ['font-semibold pl-2', isActive && 'text-link-default'];
@@ -73,7 +68,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                 {isSecondLevel && hasChildren && (
                     <ArrowIcon
                         className={twMergeCustom(
-                            'text-text-subtle size-4 -rotate-90 cursor-pointer transition-all',
+                            'text-text-less size-4 -rotate-90 cursor-pointer transition-all',
                             isActive && 'text-link-default',
                             isOpen && 'rotate-0',
                         )}

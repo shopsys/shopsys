@@ -16,7 +16,7 @@ export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation, skeleto
                             skeletonType={skeletonType}
                             className={twJoin(
                                 'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold group-first-of-type:pl-0',
-                                'text-link-inverted no-underline',
+                                'text-link-inverted-default no-underline',
                                 'hover:text-link-inverted-hovered group-hover:text-link-inverted-hovered group-hover:no-underline hover:no-underline',
                                 'active:text-link-inverted-hovered',
                                 'disabled:text-link-inverted-disabled',
@@ -24,7 +24,7 @@ export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation, skeleto
                         >
                             {navigationItem.name}
                             {hasChildren && (
-                                <ArrowIcon className="text-link-inverted group-hover:text-link-inverted-hovered ml-2 size-5 group-hover:rotate-180" />
+                                <ArrowIcon className="text-link-inverted-default group-hover:text-link-inverted-hovered ml-2 size-5 group-hover:rotate-180" />
                             )}
                         </ExtendedNextLink>
                     </li>

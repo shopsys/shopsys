@@ -26,6 +26,7 @@ import { SkeletonPageRegistration } from './SkeletonPageRegistration';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
+import { SkeletonPageUserConsent } from './SkeletonPageUserConsent';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
 import { useEffect } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
@@ -125,6 +126,8 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageTransportAndPayment />;
         case SkeletonEnum.Wishlist:
             return <SkeletonPageWishlist />;
+        case SkeletonEnum.UserConsent:
+            return <SkeletonPageUserConsent />;
         default:
             return null;
     }
