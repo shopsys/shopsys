@@ -1,5 +1,6 @@
 <?php
 
+use Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum;
 use Shopsys\MakerBundle\EntityConfig\EntityTypeEnum;
 
 ?>
@@ -176,7 +177,7 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php endif ?>
 
 <?php foreach ($entity_config->getAllProperties() as $property): ?>
-    public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php elseif ($property->isForDomain()): ?>int $domainId<?php endif ?>): <?= $property->getTypeHint(true); ?>
+    public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php elseif ($property->isForDomain()): ?>int $domainId<?php endif ?>): <?= $property->getTypeHint(CollectionTypeHintTypeEnum::ARRAY); ?>
     {
         <?php if ($property->isForTranslation()): ?>
             return $this->translation($locale)-><?= $property->getGetterName(); ?>();

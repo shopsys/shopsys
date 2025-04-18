@@ -69,15 +69,22 @@ class RelationProperty extends Property
     }
 
     /**
-     * @param bool $collectionAsArray
+     * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
      * @return string
      */
-    public function getTypeHint(bool $collectionAsArray = false): string
-    {
+    public function getTypeHint(
+        CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
+    ): string {
         $typehintPrefix = $this->isNullable ? '?' : '';
 
         if ($this->isCollection()) {
-            return sprintf('%s%s', $typehintPrefix, $collectionAsArray ? 'array' : '\\' . Collection::class);
+            $type = match ($collectionTypeHintType) {
+                CollectionTypeHintTypeEnum::COLLECTION => '\\' . Collection::class,
+                CollectionTypeHintTypeEnum::ARRAY => 'array',
+                CollectionTypeHintTypeEnum::INNER_CLASS => '\\' . $this->relationTargetEntity . '[]',
+            };
+
+            return sprintf('%s%s', $typehintPrefix, $type);
         }
 
         return sprintf('%s%s', $typehintPrefix, '\\' . $this->relationTargetEntity);

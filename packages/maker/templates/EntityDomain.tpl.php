@@ -1,3 +1,8 @@
+<?php
+
+use Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum;
+
+?>
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\MakerBundle\EntityConfig\EntityConfig $entity_config */ ?>
 
@@ -52,7 +57,7 @@ class <?= $class_name; ?>
     }
 
 <?php foreach ($entity_config->getDomainPropertiesOnly() as $property): ?>
-    public function <?= $property->getGetterName(); ?>(): <?= $property->getTypeHint(true); ?>
+    public function <?= $property->getGetterName(); ?>(): <?= $property->getTypeHint(CollectionTypeHintTypeEnum::ARRAY); ?>
     {
         return $this-><?= $property->propertyName; ?><?= $property->isCollection() ? '->getValues()' : '' ?>;
     }

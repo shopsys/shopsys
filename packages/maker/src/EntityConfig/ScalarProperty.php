@@ -92,11 +92,12 @@ class ScalarProperty extends Property
     }
 
     /**
-     * @param bool $collectionAsArray
+     * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
      * @return string
      */
-    public function getTypeHint(bool $collectionAsArray = false): string
-    {
+    public function getTypeHint(
+        CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
+    ): string {
         $typeMapping = [
             'string' => ['string', 'ascii_string', 'text', 'guid', 'enum'],
             'bool' => ['boolean'],

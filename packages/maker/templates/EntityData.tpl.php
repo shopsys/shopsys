@@ -1,3 +1,8 @@
+<?php
+
+use Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum;
+
+?>
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\MakerBundle\EntityConfig\EntityConfig $entity_config */ ?>
 
@@ -11,6 +16,7 @@ class <?= $class_name; ?>
     public ?string $uuid;
 <?php endif; ?>
 <?php foreach ($entity_config->getAllProperties() as $property): ?>
-    public <?= $property->isForTranslation() || $property->isForDomain() ? 'array' : $property->getTypeHint(true); ?> $<?= $property->propertyName; ?>;
+    <?= $property->getAnnotationForDataObject(); ?>
+    public <?= $property->isForTranslation() || $property->isForDomain() ? 'array' : $property->getTypeHint(CollectionTypeHintTypeEnum::ARRAY); ?> $<?= $property->propertyName; ?>;
 <?php endforeach; ?>
 }
