@@ -52,7 +52,7 @@ class GenerateEntityAgendaCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $entityConfig = $this->entityConfigFactory->create($input, $io);
+        $entityName = $input->getArgument(BaseMaker::ENTITY_NAME_ARGUMENT);
 
         $application = $this->getApplication();
 
@@ -71,18 +71,8 @@ class GenerateEntityAgendaCommand extends Command
         foreach ($commandNames as $commandName) {
             $commandInputParameters = [
                 'command' => $commandName,
-                BaseMaker::ENTITY_NAME_ARGUMENT => $entityConfig->entityName,
+                BaseMaker::ENTITY_NAME_ARGUMENT => $entityName,
             ];
-
-            if ($commandName === EntityMaker::getCommandName()) {
-                $commandInputParameters += [
-                    '--' . EntityMaker::TABLE_NAME_OPTION => $entityConfig->tableName,
-                    '--' . EntityMaker::IS_TRANSLATABLE_OPTION => $entityConfig->isTranslatable,
-                    '--' . EntityMaker::IS_MULTI_DOMAIN_OPTION => $entityConfig->isMultiDomain,
-                    '--' . EntityMaker::HAS_ID_OPTION => $entityConfig->hasId,
-                    '--' . EntityMaker::HAS_UUID_OPTION => $entityConfig->hasUuid,
-                ];
-            }
 
             $commandInput = new ArrayInput($commandInputParameters);
 

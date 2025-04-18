@@ -17,20 +17,12 @@ use Shopsys\MakerBundle\EntityConfig\EntityTypeEnum;
 use Shopsys\MakerBundle\Utils\NamingHelper;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Generator;
-use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Bundle\MakerBundle\Util\UseStatementGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 class EntityMaker extends BaseMaker
 {
-    public const string TABLE_NAME_OPTION = 'tableName';
-    public const string IS_TRANSLATABLE_OPTION = 'isTranslatable';
-    public const string IS_MULTI_DOMAIN_OPTION = 'isMultiDomain';
-    public const string HAS_ID_OPTION = 'hasId';
-    public const string HAS_UUID_OPTION = 'hasUuid';
-
     /**
      * @param \Shopsys\MakerBundle\EntityConfig\EntityFieldsConfigurator $entityFieldsConfigurator
      */
@@ -54,21 +46,6 @@ class EntityMaker extends BaseMaker
     public static function getCommandDescription(): string
     {
         return 'Create a new entity class';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureCommand(Command $command, InputConfiguration $inputConfig)
-    {
-        parent::configureCommand($command, $inputConfig);
-
-        $command
-            ->addOption(self::TABLE_NAME_OPTION, null, InputOption::VALUE_REQUIRED, 'The database table name')
-            ->addOption(self::IS_TRANSLATABLE_OPTION, null, InputOption::VALUE_REQUIRED, 'Is the entity translatable?')
-            ->addOption(self::IS_MULTI_DOMAIN_OPTION, null, InputOption::VALUE_REQUIRED, 'Is the entity multi domain?')
-            ->addOption(self::HAS_ID_OPTION, null, InputOption::VALUE_REQUIRED, 'Does the entity have an ID?')
-            ->addOption(self::HAS_UUID_OPTION, null, InputOption::VALUE_REQUIRED, 'Does the entity have a UUID?');
     }
 
     /**
