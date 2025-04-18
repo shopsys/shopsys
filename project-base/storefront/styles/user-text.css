@@ -67,14 +67,12 @@
             }
         }
 
-        .image-position {
-            &-center {
-                @apply mx-auto;
-            }
+        .image-position-right {
+            @apply ml-auto;
+        }
 
-            &-right {
-                @apply ml-auto;
-            }
+        .image-position-center {
+            @apply mx-auto;
         }
 
         .gjs-text-with-image {
