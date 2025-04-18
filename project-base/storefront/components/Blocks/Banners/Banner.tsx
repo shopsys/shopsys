@@ -14,16 +14,25 @@ type BannerProps = {
 const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, className }) => (
     <div
         className={twMergeCustom(
-            'mt-auto p-6 lg:absolute lg:right-0 lg:h-full lg:w-[455px] lg:px-14 lg:py-24',
+            'mt-auto flex flex-col justify-center px-14 py-6 lg:absolute lg:right-0 lg:h-full lg:w-[455px]',
             className,
         )}
         style={{
             backgroundColor: getRGBColorString(banner.rgbBackgroundColor, banner.opacity),
         }}
     >
-        <h1 className={twJoin('vl:mb-5 mb-2.5', getYIQContrastTextColor(banner.rgbBackgroundColor))}>{banner.name}</h1>
+        <h1
+            className={twJoin(
+                'vl:mb-5 mb-2.5 line-clamp-5 wrap-anywhere',
+                getYIQContrastTextColor(banner.rgbBackgroundColor),
+            )}
+        >
+            {banner.name}
+        </h1>
         {banner.description && (
-            <p className={getYIQContrastTextColor(banner.rgbBackgroundColor)}>{banner.description}</p>
+            <p className={twJoin('line-clamp-10 wrap-anywhere', getYIQContrastTextColor(banner.rgbBackgroundColor))}>
+                {banner.description}
+            </p>
         )}
     </div>
 );
@@ -44,7 +53,7 @@ export const Banner: FC<BannerProps> = ({ banner, bannerSliderState, index, numI
                 mobileAlt={banner.mobileMainImage.name || banner.name}
                 mobileSrc={banner.mobileMainImage.url}
             >
-                {banner.description && <BannerContent banner={banner} className="hidden lg:block" />}
+                {banner.description && <BannerContent banner={banner} className="hidden lg:flex" />}
             </BannerImage>
 
             {banner.description && <BannerContent banner={banner} className="block lg:hidden" />}

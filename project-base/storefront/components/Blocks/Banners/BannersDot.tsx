@@ -10,9 +10,17 @@ export type BannersDotProps = {
     sliderItem: TypeSliderItemFragment;
     moveToSlide: (slideToMoveTo: number) => void;
     slideInterval: number;
+    totalItems: number;
 };
 
-export const BannersDot: FC<BannersDotProps> = ({ index, isActive, sliderItem, moveToSlide, slideInterval }) => {
+export const BannersDot: FC<BannersDotProps> = ({
+    index,
+    isActive,
+    sliderItem,
+    moveToSlide,
+    slideInterval,
+    totalItems,
+}) => {
     const dotRef = useRef<HTMLButtonElement>(null);
     const [start, setStart] = useState(false);
     const isDesktop = useMediaMin('vl');
@@ -47,7 +55,9 @@ export const BannersDot: FC<BannersDotProps> = ({ index, isActive, sliderItem, m
                     'z-above bg-textAccent vl:block absolute top-0 left-0 hidden h-[3px] w-0 transition-all duration-[0s] ease-linear',
                 )}
                 style={
-                    isActive && start ? { transitionDuration: `${slideInterval / 1000}s`, width: '100%' } : undefined
+                    isActive && totalItems > 1 && start
+                        ? { transitionDuration: `${slideInterval / 1000}s`, width: '100%' }
+                        : undefined
                 }
             />
         </button>
