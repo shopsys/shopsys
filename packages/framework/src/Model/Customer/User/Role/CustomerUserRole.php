@@ -29,4 +29,21 @@ class CustomerUserRole
             t('Access to all the complaints created under the user\'s company') => self::ROLE_API_COMPANY_COMPLAINTS_VIEW,
         ];
     }
+
+    /**
+     * @return array<string, string[]>
+     */
+    public static function getRolesHierarchy(): array
+    {
+        return [
+            static::ROLE_API_ALL => [
+                static::ROLE_API_CUSTOMER_SELF_MANAGE,
+                static::ROLE_API_CUSTOMER_SEES_PRICES,
+                static::ROLE_API_CART_AND_ORDER_CREATION,
+                static::ROLE_API_COMPANY_ORDERS_VIEW,
+                static::ROLE_API_COMPLAINT_CREATION,
+                static::ROLE_API_COMPANY_COMPLAINTS_VIEW,
+            ],
+        ];
+    }
 }
