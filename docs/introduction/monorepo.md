@@ -97,3 +97,9 @@ located in the directory `project-base/`.
 
 - Package is functional in monorepo but broken outside of monorepo - ensure that every parameter required by package
   is available even outside the monorepo
+
+## Using Symfony makers within monorepo
+
+- At the moment, the makers are intended to primarily help the project developers.
+- That means the classes are generated into the `App` namespace and follow the project rules, such as using typehints even for the entity properties, using `private` visibility, etc.
+- When testing or implementing the makers, you need to set `MAKER_PHP_CS_FIXER_CONFIG_PATH` env variable in your `env.local` to `packages/maker/config/maker-php-cs-fixer.config.php`.

@@ -274,3 +274,8 @@ Other parts cannot be extended because PHP does not support multiple class inher
 There are some model-specific rules that help up maintain easier usage of the model.
 They also help which classes should be a part of the `Model` namespace and which shouldn't.
 You can read more about them in [Model Rules](./model-rules.md).
+
+!!! tip
+
+    To speedup your implemetation, you can use our custom Symfony makers that can generate new entities and related classes.
+    Check [Generating code with Symfony makers](../introduction/generating-code-with-symfony-makers.md) for more information.
