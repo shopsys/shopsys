@@ -7,7 +7,7 @@ mutation ApplyPromoCodeToCart(
         promoCode: $promoCode
     }) {
         uuid
-        promoCode {
+        promoCodes {
             code
             type
         }

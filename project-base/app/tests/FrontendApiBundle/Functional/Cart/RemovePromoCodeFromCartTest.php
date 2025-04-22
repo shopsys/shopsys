@@ -24,7 +24,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'RemovePromoCodeFromCart');
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
     }
 
     public function testPromoCodeIsRemovedFromCartAfterDeletion(): void
@@ -39,7 +39,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         // if promo code is deleted, CartWatcher cannot possibly know about it and report modification
         self::assertEmpty($data['modifications']['promoCodeModifications']['noLongerApplicablePromoCode']);
@@ -58,7 +58,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         return $promoCode;
     }

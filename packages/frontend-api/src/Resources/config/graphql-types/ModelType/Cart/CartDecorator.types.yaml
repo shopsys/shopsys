@@ -18,9 +18,9 @@ CartDecorator:
             selectedPickupPlaceIdentifier:
                 type: "String"
                 description: "Selected pickup place identifier if provided"
-            promoCode:
-                type: "PromoCode"
-                description: "Applied promo code if provided"
+            promoCodes:
+                type: "[PromoCode!]!"
+                description: "Applied promo codes if provided"
             modifications:
                 type: "CartModificationsResult!"
             totalPrice:

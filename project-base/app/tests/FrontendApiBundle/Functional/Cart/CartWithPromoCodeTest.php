@@ -38,21 +38,21 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ]);
         $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        $query = 'query{
-            cart(cartInput: {
+        $query = 'query {
+            cart (cartInput: {
                 cartUuid: "' . $cartUuid . '"
             }){
                 uuid
-                items{
+                items {
                     uuid
                     quantity
                 }
-                totalPrice{
+                totalPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
                 }
-                totalDiscountPrice{
+                totalDiscountPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
@@ -97,6 +97,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ];
 
         $addToCartResult = $addAnotherToCartResponse['data']['AddToCart'];
+
         $this->assertSame($totalPriceExpected, $addToCartResult['cart']['totalPrice']);
         $this->assertSame($totalDiscountPriceExpected, $addToCartResult['cart']['totalDiscountPrice']);
     }

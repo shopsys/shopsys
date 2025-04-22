@@ -9,7 +9,6 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
@@ -22,6 +21,7 @@ use App\Model\Transport\TransportFacade;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -473,7 +473,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
     /**
      * @param string $cartUuid
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      */
     private function applyPromoCodeToCart(string $cartUuid, PromoCode $promoCode): void
     {

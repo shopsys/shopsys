@@ -31,6 +31,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -126,6 +128,8 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(OrderItemDataFactory::class),
             $this->createMock(OrderDataFactory::class),
             $this->createMock(PricingSetting::class),
+            $this->createMock(OrderInputFactory::class),
+            $this->createMock(OrderProcessor::class),
         );
     }
 

@@ -395,8 +395,8 @@ type Cart {
   payment: Payment
   "Selected bank swift code of goPay payment bank transfer"
   paymentGoPayBankSwift: String
-  "Applied promo code if provided"
-  promoCode: PromoCode
+  "Applied promo codes if provided"
+  promoCodes: [PromoCode!]!
   "Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa."
   remainingAmountForFreeTransport: Money
   "Rounding amount if payment has rounding allowed"
