@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypePersonalDataPageTextQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalDataPage: { __typename?: 'PersonalDataPage', displaySiteContent: string, exportSiteContent: string } | null };
+export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalDataPage: { __typename?: 'PersonalDataPage', displaySiteContent: string | null, exportSiteContent: string | null } | null };
 
 
       export interface PossibleTypesResultData {

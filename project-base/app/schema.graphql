@@ -1888,11 +1888,11 @@ enum PersonalDataAccessRequestTypeEnum {
 
 type PersonalDataPage {
   "The HTML content of the site where a customer can request displaying his personal data"
-  displaySiteContent: String!
+  displaySiteContent: String
   "URL slug of display site"
   displaySiteSlug: String!
   "The HTML content of the site where a customer can request exporting his personal data"
-  exportSiteContent: String!
+  exportSiteContent: String
   "URL slug of export site"
   exportSiteSlug: String!
 }

@@ -2317,11 +2317,11 @@ export enum TypePersonalDataAccessRequestTypeEnum {
 export type TypePersonalDataPage = {
   __typename?: 'PersonalDataPage';
   /** The HTML content of the site where a customer can request displaying his personal data */
-  displaySiteContent: Scalars['String']['output'];
+  displaySiteContent: Maybe<Scalars['String']['output']>;
   /** URL slug of display site */
   displaySiteSlug: Scalars['String']['output'];
   /** The HTML content of the site where a customer can request exporting his personal data */
-  exportSiteContent: Scalars['String']['output'];
+  exportSiteContent: Maybe<Scalars['String']['output']>;
   /** URL slug of export site */
   exportSiteSlug: Scalars['String']['output'];
 };
