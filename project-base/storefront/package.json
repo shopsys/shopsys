@@ -25,8 +25,8 @@
     "dependencies": {
         "@floating-ui/react": "~0.27.6",
         "@hookform/resolvers": "~2.6.1",
-        "@next/bundle-analyzer": "~14.2.26",
-        "@sentry/nextjs": "~8.55.0",
+        "@next/bundle-analyzer": "~15.2.5",
+        "@sentry/nextjs": "~9.12.0",
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.1.6",
         "@urql/exchange-graphcache": "~6.4.1",
@@ -41,7 +41,7 @@
         "js-base64": "~3.7.7",
         "jwt-decode": "~4.0.0",
         "lz-string": "~1.5.0",
-        "next": "~14.2.26",
+        "next": "~15.2.5",
         "next-translate": "~2.6.2",
         "next-translate-plugin": "~2.6.2",
         "next-urql": "~5.0.2",
@@ -117,7 +117,6 @@
     },
     "pnpm": {
         "onlyBuiltDependencies": [
-            "@sentry/cli",
             "esbuild",
             "next-translate-plugin"
         ]
