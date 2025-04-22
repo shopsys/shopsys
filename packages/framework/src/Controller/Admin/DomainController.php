@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Form\Admin\Domain\DomainFormType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,6 +78,7 @@ class DomainController extends AdminBaseController
         $grid->addColumn('name', 'name', t('Domain name'));
         $grid->addColumn('locale', 'locale', t('Language'));
         $grid->addColumn('icon', 'icon', t('Icon'));
+        $grid->addEditActionColumn('admin_domain_edit', ['id' => 'id']);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Domain/listGrid.html.twig');
 
@@ -92,14 +92,12 @@ class DomainController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/domain/edit/{id}', requirements: ['id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    #[Route(path: '/domain/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $domain = $this->domain->getDomainConfigById($id);
 
-        $form = $this->createForm(DomainFormType::class, null, [
-            'action' => $this->generateUrl('admin_domain_edit', ['id' => $id]),
-        ]);
+        $form = $this->createForm(DomainFormType::class, null, ['domain' => $domain]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -119,7 +117,7 @@ class DomainController extends AdminBaseController
                     );
                 }
 
-                return new JsonResponse(['result' => 'valid']);
+                return $this->redirectToRoute('admin_domain_list');
             } catch (FileIsNotSupportedImageException $ex) {
                 $this->addErrorFlash(t('File type not supported.'));
             } catch (MoveToFolderFailedException $ex) {
@@ -128,10 +126,7 @@ class DomainController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            return new JsonResponse([
-                'result' => 'invalid',
-                'errors' => $this->errorExtractor->getAllErrorsAsArray($form, $this->getErrorMessages()),
-            ]);
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Domain/edit.html.twig', [

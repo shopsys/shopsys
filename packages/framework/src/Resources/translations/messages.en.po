@@ -2539,9 +2539,6 @@ msgstr ""
 msgid "Lists and nomenclatures"
 msgstr ""
 
-msgid "Loading"
-msgstr ""
-
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr ""
 
@@ -4559,9 +4556,6 @@ msgid "Upload attachment"
 msgstr ""
 
 msgid "Upload files"
-msgstr ""
-
-msgid "Upload icon"
 msgstr ""
 
 msgid "Upload image"
