@@ -11,6 +11,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { PaymentTypeEnum } from 'types/payment';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type OrderItemProps = {
@@ -56,15 +57,17 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         {formatDate(order.creationDate)}
                     </OrderItemColumnInfo>
 
-                    <OrderItemColumnInfo title={t('Price')}>
-                        {formatPrice(order.totalPrice.priceWithVat)}
+                    {isPriceVisible(order.totalPrice.priceWithVat) && (
+                        <OrderItemColumnInfo title={t('Price')}>
+                            {formatPrice(order.totalPrice.priceWithVat)}
 
-                        <OrderPaymentStatusBar
-                            orderHasPaymentInProcess={order.hasPaymentInProcess}
-                            orderIsPaid={order.isPaid}
-                            orderPaymentType={order.payment.type}
-                        />
-                    </OrderItemColumnInfo>
+                            <OrderPaymentStatusBar
+                                orderHasPaymentInProcess={order.hasPaymentInProcess}
+                                orderIsPaid={order.isPaid}
+                                orderPaymentType={order.payment.type}
+                            />
+                        </OrderItemColumnInfo>
+                    )}
 
                     <OrderItemColumnInfo title={t('State')}>{order.status}</OrderItemColumnInfo>
                 </div>

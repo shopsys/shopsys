@@ -19,7 +19,6 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
 }) => {
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
-    const isProductPriceVisible = isPriceVisible(product.price.priceWithVat);
 
     return (
         <li
@@ -55,7 +54,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     {quantity + ' ' + product.unit.name}
                 </div>
 
-                {isProductPriceVisible && (
+                {isPriceVisible(product.price.priceWithVat) && (
                     <div className="font-secondary text-price w-28 font-bold break-words lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                     </div>

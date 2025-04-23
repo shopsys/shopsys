@@ -9,7 +9,7 @@ export const SkeletonPageContactInformation: FC = () => (
         />
 
         <div className="vl:flex-row flex w-full flex-col flex-wrap">
-            <div className="vl:mb-0 vl:min-h-[61vh] vl:flex-1 vl:pr-10 mb-16 w-full">
+            <div className="vl:mb-0 vl:flex-1 vl:pr-10 mb-16 w-full">
                 <Skeleton className="mb-3 h-14 w-full lg:w-[65%]" />
                 <Skeleton className="h-20 w-full lg:h-16" />
                 <div className="vl:flex-row mt-8 flex flex-col justify-between gap-3">

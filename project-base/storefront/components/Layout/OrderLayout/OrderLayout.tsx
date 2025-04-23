@@ -44,7 +44,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer>
+                <footer className="mt-auto h-fit">
                     <Webline wrapperClassName="bg-backgroundAccentLess">
                         <Footer simpleFooter />
                     </Webline>

@@ -113,6 +113,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                             <OrderConfirmationProducts items={orderData.order.items} />
 
                             <OrderConfirmationSummary
+                                promoCode={orderData.order.promoCode}
                                 totalPrice={orderData.order.totalPrice}
                                 payment={{
                                     name: orderPayment?.name ?? orderData.order.payment.name,

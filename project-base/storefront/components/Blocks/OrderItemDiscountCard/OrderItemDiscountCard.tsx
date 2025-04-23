@@ -1,5 +1,5 @@
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 type OrderItemDiscountCardProps = {
     name: string;
@@ -13,9 +13,12 @@ export const OrderItemDiscountCard: FC<OrderItemDiscountCardProps> = ({ name, pr
         <li className="bg-backgroundMore font-secondary -mt-5 flex flex-col gap-1 rounded-b-xl px-4 pb-4">
             <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-semibold">{name}</span>
-                <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
-                    {formatPrice(mapPriceForCalculations(price))}
-                </div>
+
+                {isPriceVisible(price) && (
+                    <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
+                        {formatPrice(mapPriceForCalculations(price))}
+                    </div>
+                )}
             </div>
         </li>
     );
