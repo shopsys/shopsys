@@ -1261,7 +1261,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   variants: [Variant!]!
   "Number of visible variants"
   variantsCount: Int!
-  vat: Vat!
+  vatPercent: String!
 }
 
 scalar Money
@@ -1466,7 +1466,7 @@ type Order {
   email: String!
   "The customer's first name"
   firstName: String
-  "Indicates whether the order is paid with an external payment method"
+  "Indicates whether the order has an external payment"
   hasExternalPayment: Boolean!
   "Indicates whether order payment is still being processed with GoPay payment type"
   hasPaymentInProcess: Boolean!
@@ -1851,15 +1851,21 @@ type Payment {
   "List of assigned transports"
   transports: [Transport!]!
   "Type of payment"
-  type: String!
+  type: PaymentTypeEnum!
   "UUID"
   uuid: Uuid!
-  vat: Vat!
+  vatPercent: String!
 }
 
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
+}
+
+"One of the possible methods of the payment type"
+enum PaymentTypeEnum {
+  basic
+  goPay
 }
 
 type PersonalData {
@@ -1992,7 +1998,7 @@ interface Product {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
-  vat: Vat!
+  vatPercent: String!
 }
 
 "A connection to a list of items."
@@ -2490,7 +2496,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
-  vat: Vat!
+  vatPercent: String!
 }
 
 input RemoveCustomerUserDataInput {
@@ -2749,7 +2755,7 @@ type Transport {
   transportTypeCode: TransportTypeEnum!
   "UUID"
   uuid: Uuid!
-  vat: Vat!
+  vatPercent: String!
 }
 
 "One of the possible methods of the transport type"
@@ -2840,15 +2846,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
-  vat: Vat!
-}
-
-"Represents a vat"
-type Vat {
-  "Vat name"
-  name: String!
-  "Vat percent"
-  percent: String!
+  vatPercent: String!
 }
 
 type VideoToken {

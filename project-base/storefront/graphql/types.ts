@@ -497,8 +497,8 @@ export type TypeCart = {
   payment: Maybe<TypePayment>;
   /** Selected bank swift code of goPay payment bank transfer */
   paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
-  /** Applied promo code if provided */
-  promoCode: Maybe<TypePromoCode>;
+  /** Applied promo codes if provided */
+  promoCodes: Array<TypePromoCode>;
   /** Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa. */
   remainingAmountForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Rounding amount if payment has rounding allowed */
@@ -1445,6 +1445,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   variants: Array<TypeVariant>;
   /** Number of visible variants */
   variantsCount: Scalars['Int']['output'];
+  vatPercent: Scalars['String']['output'];
 };
 
 
@@ -1861,6 +1862,8 @@ export type TypeOrder = {
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Indicates whether the order has an external payment */
+  hasExternalPayment: Scalars['Boolean']['output'];
   /** Indicates whether order payment is still being processed with GoPay payment type */
   hasPaymentInProcess: Scalars['Boolean']['output'];
   /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
@@ -2244,7 +2247,7 @@ export type TypePayment = {
   /** Payment images */
   images: Array<TypeImage>;
   /** Localized payment instruction (domain dependent) */
-  instruction: Maybe<Scalars['String']['output']>;
+  instructions: Maybe<Scalars['String']['output']>;
   /** Payment image by params */
   mainImage: Maybe<TypeImage>;
   /** Payment name */
@@ -2256,9 +2259,10 @@ export type TypePayment = {
   /** List of assigned transports */
   transports: Array<TypeTransport>;
   /** Type of payment */
-  type: Scalars['String']['output'];
+  type: TypePaymentTypeEnum;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  vatPercent: Scalars['String']['output'];
 };
 
 
@@ -2284,6 +2288,12 @@ export type TypePaymentSetupCreationData = {
   /** Identifiers of GoPay payment method */
   goPayCreatePaymentSetup: Maybe<TypeGoPayCreatePaymentSetup>;
 };
+
+/** One of the possible methods of the payment type */
+export enum TypePaymentTypeEnum {
+  Basic = 'basic',
+  GoPay = 'goPay'
+}
 
 export type TypePersonalData = {
   __typename?: 'PersonalData';
@@ -2419,6 +2429,7 @@ export type TypeProduct = {
   usps: Array<Scalars['String']['output']>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  vatPercent: Scalars['String']['output'];
 };
 
 
@@ -3185,6 +3196,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   usps: Array<Scalars['String']['output']>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  vatPercent: Scalars['String']['output'];
 };
 
 
@@ -3472,7 +3484,7 @@ export type TypeTransport = {
   /** Transport images */
   images: Array<TypeImage>;
   /** Localized transport instruction (domain dependent) */
-  instruction: Maybe<Scalars['String']['output']>;
+  instructions: Maybe<Scalars['String']['output']>;
   /** Pointer telling if the transport is of type personal pickup */
   isPersonalPickup: Scalars['Boolean']['output'];
   /** Transport image by params */
@@ -3491,6 +3503,7 @@ export type TypeTransport = {
   transportTypeCode: TypeTransportTypeEnum;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  vatPercent: Scalars['String']['output'];
 };
 
 
@@ -3598,6 +3611,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   usps: Array<Scalars['String']['output']>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  vatPercent: Scalars['String']['output'];
 };
 
 
