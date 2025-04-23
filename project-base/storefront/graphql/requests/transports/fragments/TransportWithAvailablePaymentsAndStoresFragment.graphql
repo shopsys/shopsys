@@ -18,4 +18,5 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     }
     transportTypeCode
     isPersonalPickup
+    vatPercent
 }

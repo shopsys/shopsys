@@ -46,6 +46,7 @@ class PaymentsTest extends GraphQlTestCase
                     ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
             ],
             [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -65,6 +66,7 @@ class PaymentsTest extends GraphQlTestCase
                     ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
             ],
             [
                 'name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -83,6 +85,7 @@ class PaymentsTest extends GraphQlTestCase
                     ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
             ],
             [
                 'name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -103,6 +106,7 @@ class PaymentsTest extends GraphQlTestCase
                     'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/payment_card@2x.png',
                     'paymentGroup' => 'card-payment',
                 ],
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -125,6 +129,7 @@ class PaymentsTest extends GraphQlTestCase
                     'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/bank_account@2x.png',
                     'paymentGroup' => 'bank-transfer',
                 ],
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -138,6 +143,7 @@ class PaymentsTest extends GraphQlTestCase
                     ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
             ],
         ];
 

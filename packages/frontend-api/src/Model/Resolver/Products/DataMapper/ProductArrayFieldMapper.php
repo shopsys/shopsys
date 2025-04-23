@@ -340,4 +340,13 @@ class ProductArrayFieldMapper
     {
         return $data['product_videos'];
     }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function getVatPercent(array $data): string
+    {
+        return $data['vat_percent'];
+    }
 }

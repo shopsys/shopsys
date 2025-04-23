@@ -37,21 +37,21 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
  * @method int[] extractVariantIds(\App\Model\Product\Product $product)
+ * @method string extractBrandDetailSlug(int $domainId, \App\Model\Product\Product $product)
  * @method string extractDetailSlug(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractFlags(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
- * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
- * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
- * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
- * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
  * @method string extractProductType(\App\Model\Product\Product $product, int $domainId)
  * @method int extractPriorityByProductType(\App\Model\Product\Product $product, int $domainId)
- * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
- * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
+ * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
+ * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
+ * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
+ * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
- * @method string extractBrandDetailSlug(int $domainId, \App\Model\Product\Product $product)
+ * @method string extractVat(\App\Model\Product\Product $product, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {

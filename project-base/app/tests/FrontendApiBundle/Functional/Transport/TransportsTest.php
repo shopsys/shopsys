@@ -65,6 +65,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -87,6 +88,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -157,6 +159,7 @@ class TransportsTest extends GraphQlTestCase
                         ],
                     ],
                 ],
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -177,6 +180,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -196,6 +200,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
         ];
 
