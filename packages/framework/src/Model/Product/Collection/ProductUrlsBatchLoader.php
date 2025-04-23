@@ -84,18 +84,6 @@ class ProductUrlsBatchLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
-     */
-    public function getResizedProductImageUrl(Product $product, DomainConfig $domainConfig): ?string
-    {
-        $imageUrl = $this->getProductImageUrl($product, $domainConfig);
-
-        return $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl) : null;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
     protected function getKey(Product $product, DomainConfig $domainConfig): string

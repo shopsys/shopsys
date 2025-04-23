@@ -52,7 +52,7 @@ class GoogleFeedItemFactory
             $product->getDescriptionAsPlainText($domainConfig->getId()),
             $product->getEan(),
             $product->getPartno(),
-            $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
+            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
         );
     }
 

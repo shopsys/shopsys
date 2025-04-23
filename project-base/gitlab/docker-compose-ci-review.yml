@@ -95,6 +95,9 @@ services:
 
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest
+        environment:
+            IMGPROXY_AUTO_WEBP: true
+            IMGPROXY_ENFORCE_WEBP: true
         networks:
             - default
         labels:
