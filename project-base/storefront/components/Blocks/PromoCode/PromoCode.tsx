@@ -1,7 +1,7 @@
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
@@ -64,6 +64,7 @@ export const PromoCode: FC = () => {
                                     textInputProps={{
                                         label: formMeta.fields.promoCode.label,
                                         required: true,
+                                        className: '!rounded-r-none border-r-0',
                                     }}
                                 />
                                 <SubmitButton

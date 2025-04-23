@@ -26,6 +26,8 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
         return null;
     }
 
+    const totalDiscount = cart.totalDiscountPrice;
+
     return (
         <>
             <Adverts className="mb-4" positionName="cartPreview" />
@@ -59,13 +61,13 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                                 )}
                             </AnimatePresence>
 
-                            {promoCodes.map((promoCode) => (
+                            {promoCodes.length > 0 && (
                                 <PromoCode
-                                    key={promoCode.code}
-                                    discount={promoCode.discount}
-                                    promoCode={promoCode.code}
+                                    key={promoCodes[0].code}
+                                    code={promoCodes[0].code}
+                                    discount={totalDiscount}
                                 />
-                            ))}
+                            )}
                         </div>
 
                         <TotalPrice totalPrice={cart.totalPrice} />
