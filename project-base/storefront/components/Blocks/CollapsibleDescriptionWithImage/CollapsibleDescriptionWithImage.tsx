@@ -4,7 +4,7 @@ import { CollapsibleText } from 'components/Basic/CollapsibleText/CollapsibleTex
 import { Image } from 'components/Basic/Image/Image';
 
 type CollapsibleDescriptionWithImageProps = {
-    scrollTargetRef: React.RefObject<HTMLDivElement>;
+    scrollTargetRef: React.RefObject<HTMLDivElement | null>;
     description: string | null;
     currentPage: number;
     imageName: string;

@@ -1,4 +1,4 @@
-import { getCookies } from 'cookies-next';
+import { getCookies } from 'cookies-next/client';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -20,7 +20,7 @@ export const useAuthLoader = () => {
 
     useEffect(() => {
         const cookies = getCookies();
-        const isWithUserTokens = !!(cookies.accessToken && cookies.refreshToken);
+        const isWithUserTokens = !!(cookies?.accessToken && cookies.refreshToken);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
             router.reload();

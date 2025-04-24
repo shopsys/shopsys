@@ -13,7 +13,7 @@ import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type BlogCategoryArticlesWrapperProps = {
     uuid: string;
-    paginationScrollTargetRef: React.RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: React.RefObject<HTMLDivElement | null>;
     blogCategoryTotalCount: number;
 };
 

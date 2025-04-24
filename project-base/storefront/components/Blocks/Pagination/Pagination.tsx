@@ -16,7 +16,7 @@ import { usePagination } from 'utils/ui/usePagination';
 
 type PaginationProps = {
     totalCount: number;
-    paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
     pageSize?: number;
@@ -49,7 +49,7 @@ export const Pagination: FC<PaginationProps> = ({
     const queryParams = getUrlQueriesWithoutDynamicPageQueries(router.query);
 
     const onChangePage = (pageNumber: number) => () => {
-        if (paginationScrollTargetRef?.current) {
+        if (paginationScrollTargetRef.current) {
             paginationScrollTargetRef.current.scrollIntoView();
         }
         updatePagination(pageNumber);

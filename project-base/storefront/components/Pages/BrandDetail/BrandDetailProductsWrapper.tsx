@@ -13,7 +13,7 @@ import { getMappedProducts } from 'utils/mappers/products';
 
 type BrandDetailProductsWrapperProps = {
     brand: TypeBrandDetailFragment;
-    paginationScrollTargetRef: RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
 export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = ({
