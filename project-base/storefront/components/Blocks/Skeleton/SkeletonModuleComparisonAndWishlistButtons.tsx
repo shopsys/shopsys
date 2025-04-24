@@ -1,5 +1,8 @@
-import Skeleton from 'react-loading-skeleton';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleComparisonAndWishlistButtons: FC = () => (
-    <Skeleton className="h-full w-full" containerClassName="h-28 lg:h-6" />
+    <div className="flex flex-wrap gap-x-4 gap-y-1">
+        <Skeleton className="h-6 w-32" />
+        <Skeleton className="h-6 w-40" />
+    </div>
 );

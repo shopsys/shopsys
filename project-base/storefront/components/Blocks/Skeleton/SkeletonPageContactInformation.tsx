@@ -1,24 +1,29 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageContactInformation: FC = () => (
     <Webline>
-        <Skeleton
-            className="vl:h-11 mx-auto mt-1 mb-5 h-16 w-full max-w-[840px] lg:mt-6 lg:mb-10"
-            containerClassName="flex"
-        />
+        <Skeleton className="vl:h-11 mx-auto mt-1 mb-5 flex h-16 w-full max-w-[840px] rounded-xl lg:mt-6 lg:mb-10" />
 
-        <div className="vl:flex-row flex w-full flex-col flex-wrap">
-            <div className="vl:mb-0 vl:flex-1 vl:pr-10 mb-16 w-full">
-                <Skeleton className="mb-3 h-14 w-full lg:w-[65%]" />
-                <Skeleton className="h-20 w-full lg:h-16" />
-                <div className="vl:flex-row mt-8 flex flex-col justify-between gap-3">
-                    <Skeleton className="vl:w-40 h-12 w-full" />
-                    <Skeleton className="vl:w-52 h-12 w-full" />
+        <div className="vl:flex-row flex flex-col flex-wrap">
+            <div className="vl:flex-1 vl:pr-10">
+                <Skeleton className="h-96 rounded-xl" />
+
+                <div className="mt-4 flex flex-col gap-1">
+                    <Skeleton className="h-6" />
+                    <Skeleton className="h-6 w-2/3" />
+                </div>
+
+                <Skeleton className="mt-4 h-6 w-1/3" />
+
+                <div className="mt-4 mb-12 flex flex-col flex-wrap items-center lg:mb-24 lg:w-full lg:flex-row lg:justify-between">
+                    <Skeleton className="vl:w-40 h-9" />
+                    <Skeleton className="vl:w-52 h-9" />
                 </div>
             </div>
+
             <div className="vl:max-w-md w-full">
-                <Skeleton className="h-40 w-full" />
+                <Skeleton className="h-64 rounded-xl" />
             </div>
         </div>
     </Webline>

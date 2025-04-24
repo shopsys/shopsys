@@ -1,16 +1,18 @@
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
-import Skeleton from 'react-loading-skeleton';
+import { SkeletonModuleCustomerComplaints } from './SkeletonModuleCustomerComplaints';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleCustomerComplaintList: FC = () => (
     <SkeletonModuleCustomer>
-        <div className="flex flex-1 flex-col">
-            <Skeleton className="mb-4 h-11" containerClassName="w-72" />
-            <Skeleton className="mb-4 h-8" containerClassName="w-36" />
-            <Skeleton className="mb-4 h-10 w-full" />
+        <Skeleton className="h-8 w-72 lg:h-10" />
 
-            <Skeleton className="mb-5 h-36 w-full" />
-            <Skeleton className="mb-5 h-36 w-full" />
-            <Skeleton className="mb-5 h-36 w-full" />
+        <div className="flex gap-2">
+            <Skeleton className="h-8 w-36" />
+            <Skeleton className="h-8 w-36" />
         </div>
+
+        <Skeleton className="h-12" />
+
+        <SkeletonModuleCustomerComplaints />
     </SkeletonModuleCustomer>
 );

@@ -1,6 +1,7 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { BreadcrumbsSpan, breadcrumbsTwClass } from 'components/Layout/Breadcrumbs/Breadcrumbs';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { Fragment } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { twMergeCustom } from 'utils/twMerge';
@@ -10,12 +11,13 @@ type SkeletonModuleBreadcrumbsProps = {
 };
 
 export const SkeletonModuleBreadcrumbs: FC<SkeletonModuleBreadcrumbsProps> = ({ count }) => (
-    <div className={twMergeCustom('mb-4', breadcrumbsTwClass)}>
+    <Webline className={twMergeCustom('mb-4', breadcrumbsTwClass)}>
         {createEmptyArray(count).map((_, index) => (
             <Fragment key={index}>
-                <Skeleton containerClassName={twJoin('w-28', index >= 1 && 'hidden lg:block')} />
+                <Skeleton className={twJoin('h-4 w-20 rounded-sm', index >= 1 && 'hidden lg:block')} />
+
                 {index < count - 1 && <BreadcrumbsSpan>/</BreadcrumbsSpan>}
             </Fragment>
         ))}
-    </div>
+    </Webline>
 );

@@ -1,9 +1,8 @@
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
-import { twMergeCustom } from 'utils/twMerge';
 
-export const SkeletonModulePromotedCategories: FC = ({ className }) => (
+export const SkeletonModulePromotedCategories: FC = () => (
     <Webline>
-        <Skeleton className={twMergeCustom('vl:h-[635px] h-[245px] w-full', className)} />
+        <Skeleton className="vl:h-[635px] h-[245px] rounded-xl" />
     </Webline>
 );

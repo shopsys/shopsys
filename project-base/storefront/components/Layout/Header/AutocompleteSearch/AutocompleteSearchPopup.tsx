@@ -57,6 +57,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 )}
             >
                 {areAutocompleteSearchDataFetching && <AutocompleteSkeleton />}
+
                 {!areAutocompleteSearchDataFetching && !isWithResults && (
                     <div className="flex items-center">
                         <IconImage alt="warning" icon="warning" />
@@ -65,6 +66,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                         </span>
                     </div>
                 )}
+
                 {!areAutocompleteSearchDataFetching && isWithResults && (
                     <>
                         {productsSearch && (

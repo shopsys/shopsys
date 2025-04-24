@@ -1,14 +1,19 @@
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
+import { SkeletonModuleHeadline } from './SkeletonModuleHeadline';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageRegistration: FC = () => (
-    <Webline>
+    <>
         <SkeletonModuleBreadcrumbs count={2} />
 
-        <div className="mx-auto flex w-full max-w-3xl flex-col">
-            <Skeleton className="mb-3 h-10 w-80" />
-            <Skeleton className="mb-3 h-screen w-full" />
-        </div>
-    </Webline>
+        <Webline width="lg">
+            <VerticalStack gap="sm">
+                <SkeletonModuleHeadline />
+
+                <Skeleton className="h-screen w-full" />
+            </VerticalStack>
+        </Webline>
+    </>
 );

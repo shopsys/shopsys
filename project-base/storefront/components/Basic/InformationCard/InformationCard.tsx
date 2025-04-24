@@ -8,7 +8,7 @@ type InformationCardProps = {
 
 export const InformationCard: FC<InformationCardProps> = ({ children, icon, heading, className }) => {
     return (
-        <div className={twMergeCustom('flex min-w-60 flex-col gap-3', className)}>
+        <div className={twMergeCustom('flex flex-col gap-3', className)}>
             <div className="flex items-center gap-3">
                 {icon}
                 <h5>{heading}</h5>

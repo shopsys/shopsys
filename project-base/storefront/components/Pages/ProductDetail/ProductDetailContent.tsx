@@ -53,7 +53,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         videoIds={product.productVideos}
                     />
 
-                    <div className="flex w-full flex-1 flex-col gap-4">
+                    <div className="flex w-full flex-1 flex-col gap-5">
                         <ProductDetailInfo
                             brand={product.brand}
                             catalogNumber={product.catalogNumber}

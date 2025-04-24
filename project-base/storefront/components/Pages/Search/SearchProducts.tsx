@@ -4,6 +4,7 @@ import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapp
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
@@ -23,8 +24,10 @@ export const SearchProducts: FC = () => {
     }
 
     return (
-        <>
-            <h5>{t('Found products')}</h5>
+        <div>
+            <Webline>
+                <h5 className="mb-2">{t('Found products')}</h5>
+            </Webline>
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
@@ -36,7 +39,7 @@ export const SearchProducts: FC = () => {
                     totalCount={searchProductsData.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
+                <div className="flex flex-1 flex-col gap-5" ref={paginationScrollTargetRef}>
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 
@@ -59,6 +62,6 @@ export const SearchProducts: FC = () => {
                     />
                 </div>
             </FilteredProductsWrapper>
-        </>
+        </div>
     );
 };

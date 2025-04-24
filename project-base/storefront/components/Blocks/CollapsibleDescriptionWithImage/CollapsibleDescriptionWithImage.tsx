@@ -22,7 +22,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
 
     return (
         <Webline>
-            {!!title && <h1 className="mb-4">{title}</h1>}
+            {!!title && <h1 className="mb-5">{title}</h1>}
 
             <section className="vl:flex-row flex w-full flex-col-reverse justify-between gap-5" ref={scrollTargetRef}>
                 {!!description && currentPage === 1 && (

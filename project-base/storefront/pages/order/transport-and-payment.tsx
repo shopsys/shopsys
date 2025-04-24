@@ -21,7 +21,9 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <Script src="https://widget.packeta.com/v6/www/js/library.js" strategy="afterInteractive" />
+
             <MetaRobots content="noindex" />
+
             <TransportAndPaymentContent />
         </>
     );

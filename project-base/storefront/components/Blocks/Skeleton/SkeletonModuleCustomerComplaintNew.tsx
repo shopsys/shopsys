@@ -1,15 +1,15 @@
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
-import Skeleton from 'react-loading-skeleton';
+import { SkeletonModuleHeadline } from './SkeletonModuleHeadline';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleCustomerComplaintNew: FC = () => (
     <SkeletonModuleCustomer>
-        <div className="flex flex-1 flex-col">
-            <Skeleton className="mb-4 h-11" containerClassName="w-72" />
-            <Skeleton className="mb-4 h-10 w-full" />
+        <SkeletonModuleHeadline />
 
-            <Skeleton className="mb-5 h-36 w-full" />
-            <Skeleton className="mb-5 h-36 w-full" />
-            <Skeleton className="mb-5 h-36 w-full" />
-        </div>
+        <Skeleton className="h-12" />
+
+        <Skeleton className="h-32 rounded-xl" />
+        <Skeleton className="h-32 rounded-xl" />
+        <Skeleton className="h-32 rounded-xl" />
     </SkeletonModuleCustomer>
 );

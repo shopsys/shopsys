@@ -5,6 +5,7 @@ import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/Filte
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
@@ -22,7 +23,9 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
 
     return (
         <VerticalStack gap="md">
-            <h1>{title}</h1>
+            <Webline>
+                <h1>{title}</h1>
+            </Webline>
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
@@ -34,7 +37,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     totalCount={flag.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 flex-col gap-5">
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={flag.products.productFilterOptions} />
 

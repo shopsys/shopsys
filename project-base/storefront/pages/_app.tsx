@@ -9,7 +9,6 @@ import { AppProps as NextAppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import 'nprogress/nprogress.css';
 import { ReactElement } from 'react';
-import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/theme.css';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';

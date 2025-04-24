@@ -4,6 +4,7 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
@@ -88,59 +89,63 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     if (hash === '' || email === '') {
         return (
             <Webline width="lg">
-                <h1 className="mb-4">{t('Set new password')}</h1>
-                <Trans
-                    defaultTrans="An error occurred while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
-                    i18nKey="ResendRecoveryLink"
-                    components={{
-                        0: <br />,
-                        lnk1: <Link href={resetPasswordUrl} />,
-                    }}
-                />
+                <VerticalStack gap="sm">
+                    <h1>{t('Set new password')}</h1>
+                    <Trans
+                        defaultTrans="An error occurred while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
+                        i18nKey="ResendRecoveryLink"
+                        components={{
+                            0: <br />,
+                            lnk1: <Link href={resetPasswordUrl} />,
+                        }}
+                    />
+                </VerticalStack>
             </Webline>
         );
     }
 
     return (
         <Webline width="lg">
-            <h1 className="mb-4">{t('Set new password')}</h1>
+            <VerticalStack gap="sm">
+                <h1>{t('Set new password')}</h1>
 
-            <FormProvider {...formProviderMethods}>
-                <Form
-                    className="flex w-full justify-center"
-                    onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}
-                >
-                    <FormContentWrapper>
-                        <FormBlockWrapper>
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPassword.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPassword.label,
-                                }}
-                            />
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPasswordConfirm.name}
-                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPasswordConfirm.label,
-                                }}
-                            />
-                            <FormButtonWrapper>
-                                <SubmitButton
-                                    isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
-                                >
-                                    {t('Set new password')}
-                                </SubmitButton>
-                            </FormButtonWrapper>
-                        </FormBlockWrapper>
-                    </FormContentWrapper>
-                </Form>
-            </FormProvider>
+                <FormProvider {...formProviderMethods}>
+                    <Form
+                        className="flex w-full justify-center"
+                        onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}
+                    >
+                        <FormContentWrapper>
+                            <FormBlockWrapper>
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.newPassword.name}
+                                    render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.newPassword.label,
+                                    }}
+                                />
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.newPasswordConfirm.name}
+                                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.newPasswordConfirm.label,
+                                    }}
+                                />
+                                <FormButtonWrapper>
+                                    <SubmitButton
+                                        isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
+                                    >
+                                        {t('Set new password')}
+                                    </SubmitButton>
+                                </FormButtonWrapper>
+                            </FormBlockWrapper>
+                        </FormContentWrapper>
+                    </Form>
+                </FormProvider>
+            </VerticalStack>
         </Webline>
     );
 };

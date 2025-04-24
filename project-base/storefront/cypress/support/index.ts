@@ -62,7 +62,7 @@ Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
     cy.window().then((win) => {
         win.dispatchEvent(new Event('resize'));
     });
-    cy.get('.react-loading-skeleton').should('not.exist');
+    cy.get('.custom-loading-skeleton').should('not.exist');
     cy.get('#nprogress').should('not.exist');
     cy.getByTID([TIDs.loader]).should('not.exist');
 

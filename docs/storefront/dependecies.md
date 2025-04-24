@@ -8,6 +8,5 @@ Sometimes, it's not worth reinventing the wheel, right? For those cases, we use 
 - [embla-carousel-react](https://www.embla-carousel.com/) - lightweight carousel library
 - [zustand](https://github.com/pmndrs/zustand) - store management
 - [react-toastify](https://fkhadra.github.io/react-toastify/introduction) - solution for displaying toast notifications
-- [react-loading-skeleton](https://github.com/dvtng/react-loading-skeleton) - solution for skeletons
-- [react-hook-form](https://github.com/dvtng/react-loading-skeleton) - solution for forms
+- [react-hook-form](https://github.com/react-hook-form/react-hook-form) - solution for forms
 - [nprogress](https://www.npmjs.com/package/nprogress) - show loading state between navigation

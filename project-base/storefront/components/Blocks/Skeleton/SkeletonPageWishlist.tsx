@@ -1,13 +1,17 @@
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleWishlist } from './SkeletonModuleWishlist';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageWishlist: FC = () => (
-    <Webline>
+    <>
         <SkeletonModuleBreadcrumbs count={2} />
-        <Skeleton className="mb-3 h-8 w-44 lg:mb-4 lg:h-9" />
-        <Skeleton className="h-16" />
-        <SkeletonModuleWishlist />
-    </Webline>
+
+        <Webline>
+            <Skeleton className="mb-4 h-8 w-44 lg:h-10" />
+            <Skeleton className="mb-2 h-9 w-48" />
+
+            <SkeletonModuleWishlist />
+        </Webline>
+    </>
 );

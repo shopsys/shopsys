@@ -1,3 +1,3 @@
-import Skeleton from 'react-loading-skeleton';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
-export const SkeletonModuleComparison: FC = () => <Skeleton className="mb-24 h-[1000px] w-full" />;
+export const SkeletonModuleComparison: FC = () => <Skeleton className="h-[800px]" />;

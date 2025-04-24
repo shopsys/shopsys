@@ -160,6 +160,8 @@
     --color-labelLinkBorderDisabled: #afbbcf;
     --color-labelLinkBorderHovered: #3967b2;
 
+    --color-skeleton: #ececec;
+
     --color-imageOverlay: rgba(201, 201, 201, 0.5);
     --color-overlay: rgba(37, 40, 61, 0.5);
     --color-transparent: transparent;

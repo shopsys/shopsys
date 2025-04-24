@@ -59,12 +59,14 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     />
                 </Webline>
 
-                <ProductDetailInfo
-                    catalogNumber={product.catalogNumber}
-                    name={product.name}
-                    namePrefix={product.namePrefix}
-                    nameSuffix={product.nameSuffix}
-                />
+                <Webline>
+                    <ProductDetailInfo
+                        catalogNumber={product.catalogNumber}
+                        name={product.name}
+                        namePrefix={product.namePrefix}
+                        nameSuffix={product.nameSuffix}
+                    />
+                </Webline>
 
                 <ProductVariantsTable variants={product.variants} />
 
