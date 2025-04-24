@@ -3,9 +3,15 @@ import { createGeolocationSlice, GeolocationSlice } from './slices/createGeoloca
 import { createPageLoadingStateSlice, PageLoadingStateSlice } from './slices/createPageLoadingStateSlice';
 import { createPortalSlice, PortalSlice } from './slices/createPortalSlice';
 import { createSeoCategorySlice, SeoCategorySlice } from './slices/createSeoCategorySlice';
+import { UserMenuSlice, createUserMenuSlice } from './slices/createUserMenuSlice';
 import { create } from 'zustand';
 
-type SessionStore = SeoCategorySlice & PageLoadingStateSlice & PortalSlice & FilterPanelSlice & GeolocationSlice;
+type SessionStore = SeoCategorySlice &
+    PageLoadingStateSlice &
+    PortalSlice &
+    FilterPanelSlice &
+    GeolocationSlice &
+    UserMenuSlice;
 
 export const useSessionStore = create<SessionStore>()((...store) => ({
     ...createSeoCategorySlice(...store),
@@ -13,4 +19,5 @@ export const useSessionStore = create<SessionStore>()((...store) => ({
     ...createPortalSlice(...store),
     ...createFilterPanelSlice(...store),
     ...createGeolocationSlice(...store),
+    ...createUserMenuSlice(...store),
 }));

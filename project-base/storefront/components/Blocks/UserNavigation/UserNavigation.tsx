@@ -1,33 +1,23 @@
+import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { Button } from 'components/Forms/Button/Button';
-import { m } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
-import { collapseExpandAnimation } from 'utils/animations/animationVariants';
+import { useSessionStore } from 'store/useSessionStore';
 
 export const UserNavigation: FC = () => {
     const { t } = useTranslation();
-    const [isExpanded, setIsExpanded] = useState(false);
+    const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
 
     return (
         <aside>
-            <Button
-                className="w-full lg:hidden"
-                variant={isExpanded ? 'secondary' : 'inverted'}
-                onClick={() => setIsExpanded((prev) => !prev)}
-            >
+            <div className="min-w-[275px]">
+                <UserMenu className="hidden lg:flex" />
+            </div>
+
+            <Button className="w-full lg:hidden" variant="secondary" onClick={() => setIsUserMenuOpen(true)}>
+                <MenuIcon className="size-4" />
                 {t('My menu')}
             </Button>
-
-            <m.div
-                key="user-navigation"
-                animate={isExpanded ? 'open' : 'closed'}
-                className="!flex min-w-[275px] flex-col lg:!h-fit"
-                initial={false}
-                variants={collapseExpandAnimation}
-            >
-                <UserMenu className="mt-6 lg:mt-0" />
-            </m.div>
         </aside>
     );
 };
