@@ -75,7 +75,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     'required' => false,
                     'main_product' => $product,
                     'label' => t('Related products'),
-                    'allow_variants' => false,
                 ]);
 
             $builder->add($relatedProductsGroupBuilder);
