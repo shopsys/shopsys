@@ -129,9 +129,10 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     </div>
                 </ExtendedNextLink>
 
-                <div className="flex w-full items-center justify-between gap-1 px-2.5 sm:justify-normal sm:gap-2.5 sm:px-5">
+                <div className="flex w-full items-center justify-between gap-1 px-2.5 md:justify-normal md:gap-2.5 md:px-5">
                     {visibleItemsConfig.addToCart && (
                         <ProductAction
+                            showResponsiveCartIcon
                             gtmMessageOrigin={gtmMessageOrigin}
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}

@@ -1,3 +1,4 @@
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -22,8 +23,9 @@ type AddToCartProps = {
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
     isWithSpinbox?: boolean;
-    buttonSize?: 'small' | 'medium' | 'large';
+    buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonVariant?: 'primary' | 'inverted';
+    showResponsiveCartIcon?: boolean;
 };
 
 export const AddToCart: FC<AddToCartProps> = ({
@@ -36,6 +38,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     isWithSpinbox = true,
     buttonSize = 'medium',
     buttonVariant = 'primary',
+    showResponsiveCartIcon = false,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
@@ -67,7 +70,14 @@ export const AddToCart: FC<AddToCartProps> = ({
     return (
         <div className={twMergeCustom('flex items-center justify-between gap-2', className)}>
             {isWithSpinbox && (
-                <Spinbox defaultValue={1} id={productUuid} min={minQuantity} ref={spinboxRef} size="small" step={1} />
+                <Spinbox
+                    defaultValue={1}
+                    id={productUuid}
+                    min={minQuantity}
+                    ref={spinboxRef}
+                    size={buttonSize}
+                    step={1}
+                />
             )}
 
             <div className="relative">
@@ -83,7 +93,8 @@ export const AddToCart: FC<AddToCartProps> = ({
                     variant={buttonVariant}
                     onClick={onAddToCartHandler}
                 >
-                    <span>{t('Add to cart')}</span>
+                    {showResponsiveCartIcon && <CartIcon className="size-5 md:hidden" />}
+                    <span className={showResponsiveCartIcon ? 'hidden md:block' : ''}>{t('Add to cart')}</span>
                 </Button>
             </div>
         </div>

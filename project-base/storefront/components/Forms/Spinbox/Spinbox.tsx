@@ -14,11 +14,11 @@ type SpinboxProps = {
     defaultValue: number;
     id: string;
     onChangeValueCallback?: (currentValue: number) => void;
-    size?: 'small' | 'large';
+    size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
-    ({ min, onChangeValueCallback, step, defaultValue, size, id }, spinboxForwardedRef) => {
+    ({ min, onChangeValueCallback, step, defaultValue, size = 'large', id }, spinboxForwardedRef) => {
         const { t } = useTranslation();
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
@@ -109,8 +109,10 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'bg-inputBackground outline-inputBorder inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-md outline outline-2 outline-offset-[-2px]',
-                    size === 'small' ? 'py-2.5' : 'py-3.5',
+                    'bg-inputBackground outline-inputBorder inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-md outline-2 outline-offset-[-2px]',
+                    (size === 'small' || size === 'medium') && 'py-1',
+                    size === 'large' && 'py-1 sm:py-1.5',
+                    size === 'xlarge' && 'py-1.5 sm:py-3.5',
                 )}
             >
                 <SpinboxButton
@@ -135,7 +137,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     type="number"
                     className={twJoin(
                         'font-secondary text-inputText text-center text-lg font-bold outline-hidden',
-                        size === 'small' ? 'w-8' : 'w-10',
+                        size === 'xlarge' ? 'w-10' : 'w-8',
                     )}
                     onBlur={onBlurHandler}
                     onInput={onInputHandler}
@@ -167,14 +169,15 @@ type SpinboxButtonProps = {
     onMouseLeave: () => void;
     title: string;
     disabled: boolean;
-    size?: 'small' | 'large';
+    size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, ...props }) => (
     <button
         className={twMergeCustom([
-            'text-inputBorder hover:text-inputBorderHovered cursor-pointer border-none outline-none',
-            size === 'small' ? 'w-7' : 'w-10',
+            'text-inputBorder hover:text-inputBorderHovered flex cursor-pointer justify-center border-none outline-none',
+            size === 'xlarge' ? 'w-10' : 'w-7',
+
             disabled && 'text-inputBorderDisabled pointer-events-none',
         ])}
         {...props}
