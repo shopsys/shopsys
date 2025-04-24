@@ -1,5 +1,4 @@
 import { AuthConfig } from '@urql/exchange-auth';
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 import { CombinedError, makeOperation, Operation } from 'urql';
 
 const isRefreshTokenMutation = (operation: Operation) => {
@@ -19,8 +18,7 @@ const isRefreshTokenMutation = (operation: Operation) => {
  * Add access token to each request if authState is valid
  * Access token is not added to the RefreshTokens mutation (allows refreshing tokens with invalid access token)
  */
-const addAuthToOperation = (operation: Operation): Operation => {
-    const accessToken = (cookies() as unknown as UnsafeUnwrappedCookies).get('accessToken')?.value;
+const addAuthToOperation = (operation: Operation, accessToken: string | undefined): Operation => {
     if (!accessToken || isRefreshTokenMutation(operation)) {
         return operation;
     }
@@ -61,9 +59,9 @@ const refreshAuth = async (): Promise<void> => {
     console.log('skip refreshAuth on server');
 };
 
-export const getAuthExchangeOptions = () => async (): Promise<AuthConfig> => {
+export const getAuthExchangeOptions = (accessToken: string | undefined) => async (): Promise<AuthConfig> => {
     return {
-        addAuthToOperation: (operation) => addAuthToOperation(operation),
+        addAuthToOperation: (operation) => addAuthToOperation(operation, accessToken),
         didAuthError,
         refreshAuth,
     };

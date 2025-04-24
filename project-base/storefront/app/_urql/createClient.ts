@@ -2,7 +2,7 @@ import { getUrqlExchanges } from './exchanges';
 import { registerUrql } from '@urql/next/rsc';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import getConfig from 'next/config';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import 'server-only';
 // eslint-disable-next-line no-restricted-imports
@@ -22,21 +22,22 @@ async function getRedis() {
     return redisClient;
 }
 
-function getClient({
+async function getClient({
     publicGraphqlEndpoint,
     redisClient,
 }: {
     publicGraphqlEndpoint: string;
     redisClient?: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
-}): () => Client {
+}): Promise<() => Client> {
     const { serverRuntimeConfig } = getConfig();
     const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
+    const accessToken = (await cookies()).get('accessToken')?.value;
 
     const makeClient = () => {
         return createUrqlClient({
             url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
-            exchanges: getUrqlExchanges(),
+            exchanges: getUrqlExchanges(accessToken),
             fetchOptions: {
                 headers: {
                     OriginalHost: publicGraphqlEndpointObject.host,
@@ -61,7 +62,7 @@ export async function createClient() {
 
     await redisClient.connect();
 
-    const newClient = getClient({
+    const newClient = await getClient({
         publicGraphqlEndpoint,
         redisClient,
     });
