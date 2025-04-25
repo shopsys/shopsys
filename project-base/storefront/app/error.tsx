@@ -2,14 +2,13 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { isNotFoundError } from 'next/dist/client/components/not-found';
 import { useEffect } from 'react';
 
 const ErrorPage = ({ error }: { error: Error & { digest?: string } }) => {
+    console.log('☀️ error.tsx');
     useEffect(() => {
-        if (!isNotFoundError(error)) {
-            Sentry.captureException(error);
-        }
+        console.log('☀️ error.tsx useEffect');
+        Sentry.captureException(error);
     }, [error]);
 
     return (
