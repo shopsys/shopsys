@@ -6,10 +6,14 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Override;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20180702111020 extends AbstractMigration
+class Version20180702111020 extends AbstractMigration implements ContainerAwareInterface
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -69,29 +73,36 @@ class Version20180702111020 extends AbstractMigration
 
     private function setOrderSubmittedText()
     {
-        $orderSubmittedTextSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;',
-        )->fetchOne();
+        foreach ($this->getAllDomainIds() as $domainId) {
+            $orderSubmittedTextSettingCount = $this->sql(
+                'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = :domainId;',
+                [
+                    'domainId' => $domainId,
+                ],
+            )->fetchOne();
 
-        if ($orderSubmittedTextSettingCount > 0) {
-            return;
+            if ($orderSubmittedTextSettingCount > 0) {
+                return;
+            }
+
+            $orderSubmittedText = t('
+                <p>
+                    Order number {number} has been sent, thank you for your purchase.
+                    We will contact you about next order status. <br /><br />
+                    <a href="{order_detail_url}">Track</a> the status of your order. <br />
+                    {transport_instructions} <br />
+                    {payment_instructions} <br />
+                </p>
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getDomainLocale($domainId));
+
+            $this->sql(
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'orderSubmittedText\', :domainId, :text, \'string\')',
+                [
+                    'text' => $orderSubmittedText,
+                    'domainId' => $domainId,
+                ],
+            );
         }
-
-        $orderSubmittedText = '
-            <p>
-                Order number {number} has been sent, thank you for your purchase.
-                We will contact you about next order status. <br /><br />
-                <a href="{order_detail_url}">Track</a> the status of your order. <br />
-                {transport_instructions} <br />
-                {payment_instructions} <br />
-            </p>
-        ';
-        $this->sql(
-            'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'orderSubmittedText\', 1, :text, \'string\')',
-            [
-                'text' => $orderSubmittedText,
-            ],
-        );
     }
 
     private function setMainAdminMail()
