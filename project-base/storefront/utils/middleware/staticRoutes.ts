@@ -37,44 +37,32 @@ const getStaticUrlsAvailableForDomain = (host: string): Record<string, string> =
     return STATIC_REWRITE_PATHS[domainUrlKey];
 };
 
-const getRewriteTargetPathname = (
-    request: NextRequest,
-    staticUrlsAvailableForDomain: Record<string, string>,
-): string => {
-    let rewriteTargetPathnameArray: string[] = [];
+function getRewriteTargetPathname(request: NextRequest, routeDefinitions: Record<string, string>): string {
+    const requestedSegments = request.nextUrl.pathname.split('/').filter(Boolean);
 
-    for (const [staticRewritePathname, staticLocalizedPathname] of Object.entries(staticUrlsAvailableForDomain)) {
-        const requestedPathnameSegments = request.nextUrl.pathname.split('/');
-        const staticRewritePathnameSegments = staticRewritePathname.split('/');
-        const staticLocalizedPathnameSegments = staticLocalizedPathname.split('/');
+    for (const [leftSide, rightSide] of Object.entries(routeDefinitions)) {
+        const rightSegments = rightSide.split('/').filter(Boolean);
 
-        let areAllSegmentsIdenticalOrDynamic = true;
-        const rewriteTargetPathnameArrayBuffer = [];
-        const hasDynamicSegment = staticRewritePathnameSegments.some((segment) => isPathnameSegmentDynamic(segment));
+        if (rightSegments.length !== requestedSegments.length) {
+            continue; // Skip if segment count doesn't match
+        }
 
-        for (let index = 0; index < requestedPathnameSegments.length; index++) {
-            const isCurrentPathnameSegmentDynamic = isPathnameSegmentDynamic(staticRewritePathnameSegments[index]);
+        const params: Record<string, string> = {};
+        let isMatch = true;
 
-            areAllSegmentsIdenticalOrDynamic =
-                areAllSegmentsIdenticalOrDynamic &&
-                (staticLocalizedPathnameSegments[index] === requestedPathnameSegments[index] ||
-                    isCurrentPathnameSegmentDynamic);
-
-            if (isCurrentPathnameSegmentDynamic) {
-                rewriteTargetPathnameArrayBuffer.push(requestedPathnameSegments[index]);
-            } else {
-                rewriteTargetPathnameArrayBuffer.push(staticRewritePathnameSegments[index]);
+        for (let i = 0; i < rightSegments.length; i++) {
+            if (rightSegments[i].startsWith(':')) {
+                params[rightSegments[i]] = requestedSegments[i]; // Store dynamic value
+            } else if (rightSegments[i] !== requestedSegments[i]) {
+                isMatch = false;
+                break;
             }
         }
 
-        if (hasDynamicSegment && requestedPathnameSegments.length !== staticRewritePathnameSegments.length) {
-            areAllSegmentsIdenticalOrDynamic = false;
-        }
-
-        if (areAllSegmentsIdenticalOrDynamic) {
-            rewriteTargetPathnameArray = [...rewriteTargetPathnameArrayBuffer];
+        if (isMatch) {
+            return leftSide.replace(/:(\w+)/g, (_, param) => params[':' + param] || '');
         }
     }
 
-    return rewriteTargetPathnameArray.join('/'); // returns empty string if rewriteTargetPathnameArray is empty
-};
+    return ''; // No match found
+}
