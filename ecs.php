@@ -70,6 +70,7 @@ return ECSConfig::configure()
                 'Shopsys\FrameworkBundle\Twig',
                 'Shopsys\FrontendApiBundle',
                 'Shopsys\LuigisBoxBundle',
+                'Shopsys\MakerBundle',
                 'Shopsys\MigrationBundle\Command',
                 'Shopsys\MigrationBundle\Component',
                 'Shopsys\ProductFeed\GoogleBundle\Model',
@@ -94,6 +95,7 @@ return ECSConfig::configure()
             __DIR__ . '/packages/coding-standards/tests/Unit/**/correct/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/Correct/*',
             __DIR__ . '/packages/coding-standards/tests/Unit/**/fixed/*',
+            __DIR__ . '/packages/maker/templates/*',
             AssignmentInConditionSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',
             ],
@@ -115,6 +117,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Blog/Article/Elasticsearch/BlogArticleElasticsearchDataFetcher.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/ProductExportRepository.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php',
+                __DIR__ . '/packages/maker/src/EntityConfig/EntityFieldsConfigurator.php',
             ],
             DisallowMultipleAssignmentsSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',
@@ -156,6 +159,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/tests/Unit/Model/Payment/IndependentPaymentVisibilityCalculationTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Product/Search/ProductElasticsearchConverterTest.php',
                 __DIR__ . '/packages/frontend-api/src/Model/Resolver/Customer/User/CustomerUserResolverMap.php',
+                __DIR__ . '/packages/maker/src/EntityConfig/EntityFieldsConfigurator.php',
                 __DIR__ . '/packages/migrations/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
                 __DIR__ . '/packages/product-feed-zbozi/src/DataFixtures/ZboziPluginDataFixture.php',
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',

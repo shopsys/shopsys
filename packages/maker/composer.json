@@ -1,0 +1,64 @@
+{
+    "name": "shopsys/maker",
+    "type": "library",
+    "description": "Set of Symfony makers for generating code within Shopsys Platform projects",
+    "keywords": ["Shopsys Platform", "SSFW", "maker", "code generator"],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shopsys\\MakerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\MakerBundle\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "doctrine/collections": "^1.5",
+        "doctrine/data-fixtures": "^1.3",
+        "doctrine/dbal": "^3.8.5",
+        "doctrine/orm": "^2.11.2",
+        "doctrine/persistence": "^3.3.3",
+        "prezent/doctrine-translatable": "^3.3.0",
+        "ramsey/uuid": "^4.3.1",
+        "shopsys/framework": "17.0.x-dev",
+        "shopsys/migrations": "17.0.x-dev",
+        "symfony/console": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/filesystem": "^6.4",
+        "symfony/framework-bundle": "^6.4",
+        "symfony/http-kernel": "^6.4",
+        "symfony/maker-bundle": "^1.62",
+        "symfony/process": "^6.4",
+        "symfony/service-contracts": "^2.5.2",
+        "symfony/yaml": "^6.4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11.7",
+        "phpstan/phpstan-doctrine": "^1.4.8.",
+        "phpstan/phpstan-phpunit": "^1.4.0",
+        "phpstan/phpstan-symfony": "^1.4.6",
+        "phpunit/phpunit": "^9.5.20",
+        "shopsys/coding-standards": "17.0.x-dev"
+    },
+    "extra": {
+        "symfony": {
+            "require": "^6.4",
+            "docker": false
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

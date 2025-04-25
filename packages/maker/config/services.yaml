@@ -1,0 +1,22 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Shopsys\MakerBundle\:
+        exclude:
+            - '../src/DependencyInjection/'
+        resource: '../src/'
+
+    Shopsys\MakerBundle\EntityConfig\EntityFieldsConfigurator:
+        arguments:
+            $managerRegistry: '@doctrine'
+
+    Shopsys\MakerBundle\Maker\FrontendApiTypeMaker:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    Shopsys\MakerBundle\Utils\EntityChoiceHelper:
+        arguments:
+            $entityExtensionMap: '%shopsys.entity_extension.map%'

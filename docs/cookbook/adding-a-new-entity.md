@@ -170,3 +170,8 @@ php phing db-migrations
 
 Now, there is a new entity in your system - `Salesmen` - for which exists a database table that has 4 records with salesmen.
 If you want to display a list of them in the administration, follow ["Create basic grid" cookbook](./create-basic-grid.md).
+
+!!! tip
+
+    To speedup your implemetation, you can use our custom Symfony makers that can generate new entities and related classes.
+    Check [Generating code with Symfony makers](../introduction/generating-code-with-symfony-makers.md) for more information.

@@ -472,3 +472,8 @@ $brandData = $this->brandDataFactory->create();
 // ...
 $brand = $this->brandFactory->create($brandData);
 ```
+
+!!! tip
+
+    To speedup your implemetation, you can use our custom Symfony makers that can generate new entities and related classes.
+    Check [Generating code with Symfony makers](../introduction/generating-code-with-symfony-makers.md) for more information.

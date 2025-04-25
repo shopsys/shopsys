@@ -16,7 +16,7 @@ NC="\e[0m"
 #   /CHANGELOG-XX.md
 #   /packages/framework/src/Resources/config/packages_registry.yaml
 #   project-base/app/config/bundles.php
-#   "replace" section in monorepo's composer.json
+#   "replace", "autoload", and "autoload-dev" sections in monorepo's composer.json
 get_all_packages() {
     echo "administration \
         framework \
@@ -37,6 +37,7 @@ get_all_packages() {
         coding-standards \
         http-smoke-testing \
         form-types-bundle \
+        maker \
         migrations \
         monorepo-tools \
         php-image \
