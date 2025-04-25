@@ -132,7 +132,7 @@
     }
 
     .Toastify__toast {
-        @apply !rounded;
+        @apply !rounded-toast;
     }
 
     .Toastify__toast-body {

@@ -109,7 +109,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'bg-input-bg-default outline-input-border-default inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-md outline-2 outline-offset-[-2px]',
+                    'bg-input-bg-default outline-input-border-default rounded-counter inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden outline-2 outline-offset-[-2px]',
                     (size === 'small' || size === 'medium') && 'py-1',
                     size === 'large' && 'py-1 sm:py-1.5',
                     size === 'xlarge' && 'py-1.5 sm:py-3.5',

@@ -12,7 +12,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type = 'custom'
     const router = useRouter();
 
     const flagTwClass = twMergeCustom(
-        'inline-flex rounded-sm px-1.5 py-0.5 text-xs transition-all',
+        'inline-flex rounded-flag px-1.5 py-0.5 text-xs transition-all',
         className,
         type === 'blog' &&
             'bg-text-less font-secondary font-semiBold text-xs !text-text-inverted no-underline hover:bg-background-accent-more hover:text-text-inverted hover:!no-underline',

@@ -10,17 +10,14 @@
     --radius-3xl: 24px;
     --radius-4xl: 32px;
     --radius-full: 9999px;
-    --radius-badge: var(--radius-sm);
+    --radius-DEPRECTED_image: var(--radius-xl);
     --radius-button: var(--radius-md);
     --radius-checkbox: var(--radius-sm);
     --radius-counter: var(--radius-md);
-    --radius-image: var(--radius-xl);
-    --radius-inner: var(--radius-lg);
+    --radius-flag: var(--radius-sm);
     --radius-input: var(--radius-md);
-    --radius-label: var(--radius-xl);
-    --radius-outer: var(--radius-xl);
     --radius-tag: var(--radius-full);
-    --radius-flash-message: var(--radius-md);
+    --radius-toast: var(--radius-md);
     --radius-product-card: var(--radius-xl);
 
     --border-width-0: 0px;
@@ -124,7 +121,6 @@
     --color-base-white: #ffffff;
 
     --color-brand-50: #d5eefe;
-    --color-brand-50: #d5eefe;
     --color-brand-100: #acdeff;
     --color-brand-200: #73c7ff;
     --color-brand-300: #39b1ff;
@@ -170,7 +166,7 @@
     --color-red-100: #fce5e5;
     --color-red-200: #fce5e5;
     --color-red-500: #ec5353;
-    --color-red-700: #ec5353;
+    --color-red-700: #d44a4a;
 
     --color-secondary-50: #f4faff;
     --color-secondary-100: #f4faff;
@@ -206,8 +202,27 @@
     --color-DEPRECATED_tag_light-text-disabled: var(--color-text-default);
     --color-DEPRECATED_tag_light-text-hovered: var(--color-text-default);
 
+    --color-flag-text: var(--color-text-inverted);
+
     --color-skeleton-default: var(--color-gray-200);
     --color-skeleton-less: var(--color-gray-100);
+
+    --color-toast-bg-default: var(--color-brand-50);
+    --color-toast-bg-error: var(--color-red-100);
+    --color-toast-bg-succes: var(--color-green-100);
+    --color-toast-bg-warning: var(--color-orange-100);
+    --color-toast-border-default: var(--color-border-brand);
+    --color-toast-border-error: var(--color-border-error);
+    --color-toast-border-succes: var(--color-border-success);
+    --color-toast-border-warning: var(--color-icon-warning);
+    --color-toast-icon-default: var(--color-icon-accent);
+    --color-toast-icon-error: var(--color-icon-error);
+    --color-toast-icon-succes: var(--color-icon-success);
+    --color-toast-icon-warning: var(--color-icon-warning);
+    --color-toast-text-default: var(--color-text-accent);
+    --color-toast-text-error: var(--color-text-error);
+    --color-toast-text-succes: var(--color-text-success);
+    --color-toast-text-warning: var(--color-text-warning);
 
     --color-availability-in-stock: var(--color-text-success);
     --color-availability-out-of-stock: var(--color-text-error);
@@ -226,8 +241,6 @@
     --color-background-brand-less: var(--color-brand-600);
     --color-background-success-more: var(--color-green-700);
     --color-background-warning-more: var(--color-orange-700);
-
-    --color-badge-text: var(--color-text-inverted);
 
     --color-border-active: var(--color-secondary-600);
     --color-border-brand: var(--color-brand-700);
@@ -309,23 +322,6 @@
     --color-fill-more: var(--color-gray-100);
     --color-fill-most: var(--color-gray-200);
     --color-fill-accent-less: var(--color-secondary-100);
-
-    --color-flash-message-bg-default: var(--color-brand-50);
-    --color-flash-message-bg-error: var(--color-red-100);
-    --color-flash-message-bg-succes: var(--color-green-100);
-    --color-flash-message-bg-warning: var(--color-orange-100);
-    --color-flash-message-border-default: var(--color-border-brand);
-    --color-flash-message-border-error: var(--color-border-error);
-    --color-flash-message-border-succes: var(--color-border-success);
-    --color-flash-message-border-warning: var(--color-icon-warning);
-    --color-flash-message-icon-default: var(--color-icon-accent);
-    --color-flash-message-icon-error: var(--color-icon-error);
-    --color-flash-message-icon-succes: var(--color-icon-success);
-    --color-flash-message-icon-warning: var(--color-icon-warning);
-    --color-flash-message-text-default: var(--color-text-accent);
-    --color-flash-message-text-error: var(--color-text-error);
-    --color-flash-message-text-succes: var(--color-text-success);
-    --color-flash-message-text-warning: var(--color-text-warning);
 
     --color-footer-bg-dark: var(--color-background-brand);
     --color-footer-bg-light: var(--color-background-accent-less);
