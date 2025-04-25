@@ -191,9 +191,6 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
 
-    Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
-        alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
-
     Shopsys\FrameworkBundle\Model\Cart\AddProductResult:
         alias: App\Model\Cart\AddProductResult
 
