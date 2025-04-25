@@ -72,8 +72,6 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-
-        $this->relatedProducts = new ArrayCollection();
     }
 
     /**
