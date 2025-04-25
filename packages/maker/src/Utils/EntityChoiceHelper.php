@@ -55,7 +55,10 @@ class EntityChoiceHelper
 
         $availableEntityNames = $this->filterOutShopsysEntitiesThatHaveExtensionInProjectBase($allEntityNames);
 
-        return array_map($this->convertFqcnToAutocompleteFormat(...), $availableEntityNames);
+        $choices = array_map($this->convertFqcnToAutocompleteFormat(...), $availableEntityNames);
+        sort($choices);
+
+        return $choices;
     }
 
     /**
