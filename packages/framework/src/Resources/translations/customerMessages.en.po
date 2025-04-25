@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Amount"
+msgstr ""
+
+msgid "Available immediately"
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "Catalog number"
+msgstr ""
+
+msgid "Delivery address"
+msgstr ""
+
+msgid "Exchange"
+msgstr ""
+
+msgid "Fix"
+msgstr ""
+
+msgid "Free"
+msgstr ""
+
+msgid "In stock"
+msgstr ""
+
+msgid "Instructions"
+msgstr ""
+
+msgid "Money return"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Order items"
+msgstr ""
+
+msgid "Out of stock"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Transport"
+msgstr ""
+
+msgid "Unavailable"
+msgstr ""
+
+msgid "Unit price"
+msgstr ""
+
+msgid "ex VAT"
+msgstr ""
+
+msgid "inc VAT"
+msgstr ""
+
+msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
+msgstr ""
+

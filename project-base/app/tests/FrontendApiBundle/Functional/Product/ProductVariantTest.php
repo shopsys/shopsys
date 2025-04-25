@@ -50,7 +50,7 @@ class ProductVariantTest extends GraphQlTestCase
             'availableStoresCount' => null,
             'stockQuantity' => null,
             'availability' => [
-                'name' => t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
             'storeAvailabilities' => [],

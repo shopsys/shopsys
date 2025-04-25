@@ -144,11 +144,11 @@ class ProductAvailabilityFacade
 
         foreach ($stores as $store) {
             $availabilityStatus = AvailabilityStatusEnum::IN_STOCK;
-            $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+            $availabilityInformation = t('Available immediately', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
 
             if (!$isAvailable) {
                 $availabilityStatus = AvailabilityStatusEnum::OUT_OF_STOCK;
-                $availabilityInformation = t('Unavailable', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+                $availabilityInformation = t('Unavailable', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
             } else {
                 $stock = $store->getStock();
 
@@ -187,7 +187,7 @@ class ProductAvailabilityFacade
         return t(
             '{0,1} Available in one week|[2,Inf] Available in %count% weeks',
             ['%count%' => $weeks],
-            Translator::DEFAULT_TRANSLATION_DOMAIN,
+            Translator::CUSTOMER_TRANSLATION_DOMAIN,
             $domainLocale,
         );
     }
@@ -256,7 +256,7 @@ class ProductAvailabilityFacade
      */
     public function getOnStockText(string $domainLocale): string
     {
-        return t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+        return t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
     }
 
     /**
@@ -265,7 +265,7 @@ class ProductAvailabilityFacade
      */
     public function getOutOfStockText(string $domainLocale): string
     {
-        return t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+        return t('Out of stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $domainLocale);
     }
 
     /**

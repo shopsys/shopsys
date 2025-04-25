@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "Amount"
+msgstr "Množství"
+
+msgid "Available immediately"
+msgstr "Ihned k odběru"
+
+msgid "Billing address"
+msgstr "Fakturační adresa"
+
+msgid "Catalog number"
+msgstr "Katalogové číslo"
+
+msgid "Delivery address"
+msgstr "Dodací adresa"
+
+msgid "Exchange"
+msgstr "Výměna"
+
+msgid "Fix"
+msgstr "Oprava"
+
+msgid "Free"
+msgstr "Zdarma"
+
+msgid "In stock"
+msgstr "Skladem"
+
+msgid "Instructions"
+msgstr "Pokyny"
+
+msgid "Money return"
+msgstr "Vrácení peněz"
+
+msgid "Note"
+msgstr "Poznámka"
+
+msgid "Order items"
+msgstr "Položky objednávky"
+
+msgid "Out of stock"
+msgstr "Aktuálně nedostupné"
+
+msgid "Payment"
+msgstr "Platba"
+
+msgid "Transport"
+msgstr "Doprava"
+
+msgid "Unavailable"
+msgstr "Nedostupné"
+
+msgid "Unit price"
+msgstr "Jednotková cena"
+
+msgid "ex VAT"
+msgstr "bez DPH"
+
+msgid "inc VAT"
+msgstr "s DPH"
+
+msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
+msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů"
+

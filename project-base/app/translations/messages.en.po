@@ -10,9 +10,6 @@ msgstr ""
 msgid "Basic objects"
 msgstr ""
 
-msgid "Brand overview"
-msgstr ""
-
 msgid "Catalog numbers"
 msgstr ""
 
@@ -34,22 +31,13 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-msgid "Contact"
-msgstr ""
-
 msgid "Default"
-msgstr ""
-
-msgid "Edit data"
 msgstr ""
 
 msgid "File"
 msgstr ""
 
 msgid "File not found in main filesystem. Please try again later."
-msgstr ""
-
-msgid "Forgotten password"
 msgstr ""
 
 msgid "GTM ID"
@@ -88,9 +76,6 @@ msgstr ""
 msgid "List of products"
 msgstr ""
 
-msgid "Login"
-msgstr ""
-
 msgid "Mandatory variables"
 msgstr ""
 
@@ -104,12 +89,6 @@ msgid "Open in new window"
 msgstr ""
 
 msgid "Optional variables"
-msgstr ""
-
-msgid "Order detail"
-msgstr ""
-
-msgid "Orders"
 msgstr ""
 
 msgid "Outside layout"
@@ -127,9 +106,6 @@ msgstr ""
 msgid "Product image"
 msgstr ""
 
-msgid "Registration"
-msgstr ""
-
 msgid "Related products"
 msgstr ""
 
@@ -140,9 +116,6 @@ msgid "Rows"
 msgstr ""
 
 msgid "Save"
-msgstr ""
-
-msgid "Search [noun]"
 msgstr ""
 
 msgid "Secondary"

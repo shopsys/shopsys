@@ -409,9 +409,6 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
-msgid "Available immediately"
-msgstr ""
-
 msgid "Available payment methods"
 msgstr ""
 
@@ -2128,9 +2125,6 @@ msgstr ""
 msgid "Fourth column categories"
 msgstr ""
 
-msgid "Free"
-msgstr ""
-
 msgid "Free from order value"
 msgstr ""
 
@@ -3152,9 +3146,6 @@ msgid "Origin"
 msgstr ""
 
 msgid "Original translation"
-msgstr ""
-
-msgid "Out of stock"
 msgstr ""
 
 msgid "Overwrite Price list"
@@ -4435,9 +4426,6 @@ msgstr ""
 msgid "Transfers - view"
 msgstr ""
 
-msgid "Transport"
-msgstr ""
-
 msgid "Transport type"
 msgstr ""
 
@@ -4498,9 +4486,6 @@ msgstr ""
 msgid "Unable to load list of language constants"
 msgstr ""
 
-msgid "Unavailable"
-msgstr ""
-
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr ""
 
@@ -4514,9 +4499,6 @@ msgid "Unit <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
-msgstr ""
-
-msgid "Unit price"
 msgstr ""
 
 msgid "Unit price excluding VAT"
@@ -4897,9 +4879,6 @@ msgstr ""
 msgid "empty value"
 msgstr ""
 
-msgid "ex VAT"
-msgstr ""
-
 msgid "files"
 msgstr ""
 
@@ -4922,9 +4901,6 @@ msgid "higher than"
 msgstr ""
 
 msgid "in category (between first and second row of products)"
-msgstr ""
-
-msgid "inc VAT"
 msgstr ""
 
 msgid "include"
@@ -5024,9 +5000,6 @@ msgid "without VAT"
 msgstr ""
 
 msgid "without positioning"
-msgstr ""
-
-msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
 msgstr ""
 
 msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."

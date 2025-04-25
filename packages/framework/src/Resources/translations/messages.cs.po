@@ -409,9 +409,6 @@ msgstr "Automatické filtry"
 msgid "Available"
 msgstr "Dostupné"
 
-msgid "Available immediately"
-msgstr "Ihned k odběru"
-
 msgid "Available payment methods"
 msgstr "Dostupné platby"
 
@@ -2128,9 +2125,6 @@ msgstr "Zaslání zapomenutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategorie čtvrtého sloupce"
 
-msgid "Free"
-msgstr "Zdarma"
-
 msgid "Free from order value"
 msgstr "Zdarma od hodnoty objednávky"
 
@@ -3153,9 +3147,6 @@ msgstr "Původ"
 
 msgid "Original translation"
 msgstr "Původní překlad"
-
-msgid "Out of stock"
-msgstr "Aktuálně nedostupné"
 
 msgid "Overwrite Price list"
 msgstr "Přepsat ceník"
@@ -4435,9 +4426,6 @@ msgstr "Přenosy"
 msgid "Transfers - view"
 msgstr "Přehled chyb v přenosech - zobrazení"
 
-msgid "Transport"
-msgstr "Doprava"
-
 msgid "Transport type"
 msgstr "Typ dopravy"
 
@@ -4498,9 +4486,6 @@ msgstr "Zboží se nepodařilo vložit"
 msgid "Unable to load list of language constants"
 msgstr "Nepodařilo se načíst přehled jazykových konstant"
 
-msgid "Unavailable"
-msgstr "Nedostupné"
-
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr "Došlo k neočekávané chybě, soubor nebyl nahrán."
 
@@ -4515,9 +4500,6 @@ msgstr "Jednotka <strong>{{ name }}</strong> byla smazána"
 
 msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
 msgstr "Jednotka <strong>{{ name }}</strong> byla smazána a byla nahrazena jednotkou <strong>{{ newName }}</strong>."
-
-msgid "Unit price"
-msgstr "Jednotková cena"
 
 msgid "Unit price excluding VAT"
 msgstr "Jednotková cena bez DPH"
@@ -4897,9 +4879,6 @@ msgstr "neobsahuje"
 msgid "empty value"
 msgstr "prázdná hodnota"
 
-msgid "ex VAT"
-msgstr "bez DPH"
-
 msgid "files"
 msgstr "soubory"
 
@@ -4923,9 +4902,6 @@ msgstr "větší než"
 
 msgid "in category (between first and second row of products)"
 msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
-
-msgid "inc VAT"
-msgstr "s DPH"
 
 msgid "include"
 msgstr "obsahuje"
@@ -5025,9 +5001,6 @@ msgstr "bez DPH"
 
 msgid "without positioning"
 msgstr "bez umístění"
-
-msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
-msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů"
 
 msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
 msgstr "{1} Existuje jeden parametr typu slider, který nemá vyplněné své číselné hodnoty.|[2,4] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty.|[5,Inf] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty."

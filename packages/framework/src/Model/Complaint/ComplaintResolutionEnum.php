@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ComplaintResolutionEnum extends AbstractEnum
 {
@@ -25,13 +26,25 @@ class ComplaintResolutionEnum extends AbstractEnum
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getAllIndexedByTranslationsForCustomer(): array
+    {
+        return [
+            t('Fix', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN) => static::FIX,
+            t('Exchange', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN) => static::EXCHANGE,
+            t('Money return', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN) => static::MONEY_RETURN,
+        ];
+    }
+
+    /**
      * @return array<string, array<string, string>>
      */
     public function serialize(): array
     {
         $returnArray = [];
 
-        foreach ($this->getAllIndexedByTranslations() as $name => $value) {
+        foreach ($this->getAllIndexedByTranslationsForCustomer() as $name => $value) {
             $returnArray[$value] = [
                 'name' => $name,
                 'value' => $value,
