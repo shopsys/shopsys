@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Domain;
 
 use Override;
+use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -17,13 +19,17 @@ class DomainFormType extends AbstractType
     public const string FIELD_ICON = 'icon';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('domainIcon', DisplayOnlyDomainIconType::class, [
+                'label' => t('Existing icon'),
+                'data' => $options['domain']->getId(),
+                'show_domain_name' => false,
+            ])
             ->add(self::FIELD_ICON, ImageUploadType::class, [
                 'required' => false,
                 'file_constraints' => [
@@ -37,17 +43,20 @@ class DomainFormType extends AbstractType
                 ],
                 'info_text' => t('The optimal size of the icon is 46x26 px. Only PNG format is allowed.'),
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_domain_list',
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     * {@inheritdoc}
      */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'attr' => ['novalidate' => 'novalidate'],
-        ]);
+        $resolver->setDefaults(['attr' => ['novalidate' => 'novalidate']])
+            ->setRequired('domain')
+            ->setAllowedTypes('domain', [DomainConfig::class]);
     }
 }

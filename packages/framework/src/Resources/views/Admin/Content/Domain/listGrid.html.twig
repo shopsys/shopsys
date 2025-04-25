@@ -10,7 +10,4 @@
 
 {% block grid_value_cell_id_icon %}
     {{ domainIcon(row.id) }}
-    <span class="js-domain-icon-edit-container in-icon in-icon--edit in-icon--after-flag right" data-url="{{ url('admin_domain_edit', { id: row.id }) }}">
-        {{ ux_icon('pencil', { class: 'js-edit-domain-icon', 'title': 'Edit'|trans }) }}
-    </span>
 {% endblock %}

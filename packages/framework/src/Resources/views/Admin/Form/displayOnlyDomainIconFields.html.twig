@@ -6,9 +6,11 @@
                     <span class="form-line__item__domain__image">
                         {{ domainIcon(form.vars.data) }}
                     </span>
-                    <strong class="form-line__item__domain__name">
-                        {{ getDomainName(form.vars.data) }}
-                    </strong>
+                    {% if show_domain_name %}
+                        <strong class="form-line__item__domain__name">
+                            {{ getDomainName(form.vars.data) }}
+                        </strong>
+                    {% endif %}
                 </div>
             </div>
         </div>

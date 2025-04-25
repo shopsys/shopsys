@@ -21,6 +21,7 @@ class DisplayOnlyDomainIconType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['data'] = (int)$options['data'];
+        $view->vars['show_domain_name'] = $options['show_domain_name'];
     }
 
     /**
@@ -32,6 +33,9 @@ class DisplayOnlyDomainIconType extends AbstractType
         $resolver->setDefaults([
             'mapped' => false,
             'required' => false,
-        ]);
+            'show_domain_name' => true,
+        ])
+            ->setDefined('show_domain_name')
+            ->setAllowedTypes('show_domain_name', ['bool']);
     }
 }

@@ -2539,9 +2539,6 @@ msgstr "Seznam produktů v objednávce (obrázek, název, množství, cena za je
 msgid "Lists and nomenclatures"
 msgstr "Seznamy a číselníky"
 
-msgid "Loading"
-msgstr "Načítám"
-
 msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
 msgstr "Lokalizace \"%locale%\" není podporovaná. Můžete si vybrat pouze z následujících lokalizací: \"%supportedLocales%\"."
 
@@ -4560,9 +4557,6 @@ msgstr "Nahrát přílohu"
 
 msgid "Upload files"
 msgstr "Nahrát soubory"
-
-msgid "Upload icon"
-msgstr "Nahrát ikonu"
 
 msgid "Upload image"
 msgstr "Nahrát obrázek"

@@ -14,7 +14,6 @@ import './ColorPicker';
 import './Complaint';
 import './ConfirmDelete';
 import './CounterUp';
-import './DomainIcon';
 import './DynamicPlaceholder';
 import './EntityUrlsNew';
 import './EntityUrlsRow';
