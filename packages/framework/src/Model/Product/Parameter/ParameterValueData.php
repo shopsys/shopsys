@@ -24,11 +24,6 @@ class ParameterValueData
     /**
      * @var string|null
      */
-    public $uuid;
-
-    /**
-     * @var string|null
-     */
     public $rgbHex;
 
     /**

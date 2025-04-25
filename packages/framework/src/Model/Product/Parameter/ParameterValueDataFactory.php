@@ -57,7 +57,6 @@ class ParameterValueDataFactory
         $parameterValueData->text = $parameterValue->getText();
         $parameterValueData->numericValue = $parameterValue->getNumericValue();
         $parameterValueData->locale = $parameterValue->getLocale();
-        $parameterValueData->uuid = $parameterValue->getUuid();
         $parameterValueData->rgbHex = $parameterValue->getRgbHex();
         $parameterValueData->colourIcon = $this->uploadedFileDataFactory->create();
     }

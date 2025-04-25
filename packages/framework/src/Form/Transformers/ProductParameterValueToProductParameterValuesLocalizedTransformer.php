@@ -46,15 +46,9 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
             $locale = $productParameterValueData->parameterValueData->locale;
 
             if (!array_key_exists($parameterId, $normData)) {
-                $normData[$parameterId] = $this->productParameterValuesLocalizedDataFactory->create();
-                $normData[$parameterId]->parameter = $productParameterValueData->parameter;
-                $normData[$parameterId]->valueTextsByLocale = [];
-            }
-
-            $normData[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
-
-            if ($productParameterValueData->parameter->isSlider()) {
-                $normData[$parameterId]->numericValue = $productParameterValueData->parameterValueData->text;
+                $normData[$parameterId] = $this->productParameterValuesLocalizedDataFactory->createFromProductParameterValueData($productParameterValueData);
+            } else {
+                $normData[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
             }
         }
 
@@ -72,22 +66,8 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
 
             /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData $productParameterValuesLocalizedData */
             foreach ($value as $productParameterValuesLocalizedData) {
-                foreach ($productParameterValuesLocalizedData->valueTextsByLocale as $locale => $valueText) {
-                    if ($valueText !== null) {
-                        $productParameterValueData = $this->productParameterValueDataFactory->create();
-                        $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
-                        $parameterValueData = $this->parameterValueDataFactory->create();
-                        $parameterValueData->text = $valueText;
-
-                        if ($productParameterValuesLocalizedData->parameter->isSlider()) {
-                            $parameterValueData->numericValue = $valueText;
-                        }
-
-                        $parameterValueData->locale = $locale;
-                        $productParameterValueData->parameterValueData = $parameterValueData;
-
-                        $modelData[] = $productParameterValueData;
-                    }
+                foreach ($this->productParameterValueDataFactory->createMultipleFromProductParameterValuesLocalizedData($productParameterValuesLocalizedData) as $productParameterValueData) {
+                    $modelData[] = $productParameterValueData;
                 }
             }
 

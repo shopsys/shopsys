@@ -8,9 +8,12 @@ class ProductParameterValueDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
-    public function __construct(protected readonly ParameterValueDataFactory $parameterValueDataFactory)
-    {
+    public function __construct(
+        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
+        protected readonly ParameterFacade $parameterFacade,
+    ) {
     }
 
     /**
@@ -54,5 +57,42 @@ class ProductParameterValueDataFactory
         $productParameterValueData->parameterValueData = $this->parameterValueDataFactory->createFromParameterValue(
             $productParameterValue->getValue(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData $productParameterValuesLocalizedData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
+     */
+    public function createMultipleFromProductParameterValuesLocalizedData(
+        ProductParameterValuesLocalizedData $productParameterValuesLocalizedData,
+    ): array {
+        $productParameterValuesData = [];
+
+        foreach ($productParameterValuesLocalizedData->valueTextsByLocale as $locale => $valueText) {
+            if ($valueText !== null) {
+                $productParameterValueData = $this->create();
+                $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
+
+                $parameterValue = $this->parameterFacade->findParameterValueByValueTextAndLocale($valueText, $locale);
+
+                if ($parameterValue === null) {
+                    $parameterValueData = $this->parameterValueDataFactory->create();
+                } else {
+                    $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
+                }
+                $parameterValueData->text = $valueText;
+
+                if ($productParameterValuesLocalizedData->parameter->isSlider()) {
+                    $parameterValueData->numericValue = $valueText;
+                }
+
+                $parameterValueData->locale = $locale;
+                $productParameterValueData->parameterValueData = $parameterValueData;
+
+                $productParameterValuesData[] = $productParameterValueData;
+            }
+        }
+
+        return $productParameterValuesData;
     }
 }

@@ -196,25 +196,27 @@ class ParameterRepository
     }
 
     /**
-     * @param string $valueText
-     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
-    {
-        $parameterValue = $this->getParameterValueRepository()->findOneBy([
-            'text' => $valueText,
-            'locale' => $locale,
-        ]);
+    public function findOrCreateParameterValueByParameterValueData(
+        ParameterValueData $parameterValueData,
+    ): ParameterValue {
+        $parameterValue = $this->findParameterValueByValueTextAndLocale(
+            $parameterValueData->text,
+            $parameterValueData->locale,
+        );
 
         if ($parameterValue === null) {
-            $parameterValueData = $this->parameterValueDataFactory->create();
-            $parameterValueData->text = $valueText;
-            $parameterValueData->locale = $locale;
             $parameterValue = $this->parameterValueFactory->create($parameterValueData);
             $this->em->persist($parameterValue);
             // Doctrine's identity map is not cache.
             // We have to flush now, so that next findOneBy() finds new ParameterValue.
+            $this->em->flush();
+        }
+
+        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
+            $parameterValue->edit($parameterValueData);
             $this->em->flush();
         }
 
@@ -228,17 +230,26 @@ class ParameterRepository
      */
     public function getParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null $parameterValue */
-        $parameterValue = $this->getParameterValueRepository()->findOneBy([
-            'text' => $valueText,
-            'locale' => $locale,
-        ]);
+        $parameterValue = $this->findParameterValueByValueTextAndLocale($valueText, $locale);
 
         if ($parameterValue === null) {
             throw new ParameterValueNotFoundException();
         }
 
         return $parameterValue;
+    }
+
+    /**
+     * @param string $valueText
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
+     */
+    public function findParameterValueByValueTextAndLocale(string $valueText, string $locale): ?ParameterValue
+    {
+        return $this->getParameterValueRepository()->findOneBy([
+            'text' => $valueText,
+            'locale' => $locale,
+        ]);
     }
 
     /**

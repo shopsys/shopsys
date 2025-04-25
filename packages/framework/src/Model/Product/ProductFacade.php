@@ -242,9 +242,9 @@ class ProductFacade
         $toFlush = [];
 
         foreach ($productParameterValuesData as $productParameterValueData) {
-            $parameterValue = $this->parameterRepository->findOrCreateParameterValueByValueTextAndLocale(
-                $productParameterValueData->parameterValueData->text,
-                $productParameterValueData->parameterValueData->locale,
+            $parameterValueData = $productParameterValueData->parameterValueData;
+            $parameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
+                $parameterValueData,
             );
 
             if ($productParameterValueData->parameter->isSlider()) {

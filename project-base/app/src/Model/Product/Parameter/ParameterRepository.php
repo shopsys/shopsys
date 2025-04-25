@@ -7,8 +7,6 @@ namespace App\Model\Product\Parameter;
 use Doctrine\ORM\Query\Expr\Join;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 
 /**
@@ -25,34 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
  */
 class ParameterRepository extends BaseParameterRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
-    public function findOrCreateParameterValueByParameterValueData(
-        ParameterValueData $parameterValueData,
-    ): ParameterValue {
-        $parameterValue = $this->getParameterValueRepository()->findOneBy([
-            'text' => $parameterValueData->text,
-            'locale' => $parameterValueData->locale,
-        ]);
-
-        if ($parameterValue === null) {
-            $parameterValue = $this->parameterValueFactory->create($parameterValueData);
-            $this->em->persist($parameterValue);
-            // Doctrine's identity map is not cache.
-            // We have to flush now, so that next findOneBy() finds new ParameterValue.
-            $this->em->flush();
-        }
-
-        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
-            $parameterValue->edit($parameterValueData);
-            $this->em->flush();
-        }
-
-        return $parameterValue;
-    }
-
     /**
      * @param \App\Model\Product\Product[] $products
      * @param string $locale

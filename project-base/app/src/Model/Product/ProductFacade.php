@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Override;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
 /**
@@ -34,64 +31,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \App\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade, \App\Model\Product\ProductFactory $productFactory, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory, \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation, \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher, \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade, \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade, \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade)
  * @method \App\Model\Product\Product edit(int $productId, \App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
  * @method refreshProductAccessories(\App\Model\Product\Product $product, \App\Model\Product\Product[] $accessories)
+ * @method saveParameters(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData)
  */
 class ProductFacade extends BaseProductFacade
 {
-    /**
-     * @param string $productCatnum
-     * @return \App\Model\Product\Product|null
-     */
-    public function findOneByCatnumExcludeMainVariants($productCatnum): ?BaseProduct
-    {
-        try {
-            return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
-        } catch (ProductNotFoundException $exception) {
-            return null;
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
-     */
-    #[Override]
-    protected function saveParameters(BaseProduct $product, array $productParameterValuesData)
-    {
-        // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
-        // in database, this leads in trying to insert duplicate entry.
-        // That's why it's necessary to do remove and flush first.
-
-        $oldProductParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
-
-        foreach ($oldProductParameterValues as $oldProductParameterValue) {
-            $this->em->remove($oldProductParameterValue);
-        }
-        $this->em->flush();
-
-        $toFlush = [];
-
-        foreach ($productParameterValuesData as $productParameterValueData) {
-            $parameterValueData = $productParameterValueData->parameterValueData;
-            $parameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
-                $parameterValueData,
-            );
-
-            if ($productParameterValueData->parameter->isSlider()) {
-                $parameterValue->setNumericValue($productParameterValueData->parameterValueData->numericValue);
-                $toFlush[] = $parameterValue;
-            }
-
-            $productParameterValue = $this->productParameterValueFactory->create(
-                $product,
-                $productParameterValueData->parameter,
-                $parameterValue,
-            );
-            $this->em->persist($productParameterValue);
-            $toFlush[] = $productParameterValue;
-        }
-
-        if (count($toFlush) > 0) {
-            $this->em->flush();
-        }
-    }
 }
