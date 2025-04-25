@@ -12,10 +12,8 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         middlewarePrefetch: 'strict',
-        instrumentationHook: true,
     },
     reactStrictMode: true,
-    swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     images: {
         loader: 'custom',
@@ -105,17 +103,35 @@ const nextConfig = {
     },
 };
 
-const SentryWebpackPluginOptions = {
-    authToken: process.env.SENTRY_AUTH_TOKEN,
-    disableServerWebpackPlugin: process.env.APP_ENV === 'development',
-    disableClientWebpackPlugin: process.env.APP_ENV === 'development',
-    hideSourceMaps: true,
-    sourcemaps: {
-        deleteSourcemapsAfterUpload: true,
-    },
-    errorHandler: (err, _invokeErr, compilation) => {
-        compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
-    },
-};
-
-module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(nextConfig), SentryWebpackPluginOptions));
+if (process.env.APP_ENV === 'production') {
+    module.exports = withBundleAnalyzer(
+        withSentryConfig(nextTranslate(nextConfig), {
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            telemetry: false,
+            unstable_sentryWebpackPluginOptions: {
+                disable: process.env.APP_ENV === 'development',
+                errorHandler: (err) => {
+                    // eslint-disable-next-line no-console
+                    console.warn('Sentry CLI Plugin: ' + err.message);
+                },
+            },
+            sourcemaps: {
+                deleteSourcemapsAfterUpload: true,
+            },
+            widenClientFileUpload: true,
+            reactComponentAnnotation: {
+                enabled: true,
+            },
+            disableLogger: true,
+            bundleSizeOptimizations: {
+                excludeDebugStatements: true,
+                // all bellow - remove (set false) if you want to use replays
+                excludeReplayShadowDom: false,
+                excludeReplayIframe: false,
+                excludeReplayWorker: false,
+            },
+        }),
+    );
+} else {
+    module.exports = withBundleAnalyzer(nextTranslate(nextConfig));
+}
