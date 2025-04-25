@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LanguageConstantController extends AdminBaseController
 {

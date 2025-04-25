@@ -9,7 +9,7 @@ use Normalizer;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SearchAdminController extends AdminBaseController
 {

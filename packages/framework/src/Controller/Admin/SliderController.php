@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SliderController extends AdminBaseController
 {

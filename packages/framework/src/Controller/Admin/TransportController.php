@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TransportController extends AdminBaseController
 {

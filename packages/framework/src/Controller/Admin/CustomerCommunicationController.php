@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CustomerCommunicationController extends AdminBaseController
 {

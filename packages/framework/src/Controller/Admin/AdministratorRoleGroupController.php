@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNam
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class AdministratorRoleGroupController extends AdminBaseController
 {

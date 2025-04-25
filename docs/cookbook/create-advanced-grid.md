@@ -342,7 +342,7 @@ namespace App\Controller\Admin;
 use App\Model\Salesman\SalesmanFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SalesmanController extends AdminBaseController
 {

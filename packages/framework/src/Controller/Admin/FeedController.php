@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class FeedController extends AdminBaseController
 {

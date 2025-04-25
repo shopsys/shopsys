@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BillingAddressController extends AdminBaseController
 {

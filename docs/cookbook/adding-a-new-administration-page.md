@@ -12,7 +12,7 @@ Create a class extending `AdminBaseController` in `src/Controller/Admin` directo
 namespace App\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DashboardController extends AdminBaseController
 {

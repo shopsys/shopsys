@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusNotF
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Grid\ComplaintStatusInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ComplaintStatusController extends AdminBaseController
 {

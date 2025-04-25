@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AdminBaseController
 {

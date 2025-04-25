@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\TermsAndConditionsSetting
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LegalConditionsController extends AdminBaseController
 {
