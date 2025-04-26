@@ -1,8 +1,8 @@
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useEffect } from 'react';
+import { Sentry } from 'utils/sentry';
 
 const ErrorPage = ({ error }: { error: Error & { digest?: string } }) => {
     console.log('☀️ error.tsx');
