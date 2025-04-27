@@ -1,0 +1,36 @@
+{% extends '@ShopsysFramework/Admin/Content/Chat/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing chat'|trans }}{% endblock %}
+{% block h1 %}{{ 'Editing chat'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="chat">
+        <div class="chat__info">{{ 'Agent name'|trans }}: {{ chat.agent.name }}</div>
+        <div class="chat__info">{{ 'Model'|trans }}: {{ chat.agent.model }}</div>
+        <div class="chat__info">{{ 'Total tokens'|trans }}: {{ chat.totalTokens }}</div>
+
+        {% for message in chat.messages %}
+            <div class="chat-message">
+                <div>
+                    {{ 'Question'|trans }}:<br />
+                    <div class="chat-message__question">
+                        {{ message.question }}
+                    </div>
+                </div>
+                <div>
+                    {{ 'Answer'|trans }}:<br />
+                    <div class="chat-message__answer">
+                        {{ message.answer|escape }}
+                    </div>
+                </div>
+                <div class="chat-message__info">
+                    {{ 'Input tokens'|trans }}: {{ message.inputTokens }},
+                    {{ 'Output tokens'|trans }}: {{ message.outputTokens }},
+                    {{ 'Total'|trans }}: {{ message.totalTokens }}
+                </div>
+            </div>
+        {% endfor %}
+
+        {{ parent() }}
+    </div>
+{% endblock %}

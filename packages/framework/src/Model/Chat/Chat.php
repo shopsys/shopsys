@@ -28,7 +28,7 @@ class Chat
      * @var string
      * @ORM\Column(type="guid", unique=true)
      */
-    protected $userIdentifier;
+    protected $identifier;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -71,7 +71,7 @@ class Chat
      */
     protected function setData(ChatData $chatData): void
     {
-        $this->userIdentifier = $chatData->userIdentifier;
+        $this->identifier = $chatData->identifier;
         $this->agent = $chatData->agent;
     }
 
@@ -86,9 +86,9 @@ class Chat
     /**
      * @return string
      */
-    public function getUserIdentifier()
+    public function getIdentifier()
     {
-        return $this->userIdentifier;
+        return $this->identifier;
     }
 
     /**
@@ -152,5 +152,13 @@ class Chat
         }
 
         return implode("\n", $output);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalTokens(): int
+    {
+        return array_sum(array_map(fn ($message) => $message->getTotalTokens(), $this->getMessages()));
     }
 }

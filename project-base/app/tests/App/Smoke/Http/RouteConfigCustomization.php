@@ -423,6 +423,22 @@ class RouteConfigCustomization
                     ->setParameter('search', 'prod')
                     ->setExpectedStatusCode(200);
             })
+            ->customizeByRouteName('admin_chat_edit', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use "identifier" string uuid of Chat identifier')
+                    ->setParameter('identifier', 'ff7b0683-2a35-4421-9dd9-47716109a685')
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_chat_savemessage', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use "identifier" string uuid of Chat identifier and "agentInternalIdentifier" string')
+                    ->setParameter('identifier', 'ff7b0683-2a35-4421-9dd9-47716109a685')
+                    ->setParameter('agentInternalIdentifier', 'articleGenerator')
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_chat_load', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use "identifier" string uuid of Chat identifier')
+                    ->setParameter('identifier', 'ff7b0683-2a35-4421-9dd9-47716109a685')
+                    ->setExpectedStatusCode(200);
+            })
         ;
     }
 

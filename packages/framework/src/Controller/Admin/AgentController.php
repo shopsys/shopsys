@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Agent\AgentFormType;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentDataFactory;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentFacade;
@@ -108,8 +109,9 @@ class AgentController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Agent/new.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Agent/edit.html.twig', [
             'form' => $form->createView(),
+            'agent' => $agent,
         ]);
     }
 
@@ -147,6 +149,23 @@ class AgentController extends AdminBaseController
     #[Route(path: '/agent/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction(int $id): Response
     {
+        $agent = $this->agentFacade->getById($id);
+
+        if ($this->agentFacade->isAgentUsed($agent)) {
+            $message = t(
+                'Because agent "%name%"  is used with other chats also, you have to choose a new agent which will replace '
+                . 'the existing one. Which agent you want to set to these chats? ',
+                ['%name%' => $agent->getName()],
+            );
+
+            return $this->confirmDeleteResponseFactory->createSetNewAndDeleteResponse(
+                $message,
+                'admin_agent_delete',
+                $id,
+                $this->agentFacade->getAllExceptId($id),
+            );
+        }
+
         $message = t('Do you really want to remove this agent?');
 
         return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_agent_delete', $id);

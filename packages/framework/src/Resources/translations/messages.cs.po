@@ -91,6 +91,12 @@ msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla ús
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
 
+msgid "AI Chat"
+msgstr ""
+
+msgid "AI Chats overview"
+msgstr "Přehled AI Chatů"
+
 msgid "Access to all the complaints created under the user's company"
 msgstr "Přístup ke všem reklamacím vytvořeným pod firmou uživatele"
 
@@ -280,6 +286,36 @@ msgstr "Reklamní systém - vše"
 msgid "Adverts - view"
 msgstr "Reklamní systém - zobrazení"
 
+msgid "Agent"
+msgstr ""
+
+msgid "Agent <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Agent <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvořen"
+
+msgid "Agent <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Agent <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upraven"
+
+msgid "Agent <strong>{{ name }}</strong> deleted"
+msgstr "Agent <strong>{{ name }}</strong> smazán"
+
+msgid "Agent detail"
+msgstr "Detail agenta"
+
+msgid "Agent name"
+msgstr "Jméno agenta"
+
+msgid "Agent setup"
+msgstr "Nastavení agenta"
+
+msgid "Agents"
+msgstr "Agenti"
+
+msgid "Agents overview"
+msgstr "Přehled agentů"
+
+msgid "Ai"
+msgstr ""
+
 msgid "All"
 msgstr "Vše"
 
@@ -321,6 +357,9 @@ msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu.
 
 msgid "Ancestor category"
 msgstr "Rodičovská kategorie"
+
+msgid "Answer"
+msgstr "Odpověď"
 
 msgid "Applicable variables"
 msgstr "Použitelné proměnné"
@@ -691,6 +730,15 @@ msgstr "Změny"
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr "Změnou domény ztratíte neuložené změny. Chcete pokračovat?"
 
+msgid "Chat detail"
+msgstr "Detail chatu"
+
+msgid "Chat with question handled successfully!"
+msgstr "Chat s otázkou byl úspěšně vyřešen!"
+
+msgid "Chats"
+msgstr "Chaty"
+
 msgid "Choose"
 msgstr "Vybrat"
 
@@ -961,6 +1009,9 @@ msgstr "Vytvořit novou skupinu práv pro administrátora"
 msgid "Create new advertising"
 msgstr "Vytvořit novou reklamu"
 
+msgid "Create new agent"
+msgstr "Vytvořit nového agenta"
+
 msgid "Create new article"
 msgstr "Vytvořit nový článek"
 
@@ -978,6 +1029,9 @@ msgstr "Vytvořit novou značku"
 
 msgid "Create new category"
 msgstr "Vytvořit novou kategorii"
+
+msgid "Create new chat"
+msgstr "Vytvořit nový chat"
 
 msgid "Create new complaint status"
 msgstr "Vytvořit nový stav reklamace"
@@ -1426,6 +1480,9 @@ msgstr "Opravdu chcete odstranit tohoto administrátora?"
 msgid "Do you really want to remove this advert?"
 msgstr "Opravdu chcete odstranit tuto reklamu?"
 
+msgid "Do you really want to remove this agent?"
+msgstr "Opravdu chcete odstranit tohoto agenta?"
+
 msgid "Do you really want to remove this article?"
 msgstr "Opravdu chcete odstranit tento článek?"
 
@@ -1437,6 +1494,9 @@ msgstr "Opravdu chcete odstranit tuto značku? Pokud je někde použita, bude od
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s náležícími SEO mixy?"
+
+msgid "Do you really want to remove this chat?"
+msgstr "Opravdu chcete odstranit tento chat?"
 
 msgid "Do you really want to remove this customer user role group?"
 msgstr "Opravdu chcete odstranit tuto skupinu práv"
@@ -1615,6 +1675,9 @@ msgstr "Editace reklamy"
 msgid "Editing advertising - %name%"
 msgstr "Editace reklamy - %name%"
 
+msgid "Editing agent"
+msgstr "Editace agenta"
+
 msgid "Editing article"
 msgstr "Editace článku"
 
@@ -1653,6 +1716,9 @@ msgstr "Editace kategorie"
 
 msgid "Editing category - %name%"
 msgstr "Editace kategorie - %name%"
+
+msgid "Editing chat"
+msgstr "Editace chatu"
 
 msgid "Editing complaint"
 msgstr "Editace reklamace"
@@ -1827,6 +1893,9 @@ msgstr "Povolit dvoufaktorové ověřování"
 
 msgid "Enable whitelist"
 msgstr "Whitelist aktivní"
+
+msgid "Enabled"
+msgstr "Povoleno"
 
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
@@ -2365,6 +2434,9 @@ msgstr "Vstupní cena s DPH"
 msgid "Input price without VAT"
 msgstr "Vstupní cena bez DPH"
 
+msgid "Input tokens"
+msgstr "Vstupní tokeny"
+
 msgid "Inquired product"
 msgstr "Poptávaný produkt"
 
@@ -2400,6 +2472,9 @@ msgstr "Pokyny"
 
 msgid "Integrations"
 msgstr "Integrace"
+
+msgid "Internal Key"
+msgstr "Interní klíč"
 
 msgid "Internal note"
 msgstr "Interní poznámka"
@@ -2650,6 +2725,9 @@ msgstr "Minimální počet desetinných míst"
 msgid "Minimal duration from all runs in last seven days"
 msgstr "Minimální trvání všech cronů za posledních sedm dní"
 
+msgid "Model"
+msgstr "Model"
+
 msgid "Modifications"
 msgstr "Úpravy"
 
@@ -2734,6 +2812,9 @@ msgstr "Nová skupina práv pro administrátora"
 msgid "New advertising"
 msgstr "Nová reklama"
 
+msgid "New agent"
+msgstr "Nový agent"
+
 msgid "New article"
 msgstr "Nový článek"
 
@@ -2751,6 +2832,9 @@ msgstr "Nová značka"
 
 msgid "New category"
 msgstr "Nová kategorie"
+
+msgid "New chat"
+msgstr "Nový chat"
 
 msgid "New closed day"
 msgstr "Nový svátek / interní den"
@@ -2848,6 +2932,9 @@ msgstr "Nebyly nalezeny žádné sazby DPH. Nejprve musíte nějakou vytvořit."
 msgid "No advertising found. You have to create some first."
 msgstr "Nebyla nalezena žádná reklama. Nejprve musíte nějakou vytvořit."
 
+msgid "No agents found. You have to create some first."
+msgstr "Nebyl nalezen žádný agent. Nejprve musíte nějaký vytvořit."
+
 msgid "No articles found on this domain. You have to create some first."
 msgstr "Na této doméně nebyly nalezeny žádné články. Nejprve musíte nějaký vytvořit."
 
@@ -2856,6 +2943,9 @@ msgstr "Nebyly nalezeny žádné články blogu."
 
 msgid "No brands found. You have to create some first."
 msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
+
+msgid "No chats found. You have to create some first."
+msgstr "Nebyl nalezen žádný chat. Nejprve musíte nějaký vytvořit."
 
 msgid "No combinations of SEO categories found."
 msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
@@ -3159,6 +3249,9 @@ msgstr "Původní překlad"
 
 msgid "Out of stock"
 msgstr "Aktuálně nedostupné"
+
+msgid "Output tokens"
+msgstr "Výstupní tokeny"
 
 msgid "Overwrite Price list"
 msgstr "Přepsat ceník"
@@ -3607,6 +3700,12 @@ msgstr "Promované produkty"
 msgid "Quantity"
 msgstr "Množství"
 
+msgid "Question"
+msgstr "Otázka"
+
+msgid "Question handled successfully!"
+msgstr "Otázka úspěšně vyřešena!"
+
 msgid "Quick product search"
 msgstr "Rychlé vyhledávání v produktech"
 
@@ -3901,6 +4000,9 @@ msgstr "Vybraná skupina práv pro administrátora neexistuje."
 msgid "Selected advertisement doesn't exist."
 msgstr "Zvolená reklama neexistuje."
 
+msgid "Selected agent doesn't exist."
+msgstr "Vybraný agent neexistuje."
+
 msgid "Selected article doesn't exist."
 msgstr "Zvolený článek neexistuje."
 
@@ -4053,6 +4155,9 @@ msgstr "Nastavení"
 
 msgid "Settings modified."
 msgstr "Nastavení bylo upraveno."
+
+msgid "Setup"
+msgstr "Nastavení"
 
 msgid "Several times a day (%hours%h and %minutes%m)"
 msgstr "Několikrát denně (%hours%h a %minutes%m)"
@@ -4404,6 +4509,9 @@ msgstr "Celková cena"
 
 msgid "Total price including VAT"
 msgstr "Celková cena s DPH"
+
+msgid "Total tokens"
+msgstr "Celkem tokenů"
 
 msgid "Tracking URL"
 msgstr "URL pro sledování zásilky"
@@ -4867,6 +4975,9 @@ msgstr "reklam"
 msgid "after"
 msgstr "po"
 
+msgid "agents"
+msgstr "agenti"
+
 msgid "articles"
 msgstr "článků"
 
@@ -4878,6 +4989,9 @@ msgstr "článků blogu"
 
 msgid "brands"
 msgstr "značek"
+
+msgid "chats"
+msgstr "chaty"
 
 msgid "complaint statuses"
 msgstr "stavy reklamací"

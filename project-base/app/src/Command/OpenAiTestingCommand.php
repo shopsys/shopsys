@@ -56,10 +56,10 @@ class OpenAiTestingCommand extends Command
         $userIdentifier = '654600d9-72fb-4047-be2c-7473f42e1e6a';
 
         try {
-            $chat = $this->chatFacade->getChatByUserIdentifier($userIdentifier);
+            $chat = $this->chatFacade->getChatByIdentifier($userIdentifier);
         } catch (Exception $exception) {
             $chatData = $this->chatDataFactory->create();
-            $chatData->userIdentifier = $userIdentifier;
+            $chatData->identifier = $userIdentifier;
             $chatData->agent = $this->agentFacade->findAgentByInternalKey(AgentDataFixture::AGENT_ASTROLOG_KEY);
 
             $chat = $this->chatFacade->create($chatData);

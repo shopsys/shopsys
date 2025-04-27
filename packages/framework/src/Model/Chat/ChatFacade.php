@@ -42,18 +42,33 @@ class ChatFacade
     }
 
     /**
-     * @param string $userIdentifier
+     * @param string $identifier
      * @return \Shopsys\FrameworkBundle\Model\Chat\Chat|null
      */
-    public function getChatByUserIdentifier(string $userIdentifier): ?Chat
+    public function getChatByIdentifier(string $identifier): ?Chat
     {
-        $chat = $this->chatRepository->findByUserIdentifier($userIdentifier);
+        $chat = $this->chatRepository->findByIdentifier($identifier);
 
         if ($chat === null) {
-            throw new NotFoundHttpException(sprintf('Chat with identifier %s not found.', $userIdentifier));
+            throw new NotFoundHttpException(sprintf('Chat with identifier %s not found.', $identifier));
         }
 
         return $chat;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        $chat = $this->chatRepository->findById($id);
+
+        if (!$chat) {
+            return;
+        }
+
+        $this->em->remove($chat);
+        $this->em->flush();
     }
 
     /**
@@ -61,7 +76,7 @@ class ChatFacade
      * @param string $question
      * @return \Shopsys\FrameworkBundle\Model\Chat\Message\ChatMessage
      */
-    public function addQuestion(Chat $chat, string $question): ChatMessage
+    private function addQuestion(Chat $chat, string $question): ChatMessage
     {
         $chatMessage = $this->chatMessageFactory->create($chat, $question);
         $this->em->persist($chatMessage);

@@ -22,11 +22,11 @@ class AgentFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Chat\Agent\Agent
+     * @return \Shopsys\FrameworkBundle\Model\Chat\Agent\Agent[]
      */
-    public function getDefaultAgent(): Agent
+    public function getEnabledAgents(): array
     {
-        return $this->agentRepository->getDefaultAgent();
+        return $this->agentRepository->getEnabledAgents();
     }
 
     /**
@@ -88,5 +88,23 @@ class AgentFacade
         $agent = $this->getById($id);
         $this->em->remove($agent);
         $this->em->flush();
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Chat\Agent\Agent[]
+     */
+    public function getAllExceptId(int $id): array
+    {
+        return $this->agentRepository->getAllExceptId($id);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\Agent $agent
+     * @return bool
+     */
+    public function isAgentUsed(Agent $agent): bool
+    {
+        return $this->agentRepository->isAgentUsed($agent);
     }
 }

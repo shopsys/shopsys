@@ -30,12 +30,12 @@ class Version20250418140104 extends AbstractMigration
             CREATE TABLE chats (
                 id SERIAL NOT NULL,
                 agent_id INT NOT NULL,
-                user_identifier UUID NOT NULL,
+                identifier UUID NOT NULL,
                 created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
                 updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
                 PRIMARY KEY(id)
             )');
-        $this->sql('CREATE UNIQUE INDEX UNIQ_2D68180FD0494586 ON chats (user_identifier)');
+        $this->sql('CREATE UNIQUE INDEX UNIQ_2D68180F772E836A ON chats (identifier)');
         $this->sql('CREATE INDEX IDX_2D68180F3414710B ON chats (agent_id)');
         $this->sql('
             CREATE TABLE chat_agents (

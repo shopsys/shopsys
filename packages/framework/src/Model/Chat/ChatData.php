@@ -14,5 +14,5 @@ class ChatData
     /**
      * @var string|null
      */
-    public $userIdentifier;
+    public $identifier;
 }

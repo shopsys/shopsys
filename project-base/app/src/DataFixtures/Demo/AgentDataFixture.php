@@ -51,6 +51,6 @@ class AgentDataFixture extends AbstractReferenceFixture
         $agentData->setup = 'Jsi asistent pro vytváření článků podle zadaného tématu. Výstupem bude článek v odstavcích ve formátu html.';
 
         $agent = $this->agentFacade->create($agentData);
-        $this->addReference(self::AGENT_ASTROLOG_KEY, $agent);
+        $this->addReference(self::AGENT_ARTICLE_GENERATOR_KEY, $agent);
     }
 }

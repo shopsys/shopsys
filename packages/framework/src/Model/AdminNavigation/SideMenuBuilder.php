@@ -708,6 +708,10 @@ class SideMenuBuilder
         $agentMenu = $aiMenu->addChild('agents', ['route' => 'admin_agent_list', 'label' => t('Agents')]);
         $agentMenu->addChild('new_agent', ['route' => 'admin_agent_new', 'display' => false, 'label' => t('New agent')]);
         $agentMenu->addChild('edit_agent', ['route' => 'admin_agent_edit', 'display' => false, 'label' => t('Agent detail')]);
+        $chatMenu = $aiMenu->addChild('chats', ['route' => 'admin_chat_list', 'label' => t('Chats')]);
+        $chatMenu->addChild('edit_chat', ['route' => 'admin_chat_edit', 'display' => false, 'label' => t('Chat detail')]);
+        $chatMenu->addChild('new_chat', ['route' => 'admin_chat_new', 'display' => false, 'label' => t('New chat ')]);
+
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INTEGRATIONS, $integrationsMenu);
 
