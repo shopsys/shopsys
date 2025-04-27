@@ -231,7 +231,7 @@ final class Datagrid
         $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
         $grid = $this->gridFactory->create($this->options['name'], $datasource);
 
-        if ($this->fields->count() === 1 && $this->fields->first()->isVisible() === false) {
+        if ($this->fields->isEmpty() || $this->fields->forAll(fn ($key, FieldDescriptor $field) => $field->isVisible() === false)) {
             return $grid->createView();
         }
 
