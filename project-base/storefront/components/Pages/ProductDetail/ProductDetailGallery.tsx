@@ -7,7 +7,7 @@ import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragme
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 const ModalGallery = dynamic(() =>
@@ -89,9 +89,8 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                             }
 
                             return (
-                                <>
+                                <Fragment key={index}>
                                     <li
-                                        key={index}
                                         className={twJoin(
                                             'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
                                             (isWithAdditionalImages || isVideo) && 'relative',
@@ -136,7 +135,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                             </span>
                                         </li>
                                     )}
-                                </>
+                                </Fragment>
                             );
                         })}
                     </ul>
