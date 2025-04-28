@@ -10,7 +10,6 @@
     --radius-3xl: 24px;
     --radius-4xl: 32px;
     --radius-full: 9999px;
-    --radius-DEPRECTED_image: var(--radius-xl);
     --radius-button: var(--radius-md);
     --radius-checkbox: var(--radius-sm);
     --radius-counter: var(--radius-md);
@@ -73,6 +72,9 @@
     --text-4xl: 36px;
     --text-5xl: 48px;
 
+    --font-accent: 'Raleway';
+    --font-body: 'Inter';
+
     --font-letter-spacing-5: 5px;
     --font-letter-spacing-normal: 0px;
     --font-letter-spacing-tight: -0.4px;
@@ -91,6 +93,9 @@
     --font-weight-normal: 400;
     --font-weight-semibold: 600;
     --font-weight-thin: 100;
+
+    --font-family-accent: var(--font-accent);
+    --font-family-body: var(--font-body);
 
     --leading-none: 0px;
     --leading-3: 12px;
@@ -188,19 +193,6 @@
 
     --color-overlay-default: #25283d80;
     --color-overlay-image: #c9c9c980;
-
-    --color-DEPRECATED_tag_light-bg-active: var(--color-background-default);
-    --color-DEPRECATED_tag_light-bg-default: var(--color-background-more);
-    --color-DEPRECATED_tag_light-bg-disabled: var(--color-gray-400);
-    --color-DEPRECATED_tag_light-bg-hovered: var(--color-background-more);
-    --color-DEPRECATED_tag_light-border-active: var(--color-primary-500);
-    --color-DEPRECATED_tag_light-border-default: var(--color-base-transparent);
-    --color-DEPRECATED_tag_light-border-disabled: var(--color-base-transparent);
-    --color-DEPRECATED_tag_light-border-hovered: var(--color-base-transparent);
-    --color-DEPRECATED_tag_light-text-active: var(--color-text-default);
-    --color-DEPRECATED_tag_light-text-default: var(--color-text-default);
-    --color-DEPRECATED_tag_light-text-disabled: var(--color-text-default);
-    --color-DEPRECATED_tag_light-text-hovered: var(--color-text-default);
 
     --color-flag-text: var(--color-text-inverted);
 
