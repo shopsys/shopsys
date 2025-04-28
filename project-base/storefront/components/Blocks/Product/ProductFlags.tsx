@@ -1,4 +1,3 @@
-import { ProductFlag } from './ProductFlag';
 import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
@@ -40,7 +39,13 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
         <div className={twMergeCustom('absolute flex flex-col items-start gap-1', variantTwClass[variant])}>
             {visibleItemsConfig.flags &&
                 flags.length > 0 &&
-                flags.map(({ name, rgbColor }, index) => <ProductFlag key={index} name={name} rgbColor={rgbColor} />)}
+                flags.map(({ name, rgbColor }, index) => {
+                    return (
+                        <Flag key={index} rgbBgColor={rgbColor}>
+                            {name}
+                        </Flag>
+                    );
+                })}
 
             {visibleItemsConfig.discount &&
                 !!percentageDiscount &&

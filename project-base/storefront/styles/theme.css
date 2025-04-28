@@ -72,9 +72,6 @@
     --text-4xl: 36px;
     --text-5xl: 48px;
 
-    --font-accent: 'Raleway';
-    --font-body: 'Inter';
-
     --font-letter-spacing-5: 5px;
     --font-letter-spacing-normal: 0px;
     --font-letter-spacing-tight: -0.4px;
@@ -93,9 +90,6 @@
     --font-weight-normal: 400;
     --font-weight-semibold: 600;
     --font-weight-thin: 100;
-
-    --font-family-accent: var(--font-accent);
-    --font-family-body: var(--font-body);
 
     --leading-none: 0px;
     --leading-3: 12px;
