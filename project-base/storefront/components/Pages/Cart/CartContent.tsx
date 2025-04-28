@@ -2,6 +2,7 @@ import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
@@ -17,12 +18,14 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { url, isLuigisBoxActive } = useDomainConfig();
 
     return (
-        <Webline>
-            <CartSteps activeStep={1} domainUrl={url} />
+        <VerticalStack gap="md">
+            <Webline>
+                <CartSteps activeStep={1} domainUrl={url} />
 
-            <CartList items={cart.items} />
+                <CartList items={cart.items} />
 
-            <CartSummary />
+                <CartSummary />
+            </Webline>
 
             {isLuigisBoxActive && (
                 <DeferredRecommendedProducts
@@ -36,6 +39,6 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     )}
                 />
             )}
-        </Webline>
+        </VerticalStack>
     );
 };
