@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 
 const range = (start: number, end: number) => {
@@ -15,54 +17,48 @@ export const usePagination = (
     pageSize: number,
 ): number[] | null =>
     useMemo(() => {
+        // Calculate basic pagination values
         const lastPage = Math.ceil(totalCount / pageSize);
         const firstPage = 1;
-        const totalPageNumbers = 7;
-        const totalMobilePageNumbers = totalPageNumbers - 2;
-        if (
-            (isMobilePaginationVisible && totalMobilePageNumbers >= lastPage) ||
-            (!isMobilePaginationVisible && totalPageNumbers >= lastPage)
-        ) {
+
+        // Define how many page numbers we want to show
+        const totalDesktopPageNumbers = 7;
+        const totalMobilePageNumbers = totalDesktopPageNumbers - 2;
+        const maxVisiblePages = isMobilePaginationVisible ? totalMobilePageNumbers : totalDesktopPageNumbers;
+
+        // If we have fewer pages than our display limit, show all pages
+        // Example: For 5 total pages on desktop (max 7), show: 1 2 3 4 5
+        if (lastPage <= maxVisiblePages) {
             return range(1, lastPage);
         }
-        const leftPaginationBreakpoint = 3;
-        const secondToLastPage = lastPage - 2;
-        const thirdToLastPage = lastPage - 3;
 
-        if (isMobilePaginationVisible && currentPage < leftPaginationBreakpoint && currentPage < secondToLastPage) {
-            const firstNumbersOfPagination = range(firstPage, leftPaginationBreakpoint + 1);
-            return [...firstNumbersOfPagination, lastPage];
-        } else if (
-            !isMobilePaginationVisible &&
-            currentPage < leftPaginationBreakpoint + 2 &&
-            currentPage < thirdToLastPage
-        ) {
-            const firstNumbersOfPagination = range(firstPage, leftPaginationBreakpoint + 2);
-            return [...firstNumbersOfPagination, lastPage];
+        // Define where pagination patterns change
+        const leftBreakpoint = isMobilePaginationVisible ? 3 : 4;
+        const rightBreakpoint = isMobilePaginationVisible ? lastPage - 2 : lastPage - 3;
+
+        // Handle pages near the start
+        // Mobile example: 1 2 3 4 ... 10
+        // Desktop example: 1 2 3 4 5 ... 10
+        if (currentPage < leftBreakpoint) {
+            const startRange = range(firstPage, leftBreakpoint + (isMobilePaginationVisible ? 1 : 2));
+            return [...startRange, lastPage];
         }
 
-        if (isMobilePaginationVisible && currentPage > leftPaginationBreakpoint && currentPage >= secondToLastPage) {
-            const lastNumbersOfPagination = range(lastPage - leftPaginationBreakpoint, lastPage);
-            return [firstPage, ...lastNumbersOfPagination];
-        } else if (
-            !isMobilePaginationVisible &&
-            currentPage > leftPaginationBreakpoint + 1 &&
-            currentPage >= thirdToLastPage
-        ) {
-            const lastNumbersOfPagination = range(lastPage - leftPaginationBreakpoint - 1, lastPage);
-            return [firstPage, ...lastNumbersOfPagination];
+        // Handle pages near the end
+        // Mobile example: 1 ... 7 8 9 10
+        // Desktop example: 1 ... 6 7 8 9 10
+        if (currentPage >= rightBreakpoint) {
+            const endRange = range(
+                lastPage - (isMobilePaginationVisible ? leftBreakpoint : leftBreakpoint + 1),
+                lastPage,
+            );
+            return [firstPage, ...endRange];
         }
 
-        if (
-            (isMobilePaginationVisible &&
-                currentPage > leftPaginationBreakpoint - 1 &&
-                currentPage < secondToLastPage) ||
-            (!isMobilePaginationVisible && currentPage > leftPaginationBreakpoint && currentPage < thirdToLastPage)
-        ) {
+        // Handle middle pages
+        // Example: 1 ... 4 5 6 ... 10
+        if (currentPage >= leftBreakpoint - 1 && currentPage < rightBreakpoint) {
             const middleRange = range(currentPage - 1, currentPage + 1);
-            if (isMobilePaginationVisible) {
-                return [firstPage, ...middleRange, lastPage];
-            }
             return [firstPage, ...middleRange, lastPage];
         }
 
