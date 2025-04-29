@@ -7,7 +7,7 @@ import { headers } from 'next/headers';
 import { getDictionary } from 'utils/getDictionary';
 
 export const FooterCopyright = async () => {
-    const { defaultLocale: lang } = getDomainConfig(headers().get('host')!);
+    const { defaultLocale: lang } = getDomainConfig((await headers()).get('host')!);
     const dictionary = await getDictionary(lang);
     const t = await getTranslation({ defaultLang: lang, defaultDictionary: dictionary });
 

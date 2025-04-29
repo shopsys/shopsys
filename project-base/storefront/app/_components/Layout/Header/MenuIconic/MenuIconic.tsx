@@ -8,7 +8,7 @@ import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 
 export const MenuIconic = async () => {
     const t = await getTranslation();
-    const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls([
+    const [storesUrl, productComparisonUrl, wishlistUrl] = await getInternationalizedStaticUrls([
         '/stores',
         '/product-comparison',
         '/wishlist',

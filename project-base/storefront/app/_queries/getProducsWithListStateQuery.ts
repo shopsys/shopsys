@@ -11,8 +11,9 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { TypeProductListTypeEnum } from 'graphql/types';
 
 export const getProducsWithListStateQuery = async (products: TypeListedProductFragment[]) => {
-    const comparisonUuidUuid = getCookieStoreStateFromServer().productListUuids?.COMPARISON;
-    const wishlistUuid = getCookieStoreStateFromServer().productListUuids?.WISHLIST;
+    const { productListUuids } = await getCookieStoreStateFromServer();
+    const comparisonUuidUuid = productListUuids?.COMPARISON;
+    const wishlistUuid = productListUuids?.WISHLIST;
 
     const comparisonResult = comparisonUuidUuid
         ? await createQuery<TypeProductListQuery, TypeProductListQueryVariables>(ProductListQueryDocument, {

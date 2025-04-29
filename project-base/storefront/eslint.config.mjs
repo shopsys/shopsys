@@ -30,6 +30,7 @@ export default [
             '!**/.prettierrc.js',
             'graphql/types.ts',
             '**/*.generated.*',
+            '**/*.ssr.*',
             'config/*',
             '**/eslint.config.mjs',
             '**/schema.graphql.json',

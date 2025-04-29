@@ -60,7 +60,11 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
             </div>
             <ul className="flex max-h-[87dvh] flex-col gap-2">
                 <MenuIconicItemUserAuthenticatedContentListItem>
-                    <MenuIconicSubItemLink href={customerOrdersUrl} tid={TIDs.header_my_orders_link} type="orderList">
+                    <MenuIconicSubItemLink
+                        href={customerOrdersUrl}
+                        tid={TIDs.user_menu_my_orders_link}
+                        type="orderList"
+                    >
                         <SearchListIcon className="size-6" />
                         {t('My orders')}
                     </MenuIconicSubItemLink>
@@ -69,7 +73,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
                 <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink
                         href={customerComplaintsUrl}
-                        tid={TIDs.header_my_complaints_link}
+                        tid={TIDs.user_menu_my_orders_link}
                         type="complaintList"
                     >
                         <ComplaintsIcon className="size-6" />
@@ -89,7 +93,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
                 <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink
                         href={customerEditProfileUrl}
-                        tid={TIDs.header_edit_profile_link}
+                        tid={TIDs.user_menu_edit_profile_link}
                         type="editProfile"
                     >
                         <EditIcon className="size-6" />
@@ -100,7 +104,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
                 <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink
                         href={customerChangePasswordUrl}
-                        tid={TIDs.header_change_password_link}
+                        tid={TIDs.user_menu_change_password_link}
                         type="changePassword"
                     >
                         <LockCheckIcon className="size-6" />
@@ -109,7 +113,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
                 </MenuIconicItemUserAuthenticatedContentListItem>
 
                 <MenuIconicItemUserAuthenticatedContentListItem>
-                    <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
+                    <MenuIconicSubItemLink tid={TIDs.user_menu_logout} onClick={logout}>
                         <ExitIcon className="size-6" />
                         {t('Logout')}
                     </MenuIconicSubItemLink>

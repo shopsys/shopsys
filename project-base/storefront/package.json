@@ -136,6 +136,10 @@
             "form-data@>=4.0.0 <4.0.4": ">=4.0.4",
             "@eslint/plugin-kit@<0.3.4": ">=0.3.4",
             "tmp@<=0.2.3": ">=0.2.4"
-        }
+        },
+        "ignoredBuiltDependencies": [
+            "@sentry/cli",
+            "sharp"
+        ]
     }
 }

@@ -5,12 +5,12 @@ import { SameLengthOutput } from 'types/SameLengthOutput';
 
 export type Url = StaticRewritePathKeyType | { url: StaticRewritePathKeyType; param: string | undefined | null };
 
-export const getInternationalizedStaticUrls = <InputUrls extends Url[]>(urls: [...InputUrls]) => {
+export const getInternationalizedStaticUrls = async <InputUrls extends Url[]>(urls: [...InputUrls]) => {
     return urls.map((url) => getInternationalizedStaticUrl(url)) as SameLengthOutput<InputUrls>;
 };
 
-export const getInternationalizedStaticUrl = (url: Url) => {
-    const domainConfig = getDomainConfig(headers().get('host')!);
+export const getInternationalizedStaticUrl = async (url: Url) => {
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
 
     const urlsOnDomain = STATIC_REWRITE_PATHS[domainConfig.url];
 
