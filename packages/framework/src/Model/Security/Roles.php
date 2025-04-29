@@ -174,6 +174,9 @@ class Roles
     public const string ROLE_PRICE_LIST_FULL = 'ROLE_PRICE_LIST_FULL';
     public const string ROLE_PRICE_LIST_VIEW = 'ROLE_PRICE_LIST_VIEW';
 
+    public const string ROLE_CLOSED_DAYS_FULL = 'ROLE_CLOSED_DAYS_FULL';
+    public const string ROLE_CLOSED_DAYS_VIEW = 'ROLE_CLOSED_DAYS_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -409,6 +412,10 @@ class Roles
                 static::ROLE_PRICE_LIST_FULL => t('Price lists - full'),
                 static::ROLE_PRICE_LIST_VIEW => t('Price lists - view'),
             ],
+            [
+                static::ROLE_CLOSED_DAYS_FULL => t('Closed days - full'),
+                static::ROLE_CLOSED_DAYS_VIEW => t('Closed days - view'),
+            ],
         ];
     }
 
@@ -475,6 +482,7 @@ class Roles
                 static::ROLE_INQUIRY_VIEW,
                 static::ROLE_WATCHDOG_FULL,
                 static::ROLE_PRICE_LIST_FULL,
+                static::ROLE_CLOSED_DAYS_FULL,
             ],
             static::ROLE_ALL_VIEW => [
                 static::ROLE_ORDER_VIEW,
@@ -532,6 +540,7 @@ class Roles
                 static::ROLE_INQUIRY_VIEW,
                 static::ROLE_WATCHDOG_VIEW,
                 static::ROLE_PRICE_LIST_FULL,
+                static::ROLE_CLOSED_DAYS_VIEW,
             ],
             static::ROLE_ORDER_FULL => [static::ROLE_ORDER_VIEW],
             static::ROLE_CUSTOMER_FULL => [static::ROLE_CUSTOMER_VIEW],
@@ -585,6 +594,7 @@ class Roles
             static::ROLE_COMPLAINT_STATUS_FULL => [static::ROLE_COMPLAINT_STATUS_VIEW],
             static::ROLE_WATCHDOG_FULL => [static::ROLE_WATCHDOG_VIEW],
             static::ROLE_PRICE_LIST_FULL => [static::ROLE_PRICE_LIST_VIEW],
+            static::ROLE_CLOSED_DAYS_FULL => [static::ROLE_CLOSED_DAYS_VIEW],
         ];
     }
 

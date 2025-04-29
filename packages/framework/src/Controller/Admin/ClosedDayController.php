@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Store\ClosedDayFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\Exception\ClosedDayNotFoundException;
@@ -37,6 +39,7 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/list/')]
+    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_VIEW])]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/ClosedDay/list.html.twig', [
@@ -49,6 +52,7 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/new/')]
+    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_FULL])]
     public function newAction(Request $request): Response
     {
         $closedDayData = $this->closedDayDataFactory->create();
@@ -86,6 +90,8 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $closedDay = $this->closedDayFacade->getById($id);
@@ -132,6 +138,7 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
