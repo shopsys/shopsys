@@ -165,7 +165,7 @@ class FrontendApiTypeMaker extends AbstractMaker
         }
 
         foreach ($metadata->getAssociationNames() as $fieldName) {
-            if (in_array($fieldName, self::EXCLUDED_ASSOCIATION_NAMES, true)) {
+            if (in_array($fieldName, [...self::EXCLUDED_ASSOCIATION_NAMES, lcfirst(Str::getShortClassName($this->selectedEntityClass))], true)) {
                 continue;
             }
             $fieldsConfig[$fieldName] = $this->getFieldDefinition($metadata, $fieldName);
