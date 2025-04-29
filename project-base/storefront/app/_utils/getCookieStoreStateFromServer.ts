@@ -24,8 +24,8 @@ const getDefaultInitState = (): CookiesStoreState => ({
 
 export type CookiesStore = CookiesStoreState & CookiesStoreActions;
 
-export function getCookieStoreStateFromServer(): CookiesStoreState {
-    const cookiesStore = cookies().get('cookiesStore')?.value;
+export async function getCookieStoreStateFromServer(): Promise<CookiesStoreState> {
+    const cookiesStore = (await cookies()).get('cookiesStore')?.value;
     const newState = getDefaultInitState();
 
     if (!cookiesStore) {

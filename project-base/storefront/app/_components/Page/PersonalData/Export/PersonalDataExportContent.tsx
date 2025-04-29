@@ -4,7 +4,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 
 type PersonalDataExportContentProps = {
-    contentSiteText: string | undefined;
+    contentSiteText: string | null | undefined;
 };
 
 export const PersonalDataExportContent = async ({ contentSiteText }: PersonalDataExportContentProps) => {

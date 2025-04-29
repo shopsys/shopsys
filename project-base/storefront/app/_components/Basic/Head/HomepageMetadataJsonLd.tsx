@@ -5,8 +5,8 @@ type HomepageMetadataProps = {
 };
 
 // DOCS: https://nextjs.org/docs/14/app/building-your-application/optimizing/metadata#json-ld
-export const HomepageMetadataJsonLd: FC<HomepageMetadataProps> = ({ url }) => {
-    const [searchUrl] = getInternationalizedStaticUrls(['/search']);
+export const HomepageMetadataJsonLd: FC<HomepageMetadataProps> = async ({ url }) => {
+    const [searchUrl] = await getInternationalizedStaticUrls(['/search']);
 
     const jsonLd = {
         '@context': 'https://schema.org/',

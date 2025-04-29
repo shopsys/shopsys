@@ -20,6 +20,7 @@ const isRefreshTokenMutation = (operation: Operation) => {
  * Access token is not added to the RefreshTokens mutation (allows refreshing tokens with invalid access token)
  */
 const addAuthToOperation = (operation: Operation): Operation => {
+    // @ts-expect-error cookies is asynchronous but still works for now
     const accessToken = cookies().get('accessToken')?.value;
     if (!accessToken || isRefreshTokenMutation(operation)) {
         return operation;

@@ -15,7 +15,7 @@ const HomePage = async () => {
     // const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.homepage);
     // useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const domainConfig = getDomainConfig(headers().get('host')!);
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
 
     return (
         <>

@@ -1,16 +1,16 @@
 'use client';
 
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
-import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageLogin: FC = () => (
     <Webline>
         <SkeletonModuleBreadcrumbs count={2} />
 
         <div className="mx-auto flex w-full max-w-3xl flex-col">
-            <Skeleton className="h-10 w-72" containerClassName="flex mb-5" />
-            <Skeleton className="h-[435px]" containerClassName="flex w-full" />
+            <Skeleton className="h-10 w-72" />
+            <Skeleton className="h-[435px]" />
         </div>
     </Webline>
 );

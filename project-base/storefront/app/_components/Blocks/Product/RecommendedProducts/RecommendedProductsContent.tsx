@@ -19,9 +19,9 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
     itemUuids = [],
 }) => {
     const [t] = await Promise.all([getTranslation()]);
-    const { userIdentifier } = getCookieStoreStateFromServer();
+    const { userIdentifier } = await getCookieStoreStateFromServer();
 
-    const pathname = headers().get('x-pathname') ?? '/';
+    const pathname = (await headers()).get('x-pathname') ?? '/';
 
     const { data: recommendedProductsData } = await getRecommendedProductsQuery({
         userIdentifier,

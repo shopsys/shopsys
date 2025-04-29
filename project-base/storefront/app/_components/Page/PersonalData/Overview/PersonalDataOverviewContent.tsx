@@ -4,7 +4,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 
 type PersonalDataOverviewContentProps = {
-    contentSiteText: string | undefined;
+    contentSiteText: string | null | undefined;
 };
 
 export const PersonalDataOverviewContent = async ({ contentSiteText }: PersonalDataOverviewContentProps) => {

@@ -53,7 +53,7 @@ function getClient({
 }
 
 export async function createClient() {
-    const domainConfig = getDomainConfig(headers().get('host')!);
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
 
     const publicGraphqlEndpoint = domainConfig.publicGraphqlEndpoint;
 

@@ -42,8 +42,8 @@
         "js-base64": "~3.7.7",
         "jwt-decode": "~4.0.0",
         "lz-string": "~1.5.0",
-        "next": "~15.2.5",
         "negotiator": "^1.0.0",
+        "next": "~15.2.5",
         "next-translate": "~2.6.2",
         "next-translate-plugin": "~2.6.2",
         "next-urql": "~5.0.2",
@@ -122,6 +122,10 @@
         "onlyBuiltDependencies": [
             "esbuild",
             "next-translate-plugin"
+        ],
+        "ignoredBuiltDependencies": [
+            "@sentry/cli",
+            "sharp"
         ]
     }
 }

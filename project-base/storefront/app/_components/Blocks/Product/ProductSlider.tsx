@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
-import { isTextSelected } from 'utils/ui/disableClickWhenTextSelected';
+import { isTextSelected } from 'utils/ui/isTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';

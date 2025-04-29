@@ -22,6 +22,7 @@ export type DomainConfigType = {
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {
     const replacedDomain = domainUrl.replace(':3000', ':8000');
+    console.log("🚀 -> getDomainConfig -> replacedDomain:", replacedDomain)
     const cdnDomain = process.env.CDN_DOMAIN ?? '';
 
     for (const domain of domainsConfig) {

@@ -2,8 +2,21 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { isNotFoundError } from 'next/dist/client/components/not-found';
 import { useEffect } from 'react';
+
+function isNotFoundError(error: Error & { digest?: string }): boolean {
+    // Check if the error is a Response with status 404
+    if (error instanceof Response) {
+        return error.status === 404;
+    }
+
+    // Check for Vercel's NOT_FOUND error code
+    if (typeof error === 'object' && 'code' in error) {
+        return error.code === 'NOT_FOUND';
+    }
+
+    return false;
+}
 
 const ErrorPage = ({ error }: { error: Error & { digest?: string } }) => {
     useEffect(() => {
