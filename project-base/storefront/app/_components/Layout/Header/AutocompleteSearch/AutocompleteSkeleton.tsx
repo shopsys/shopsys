@@ -1,11 +1,11 @@
-import Skeleton from 'react-loading-skeleton';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const AutocompleteSkeleton: FC = () => {
     return (
         <>
             <div>
-                <Skeleton className="mb-2.5 h-6" containerClassName="flex w-[100px]" />
+                <Skeleton className="mb-2.5 h-6" />
 
                 <div className="flex w-full gap-4 overflow-hidden lg:grid lg:grid-cols-4 lg:gap-5">
                     {createEmptyArray(4).map((_, index) => (
@@ -15,17 +15,17 @@ export const AutocompleteSkeleton: FC = () => {
             </div>
 
             <div>
-                <Skeleton className="mb-2.5 h-6" containerClassName="flex w-[80px]" />
+                <Skeleton className="mb-2.5 h-6" />
 
                 <div className="flex flex-wrap gap-2">
                     {createEmptyArray(3).map((_, index) => (
-                        <Skeleton key={index} className="h-[28px] !rounded-full" containerClassName="w-[120px]" />
+                        <Skeleton key={index} className="h-[28px] !rounded-full" />
                     ))}
                 </div>
             </div>
 
             <div className="flex justify-center">
-                <Skeleton className="h-[56px]" containerClassName="vl:w-[180px] w-full" />
+                <Skeleton className="h-[56px]" />
             </div>
         </>
     );

@@ -1,27 +1,44 @@
-'use client';
-
-import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { getBlogCategoryArticlesQuery } from 'app/_queries/getBlogCategoryArticlesQuery';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { Fragment } from 'react';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
+import { defaultLocale } from 'i18n';
+import { notFound } from 'next/navigation';
 import { twJoin } from 'tailwind-merge';
-import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 
-type BlogArticlesListProps = {
-    blogArticles: TypeListedBlogArticleFragment[];
-    isLoadingMoreBlogCategoryArticles: boolean;
+export type BlogArticlesProps = {
+    blogCategoryUuid: string;
+    endCursor: string;
 };
 
-export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLoadingMoreBlogCategoryArticles }) => {
+export const BlogArticlesServer = async ({ blogCategoryUuid, endCursor }: BlogArticlesProps) => {
+    const blogArticleConnection = await getBlogCategoryArticlesQuery(
+        blogCategoryUuid,
+        endCursor,
+        DEFAULT_BLOG_PAGE_SIZE,
+    );
+
+    if (!blogArticleConnection) {
+        return notFound();
+    }
+
+    const mappedArticles = mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticleConnection.edges);
+
+    if (!mappedArticles?.length) {
+        const t = await getTranslation();
+        return <div>{t('Sorry, there are no articles in this category at the moment.')}</div>;
+    }
+
     return (
-        <ul className="flex w-full flex-col gap-y-5">
-            {blogArticles.map((blogArticle) => (
-                <li key={blogArticle.uuid} className="w-full">
+        <>
+            {mappedArticles.map((blogArticle) => (
+                <li key={blogArticle.uuid} className="w-full xl:max-w-[784px]">
                     <ExtendedNextLink
                         href={blogArticle.link}
                         type="blogArticle"
@@ -36,19 +53,20 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 alt={blogArticle.mainImage?.name || blogArticle.name}
                                 className="rounded-xl"
                                 height={351}
-                                sizes="(max-width: 600px) 85vw, (min-width: 768px) 250px, 320px"
+                                sizes="(max-width: 600px) 100vw, (min-width: 600px) 250px, (min-width: 769px) 320px"
                                 src={blogArticle.mainImage?.url}
                                 width={510}
                             />
                         </div>
 
                         <div className="flex flex-1 flex-col gap-y-3">
-                            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
-                                <ArticleDate
-                                    className="mr-3.5"
-                                    date={blogArticle.publishDate}
+                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                                <span
+                                    className="font-secondary text-textSubtle text-sm font-semibold"
                                     tid={TIDs.blog_article_publication_date}
-                                />
+                                >
+                                    {new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
+                                </span>
 
                                 <div className="flex flex-wrap gap-2">
                                     {blogArticle.blogCategories.map((blogArticleCategory) => (
@@ -74,14 +92,6 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                     </ExtendedNextLink>
                 </li>
             ))}
-
-            {isLoadingMoreBlogCategoryArticles && (
-                <div className="flex flex-col gap-y-5">
-                    {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (
-                        <SkeletonModuleArticleBlog key={index} />
-                    ))}
-                </div>
-            )}
-        </ul>
+        </>
     );
 };

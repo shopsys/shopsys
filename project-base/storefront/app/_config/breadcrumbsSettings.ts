@@ -1,5 +1,6 @@
 import { getArticleDetailQuery } from 'app/_queries/getArticleDetailQuery';
 import { getBlogArticleDetailQuery } from 'app/_queries/getBlogArticleDetailQuery';
+import { getBlogCategoryDetailQuery } from 'app/_queries/getBlogCategoryDetailQuery';
 import { getProductQuery } from 'app/_queries/getProductQuery';
 import { mapToBreadcrumbFragments } from 'app/_utils/breadcrumbs';
 import { DynamicBreadcrumbsSettings, StaticBreadcrumb, StaticBreadcrumbsSettings } from 'types/breadcrumbs';
@@ -44,15 +45,17 @@ export const dynamicBreadcrumbsSettings: DynamicBreadcrumbsSettings = {
 
         return article?.breadcrumb ?? [];
     },
-    // TODO finish rest
     '/blogArticles': async (pathname) => {
         const blogArticleSlug = pathname.split('/blogArticles/')[1];
         const blogArticle = await getBlogArticleDetailQuery(blogArticleSlug);
         return blogArticle?.breadcrumb ?? [];
     },
-    '/blogCategories': async () => {
-        return [];
+    '/blogCategories': async (pathname) => {
+        const blogCategorySlug = pathname.split('/blogCategories/')[1];
+        const blogCategory = await getBlogCategoryDetailQuery(blogCategorySlug);
+        return blogCategory?.breadcrumb ?? [];
     },
+    // TODO finish rest
     '/brands': async () => {
         return [];
     },

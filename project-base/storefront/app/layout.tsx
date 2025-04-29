@@ -7,7 +7,6 @@ import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import 'nprogress/nprogress.css';
-import 'react-loading-skeleton/dist/skeleton.css';
 import 'styles/theme.css';
 
 type MetadataProps = {
@@ -29,8 +28,8 @@ type RootLayoutProps = {
 };
 
 const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
-    const pathname = headers().get('x-pathname') ?? '/';
-    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/user-consent']);
+    const pathname = (await headers()).get('x-pathname') ?? '/';
+    const [consentUpdatePageUrl] = await getInternationalizedStaticUrls(['/user-consent']);
     const isConsentUpdatePage = consentUpdatePageUrl === pathname;
 
     return (

@@ -1,4 +1,4 @@
-import { PageType } from 'types/simpleNavigation';
+import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { StateCreator } from 'zustand';
 
 type CUSTOM_PAGE_TYPES = [

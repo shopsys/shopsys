@@ -3,7 +3,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 
 export type ProductItemProps = {
     product: TypeListedProductFragment;
@@ -21,7 +20,6 @@ export const ProductListItemWrapper: FC<ProductItemProps> = ({ children, product
             draggable={false}
             href={product.slug}
             type={product.isMainVariant ? 'productMainVariant' : 'product'}
-            onClickExtended={disableClickWhenTextSelected}
             onMouseUp={() => {
                 // onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
                 // onClick?.(product, listIndex);
