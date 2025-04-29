@@ -62,7 +62,7 @@ class RegisterTest extends GraphQlTestCase
         $expectedViolationMessage = t(
             'This email is already registered',
             [],
-            Translator::VALIDATOR_TRANSLATION_DOMAIN,
+            Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
             $firstDomainLocale,
         );
 
@@ -97,25 +97,25 @@ class RegisterTest extends GraphQlTestCase
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
             2 => t(
                 'Please enter valid email',
                 [],
-                Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
             3 => t(
                 'Password must be at least {{ limit }} characters long',
                 ['{{ limit }}' => 6],
-                Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
         ];

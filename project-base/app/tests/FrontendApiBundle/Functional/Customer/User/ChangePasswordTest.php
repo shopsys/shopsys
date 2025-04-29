@@ -27,7 +27,7 @@ class ChangePasswordTest extends GraphQlWithLoginTestCase
     public function testChangePasswordWithWrongData(): void
     {
         $expectedViolationMessages = [
-            0 => t('New password must be at least {{ limit }} characters long', ['{{ limit }}' => 6], Translator::VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            0 => t('New password must be at least {{ limit }} characters long', ['{{ limit }}' => 6], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePasswordMutation.graphql', [

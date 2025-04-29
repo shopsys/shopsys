@@ -51,7 +51,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
                 foreach ($messages as $message) {
                     // message value can be null or ~
                     if (is_string($message)) {
-                        $catalogue->add(new Message($message, Translator::VALIDATOR_TRANSLATION_DOMAIN));
+                        $catalogue->add(new Message($message, Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN));
                     }
                 }
             }

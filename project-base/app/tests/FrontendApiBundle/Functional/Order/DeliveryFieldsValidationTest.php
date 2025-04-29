@@ -31,37 +31,37 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $expectedValidations = [
             'input.deliveryFirstName' => [
                 0 => [
-                    'message' => t('Please enter first name of contact person', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter first name of contact person', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryLastName' => [
                 0 => [
-                    'message' => t('Please enter last name of contact person', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter last name of contact person', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryStreet' => [
                 0 => [
-                    'message' => t('Please enter street', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter street', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryCity' => [
                 0 => [
-                    'message' => t('Please enter city', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter city', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryPostcode' => [
                 0 => [
-                    'message' => t('Please enter zip code', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter zip code', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryCountry' => [
                 0 => [
-                    'message' => t('Please choose country', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please choose country', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
@@ -102,7 +102,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $expectedValidations = [
             'input' => [
                 0 => [
-                    'message' => t('You must be logged in if you want to provide the delivery address UUID in the order input', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'message' => t('You must be logged in if you want to provide the delivery address UUID in the order input', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'code' => '9dcda0d3-7264-4c5f-9b35-f5b155f997f9',
                 ],
             ],

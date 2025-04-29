@@ -42,6 +42,7 @@
         "arvenil/ninja-mutex": "^0.6",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
+        "cweagans/composer-patches": "^1.7",
         "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^3.2.2",
         "doctrine/doctrine-bundle": "^2.5.7",
@@ -175,11 +176,11 @@
             "php": "8.3.2"
         },
         "allow-plugins": {
+            "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ocramius/package-versions": true,
-            "symfony/flex": true,
-            "cweagans/composer-patches": true,
             "php-http/discovery": true,
+            "symfony/flex": true,
             "symfony/runtime": true
         }
     },
@@ -189,6 +190,11 @@
         "src-dir": "src",
         "var-dir": "var",
         "public-dir": "web",
+        "patches": {
+            "overblog/graphql-bundle": {
+                "Change default validator domain": "patch/overblog-validator.patch"
+            }
+        },
         "symfony": {
             "allow-contrib": true,
             "require": "^6.4",

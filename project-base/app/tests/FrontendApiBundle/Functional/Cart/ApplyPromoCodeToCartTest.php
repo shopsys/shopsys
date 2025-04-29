@@ -20,6 +20,7 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use App\Model\Transport\Transport;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
@@ -125,7 +126,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $errors = $this->getErrorsFromResponse($response);
 
         self::assertEquals('validation', $errors[0]['message']);
-        self::assertEquals(t('The promo code is not applicable to any of the products in your cart. Check it, please.', [], 'validators', $this->getFirstDomainLocale()), $errors[0]['extensions']['validation']['input.promoCode'][0]['message']);
+        self::assertEquals(t('The promo code is not applicable to any of the products in your cart. Check it, please.', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), $errors[0]['extensions']['validation']['input.promoCode'][0]['message']);
     }
 
     public function testApplyPromoCodeWithoutCart(): void
@@ -139,7 +140,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $errors = $this->getErrorsFromResponse($response);
 
         self::assertEquals('validation', $errors[0]['message']);
-        self::assertEquals(t('The promo code is not applicable to any of the products in your cart. Check it, please.', [], 'validators', $this->getFirstDomainLocale()), $errors[0]['extensions']['validation']['input.promoCode'][0]['message']);
+        self::assertEquals(t('The promo code is not applicable to any of the products in your cart. Check it, please.', [], Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), $errors[0]['extensions']['validation']['input.promoCode'][0]['message']);
     }
 
     public function testModificationAfterProductIsRemoved(): void

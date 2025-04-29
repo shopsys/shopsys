@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Customer\User;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\BillingAddress;
 use App\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -230,19 +231,19 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             'input.firstName' => t(
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                'validators',
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
             'input.lastName' => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                'validators',
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
             'input.telephone' => t(
                 'Telephone number cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 30],
-                'validators',
+                Translator::CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
         ];

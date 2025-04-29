@@ -92,6 +92,7 @@
         "becklyn/ordered-form-bundle": "^1.4",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
+        "cweagans/composer-patches": "^1.7",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/annotations": "^1.6.0",
         "doctrine/cache": "^1.7",
@@ -147,8 +148,8 @@
         "scheb/2fa-bundle": "^7.6.0",
         "scheb/2fa-email": "^7.6.0",
         "scheb/2fa-google-authenticator": "^7.6.0",
-        "sentry/sentry-symfony": "^5.0.1",
         "sentry/sentry": "^4.10.0",
+        "sentry/sentry-symfony": "^5.0.1",
         "shopsys/deployment": "^4.0.0",
         "shopsys/jsformvalidator-bundle": "^2.0.0",
         "snc/redis-bundle": "^4.8.0",
@@ -254,10 +255,11 @@
             "php": "8.3.2"
         },
         "allow-plugins": {
+            "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ocramius/package-versions": true,
-            "symfony/flex": true,
             "php-http/discovery": true,
+            "symfony/flex": true,
             "symfony/runtime": true
         }
     },
@@ -274,6 +276,11 @@
         },
         "runtime": {
             "dotenv_path": "project-base/app/.env"
+        },
+        "patches": {
+            "overblog/graphql-bundle": {
+                "Change default validator domain": "project-base/app/patch/overblog-validator.patch"
+            }
         }
     },
     "replace": {

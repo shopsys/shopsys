@@ -19,6 +19,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     public const string VALIDATOR_TRANSLATION_DOMAIN = 'validators';
     public const string TESTS_TRANSLATION_DOMAIN = 'tests';
     public const string CUSTOMER_TRANSLATION_DOMAIN = 'customerMessages';
+    public const string CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN = 'customerValidators';
     public const string SOURCE_LOCALE = 'en';
 
     /**
