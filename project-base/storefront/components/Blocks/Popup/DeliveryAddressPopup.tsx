@@ -205,6 +205,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                         required: true,
                                         type: 'text',
                                         autoComplete: 'postal-code',
+                                        inputMode: 'numeric',
                                     }}
                                 />
                             </FormColumn>

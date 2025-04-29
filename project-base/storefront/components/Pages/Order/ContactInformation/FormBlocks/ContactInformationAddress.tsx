@@ -70,6 +70,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
+                        inputMode: 'numeric',
                         onChange: (event) => updateContactInformation({ postcode: event.currentTarget.value }),
                     }}
                 />

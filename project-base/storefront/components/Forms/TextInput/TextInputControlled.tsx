@@ -18,6 +18,7 @@ type TextInputControlledProps = {
         | 'inputSize'
         | 'autoComplete'
         | 'className'
+        | 'inputMode'
     >;
     control: Control<any>;
     formName: string;
