@@ -1,11 +1,8 @@
-import * as Types from '../../../../types';
+import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ImageFragment } from '../../../images/fragments/ImageFragment.ssr';
-import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.ssr';
-import { HreflangLinksFragment } from '../../../hreflangLinks/fragments/HreflangLinksFragment.ssr';
-import { SimpleBlogCategoryFragment } from '../../../blogCategories/fragments/SimpleBlogCategoryFragment.ssr';
-export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, seoTitle: string | null, seoMetaDescription: string | null, seoH1: string | null, mainBlogCategoryUuid: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }>, blogCategories: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }> };
+import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.ssr';
+export type TypeChangePaymentInOrderFragment = { __typename: 'Order', urlHash: string, number: string, paymentTransactionsCount: number, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } };
 
 
       export interface PossibleTypesResultData {
@@ -90,34 +87,14 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
 };
       export default result;
     
-export const BlogArticleDetailFragment = gql`
-    fragment BlogArticleDetailFragment on BlogArticle {
+export const ChangePaymentInOrderFragment = gql`
+    fragment ChangePaymentInOrderFragment on Order {
   __typename
-  id
-  uuid
-  name
-  slug
-  link
-  mainImage {
-    ...ImageFragment
-  }
-  breadcrumb {
-    ...BreadcrumbFragment
-  }
-  text
-  publishDate
-  seoTitle
-  seoMetaDescription
-  seoH1
-  hreflangLinks {
-    ...HreflangLinksFragment
-  }
-  mainBlogCategoryUuid
-  blogCategories {
-    ...SimpleBlogCategoryFragment
+  urlHash
+  number
+  paymentTransactionsCount
+  payment {
+    ...SimplePaymentFragment
   }
 }
-    ${ImageFragment}
-${BreadcrumbFragment}
-${HreflangLinksFragment}
-${SimpleBlogCategoryFragment}`;
+    ${SimplePaymentFragment}`;
