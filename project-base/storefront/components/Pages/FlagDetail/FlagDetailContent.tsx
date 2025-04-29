@@ -27,7 +27,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                 <h1>{title}</h1>
             </Webline>
 
-            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
+            <FilteredProductsWrapper>
                 <DeferredFilterPanel
                     defaultOrderingMode={flag.products.defaultOrderingMode}
                     orderingMode={flag.products.orderingMode}
@@ -37,7 +37,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     totalCount={flag.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col gap-5">
+                <div className="flex flex-1 scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={flag.products.productFilterOptions} />
 

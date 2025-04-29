@@ -33,7 +33,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 title={title}
             />
 
-            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
+            <FilteredProductsWrapper>
                 <DeferredFilterPanel
                     defaultOrderingMode={brand.products.defaultOrderingMode}
                     orderingMode={brand.products.orderingMode}
@@ -43,7 +43,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                     totalCount={brand.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col gap-5">
+                <div className="flex flex-1 scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={brand.products.productFilterOptions} />
 
