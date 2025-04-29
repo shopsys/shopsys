@@ -27,7 +27,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                         alt={article.mainImage?.name || article.name}
                         className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
                         height={220}
-                        sizes="(max-width: 600px) 90vw, (max-width: 1024px) 40vw, 10vw"
+                        sizes="(max-width: 1023px) 0px, 144px"
                         src={article.mainImage?.url}
                         tid={TIDs.blog_preview_image}
                         width={320}

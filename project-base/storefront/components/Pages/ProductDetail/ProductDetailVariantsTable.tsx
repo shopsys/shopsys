@@ -51,7 +51,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                 priority
                                 alt={variant.mainImage?.name || variant.fullName}
                                 className="object-contain"
-                                sizes="(max-width: 600px) 100vw, (max-width: 768px) 50vw, 8vw"
+                                sizes="(max-width: 600px) 100vw, (max-width: 768px) 50vw, 64px"
                                 src={variant.mainImage?.url}
                             />
                         </div>

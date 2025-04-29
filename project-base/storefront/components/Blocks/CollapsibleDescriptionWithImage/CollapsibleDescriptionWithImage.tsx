@@ -36,7 +36,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
                             alt={imageName}
                             className="vl:size-[130px] h-[262px] w-full rounded-lg object-contain sm:h-[130px] sm:w-fit"
                             height={262}
-                            sizes="50vw"
+                            sizes="(max-width: 479px) 90vw, (max-width: 1023px) 150px, 130px"
                             src={imageUrl}
                             width={262}
                         />

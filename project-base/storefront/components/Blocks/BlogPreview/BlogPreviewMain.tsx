@@ -27,7 +27,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                         alt={article.mainImage?.name || article.name}
                         className="vl:aspect-16/11 aspect-video size-auto rounded-xl object-cover"
                         height={220}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
+                        sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"
                         src={article.mainImage?.url}
                         tid={TIDs.blog_preview_image}
                         width={320}

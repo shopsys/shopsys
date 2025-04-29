@@ -56,7 +56,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                         priority
                         alt={mainImage?.name || productName}
                         height={500}
-                        sizes="50vw"
+                        sizes="(max-width: 1023px) 100vw, 500px"
                         src={mainImage?.url}
                         width={500}
                         className={twJoin(
@@ -103,6 +103,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                 alt={galleryItem.name || `${productName}-${index}`}
                                                 className="aspect-square object-contain object-center p-1 mix-blend-multiply"
                                                 height={64}
+                                                sizes="(max-width: 1023px) 60px, 56px"
                                                 src={galleryItemThumbnail?.url}
                                                 tid={TIDs.product_gallery_image}
                                                 width={64}

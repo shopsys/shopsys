@@ -37,7 +37,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 alt={blogArticle.mainImage?.name || blogArticle.name}
                                 className="rounded-xl"
                                 height={351}
-                                sizes="(max-width: 600px) 100vw, (min-width: 600px) 250px, (min-width: 769px) 320px"
+                                sizes="(max-width: 600px) 85vw, (min-width: 768px) 250px, 320px"
                                 src={blogArticle.mainImage?.url}
                                 width={510}
                             />
