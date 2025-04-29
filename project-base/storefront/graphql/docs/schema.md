@@ -224,7 +224,7 @@ Hash to securely recognize access
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>AdvertCode</strong></td>
+<td colspan="2" valign="top"><strong id="query.advertcode">AdvertCode</strong></td>
 <td valign="top"><a href="#advertcode">AdvertCode</a></td>
 <td></td>
 </tr>
@@ -3246,7 +3246,7 @@ Applied promo codes if provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
+<td colspan="2" valign="top"><strong id="cart.remainingamountforfreetransport">remainingAmountForFreeTransport</strong></td>
 <td valign="top"><a href="#money">Money</a></td>
 <td>
 
@@ -3640,16 +3640,7 @@ Category images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>linkedCategories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-A list of categories linked to the given category
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="category.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -6709,7 +6700,7 @@ Type of the order status
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Billing address street name
+Billing address street name 
 
 </td>
 </tr>
@@ -6763,7 +6754,7 @@ Transport method applied to the order
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Unique url hash that can be used to
+Unique url hash that can be used to 
 
 </td>
 </tr>
@@ -7844,8 +7835,8 @@ Customer orders
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>displaySiteContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong id="personaldatapage.displaysitecontent">displaySiteContent</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The HTML content of the site where a customer can request displaying his personal data
@@ -7862,8 +7853,8 @@ URL slug of display site
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exportSiteContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong id="personaldatapage.exportsitecontent">exportSiteContent</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The HTML content of the site where a customer can request exporting his personal data
@@ -10884,13 +10875,13 @@ Name of the sender
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>latitude</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong id="coordinates.latitude">latitude</strong></td>
+<td valign="top"><a href="#float">Float</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>longitude</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong id="coordinates.longitude">longitude</strong></td>
+<td valign="top"><a href="#float">Float</a>!</td>
 <td></td>
 </tr>
 </tbody>
