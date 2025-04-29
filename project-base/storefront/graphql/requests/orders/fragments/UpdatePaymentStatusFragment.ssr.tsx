@@ -1,11 +1,7 @@
-import * as Types from '../../../../types';
+import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ImageFragment } from '../../../images/fragments/ImageFragment.ssr';
-import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.ssr';
-import { HreflangLinksFragment } from '../../../hreflangLinks/fragments/HreflangLinksFragment.ssr';
-import { SimpleBlogCategoryFragment } from '../../../blogCategories/fragments/SimpleBlogCategoryFragment.ssr';
-export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, seoTitle: string | null, seoMetaDescription: string | null, seoH1: string | null, mainBlogCategoryUuid: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }>, blogCategories: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }> };
+export type TypeUpdatePaymentStatusFragment = { __typename: 'Order', isPaid: boolean, number: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: string } };
 
 
       export interface PossibleTypesResultData {
@@ -90,34 +86,17 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
 };
       export default result;
     
-export const BlogArticleDetailFragment = gql`
-    fragment BlogArticleDetailFragment on BlogArticle {
+export const UpdatePaymentStatusFragment = gql`
+    fragment UpdatePaymentStatusFragment on Order {
   __typename
-  id
-  uuid
-  name
-  slug
-  link
-  mainImage {
-    ...ImageFragment
+  isPaid
+  number
+  paymentTransactionsCount
+  payment {
+    name
+    type
   }
-  breadcrumb {
-    ...BreadcrumbFragment
-  }
-  text
-  publishDate
-  seoTitle
-  seoMetaDescription
-  seoH1
-  hreflangLinks {
-    ...HreflangLinksFragment
-  }
-  mainBlogCategoryUuid
-  blogCategories {
-    ...SimpleBlogCategoryFragment
-  }
+  hasPaymentInProcess
+  urlHash
 }
-    ${ImageFragment}
-${BreadcrumbFragment}
-${HreflangLinksFragment}
-${SimpleBlogCategoryFragment}`;
+    `;
