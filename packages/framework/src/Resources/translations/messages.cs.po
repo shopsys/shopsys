@@ -1303,9 +1303,6 @@ msgstr "Telefonní číslo pro doručení"
 msgid "Delivery street"
 msgstr "Ulice pro doručení"
 
-msgid "Department stores"
-msgstr "Obchodní domy"
-
 msgid "Description"
 msgstr "Popis"
 

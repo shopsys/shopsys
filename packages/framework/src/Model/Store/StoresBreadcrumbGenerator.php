@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Store;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use function t;
 
 class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
@@ -26,7 +27,7 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $breadcrumbItems[] = new BreadcrumbItem(
-            t('Department stores'),
+            t('Department stores', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),
             'front_stores',
         );
 

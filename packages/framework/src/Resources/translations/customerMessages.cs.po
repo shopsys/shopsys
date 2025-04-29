@@ -13,11 +13,17 @@ msgstr "Ihned k odběru"
 msgid "Billing address"
 msgstr "Fakturační adresa"
 
+msgid "Brand overview"
+msgstr "Přehled značek"
+
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
+
+msgid "Department stores"
+msgstr "Obchodní domy"
 
 msgid "Exchange"
 msgstr "Výměna"
@@ -48,6 +54,12 @@ msgstr "Aktuálně nedostupné"
 
 msgid "Payment"
 msgstr "Platba"
+
+msgid "Personal information export"
+msgstr "Export osobních údajů"
+
+msgid "Personal information overview"
+msgstr "Přehled osobních údajů"
 
 msgid "Transport"
 msgstr "Doprava"

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
@@ -15,9 +16,9 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
         if (in_array($routeName, $this->getPersonalDataRouteNames(), true)) {
-            $breadcrumbItem = new BreadcrumbItem(t('Personal information overview'));
+            $breadcrumbItem = new BreadcrumbItem(t('Personal information overview', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN));
         } else {
-            $breadcrumbItem = new BreadcrumbItem(t('Personal information export'));
+            $breadcrumbItem = new BreadcrumbItem(t('Personal information export', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN));
         }
 
         return [$breadcrumbItem];

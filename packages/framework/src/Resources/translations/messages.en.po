@@ -1303,9 +1303,6 @@ msgstr ""
 msgid "Delivery street"
 msgstr ""
 
-msgid "Department stores"
-msgstr ""
-
 msgid "Description"
 msgstr ""
 

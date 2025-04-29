@@ -13,10 +13,16 @@ msgstr ""
 msgid "Billing address"
 msgstr ""
 
+msgid "Brand overview"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
 msgid "Delivery address"
+msgstr ""
+
+msgid "Department stores"
 msgstr ""
 
 msgid "Exchange"
@@ -47,6 +53,12 @@ msgid "Out of stock"
 msgstr ""
 
 msgid "Payment"
+msgstr ""
+
+msgid "Personal information export"
+msgstr ""
+
+msgid "Personal information overview"
 msgstr ""
 
 msgid "Transport"

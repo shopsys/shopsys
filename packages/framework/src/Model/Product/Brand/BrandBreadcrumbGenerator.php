@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
@@ -26,7 +27,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         $isBrandDetail = $routeName === 'front_brand_detail';
 
         $breadcrumbItems[] = new BreadcrumbItem(
-            t('Brand overview'),
+            t('Brand overview', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),
             $isBrandDetail ? 'front_brand_list' : null,
         );
 
