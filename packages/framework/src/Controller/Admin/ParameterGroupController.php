@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotF
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +41,7 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/list/')]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->getGrid();
@@ -53,6 +56,7 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/new/')]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_FULL])]
     public function newAction(Request $request): Response
     {
         $parameterGroupData = $this->parameterGroupDataFactory->create();
@@ -91,6 +95,8 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $parameterGroup = $this->parameterGroupFacade->getById($id);
@@ -131,6 +137,7 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/product/parameter-group/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

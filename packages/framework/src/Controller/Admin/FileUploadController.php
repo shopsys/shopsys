@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,6 +31,7 @@ class FileUploadController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/file-upload/')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function uploadAction(Request $request): JsonResponse
     {
         $actionResult = [
@@ -67,6 +70,7 @@ class FileUploadController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/file-upload/delete-temporary-file/')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function deleteTemporaryFileAction(Request $request): JsonResponse
     {
         $filename = $request->get('filename');

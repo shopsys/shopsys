@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +45,7 @@ class DomainFilterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/multidomain/filter-domain/{namespace}/{domainId}', requirements: ['domainId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function selectDomainAction(Request $request, string $namespace, ?int $domainId = null): RedirectResponse
     {
         $this->adminDomainFilterTabsFacade->setSelectedDomainId($namespace, $domainId);

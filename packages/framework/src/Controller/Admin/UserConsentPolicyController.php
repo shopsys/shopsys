@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\UserConsentPolicy\UserConsentPolicySettingFormType;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +30,8 @@ class UserConsentPolicyController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/user-consent-policy/setting/')]
+    #[AccessControlRule([Roles::ROLE_USER_CONSENT_POLICY_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_USER_CONSENT_POLICY_VIEW], ['GET'])]
     public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
 use Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -106,6 +107,7 @@ class LoginController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sso/{originalDomainId}', requirements: ['originalDomainId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function ssoAction(Request $request, int $originalDomainId): Response
     {
         $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration(
@@ -129,6 +131,7 @@ class LoginController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/authorization/')]
+    #[AccessControlRule(['PUBLIC_ACCESS'])]
     public function authorizationAction(Request $request): Response
     {
         $multidomainLoginToken = $request->get(static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);

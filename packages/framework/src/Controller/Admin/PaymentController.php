@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -39,6 +41,7 @@ class PaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/new/')]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
     public function newAction(Request $request): Response
     {
         $paymentData = $this->paymentDataFactory->create();
@@ -78,6 +81,8 @@ class PaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $payment = $this->paymentFacade->getById($id);
@@ -121,6 +126,7 @@ class PaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

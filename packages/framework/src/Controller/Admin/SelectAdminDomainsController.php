@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdminDomainsFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -42,6 +44,7 @@ class SelectAdminDomainsController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route('/domains/filter', name: 'admin_domains_filter', methods: ['POST'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function filterDomainsAction(Request $request): Response
     {
         $form = $this->createForm(AdminDomainsFormType::class);

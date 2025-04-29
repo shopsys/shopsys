@@ -16,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -50,6 +52,8 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $category = $this->categoryFacade->getById($id);
@@ -94,6 +98,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/new/')]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL])]
     public function newAction(Request $request): Response
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -132,6 +137,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/list/')]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_VIEW])]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'category';
@@ -166,6 +172,7 @@ class CategoryController extends AdminBaseController
      * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      */
     #[Route(path: '/category/apply-sorting/', methods: ['post'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL])]
     public function applySortingAction(Request $request): Response
     {
         $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
@@ -182,6 +189,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -208,6 +216,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_VIEW])]
     public function loadBranchJsonAction(int $domainId, int $id): Response
     {
         $parentCategory = $this->categoryFacade->getById($id);

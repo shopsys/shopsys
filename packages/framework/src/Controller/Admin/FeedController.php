@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,6 +42,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FEED_VIEW])]
     public function generateAction(string $feedName, int $domainId): Response
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
@@ -72,6 +74,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/feed/schedule/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FEED_VIEW])]
     public function scheduleAction(string $feedName, int $domainId): RedirectResponse
     {
         try {
@@ -101,6 +104,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/feed/list/')]
+    #[AccessControlRule([Roles::ROLE_FEED_VIEW])]
     public function listAction(): Response
     {
         $feedsData = [];

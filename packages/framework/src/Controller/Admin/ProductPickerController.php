@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +50,7 @@ class ProductPickerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}/{withPrice}/{domainId}')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function pickMultipleAction(
         Request $request,
         string $jsInstanceId,
@@ -78,6 +81,7 @@ class ProductPickerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product-picker/pick-single/{parentInstanceId}/', defaults: ['parentInstanceId' => '__instance_id__'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function pickSingleAction(Request $request, string $parentInstanceId): Response
     {
         return $this->getPickerResponse(
@@ -137,6 +141,7 @@ class ProductPickerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product-picker/basic-price/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function basicProductPriceAction(Request $request): Response
     {
         $productId = (int)$request->get('productId');

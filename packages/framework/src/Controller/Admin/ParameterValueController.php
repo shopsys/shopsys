@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,6 +47,7 @@ class ParameterValueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-value/list', name: 'admin_parametervalue_list')]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_VIEW])]
     public function listAction(): Response
     {
         $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
@@ -73,6 +76,8 @@ class ParameterValueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $parameterValue = $this->parameterFacade->getParameterValueById($id);
@@ -115,6 +120,8 @@ class ParameterValueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-values/edit/{id}', name: 'admin_parametervalues_edit', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_VIEW], ['GET'])]
     public function parameterValuesEditAction(Request $request, int $id): Response
     {
         $parameter = $this->parameterFacade->getById($id);

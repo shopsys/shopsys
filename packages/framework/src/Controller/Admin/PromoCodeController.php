@@ -16,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +48,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/list')]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW])]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -68,6 +71,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/promo-code/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
@@ -93,6 +97,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/new')]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL])]
     public function newAction(Request $request): Response
     {
         $fillFromPromoCodeId = $request->query->get('fillFromPromoCodeId');
@@ -139,6 +144,8 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $promoCode = $this->promoCodeFacade->getById($id);
@@ -182,6 +189,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/new-mass-generate')]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL])]
     public function newMassGenerateAction(Request $request): Response
     {
         $promoCodeData = $this->promoCodeDataFactory->create();
@@ -228,6 +236,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/list-mass-generate-batch')]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW])]
     public function listMassGenerateBatchAction(Request $request): Response
     {
         $grid = $this->promoCodeMassGeneratedBatchGridFactory->create();
@@ -246,6 +255,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
+    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW])]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
         $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');

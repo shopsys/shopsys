@@ -30,4 +30,14 @@ class AttributeRouteControllerLoader extends BaseAttributeRouteControllerLoader
     {
         return preg_replace('/^(app_|shopsys_framework_)/', '', $routeName);
     }
+
+    /**
+     * @param \ReflectionClass $class
+     * @param \ReflectionMethod $method
+     * @return string
+     */
+    public function getRouteName(ReflectionClass $class, ReflectionMethod $method): string
+    {
+        return $this->getDefaultRouteName($class, $method);
+    }
 }

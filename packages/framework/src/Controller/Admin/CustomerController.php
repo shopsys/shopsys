@@ -26,7 +26,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
 use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,6 +76,8 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -128,6 +132,8 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/edit-customer-user/{id}', name: 'admin_customer_user_edit', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
     public function editCustomerUserAction(Request $request, int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -181,6 +187,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/list/')]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW])]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -237,6 +244,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/new/')]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function newAction(Request $request): Response
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
@@ -279,6 +287,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/new-customer-user/{customerId}/', name: 'admin_customer_new_customer_user', requirements: ['customerId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function newCustomerUserAction(Request $request, int $customerId): Response
     {
         $customer = $this->customerFacade->getById($customerId);
@@ -330,6 +339,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function deleteAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -367,6 +377,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete-all/{id}', name: 'admin_customer_delete_all', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function deleteAllAction(int $id): Response
     {
         $customer = $this->customerFacade->getById($id);
@@ -395,6 +406,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/send-reset-password/{id}', name: 'admin_customer_send_reset_password', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW])]
     public function sendResetPasswordAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);

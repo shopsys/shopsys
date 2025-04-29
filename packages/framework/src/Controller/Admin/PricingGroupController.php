@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundEx
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupInlineEdit;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,6 +40,8 @@ class PricingGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/group/list/')]
+    #[AccessControlRule([Roles::ROLE_PRICING_GROUP_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PRICING_GROUP_VIEW], ['GET'])]
     public function listAction(): Response
     {
         $grid = $this->pricingGroupInlineEdit->getGrid();
@@ -54,6 +58,7 @@ class PricingGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/group/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PRICING_GROUP_FULL])]
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
@@ -94,6 +99,7 @@ class PricingGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/group/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PRICING_GROUP_FULL])]
     public function deleteConfirmAction(int $id): Response
     {
         try {

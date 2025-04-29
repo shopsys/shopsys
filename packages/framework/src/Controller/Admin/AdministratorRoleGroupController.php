@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,6 +40,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/list/')]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_VIEW])]
     public function listAction(): Response
     {
         $queryBuilder = $this->administratorRoleGroupFacade->getAllQueryBuilder();
@@ -64,6 +67,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/new/')]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
     public function newAction(Request $request): Response
     {
         $roleGroupData = new AdministratorRoleGroupData();
@@ -108,6 +112,8 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
@@ -162,6 +168,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/copy/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
     public function copyAction(Request $request, int $id): Response
     {
         try {
@@ -192,6 +199,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
     public function deleteAction(int $id): Response
     {
         $namesUsingThisRoleGroup = $this->administratorFacade->findAdministratorNamesWithRoleGroup($id);

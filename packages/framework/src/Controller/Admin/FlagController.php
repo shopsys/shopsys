@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -41,6 +43,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/list/')]
+    #[AccessControlRule([Roles::ROLE_FLAG_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->flagGridFactory->create();
@@ -55,6 +58,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/new/')]
+    #[AccessControlRule([Roles::ROLE_FLAG_FULL])]
     public function newAction(Request $request): Response
     {
         $flagData = $this->flagDataFactory->create();
@@ -100,6 +104,8 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FLAG_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_FLAG_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $flag = $this->flagFacade->getById($id);
@@ -142,6 +148,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FLAG_FULL])]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -173,6 +180,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FLAG_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

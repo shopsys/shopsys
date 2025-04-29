@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentat
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -43,6 +45,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/list/')]
+    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->salesRepresentativeGridFactory->create();
@@ -57,6 +60,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/new/')]
+    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL])]
     public function newAction(Request $request): Response
     {
         $salesRepresentativeData = $this->salesRepresentativeDataFactory->create();
@@ -92,6 +96,8 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $salesRepresentative = $this->salesRepresentativeFacade->getById($id);
@@ -140,6 +146,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -166,6 +173,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL])]
     public function deleteConfirmAction(int $id): Response
     {
         try {

@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Transfer\TransferIssueSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +40,7 @@ class TransferIssueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transfer/issue/list/', name: 'admin_transferissue_list')]
+    #[AccessControlRule([Roles::ROLE_TRANSFER_VIEW])]
     public function listAction(Request $request): Response
     {
         $administrator = $this->getCurrentAdministrator();

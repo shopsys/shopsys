@@ -24,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,6 +63,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/')]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->readyCategorySeoMixGridFactory->create(
@@ -77,6 +80,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/category')]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
     public function newCategoryAction(): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -98,6 +102,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/filters/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
     public function newFiltersAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -132,6 +137,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/combinations/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
     public function newCombinationsAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -193,6 +199,8 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/ready-combination/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_VIEW], ['GET'])]
     public function readyCombinationAction(Request $request, int $categoryId): Response
     {
         $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
@@ -314,6 +322,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

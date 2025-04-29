@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,6 +34,7 @@ class UnitController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/list/')]
+    #[AccessControlRule([Roles::ROLE_UNIT_VIEW])]
     public function listAction(): Response
     {
         $unitInlineEdit = $this->unitInlineEdit;
@@ -49,6 +52,7 @@ class UnitController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_UNIT_FULL])]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -95,6 +99,7 @@ class UnitController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_UNIT_FULL])]
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
@@ -133,6 +138,8 @@ class UnitController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/setting/')]
+    #[AccessControlRule([Roles::ROLE_UNIT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_UNIT_VIEW], ['GET'])]
     public function settingAction(Request $request): Response
     {
         try {

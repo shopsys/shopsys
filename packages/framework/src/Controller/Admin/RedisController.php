@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,6 +26,7 @@ class RedisController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/redis/clean-storefront-query-cache')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function cleanAction(Request $request): Response
     {
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache();
@@ -40,6 +43,7 @@ class RedisController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/redis/show-clean-storefront-query-cache')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function showAction(Request $request): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/StorefrontCache/clean.html.twig');

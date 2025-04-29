@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +41,7 @@ class DeliveryAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/delivery-address/new/{customerId}', name: 'admin_delivery_address_new', requirements: ['customerId' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function newAction(Request $request, int $customerId): Response
     {
         $customer = $this->customerFacade->getById($customerId);
@@ -91,6 +94,8 @@ class DeliveryAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/delivery-address/edit/{id}', name: 'admin_delivery_address_edit', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);
@@ -149,6 +154,7 @@ class DeliveryAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/delivery-address/delete/{id}', name: 'admin_delivery_address_delete', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);

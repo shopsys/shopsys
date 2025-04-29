@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\PrivacyPolicySettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\TermsAndConditionsSettingFormType;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,6 +31,8 @@ class LegalConditionsController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/legal-conditions/setting/')]
+    #[AccessControlRule([Roles::ROLE_LEGAL_CONDITIONS_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_LEGAL_CONDITIONS_VIEW], ['GET'])]
     public function termsAndConditionsAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -66,6 +70,8 @@ class LegalConditionsController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/legal-conditions/privacy-policy/')]
+    #[AccessControlRule([Roles::ROLE_PRIVACY_POLICY_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PRIVACY_POLICY_VIEW], ['GET'])]
     public function privacyPolicyAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

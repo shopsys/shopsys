@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactory;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Country\Grid\CountryGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -36,6 +38,7 @@ class CountryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/country/list/')]
+    #[AccessControlRule([Roles::ROLE_COUNTRY_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->countryGridFactory->create();
@@ -51,6 +54,8 @@ class CountryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/country/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_COUNTRY_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_COUNTRY_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $country = $this->countryFacade->getById($id);
@@ -91,6 +96,7 @@ class CountryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/country/new/')]
+    #[AccessControlRule([Roles::ROLE_COUNTRY_FULL])]
     public function newAction(Request $request): Response
     {
         $countryData = $this->countryDataFactory->create();

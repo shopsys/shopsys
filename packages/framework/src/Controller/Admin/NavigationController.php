@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundExc
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,6 +40,7 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/list/')]
+    #[AccessControlRule([Roles::ROLE_NAVIGATION_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->getGrid(
@@ -54,6 +57,7 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/new/')]
+    #[AccessControlRule([Roles::ROLE_NAVIGATION_FULL])]
     public function newAction(Request $request): Response
     {
         $navigationItemData = $this->navigationItemDataFactory->createNew();
@@ -95,6 +99,8 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_NAVIGATION_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_NAVIGATION_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $navigationItem = $this->navigationItemFacade->getById($id);
@@ -138,6 +144,7 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_NAVIGATION_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

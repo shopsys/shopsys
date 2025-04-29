@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -37,6 +39,7 @@ class BestsellingProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/bestselling-product/list/')]
+    #[AccessControlRule([Roles::ROLE_BESTSELLING_PRODUCT_VIEW])]
     public function listAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -62,6 +65,8 @@ class BestsellingProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/bestselling-product/detail/')]
+    #[AccessControlRule([Roles::ROLE_BESTSELLING_PRODUCT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_BESTSELLING_PRODUCT_VIEW], ['GET'])]
     public function detailAction(Request $request): Response
     {
         $categoryId = (int)$request->query->get('categoryId');

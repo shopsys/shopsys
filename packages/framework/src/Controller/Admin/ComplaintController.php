@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplain
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,6 +47,7 @@ class ComplaintController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/list/')]
+    #[AccessControlRule([Roles::ROLE_COMPLAINT_VIEW])]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'complaints';
@@ -95,6 +98,8 @@ class ComplaintController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_COMPLAINT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_COMPLAINT_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $complaint = $this->complaintFacade->getById($id);
@@ -138,6 +143,7 @@ class ComplaintController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/get-advanced-search-rule-form/', methods: ['post'])]
+    #[AccessControlRule([Roles::ROLE_COMPLAINT_VIEW])]
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchComplaintFacade->createRuleForm(

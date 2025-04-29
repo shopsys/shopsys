@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundE
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +38,7 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter/list/')]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VIEW])]
     public function listAction(): Response
     {
         $grid = $this->parameterGridFactory->create();
@@ -50,6 +53,7 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter/new/')]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_FULL])]
     public function newAction(Request $request): Response
     {
         $parameterData = $this->parameterDataFactory->create();
@@ -94,6 +98,8 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $parameter = $this->parameterFacade->getById($id);
@@ -138,6 +144,7 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/product/parameter/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PARAMETER_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

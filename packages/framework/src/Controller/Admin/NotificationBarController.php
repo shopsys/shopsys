@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Form\Admin\NotificationBar\NotificationBarFormType;
 use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFoundException;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +39,7 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/notification-bar/list/')]
+    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_VIEW])]
     public function listAction(): Response
     {
         $queryBuilder = $this->notificationBarFacade->getAllByDomainIdQueryBuilderForGrid($this->adminDomainTabsFacade->getSelectedDomainId());
@@ -64,6 +67,7 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/notification-bar/new/')]
+    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_FULL])]
     public function newAction(Request $request): Response
     {
         $notificationBarData = $this->notificationBarDataFactory->create();
@@ -98,6 +102,8 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/notification-bar/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $notificationBar = $this->notificationBarFacade->getById($id);
@@ -138,6 +144,7 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/notification-bar/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
