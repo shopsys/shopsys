@@ -6,6 +6,7 @@ const environment = getPublicConfigProperty('sentryEnvironment', '');
 const enableFeedback = getPublicConfigProperty('sentryFeedbackEnable', false);
 const enableReplays = getPublicConfigProperty('sentryReplaysEnable', false);
 
+// TODO: how to solve NEXT_PUBLIC_?
 Sentry.init({
     dsn: process.env.SENTRY_DSN ?? '',
     environment: process.env.SENTRY_ENVIRONMENT ?? '',
