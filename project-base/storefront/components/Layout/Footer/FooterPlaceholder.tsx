@@ -1,12 +1,12 @@
 'use client';
 
 import { FooterProps } from './Footer';
-import imageLogo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
+import imageLogo from 'public/images/logo.svg';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
