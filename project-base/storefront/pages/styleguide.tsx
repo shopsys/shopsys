@@ -26,7 +26,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         const pathModule = await import('path');
         iconList = fsModule.readdirSync(pathModule.join(process.cwd(), '/components/Basic/Icon'));
 
-        const cssContent = fsModule.readFileSync(pathModule.join(process.cwd(), '/styles/theme.css'));
+        const cssContent = fsModule.readFileSync(pathModule.join(process.cwd(), '/styles/globals.css'));
         tailwindColors = cssContent
             .toString()
             .split('\n')

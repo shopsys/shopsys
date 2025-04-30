@@ -1,0 +1,9 @@
+@layer components {
+    .gjs-template-header-bg {
+        @apply from-backgroundBrand to-backgroundBrandLess bg-linear-to-tr/srgb;
+    }
+
+    .gjp-template-header-search-button {
+        @apply top-1/2 left-3 -translate-y-1/2;
+    }
+}

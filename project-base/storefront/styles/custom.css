@@ -1,0 +1,7 @@
+@theme {
+    --radius-sm: 0.1875rem;
+    --text-zero: [0, 0];
+    --keyframes-fadeIn: fadeIn 0.2s ease-in-out;
+    --animation-fadeIn: fadeIn 0.2s ease-in-out;
+    --aspect-16/11: 16 / 11;
+}

@@ -1,0 +1,4 @@
+@theme inline {
+    --font-default: var(--font-inter);
+    --font-secondary: var(--font-raleway);
+}

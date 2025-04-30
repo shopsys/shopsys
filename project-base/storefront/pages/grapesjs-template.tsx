@@ -24,10 +24,7 @@ const Index: FC = () => {
             <NotificationBars />
 
             <header>
-                <Webline
-                    className="relative"
-                    wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
-                >
+                <Webline className="relative" wrapperClassName="gjs-template-header-bg">
                     <div className="flex flex-wrap items-center gap-x-1 gap-y-3 py-3 lg:gap-x-7 lg:pt-6 lg:pb-5">
                         <Logo />
 
@@ -57,7 +54,7 @@ const Index: FC = () => {
                     </Webline>
 
                     <Webline>
-                        <GrapesJs className="gjs-editable" />
+                        <GrapesJs className="gjs-editable py-4" />
                     </Webline>
                 </VerticalStack>
             </main>
