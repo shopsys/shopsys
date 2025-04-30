@@ -19,7 +19,9 @@ function isNotFoundError(error: Error & { digest?: string }): boolean {
 }
 
 const ErrorPage = ({ error }: { error: Error & { digest?: string } }) => {
+    console.log('☀️ error.tsx');
     useEffect(() => {
+        console.log('☀️ error.tsx useEffect');
         if (!isNotFoundError(error)) {
             Sentry.captureException(error);
         }
