@@ -13,8 +13,8 @@ type ProductsListProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
-    ref?: RefObject<HTMLUListElement>;
-    productRefs?: RefObject<HTMLLIElement>[];
+    ref?: RefObject<HTMLUListElement | null>;
+    productRefs?: RefObject<HTMLLIElement | null>[];
     swipeHandlers?: SwipeableHandlers;
     className?: string;
     isWithSimpleCards?: boolean;

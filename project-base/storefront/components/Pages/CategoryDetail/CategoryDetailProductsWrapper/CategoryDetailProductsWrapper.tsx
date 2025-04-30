@@ -16,6 +16,7 @@ export type CategoryDetailProductsWrapperProps = {
     areProductsFetching: boolean;
     isLoadingMoreProducts: boolean;
     hasNextPage: boolean;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
 export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProps> = ({
@@ -24,6 +25,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
     areProductsFetching,
     isLoadingMoreProducts,
     hasNextPage,
+    paginationScrollTargetRef,
 }) => {
     const { t } = useTranslation();
     const gtmProductListName = useMemo(
@@ -43,7 +45,12 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
                 isLoadingMoreProducts={isLoadingMoreProducts}
                 products={products}
             />
-            <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={category.products.totalCount} />
+            <Pagination
+                isWithLoadMore
+                hasNextPage={hasNextPage}
+                totalCount={category.products.totalCount}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+            />
         </>
     );
 };

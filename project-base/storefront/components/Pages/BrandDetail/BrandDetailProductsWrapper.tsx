@@ -7,14 +7,19 @@ import { BrandProductsQueryDocument } from 'graphql/requests/products/queries/Br
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import { RefObject } from 'react';
 import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 
 type BrandDetailProductsWrapperProps = {
     brand: TypeBrandDetailFragment;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
-export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = ({ brand }) => {
+export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = ({
+    brand,
+    paginationScrollTargetRef,
+}) => {
     const {
         products: brandProductsData,
         areProductsFetching,
@@ -34,7 +39,12 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
                 isLoadingMoreProducts={isLoadingMoreProducts}
                 products={listedBrandProducts}
             />
-            <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={brand.products.totalCount} />
+            <Pagination
+                isWithLoadMore
+                hasNextPage={hasNextPage}
+                totalCount={brand.products.totalCount}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+            />
         </>
     );
 };
