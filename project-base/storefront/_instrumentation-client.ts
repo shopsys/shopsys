@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 
+// TODO: how to solve NEXT_PUBLIC_?
 Sentry.init({
     dsn: process.env.SENTRY_DSN ?? '',
     environment: process.env.SENTRY_ENVIRONMENT ?? '',
