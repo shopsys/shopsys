@@ -5,7 +5,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useEffect } from 'react';
 
 const ErrorPage = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
+    console.log('☀️ global-error.tsx');
     useEffect(() => {
+        console.log('☀️ global-error.tsx useEffect');
         Sentry.captureException(error);
     }, [error]);
 
