@@ -6,12 +6,12 @@ import { ClientOptions, fetchExchange, ssrExchange } from 'urql';
 import { dedupExchange } from 'urql/dedupExchange';
 import { operationNameExchange } from 'urql/operationNameExchange';
 
-export const getUrqlExchanges = (): ClientOptions['exchanges'] => [
+export const getUrqlExchanges = (accessToken: string | undefined): ClientOptions['exchanges'] => [
     devtoolsExchange,
     dedupExchange,
     cache,
     ssrExchange({ isClient: false }),
-    authExchange(getAuthExchangeOptions()),
+    authExchange(getAuthExchangeOptions(accessToken)),
     operationNameExchange,
     fetchExchange,
 ];

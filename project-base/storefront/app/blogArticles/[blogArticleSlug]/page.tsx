@@ -6,7 +6,8 @@ import { TIDs } from 'cypress/tids';
 import { notFound } from 'next/navigation';
 import { VISIBLE_SLIDER_ITEMS_BLOG } from 'utils/productSlider';
 
-const BlogArticleDetailPage = async ({ params: { blogArticleSlug } }: { params: { blogArticleSlug: string } }) => {
+const BlogArticleDetailPage = async ({ params }: { params: Promise<{ blogArticleSlug: string }> }) => {
+    const { blogArticleSlug } = await params;
     const blogArticleData = await getBlogArticleDetailQuery(blogArticleSlug);
 
     if (!blogArticleData) {

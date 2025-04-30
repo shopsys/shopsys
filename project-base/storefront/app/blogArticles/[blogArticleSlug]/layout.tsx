@@ -4,14 +4,15 @@ import { getBlogArticleDetailQuery } from 'app/_queries/getBlogArticleDetailQuer
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { notFound } from 'next/navigation';
 
-type Params = { blogArticleSlug: string };
+type Params = Promise<{ blogArticleSlug: string }>;
 
 type BlogArticleDetailLayoutProps = {
     children: React.ReactNode;
     params: Params;
 };
 
-const BlogArticleDetailLayout = async ({ children, params: { blogArticleSlug } }: BlogArticleDetailLayoutProps) => {
+const BlogArticleDetailLayout = async ({ children, params }: BlogArticleDetailLayoutProps) => {
+    const { blogArticleSlug } = await params;
     const blogArticleData = await getBlogArticleDetailQuery(blogArticleSlug);
 
     if (!blogArticleData) {

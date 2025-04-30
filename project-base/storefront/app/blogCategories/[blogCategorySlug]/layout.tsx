@@ -5,14 +5,15 @@ import { getBlogCategoryDetailQuery } from 'app/_queries/getBlogCategoryDetailQu
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { notFound } from 'next/navigation';
 
-type Params = { blogCategorySlug: string };
+type Params = Promise<{ blogCategorySlug: string }>;
 
 type BlogCategoryLayoutProps = {
     children: React.ReactNode;
     params: Params;
 };
 
-const BlogCategoryLayout = async ({ children, params: { blogCategorySlug } }: BlogCategoryLayoutProps) => {
+const BlogCategoryLayout = async ({ children, params }: BlogCategoryLayoutProps) => {
+    const { blogCategorySlug } = await params;
     const blogCategoryData = await getBlogCategoryDetailQuery(blogCategorySlug);
 
     if (!blogCategoryData) {
