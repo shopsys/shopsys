@@ -1,6 +1,6 @@
 'use client';
 
-import { getCookies } from 'cookies-next';
+import { getCookies } from 'cookies-next/client';
 import useTranslation from 'next-translate/useTranslation';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -26,7 +26,7 @@ export const AuthInfo: FC<AuthInfoProps> = ({ isUserLoggedIn }) => {
 
     useEffect(() => {
         const cookies = getCookies();
-        const isWithUserTokens = !!(cookies.accessToken && cookies.refreshToken);
+        const isWithUserTokens = !!(cookies?.accessToken && cookies.refreshToken);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
             router.refresh(); // TODO: předělat architekturu, podle mě ten refresh je tu z pages, kdy byl potřeba, z app serveru to můžem rovnou poslat

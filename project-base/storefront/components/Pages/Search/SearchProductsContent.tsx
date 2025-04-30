@@ -10,12 +10,14 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
+import { RefObject } from 'react';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { getMappedProducts } from 'utils/mappers/products';
 
 type SearchProductsContentProps = {
     areSearchProductsFetching: boolean;
     isLoadingMoreSearchProducts: boolean;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
     searchProductsData: TypeSearchProductsQuery['productsSearch'];
 };
 
@@ -23,6 +25,7 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
     areSearchProductsFetching,
     isLoadingMoreSearchProducts,
     searchProductsData,
+    paginationScrollTargetRef,
 }) => {
     const { t } = useTranslation();
     const searchResultProducts = getMappedProducts(searchProductsData.edges);
@@ -78,6 +81,7 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
             )}
 
             <Pagination
+                paginationScrollTargetRef={paginationScrollTargetRef}
                 isWithLoadMore
                 hasNextPage={searchProductsData.pageInfo.hasNextPage}
                 totalCount={searchProductsData.totalCount}

@@ -5,7 +5,7 @@ import { usePaginationContext } from 'components/providers/PaginationProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { Fragment, MouseEventHandler, forwardRef } from 'react';
+import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
@@ -18,6 +18,7 @@ import { useScrollRestoration } from 'utils/ui/useScrollRestoration';
 
 type PaginationProps = {
     totalCount: number;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
     pageSize?: number;
@@ -55,6 +56,9 @@ export const Pagination: FC<PaginationProps> = ({
     const queryParams = getUrlQueriesWithoutDynamicPageQueries(router.query);
 
     const onChangePage = (pageNumber: number) => () => {
+        if (paginationScrollTargetRef?.current) {
+            paginationScrollTargetRef.current.scrollIntoView();
+        }
         updatePagination(pageNumber);
 
         // timeout for safari scroll

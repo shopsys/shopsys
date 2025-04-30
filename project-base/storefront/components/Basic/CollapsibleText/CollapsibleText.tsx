@@ -8,7 +8,7 @@ import { twJoin } from 'tailwind-merge';
 
 type CollapsibleTextProps = {
     text: string;
-    scrollTargetRef: RefObject<HTMLDivElement>;
+    scrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
 export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef }) => {

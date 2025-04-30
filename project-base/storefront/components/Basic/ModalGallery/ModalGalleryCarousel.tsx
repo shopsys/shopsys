@@ -11,7 +11,7 @@ import { twJoin } from 'tailwind-merge';
 
 type ModalGalleryCarouselProps = {
     items: (TypeVideoTokenFragment | TypeImageFragment | TypeFileFragment)[];
-    itemsRefs: RefObject<HTMLLIElement>[];
+    itemsRefs: RefObject<HTMLLIElement | null>[];
     selectedIndex: number;
     galleryName: string;
     onSelectItem: (index: number) => void;

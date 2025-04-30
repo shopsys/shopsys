@@ -7,14 +7,16 @@ import { FlagProductsQueryDocument } from 'graphql/requests/products/queries/Fla
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import { RefObject } from 'react';
 import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 
 type FlagDetailProductsWrapperProps = {
     flag: TypeFlagDetailFragment;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
-export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag }) => {
+export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, paginationScrollTargetRef }) => {
     const { products, areProductsFetching, hasNextPage, isLoadingMoreProducts } = useProductsData(
         FlagProductsQueryDocument,
         flag.products.totalCount,
@@ -33,7 +35,12 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
                 products={flagListedProducts}
             />
 
-            <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={flag.products.totalCount} />
+            <Pagination
+                isWithLoadMore
+                hasNextPage={hasNextPage}
+                totalCount={flag.products.totalCount}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+            />
         </>
     );
 };

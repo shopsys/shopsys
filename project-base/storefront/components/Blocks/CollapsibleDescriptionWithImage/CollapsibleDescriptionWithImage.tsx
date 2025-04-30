@@ -20,7 +20,7 @@ const CollapsibleDescriptionWithImageComp: FC<CollapsibleDescriptionWithImagePro
     imageName,
     imageUrl,
 }) => {
-    const scrollTargetRef = useRef<HTMLDivElement>(null);
+    const scrollTargetRef = useRef<HTMLDivElement | null>(null);
 
     return (
         <Webline>

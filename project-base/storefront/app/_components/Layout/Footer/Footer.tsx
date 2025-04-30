@@ -2,6 +2,7 @@ import { FooterCopyright } from './FooterCopyright';
 import { NewsletterForm } from 'app/_components/Layout/Footer/NewsletterForm/NewsletterForm';
 import { getFooterArticlesQuery } from 'app/_queries/getFooterArticlesQuery';
 import { createQuery } from 'app/_urql/urql-dto';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
@@ -14,7 +15,6 @@ import {
 } from 'graphql/requests/settings/queries/SettingsQuery.ssr';
 import { headers } from 'next/headers';
 import { FooterArticle } from 'types/footerArticle';
-import { getDomainConfig } from 'utils/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export type FooterProps =
