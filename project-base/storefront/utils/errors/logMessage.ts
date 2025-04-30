@@ -1,18 +1,18 @@
-import { captureMessage, SeverityLevel, withScope } from '@sentry/nextjs';
 import { isEnvironment } from 'utils/isEnvironment';
+import { Sentry } from 'utils/sentry';
 
 type SentryExtra = { key: string; data: string };
 
-export const logMessage = (message: string, extras: Array<SentryExtra> = [], level: SeverityLevel = 'info'): void => {
+export const logMessage = (message: string, extras: Array<SentryExtra> = [], level: string = 'info'): void => {
     if (isEnvironment('development')) {
         /* eslint-disable no-console */
         console.warn(message, { extras });
     }
 
-    withScope((scope) => {
+    Sentry.withScope((scope) => {
         extras.forEach((extra) => {
             scope.setExtra(extra.key, extra.data);
         });
-        captureMessage(message, level);
+        Sentry.captureMessage(message, level);
     });
 };
