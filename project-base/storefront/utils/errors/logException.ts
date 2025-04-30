@@ -1,6 +1,6 @@
 import { isWithErrorDebugging } from './isWithErrorDebugging';
-import { captureException } from '@sentry/nextjs';
 import { isEnvironment } from 'utils/isEnvironment';
+import { Sentry } from 'utils/sentry';
 
 export const logException = (e: unknown): void => {
     if (isEnvironment('development') || isWithErrorDebugging) {
@@ -8,5 +8,5 @@ export const logException = (e: unknown): void => {
         console.error(e);
     }
 
-    captureException(e);
+    Sentry.captureException(e);
 };
