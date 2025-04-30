@@ -18,6 +18,7 @@ import { useScrollRestoration } from 'utils/ui/useScrollRestoration';
 
 type PaginationProps = {
     totalCount: number;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
     pageSize?: number;
