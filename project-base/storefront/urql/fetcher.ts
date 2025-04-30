@@ -1,7 +1,7 @@
-import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { isClient } from 'utils/isClient';
+import { Sentry } from 'utils/sentry';
 
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
@@ -32,7 +32,7 @@ export const fetcher =
     (redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts> | undefined) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
         if (!isClient && !redisClient) {
-            captureException(
+            Sentry.captureException(
                 'Redis client was missing on server. This will cause the Redis cache to not work properly.',
             );
         }
@@ -102,7 +102,7 @@ export const fetcher =
                 }),
             );
         } catch (e) {
-            captureException(e);
+            Sentry.captureException(e);
 
             return fetch(input, createInit(init));
         }

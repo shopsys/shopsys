@@ -1,4 +1,3 @@
-import { captureException } from '@sentry/nextjs';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Translate as NextTranslate } from 'next-translate';
 import { Translate } from 'types/translation';
@@ -7,6 +6,7 @@ import { isNoLogError } from 'utils/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { mapGraphqlErrorForDevelopment } from 'utils/errors/mapGraphqlErrorForDevelopment';
 import { isEnvironment } from 'utils/isEnvironment';
+import { Sentry } from 'utils/sentry';
 
 const isWithConsoleErrorDebugging = process.env.ERROR_DEBUGGING_LEVEL === 'console';
 
@@ -79,7 +79,7 @@ const logException = (e: unknown): void => {
         console.error(e);
     }
 
-    captureException(e);
+    Sentry.captureException(e);
 };
 
 export const isNotFoundError = (error: CombinedError | undefined) => {

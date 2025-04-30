@@ -1,8 +1,8 @@
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useEffect } from 'react';
+import { Sentry } from 'utils/sentry';
 
 function isNotFoundError(error: Error & { digest?: string }): boolean {
     // Check if the error is a Response with status 404
