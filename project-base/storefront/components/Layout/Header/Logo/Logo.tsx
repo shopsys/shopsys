@@ -1,10 +1,10 @@
 'use client';
 
-import imageLogoInverted from '/public/images/logo-inverted.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
+import imageLogoInverted from 'public/images/logo-inverted.svg';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 

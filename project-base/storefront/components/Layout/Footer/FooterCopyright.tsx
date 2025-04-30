@@ -1,6 +1,5 @@
 'use client';
 
-import imageLogo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
@@ -9,6 +8,7 @@ import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import imageLogo from 'public/images/logo.svg';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 

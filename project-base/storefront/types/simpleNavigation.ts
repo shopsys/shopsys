@@ -52,6 +52,7 @@ export const CUSTOM_PAGE_TYPES = [
     'contact',
     'wishlist',
     'customer-users',
+    'user-consent',
 ] as const;
 
 export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];

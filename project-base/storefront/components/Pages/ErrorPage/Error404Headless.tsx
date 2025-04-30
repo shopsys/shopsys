@@ -1,8 +1,8 @@
 'use client';
 
 import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
-import image404 from '/public/images/404_m.png';
 import { Image } from 'components/Basic/Image/Image';
+import image404 from 'public/images/404_m.png';
 
 type Error404HeadlessProps = {
     imageAlt: string;
