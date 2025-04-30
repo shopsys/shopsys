@@ -98,6 +98,23 @@ const nextConfig = {
         if (!isServer) {
             config.resolve.alias.redis = false;
         }
+        config.ignoreWarnings = [
+            ...(config.ignoreWarnings || []),
+            {
+                // Ignore warnings for dynamic requires in @opentelemetry/instrumentation
+                module: /@opentelemetry\/instrumentation/,
+                message: /Critical dependency: the request of a dependency is an expression/,
+            },
+            {
+                // Sentry itself might have dynamic requires
+                module: /@sentry\/nextjs/,
+                message: /Critical dependency: the request of a dependency is an expression/,
+            },
+            {
+                module: /@sentry\/node/,
+                message: /Critical dependency: the request of a dependency is an expression/,
+            },
+        ];
 
         return config;
     },
