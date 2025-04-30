@@ -20,7 +20,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
     imageName,
     imageUrl,
 }) => {
-    const scrollTargetRef = useRef<HTMLDivElement>(null);
+    const scrollTargetRef = useRef<HTMLDivElement | null>(null);
 
     return (
         <Webline>

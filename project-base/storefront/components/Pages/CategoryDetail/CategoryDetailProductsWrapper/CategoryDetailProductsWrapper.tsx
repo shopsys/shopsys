@@ -15,7 +15,7 @@ export type CategoryDetailProductsWrapperProps = {
     areProductsFetching: boolean;
     isLoadingMoreProducts: boolean;
     hasNextPage: boolean;
-    paginationScrollTargetRef: RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
 export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProps> = ({

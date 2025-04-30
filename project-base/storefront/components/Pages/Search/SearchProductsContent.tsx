@@ -17,7 +17,7 @@ import { getMappedProducts } from 'utils/mappers/products';
 type SearchProductsContentProps = {
     areSearchProductsFetching: boolean;
     isLoadingMoreSearchProducts: boolean;
-    paginationScrollTargetRef: RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
     searchProductsData: TypeSearchProductsQuery['productsSearch'];
 };
 

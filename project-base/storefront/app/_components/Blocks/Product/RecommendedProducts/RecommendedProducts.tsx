@@ -1,9 +1,9 @@
 import { RecommendedProductsContent } from 'app/_components/Blocks/Product/RecommendedProducts/RecommendedProductsContent';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { SkeletonModuleRecommendedProducts } from 'components/Blocks/Skeleton/SkeletonModuleRecommendedProducts';
 import { TypeRecommendationType } from 'graphql/types';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
-import { getDomainConfig } from 'utils/domain/domainConfig';
 
 export type RecommendedProductsProps = {
     recommendationType: TypeRecommendationType;
