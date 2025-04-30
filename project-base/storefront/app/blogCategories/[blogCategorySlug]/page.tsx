@@ -11,23 +11,19 @@ import { Suspense } from 'react';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 
-type Params = { blogCategorySlug: string };
-type SearchParams = { [key: string]: string | string[] | undefined };
+type Params = Promise<{ blogCategorySlug: string }>;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-const BlogCategoryPage = async ({
-    params: { blogCategorySlug },
-    searchParams,
-}: {
-    params: Params;
-    searchParams: SearchParams;
-}) => {
+const BlogCategoryPage = async ({ params, searchParams }: { params: Params; searchParams: SearchParams }) => {
+    const { blogCategorySlug } = await params;
+    const resolvedSearchParams = await searchParams;
     const currentPage =
-        typeof searchParams[PAGE_QUERY_PARAMETER_NAME] === 'string'
-            ? Number(searchParams[PAGE_QUERY_PARAMETER_NAME])
+        typeof resolvedSearchParams[PAGE_QUERY_PARAMETER_NAME] === 'string'
+            ? Number(resolvedSearchParams[PAGE_QUERY_PARAMETER_NAME])
             : 1;
     const currentLoadMore =
-        typeof searchParams[LOAD_MORE_QUERY_PARAMETER_NAME] === 'string'
-            ? Number(searchParams[LOAD_MORE_QUERY_PARAMETER_NAME])
+        typeof resolvedSearchParams[LOAD_MORE_QUERY_PARAMETER_NAME] === 'string'
+            ? Number(resolvedSearchParams[LOAD_MORE_QUERY_PARAMETER_NAME])
             : 0;
     const blogCategoryData = await getBlogCategoryDetailQuery(blogCategorySlug);
 

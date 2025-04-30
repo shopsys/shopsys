@@ -4,13 +4,13 @@ import { getBreadcrumbs } from 'app/_utils/breadcrumbs';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 
 type BreadcrumbsParallelRouteProps = {
-    params: {
+    params: Promise<{
         all: string[];
-    };
+    }>;
 };
 
 const BreadcrumbsParallelRoute = async ({ params }: BreadcrumbsParallelRouteProps) => {
-    const { all } = params;
+    const { all } = await params;
 
     // Temporary check for development, should not be catching `_next` in production
     if (!all.length || all[0].startsWith('_next')) {

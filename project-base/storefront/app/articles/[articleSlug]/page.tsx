@@ -7,7 +7,8 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { notFound } from 'next/navigation';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'utils/productSlider';
 
-const ArticleDetailPage = async ({ params: { articleSlug } }: { params: { articleSlug: string } }) => {
+const ArticleDetailPage = async ({ params }: { params: Promise<{ articleSlug: string }> }) => {
+    const { articleSlug } = await params;
     const articleDetailData = await getArticleDetailQuery(articleSlug);
 
     const article = articleDetailData?.__typename === 'ArticleSite' ? articleDetailData : null;
