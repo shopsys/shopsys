@@ -101,14 +101,14 @@ export const fetcher =
             const hash = `${key}${md5(body).toString().substring(0, 7)}`;
             const fromCache = await redisClient.get(hash);
 
-            if (fromCache !== null) {
-                const response = new Response(JSON.stringify({ data: JSON.parse(fromCache) }), {
-                    statusText: 'OK',
-                    status: 200,
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                return Promise.resolve(response);
-            }
+            // if (fromCache !== null) {
+            //     const response = new Response(JSON.stringify({ data: JSON.parse(fromCache) }), {
+            //         statusText: 'OK',
+            //         status: 200,
+            //         headers: { 'Content-Type': 'application/json' },
+            //     });
+            //     return Promise.resolve(response);
+            // }
 
             const result = await fetch(createCleanedInput(input), {
                 ...init,
@@ -129,9 +129,9 @@ export const fetcher =
 
             const res = await result.json();
 
-            if (res.data !== undefined && res.error === undefined) {
-                await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
-            }
+            // if (res.data !== undefined && res.error === undefined) {
+            //     await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
+            // }
 
             return Promise.resolve(
                 new Response(JSON.stringify(res), {
