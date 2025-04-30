@@ -1,15 +1,6 @@
 # Docker Troubleshooting
 
-1. [How to Run Multiple Projects by Docker](#how-to-run-multiple-projects-by-docker)
-    1. [Multiple Projects - Quick Solution - Only One Project Running at the Time](#multiple-projects---quick-solution---only-one-project-running-at-the-time)
-    1. [Multiple Projects - Long Term Solution](#multiple-projects---long-term-solution)
-1. [Update of Dockerfile is not Reflected](#update-of-dockerfile-is-not-reflected)
-1. [Update of Docker-compose is not Reflected](#update-of-docker-compose-is-not-reflected)
-1. [Docker-sync stopped to sync files](#docker-sync-stopped-to-sync-files)
-1. [Application is slow on Mac](#application-is-slow-on-mac)
-1. [A Docker container is not running](#a-docker-container-is-not-running)
-1. [Composer dependencies installation fails on memory limit](#composer-dependencies-installation-fails-on-memory-limit)
-1. [Starting up the Docker containers fails due to invalid reference format](#starting-up-the-docker-containers-fails-due-to-invalid-reference-format)
+[TOC]
 
 If you are developing on Shopsys Platform using Docker, you might run into some problems during the process.
 

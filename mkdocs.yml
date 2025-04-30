@@ -1,4 +1,3 @@
-
 extra_css:
     - _theme/main.css
 
@@ -7,6 +6,7 @@ markdown_extensions:
             permalink: True
             toc_depth: 2-4
     - admonition
+    - def_list
 
 plugins:
     -   awesome-pages:
@@ -22,4 +22,5 @@ theme:
         - less
         - twig
         - yaml
+    hljs_style: vs2015
     name: readthedocs

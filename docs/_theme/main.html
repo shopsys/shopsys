@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {%- block site_name %}
-<a href="{{ nav.homepage.url|url }}"><img src="{{ base_url }}/_theme/img/shopsys-logo.svg"></a>
+    <a href="{{ nav.homepage.url|url }}" class="logo"><img src="{{ base_url }}/_theme/img/shopsys-logo.svg"></a>
 {%- endblock %}
 
 {%- block site_nav %}
-    <ul class="current">
+    <ul class="current simple">
         {% set navlevel = 1 %}
         {% for nav_item in nav %}
             <li class="toctree-l{{ navlevel }}{% if nav_item.active %} current{%endif%}">

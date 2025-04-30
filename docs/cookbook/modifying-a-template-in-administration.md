@@ -11,7 +11,7 @@ If you need to extend the product with a new attribute, see the tutorial [Adding
 Modifying the bundle templates that are located in the vendor can be done by overriding these templates.
 
 _If you need to extend or modify the form itself, it is unnecessary to use the overriding and consequently lose upgradeability.
-For the extensions of the forms, see [Enable administrator to edit the `extId` field](./adding-new-attribute-to-an-entity.md#enable-administrator-to-edit-the-extId-field)._
+For the extensions of the forms, see [Enable administrator to edit the `extId` field](./adding-new-attribute-to-an-entity.md#enable-an-administrator-to-edit-the-extid-field)._
 
 #### The first step is to create a copy of the original twig template that you want to modify.
 

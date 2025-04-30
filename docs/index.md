@@ -28,9 +28,9 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Design implementation and customization, LESS, ...
 * [Administration](./administration/index.md)
     * Administration menu and grids.
-* [Frontend API](./frontend-api)
+* [Frontend API](./frontend-api/index.md)
     * Information about the frontend GraphQL API dedicated to connecting external storefronts or mobile apps.
-* [Storefront](./storefront)
+* [Storefront](./storefront/index.md)
     * Documentation for demo frontend client.
 * [Extensibility](./extensibility/index.md)
     * How to customize the behavior of Shopsys Platform to suit your needs.
