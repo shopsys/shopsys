@@ -1,4 +1,5 @@
 import { Container } from './_components/Layout/Container/Container';
+import { getPromotedCategoriesQuery } from './_queries/getPromotedCategoriesQuery';
 import { HomepageMetadataJsonLd } from 'app/_components/Basic/Head/HomepageMetadataJsonLd';
 import { BlogPreview } from 'app/_components/Blocks/BlogPreview/BlogPreview';
 import { PromotedCategories } from 'app/_components/Blocks/Categories/PromotedCategories';
@@ -16,6 +17,7 @@ const HomePage = async () => {
     // useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     const domainConfig = getDomainConfig((await headers()).get('host')!);
+    const promotedCategoriesData = await getPromotedCategoriesQuery();
 
     return (
         <>
@@ -26,7 +28,7 @@ const HomePage = async () => {
 
                 <UpsList />
 
-                <PromotedCategories />
+                <PromotedCategories promotedCategoriesData={promotedCategoriesData} />
 
                 <RecommendedProducts recommendationType={TypeRecommendationType.Personalized} />
 
