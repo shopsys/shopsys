@@ -2,6 +2,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Error404Headless } from 'components/Pages/ErrorPage/Error404Headless';
 
 const NotFound = async () => {
+    // console.log('☀️ not-found.tsx');
     const t = await getTranslation();
 
     return (
