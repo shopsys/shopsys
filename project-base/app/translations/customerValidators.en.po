@@ -4,13 +4,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "An array of values is not supported as an input for \"slider\" type parameter. Use \"minimalValue\" and \"maximalValue\" instead."
+msgid "An array of values is not supported as an input for \"%type%\" type parameter. Use \"%minimalValue%\" and \"%maximalValue%\" instead."
 msgstr ""
 
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
+msgid "Minimal and maximal value are not supported as an input for other than \"%type%\" type parameter. Use \"%values%\" instead."
 msgstr ""
 
 msgid "New password must be at least {{ limit }} characters long"

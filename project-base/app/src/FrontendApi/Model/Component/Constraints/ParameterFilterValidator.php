@@ -35,12 +35,17 @@ class ParameterFilterValidator extends ConstraintValidator
 
         if ($parameter->isSlider() && count($value->values) > 0) {
             $this->context->buildViolation($constraint->valuesNotSupportedForSliderTypeMessage)
+                ->setParameter('%type%', 'slider')
+                ->setParameter('%minimalValue%', 'minimalValue')
+                ->setParameter('%maximalValue%', 'maximalValue')
                 ->setCode($constraint::VALUES_NOT_SUPPORTED_FOR_SLIDER_TYPE_ERROR)
                 ->addViolation();
         }
 
         if (($value->minimalValue !== null || $value->maximalValue !== null) && $parameter->isSlider() === false) {
             $this->context->buildViolation($constraint->minMaxNotSupportedForNonSliderTypeMessage)
+                ->setParameter('%type%', 'slider')
+                ->setParameter('%values%', 'values')
                 ->setCode($constraint::MIN_MAX_NOT_SUPPORTED_FOR_NON_SLIDER_TYPE_ERROR)
                 ->addViolation();
         }
