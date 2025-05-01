@@ -7,22 +7,18 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SideMenuBuilder
 {
     /**
      * @param \Knp\Menu\FactoryInterface $menuFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         protected readonly FactoryInterface $menuFactory,
         protected readonly Domain $domain,
-        protected readonly AuthorizationCheckerInterface $authorizationChecker,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
@@ -226,24 +222,21 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
-        if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $roleGroupMenu = $menu->addChild('customer_user_role_group', [
-                'route' => 'admin_superadmin_customer_user_role_group_list',
-                'label' => t('Customer user role groups'),
-            ]);
+        $roleGroupMenu = $menu->addChild('customer_user_role_group', [
+            'route' => 'admin_superadmin_customer_user_role_group_list',
+            'label' => t('Customer user role groups'),
+        ]);
 
-            $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_new', [
-                'route' => 'admin_superadmin_customer_user_role_group_new',
-                'display' => false,
-                'label' => t('New customer user role group'),
-            ]);
-            $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_edit', [
-                'route' => 'admin_superadmin_customer_user_role_group_edit',
-                'display' => false,
-                'label' => t('Editing customer user role group'),
-            ]);
-            $roleGroupMenu->setExtra('superadmin', true);
-        }
+        $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_new', [
+            'route' => 'admin_superadmin_customer_user_role_group_new',
+            'display' => false,
+            'label' => t('New customer user role group'),
+        ]);
+        $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_edit', [
+            'route' => 'admin_superadmin_customer_user_role_group_edit',
+            'display' => false,
+            'label' => t('Editing customer user role group'),
+        ]);
 
         $complaintsMenu = $menu->addChild('complaints', [
             'route' => 'admin_complaint_list',
@@ -349,13 +342,11 @@ class SideMenuBuilder
             )],
         );
 
-        if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $currenciesMenuItem = $menu->addChild(
-                'currencies',
-                ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')],
-            );
-            $currenciesMenuItem->setExtra('superadmin', true);
-        }
+        $currenciesMenuItem = $menu->addChild(
+            'currencies',
+            ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')],
+        );
+        $currenciesMenuItem->setExtra('superadmin', true);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRICING, $menu);
 
@@ -665,26 +656,24 @@ class SideMenuBuilder
         $constantsListMenu = $constantsMenu->addChild('constants_list', ['route' => 'admin_languageconstant_list', 'label' => t('List of language constants')]);
         $constantsListMenu->addChild('constants_edit', ['route' => 'admin_languageconstant_edit', 'label' => t('Language constant translation'), 'display' => false]);
 
-        if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $superadminMenu = $menu->addChild('superadmin', ['label' => t('Superadmin')]);
-            $superadminMenu->setExtra('superadmin', true);
-            $superadminMenu->addChild('modules', ['route' => 'admin_superadmin_modules', 'label' => t('Modules')]);
-            $superadminMenu->addChild(
-                'pricing',
-                ['route' => 'admin_superadmin_pricing', 'label' => t('Sales including/excluding VAT settings')],
-            );
-            $superadminMenu->addChild(
-                'css_docs',
-                ['route' => 'admin_superadmin_cssdocumentation', 'label' => t('CSS documentation')],
-            );
-            $superadminMenu->addChild('urls', ['route' => 'admin_superadmin_urls', 'label' => t('URL addresses')]);
-            $superadminMenu->addChild(
-                'mail_whitelist',
-                ['route' => 'admin_superadmin_mailwhitelist', 'label' => t('E-mail whitelist settings')],
-            );
-            $superadminMenu->addChild(t('Clean Storefront Cache'), ['route' => 'admin_redis_show']);
-            $superadminMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
-        }
+        $superadminMenu = $menu->addChild('superadmin', ['label' => t('Superadmin')]);
+        $superadminMenu->setExtra('superadmin', true);
+        $superadminMenu->addChild('modules', ['route' => 'admin_superadmin_modules', 'label' => t('Modules')]);
+        $superadminMenu->addChild(
+            'pricing',
+            ['route' => 'admin_superadmin_pricing', 'label' => t('Sales including/excluding VAT settings')],
+        );
+        $superadminMenu->addChild(
+            'css_docs',
+            ['route' => 'admin_superadmin_cssdocumentation', 'label' => t('CSS documentation')],
+        );
+        $superadminMenu->addChild('urls', ['route' => 'admin_superadmin_urls', 'label' => t('URL addresses')]);
+        $superadminMenu->addChild(
+            'mail_whitelist',
+            ['route' => 'admin_superadmin_mailwhitelist', 'label' => t('E-mail whitelist settings')],
+        );
+        $superadminMenu->addChild(t('Clean Storefront Cache'), ['route' => 'admin_redis_show']);
+        $superadminMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_SETTINGS, $menu);
 

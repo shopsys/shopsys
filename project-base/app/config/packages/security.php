@@ -3,8 +3,7 @@
 use App\Environment;
 use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRulesAttributeFinder;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlData;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider;
 use Symfony\Config\SecurityConfig;
 
 /**
@@ -75,34 +74,9 @@ return static function (SecurityConfig $security): void {
  */
 function getRouteAccessControlRules(): array
 {
-    $accessControlCacheFile = sprintf(__DIR__ . '/../../var/cache/%s/access_control_rules.json', Environment::getEnvironment());
+    $projectRootDirectory = __DIR__ . '/../..';
+    $cacheDirectory = sprintf('%s/var/cache/%s', $projectRootDirectory, Environment::getEnvironment());
+    $routeAccessControlDataProvider = new RouteAccessControlDataProvider($projectRootDirectory, $cacheDirectory);
 
-    if (file_exists($accessControlCacheFile)) {
-        $accessControlRulesArray = json_decode(file_get_contents($accessControlCacheFile), true, 512, JSON_THROW_ON_ERROR);
-        $routeAccessControlRules = [];
-        foreach ($accessControlRulesArray as $accessControlRuleArray) {
-            $routeAccessControlRules[] = RouteAccessControlData::fromJson($accessControlRuleArray);
-        }
-    } else {
-        $accessControlRulesAttributeFinder = new AccessControlRulesAttributeFinder();
-
-        $appControllerDirectory = __DIR__ . '/../../src/Controller/Admin';
-        $routeAccessControlRules = $accessControlRulesAttributeFinder->findAll([$appControllerDirectory, getFrontendApiControllersDirectory()]);
-
-        file_put_contents($accessControlCacheFile, json_encode($routeAccessControlRules, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
-    }
-
-    return $routeAccessControlRules;
-}
-
-/**
- * @return string
- */
-function getFrontendApiControllersDirectory(): string
-{
-    if (file_exists(__DIR__ . '/../../../../parameters_monorepo.yaml')) {
-        return __DIR__ . '/../../../../packages/frontend-api/src/Controller/';
-    }
-
-    return __DIR__ . '/../../vendor/shopsys/frontend-api/src/Controller/';
+    return $routeAccessControlDataProvider->findAll();
 }

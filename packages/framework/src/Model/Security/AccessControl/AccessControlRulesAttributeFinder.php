@@ -13,17 +13,15 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AccessControlRulesAttributeFinder
 {
-    protected const string CONTROLLER_DIRECTORY = __DIR__ . '/../../../Controller/Admin';
-
     /**
-     * @param string[] $additionalDirectories
+     * @param string[] $directories
      * @return \Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlData[]
      */
-    public function findAll(array $additionalDirectories = []): array
+    public function findAll(array $directories): array
     {
         $finder = new Finder();
         $finder->files()
-            ->in(array_merge([self::CONTROLLER_DIRECTORY], $additionalDirectories))
+            ->in($directories)
             ->name('*.php');
 
         $rules = [];
