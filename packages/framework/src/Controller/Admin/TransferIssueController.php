@@ -87,6 +87,7 @@ class TransferIssueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/transfer/issue/delete/{id}', name: 'admin_transferissue_delete', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_TRANSFER_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

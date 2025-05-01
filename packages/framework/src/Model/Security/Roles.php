@@ -156,6 +156,7 @@ class Roles
     public const string ROLE_LANGUAGE_CONSTANTS_VIEW = 'ROLE_LANGUAGE_CONSTANTS_VIEW';
 
     public const string ROLE_TRANSFER_VIEW = 'ROLE_TRANSFER_VIEW';
+    public const string ROLE_TRANSFER_FULL = 'ROLE_TRANSFER_FULL';
 
     public const string ROLE_FILES_FULL = 'ROLE_FILES_FULL';
     public const string ROLE_FILES_VIEW = 'ROLE_FILES_VIEW';
@@ -387,6 +388,7 @@ class Roles
                 static::ROLE_FEED_VIEW => t('Feeds - view'),
             ],
             [
+                static::ROLE_TRANSFER_FULL => t('Transfers - full'),
                 static::ROLE_TRANSFER_VIEW => t('Transfers - view'),
             ],
             [
@@ -475,7 +477,7 @@ class Roles
                 static::ROLE_FEED_VIEW,
                 static::ROLE_HEUREKA_FULL,
                 static::ROLE_LANGUAGE_CONSTANTS_FULL,
-                static::ROLE_TRANSFER_VIEW,
+                static::ROLE_TRANSFER_FULL,
                 static::ROLE_FILES_FULL,
                 static::ROLE_COMPLAINT_FULL,
                 static::ROLE_COMPLAINT_STATUS_FULL,
@@ -595,6 +597,7 @@ class Roles
             static::ROLE_WATCHDOG_FULL => [static::ROLE_WATCHDOG_VIEW],
             static::ROLE_PRICE_LIST_FULL => [static::ROLE_PRICE_LIST_VIEW],
             static::ROLE_CLOSED_DAYS_FULL => [static::ROLE_CLOSED_DAYS_VIEW],
+            static::ROLE_TRANSFER_FULL => [static::ROLE_TRANSFER_VIEW],
         ];
     }
 
