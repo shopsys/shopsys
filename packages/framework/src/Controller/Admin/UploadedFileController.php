@@ -51,8 +51,8 @@ class UploadedFileController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/uploaded-file/')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[Route(path: '/uploaded-file/list')]
+    #[AccessControlRule([Roles::ROLE_FILES_VIEW])]
     public function listAction(Request $request): Response
     {
         $quickSearchData = new QuickSearchFormData();
