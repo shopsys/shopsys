@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Controller;
+namespace Shopsys\FrontendApiBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserExcept
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerUserController extends AdminBaseController
@@ -27,6 +28,7 @@ class CustomerUserController extends AdminBaseController
      * @param int $customerUserId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/login-as-customer-user/{customerUserId}')]
     #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
     public function loginAsCustomerUserAction(int $customerUserId): Response
     {

@@ -28,7 +28,7 @@ services:
 
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
 
-    Shopsys\FrontendApiBundle\Controller\CustomerUserController:
+    Shopsys\FrontendApiBundle\Controller\Admin\CustomerUserController:
         tags: [ 'controller.service_arguments' ]
 
     Shopsys\FrontendApiBundle\Controller\FrontendApiController:

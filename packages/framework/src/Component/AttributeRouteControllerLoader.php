@@ -28,7 +28,7 @@ class AttributeRouteControllerLoader extends BaseAttributeRouteControllerLoader
      */
     public static function replacePartOfTheRouteName(string $routeName): string
     {
-        return preg_replace('/^(app_|shopsys_framework_)/', '', $routeName);
+        return preg_replace('/^(app_|shopsys_framework_|shopsys_frontendapi_)/', '', $routeName);
     }
 
     /**
