@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Menu;
 
+use Knp\Menu\ItemInterface;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
@@ -25,19 +26,13 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
     ) {
     }
 
-    // TODO: This will not work for newly created Root sections in project-base
-    public static function getSubscribedEvents()
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
-            ConfigureMenuEvent::SIDE_MENU_ROOT => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_ORDERS => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_CUSTOMERS => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_PRICING => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_MARKETING => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS => 'onConfigureMenu',
-            ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'onConfigureMenu',
+            ConfigureMenuEvent::SIDE_MENU_ROOT => ['onConfigureMenu', -200],
         ];
     }
 
@@ -46,7 +41,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
      */
     public function onConfigureMenu(ConfigureMenuEvent $event): void
     {
-        $menu = $event->getMenu();
+        $rootMenu = $event->getMenu();
 
         foreach ($this->crudControllerDefinitionRegistry->getItems() as $item) {
             $config = $this->crudConfigProvider->getConfig($item);
@@ -56,11 +51,14 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
             }
 
             $sectionMenu = $config->getMenuSection();
-            $submenuSection = $config->getSubmenuSection();
 
-            if ($menu->getName() !== $sectionMenu) {
-                continue;
+            $menu = $this->findMenuItem($rootMenu, $sectionMenu);
+
+            if ($menu === null) {
+                return;
             }
+
+            $submenuSection = $config->getSubmenuSection();
 
             if ($submenuSection !== null) {
                 $menu = $menu->getChild($submenuSection);
@@ -87,5 +85,27 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                 ]);
             }
         }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     * @param string $menuSectionName
+     * @return \Knp\Menu\ItemInterface|null
+     */
+    private function findMenuItem(ItemInterface $rootMenu, string $menuSectionName): ?ItemInterface
+    {
+        if ($rootMenu->getName() === $menuSectionName) {
+            return $rootMenu;
+        }
+
+        foreach ($rootMenu->getChildren() as $child) {
+            $menuItem = $this->findMenuItem($child, $menuSectionName);
+
+            if ($menuItem !== null) {
+                return $menuItem;
+            }
+        }
+
+        return null;
     }
 }
