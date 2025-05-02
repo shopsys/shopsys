@@ -543,7 +543,7 @@ class Roles
                 static::ROLE_COMPLAINT_STATUS_VIEW,
                 static::ROLE_INQUIRY_VIEW,
                 static::ROLE_WATCHDOG_VIEW,
-                static::ROLE_PRICE_LIST_FULL,
+                static::ROLE_PRICE_LIST_VIEW,
                 static::ROLE_CLOSED_DAYS_VIEW,
             ],
             static::ROLE_ORDER_FULL => [static::ROLE_ORDER_VIEW],
