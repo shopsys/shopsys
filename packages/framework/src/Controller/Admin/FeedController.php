@@ -42,7 +42,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FEED_VIEW])]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function generateAction(string $feedName, int $domainId): Response
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
@@ -74,7 +74,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/feed/schedule/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FEED_VIEW])]
+    #[AccessControlRule([Roles::ROLE_FEED_FULL])]
     public function scheduleAction(string $feedName, int $domainId): RedirectResponse
     {
         try {
