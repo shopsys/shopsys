@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainExce
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\AiFunction;
 use Symfony\Component\HttpFoundation\Request;
 
 class Domain implements DomainIdsProviderInterface
@@ -39,6 +40,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return int
      */
+    #[AiFunction(aiFunctionName: 'getCurrentDomainId')]
     public function getId()
     {
         return $this->getCurrentDomainConfig()->getId();
@@ -47,6 +49,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
+    #[AiFunction(aiFunctionName: 'getCurrentLocale')]
     public function getLocale()
     {
         return $this->getCurrentDomainConfig()->getLocale();

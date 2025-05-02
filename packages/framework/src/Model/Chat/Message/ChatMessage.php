@@ -14,6 +14,9 @@ use Shopsys\FrameworkBundle\Model\Chat\Chat;
  */
 class ChatMessage
 {
+    public const TYPE_MESSAGE = 'message';
+    public const TYPE_FUNCTION = 'function';
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -67,6 +70,24 @@ class ChatMessage
     protected $totalTokens = null;
 
     /**
+     * @var array
+     * @ORM\Column(type="json", nullable=true)
+     */
+    protected $functionCall = null;
+
+    /**
+     * @var array
+     * @ORM\Column(type="json", nullable=true)
+     */
+    protected $functionCallResult = null;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $type;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Chat\Chat $chat
      * @param string $question
      */
@@ -77,6 +98,7 @@ class ChatMessage
         $this->chat = $chat;
         $this->question = $question;
         $this->createdAt = new DateTime();
+        $this->type = self::TYPE_MESSAGE;
     }
 
     /**
@@ -173,5 +195,53 @@ class ChatMessage
     public function setTotalTokens($totalTokens): void
     {
         $this->totalTokens = $totalTokens;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getFunctionCall()
+    {
+        return $this->functionCall;
+    }
+
+    /**
+     * @param array $functionCall
+     */
+    public function setFunctionCall($functionCall)
+    {
+        $this->functionCall = $functionCall;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getFunctionCallResult()
+    {
+        return $this->functionCallResult;
+    }
+
+    /**
+     * @param array|null $functionCallResult
+     */
+    public function setFunctionCallResult($functionCallResult)
+    {
+        $this->functionCallResult = $functionCallResult;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type): void
+    {
+        $this->type = $type;
     }
 }

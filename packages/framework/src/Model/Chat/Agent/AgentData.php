@@ -30,4 +30,6 @@ class AgentData
      * @var string|null
      */
     public $internalKey;
+
+    public $availableAiFunctions = [];
 }

@@ -14,13 +14,22 @@
                 <div>
                     {{ 'Question'|trans }}:<br />
                     <div class="chat-message__question">
-                        {{ message.question }}
+                        {% if message.question == constant('Shopsys\\FrameworkBundle\\Model\\Chat\\Message\\ChatMessage::TYPE_FUNCTION') %}
+                            {{ 'Function call result'|trans }}: {{ message.functionCallResult['name'] }}: "{{ message.functionCallResult['content'] }}"
+                        {% else %}
+                            {{ message.question }}
+                        {%  endif %}
                     </div>
                 </div>
                 <div>
                     {{ 'Answer'|trans }}:<br />
                     <div class="chat-message__answer">
-                        {{ message.answer|escape }}
+
+                        {% if message.functionCall is not null %}
+                            {{ 'Function call request'|trans }}: {{ message.functionCall['name'] }}({{ message.functionCall['arguments']|map((v, k) => k ~ ': "' ~ v ~ '"')|join(', ') }})
+                        {% else %}
+                            {{ message.answer|escape }}
+                        {%  endif %}
                     </div>
                 </div>
                 <div class="chat-message__info">

@@ -147,8 +147,25 @@ class Chat
         ];
 
         foreach ($this->getMessages() as $message) {
-            $output[] = sprintf('Question: %s', $message->getQuestion());
-            $output[] = $message->getAnswer() ? sprintf('Answer: %s', $message->getAnswer()) : '';
+            if ($message->getType() === ChatMessage::TYPE_FUNCTION) {
+                $output[] = sprintf('Function call result: %s: "%s"', $message->getFunctionCallResult()['name'], $message->getFunctionCallResult()['content']);
+            } else {
+                $output[] = sprintf('Question: %s', $message->getQuestion());
+            }
+
+            if ($message->getFunctionCall()) {
+                $args = $message->getFunctionCall()['arguments'];
+                $output[] = sprintf(
+                    'Function call request: %s(%s)',
+                    $message->getFunctionCall()['name'],
+                    implode(
+                        ', ',
+                        array_map(fn (string $k, string $v): string => $k . ': ' . $v, array_keys($args), array_values($args)),
+                    ),
+                );
+            } else {
+                $output[] = $message->getAnswer() ? sprintf('Answer: %s', $message->getAnswer()) : '';
+            }
         }
 
         return implode("\n", $output);

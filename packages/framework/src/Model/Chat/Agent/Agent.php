@@ -52,6 +52,12 @@ class Agent
     protected $internalKey;
 
     /**
+     * @var string[]
+     * @ORM\Column(type="json")
+     */
+    protected $availableAiFunctions = [];
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\AgentData $agentData
      */
     public function __construct(AgentData $agentData)
@@ -69,6 +75,7 @@ class Agent
         $this->model = $agentData->model;
         $this->setup = $agentData->setup;
         $this->internalKey = $agentData->internalKey;
+        $this->availableAiFunctions = $agentData->availableAiFunctions;
     }
 
     /**
@@ -125,5 +132,13 @@ class Agent
     public function getInternalKey()
     {
         return $this->internalKey;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableAiFunctions()
+    {
+        return $this->availableAiFunctions;
     }
 }

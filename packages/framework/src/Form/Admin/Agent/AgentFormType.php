@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Component\OpenAi\OpenAiModelEnum;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\Agent;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentData;
+use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner;
+use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\FunctionRunnerSetup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,6 +22,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AgentFormType extends AbstractType
 {
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner $dynamicFunctionRunner
+     */
+    public function __construct(
+        protected readonly DynamicFunctionRunner $dynamicFunctionRunner,
+    ) {
+    }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -52,6 +62,11 @@ class AgentFormType extends AbstractType
             ->add('setup', TextareaType::class, [
                 'label' => t('Setup'),
                 'required' => false,
+            ])
+            ->add('availableAiFunctions', ChoiceType::class, [
+                'label' => t('Available Ai functions'),
+                'choices' => array_map(fn (FunctionRunnerSetup $setup) => $setup->aiFunctionName, $this->dynamicFunctionRunner->getAvailableFunctionList()),
+                'multiple' => true,
             ])
         ;
 

@@ -11,6 +11,7 @@ use ReflectionMethod;
 use ReflectionObject;
 use Shopsys\FrameworkBundle\Component\AttributeRouteControllerLoader;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\CollectAiFunctionsPass;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -77,6 +78,17 @@ class Kernel extends BaseKernel
         if (file_exists($configDir . '/parameters.yaml')) {
             $container->import($configDir . '/parameters.yaml');
         }
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    #[Override]
+    protected function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new CollectAiFunctionsPass());
     }
 
     /**

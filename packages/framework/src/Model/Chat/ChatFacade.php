@@ -76,7 +76,7 @@ class ChatFacade
      * @param string $question
      * @return \Shopsys\FrameworkBundle\Model\Chat\Message\ChatMessage
      */
-    private function addQuestion(Chat $chat, string $question): ChatMessage
+    protected function addQuestion(Chat $chat, string $question): ChatMessage
     {
         $chatMessage = $this->chatMessageFactory->create($chat, $question);
         $this->em->persist($chatMessage);

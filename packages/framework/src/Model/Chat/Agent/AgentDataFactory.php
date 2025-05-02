@@ -34,6 +34,7 @@ class AgentDataFactory
         $agentData->model = $agent->getModel();
         $agentData->setup = $agent->getSetup();
         $agentData->internalKey = $agent->getInternalKey();
+        $agentData->availableAiFunctions = $agent->getAvailableAiFunctions();
 
         return $agentData;
     }

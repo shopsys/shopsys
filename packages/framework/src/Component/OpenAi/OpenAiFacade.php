@@ -16,13 +16,14 @@ class OpenAiFacade
      * @param \Shopsys\FrameworkBundle\Component\OpenAi\OpenAiClient $openAiClient
      * @param \Shopsys\FrameworkBundle\Component\OpenAi\OpenAiMapper $openAiMapper
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Component\OpenAi\OpenAiFunctionCallingFacade $openAiFunctionCallingFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OpenAiClient $openAiClient,
         protected readonly OpenAiMapper $openAiMapper,
-
         protected readonly LoggerInterface $logger,
+        protected readonly OpenAiFunctionCallingFacade $openAiFunctionCallingFacade,
     ) {
     }
 
@@ -43,8 +44,13 @@ class OpenAiFacade
             return $chatMessage;
         }
 
-
         // validation? is possible validate response?
+
+        $functionCallingChatMessage = $this->openAiFunctionCallingFacade->handleFunctionCalling($response, $chatMessage);
+
+        if ($functionCallingChatMessage) {
+            return $this->handleQuestion($functionCallingChatMessage);
+        }
 
         $this->openAiMapper->mapOpenAiChatResponseToChatMessage($response, $chatMessage);
 

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\AiFunction;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -485,5 +486,22 @@ class ProductFacade
     public function findAllByCatnums(array $catnums): array
     {
         return $this->productRepository->findAllByCatnums($catnums);
+    }
+
+    /**
+     * @param string $catnum
+     * @param string $locale
+     * @return string
+     */
+    #[AiFunction(aiFunctionName: 'getProductNameByCatnum')]
+    public function getProductNameByCatnum(string $catnum, string $locale): string
+    {
+        $product = $this->findByCatnum($catnum);
+
+        if ($product === null) {
+            return '';
+        }
+
+        return $product->getName($locale);
     }
 }

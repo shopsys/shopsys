@@ -43,14 +43,7 @@ class AgentDataFixture extends AbstractReferenceFixture
         $agent = $this->agentFacade->create($agentData);
         $this->addReference(self::AGENT_ASTROLOG_KEY, $agent);
 
-        $agentData = $this->agentDataFactory->create();
-        $agentData->name = 'Article generator ' . OpenAiModelEnum::GPT_3_5_TURBO;
-        $agentData->internalKey = self::AGENT_ARTICLE_GENERATOR_KEY;
-        $agentData->enabled = true;
-        $agentData->model = OpenAiModelEnum::GPT_3_5_TURBO;
-        $agentData->setup = 'Jsi asistent pro vytváření článků podle zadaného tématu. Výstupem bude článek v odstavcích ve formátu html.';
-
-        $agent = $this->agentFacade->create($agentData);
+        $agent = $this->agentFacade->findAgentByInternalKey(self::AGENT_ARTICLE_GENERATOR_KEY);
         $this->addReference(self::AGENT_ARTICLE_GENERATOR_KEY, $agent);
     }
 }
