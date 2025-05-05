@@ -31,5 +31,6 @@
         - ./migrations-lock.yaml
         - ./migrations-lock.yml
         - ./node_modules/*
+        - ./orchestration/kubernetes/**/*.yaml
         - ./var/*
         - ./vendor/*
