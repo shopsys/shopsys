@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Controller;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
-use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
-use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,20 +25,12 @@ class SocialNetworkController extends AbstractController
     protected const string PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART = 'shouldOverwriteCustomerUserCart';
 
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade $socialNetworkFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        protected readonly SocialNetworkConfigFactory $socialNetworkConfigFactory,
-        protected readonly RegistrationFacade $registrationFacade,
-        protected readonly RegistrationDataFactory $registrationDataFactory,
         protected readonly SocialNetworkFacade $socialNetworkFacade,
         protected readonly Domain $domain,
-        protected readonly CartFacade $cartFacade,
     ) {
     }
 
