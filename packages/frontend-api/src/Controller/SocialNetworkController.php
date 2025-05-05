@@ -114,14 +114,17 @@ class SocialNetworkController extends AbstractController
         $refererUrl = $refererUrl ?? $homepageUrl;
         $request->getSession()->remove(self::REFERER_URL);
         $refererUrl = str_replace($this->domain->getUrl(), '', $refererUrl);
-        $url = '/social-login?redirect=' . $refererUrl;
-        $url .= '&showCartMergeInfo=' . ($showCartMergeInfo ? 'true' : 'false');
-        $url .= '&isRegistration=' . ($isRegistration ? 'true' : 'false');
+        $parameters = [
+            'redirect' => $refererUrl,
+            'showCartMergeInfo' => $showCartMergeInfo ? 'true' : 'false',
+            'isRegistration' => $isRegistration ? 'true' : 'false',
+        ];
 
         if ($addExceptionMessage) {
-            $url .= '&exceptionType=socialNetworkLoginException&socialNetwork=' . $type;
+            $parameters['exceptionType'] = 'socialNetworkLoginException';
+            $parameters['socialNetwork'] = $type;
         }
 
-        return $url;
+        return $this->generateUrl('front_social_network_login_page', $parameters, UrlGeneratorInterface::RELATIVE_PATH);
     }
 }
