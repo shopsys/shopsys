@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain;
 use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDomain;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPrice;
 
 class MultidomainEntityClassProvider implements MultidomainEntityClassProviderInterface
 {
@@ -45,6 +46,7 @@ class MultidomainEntityClassProvider implements MultidomainEntityClassProviderIn
             CountryDomain::class,
             SeoPageDomain::class,
             StockDomain::class,
+            TransportPrice::class,
         ];
     }
 }
