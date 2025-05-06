@@ -29,7 +29,7 @@ export const SearchProducts: FC = () => {
                 <h5 className="mb-2">{t('Found products')}</h5>
             </Webline>
 
-            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
+            <FilteredProductsWrapper>
                 <DeferredFilterPanel
                     defaultOrderingMode={searchProductsData.defaultOrderingMode}
                     orderingMode={searchProductsData.orderingMode}
@@ -39,7 +39,7 @@ export const SearchProducts: FC = () => {
                     totalCount={searchProductsData.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col gap-5" ref={paginationScrollTargetRef}>
+                <div className="flex flex-1 scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 

@@ -49,7 +49,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
             <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={category.children} />
 
-            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
+            <FilteredProductsWrapper>
                 <DeferredFilterPanel
                     categoryAutomatedFilters={category.automatedFilters}
                     defaultOrderingMode={category.products.defaultOrderingMode}
@@ -63,7 +63,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <div className="flex flex-1 flex-col gap-5">
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="vl:flex-col flex flex-col-reverse">
+                    <div className="vl:flex-col flex scroll-mt-5 flex-col-reverse" ref={paginationScrollTargetRef}>
                         <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

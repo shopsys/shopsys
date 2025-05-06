@@ -47,10 +47,14 @@ export const Pagination: FC<PaginationProps> = ({
     const queryParams = getUrlQueriesWithoutDynamicPageQueries(router.query);
 
     const onChangePage = (pageNumber: number) => () => {
-        if (paginationScrollTargetRef?.current) {
-            paginationScrollTargetRef.current.scrollIntoView();
-        }
         updatePagination(pageNumber);
+
+        // timeout for safari scroll
+        setTimeout(() => {
+            if (paginationScrollTargetRef?.current) {
+                paginationScrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100);
     };
 
     const seenProducts = currentPageWithLoadMore * pageSize;
