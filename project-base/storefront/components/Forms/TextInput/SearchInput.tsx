@@ -58,7 +58,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
-                className="absolute top-1/2 left-3 flex -translate-y-1/2 items-center"
+                className="gjp-template-header-search-button absolute top-1/2 left-3 flex -translate-y-1/2 items-center"
                 title={t('Search')}
                 type="submit"
                 onClick={onSearch}

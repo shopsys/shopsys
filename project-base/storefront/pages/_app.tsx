@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import 'nprogress/nprogress.css';
 import { ReactElement } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import 'styles/theme.css';
+import 'styles/globals.css';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';
 import { logException } from 'utils/errors/logException';
 import { initDayjsLocale } from 'utils/formaters/formatDate';
