@@ -121,7 +121,8 @@
     "pnpm": {
         "onlyBuiltDependencies": [
             "esbuild",
-            "next-translate-plugin"
+            "next-translate-plugin",
+            "sharp"
         ],
         "overrides": {
             "@urql/core": "6.0.1",

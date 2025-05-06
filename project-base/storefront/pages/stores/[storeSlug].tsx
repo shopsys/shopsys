@@ -71,6 +71,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     storeResponse.data?.store,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                 );
 
                 if (serverSideErrorResponse) {

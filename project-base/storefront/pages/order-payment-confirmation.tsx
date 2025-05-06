@@ -20,6 +20,7 @@ import { useOrderPaymentPageContentQuery } from 'graphql/requests/orders/queries
 import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentContentPageStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -168,7 +169,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     if (orderUuid === '') {
         return {
             redirect: {
-                destination: '/',
+                destination: getBasePathWithLocale('/', domainConfig.defaultLocale),
                 statusCode: 301,
             },
         };

@@ -34,7 +34,7 @@ const nextConfig = {
         ],
     },
     serverRuntimeConfig: {
-        internalGraphqlEndpoint: `${process.env.INTERNAL_ENDPOINT}graphql/`,
+        internalGraphqlEndpoint: process.env.INTERNAL_ENDPOINT,
     },
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
@@ -83,7 +83,7 @@ const nextConfig = {
                 type: 'B2B',
             },
             {
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2, // TODO
+                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_3,
                 url: process.env.DOMAIN_HOSTNAME_3,
                 defaultLocale: 'sk',
                 currencyCode: 'EUR',

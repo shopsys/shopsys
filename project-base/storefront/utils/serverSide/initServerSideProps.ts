@@ -168,7 +168,11 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         const isUserLoggedIn = isUserLoggedInSSR(currentClient);
 
         if (!isUserLoggedIn) {
-            return getUnauthenticatedRedirectSSR(getUrlWithoutGetParameters(context.resolvedUrl), domainConfig.url);
+            return getUnauthenticatedRedirectSSR(
+                getUrlWithoutGetParameters(context.resolvedUrl),
+                domainConfig.url,
+                context.locale,
+            );
         }
     }
 

@@ -57,7 +57,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <DeferredSymfonyDebugToolbar />
             <DeferredUserConsent url={pageProps.domainConfig.url} />
             <Portal />
-            <DeferredGtmHeadScript />
+            <DeferredGtmHeadScript gtmId={pageProps.domainConfig.gtmId} />
         </div>
     );
 };

@@ -7,6 +7,7 @@ import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 import { getServerConfigProperty } from 'utils/config/getNextConfig';
+import { DEFAULT_LOCALE, getInternalGraphqlEndpoint } from 'utils/domain/domainUtils';
 
 export const createClient = ({
     t,
@@ -14,14 +15,20 @@ export const createClient = ({
     publicGraphqlEndpoint,
     redisClient,
     context,
+    defaultLocale,
 }: {
     t: Translate;
     ssrExchange: SSRExchange;
     publicGraphqlEndpoint: string;
     redisClient?: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
     context?: GetServerSidePropsContext | NextPageContext;
+    defaultLocale?: string;
 }): Client => {
-    const internalGraphqlEndpoint = getServerConfigProperty('internalGraphqlEndpoint');
+    const locale = defaultLocale ?? context?.locale ?? DEFAULT_LOCALE;
+    const internalGraphqlEndpoint = getInternalGraphqlEndpoint(
+        getServerConfigProperty('internalGraphqlEndpoint'),
+        locale,
+    );
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
 
     return initUrqlClient(
@@ -31,6 +38,7 @@ export const createClient = ({
             fetchOptions: {
                 headers: {
                     OriginalHost: publicGraphqlEndpointObject.host,
+                    Locale: locale,
                     'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
                 },
             },

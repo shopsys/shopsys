@@ -1,7 +1,8 @@
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
-import { FriendlyPageTypesValue, FriendlyPagesDestinations, FriendlyPagesTypes } from 'types/friendlyUrl';
-import { getDomainIdFromHostname } from 'utils/domain/getDomainIdFromHostname';
+import { type FriendlyPageTypesValue, FriendlyPagesDestinations, FriendlyPagesTypes } from 'types/friendlyUrl';
+import { getBaseUrlWithLocale } from 'utils/domain/domainUtils';
+import { getHostAndDomainFromRequest } from 'utils/domain/getHostAndDomainFromRequest';
 import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 
 const ERROR_PAGE_ROUTE = '/404';
@@ -18,31 +19,49 @@ export const middleware: NextMiddleware = async (request) => {
             return new NextResponse(null, { status: 404 });
         }
 
-        const host = getHostFromRequest(request);
+        const { host, domainId, currentLocale } = getHostAndDomainFromRequest(request);
+        const { search, origin: baseOrigin } = new URL(request.url);
+        const origin = getBaseUrlWithLocale(baseOrigin, currentLocale);
+
+        let pathname = request.nextUrl.pathname;
+        if (pathname.startsWith('/')) {
+            pathname = pathname.substring(1);
+        }
+
+        if (domainId < 1) {
+            const defaultDomainUrl = Object.keys(STATIC_REWRITE_PATHS)[0];
+            return NextResponse.redirect(new URL(`${defaultDomainUrl}${pathname}${search}`));
+        }
+
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
 
         if (rewriteTargetUrl) {
-            const rewriteUrlObject = new URL(rewriteTargetUrl, request.url);
+            const rewriteUrlObject = new URL(`${origin}${rewriteTargetUrl}`);
+
             addQueryParametersToRewriteUrlObject(rewriteUrlObject, request.nextUrl.search);
 
             return NextResponse.rewrite(rewriteUrlObject);
         }
 
-        const { search } = new URL(request.url);
         const queryParams = new URLSearchParams(search);
         const slugTypeQueryParam = queryParams.get('slugType');
 
         if (slugTypeQueryParam && isFriendlyPageTypesValue(slugTypeQueryParam)) {
-            return rewriteDynamicPages(slugTypeQueryParam, request.url, search);
+            return rewriteDynamicPages(
+                slugTypeQueryParam as FriendlyPageTypesValue,
+                request.url,
+                search,
+                currentLocale,
+            );
         }
 
         const pageTypeResponse = await fetch(`${process.env.INTERNAL_ENDPOINT}resolve-friendly-url`, {
             method: 'POST',
             body: JSON.stringify({
-                slug: request.nextUrl.pathname,
-                domainId: getDomainIdFromHostname(request.headers.get('Host') as string),
+                slug: pathname,
+                domainId,
             }),
         });
 
@@ -69,16 +88,12 @@ export const middleware: NextMiddleware = async (request) => {
             await pageTypeResponse.json();
 
         if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
-            return NextResponse.redirect(
-                new URL(
-                    `${pageTypeParsedResponse.redirectTo}${queryParams.toString() !== '' ? `?${queryParams}` : ''}`,
-                    request.url,
-                ).href,
-                pageTypeParsedResponse.redirectCode,
-            );
+            const redirectUrl =
+                getBaseUrlWithLocale(origin, currentLocale) + pageTypeParsedResponse.redirectTo + search;
+            return NextResponse.redirect(redirectUrl, pageTypeParsedResponse.redirectCode);
         }
 
-        return rewriteDynamicPages(pageTypeParsedResponse.route, request.url, search);
+        return rewriteDynamicPages(pageTypeParsedResponse.route, request.url, search, currentLocale);
     } catch (e) {
         if (
             (process.env.ERROR_DEBUGGING_LEVEL === 'console' ||
@@ -104,37 +119,33 @@ export const middleware: NextMiddleware = async (request) => {
 
 export const config = {
     matcher: [
+        '/', // Explicitly match the homepage
         '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|tailwind-for-admin|robots).*)',
     ],
 };
 
 const isInRange = (number: number, start: number, end: number) => number >= start && start <= end;
 
-const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: string, queryParams: string) => {
+const rewriteDynamicPages = (
+    pageType: FriendlyPageTypesValue,
+    rewriteUrl: string,
+    queryParams: string,
+    currentLocale: string | undefined,
+) => {
     const pageTypeKey = getPageTypeKey(pageType);
 
-    const host = new URL(rewriteUrl).origin;
+    const origin = getBaseUrlWithLocale(new URL(rewriteUrl).origin, currentLocale);
+
     if (pageTypeKey) {
-        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host));
+        return NextResponse.rewrite(new URL(`${origin}${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`));
     }
 
-    return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, host), {
+    return NextResponse.rewrite(new URL(origin + ERROR_PAGE_ROUTE), {
         headers: [
             [MIDDLEWARE_STATUS_CODE_KEY, '404'],
             [MIDDLEWARE_STATUS_MESSAGE_KEY, 'Friendly URL page not found for ' + rewriteUrl],
         ],
     });
-};
-
-const getHostFromRequest = (request: NextRequest): string => {
-    const requestHeaders = new Headers(request.headers);
-    const host = requestHeaders.get('host');
-
-    if (host === null) {
-        throw new Error(`Host was not found in the request header.`);
-    }
-
-    return host;
 };
 
 const getDomainUrlFromStaticUrls = (host: string): string => {

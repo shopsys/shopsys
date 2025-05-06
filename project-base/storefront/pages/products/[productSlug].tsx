@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
+import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
@@ -106,6 +107,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 productResponse.data?.product,
                 context.res,
                 domainConfig.url,
+                context.locale,
             );
 
             if (serverSideErrorResponse) {
@@ -118,7 +120,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
             ) {
                 return {
                     redirect: {
-                        destination: productResponse.data.product.mainVariant.slug,
+                        destination: getBasePathWithLocale(
+                            productResponse.data.product.mainVariant.slug,
+                            domainConfig.defaultLocale,
+                        ),
                         permanent: false,
                     },
                 };

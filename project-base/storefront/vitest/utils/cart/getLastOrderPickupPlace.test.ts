@@ -15,7 +15,7 @@ vi.mock('gtm/mappers/getGtmPickupPlaceFromLastOrder', () => ({
 
 vi.mock('next/config', () => ({
     default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/graphql/' },
+        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
         publicRuntimeConfig: {
             errorDebuggingLevel: 'no-debug',
             domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],

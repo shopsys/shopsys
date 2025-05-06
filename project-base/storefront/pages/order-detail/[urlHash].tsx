@@ -22,6 +22,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
+import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -69,7 +70,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             if (typeof context.params?.urlHash !== 'string') {
                 return {
                     redirect: {
-                        destination: '/',
+                        destination: getBasePathWithLocale('/', domainConfig.defaultLocale),
                         statusCode: 301,
                     },
                 };

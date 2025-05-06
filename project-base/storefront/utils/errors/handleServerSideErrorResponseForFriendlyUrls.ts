@@ -4,6 +4,7 @@ import { mapGraphqlErrorForDevelopment } from './mapGraphqlErrorForDevelopment';
 import { IncomingMessage, ServerResponse } from 'http';
 import { CombinedError } from 'urql';
 import { getLoginUrlWithRedirect } from 'utils/auth/getLoginUrlWithRedirect';
+import { DEFAULT_LOCALE } from 'utils/domain/domainUtils';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const handleServerSideErrorResponseForFriendlyUrls = (
@@ -11,14 +12,15 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
     serverSideRequestData: unknown,
     res: ServerResponse<IncomingMessage>,
     domainUrl: string,
-    urlSlug?: string,
+    contextLocale: string = DEFAULT_LOCALE,
+    urlSlug: string | undefined = undefined,
 ) => {
     if (error?.response.status === 401) {
         const redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(['/login'], domainUrl)[0];
 
         return {
             redirect: {
-                destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl),
+                destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, contextLocale),
                 permanent: false,
             },
         };

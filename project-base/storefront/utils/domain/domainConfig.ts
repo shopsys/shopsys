@@ -1,3 +1,4 @@
+import { getBaseUrlWithLocale } from './domainUtils';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
@@ -21,22 +22,52 @@ export type DomainConfigType = {
     type: CustomerUserAreaEnum;
 };
 
-export function getDomainConfig(domainUrl: string): DomainConfigType {
-    const replacedDomain = domainUrl.replace(':3000', ':8000');
+export function getDomainConfig(domainUrl: string, locale: string | undefined): DomainConfigType {
+    console.log(domainUrl, locale);
+    const normalizedDomain = domainUrl.replace(':3000', ':8000');
+    const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
+    const isDefaultLocale = locale === 'default';
 
-    for (const domain of domainsConfig) {
-        const publicDomainUrl = new URL(domain.url || '').host;
+    for (const domainConfig of domainsConfig) {
+        const configDomainUrl = new URL(domainConfig.url || '');
+        const configDomainHost = configDomainUrl.host;
+        const configDomainPath = configDomainUrl.pathname;
 
-        if (publicDomainUrl === replacedDomain) {
-            return domain;
+        // For non-default locales, match both host and locale
+        if (!isDefaultLocale && domainConfig.defaultLocale === locale) {
+            const requestUrl = new URL(`http://${normalizedDomain}`);
+
+            // Check if hosts match
+            if (configDomainHost === requestUrl.host) {
+                // For domains with locale in path (like /sk/), check if config path matches locale
+                if (configDomainPath !== '/' && configDomainPath.startsWith(`/${locale}`)) {
+                    return domainConfig;
+                }
+                // For domains without path but matching locale
+                if (configDomainPath === '/') {
+                    return domainConfig;
+                }
+            }
+            continue;
+        }
+
+        // For default locale, match host and ensure no conflicting locale path
+        if (isDefaultLocale) {
+            const requestUrl = new URL(`http://${normalizedDomain}`);
+
+            if (configDomainHost === requestUrl.host) {
+                // Prefer domains without locale path for default locale
+                if (configDomainPath === '/' || configDomainPath === '') {
+                    return domainConfig;
+                }
+            }
         }
     }
 
-    // Return first domain for CDN domain to properly render error page
-    const cdnDomainHost = new URL(cdnDomain).host;
-    if (replacedDomain === cdnDomainHost) {
+    const cdnDomainHost = getBaseUrlWithLocale(new URL(cdnDomain).host, locale);
+    if (hostWithLocale === cdnDomainHost) {
         return domainsConfig[0];
     }
 
-    throw new Error('Domain `' + replacedDomain + '` is not known domain');
+    throw new Error(`Domain '${hostWithLocale}' is not configured`);
 }

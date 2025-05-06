@@ -130,6 +130,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagDetailResponse.data?.flag,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                     urlSlug,
                 );
 
@@ -142,6 +143,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagProductsResponse.data?.products,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                     urlSlug,
                 );
 

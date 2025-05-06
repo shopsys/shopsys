@@ -90,6 +90,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     blogCategoryResponse.data?.blogCategory,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                 );
 
                 if (serverSideErrorResponse) {

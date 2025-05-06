@@ -82,6 +82,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     articleResponse.data?.article,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                 );
 
                 if (serverSideErrorResponse) {
