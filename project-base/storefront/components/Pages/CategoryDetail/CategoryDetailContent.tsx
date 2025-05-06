@@ -24,7 +24,9 @@ const AdvancedSeoCategories = dynamic(() =>
 );
 
 const CategoryBestsellers = dynamic(() =>
-    import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
+    import('../../../app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers').then(
+        (component) => component.CategoryBestsellers,
+    ),
 );
 
 type CategoryDetailContentProps = {
