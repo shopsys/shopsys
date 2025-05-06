@@ -132,6 +132,7 @@ return ECSConfig::configure()
             ForbiddenDumpSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/DateTimeHelper/Exception/CannotParseDateTimeException.php',
                 __DIR__ . '/packages/framework/src/Twig/VarDumperExtension.php',
+                __DIR__ . '/packages/framework/src/Model/Security/AccessControl/RouteAccessControlDataProvider.php',
             ],
             ForceLateStaticBindingForProtectedConstantsSniff::class => [
                 __DIR__ . '/project-base',

@@ -21,21 +21,21 @@ class RouteAccessControlDataProvider
      */
     public function findAll(): array
     {
-        $accessControlCacheFile = $this->cacheDirectory . '/access_control_rules.json';
+        $accessControlCacheFile = $this->cacheDirectory . '/access_control_rules.php';
 
         if (file_exists($accessControlCacheFile)) {
-            $accessControlRulesArray = json_decode(file_get_contents($accessControlCacheFile), true, 512, JSON_THROW_ON_ERROR);
+            $accessControlRulesArray = require $accessControlCacheFile;
             $routeAccessControlRules = [];
 
             foreach ($accessControlRulesArray as $accessControlRuleArray) {
-                $routeAccessControlRules[] = RouteAccessControlData::fromArray($accessControlRuleArray);
+                $routeAccessControlRules[] = $accessControlRuleArray;
             }
         } else {
             $accessControlRulesAttributeFinder = new AccessControlRulesAttributeFinder();
 
             $routeAccessControlRules = $accessControlRulesAttributeFinder->findAll($this->getControllerDirectories());
 
-            file_put_contents($accessControlCacheFile, json_encode($routeAccessControlRules, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
+            file_put_contents($accessControlCacheFile, sprintf('<?php return %s;', var_export($routeAccessControlRules, true)));
         }
 
         return $routeAccessControlRules;

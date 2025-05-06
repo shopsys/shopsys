@@ -17,14 +17,17 @@ class RouteAccessControlData
     }
 
     /**
-     * @param array $array
+     * Used for caching into the PHP file using var_export
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider::findAll()
+     * @param array{routeName: string, accessControlRule: \Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule} $array
      * @return self
      */
-    public static function fromArray(array $array): self
+    public static function __set_state(array $array): self
     {
         return new self(
-            $array['routeName'] ?? '',
-            AccessControlRule::fromArray($array['accessControlRule'] ?? []),
+            $array['routeName'],
+            $array['accessControlRule'],
         );
     }
 }

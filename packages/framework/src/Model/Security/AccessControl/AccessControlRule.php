@@ -37,10 +37,13 @@ class AccessControlRule
     }
 
     /**
+     * Used for caching into the PHP file using var_export
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider::findAll()
      * @param array $array
      * @return self
      */
-    public static function fromArray(array $array): self
+    public static function __set_state(array $array): self
     {
         return new self(
             $array['roles'] ?? [],

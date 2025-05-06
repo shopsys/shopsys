@@ -23,7 +23,7 @@ The most important settings in the security config are:
     public function editAction(Request $request, int $id): Response
 ```
 
-- the attributes are collected at the container build time and cached in `var/cache/%env%/access_control_rules.json` file, see `Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider` class
+- the attributes are collected at the container build time and cached in `var/cache/%env%/access_control_rules.php` file, see `Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider` class
 - the access control coverage of all the controller actions is checked automatically by the `access-control-rules-check` [phing](../introduction/console-commands-for-application-management-phing-targets.md) target (it is a part of `standards` check)
 
 If a particular page or section is restricted for the given administrator, it is automatically removed from the menu, see `Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemsGrantedRolesSubscriber`.
