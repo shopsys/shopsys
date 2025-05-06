@@ -1,6 +1,3 @@
-'use client';
-
-import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
 import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
@@ -18,13 +15,13 @@ import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 const AdvancedSeoCategories = dynamic(() =>
-    import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
+    import('../../../../components/Pages/CategoryDetail/AdvancedSeoCategories').then(
+        (component) => component.AdvancedSeoCategories,
+    ),
 );
 
 const CategoryBestsellers = dynamic(() =>
-    import('../../../app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers').then(
-        (component) => component.CategoryBestsellers,
-    ),
+    import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
 );
 
 type CategoryDetailContentProps = {
