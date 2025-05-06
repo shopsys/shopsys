@@ -1,4 +1,5 @@
 import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
+import { CategoryBestsellers } from 'app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers';
 import { getCategoryDetailQuery } from 'app/_queries/getCategoryDetailQuery';
 import { getCategoryProductsQuery } from 'app/_queries/getCategoryProductsQuery';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -13,6 +14,7 @@ type CategoryPageProps = {
         categorySlug: string;
         sort: TypeProductOrderingModeEnum;
         filter: TypeProductFilter;
+        page: number;
     }>;
 };
 
@@ -25,8 +27,6 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
         return notFound();
     }
 
-    console.log('🐳 categoryData', categoryData);
-
     const products = await getCategoryProductsQuery(categorySlug, '', sort, filter, 10);
 
     if (!products) {
@@ -37,6 +37,8 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
         <Webline>
             <VerticalStack gap="md">
                 <h1>category</h1>
+
+                <CategoryBestsellers products={categoryData.bestsellers} />
 
                 <ProductsList
                     gtmMessageOrigin={GtmMessageOriginType.other}

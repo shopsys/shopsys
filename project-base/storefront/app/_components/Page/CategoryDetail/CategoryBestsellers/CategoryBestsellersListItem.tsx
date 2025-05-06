@@ -1,32 +1,26 @@
-'use client';
-
+import { ProductAvailability } from 'app/_components/Blocks/Product/ProductAvailability';
+import { ProductFlags } from 'app/_components/Blocks/Product/ProductFlags';
+import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';
+import { ProductListItemImage } from 'app/_components/Blocks/Product/ProductsList/ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
-import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { ProductListItemImage } from 'components/Blocks/Product/ProductsList/ProductListItemImage';
-import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;
-    gtmProductListName: GtmProductListNameType;
-    listIndex: number;
+    // gtmProductListName: GtmProductListNameType;
+    // listIndex: number;
 };
 
 export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> = ({
     product,
-    gtmProductListName,
-    listIndex,
+    // gtmProductListName,
+    // listIndex,
 }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
-    const { canSeePrices } = useAuthorization();
+    // const { url } = useDomainConfig();
+    // const { canSeePrices } = useAuthorization();
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
@@ -41,7 +35,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 ns: 'accessibility',
                 productName: product.fullName,
             })}
-            onMouseUp={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
+            // onMouseUp={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
         >
             <div className="flex w-20 shrink-0">
                 <ProductListItemImage
