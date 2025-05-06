@@ -192,7 +192,7 @@ class Roles
      */
     public function getAvailableAdministratorRolesGrid(): array
     {
-        return [
+        $rolesGrid = [
             [
                 static::ROLE_ALL => t('All - full'),
                 static::ROLE_ALL_VIEW => t('All - view'),
@@ -421,6 +421,41 @@ class Roles
                 static::ROLE_CLOSED_DAYS_VIEW => t('Closed days - view'),
             ],
         ];
+
+        return $this->addRolesToGrid($rolesGrid);
+    }
+
+    /**
+     * @param array<array<string, string>> $rolesGrid
+     * @param array<array<string, string>> $rolePairs
+     * @return array<array<string, string>>
+     */
+    protected function addRolePairsToGrid(array $rolesGrid, array $rolePairs): array
+    {
+        foreach ($rolePairs as $rolePair) {
+            $rolesGrid[] = $rolePair;
+        }
+
+        return $rolesGrid;
+    }
+
+    /**
+     * @param array<array<string, string>> $rolesGrid
+     * @return array<array<string, string>>
+     */
+    protected function addRolesToGrid(array $rolesGrid): array
+    {
+        /**
+         * to be overridden on a project when adding new roles like this:
+         * $rolesPair = [
+         * static::ROLE_CUSTOM_FEATURE_VIEW => t('Custom feature - view'),
+         * static::ROLE_CUSTOM_FEATURE_FULL => t('Custom feature - full'),
+         * ];
+         *
+         * return $this->addRolePairsToGrid($rolesGrid, [$rolesPair]);
+         */
+
+        return $rolesGrid;
     }
 
     /**
@@ -428,7 +463,7 @@ class Roles
      */
     public static function getRolesHierarchy(): array
     {
-        return [
+        $hierarchy = [
             static::ROLE_SUPER_ADMIN => [static::ROLE_ADMIN, static::ROLE_ALL],
             static::ROLE_ALL => [
                 static::ROLE_ORDER_FULL,
@@ -602,6 +637,37 @@ class Roles
             static::ROLE_TRANSFER_FULL => [static::ROLE_TRANSFER_VIEW],
             static::ROLE_FEED_FULL => [static::ROLE_FEED_VIEW],
         ];
+
+        return static::addRolesToHierarchy($hierarchy);
+    }
+
+    /**
+     * @param array<string, string[]> $rolesHierarchy
+     * @param array<string, string> $rolePairs
+     * @return array<string, string[]>
+     */
+    protected static function addRolePairsToHierarchy(array $rolesHierarchy, array $rolePairs): array
+    {
+        foreach ($rolePairs as $fullRole => $viewRole) {
+            $rolesHierarchy[static::ROLE_ALL][] = $fullRole;
+            $rolesHierarchy[static::ROLE_ALL_VIEW][] = $viewRole;
+            $rolesHierarchy[$fullRole] = [$viewRole];
+        }
+
+        return $rolesHierarchy;
+    }
+
+    /**
+     * @param array<string, string[]> $rolesHierarchy
+     * @return array<string, string[]>
+     */
+    protected static function addRolesToHierarchy(array $rolesHierarchy): array
+    {
+        /**
+         * to be overridden on a project when adding new roles like this:
+         * return static::addRolePair($rolesHierarchy, static::ROLE_CUSTOM_FEATURE_VIEW, static::ROLE_CUSTOM_FEATURE_FULL);
+         */
+        return $rolesHierarchy;
     }
 
     /**

@@ -119,7 +119,7 @@ The event subscriber should be auto-discovered by Symfony, reconfiguring the men
 When adding a new administrator page, you need to decide which [administrator roles](../administration/admin-rights.md) should have access to it.
 For the new agenda, you will probably need to create a new role. Usually, a `VIEW`/`FULL` pair of roles is used, so let's follow the convention here as well. In `Roles.php`, add the new roles, define theirs translations, and put them into the hierarchy:
 
-```diff
+```php
 
 <?php
 
@@ -127,44 +127,36 @@ declare(strict_types=1);
 
 namespace App\Model\Security;
 
-+ use Override;
+use Override;
 use Shopsys\FrameworkBundle\Model\Security\Roles as BaseRoles;
 
 class Roles extends BaseRoles
 {
-+    public const string ROLE_X_VIEW = 'ROLE_X_VIEW';
-+    public const string ROLE_X_FULL = 'ROLE_X_FULL';
-+
-+    /**
-+     * {@inheritdoc}
-+     */
-+    #[Override]
-+    public function getAvailableAdministratorRolesGrid(): array
-+    {
-+         $grid = parent::getAvailableAdministratorRolesGrid();
-+
-+         $grid[] = [
-+             static::ROLE_X_FULL => t('X.com feed - full'),
-+             static::ROLE_X_VIEW => t('X.com feed - view'),
-+         ];
-+
-+         return $grid;
-+    }
-+
-+    /**
-+     * {@inheritdoc}
-+     */
-+    #[Override]
-+    public static function getRolesHierarchy(): array
-+    {
-+        $rolesHierarchy = parent::getRolesHierarchy();
-+
-+        $rolesHierarchy[static::ROLE_ALL][] = static::ROLE_X_FULL;
-+        $rolesHierarchy[static::ROLE_ALL_VIEW][] = static::ROLE_X_VIEW;
-+        $rolesHierarchy[static::ROLE_X_FULL] = [static::ROLE_X_VIEW];
-+
-+        return $rolesHierarchy;
-+    }
+    public const string ROLE_X_VIEW = 'ROLE_X_VIEW';
+    public const string ROLE_X_FULL = 'ROLE_X_FULL';
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    protected static function addRolesToHierarchy(array $rolesHierarchy): array
+    {
+         return static::addRolePairsToHierarchy($rolesHierarchy, [static::ROLE_X_FULL => static::ROLE_X_VIEW]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    protected function addRolesToGrid(array $rolesGrid): array
+    {
+        $rolePair = [
+            static::ROLE_X_FULL => t('X.com feed - full'),
+            static::ROLE_X_VIEW => t('X.com feed - view'),
+        ];
+
+        return $this->addRolePairsToGrid($rolesGrid, [$rolePair]);
+    }
 }
 
 ```
