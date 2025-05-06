@@ -8,22 +8,43 @@ use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
 class CurrentDomainRouterTest extends TestCase
 {
     public function testDelegateRouter()
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfigs = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'en', $defaultTimeZone);
+        $domainConfigs = new DomainConfig(
+            Domain::FIRST_DOMAIN_ID,
+            'http://example.com:8080',
+            'example',
+            'en',
+            $defaultTimeZone,
+            'http://example.com:8080',
+        );
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain([$domainConfigs], $settingMock, $administratorFacadeMock);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
+
+        $domain = new Domain(
+            [$domainConfigs],
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
+
         $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         $generateResult = 'generateResult';
@@ -35,7 +56,7 @@ class CurrentDomainRouterTest extends TestCase
             ->onlyMethods(['__construct', 'generate', 'match', 'getRouteCollection'])
             ->disableOriginalConstructor()
             ->getMock();
-        $routerMock->expects($this->once())->method('generate')->willReturn($generateResult);
+        $routerMock->expects($this->exactly(2))->method('generate')->willReturn($generateResult);
         $routerMock->expects($this->once())->method('match')->with($this->equalTo($pathInfo))->willReturn(
             $matchResult,
         );
@@ -45,9 +66,17 @@ class CurrentDomainRouterTest extends TestCase
             ->onlyMethods(['__construct', 'getRouter'])
             ->disableOriginalConstructor()
             ->getMock();
-        $domainRouterFactoryMock->expects($this->exactly(3))->method('getRouter')->willReturn($routerMock);
+        $domainRouterFactoryMock->expects($this->exactly(4))->method('getRouter')->willReturn($routerMock);
 
-        $currentDomainRouter = new CurrentDomainRouter($domain, $domainRouterFactoryMock);
+        $administrationRouter = $this->createMock(AdministrationRouter::class);
+        $transformStringHelper = $this->createMock(TransformStringHelper::class);
+
+        $currentDomainRouter = new CurrentDomainRouter(
+            $domain,
+            $domainRouterFactoryMock,
+            $administrationRouter,
+            $transformStringHelper,
+        );
 
         $this->assertSame($generateResult, $currentDomainRouter->generate(''));
         $this->assertSame($matchResult, $currentDomainRouter->match($pathInfo));

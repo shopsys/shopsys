@@ -14,13 +14,15 @@ use Shopsys\FrameworkBundle\Component\Localization\CustomDateTimeFormatPatternRe
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
+use Symfony\Component\Routing\RouterInterface;
 
 class DateTimeFormatterExtensionTest extends TestCase
 {
-    private const DISPLAY_TIME_ZONE = 'Europe/Prague';
+    private const string DISPLAY_TIME_ZONE = 'Europe/Prague';
 
     /**
      * @return array
@@ -89,9 +91,24 @@ class DateTimeFormatterExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $dateTimeZone = new DateTimeZone(self::DISPLAY_TIME_ZONE);
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://example.com',
+            'name',
+            'en',
+            $dateTimeZone,
+            'http://example.com',
+        );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
     }
 }

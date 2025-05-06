@@ -15,7 +15,9 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlIs
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Symfony\Component\Routing\RouterInterface;
 
 class FriendlyUrlFactoryTest extends TestCase
 {
@@ -71,12 +73,36 @@ class FriendlyUrlFactoryTest extends TestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example.com', 'en', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                'http://example.cz',
+                'example.cz',
+                'cs',
+                $defaultTimeZone,
+                'http://example.cz',
+            ),
+            new DomainConfig(
+                Domain::SECOND_DOMAIN_ID,
+                'http://example.com',
+                'example.com',
+                'en',
+                $defaultTimeZone,
+                'http://example.com',
+            ),
         ];
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
+
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlFactory = $this->getMockBuilder(FriendlyUrlFactory::class)

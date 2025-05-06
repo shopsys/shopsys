@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
@@ -28,13 +28,13 @@ class LoginController extends AdminBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade $administratorLoginFacade
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly AdministrationRouter $administrationRouter,
         protected readonly AdministratorLoginFacade $administratorLoginFacade,
         protected readonly AuthenticationUtils $authenticationUtils,
     ) {
@@ -52,8 +52,7 @@ class LoginController extends AdminBaseController
         $currentDomainId = $this->domain->getId();
 
         if ($currentDomainId !== Domain::MAIN_ADMIN_DOMAIN_ID && !$this->isGranted(Roles::ROLE_ADMIN)) {
-            $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
-            $redirectTo = $mainAdminDomainRouter->generate(
+            $redirectTo = $this->administrationRouter->generate(
                 'admin_login_sso',
                 [
                     self::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $currentDomainId,
@@ -113,8 +112,7 @@ class LoginController extends AdminBaseController
         $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration(
             $this->getCurrentAdministrator(),
         );
-        $originalDomainRouter = $this->domainRouterFactory->getRouter($originalDomainId);
-        $redirectTo = $originalDomainRouter->generate(
+        $redirectTo = $this->administrationRouter->generate(
             'admin_login_authorization',
             [
                 static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME => $multidomainToken,

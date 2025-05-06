@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -24,10 +26,28 @@ class DomainRouterFactoryTest extends TestCase
     public function testGetRouter()
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.com:8080', 'example', 'en', $defaultTimeZone);
+
+        $domainConfig = new DomainConfig(
+            Domain::THIRD_DOMAIN_ID,
+            'http://example.com:8080',
+            'example',
+            'en',
+            $defaultTimeZone,
+            'http://example.com:8080',
+        );
+
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
+
+        $domain = new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
@@ -66,12 +86,14 @@ class DomainRouterFactoryTest extends TestCase
 
         $requestStackMock = $this->createMock(RequestStack::class);
         $containerMock = $this->createMock(ContainerInterface::class);
+        $transformStringHelper = $this->createMock(TransformStringHelper::class);
 
         $domainRouterFactory = new DomainRouterFactory(
             'routerConfiguration',
             $localizedRouterFactoryMock,
             $friendlyUrlRouterFactoryMock,
             $domain,
+            $transformStringHelper,
             $requestStackMock,
             $containerMock,
             __DIR__,

@@ -8,11 +8,13 @@ use DateTimeZone;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
@@ -28,14 +30,39 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'name2', 'en', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                'http://example.cz',
+                'name1',
+                'cs',
+                $defaultTimeZone,
+                'http://example.cz',
+            ),
+            new DomainConfig(
+                Domain::SECOND_DOMAIN_ID,
+                'http://example.com',
+                'name2',
+                'en',
+                $defaultTimeZone,
+                'http://example.com',
+            ),
         ];
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
+
+        $routerMock = $this->getMockBuilder(DomainRouter::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $routerMock->method('match')->willReturnCallback(function ($path) {
             if ($path !== '/existing-url/') {
                 throw new ResourceNotFoundException();

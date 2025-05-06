@@ -407,6 +407,15 @@ services:
             $globalClient: '@snc_redis.global'
             $currentVersion: '%build-version%'
 
+    Shopsys\FrameworkBundle\Component\Router\AdministrationRouter:
+        class: Shopsys\FrameworkBundle\Component\Router\AdministrationRouter
+        factory: ['@Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory', getAdministrationRouter]
+
+    Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory:
+        arguments:
+            $routerConfiguration: '%router.resource%'
+            $cacheDir: '%shopsys.router.domain.cache_dir%'
+
     Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
         tags:
             - { name: router, priority: 70 }

@@ -7,25 +7,28 @@ namespace Shopsys\FrameworkBundle\Component\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Symfony\Component\Routing\RouterInterface;
 
 class DomainFactoryOverwritingDomainUrl
 {
-    protected ?string $overwriteDomainUrl = null;
-
     /**
-     * @param string|null $overwriteDomainUrl
+     * @param string $overwriteDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
+     * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
-        $overwriteDomainUrl,
+        protected readonly string $overwriteDomainUrl,
         protected readonly DomainsConfigLoader $domainsConfigLoader,
         protected readonly Setting $setting,
         protected readonly AdministratorFacade $administratorFacade,
+        protected readonly AdministrationFacade $administrationFacade,
+        protected readonly RouterInterface $router,
     ) {
-        $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
 
     /**
@@ -33,7 +36,7 @@ class DomainFactoryOverwritingDomainUrl
      * @param string $domainsUrlsConfigFilepath
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath)
+    public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
@@ -44,7 +47,13 @@ class DomainFactoryOverwritingDomainUrl
             $domainConfigs = $this->overwriteDomainUrl($domainConfigs);
         }
 
-        $domain = new Domain($domainConfigs, $this->setting, $this->administratorFacade);
+        $domain = new Domain(
+            $domainConfigs,
+            $this->setting,
+            $this->administratorFacade,
+            $this->administrationFacade,
+            $this->router,
+        );
 
         $domainId = getenv('DOMAIN');
 
@@ -59,7 +68,7 @@ class DomainFactoryOverwritingDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function overwriteDomainUrl(array $domainConfigs)
+    public function overwriteDomainUrl(array $domainConfigs): array
     {
         $mockedDomainConfigs = [];
 

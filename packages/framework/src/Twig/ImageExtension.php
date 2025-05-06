@@ -150,7 +150,7 @@ class ImageExtension extends AbstractExtension
      */
     protected function getEmptyImageUrl(DomainConfig $domainConfig): string
     {
-        return $domainConfig->getUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
+        return $domainConfig->getBaseUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
     }
 
     /**

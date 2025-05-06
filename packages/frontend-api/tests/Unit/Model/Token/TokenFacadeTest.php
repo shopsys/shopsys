@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageException;
@@ -26,6 +27,7 @@ use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\Routing\RouterInterface;
 
 class TokenFacadeTest extends TestCase
 {
@@ -160,11 +162,27 @@ class TokenFacadeTest extends TestCase
     private function createDomain(): Domain
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(1, 'http://webserver:8080', 'domain', 'en', $defaultTimeZone);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://webserver:8080',
+            'domain',
+            'en',
+            $defaultTimeZone,
+            'http://webserver:8080',
+        );
         $setting = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain([$domainConfig], $setting, $administratorFacadeMock);
+        $domain = new Domain(
+            [$domainConfig],
+            $setting,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
+
         $domain->switchDomainById(1);
 
         return $domain;

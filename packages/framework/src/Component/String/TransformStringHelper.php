@@ -153,4 +153,32 @@ class TransformStringHelper
 
         return trim(preg_replace('/\s\s+/', ' ', strip_tags(str_replace('<', ' <', html_entity_decode($htmlText)))));
     }
+
+    /**
+     * @param string $string
+     * @param string $stringToRemove
+     * @return string
+     */
+    public function removeStringFromStart(string $string, string $stringToRemove): string
+    {
+        if (str_starts_with($string, $stringToRemove)) {
+            return substr($string, strlen($stringToRemove));
+        }
+
+        return $string;
+    }
+
+    /**
+     * @param string $string
+     * @param string $stringToRemove
+     * @return string
+     */
+    public function removeStringFromEnd(string $string, string $stringToRemove): string
+    {
+        if (str_ends_with($string, $stringToRemove)) {
+            return substr($string, 0, -strlen($stringToRemove));
+        }
+
+        return $string;
+    }
 }

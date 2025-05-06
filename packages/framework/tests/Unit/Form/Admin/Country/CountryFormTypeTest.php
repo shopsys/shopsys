@@ -136,8 +136,22 @@ class CountryFormTypeTest extends TypeTestCase
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
 
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                '',
+                '',
+                'cs',
+                $defaultTimeZone,
+                '',
+            ),
+            new DomainConfig(
+                Domain::SECOND_DOMAIN_ID,
+                '',
+                '',
+                'en',
+                $defaultTimeZone,
+                '',
+            ),
         ];
 
         $this->domain->method('getAll')->willReturn($domainConfigs);

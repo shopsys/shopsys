@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Breadcrumb;
 
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -47,7 +48,7 @@ class BreadcrumbFacade
 
             $breadcrumb[] = [
                 'name' => $breadcrumbItem->getName(),
-                'slug' => $domainRouter->generate($breadcrumbItemRouteName, $breadcrumbItemRouteParams),
+                'slug' => $domainRouter->generate($breadcrumbItemRouteName, $breadcrumbItemRouteParams, DomainRouter::SLUG),
             ];
         }
 

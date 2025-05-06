@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
 class CurrentDomainRouter implements ChainRouterInterface
 {
@@ -17,10 +21,14 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly AdministrationRouter $administrationRouter,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -56,6 +64,16 @@ class CurrentDomainRouter implements ChainRouterInterface
      */
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
+        if ($referenceType === self::ABSOLUTE_PATH) {
+            $url = $this->getDomainRouter()->generate($name, $parameters, $referenceType);
+
+            $domainPostfix = $this->domain->getPostfix();
+
+            if ($domainPostfix !== null) {
+                return $this->transformStringHelper->removeStringFromStart($url, $domainPostfix);
+            }
+        }
+
         return $this->getDomainRouter()->generate($name, $parameters, $referenceType);
     }
 
@@ -69,18 +87,22 @@ class CurrentDomainRouter implements ChainRouterInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter
+     * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter|\Shopsys\FrameworkBundle\Component\Router\AdministrationRouter
      */
-    protected function getDomainRouter(): DomainRouter
+    protected function getDomainRouter(): RouterInterface
     {
+        if ($this->domain->isDomainResolvedByFallback()) {
+            return $this->administrationRouter;
+        }
+
         return $this->domainRouterFactory->getRouter($this->domain->getId());
     }
 
     /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Symfony\Component\Routing\RouterInterface|\Symfony\Component\Routing\Matcher\RequestMatcherInterface|\Symfony\Component\Routing\Generator\UrlGeneratorInterface $router
      * @param int $priority
      */
-    public function add($router, $priority = 0): void
+    public function add(RouterInterface|RequestMatcherInterface|UrlGeneratorInterface $router, int $priority = 0): void
     {
         $this->getDomainRouter()->add($router, $priority);
     }

@@ -12,34 +12,42 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 
 class Domain implements DomainIdsProviderInterface
 {
-    public const FIRST_DOMAIN_ID = 1;
-    public const SECOND_DOMAIN_ID = 2;
-    public const THIRD_DOMAIN_ID = 3;
-    public const MAIN_ADMIN_DOMAIN_ID = 1;
+    public const int FIRST_DOMAIN_ID = 1;
+    public const int SECOND_DOMAIN_ID = 2;
+    public const int THIRD_DOMAIN_ID = 3;
+    public const int MAIN_ADMIN_DOMAIN_ID = 1;
 
     protected ?DomainConfig $currentDomainConfig = null;
+
+    protected bool $domainResolvedByFallback;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
+     * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
         protected readonly array $domainConfigs,
         protected readonly Setting $setting,
         protected readonly AdministratorFacade $administratorFacade,
+        protected readonly AdministrationFacade $administrationFacade,
+        protected readonly RouterInterface $router,
     ) {
     }
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->getCurrentDomainConfig()->getId();
     }
@@ -47,7 +55,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->getCurrentDomainConfig()->getLocale();
     }
@@ -55,7 +63,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getCurrentDomainConfig()->getName();
     }
@@ -63,7 +71,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->getCurrentDomainConfig()->getUrl();
     }
@@ -71,7 +79,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return bool
      */
-    public function isHttps()
+    public function isHttps(): bool
     {
         return $this->getCurrentDomainConfig()->isHttps();
     }
@@ -79,7 +87,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         $domainConfigsWithDataCreated = [];
 
@@ -102,7 +110,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return int[]
      */
-    public function getAllIds()
+    public function getAllIds(): array
     {
         $ids = [];
 
@@ -131,7 +139,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAllIncludingDomainConfigsWithoutDataCreated()
+    public function getAllIncludingDomainConfigsWithoutDataCreated(): array
     {
         return $this->domainConfigs;
     }
@@ -140,7 +148,7 @@ class Domain implements DomainIdsProviderInterface
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getDomainConfigById($domainId)
+    public function getDomainConfigById(int $domainId): DomainConfig
     {
         foreach ($this->domainConfigs as $domainConfig) {
             if ($domainId === $domainConfig->getId()) {
@@ -154,33 +162,61 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @param int $domainId
      */
-    public function switchDomainById($domainId)
+    public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
+        $this->domainResolvedByFallback = false;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function switchDomainByRequest(Request $request)
+    public function switchDomainByRequest(Request $request): void
     {
-        $url = $request->getSchemeAndHttpHost();
+        $this->currentDomainConfig = null;
 
         foreach ($this->domainConfigs as $domainConfig) {
-            if ($domainConfig->getUrl() === $url) {
-                $this->currentDomainConfig = $domainConfig;
+            $this->isDomainWithPostfix($domainConfig);
+
+            if (!str_starts_with($request->getUri(), $domainConfig->getUrl())) {
+                continue;
+            }
+
+            $this->currentDomainConfig = $domainConfig;
+            $this->domainResolvedByFallback = false;
+        }
+
+        if ($this->currentDomainConfig === null) {
+            $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
+            $firstDomainConfig = $this->getDomainConfigById(self::FIRST_DOMAIN_ID);
+
+            if ($this->isDomainWithPostfix($firstDomainConfig)) {
+                $this->currentDomainConfig = $firstDomainConfig;
+
+                $this->domainResolvedByFallback = true;
 
                 return;
             }
-        }
 
-        throw new UnableToResolveDomainException($url);
+            throw new UnableToResolveDomainException($url);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return bool
+     */
+    protected function isDomainWithPostfix(DomainConfig $domainConfig): bool
+    {
+        $path = parse_url($domainConfig->getUrl(), PHP_URL_PATH);
+
+        return $path !== null && $path !== '/';
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getCurrentDomainConfig()
+    public function getCurrentDomainConfig(): DomainConfig
     {
         if ($this->currentDomainConfig === null) {
             throw new NoDomainSelectedException();
@@ -192,7 +228,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return bool
      */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return count($this->getAll()) > 1;
     }
@@ -265,5 +301,23 @@ class Domain implements DomainIdsProviderInterface
     public function hasAdminAllDomainsEnabled(): bool
     {
         return count($this->getAdminEnabledDomainIds()) === count($this->getAllIds());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDomainResolvedByFallback(): bool
+    {
+        return $this->domainResolvedByFallback;
+    }
+
+    public function getPostfix(): ?string
+    {
+        return $this->getCurrentDomainConfig()->getPostfix();
+    }
+
+    public function getBaseUrl(): string
+    {
+        return $this->getCurrentDomainConfig()->getBaseUrl();
     }
 }

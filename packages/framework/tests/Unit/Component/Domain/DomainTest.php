@@ -12,8 +12,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 
 class DomainTest extends TestCase
 {
@@ -24,7 +26,14 @@ class DomainTest extends TestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
 
-        return new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example.com', 'cs', $defaultTimeZone);
+        return new DomainConfig(
+            Domain::FIRST_DOMAIN_ID,
+            'http://example.com:8080',
+            'example.com',
+            'cs',
+            $defaultTimeZone,
+            'http://example.com:8080',
+        );
     }
 
     /**
@@ -34,7 +43,14 @@ class DomainTest extends TestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
 
-        return new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.org:8080', 'example.org', 'en', $defaultTimeZone);
+        return new DomainConfig(
+            Domain::SECOND_DOMAIN_ID,
+            'http://example.org:8080',
+            'example.org',
+            'en',
+            $defaultTimeZone,
+            'http://example.org:8080',
+        );
     }
 
     /**
@@ -52,8 +68,17 @@ class DomainTest extends TestCase
     {
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            $this->getDomainConfigs(),
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
+
         $this->expectException(NoDomainSelectedException::class);
         $domain->getId();
     }
@@ -62,8 +87,16 @@ class DomainTest extends TestCase
     {
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            $this->getDomainConfigs(),
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->onlyMethods(['getSchemeAndHttpHost'])
@@ -84,8 +117,16 @@ class DomainTest extends TestCase
         $domainConfigs = $this->getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $this->assertSame($domainConfigs, $domain->getAllIncludingDomainConfigsWithoutDataCreated());
     }
@@ -113,8 +154,16 @@ class DomainTest extends TestCase
             });
 
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $this->assertSame([1 => $domainConfigWithDataCreated], $domain->getAll());
     }
@@ -124,8 +173,16 @@ class DomainTest extends TestCase
         $domainConfigs = $this->getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $this->assertSame($domainConfigs[0], $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
         $this->assertSame($domainConfigs[1], $domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID));
@@ -140,12 +197,27 @@ class DomainTest extends TestCase
         $domainConfigs = [
             $this->createDomainConfigFirst(),
             $this->createDomainConfigSecond(),
-            new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.cz:8080', 'example.cz', 'cs', $defaultTimeZone),
+            new DomainConfig(
+                Domain::THIRD_DOMAIN_ID,
+                'http://example.cz:8080',
+                'example.cz',
+                'cs',
+                $defaultTimeZone,
+                'http://example.cz:8080',
+            ),
         ];
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
 
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $expectedLocales = [
             'cs' => 'cs',

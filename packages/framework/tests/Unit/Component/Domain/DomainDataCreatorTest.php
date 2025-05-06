@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
@@ -22,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Symfony\Component\Routing\RouterInterface;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class DomainDataCreatorTest extends TestCase
@@ -32,7 +34,14 @@ class DomainDataCreatorTest extends TestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                'http://example.com:8080',
+                'example',
+                'cs',
+                $defaultTimeZone,
+                'http://example.com:8080',
+            ),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -42,7 +51,16 @@ class DomainDataCreatorTest extends TestCase
             ->with($this->equalTo(Setting::DOMAIN_DATA_CREATED), $this->equalTo(1))
             ->willReturn(true);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
         $multidomainEntityDataCreatorMock = $this->createMock(MultidomainEntityDataCreator::class);
@@ -81,8 +99,22 @@ class DomainDataCreatorTest extends TestCase
         $tFunctionMock = $builder->build();
 
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                'http://example.com:8080',
+                'example',
+                'cs',
+                $defaultTimeZone,
+                'http://example.com:8080',
+            ),
+            new DomainConfig(
+                Domain::SECOND_DOMAIN_ID,
+                'http://example.com:8080',
+                'example',
+                'cs',
+                $defaultTimeZone,
+                'http://example.com:8080',
+            ),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -98,7 +130,16 @@ class DomainDataCreatorTest extends TestCase
                 throw new SettingValueNotFoundException();
             });
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
         $settingValueRepositoryMock
@@ -162,6 +203,7 @@ class DomainDataCreatorTest extends TestCase
             'example',
             'cs',
             $defaultTimeZone,
+            'http://example.com:8080',
         );
         $domainConfigWithNewLocale = new DomainConfig(
             Domain::SECOND_DOMAIN_ID,
@@ -169,6 +211,7 @@ class DomainDataCreatorTest extends TestCase
             'example',
             'en',
             $defaultTimeZone,
+            'http://example.com:8080',
         );
         $domainConfigs = [
             $domainConfigWithDataCreated,

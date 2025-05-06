@@ -8,8 +8,8 @@ use DateTimeZone;
 
 class DomainConfig
 {
-    public const TYPE_B2C = 'b2c';
-    public const TYPE_B2B = 'b2b';
+    public const string TYPE_B2C = 'b2c';
+    public const string TYPE_B2B = 'b2b';
 
     /**
      * @param int $id
@@ -17,8 +17,10 @@ class DomainConfig
      * @param string $name
      * @param string $locale
      * @param \DateTimeZone $dateTimeZone
+     * @param string $baseUrl
      * @param string $type
      * @param bool $loadDemoData
+     * @param string|null $postfix
      */
     public function __construct(
         protected int $id,
@@ -26,15 +28,17 @@ class DomainConfig
         protected string $name,
         protected string $locale,
         protected DateTimeZone $dateTimeZone,
+        protected readonly string $baseUrl,
         protected string $type = self::TYPE_B2C,
         protected readonly bool $loadDemoData = true,
+        protected readonly ?string $postfix = null,
     ) {
     }
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -42,7 +46,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -50,7 +54,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -58,7 +62,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -66,9 +70,9 @@ class DomainConfig
     /**
      * @return bool
      */
-    public function isHttps()
+    public function isHttps(): bool
     {
-        return strpos($this->url, 'https://') === 0;
+        return str_starts_with($this->url, 'https://');
     }
 
     /**
@@ -101,5 +105,21 @@ class DomainConfig
     public function isAllowedInDataFixtures(): bool
     {
         return $this->loadDemoData;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPostfix(): ?string
+    {
+        return $this->postfix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
     }
 }

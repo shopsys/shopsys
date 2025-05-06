@@ -15,7 +15,9 @@ use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternReposito
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Symfony\Component\Routing\RouterInterface;
 
 class DateTimeFormatterTest extends TestCase
 {
@@ -78,9 +80,25 @@ class DateTimeFormatterTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $dateTimeZone = new DateTimeZone($dateTimeZoneString);
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
-        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://example.com',
+            'name',
+            'en',
+            $dateTimeZone,
+            'http://example.com',
+        );
 
-        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
+        $router = $this->createMock(RouterInterface::class);
+
+        return new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+            $administrationFacadeMock,
+            $router,
+        );
     }
 }
