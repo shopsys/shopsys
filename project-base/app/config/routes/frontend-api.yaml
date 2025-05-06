@@ -1,8 +1,3 @@
 shopsys_frontend_api:
     prefix: /graphql
     resource: "@ShopsysFrontendApiBundle/Resources/config/routing.yaml"
-
-shopsys_frontend_api_admin:
-    prefix: /%admin_url%
-    resource: "@ShopsysFrontendApiBundle/Controller/Admin"
-    type: attribute

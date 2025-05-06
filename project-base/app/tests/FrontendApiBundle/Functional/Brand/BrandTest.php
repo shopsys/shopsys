@@ -85,7 +85,7 @@ class BrandTest extends GraphQlTestCase
             ],
             'images' => [
                 [
-                    'url' => $this->getFullUrlPath('/content-test/images/brand/canon_80.jpg'),
+                    'url' => $this->getBaseUrlPath('/content-test/images/brand/canon_80.jpg'),
                     'name' => BrandDataFixture::BRAND_CANON,
                 ],
             ],

@@ -108,8 +108,8 @@ class TokenFacade
 
         return $this->jwtConfigurationProvider->getConfiguration()
             ->builder(ChainedFormatter::withUnixTimestampDates())
-            ->issuedBy($this->domain->getDomainConfigById($domainId)->getUrl())
-            ->permittedFor($this->domain->getDomainConfigById($domainId)->getUrl())
+            ->issuedBy($this->domain->getDomainConfigById($domainId)->getBaseUrl())
+            ->permittedFor($this->domain->getDomainConfigById($domainId)->getBaseUrl())
             ->issuedAt($currentTime)
             ->canOnlyBeUsedAfter($currentTime)
             ->expiresAt($expirationTime);
@@ -155,8 +155,8 @@ class TokenFacade
 
         if (!$validator->validate(
             $token,
-            new IssuedBy($this->domain->getUrl()),
-            new PermittedFor($this->domain->getUrl()),
+            new IssuedBy($this->domain->getBaseUrl()),
+            new PermittedFor($this->domain->getBaseUrl()),
         )
         ) {
             throw new InvalidTokenUserMessageException();

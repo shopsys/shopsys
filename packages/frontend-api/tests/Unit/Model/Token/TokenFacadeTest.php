@@ -160,11 +160,23 @@ class TokenFacadeTest extends TestCase
     private function createDomain(): Domain
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(1, 'http://webserver:8080', 'domain', 'en', $defaultTimeZone);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://webserver:8080',
+            'domain',
+            'en',
+            $defaultTimeZone,
+            'http://webserver:8080',
+        );
         $setting = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        $domain = new Domain([$domainConfig], $setting, $administratorFacadeMock);
+        $domain = new Domain(
+            [$domainConfig],
+            $setting,
+            $administratorFacadeMock,
+        );
+
         $domain->switchDomainById(1);
 
         return $domain;

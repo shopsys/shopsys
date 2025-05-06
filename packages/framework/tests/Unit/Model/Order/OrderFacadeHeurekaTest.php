@@ -152,10 +152,21 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createDomain(): Domain
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone);
+        $domainConfig = new DomainConfig(
+            Domain::FIRST_DOMAIN_ID,
+            '',
+            '',
+            'cs',
+            $defaultTimeZone,
+            '',
+        );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $this->createMock(Setting::class), $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $this->createMock(Setting::class),
+            $administratorFacadeMock,
+        );
     }
 
     /**

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class FriendlyUrlMatcher
 {
-    protected const string IGNORED_INTERNAL_ROUTE = '_fragment';
+    public const string IGNORED_INTERNAL_ROUTE = '/_fragment';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
@@ -33,11 +33,11 @@ class FriendlyUrlMatcher
      */
     public function match(string $pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
-        $pathWithoutSlash = substr($pathinfo, 1);
-
-        if ($pathWithoutSlash === self::IGNORED_INTERNAL_ROUTE) {
+        if ($pathinfo === self::IGNORED_INTERNAL_ROUTE) {
             throw new ResourceNotFoundException();
         }
+
+        $pathWithoutSlash = substr($pathinfo, 1);
 
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $pathWithoutSlash);
 

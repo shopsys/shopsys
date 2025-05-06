@@ -27,7 +27,14 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
 
         return [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com', 'example.com', 'en', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                'http://example.com',
+                'example.com',
+                'en',
+                $defaultTimeZone,
+                'http://example.com',
+            ),
         ];
     }
 
@@ -35,7 +42,13 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     {
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $this->getDomainConfigs(),
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
@@ -60,7 +73,13 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     {
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $this->getDomainConfigs(),
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
@@ -88,7 +107,13 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     {
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $this->getDomainConfigs(),
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(

@@ -71,12 +71,32 @@ class FriendlyUrlFactoryTest extends TestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example.com', 'en', $defaultTimeZone),
+            new DomainConfig(
+                Domain::FIRST_DOMAIN_ID,
+                'http://example.cz',
+                'example.cz',
+                'cs',
+                $defaultTimeZone,
+                'http://example.cz',
+            ),
+            new DomainConfig(
+                Domain::SECOND_DOMAIN_ID,
+                'http://example.com',
+                'example.com',
+                'en',
+                $defaultTimeZone,
+                'http://example.com',
+            ),
         ];
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlFactory = $this->getMockBuilder(FriendlyUrlFactory::class)

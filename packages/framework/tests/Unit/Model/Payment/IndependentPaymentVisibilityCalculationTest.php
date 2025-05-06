@@ -33,7 +33,14 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         $this->domainMock = $this->createMock(Domain::class);
         $this->domainMock->method('getDomainConfigById')
             ->willReturn(
-                new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
+                new DomainConfig(
+                    Domain::FIRST_DOMAIN_ID,
+                    '',
+                    '',
+                    'cs',
+                    $defaultTimeZone,
+                    '',
+                ),
             );
 
         $this->customerUserRoleResolverMock = $this->createMock(CustomerUserRoleResolver::class);
@@ -73,7 +80,6 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         $paymentMock->method('isEnabled')->willReturn($isEnabled);
 
         $this->customerUserRoleResolverMock->method('canCurrentCustomerUserSeePrices')->willReturn($canSeePrices);
-        $this->domainMock->method('getDomainConfigById')->willReturn((object)['locale' => 'en']);
 
         $this->assertEquals($expectedResult, $this->paymentVisibilityCalculation->isIndependentlyVisible($paymentMock, 1));
     }

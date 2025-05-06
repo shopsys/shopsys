@@ -42,9 +42,21 @@ class FeedCronModuleTest extends TestCase
         $feedModuleRepositoryMock->expects($this->any())->method('getFeedModuleByNameAndDomainId')->willReturn($feedModule1);
 
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $defaultTimeZone);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://example.com',
+            'name',
+            'en',
+            $defaultTimeZone,
+            'http://example.com',
+        );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)
             ->disableOriginalConstructor()

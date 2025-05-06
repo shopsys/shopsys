@@ -11,8 +11,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 
 class DomainFactoryOverwritingDomainUrl
 {
-    protected ?string $overwriteDomainUrl = null;
-
     /**
      * @param string|null $overwriteDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
@@ -20,12 +18,11 @@ class DomainFactoryOverwritingDomainUrl
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
-        $overwriteDomainUrl,
+        protected readonly ?string $overwriteDomainUrl,
         protected readonly DomainsConfigLoader $domainsConfigLoader,
         protected readonly Setting $setting,
         protected readonly AdministratorFacade $administratorFacade,
     ) {
-        $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
 
     /**
@@ -33,7 +30,7 @@ class DomainFactoryOverwritingDomainUrl
      * @param string $domainsUrlsConfigFilepath
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath)
+    public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
@@ -44,7 +41,11 @@ class DomainFactoryOverwritingDomainUrl
             $domainConfigs = $this->overwriteDomainUrl($domainConfigs);
         }
 
-        $domain = new Domain($domainConfigs, $this->setting, $this->administratorFacade);
+        $domain = new Domain(
+            $domainConfigs,
+            $this->setting,
+            $this->administratorFacade,
+        );
 
         $domainId = getenv('DOMAIN');
 
@@ -59,7 +60,7 @@ class DomainFactoryOverwritingDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function overwriteDomainUrl(array $domainConfigs)
+    public function overwriteDomainUrl(array $domainConfigs): array
     {
         $mockedDomainConfigs = [];
 
@@ -70,7 +71,10 @@ class DomainFactoryOverwritingDomainUrl
                 $domainConfig->getName(),
                 $domainConfig->getLocale(),
                 $domainConfig->getDateTimeZone(),
+                $this->overwriteDomainUrl,
                 $domainConfig->getType(),
+                $domainConfig->isAllowedInDataFixtures(),
+                $domainConfig->getPostfix(),
             );
         }
 

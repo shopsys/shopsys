@@ -27,13 +27,17 @@ class DomainFactory
      * @param string $domainsUrlsConfigFilepath
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath)
+    public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
             $domainsUrlsConfigFilepath,
         );
-        $domain = new Domain($domainConfigs, $this->setting, $this->administratorFacade);
+        $domain = new Domain(
+            $domainConfigs,
+            $this->setting,
+            $this->administratorFacade,
+        );
 
         $domainId = getenv('DOMAIN');
 

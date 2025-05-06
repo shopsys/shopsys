@@ -186,10 +186,6 @@ services:
         lazy: true
         public: true
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
     Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator: ~
 
     Shopsys\FrameworkBundle\Component\Domain\DomainFacade:
@@ -416,6 +412,18 @@ services:
             $globalClient: '@snc_redis.global'
             $currentVersion: '%build-version%'
 
+    Shopsys\FrameworkBundle\Component\Router\AdministrationRouter:
+        class: Shopsys\FrameworkBundle\Component\Router\AdministrationRouter
+        factory: ['@Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory', getAdministrationRouter]
+        lazy: true
+        tags:
+            - { name: router, priority: 80 }
+
+    Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory:
+        arguments:
+            $routerConfiguration: 'kernel::loadRoutesAdministration'
+            $cacheDir: '%shopsys.router.administration.cache_dir%'
+
     Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
         tags:
             - { name: router, priority: 70 }
@@ -556,6 +564,10 @@ services:
         public: true
         tags:
             - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
+
+    Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider:
+        arguments:
+            $adminUrl: '%admin_url%'
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade:
         arguments:

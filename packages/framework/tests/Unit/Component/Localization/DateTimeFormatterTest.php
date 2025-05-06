@@ -78,9 +78,21 @@ class DateTimeFormatterTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $dateTimeZone = new DateTimeZone($dateTimeZoneString);
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://example.com',
+            'name',
+            'en',
+            $dateTimeZone,
+            'http://example.com',
+        );
+
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
     }
 }

@@ -18,9 +18,9 @@ class NewProductTest extends ApplicationTestCase
      */
     public static function createOrEditProductProvider(): iterable
     {
-        yield ['admin/product/new/'];
+        yield ['/admin/product/new/'];
 
-        yield ['admin/product/edit/1'];
+        yield ['/admin/product/edit/1'];
     }
 
     /**
@@ -29,11 +29,11 @@ class NewProductTest extends ApplicationTestCase
     #[DataProvider('createOrEditProductProvider')]
     public function testCreateOrEditProduct(string $relativeUrl): void
     {
-        $domainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();
-        $isDomainSecured = parse_url($domainUrl, PHP_URL_SCHEME) === 'https';
+        $domain = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $isDomainSecured = parse_url($domain->getUrl(), PHP_URL_SCHEME) === 'https';
 
         $server = [
-            'HTTP_HOST' => preg_replace('#^https?://#', '', $domainUrl),
+            'HTTP_HOST' => preg_replace('#^https?://#', '', $domain->getBaseUrl()),
             'HTTPS' => $isDomainSecured,
         ];
 
@@ -54,7 +54,7 @@ class NewProductTest extends ApplicationTestCase
         $em->rollback();
 
         $this->assertSame(302, $client->getResponse()->getStatusCode());
-        $this->assertStringStartsWith($domainUrl . '/admin/product/list', $client->followRedirect()->getUri());
+        $this->assertStringStartsWith($domain->getBaseUrl() . '/admin/product/list', $client->followRedirect()->getUri());
     }
 
     /**

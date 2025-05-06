@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
 class DateTimeFormatterExtensionTest extends TestCase
 {
-    private const DISPLAY_TIME_ZONE = 'Europe/Prague';
+    private const string DISPLAY_TIME_ZONE = 'Europe/Prague';
 
     /**
      * @return array
@@ -89,9 +89,20 @@ class DateTimeFormatterExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $dateTimeZone = new DateTimeZone(self::DISPLAY_TIME_ZONE);
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $domainConfig = new DomainConfig(
+            1,
+            'http://example.com',
+            'name',
+            'en',
+            $dateTimeZone,
+            'http://example.com',
+        );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
     }
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -14,9 +16,12 @@ class DomainSubscriber implements EventSubscriberInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
      */
-    public function __construct(protected readonly Domain $domain)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly ContextResolverInterface $contextResolver,
+    ) {
     }
 
     /**
@@ -24,12 +29,16 @@ class DomainSubscriber implements EventSubscriberInterface
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMainRequest()) {
-            try {
-                $this->domain->getId();
-            } catch (NoDomainSelectedException $exception) {
-                $this->domain->switchDomainByRequest($event->getRequest());
-            }
+        $request = $event->getRequest();
+
+        if (!$event->isMainRequest() || $this->contextResolver->isCurrentContext(AdminContext::class)) {
+            return;
+        }
+
+        try {
+            $this->domain->getId();
+        } catch (NoDomainSelectedException $exception) {
+            $this->domain->switchDomainByRequest($request);
         }
     }
 

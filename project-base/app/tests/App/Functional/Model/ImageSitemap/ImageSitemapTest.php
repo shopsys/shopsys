@@ -61,10 +61,11 @@ class ImageSitemapTest extends ApplicationTestCase
     private function getExpectedXmlRegex(DomainConfig $domainConfig): string
     {
         $urlPattern = preg_quote($domainConfig->getUrl(), '~');
+        $basUrlPattern = preg_quote($domainConfig->getBaseUrl(), '~');
         $television = $this->transformStringHelper->stringToFriendlyUrlSlug(t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
         $plasma = $this->transformStringHelper->stringToFriendlyUrlSlug(t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
 
-        return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $urlPattern . '/content-test/images/product/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc></image\:image></url>~';
+        return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $basUrlPattern . '/content-test/images/product/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc></image\:image></url>~';
     }
 
     /**

@@ -28,7 +28,7 @@ class DomainAwareSecurityHeadersSetter
             return;
         }
 
-        if (!$this->domain->isHttps()) {
+        if (!$this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->isHttps()) {
             return;
         }
 

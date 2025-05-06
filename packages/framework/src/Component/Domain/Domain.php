@@ -18,10 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Domain implements DomainIdsProviderInterface
 {
-    public const FIRST_DOMAIN_ID = 1;
-    public const SECOND_DOMAIN_ID = 2;
-    public const THIRD_DOMAIN_ID = 3;
-    public const MAIN_ADMIN_DOMAIN_ID = 1;
+    public const int FIRST_DOMAIN_ID = 1;
+    public const int SECOND_DOMAIN_ID = 2;
+    public const int THIRD_DOMAIN_ID = 3;
 
     protected ?DomainConfig $currentDomainConfig = null;
 
@@ -40,7 +39,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->getCurrentDomainConfig()->getId();
     }
@@ -48,7 +47,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->getCurrentDomainConfig()->getLocale();
     }
@@ -56,7 +55,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getCurrentDomainConfig()->getName();
     }
@@ -64,7 +63,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->getCurrentDomainConfig()->getUrl();
     }
@@ -72,7 +71,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return bool
      */
-    public function isHttps()
+    public function isHttps(): bool
     {
         return $this->getCurrentDomainConfig()->isHttps();
     }
@@ -80,7 +79,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         $domainConfigsWithDataCreated = [];
 
@@ -104,7 +103,7 @@ class Domain implements DomainIdsProviderInterface
      * @return int[]
      */
     #[Override]
-    public function getAllIds()
+    public function getAllIds(): array
     {
         $ids = [];
 
@@ -133,7 +132,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAllIncludingDomainConfigsWithoutDataCreated()
+    public function getAllIncludingDomainConfigsWithoutDataCreated(): array
     {
         return $this->domainConfigs;
     }
@@ -142,7 +141,7 @@ class Domain implements DomainIdsProviderInterface
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getDomainConfigById($domainId)
+    public function getDomainConfigById(int $domainId): DomainConfig
     {
         foreach ($this->domainConfigs as $domainConfig) {
             if ($domainId === $domainConfig->getId()) {
@@ -156,7 +155,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @param int $domainId
      */
-    public function switchDomainById($domainId)
+    public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
     }
@@ -164,25 +163,68 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function switchDomainByRequest(Request $request)
+    public function switchDomainByRequest(Request $request): void
     {
-        $url = $request->getSchemeAndHttpHost();
+        $requestBaseUrl = $request->getSchemeAndHttpHost();
+        $requestPath = '/' . trim($request->getPathInfo(), '/');
+
+        foreach ($this->getDomainConfigsSortedFromLongestPostfix($requestBaseUrl) as $domainConfig) {
+            $postfix = '/' . trim($domainConfig->getPostfix() ?? '', '/');
+
+            if (!$this->pathMatchesDomainPostfix($requestPath, $postfix)) {
+                continue;
+            }
+
+            $this->currentDomainConfig = $domainConfig;
+
+            return;
+        }
+
+        throw new UnableToResolveDomainException($request->getUri());
+    }
+
+    /**
+     * @param string $requestBaseUrl
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     */
+    protected function getDomainConfigsSortedFromLongestPostfix(string $requestBaseUrl): array
+    {
+        $matchingConfigs = [];
 
         foreach ($this->domainConfigs as $domainConfig) {
-            if ($domainConfig->getUrl() === $url) {
-                $this->currentDomainConfig = $domainConfig;
-
-                return;
+            if ($domainConfig->getBaseUrl() === $requestBaseUrl) {
+                $matchingConfigs[] = $domainConfig;
             }
         }
 
-        throw new UnableToResolveDomainException($url);
+        usort($matchingConfigs, static function (DomainConfig $a, DomainConfig $b) {
+            $aPostfixLength = strlen($a->getPostfix() ?? '');
+            $bPostfixLength = strlen($b->getPostfix() ?? '');
+
+            return $bPostfixLength - $aPostfixLength;
+        });
+
+        return $matchingConfigs;
+    }
+
+    /**
+     * @param string $requestPath
+     * @param string $postfix
+     * @return bool
+     */
+    protected function pathMatchesDomainPostfix(string $requestPath, string $postfix): bool
+    {
+        if ($postfix === '/') {
+            return true;
+        }
+
+        return $requestPath === $postfix || str_starts_with($requestPath, $postfix . '/');
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getCurrentDomainConfig()
+    public function getCurrentDomainConfig(): DomainConfig
     {
         if ($this->currentDomainConfig === null) {
             throw new NoDomainSelectedException();
@@ -194,7 +236,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return bool
      */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return count($this->getAll()) > 1;
     }
@@ -268,5 +310,21 @@ class Domain implements DomainIdsProviderInterface
     public function hasAdminAllDomainsEnabled(): bool
     {
         return count($this->getAdminEnabledDomainIds()) === count($this->getAllIds());
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPostfix(): ?string
+    {
+        return $this->getCurrentDomainConfig()->getPostfix();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->getCurrentDomainConfig()->getBaseUrl();
     }
 }

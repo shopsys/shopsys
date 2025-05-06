@@ -16,11 +16,11 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $currentDomainRouter
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
-        protected readonly CurrentDomainRouter $currentDomainRouter,
+        protected readonly AdministrationRouter $administrationRouter,
         protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
@@ -59,7 +59,7 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
     protected function redirectToExistingPath(string $newPath, ExceptionEvent $event): void
     {
         try {
-            $this->currentDomainRouter->match($newPath);
+            $this->administrationRouter->match($newPath);
 
             $uri = $event->getRequest()->getUri();
             $httpHost = $event->getRequest()->getHttpHost();

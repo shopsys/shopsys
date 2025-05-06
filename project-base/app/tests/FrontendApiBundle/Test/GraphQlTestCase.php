@@ -26,7 +26,7 @@ use Tests\App\Test\ApplicationTestCase;
 
 abstract class GraphQlTestCase extends ApplicationTestCase
 {
-    protected string $currentDomainUrl;
+    protected string $currentBaseDomainUrl;
 
     /**
      * @inject
@@ -62,7 +62,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
         $this->configureCurrentClient(null, null, ['CONTENT_TYPE' => 'application/graphql']);
 
-        $this->currentDomainUrl = $this->domain->getCurrentDomainConfig()->getUrl();
+        $this->currentBaseDomainUrl = $this->domain->getCurrentDomainConfig()->getBaseUrl();
     }
 
     protected function runCheckTestEnabledOnCurrentDomain(): void
@@ -201,7 +201,16 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      */
     protected function getFullUrlPath(string $uri): string
     {
-        return $this->currentDomainUrl . $uri;
+        return $this->domain->getCurrentDomainConfig()->getUrl() . $uri;
+    }
+
+    /**
+     * @param string $uri
+     * @return string
+     */
+    protected function getBaseUrlPath(string $uri): string
+    {
+        return $this->domain->getCurrentDomainConfig()->getBaseUrl() . $uri;
     }
 
     /**
