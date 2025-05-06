@@ -1,9 +1,9 @@
+import { CollapsibleDescriptionWithImage } from 'app/_components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
 import { CategoryBestsellers } from 'app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers';
 import { getCategoryDetailQuery } from 'app/_queries/getCategoryDetailQuery';
 import { getCategoryProductsQuery } from 'app/_queries/getCategoryProductsQuery';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -33,20 +33,27 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
         return notFound();
     }
 
+    // const title = useSeoTitleWithPagination(categoryData.products.totalCount, categoryData.name, categoryData.seoH1);
+    const title = categoryData.name;
+
     return (
-        <Webline>
-            <VerticalStack gap="md">
-                <h1>category</h1>
+        <VerticalStack gap="md">
+            <CollapsibleDescriptionWithImage
+                currentPage={1}
+                description={categoryData.description}
+                imageName={categoryData.images[0]?.name || categoryData.name}
+                imageUrl={categoryData.images[0]?.url}
+                title={title}
+            />
 
-                <CategoryBestsellers products={categoryData.bestsellers} />
+            <CategoryBestsellers products={categoryData.bestsellers} />
 
-                <ProductsList
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    gtmProductListName={GtmProductListNameType.category_detail}
-                    products={products}
-                />
-            </VerticalStack>
-        </Webline>
+            <ProductsList
+                gtmMessageOrigin={GtmMessageOriginType.other}
+                gtmProductListName={GtmProductListNameType.category_detail}
+                products={products}
+            />
+        </VerticalStack>
     );
 };
 
