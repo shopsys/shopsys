@@ -130,6 +130,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagDetailResponse.data?.flag,
                     context.res,
                     domainConfig.url,
+                    domainConfig.defaultLocale,
                     urlSlug,
                 );
 

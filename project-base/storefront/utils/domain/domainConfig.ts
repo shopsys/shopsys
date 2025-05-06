@@ -1,7 +1,8 @@
+import { getBaseUrlWithLocale } from './domainUtils';
 import getConfig from 'next/config';
 import { CustomerUserAreaEnum } from 'types/customer';
 
-type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
+export type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
 
 const {
     publicRuntimeConfig: { domains: domainsConfig, cdnDomain },
@@ -24,22 +25,31 @@ export type DomainConfigType = {
     type: CustomerUserAreaEnum;
 };
 
-export function getDomainConfig(domainUrl: string): DomainConfigType {
-    const replacedDomain = domainUrl.replace(':3000', ':8000');
+export function getDomainConfig(domainUrl: string, locale: string | undefined): DomainConfigType {
+    const normalizedDomain = domainUrl.replace(':3000', ':8000');
+    const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
+    const isDefaultLocale = locale === 'default';
 
-    for (const domain of domainsConfig) {
-        const publicDomainUrl = new URL(domain.url || '').host;
+    for (const domainConfig of domainsConfig) {
+        const configDomainHost = new URL(domainConfig.url || '').host;
 
-        if (publicDomainUrl === replacedDomain) {
-            return domain;
+        if (!isDefaultLocale && domainConfig.defaultLocale === locale) {
+            if (configDomainHost === normalizedDomain) {
+                return domainConfig;
+            }
+            // Skip if domain hosts don't match to avoid locale conflicts
+            continue;
+        }
+
+        if (isDefaultLocale && configDomainHost === normalizedDomain) {
+            return domainConfig;
         }
     }
 
-    // Return first domain for CDN domain to properly render error page
-    const cdnDomainHost = new URL(cdnDomain).host;
-    if (replacedDomain === cdnDomainHost) {
+    const cdnDomainHost = getBaseUrlWithLocale(new URL(cdnDomain).host, locale);
+    if (hostWithLocale === cdnDomainHost) {
         return domainsConfig[0];
     }
 
-    throw new Error('Domain `' + replacedDomain + '` is not known domain');
+    throw new Error(`Domain '${hostWithLocale}' is not configured`);
 }

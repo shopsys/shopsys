@@ -27,7 +27,7 @@ const nextConfig = {
         ],
     },
     serverRuntimeConfig: {
-        internalGraphqlEndpoint: `${process.env.INTERNAL_ENDPOINT}graphql/`,
+        internalGraphqlEndpoint: process.env.INTERNAL_ENDPOINT,
     },
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,

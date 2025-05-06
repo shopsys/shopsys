@@ -3,7 +3,11 @@ import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRew
 import { Redirect } from 'next';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export const getUnauthenticatedRedirectSSR = (resolvedUrl: string, domainUrl: string): { redirect: Redirect } => {
+export const getUnauthenticatedRedirectSSR = (
+    resolvedUrl: string,
+    domainUrl: string,
+    defaultLocale: string,
+): { redirect: Redirect } => {
     let redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(['/login'], domainUrl)[0];
 
     if (resolvedUrl in STATIC_REWRITE_PATHS[domainUrl]) {
@@ -16,7 +20,7 @@ export const getUnauthenticatedRedirectSSR = (resolvedUrl: string, domainUrl: st
     return {
         redirect: {
             statusCode: 302,
-            destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl),
+            destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, defaultLocale),
         },
     };
 };

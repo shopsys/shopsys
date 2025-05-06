@@ -117,7 +117,8 @@
     "pnpm": {
         "onlyBuiltDependencies": [
             "esbuild",
-            "next-translate-plugin"
+            "next-translate-plugin",
+            "sharp"
         ]
     }
 }

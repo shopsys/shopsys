@@ -24,6 +24,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -141,7 +142,10 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     if (!orderUuid || !orderEmail) {
         return {
             redirect: {
-                destination: getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0],
+                destination: getBasePathWithLocale(
+                    getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0],
+                    domainConfig.defaultLocale,
+                ),
                 statusCode: 301,
             },
         };

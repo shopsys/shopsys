@@ -129,6 +129,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     categoryDetailResponse.data?.category,
                     context.res,
                     domainConfig.url,
+                    domainConfig.defaultLocale,
                     urlSlug,
                 );
 

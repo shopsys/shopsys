@@ -11,6 +11,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
     serverSideRequestData: unknown,
     res: ServerResponse<IncomingMessage>,
     domainUrl: string,
+    defaultLocale: string,
     urlSlug?: string,
 ) => {
     if (error?.response.status === 401) {
@@ -18,7 +19,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
 
         return {
             redirect: {
-                destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl),
+                destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, defaultLocale),
                 permanent: false,
             },
         };
