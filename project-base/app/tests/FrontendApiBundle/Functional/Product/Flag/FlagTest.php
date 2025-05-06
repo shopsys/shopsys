@@ -34,12 +34,12 @@ class FlagTest extends GraphQlTestCase
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'flag');
 
-        $this->assertSame(t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), $responseData['name']);
+        $this->assertSame(t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), $responseData['name']);
         $this->assertSame('#000000', $responseData['rgbColor']);
         $this->assertSame($this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]), $responseData['slug']);
         $this->assertSame([
             [
-                'name' => t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'name' => t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                 'slug' => $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]),
             ],
         ], $responseData['breadcrumb']);

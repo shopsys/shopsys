@@ -1138,6 +1138,15 @@ msgstr ""
 msgid "MIO Cyclo 100, bicycle computer, 1,8\""
 msgstr ""
 
+msgid "Made in CZ"
+msgstr ""
+
+msgid "Made in DE"
+msgstr ""
+
+msgid "Made in SK"
+msgstr ""
+
 msgid "Magazine capacity for beans"
 msgstr ""
 
@@ -1247,6 +1256,9 @@ msgid "NS-9310 Infant replacement bags of paper for the VP-9310"
 msgstr ""
 
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
+msgstr ""
+
+msgid "New"
 msgstr ""
 
 msgid "New [adjective]"
@@ -1441,6 +1453,9 @@ msgstr ""
 msgid "Pressure"
 msgstr ""
 
+msgid "Price hit"
+msgstr ""
+
 msgid "Prime flour 1 kg"
 msgstr ""
 
@@ -1544,6 +1559,9 @@ msgid "SONY DSCRX100"
 msgstr ""
 
 msgid "SONY Xperia SP C5303"
+msgstr ""
+
+msgid "Sale"
 msgstr ""
 
 msgid "Samsung Galaxy Core 2 (SM-G355) - black"
