@@ -48,13 +48,17 @@ class NavigationItem implements OrderableEntityInterface
     protected $domainId;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $routeName;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
     public function __construct(NavigationItemData $navigationItemData)
     {
-        $this->name = $navigationItemData->name;
-        $this->url = $navigationItemData->url;
-        $this->domainId = $navigationItemData->domainId;
+        $this->setData($navigationItemData);
     }
 
     /**
@@ -62,9 +66,7 @@ class NavigationItem implements OrderableEntityInterface
      */
     public function edit(NavigationItemData $navigationItemData): void
     {
-        $this->name = $navigationItemData->name;
-        $this->url = $navigationItemData->url;
-        $this->domainId = $navigationItemData->domainId;
+        $this->setData($navigationItemData);
     }
 
     /**
@@ -113,5 +115,23 @@ class NavigationItem implements OrderableEntityInterface
     public function getDomainId()
     {
         return $this->domainId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
+     */
+    protected function setData(NavigationItemData $navigationItemData): void
+    {
+        $this->name = $navigationItemData->name;
+        $this->url = $navigationItemData->url;
+        $this->domainId = $navigationItemData->domainId;
+    }
+
+    /**
+     * @param string|null $routeName
+     */
+    public function setRouteName($routeName): void
+    {
+        $this->routeName = $routeName;
     }
 }

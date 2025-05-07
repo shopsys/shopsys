@@ -6,8 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class NavigationItemFacade
 {
@@ -18,6 +20,8 @@ class NavigationItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFactory $navigationItemFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly EntityManagerDecorator $em,
@@ -26,6 +30,8 @@ class NavigationItemFacade
         protected readonly NavigationItemDetailFactory $navigationItemDetailFactory,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
         protected readonly NavigationItemFactory $navigationItemFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -76,6 +82,7 @@ class NavigationItemFacade
         $this->fixUrlInNavigationItemData($navigationItemData);
 
         $navigationItem = $this->navigationItemFactory->create($navigationItemData);
+        $this->setNavigationItemRouteName($navigationItem);
 
         $this->em->persist($navigationItem);
         $this->em->flush();
@@ -99,6 +106,7 @@ class NavigationItemFacade
         $this->fixUrlInNavigationItemData($navigationItemData);
 
         $navigationItem->edit($navigationItemData);
+        $this->setNavigationItemRouteName($navigationItem);
 
         $this->em->flush();
 
@@ -119,15 +127,22 @@ class NavigationItemFacade
             return;
         }
 
-        if (strpos($navigationItemData->url, 'http') === 0) {
+        $domainUrl = $this->domain->getDomainConfigById($navigationItemData->domainId)->getUrl();
+        $navigationItemData->url = str_replace($domainUrl, '', $navigationItemData->url);
+
+        if (str_starts_with($navigationItemData->url, 'http://')) {
             return;
         }
 
-        if (strpos($navigationItemData->url, 'www') === 0) {
+        if (str_starts_with($navigationItemData->url, 'https://')) {
             return;
         }
 
-        if (strpos($navigationItemData->url, '/') !== 0) {
+        if (str_starts_with($navigationItemData->url, 'www.')) {
+            return;
+        }
+
+        if (!str_starts_with($navigationItemData->url, '/')) {
             $navigationItemData->url = '/' . $navigationItemData->url;
         }
     }
@@ -141,5 +156,14 @@ class NavigationItemFacade
         $this->em->flush();
 
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::NAVIGATION_QUERY_KEY_PART);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
+     */
+    protected function setNavigationItemRouteName(NavigationItem $navigationItem): void
+    {
+        $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($navigationItem->getDomainId(), trim($navigationItem->getUrl(), '/'));
+        $navigationItem->setRouteName($friendlyUrl?->getRouteName());
     }
 }
