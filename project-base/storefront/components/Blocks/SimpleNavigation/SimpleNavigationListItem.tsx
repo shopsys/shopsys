@@ -1,5 +1,3 @@
-'use client';
-
 import { getLinkType } from './simpleNavigationUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';

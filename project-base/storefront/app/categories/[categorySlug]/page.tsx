@@ -1,8 +1,12 @@
 import { CollapsibleDescriptionWithImage } from 'app/_components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
+import { FilteredProductsWrapper } from 'app/_components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
+import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
+import { AdvancedSeoCategories } from 'app/_components/Page/CategoryDetail/AdvancedSeoCategories';
 import { CategoryBestsellers } from 'app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers';
 import { getCategoryDetailQuery } from 'app/_queries/getCategoryDetailQuery';
 import { getCategoryProductsQuery } from 'app/_queries/getCategoryProductsQuery';
+import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -36,6 +40,8 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
     // const title = useSeoTitleWithPagination(categoryData.products.totalCount, categoryData.name, categoryData.seoH1);
     const title = categoryData.name;
 
+    console.log('🧪 categoryData', categoryData);
+
     return (
         <VerticalStack gap="md">
             <CollapsibleDescriptionWithImage
@@ -46,13 +52,49 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
                 title={title}
             />
 
-            <CategoryBestsellers products={categoryData.bestsellers} />
+            <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={categoryData.children} />
 
-            <ProductsList
-                gtmMessageOrigin={GtmMessageOriginType.other}
-                gtmProductListName={GtmProductListNameType.category_detail}
-                products={products}
-            />
+            <FilteredProductsWrapper>
+                {/* <DeferredFilterPanel
+                    categoryAutomatedFilters={category.automatedFilters}
+                    defaultOrderingMode={category.products.defaultOrderingMode}
+                    orderingMode={category.products.orderingMode}
+                    originalSlug={category.originalCategorySlug}
+                    productFilterOptions={category.products.productFilterOptions}
+                    slug={category.slug}
+                    totalCount={category.products.totalCount}
+                />
+                 */}
+                <div className="flex flex-1 flex-col gap-5">
+                    <CategoryBestsellers products={categoryData.bestsellers} />
+
+                    <div className="vl:flex-col flex flex-col-reverse">
+                        {/* <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
+
+                        <DeferredFilterAndSortingBar
+                            sorting={category.products.orderingMode}
+                            totalCount={category.products.totalCount}
+                        /> */}
+                    </div>
+
+                    {/* <DeferredCategoryDetailProductsWrapper
+                        category={category}
+                        paginationScrollTargetRef={paginationScrollTargetRef}
+                    /> */}
+
+                    <ProductsList
+                        gtmMessageOrigin={GtmMessageOriginType.other}
+                        gtmProductListName={GtmProductListNameType.category_detail}
+                        products={products}
+                    />
+                </div>
+            </FilteredProductsWrapper>
+
+            {!!categoryData.readyCategorySeoMixLinks.length && (
+                <AdvancedSeoCategories readyCategorySeoMixLinks={categoryData.readyCategorySeoMixLinks} />
+            )}
+
+            <LastVisitedProducts />
         </VerticalStack>
     );
 };

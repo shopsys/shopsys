@@ -1,17 +1,15 @@
-'use client';
-
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { memo } from 'react';
 
 type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: TypeCategoryDetailFragment['readyCategorySeoMixLinks'];
 };
 
-const AdvancedSeoCategoriesComp: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
-    const { t } = useTranslation();
+export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = async ({ readyCategorySeoMixLinks }) => {
+    const t = await getTranslation();
 
     return (
         <Webline className="flex flex-wrap items-center gap-5">
@@ -30,5 +28,3 @@ const AdvancedSeoCategoriesComp: FC<AdvancedSeoCategoriesProps> = ({ readyCatego
         </Webline>
     );
 };
-
-export const AdvancedSeoCategories = memo(AdvancedSeoCategoriesComp);
