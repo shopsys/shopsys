@@ -65,16 +65,16 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                     }
 
                     return (
-                        <div
-                            key={index}
-                            className={twMergeCustom('text-textError flex w-full flex-col text-sm', className)}
-                        >
+                        <div key={index} className={twMergeCustom('text-textError mb-1 text-xs', className)}>
                             {exceptionDayText}
                         </div>
                     );
                 })}
 
-            <div className={twMergeCustom('text-text flex w-full flex-col', className)} tid={TIDs.opening_hours}>
+            <div
+                className={twMergeCustom('text-text flex flex-col gap-1 self-baseline text-xs', className)}
+                tid={TIDs.opening_hours}
+            >
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
                     const isClosedWholeDay = openingHoursRanges.length === 0;
@@ -83,17 +83,15 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                         <div
                             key={dayOfWeek}
                             className={twJoin(
-                                'vl:gap-5 flex flex-row items-center gap-2 px-2.5 py-1.5',
-                                isToday && 'bg-backgroundAccentLess',
+                                'flex flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
+                                isToday ? 'bg-backgroundAccentLess' : 'hover:bg-backgroundMore',
                             )}
                         >
-                            <h6
-                                className="basis-32 uppercase md:shrink-0"
-                                tid={TIDs.opening_hours_day_of_week_with_date}
-                            >
-                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date)}
+                            <h6 className="w-44" tid={TIDs.opening_hours_day_of_week_with_date}>
+                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
                             </h6>
-                            <span className="text-sm" tid={TIDs.opening_hours_ranges}>
+
+                            <span tid={TIDs.opening_hours_ranges}>
                                 {isClosedWholeDay ? (
                                     <>{t('Closed')}</>
                                 ) : (
@@ -104,10 +102,13 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                     ))
                                 )}
                             </span>
+
                             {isToday && (
-                                <span tid={TIDs.opening_hours_status}>
-                                    <OpeningStatus isDynamic className="block" status={openingHours.status} />
-                                </span>
+                                <OpeningStatus
+                                    className="self-baseline sm:self-auto"
+                                    status={openingHours.status}
+                                    tid={TIDs.opening_hours_status}
+                                />
                             )}
                         </div>
                     );

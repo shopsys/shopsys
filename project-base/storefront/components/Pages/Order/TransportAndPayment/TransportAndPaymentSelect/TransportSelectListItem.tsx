@@ -16,6 +16,7 @@ type TransportListItemProps = {
     isActive?: boolean;
     changeTransport: ChangeTransport;
     pickupPlace: StoreOrPacketeryPoint | null;
+    openPickupPlacePopup?: () => void;
 };
 
 const TransportListItemComp: FC<TransportListItemProps> = ({
@@ -23,6 +24,7 @@ const TransportListItemComp: FC<TransportListItemProps> = ({
     isActive = false,
     changeTransport,
     pickupPlace,
+    openPickupPlacePopup,
 }) => (
     <TransportAndPaymentListItem key={transport.uuid}>
         <Radiobutton
@@ -36,8 +38,10 @@ const TransportListItemComp: FC<TransportListItemProps> = ({
                     description={transport.description}
                     image={transport.mainImage}
                     name={transport.name}
+                    openPickupPlacePopup={() => openPickupPlacePopup?.()}
                     pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}
                     price={transport.price}
+                    showChangeButton={isActive}
                 />
             }
             onClick={changeTransport}

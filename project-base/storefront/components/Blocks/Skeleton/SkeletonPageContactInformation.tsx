@@ -16,9 +16,9 @@ export const SkeletonPageContactInformation: FC = () => (
 
                 <Skeleton className="mt-4 h-6 w-1/3" />
 
-                <div className="mt-4 mb-12 flex flex-col flex-wrap items-center lg:mb-24 lg:w-full lg:flex-row lg:justify-between">
-                    <Skeleton className="vl:w-40 h-9" />
-                    <Skeleton className="vl:w-52 h-9" />
+                <div className="mt-5 flex flex-col-reverse items-center justify-between gap-4 md:mt-10 md:flex-row">
+                    <Skeleton className="vl:w-40 h-10" />
+                    <Skeleton className="vl:w-52 h-14" />
                 </div>
             </div>
 

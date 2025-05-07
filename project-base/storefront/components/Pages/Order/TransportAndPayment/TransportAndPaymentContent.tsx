@@ -61,8 +61,6 @@ export const TransportAndPaymentContent: FC = () => {
                 )}
 
                 <OrderAction
-                    withGapBottom
-                    withGapTop
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}

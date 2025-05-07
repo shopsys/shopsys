@@ -39,13 +39,11 @@ export const ContactInformationWrapper: FC = () => {
                     <ContactInformationSendOrderButton />
 
                     <OrderAction
-                        withGapBottom
                         backStepClickHandler={goToPreviousStepFromContactInformationPage}
                         buttonBack={t('Back')}
                         buttonNext={t('Submit order')}
                         hasDisabledLook={!formProviderMethods.formState.isValid}
                         shouldShowSpinnerOnNextStepButton={isCreatingOrder}
-                        withGapTop={false}
                     />
                 </Form>
             </FormProvider>

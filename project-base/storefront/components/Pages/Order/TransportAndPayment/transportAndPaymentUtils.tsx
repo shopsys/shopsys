@@ -76,7 +76,7 @@ export const useTransportChangeInSelect = (
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState(lastOrderPickupPlace);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
-    const { transport: currentTransport, pickupPlace: currentPickupPlace } = useCurrentCart();
+    const { transport: currentTransport } = useCurrentCart();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const resetTransportAndPayment = async () => {
@@ -84,6 +84,20 @@ export const useTransportChangeInSelect = (
         await changePaymentHandler(null, null);
         setPreSelectedPickupPlace(null);
         clearPacketeryPickupPoint();
+    };
+
+    const openPickupPlacePopup = (updatedTransportUuid: string) => {
+        const updatedTransport = transports?.find((transport) => transport.uuid === updatedTransportUuid);
+
+        if (isPacketeryTransport(updatedTransport?.transportTypeCode)) {
+            if (updatedTransport) {
+                openPacketeryPopup(updatedTransport);
+            }
+        }
+
+        if (updatedTransport?.isPersonalPickup) {
+            openPersonalPickupPopup(updatedTransport);
+        }
     };
 
     const changeTransport = async (updatedTransportUuid: string | null) => {
@@ -118,26 +132,24 @@ export const useTransportChangeInSelect = (
     };
 
     const openPacketeryPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
-        if (!currentPickupPlace) {
-            const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
+        const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
 
-            if (!packeteryApiKey?.length) {
-                logException('Packeta API key was not set');
-                return;
-            }
-
-            packeteryPick(
-                packeteryApiKey,
-                (packeteryPoint) => {
-                    if (packeteryPoint) {
-                        const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-                        setPacketeryPickupPoint(mappedPacketeryPoint);
-                        changeTransportHandler(newTransport.uuid, mappedPacketeryPoint);
-                    }
-                },
-                { language: defaultLocale },
-            );
+        if (!packeteryApiKey?.length) {
+            logException('Packeta API key was not set');
+            return;
         }
+
+        packeteryPick(
+            packeteryApiKey,
+            (packeteryPoint) => {
+                if (packeteryPoint) {
+                    const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
+                    setPacketeryPickupPoint(mappedPacketeryPoint);
+                    changeTransportHandler(newTransport.uuid, mappedPacketeryPoint);
+                }
+            },
+            { language: defaultLocale },
+        );
     };
 
     const openPersonalPickupPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
@@ -167,6 +179,7 @@ export const useTransportChangeInSelect = (
     return {
         changeTransport,
         resetTransportAndPayment,
+        openPickupPlacePopup,
     };
 };
 

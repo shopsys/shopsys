@@ -7,6 +7,7 @@ import { useTransportStoresQuery } from 'graphql/requests/transports/queries/Tra
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type PickupPlacePopupProps = {
@@ -16,7 +17,8 @@ type PickupPlacePopupProps = {
 
 export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onChangePickupPlaceCallback }) => {
     const { t } = useTranslation();
-    const [selectedStoreUuid, setSelectedStoreUuid] = useState('');
+    const { pickupPlace } = useCurrentCart();
+    const [selectedStoreUuid, setSelectedStoreUuid] = useState(pickupPlace?.identifier ?? '');
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const [{ data: transportStoresData, fetching: isFetchingTransportStores }] = useTransportStoresQuery({
         variables: { uuid: transportUuid },
@@ -35,7 +37,10 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
     };
 
     return (
-        <Popup className="w-11/12 max-w-4xl" contentClassName="overflow-y-auto">
+        <Popup
+            className="min-h-[min(600px,80dvh)] w-11/12 max-w-4xl md:min-h-auto"
+            contentClassName="overflow-y-auto flex flex-col flex-1"
+        >
             <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
 
             {isFetchingTransportStores && <SkeletonModuleTransportStores />}
@@ -48,7 +53,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                 />
             )}
 
-            <div className="bg-background sticky -inset-4 flex justify-between p-4">
+            <div className="bg-background sticky -inset-4 mt-auto flex justify-between p-4">
                 <Button onClick={() => updatePortalContent(null)}>{t('Close')}</Button>
 
                 <Button

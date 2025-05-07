@@ -41,22 +41,14 @@ describe('Create Order With Delivery Address Tests', () => {
     it('[Preserve Form On Refresh] should keep filled delivery address after page refresh', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -73,11 +65,7 @@ describe('Create Order With Delivery Address Tests', () => {
     it('[Preserve Form On Checkbox Change] should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
@@ -86,11 +74,7 @@ describe('Create Order With Delivery Address Tests', () => {
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after checking again', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -124,21 +108,13 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -165,11 +141,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
@@ -178,11 +150,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after checking again', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -203,22 +171,14 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with default address', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'changed contact information after refresh', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -239,22 +199,14 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with default address', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with changed delivery address', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnLabel('contact-information-formdeliveryAddressUuid0');
@@ -263,11 +215,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             getSnapshotFullIndexAsString(),
             'with changed delivery address after switching back from default',
             {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
+                blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             },
         );
 
@@ -297,21 +245,13 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     it('[Preserve Pickup On Refresh] should prefill delivery address from selected pickup point and keep delivery contact after refresh', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -330,11 +270,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     it('[Preserve Pickup On Checkbox Change] should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress);
@@ -343,11 +279,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after checking again', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -380,21 +312,13 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -421,11 +345,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
@@ -434,11 +354,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after checking again', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();

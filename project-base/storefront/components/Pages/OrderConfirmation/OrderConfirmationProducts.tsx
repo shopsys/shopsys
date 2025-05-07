@@ -8,6 +8,7 @@ import React from 'react';
 type OrderConfirmationProductsProps = {
     items: TypeOrderDetailItemFragment[] | undefined;
 };
+
 export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ items }) => {
     const { t } = useTranslation();
 

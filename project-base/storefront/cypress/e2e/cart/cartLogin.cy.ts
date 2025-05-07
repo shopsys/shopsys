@@ -171,22 +171,14 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'third step before second login', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         fillEmailInThirdStep(email);
         loginInThirdOrderStep(password);
         checkAndHideSuccessToast('Successfully logged in');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'third step after second login', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
     });
 });

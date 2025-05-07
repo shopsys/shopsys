@@ -1,7 +1,9 @@
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { getDeliveryMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
+import { AnimatePresence } from 'framer-motion';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
@@ -16,6 +18,9 @@ type TransportAndPaymentSelectItemLabelProps = {
     description?: string | null;
     image?: TypeImageFragment | null;
     pickupPlaceDetail?: StoreOrPacketeryPoint;
+    isActive?: boolean;
+    showChangeButton?: boolean;
+    openPickupPlacePopup?: () => void;
 };
 
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
@@ -25,67 +30,112 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     description,
     image,
     pickupPlaceDetail,
+    isActive,
+    showChangeButton,
+    openPickupPlacePopup,
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (
-        <div className="flex w-full flex-row items-center gap-2">
-            <div
-                tid={TIDs.transport_and_payment_list_item_image}
-                className={twJoin(
-                    'bg-backgroundMore flex h-12 w-20 items-center justify-center rounded-xl',
-                    !image && 'hidden',
-                )}
-            >
-                <Image
-                    alt={image?.name ?? name}
-                    className="aspect-video h-7 object-contain object-center mix-blend-multiply"
-                    height={28}
-                    src={image?.url}
-                    width={60}
-                />
-            </div>
+        <div className="flex w-full flex-col gap-2">
+            <div className="flex flex-row items-center gap-2">
+                <div
+                    tid={TIDs.transport_and_payment_list_item_image}
+                    className={twJoin(
+                        'bg-backgroundMore flex h-12 w-20 items-center justify-center rounded-xl',
+                        !image && 'hidden',
+                    )}
+                >
+                    <Image
+                        alt={image?.name ?? name}
+                        className="aspect-video h-7 object-contain object-center mix-blend-multiply"
+                        height={28}
+                        src={image?.url}
+                        width={60}
+                    />
+                </div>
 
-            <div className="flex flex-1 items-center justify-between gap-2">
-                <div>
+                <div className="flex flex-col gap-1">
                     <div
-                        className={twJoin('font-semibold', pickupPlaceDetail && 'lg:w-32')}
+                        id={`${pickupPlaceDetail?.identifier}-${pickupPlaceDetail?.name}`}
                         tid={TIDs.pages_order_selectitem_label_name}
                     >
                         {name}
                     </div>
 
-                    {description && <div className="text-textDisabled text-sm">{description}</div>}
+                    {description && (
+                        <div className={twJoin(pickupPlaceDetail ? 'text-text' : 'text-textSubtle', 'text-xs')}>
+                            {description}
+                        </div>
+                    )}
+
+                    {pickupPlaceDetail && (
+                        <>
+                            <span
+                                className={twJoin(
+                                    'text-xs',
+                                    (showChangeButton || isActive) && !description ? 'text-text' : 'text-textSubtle',
+                                )}
+                            >
+                                {pickupPlaceDetail.name}, {pickupPlaceDetail.city}, {pickupPlaceDetail.street}
+                            </span>
+
+                            <AnimatePresence initial={false}>
+                                {isActive && (
+                                    <AnimateCollapseDiv
+                                        className="!block"
+                                        keyName="store-opening-hours"
+                                        onAnimationStart={() => {
+                                            setTimeout(() => {
+                                                document.getElementById(pickupPlaceDetail.identifier)?.scrollIntoView({
+                                                    behavior: 'smooth',
+                                                    block: 'start',
+                                                });
+                                            }, 300);
+                                        }}
+                                    >
+                                        <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
+                                    </AnimateCollapseDiv>
+                                )}
+                            </AnimatePresence>
+                        </>
+                    )}
+
+                    {daysUntilDelivery !== undefined && (
+                        <div className="text-textSuccess hidden text-xs md:block">
+                            {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
+                        </div>
+                    )}
+
+                    {showChangeButton && pickupPlaceDetail && (
+                        <button
+                            className="text-link hover:text-linkHovered cursor-pointer text-left text-xs underline hover:no-underline"
+                            onClick={openPickupPlacePopup}
+                        >
+                            {t('Change pickup place')}
+                        </button>
+                    )}
                 </div>
 
-                {pickupPlaceDetail && (
-                    <div>
-                        <div className="text-textDisabled">{pickupPlaceDetail.name}</div>
-
-                        <div className="text-textDisabled lg:min-w-64">
-                            {pickupPlaceDetail.street}, {pickupPlaceDetail.postcode} {pickupPlaceDetail.city},{' '}
-                            {pickupPlaceDetail.country.name}
-                        </div>
-
-                        <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
-                    </div>
-                )}
-
-                {daysUntilDelivery !== undefined && (
-                    <div className="text-textAccent text-sm lg:ml-auto lg:basis-36 lg:text-right">
-                        {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
-                    </div>
-                )}
-
                 {price && isPriceVisible(price.priceWithVat) && (
-                    <div className="block shrink-0 text-sm font-bold lg:hidden">{formatPrice(price.priceWithVat)}</div>
+                    <div className={twJoin('text-text ml-auto', pickupPlaceDetail && 'hidden md:block')}>
+                        {formatPrice(price.priceWithVat)}
+                    </div>
                 )}
             </div>
 
-            {price && isPriceVisible(price.priceWithVat) && (
-                <div className="text-text hidden shrink-0 text-right text-sm font-bold lg:block lg:basis-20">
-                    {formatPrice(price.priceWithVat)}
+            {pickupPlaceDetail && (
+                <div className="-ml-7 flex items-center justify-between md:hidden">
+                    {daysUntilDelivery !== undefined && (
+                        <div className="text-textSuccess text-xs">
+                            {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
+                        </div>
+                    )}
+
+                    {price && isPriceVisible(price.priceWithVat) && (
+                        <div className="text-text ml-auto">{formatPrice(price.priceWithVat)}</div>
+                    )}
                 </div>
             )}
         </div>
