@@ -1,16 +1,14 @@
-'use client';
-
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 
 type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: TypeCategoryDetailFragment['readyCategorySeoMixLinks'];
 };
 
-export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
-    const { t } = useTranslation();
+export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = async ({ readyCategorySeoMixLinks }) => {
+    const t = await getTranslation();
 
     return (
         <Webline className="flex flex-wrap items-center gap-5">

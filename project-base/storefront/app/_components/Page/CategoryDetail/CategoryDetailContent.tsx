@@ -15,9 +15,7 @@ import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 const AdvancedSeoCategories = dynamic(() =>
-    import('../../../../components/Pages/CategoryDetail/AdvancedSeoCategories').then(
-        (component) => component.AdvancedSeoCategories,
-    ),
+    import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
 );
 
 const CategoryBestsellers = dynamic(() =>
