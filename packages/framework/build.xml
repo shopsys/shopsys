@@ -1042,9 +1042,9 @@
 
     <target name="standards-diff" depends="phplint-diff,ecs-diff,markdown-check,annotations-check,phpstan,twig-lint-diff,yaml-standards,eslint-check" description="Checks coding standards in changed files."/>
 
-    <target name="standards-fix" depends="ecs-fix,markdown-fix,annotations-fix,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix" depends="ecs-fix,markdown-fix,annotations-fix,yaml-standards-fix,eslint-fix,ux-icons-lock" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
 
-    <target name="standards-fix-diff" depends="ecs-fix-diff,markdown-fix,annotations-fix,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix-diff" depends="ecs-fix-diff,markdown-fix,annotations-fix,yaml-standards-fix,eslint-fix,ux-icons-lock" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="stylelint" description="Checks conventions in styles">
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
@@ -1629,6 +1629,13 @@
                 </exec>
             </then>
         </if>
+    </target>
+
+    <target name="ux-icons-lock" description="Scan project and import icon(s) from iconify.design">
+        <exec executable="${path.php.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="ux:icons:lock"/>
+        </exec>
     </target>
 
     <target name="warmup" description="Warms up cache.">

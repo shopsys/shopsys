@@ -23,7 +23,7 @@ check-schema:
 	docker compose exec -u root storefront chown node:node schema.graphql
 	docker compose exec storefront sh check-code-gen.sh
 
-check-fix: generate-schema php-checks php-lock-icons php-translations storefront-checks storefront-translations
+check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations
 
 php-checks:
 	docker compose exec php-fpm php phing standards-fix phpstan
