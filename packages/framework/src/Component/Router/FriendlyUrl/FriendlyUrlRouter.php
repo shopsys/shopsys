@@ -13,6 +13,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 class FriendlyUrlRouter implements RouterInterface
 {
+    public const string ROUTE_OPTION_MULTIDOMAIN = 'multidomain';
+
     protected ?RouteCollection $collection = null;
 
     /**
@@ -55,7 +57,7 @@ class FriendlyUrlRouter implements RouterInterface
     public function getRouteCollection(): RouteCollection
     {
         if ($this->collection === null) {
-            $this->collection = $this->configLoader->load($this->friendlyUrlRouterResourceFilepath);
+            $this->collection = $this->configLoader->load($this->friendlyUrlRouterResourceFilepath, 'php');
         }
 
         return $this->collection;
