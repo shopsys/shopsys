@@ -134,4 +134,12 @@ class NavigationItem implements OrderableEntityInterface
     {
         $this->routeName = $routeName;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getRouteName()
+    {
+        return $this->routeName;
+    }
 }

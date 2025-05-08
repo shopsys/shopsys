@@ -1075,6 +1075,18 @@ type FlagFilterOption {
   isSelected: Boolean!
 }
 
+enum FriendlyUrlRouteEnum {
+  FRONT_ARTICLE_DETAIL
+  FRONT_BLOGARTICLE_DETAIL
+  FRONT_BLOGCATEGORY_DETAIL
+  FRONT_BRAND_DETAIL
+  FRONT_CATEGORY_SEO
+  FRONT_FLAG_DETAIL
+  FRONT_PRODUCT_DETAIL
+  FRONT_PRODUCT_LIST
+  FRONT_STORES_DETAIL
+}
+
 type GoPayBankSwift {
   "large image url"
   imageLargeUrl: String!
@@ -1353,6 +1365,8 @@ type NavigationItem {
   link: String!
   "Navigation item name"
   name: String!
+  "Friendly route name if exists, NULL for unknown (e.g., external) links"
+  routeName: FriendlyUrlRouteEnum
 }
 
 "Represents a single column inside the navigation item"
