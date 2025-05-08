@@ -2,26 +2,21 @@ import { AnimateNavigationMenu } from 'components/Basic/Animations/AnimateNaviga
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { NavigationItemColumn } from 'components/Layout/Header/Navigation/NavigationItemColumn';
+import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { AnimatePresence, m } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
+import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 import { useDebounce } from 'utils/useDebounce';
 
 type NavigationItemProps = {
     navigationItem: TypeCategoriesByColumnFragment;
-    skeletonType?: PageType;
     isAnimationDisabled: boolean;
     handleAnimations: () => void;
 };
 
-export const NavigationItem: FC<NavigationItemProps> = ({
-    navigationItem,
-    skeletonType,
-    isAnimationDisabled,
-    handleAnimations,
-}) => {
+export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnimationDisabled, handleAnimations }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = !!navigationItem.categoriesByColumns.length;
     const isMenuOpenedDelayed = useDebounce(isMenuOpened && true, 200);
@@ -37,7 +32,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         >
             <ExtendedNextLink
                 href={navigationItem.link}
-                skeletonType={skeletonType}
+                skeletonType={getPageTypeKey(navigationItem.routeName) || DEFAULT_SKELETON_TYPE}
                 className={twJoin(
                     'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold group-first-of-type:pl-0',
                     'text-link-inverted-default no-underline',
@@ -74,7 +69,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
                         <NavigationItemColumn
                             className="py-12"
                             columnCategories={navigationItem.categoriesByColumns}
-                            skeletonType={skeletonType}
+                            skeletonType={getPageTypeKey(navigationItem.routeName) || DEFAULT_SKELETON_TYPE}
                             onLinkClick={() => setIsMenuOpened(false)}
                         />
                     </AnimateNavigationMenu>

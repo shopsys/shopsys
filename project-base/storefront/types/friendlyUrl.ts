@@ -7,6 +7,7 @@ import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDet
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
+import { TypeFriendlyUrlRouteEnum } from 'graphql/types';
 
 export type FriendlyUrlPageType =
     | TypeProductDetailFragment
@@ -20,17 +21,17 @@ export type FriendlyUrlPageType =
     | TypeFlagDetailFragment;
 
 export const FriendlyPagesTypes = {
-    article: 'front_article_detail',
-    blogArticle: 'front_blogarticle_detail',
-    blogCategory: 'front_blogcategory_detail',
-    brand: 'front_brand_detail',
+    article: TypeFriendlyUrlRouteEnum.FrontArticleDetail,
+    blogArticle: TypeFriendlyUrlRouteEnum.FrontBlogarticleDetail,
+    blogCategory: TypeFriendlyUrlRouteEnum.FrontBlogcategoryDetail,
+    brand: TypeFriendlyUrlRouteEnum.FrontBrandDetail,
     brandsOverview: 'front_brands_detail',
-    category: 'front_product_list',
-    product: 'front_product_detail',
+    category: TypeFriendlyUrlRouteEnum.FrontProductList,
+    product: TypeFriendlyUrlRouteEnum.FrontProductDetail,
     stores: 'front_stores',
-    store: 'front_stores_detail',
-    flag: 'front_flag_detail',
-    seo_category: 'front_category_seo',
+    store: TypeFriendlyUrlRouteEnum.FrontStoresDetail,
+    flag: TypeFriendlyUrlRouteEnum.FrontFlagDetail,
+    seo_category: TypeFriendlyUrlRouteEnum.FrontCategorySeo,
     complaintNew: 'front_customer_complaint_new',
     complaintList: 'front_customer_complaint_list',
     orderList: 'front_customer_order_list',

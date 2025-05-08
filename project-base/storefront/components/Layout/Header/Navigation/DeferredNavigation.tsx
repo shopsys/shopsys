@@ -1,5 +1,4 @@
 import { Navigation } from './Navigation';
-import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
@@ -17,8 +16,8 @@ export const DeferredNavigation: FC = () => {
     }
 
     return shouldRender ? (
-        <Navigation navigation={navigationData.navigation} skeletonType={DEFAULT_SKELETON_TYPE} />
+        <Navigation navigation={navigationData.navigation} />
     ) : (
-        <NavigationPlaceholder navigation={navigationData.navigation} skeletonType={DEFAULT_SKELETON_TYPE} />
+        <NavigationPlaceholder navigation={navigationData.navigation} />
     );
 };

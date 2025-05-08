@@ -7,7 +7,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeNavigationQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __typename: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> }> };
+export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __typename: 'NavigationItem', name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> }> };
 
 
       export interface PossibleTypesResultData {

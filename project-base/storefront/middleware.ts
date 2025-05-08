@@ -1,12 +1,8 @@
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
-import {
-    FriendlyPageTypesValue,
-    FriendlyPagesDestinations,
-    FriendlyPagesTypes,
-    FriendlyPagesTypesKey,
-} from 'types/friendlyUrl';
+import { FriendlyPageTypesValue, FriendlyPagesDestinations, FriendlyPagesTypes } from 'types/friendlyUrl';
 import { getDomainIdFromHostname } from 'utils/domain/getDomainIdFromHostname';
+import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 
 const ERROR_PAGE_ROUTE = '/404';
 const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
@@ -115,9 +111,7 @@ export const config = {
 const isInRange = (number: number, start: number, end: number) => number >= start && start <= end;
 
 const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: string, queryParams: string) => {
-    const pageTypeKey = (Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKey[]).find(
-        (key) => FriendlyPagesTypes[key] === pageType,
-    );
+    const pageTypeKey = getPageTypeKey(pageType);
 
     const host = new URL(rewriteUrl).origin;
     if (pageTypeKey) {

@@ -1,14 +1,12 @@
 import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
 export type NavigationProps = {
     navigation: TypeCategoriesByColumnFragment[];
-    skeletonType?: PageType;
 };
 
-export const Navigation: FC<NavigationProps> = ({ navigation, skeletonType }) => {
+export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     const [isFirstHover, setIsFirstHover] = useState(false);
     const [isAnimationDisabled, setIsAnimationDisabled] = useState(false);
 
@@ -36,7 +34,6 @@ export const Navigation: FC<NavigationProps> = ({ navigation, skeletonType }) =>
                         handleAnimations={handleAnimations}
                         isAnimationDisabled={isAnimationDisabled}
                         navigationItem={navigationItem}
-                        skeletonType={skeletonType}
                     />
                 ))}
             </ul>
