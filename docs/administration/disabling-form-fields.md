@@ -1,13 +1,55 @@
 # Disabling form fields
 
-During project implementation, there is usually necessary to have imported some fields from other systems.
-Those imported fields do not need (or even must not) be changeable in administration.
-For this purpose, there is implemented the way how to define fields which should be disabled.
+During project implementation, it is usually necessary to import some fields from external systems.
+Those imported fields do not need to (or even must not) be changeable in administration.
+For this purpose, you can configure fields which should be disabled in the form.
 
-## Enable form disabling
+## Allow form fields disabling for non-superadmin administrators
 
-To enable disabling defined fields there, need to be set ENV variable `DISABLE_FORM_FIELDS_FROM_TRANSFER` to true.
+For the testing purposes, the fields are never disabled for administrators with `ROLE_SUPER_ADMIN`.
+To allow disabling defined form fields for the rest of administrators, you need to:
+- set ENV variable `DISABLE_FORM_FIELDS_FROM_TRANSFER` to true.
+- call `FormBuilderHelper::disableFieldsByConfigurations()` with an array of fields names you want to disable in the `buildForm` method your form type extension, e.g.:
+```php
+<?php
 
-## Define disabled fields
+declare(strict_types=1);
 
-Disabled fields are defined by constant `DISABLED_FIELDS` for example in: `App\Form\Admin\CategoryFormTypeExtension`
+namespace App\Form\Admin;
+
+use Override;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
+use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
+
+final class CategoryFormTypeExtension extends AbstractTypeExtension
+{
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
+     */
+    public function __construct(
+        private readonly FormBuilderHelper $formBuilderHelper,
+    ) {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, ['name', 'descriptions']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getExtendedTypes(): iterable
+    {
+        yield CategoryFormType::class;
+    }
+}
+```
+

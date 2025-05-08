@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Form;
 
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FormBuilderHelper
 {
     /**
      * @param bool $disableFields
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly bool $disableFields,
+        protected readonly Security $security,
     ) {
     }
 
@@ -22,7 +26,7 @@ class FormBuilderHelper
      */
     public function disableFieldsByConfigurations(FormBuilderInterface $builder, array $disabledFields): void
     {
-        if (!$this->disableFields) {
+        if (!$this->hasFormDisabledFields()) {
             return;
         }
         $this->trackFormElements($builder->all(), $disabledFields);
@@ -47,6 +51,6 @@ class FormBuilderHelper
      */
     public function hasFormDisabledFields(): bool
     {
-        return $this->disableFields;
+        return $this->disableFields && !$this->security->isGranted(Roles::ROLE_SUPER_ADMIN);
     }
 }
