@@ -1138,6 +1138,15 @@ msgstr "JURA Impressa J9 TFT Carbon Automatický kávovar/espresso,barevný LCD"
 msgid "MIO Cyclo 100, bicycle computer, 1,8\""
 msgstr "MIO Cyclo 100, cyklopočítač na jízdní kolo, 1,8\""
 
+msgid "Made in CZ"
+msgstr "Vyrobeno v CZ"
+
+msgid "Made in DE"
+msgstr "Vyrobeno v DE"
+
+msgid "Made in SK"
+msgstr "Vyrobeno v SK"
+
 msgid "Magazine capacity for beans"
 msgstr "Kapacita zásobníku na zrna"
 
@@ -1248,6 +1257,9 @@ msgstr "NS-9310 Infant náhradní sáčky papírové pro VP-9310"
 
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr "NS-9710 Prominent náhradní sáčky papírové pro VP-9711/12/13"
+
+msgid "New"
+msgstr "Novinka"
 
 msgid "New [adjective]"
 msgstr "Nová"
@@ -1441,6 +1453,9 @@ msgstr "PremiumCord micro USB, A-B, 1m"
 msgid "Pressure"
 msgstr "Tlak"
 
+msgid "Price hit"
+msgstr "Cenový hit"
+
 msgid "Prime flour 1 kg"
 msgstr "Mouka hladká 1 kg"
 
@@ -1545,6 +1560,9 @@ msgstr "SONY DSCRX100"
 
 msgid "SONY Xperia SP C5303"
 msgstr "SONY Xperia SP C5303"
+
+msgid "Sale"
+msgstr "Výprodej"
 
 msgid "Samsung Galaxy Core 2 (SM-G355) - black"
 msgstr "Samsung Galaxy Core 2 (SM-G355) - černý"

@@ -20,11 +20,11 @@ class Version20240702065648 extends AbstractMigration implements ContainerAwareI
     #[Override]
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE categories DROP akeneo_code');
-        $this->sql('ALTER TABLE flags DROP akeneo_code');
-        $this->sql('ALTER TABLE images DROP akeneo_code');
-        $this->sql('ALTER TABLE images DROP akeneo_image_type');
-        $this->sql('ALTER TABLE units DROP akeneo_code');
+        $this->sql('ALTER TABLE categories DROP COLUMN IF EXISTS akeneo_code');
+        $this->sql('ALTER TABLE flags DROP COLUMN IF EXISTS akeneo_code');
+        $this->sql('ALTER TABLE images DROP COLUMN IF EXISTS akeneo_code');
+        $this->sql('ALTER TABLE images DROP COLUMN IF EXISTS akeneo_image_type');
+        $this->sql('ALTER TABLE units DROP COLUMN IF EXISTS akeneo_code');
         $this->sql('DELETE FROM setting_values WHERE name=\'akeneoTransferProductsLastUpdatedDatetime\'');
     }
 }

@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Action"
-msgstr ""
-
 msgid "Alt"
 msgstr ""
 
@@ -94,22 +91,10 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-msgid "Made in CZ"
-msgstr ""
-
-msgid "Made in DE"
-msgstr ""
-
-msgid "Made in SK"
-msgstr ""
-
 msgid "Mandatory variables"
 msgstr ""
 
 msgid "Map"
-msgstr ""
-
-msgid "New"
 msgstr ""
 
 msgid "No products are set. Please add some in the component settings."
@@ -139,9 +124,6 @@ msgstr ""
 msgid "Position of link"
 msgstr ""
 
-msgid "Price hit"
-msgstr ""
-
 msgid "Product image"
 msgstr ""
 
@@ -155,9 +137,6 @@ msgid "Right"
 msgstr ""
 
 msgid "Rows"
-msgstr ""
-
-msgid "Sale"
 msgstr ""
 
 msgid "Save"

@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "Action"
-msgstr "Akce"
-
 msgid "Alt"
 msgstr "Alt"
 
@@ -94,23 +91,11 @@ msgstr "Seznam produktů"
 msgid "Login"
 msgstr "Přihlášení"
 
-msgid "Made in CZ"
-msgstr "Vyrobeno v CZ"
-
-msgid "Made in DE"
-msgstr "Vyrobeno v DE"
-
-msgid "Made in SK"
-msgstr "Vyrobeno v SK"
-
 msgid "Mandatory variables"
 msgstr "Povinné proměnné"
 
 msgid "Map"
 msgstr "Mapa"
-
-msgid "New"
-msgstr "Novinka"
 
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
@@ -139,9 +124,6 @@ msgstr "Pozice obrázku"
 msgid "Position of link"
 msgstr "Zarovnání odkazu"
 
-msgid "Price hit"
-msgstr "Cenový hit"
-
 msgid "Product image"
 msgstr "Obrázek produktu"
 
@@ -156,9 +138,6 @@ msgstr "Vpravo"
 
 msgid "Rows"
 msgstr "Řádky"
-
-msgid "Sale"
-msgstr "Výprodej"
 
 msgid "Save"
 msgstr "Uložit"
