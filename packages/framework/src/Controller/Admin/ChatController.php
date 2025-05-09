@@ -220,6 +220,7 @@ class ChatController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Chat/chatHistory.html.twig', [
             'chat' => $chat,
+            'debug' => false,
         ]);
     }
 
@@ -238,6 +239,7 @@ class ChatController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Chat/chatHistory.html.twig', [
             'chat' => $chat,
+            'debug' => false,
         ]);
     }
 }

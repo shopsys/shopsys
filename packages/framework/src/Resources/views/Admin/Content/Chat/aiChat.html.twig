@@ -1,0 +1,22 @@
+<div id="js-ai-chat" class="chat-hidden" data-chat-load-url="{{ url('admin_chat_load',{identifier}) }}" data-save-message-url="{{ url('admin_chat_savemessage',{identifier, agentInternalIdentifier}) }}">
+    <div style="text-align:right;">
+        <button id="js-ai-chat-close">&times;</button>
+    </div>
+    <h4>{{ 'Do you need help with'|trans }}</h4>
+
+    <div id="js-ai-chat-output"></div>
+
+    <input type="text" id="js-ai-chat-input" placeholder="{{ 'Your question ...'|trans }}" />
+    <button id="js-ai-chat-submit">{{ 'Send'|trans }}</button>
+    <ul id="js-ai-chat-context-menu"></ul>
+    <div id="js-ai-chat-field-editor">
+        <textarea></textarea>
+        <button class="btn-save">{{ 'Save'|trans }}</button>
+    </div>
+</div>
+
+<div id="js-ai-chat-icon" class="chat-visible" title="{{ 'AI Assistent'|trans }}">
+    <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+        <path d="M4 4h16v12H5.17L4 17.17V4z" stroke="black" stroke-width="2" fill="#eee"/>
+    </svg>
+</div>

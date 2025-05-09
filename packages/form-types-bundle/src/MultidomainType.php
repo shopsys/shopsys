@@ -40,6 +40,7 @@ class MultidomainType extends AbstractType
             } else {
                 $domainOptions = $entryOptions;
             }
+            $domainOptions['attr']['data-domain-id'] = $domainId;
 
             $builder->add((string)$domainId, $options['entry_type'], $domainOptions);
         }

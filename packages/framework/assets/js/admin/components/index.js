@@ -1,6 +1,7 @@
 import './advert';
 import './AdministratorForm';
 import './AdvancedSearch';
+import './AiChat';
 import './AjaxConfirm';
 import './Article';
 import './CategoryDeleteConfirm';

@@ -4,42 +4,8 @@
 {% block h1 %}{{ 'Editing chat'|trans }}{% endblock %}
 
 {% block main_content %}
-    <div class="chat">
-        <div class="chat__info">{{ 'Agent name'|trans }}: {{ chat.agent.name }}</div>
-        <div class="chat__info">{{ 'Model'|trans }}: {{ chat.agent.model }}</div>
-        <div class="chat__info">{{ 'Total tokens'|trans }}: {{ chat.totalTokens }}</div>
-
-        {% for message in chat.messages %}
-            <div class="chat-message">
-                <div>
-                    {{ 'Question'|trans }}:<br />
-                    <div class="chat-message__question">
-                        {% if message.question == constant('Shopsys\\FrameworkBundle\\Model\\Chat\\Message\\ChatMessage::TYPE_FUNCTION') %}
-                            {{ 'Function call result'|trans }}: {{ message.functionCallResult['name'] }}: "{{ message.functionCallResult['content'] }}"
-                        {% else %}
-                            {{ message.question }}
-                        {%  endif %}
-                    </div>
-                </div>
-                <div>
-                    {{ 'Answer'|trans }}:<br />
-                    <div class="chat-message__answer">
-
-                        {% if message.functionCall is not null %}
-                            {{ 'Function call request'|trans }}: {{ message.functionCall['name'] }}({{ message.functionCall['arguments']|map((v, k) => k ~ ': "' ~ v ~ '"')|join(', ') }})
-                        {% else %}
-                            {{ message.answer|escape }}
-                        {%  endif %}
-                    </div>
-                </div>
-                <div class="chat-message__info">
-                    {{ 'Input tokens'|trans }}: {{ message.inputTokens }},
-                    {{ 'Output tokens'|trans }}: {{ message.outputTokens }},
-                    {{ 'Total'|trans }}: {{ message.totalTokens }}
-                </div>
-            </div>
-        {% endfor %}
-
-        {{ parent() }}
-    </div>
+    {% include '@ShopsysFramework/Admin/Content/Chat/chatHistory.html.twig'
+        with {chat: chat, debug: true}
+    %}
+    {{ parent() }}
 {% endblock %}

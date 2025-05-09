@@ -1,0 +1,78 @@
+{% import _self as self %}
+
+<div class="chat">
+    {% include '@ShopsysFramework/Admin/Content/Chat/chatInformation.html.twig'
+        with {chat: chat,information:[]}
+    %}
+
+    {% for message in chat.messages %}
+        <div class="chat-message">
+
+            {% if message.type == constant('Shopsys\\FrameworkBundle\\Model\\Chat\\Message\\ChatMessage::TYPE_FUNCTION') %}
+                {% if debug %}
+                    {% set question =
+                        ('Function call result'|trans)
+                        ~ ': '
+                        ~ message.functionCallResult.name
+                        ~ ': "'
+                        ~ message.functionCallResult.content
+                        ~ '"' %}
+
+                    {{ self.renderQuestion(question) }}
+                {%  endif %}
+            {% else %}
+                {{ self.renderQuestion(message.question) }}
+            {%  endif %}
+
+            {% if message.functionCall is not null %}
+                {% if debug %}
+                    {% set answer =
+                        ('Function call request'|trans)
+                        ~ ': '
+                        ~ message.functionCall.name
+                        ~ '('
+                        ~ (message.functionCall.arguments
+                        | map((v, k) => k ~ ': "' ~ v ~ '"')
+                        | join(', ')
+                        )
+                        ~ ')'
+                    %}
+
+                    {{ self.renderAnswer(answer) }}
+                {% endif %}
+            {% else %}
+                {{ self.renderAnswer(message.answer) }}
+            {%  endif %}
+
+            {% if debug %}
+            <div class="chat-message__info">
+                {{ 'Input tokens'|trans }}: {{ message.inputTokens }},
+                {{ 'Output tokens'|trans }}: {{ message.outputTokens }},
+                {{ 'Total'|trans }}: {{ message.totalTokens }}
+            </div>
+            {%  endif %}
+        </div>
+    {% endfor %}
+</div>
+
+{% macro renderAnswer(answer) %}
+    <div>
+        <div class="chat-message__answer-label">
+            {{ 'Agent'|trans }}
+        </div>
+        <div class="chat-message__answer">
+            {{ answer|escape }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro renderQuestion(question) %}
+    <div>
+        <div class="chat-message__question-label">
+            {{ 'You'|trans }}
+        </div>
+        <div class="chat-message__question">
+            {{ question }}
+        </div>
+    </div>
+{% endmacro %}
