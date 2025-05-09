@@ -1,5 +1,3 @@
-'use client';
-
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleProductsList } from './SkeletonModuleProductsList';
 
