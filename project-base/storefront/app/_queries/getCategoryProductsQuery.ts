@@ -12,7 +12,7 @@ export async function getCategoryProductsQuery(
     urlSlug: string,
     endCursor: string,
     orderingMode: TypeProductOrderingModeEnum,
-    filter: TypeProductFilter,
+    filter: TypeProductFilter | undefined,
     pageSize: number,
 ) {
     const result = await createQuery<TypeCategoryProductsQuery, TypeCategoryProductsQueryVariables>(
