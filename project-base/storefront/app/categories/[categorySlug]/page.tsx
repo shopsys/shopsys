@@ -1,51 +1,60 @@
 import { CollapsibleDescriptionWithImage } from 'app/_components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'app/_components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
-import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
+import { ProductsListWrapper } from 'app/_components/Blocks/Product/ProductsList/ProductsListWrapper';
+import { SimpleNavigation } from 'app/_components/Blocks/SimpleNavigation/SimpleNavigation';
+import { FilterAndSortingBarWrapper } from 'app/_components/Blocks/SortingBar/FilterAndSortingBarWrapper';
 import { AdvancedSeoCategories } from 'app/_components/Page/CategoryDetail/AdvancedSeoCategories';
 import { CategoryBestsellers } from 'app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers';
 import { getCategoryDetailQuery } from 'app/_queries/getCategoryDetailQuery';
-import { getCategoryProductsQuery } from 'app/_queries/getCategoryProductsQuery';
-import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
+import { SkeletonModuleProductList } from 'components/Blocks/Skeleton/SkeletonModuleProductList';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 type CategoryPageProps = {
     params: Promise<{
         categorySlug: string;
-        sort: TypeProductOrderingModeEnum;
-        filter: TypeProductFilter;
-        page: number;
+    }>;
+    searchParams: Promise<{
+        sort: TypeProductOrderingModeEnum | undefined;
+        filter: TypeProductFilter | undefined;
+        page: number | undefined;
     }>;
 };
 
-const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
-    const { categorySlug, sort, filter } = await params;
+const getOrderingMode = (sort: TypeProductOrderingModeEnum | undefined) => {
+    return sort !== undefined &&
+        Object.values(TypeProductOrderingModeEnum).includes(sort as TypeProductOrderingModeEnum)
+        ? sort
+        : TypeProductOrderingModeEnum.Priority;
+};
 
-    const categoryData = await getCategoryDetailQuery(categorySlug, sort, filter);
+const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) => {
+    const { categorySlug } = await params;
+    const { sort, filter, page } = await searchParams;
+
+    const orderingMode = getOrderingMode(sort);
+    const currentPage = page ?? 1;
+
+    const categoryData = await getCategoryDetailQuery(categorySlug, orderingMode, filter);
 
     if (!categoryData) {
-        return notFound();
-    }
-
-    const products = await getCategoryProductsQuery(categorySlug, '', sort, filter, 10);
-
-    if (!products) {
         return notFound();
     }
 
     // const title = useSeoTitleWithPagination(categoryData.products.totalCount, categoryData.name, categoryData.seoH1);
     const title = categoryData.name;
 
-    console.log('🧪 categoryData', categoryData);
+    // console.log('🔀 sort', sort);
+    // console.log('🔍 filter', filter);
+    // console.log('📄 page', page);
 
     return (
         <VerticalStack gap="md">
             <CollapsibleDescriptionWithImage
-                currentPage={1}
+                currentPage={currentPage}
                 description={categoryData.description}
                 imageName={categoryData.images[0]?.name || categoryData.name}
                 imageUrl={categoryData.images[0]?.url}
@@ -55,26 +64,18 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
             <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={categoryData.children} />
 
             <FilteredProductsWrapper>
-                {/* <DeferredFilterPanel
-                    categoryAutomatedFilters={category.automatedFilters}
-                    defaultOrderingMode={category.products.defaultOrderingMode}
-                    orderingMode={category.products.orderingMode}
-                    originalSlug={category.originalCategorySlug}
-                    productFilterOptions={category.products.productFilterOptions}
-                    slug={category.slug}
-                    totalCount={category.products.totalCount}
-                />
-                 */}
+                {/* <FilterPanelWrapper params={params} /> */}
+
                 <div className="flex flex-1 flex-col gap-5">
                     <CategoryBestsellers products={categoryData.bestsellers} />
 
                     <div className="vl:flex-col flex flex-col-reverse">
-                        {/* <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
+                        {/* <FilterSelectedParameters filterOptions={category.products.productFilterOptions} /> */}
 
-                        <DeferredFilterAndSortingBar
-                            sorting={category.products.orderingMode}
-                            totalCount={category.products.totalCount}
-                        /> */}
+                        <FilterAndSortingBarWrapper
+                            sorting={categoryData.products.orderingMode}
+                            totalCount={categoryData.products.totalCount}
+                        />
                     </div>
 
                     {/* <DeferredCategoryDetailProductsWrapper
@@ -82,11 +83,12 @@ const CategoryDetailPage = async ({ params }: CategoryPageProps) => {
                         paginationScrollTargetRef={paginationScrollTargetRef}
                     /> */}
 
-                    <ProductsList
-                        gtmMessageOrigin={GtmMessageOriginType.other}
-                        gtmProductListName={GtmProductListNameType.category_detail}
-                        products={products}
-                    />
+                    <Suspense
+                        key={`${categorySlug}-${sort}-${JSON.stringify(filter)}`}
+                        fallback={<SkeletonModuleProductList />}
+                    >
+                        <ProductsListWrapper categorySlug={categorySlug} filter={filter} orderingMode={orderingMode} />
+                    </Suspense>
                 </div>
             </FilteredProductsWrapper>
 
