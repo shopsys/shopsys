@@ -94,7 +94,11 @@ export const validatePostcode = (t: Translate): Schema => {
             t('Zip code cannot be longer than {{ postcodeLength }} characters', {
                 postcodeLength: VALIDATION_CONSTANTS.postcodeLength,
             }),
-            (value) => value.length <= VALIDATION_CONSTANTS.postcodeLength,
+            (value) => {
+                // Normalize the postal code by removing spaces
+                const normalizedValue = value ? value.replace(/\s/g, '') : '';
+                return normalizedValue.length <= VALIDATION_CONSTANTS.postcodeLength;
+            },
         );
 };
 

@@ -70,6 +70,7 @@ export const RegistrationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
+                        inputMode: 'numeric',
                     }}
                 />
             </FormColumn>

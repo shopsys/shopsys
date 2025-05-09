@@ -240,6 +240,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             required: true,
                                                             type: 'text',
                                                             autoComplete: 'postal-code',
+                                                            inputMode: 'numeric',
                                                             onChange: (event) =>
                                                                 updateContactInformation({
                                                                     deliveryPostcode: event.currentTarget.value,

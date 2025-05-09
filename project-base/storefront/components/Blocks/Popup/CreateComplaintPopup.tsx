@@ -438,6 +438,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                                 type: 'text',
                                                 autoComplete: 'postal-code',
                                                 disabled: isSubmitting,
+                                                inputMode: 'numeric',
                                             }}
                                         />
                                     </FormColumn>

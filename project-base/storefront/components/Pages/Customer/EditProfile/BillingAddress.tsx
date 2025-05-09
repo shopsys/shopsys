@@ -79,6 +79,7 @@ export const BillingAddress: FC = () => {
                         type: 'text',
                         autoComplete: 'postal-code',
                         disabled: !canManageCompanyData,
+                        inputMode: 'numeric',
                     }}
                 />
             </FormColumn>

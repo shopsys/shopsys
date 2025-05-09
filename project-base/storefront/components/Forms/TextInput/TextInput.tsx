@@ -16,6 +16,7 @@ type NativeProps = ExtractNativePropsFromDefault<
     | 'children'
     | 'autoComplete'
     | 'onChange'
+    | 'inputMode'
 >;
 
 export type TextInputProps = NativeProps & {
@@ -43,6 +44,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             type,
             children,
             autoComplete,
+            inputMode,
         },
         textInputForwarderRef,
     ) => (
@@ -51,6 +53,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 autoComplete={autoComplete}
                 disabled={disabled}
                 id={id}
+                inputMode={inputMode}
                 name={name}
                 placeholder={typeof label === 'string' ? label : ' '}
                 ref={textInputForwarderRef}
