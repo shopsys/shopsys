@@ -33,8 +33,8 @@ export const middleware: NextMiddleware = async (request) => {
         const queryParams = new URLSearchParams(search);
         const slugTypeQueryParam = queryParams.get('slugType');
 
-        if (slugTypeQueryParam) {
-            return rewriteDynamicPages(slugTypeQueryParam as FriendlyPageTypesValue, request.url, search);
+        if (slugTypeQueryParam && isFriendlyPageTypesValue(slugTypeQueryParam)) {
+            return rewriteDynamicPages(slugTypeQueryParam, request.url, search);
         }
 
         const pageTypeResponse = await fetch(`${process.env.INTERNAL_ENDPOINT}resolve-friendly-url`, {
@@ -203,3 +203,7 @@ const addQueryParametersToRewriteUrlObject = (rewriteUrlObject: URL, originalUrl
 };
 
 const isPathnameSegmentDynamic = (segment?: string) => segment?.charAt(0) === ':';
+
+function isFriendlyPageTypesValue(value: string): value is FriendlyPageTypesValue {
+    return Object.values(FriendlyPagesTypes).includes(value as FriendlyPageTypesValue);
+}
