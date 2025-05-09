@@ -14,6 +14,7 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
+use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use PhpParser\NodeVisitor\NameResolver;
@@ -35,6 +36,8 @@ use Twig\Node\Node as TwigNode;
  */
 class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
 {
+    use FrontendApiValidationTranslationDomainDetectorTrait;
+
     protected NodeTraverser $traverser;
 
     protected MessageCatalogue $catalogue;
@@ -67,6 +70,10 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      */
     public function enterNode(Node $node): int|Node|null
     {
+        if ($node instanceof Class_) {
+            $this->setIfFrontendApiClass((string)$node->namespacedName);
+        }
+
         if ($node instanceof New_) {
             if ($this->isConstraintClass($node->class) && count($node->args) > 0) {
                 $this->extractMessagesFromOptions($node->args[0]->value);
@@ -95,7 +102,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
                 if ($this->isMessageOptionItem($optionItemNode)) {
                     $messageId = $this->phpParserNodeHelper->getConcatenatedStringValue($optionItemNode->value, $this->file);
 
-                    $message = new Message($messageId, Translator::VALIDATOR_TRANSLATION_DOMAIN);
+                    $message = new Message($messageId, $this->getTranslationDomain());
                     $message->addSource(new FileSource($this->file->getFilename(), $optionItemNode->getLine()));
 
                     $this->catalogue->add($message);
@@ -126,6 +133,10 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      */
     public function leaveNode(Node $node): int|Node|null
     {
+        if ($node instanceof Class_) {
+            $this->resetDetection();
+        }
+
         return null;
     }
 

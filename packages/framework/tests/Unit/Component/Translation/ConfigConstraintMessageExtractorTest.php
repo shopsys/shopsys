@@ -20,9 +20,9 @@ class ConfigConstraintMessageExtractorTest extends TestCase
 
         $expectedCatalogue = new MessageCatalogue();
 
-        $message1 = new Message('Please enter email', 'validators');
-        $message2 = new Message('Please enter valid email', 'validators');
-        $message3 = new Message('Email cannot be longer than {{ limit }} characters', 'validators');
+        $message1 = new Message('Please enter email', 'customerValidators');
+        $message2 = new Message('Please enter valid email', 'customerValidators');
+        $message3 = new Message('Email cannot be longer than {{ limit }} characters', 'customerValidators');
         $expectedCatalogue->add($message1);
         $expectedCatalogue->add($message2);
         $expectedCatalogue->add($message3);

@@ -10,9 +10,6 @@ msgstr "Alt"
 msgid "Basic objects"
 msgstr "Basic"
 
-msgid "Brand overview"
-msgstr "Přehled značek"
-
 msgid "Catalog numbers"
 msgstr "Katalogová čísla"
 
@@ -34,23 +31,14 @@ msgstr "Sloupec 3"
 msgid "Columns"
 msgstr "Sloupce"
 
-msgid "Contact"
-msgstr "Kontakt"
-
 msgid "Default"
 msgstr "Základní"
-
-msgid "Edit data"
-msgstr "Upravit data"
 
 msgid "File"
 msgstr "Soubor"
 
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím znovu později."
-
-msgid "Forgotten password"
-msgstr "Zapomenuté heslo"
 
 msgid "GTM ID"
 msgstr "GTM ID"
@@ -88,9 +76,6 @@ msgstr "Blok odkazu"
 msgid "List of products"
 msgstr "Seznam produktů"
 
-msgid "Login"
-msgstr "Přihlášení"
-
 msgid "Mandatory variables"
 msgstr "Povinné proměnné"
 
@@ -105,12 +90,6 @@ msgstr "Otevírat v novém okně"
 
 msgid "Optional variables"
 msgstr "Volitelné proměnné"
-
-msgid "Order detail"
-msgstr "Detail objednávky"
-
-msgid "Orders"
-msgstr "Objednávky"
 
 msgid "Outside layout"
 msgstr "Rozložení vně"
@@ -127,9 +106,6 @@ msgstr "Zarovnání odkazu"
 msgid "Product image"
 msgstr "Obrázek produktu"
 
-msgid "Registration"
-msgstr "Registrace"
-
 msgid "Related products"
 msgstr "Související produkty"
 
@@ -141,9 +117,6 @@ msgstr "Řádky"
 
 msgid "Save"
 msgstr "Uložit"
-
-msgid "Search [noun]"
-msgstr "Hledání"
 
 msgid "Secondary"
 msgstr "Sekundární"

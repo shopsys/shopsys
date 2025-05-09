@@ -14,11 +14,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface
 {
-    public const DEFAULT_TRANSLATION_DOMAIN = 'messages';
-    public const DATA_FIXTURES_TRANSLATION_DOMAIN = 'dataFixtures';
-    public const VALIDATOR_TRANSLATION_DOMAIN = 'validators';
-    public const TESTS_TRANSLATION_DOMAIN = 'tests';
-    public const SOURCE_LOCALE = 'en';
+    public const string DEFAULT_TRANSLATION_DOMAIN = 'messages';
+    public const string DATA_FIXTURES_TRANSLATION_DOMAIN = 'dataFixtures';
+    public const string VALIDATOR_TRANSLATION_DOMAIN = 'validators';
+    public const string TESTS_TRANSLATION_DOMAIN = 'tests';
+    public const string CUSTOMER_TRANSLATION_DOMAIN = 'customerMessages';
+    public const string CUSTOMER_VALIDATOR_TRANSLATION_DOMAIN = 'customerValidators';
+    public const string SOURCE_LOCALE = 'en';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Translation\Translator|null

@@ -89,7 +89,7 @@ class ComplaintMail implements MessageFactoryInterface
             self::VARIABLE_ORDER_NUMBER => htmlspecialchars($complaint->getOrderNumberOrManualDocumentNumber(), ENT_QUOTES),
             self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
             self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            self::VARIABLE_COMPLAINT_RESOLUTION => array_search($complaint->getResolution(), $this->complaintResolutionEnum->getAllIndexedByTranslations(), true),
+            self::VARIABLE_COMPLAINT_RESOLUTION => array_search($complaint->getResolution(), $this->complaintResolutionEnum->getAllIndexedByTranslationsForCustomer(), true),
         ];
     }
 

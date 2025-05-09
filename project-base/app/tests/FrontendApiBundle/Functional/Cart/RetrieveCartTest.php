@@ -334,7 +334,7 @@ class RetrieveCartTest extends GraphQlTestCase
                 'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             'availability' => [
-                'name' => t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
             'stockQuantity' => 2700,
@@ -530,49 +530,49 @@ class RetrieveCartTest extends GraphQlTestCase
                     'store' => [
                         'name' => 'Ostrava',
                     ],
-                    'availabilityInformation' => t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('Available immediately', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Pardubice',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Brno',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Praha',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Hradec Králové',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Olomouc',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Liberec',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ], [
                     'store' => [
                         'name' => 'Plzeň',
                     ],
-                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                 ],
             ],

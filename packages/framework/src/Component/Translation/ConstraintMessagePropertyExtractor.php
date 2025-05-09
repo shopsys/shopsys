@@ -34,6 +34,8 @@ use Twig\Node\Node as TwigNode;
  */
 class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVisitor
 {
+    use FrontendApiValidationTranslationDomainDetectorTrait;
+
     protected NodeTraverser $traverser;
 
     protected MessageCatalogue $catalogue;
@@ -70,6 +72,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     {
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = $this->isConstraintClass($node);
+            $this->setIfFrontendApiClass((string)$node->namespacedName);
         }
 
         if ($node instanceof Property && $node->isPublic() && $this->isInsideConstraintClass) {
@@ -86,6 +89,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     {
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = false;
+            $this->resetDetection();
         }
 
         return null;
@@ -109,7 +113,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
             if ($this->isMessagePropertyProperty($propertyProperty)) {
                 $messageId = $this->phpParserNodeHelper->getConcatenatedStringValue($propertyProperty->default, $this->file);
 
-                $message = new Message($messageId, Translator::VALIDATOR_TRANSLATION_DOMAIN);
+                $message = new Message($messageId, $this->getTranslationDomain());
                 $message->addSource(new FileSource($this->file->getFilename(), $propertyProperty->getLine()));
 
                 $this->catalogue->add($message);

@@ -414,7 +414,7 @@ class GetStoreTest extends GraphQlTestCase
                 'longitude' => '18.2738861',
                 'breadcrumb' => [
                     [
-                        'name' => t('Department stores', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'name' => t('Department stores', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'slug' => $storesSlug,
                     ],
                     [
@@ -442,7 +442,7 @@ class GetStoreTest extends GraphQlTestCase
                 'longitude' => '15.7707169',
                 'breadcrumb' => [
                     [
-                        'name' => t('Department stores', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'name' => t('Department stores', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'slug' => $storesSlug,
                     ],
                     [

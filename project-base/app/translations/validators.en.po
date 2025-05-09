@@ -4,19 +4,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "An array of values is not supported as an input for \"slider\" type parameter. Use \"minimalValue\" and \"maximalValue\" instead."
-msgstr ""
-
-msgid "Email cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Image can be only in JPG or PNG format"
-msgstr ""
-
-msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
-msgstr ""
-
-msgid "New password must be at least {{ limit }} characters long"
 msgstr ""
 
 msgid "Please choose image"
@@ -25,21 +13,6 @@ msgstr ""
 msgid "Please enter GTM ID"
 msgstr ""
 
-msgid "Please enter new password"
-msgstr ""
-
-msgid "Please enter valid email"
-msgstr ""
-
-msgid "Please enter your email address"
-msgstr ""
-
-msgid "Provided hash is not valid."
-msgstr ""
-
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
-msgstr ""
-
-msgid "User with provided email address does not exist."
 msgstr ""
 

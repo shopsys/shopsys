@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "An array of values is not supported as an input for \"%type%\" type parameter. Use \"%minimalValue%\" and \"%maximalValue%\" instead."
+msgstr ""
+
+msgid "Email cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Minimal and maximal value are not supported as an input for other than \"%type%\" type parameter. Use \"%values%\" instead."
+msgstr ""
+
+msgid "New password must be at least {{ limit }} characters long"
+msgstr ""
+
+msgid "Please enter new password"
+msgstr ""
+
+msgid "Please enter valid email"
+msgstr ""
+
+msgid "Please enter your email address"
+msgstr ""
+
+msgid "Provided hash is not valid."
+msgstr ""
+
+msgid "User with provided email address does not exist."
+msgstr ""
+

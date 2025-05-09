@@ -159,7 +159,10 @@ class LuigisBoxFeedItemTest extends TestCase
 
         $this->assertCommonFields($luigisBoxProductFeedItem);
 
-        self::assertSame($productIsAvailableOnStock ? t('Out of stock') : t('In stock'), $luigisBoxProductFeedItem->getAvailabilityRankText());
+        self::assertSame(
+            $productIsAvailableOnStock ? t('Out of stock', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN) : t('In stock', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),
+            $luigisBoxProductFeedItem->getAvailabilityRankText(),
+        );
         self::assertSame($expectedRank, $luigisBoxProductFeedItem->getAvailabilityRank());
     }
 

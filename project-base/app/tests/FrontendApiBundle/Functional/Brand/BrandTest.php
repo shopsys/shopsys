@@ -91,7 +91,7 @@ class BrandTest extends GraphQlTestCase
             ],
             'breadcrumb' => [
                 [
-                    'name' => t('Brand overview', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    'name' => t('Brand overview', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'slug' => $this->urlGenerator->generate('front_brand_list'),
                 ],
                 [

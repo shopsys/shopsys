@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "An array of values is not supported as an input for \"%type%\" type parameter. Use \"%minimalValue%\" and \"%maximalValue%\" instead."
+msgstr "Pole hodnot (\"values\") není podporováno jako vstup pro parametry typu \"%type%\". Namísto toho použijte \"%minimalValue%\" and \"%maximalValue%\"."
+
+msgid "Email cannot be longer than {{ limit }} characters"
+msgstr "E-mail nesmí být delší než {{ limit }} znaků"
+
+msgid "Minimal and maximal value are not supported as an input for other than \"%type%\" type parameter. Use \"%values%\" instead."
+msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro parametry jiného typu než \"%type%\". Namísto toho použijte \"%values%\"."
+
+msgid "New password must be at least {{ limit }} characters long"
+msgstr "Nové heslo musí být alespoň {{ limit }} znaků dlouhé"
+
+msgid "Please enter new password"
+msgstr "Vyplňte prosím nové heslo"
+
+msgid "Please enter valid email"
+msgstr "Vyplňte prosím platný e-mail"
+
+msgid "Please enter your email address"
+msgstr "Vyplňte prosím e-mail"
+
+msgid "Provided hash is not valid."
+msgstr "Zadaný hash není validní."
+
+msgid "User with provided email address does not exist."
+msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
+

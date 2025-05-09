@@ -133,7 +133,7 @@ class PriceExtension extends AbstractExtension
     public function priceTextFilter(Money $price): string
     {
         if ($price->isZero()) {
-            return t('Free');
+            return t('Free', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN);
         }
 
         return $this->priceFilter($price);
@@ -151,7 +151,7 @@ class PriceExtension extends AbstractExtension
         string $locale,
     ): string {
         if ($price->isZero()) {
-            return t('Free', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
+            return t('Free', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $locale);
         }
         $currency = $this->currencyFacade->getById($currencyId);
 
