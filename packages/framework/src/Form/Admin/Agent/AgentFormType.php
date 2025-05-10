@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Chat\Agent\Agent;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentData;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\FunctionRunnerSetup;
+use Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStoreFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -24,9 +25,11 @@ class AgentFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner $dynamicFunctionRunner
+     * @param \Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStoreFacade $vectorStoreFacade
      */
     public function __construct(
         protected readonly DynamicFunctionRunner $dynamicFunctionRunner,
+        protected readonly VectorStoreFacade $vectorStoreFacade,
     ) {
     }
 
@@ -65,8 +68,17 @@ class AgentFormType extends AbstractType
             ])
             ->add('availableAiFunctions', ChoiceType::class, [
                 'label' => t('Available Ai functions'),
+                'required' => false,
                 'choices' => array_map(fn (FunctionRunnerSetup $setup) => $setup->aiFunctionName, $this->dynamicFunctionRunner->getAvailableFunctionList()),
                 'multiple' => true,
+            ])
+            ->add('vectorStores', ChoiceType::class, [
+                'label' => t('Available vector stores'),
+                'required' => false,
+                'multiple' => true,
+                'choices' => $this->vectorStoreFacade->findAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
             ])
         ;
 

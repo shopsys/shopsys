@@ -6,7 +6,7 @@ security:
             cost: 12
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALL]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALL, ROLE_AI]
         ROLE_ALL:
             - ROLE_ORDER_FULL
             - ROLE_CUSTOMER_FULL
@@ -506,3 +506,16 @@ security:
         - { path: ^/%admin_url%/search, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
         - { path: ^/, roles: PUBLIC_ACCESS }
+        # AI
+#        - { path: ^/%admin_url%/agent/new, roles: ROLE_AI }
+#        - { path: ^/%admin_url%/agent/edit, roles: ROLE_AI, methods: [ POST ] }
+#        - { path: ^/%admin_url%/agent/delete, roles: ROLE_AI }
+        - { path: ^/%admin_url%/agent/, roles: ROLE_AI }
+#        - { path: ^/%admin_url%/chat/new, roles: ROLE_AI }
+#        - { path: ^/%admin_url%/chat/edit, roles: ROLE_AI, methods: [ POST ] }
+#        - { path: ^/%admin_url%/chat/delete, roles: ROLE_AI }
+        - { path: ^/%admin_url%/chat/, roles: ROLE_AI }
+#        - { path: ^/%admin_url%/vector-store/new, roles: ROLE_AI }
+#        - { path: ^/%admin_url%/vector-store/edit, roles: ROLE_AI, methods: [ POST ] }
+#        - { path: ^/%admin_url%/vector-store/delete, roles: ROLE_AI }
+        - { path: ^/%admin_url%/vector-store/, roles: ROLE_AI }

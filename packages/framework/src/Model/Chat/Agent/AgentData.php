@@ -31,5 +31,13 @@ class AgentData
      */
     public $internalKey;
 
+    /**
+     * @var string[]
+     */
     public $availableAiFunctions = [];
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStore[]
+     */
+    public $vectorStores = [];
 }

@@ -6,22 +6,36 @@ namespace Shopsys\FrameworkBundle\Component\OpenAi;
 
 use Shopsys\FrameworkBundle\Model\Chat\Chat;
 use Shopsys\FrameworkBundle\Model\Chat\Message\ChatMessage;
+use Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStore;
 
 class OpenAiRequestFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\OpenAi\OpenAiFunctionCallingFactory $openAiFunctionCallingFactory
+     * @param \Shopsys\FrameworkBundle\Component\OpenAi\OpenAiToolsFactory $openAiToolsFactory
      */
     public function __construct(
         protected readonly OpenAiFunctionCallingFactory $openAiFunctionCallingFactory,
+        protected readonly OpenAiToolsFactory $openAiToolsFactory,
     ) {
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStore $vectorStore
+     * @return array
+     */
+    public function getCreateVectorStoreRequest(VectorStore $vectorStore): array
+    {
+        return [
+            'name' => $vectorStore->getName(),
+        ];
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Chat\Chat $chat
      * @return array
      */
-    public function getOpenAiSimpleRequest(Chat $chat): array
+    public function getOpenAiChatRequest(Chat $chat): array
     {
         $request = [];
         $request['model'] = $chat->getAgent()->getModel();
@@ -34,6 +48,15 @@ class OpenAiRequestFactory
             $request['function_call'] = 'auto';
         }
 
+        //        $tools = $this->openAiToolsFactory->getTools($chat->getAgent());
+
+        //        if ($tools !== null) {
+        //            $request['tools'] = $tools;
+        //
+        //            $availableVectorStores = array_filter($chat->getAgent()->getVectorStores(), fn (VectorStore $vectorStore) => $vectorStore->getExternalId() !== null);
+        //            $request['vector_store_ids'] = array_map(fn (VectorStore $vectorStore) => $vectorStore->getExternalId(), $availableVectorStores);
+        //        }
+        //d($request);
         return $request;
     }
 

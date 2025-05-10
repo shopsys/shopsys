@@ -4,3 +4,4 @@ import './ToggleElement';
 import './tooltip';
 import './CheckboxToggle';
 import './copyToClipboard';
+import './JsonEditor';

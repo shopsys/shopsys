@@ -17,6 +17,9 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
+use Shopsys\FrameworkBundle\Model\Chat\ChatFacade;
+use Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStoreConfig;
+use Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStoreFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantException;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
@@ -51,6 +54,8 @@ class ProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductGridFactory $productGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\Chat\ChatFacade $chatFacade
+     * @param \Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStoreFacade $vectorStoreFacade
      */
     public function __construct(
         protected readonly ProductMassActionFacade $productMassActionFacade,
@@ -66,6 +71,8 @@ class ProductController extends AdminBaseController
         protected readonly UnitFacade $unitFacade,
         protected readonly Setting $setting,
         protected readonly ProductGridFactory $productGridFactory,
+        protected readonly ChatFacade $chatFacade,
+        protected readonly VectorStoreFacade $vectorStoreFacade,
     ) {
     }
 
@@ -85,7 +92,10 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setSellingToUntilEndOfDay($productData);
-            $this->productFacade->edit($id, $productData, ProductRecalculationPriorityEnum::HIGH);
+            $product = $this->productFacade->edit($id, $productData, ProductRecalculationPriorityEnum::HIGH);
+
+            $vectorStore = $this->vectorStoreFacade->findByExternalId(VectorStoreConfig::PRODUCT_VECTOR_STORE);
+            $this->chatFacade->exportProductToVectorStore($vectorStore, $product, $this->domain->getCurrentDomainConfig());
 
             $this
                 ->addSuccessFlashTwig(

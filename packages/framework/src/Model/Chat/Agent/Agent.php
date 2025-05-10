@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Chat\Agent;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,10 +59,18 @@ class Agent
     protected $availableAiFunctions = [];
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStore[]|\Doctrine\Common\Collections\ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStore")
+     * @ORM\JoinTable(name="chat_agent_chat_vector_stores")
+     */
+    protected $vectorStores;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\AgentData $agentData
      */
     public function __construct(AgentData $agentData)
     {
+        $this->vectorStores = new ArrayCollection();
         $this->setData($agentData);
     }
 
@@ -76,6 +85,10 @@ class Agent
         $this->setup = $agentData->setup;
         $this->internalKey = $agentData->internalKey;
         $this->availableAiFunctions = $agentData->availableAiFunctions;
+
+        foreach ($agentData->vectorStores as $vectorStore) {
+            $this->vectorStores->add($vectorStore);
+        }
     }
 
     /**
@@ -140,5 +153,13 @@ class Agent
     public function getAvailableAiFunctions()
     {
         return $this->availableAiFunctions;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStore[]
+     */
+    public function getVectorStores()
+    {
+        return $this->vectorStores->getValues();
     }
 }
