@@ -16,7 +16,7 @@ generate-schema-native:
 	cd storefront; npm run gql
 	rm -rf storefront/schema.graphql
 
-check-fix: generate-schema php-checks php-lock-icons php-translations storefront-checks storefront-translations
+check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations
 
 php-checks:
 	docker compose exec php-fpm php phing standards-fix phpstan
