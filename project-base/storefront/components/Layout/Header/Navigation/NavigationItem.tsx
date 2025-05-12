@@ -7,6 +7,7 @@ import { AnimatePresence, m } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { getNavigationLinkSkeletonType } from 'utils/navigation/getNavigationLinkSkeletonType';
 import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 import { useDebounce } from 'utils/useDebounce';
 
@@ -20,6 +21,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = !!navigationItem.categoriesByColumns.length;
     const isMenuOpenedDelayed = useDebounce(isMenuOpened && true, 200);
+    const skeletonType = getNavigationLinkSkeletonType(navigationItem);
 
     return (
         <li
@@ -32,7 +34,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
         >
             <ExtendedNextLink
                 href={navigationItem.link}
-                skeletonType={getPageTypeKey(navigationItem.routeName) || DEFAULT_SKELETON_TYPE}
+                skeletonType={skeletonType}
                 className={twJoin(
                     'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold group-first-of-type:pl-0',
                     'text-link-inverted-default no-underline',
