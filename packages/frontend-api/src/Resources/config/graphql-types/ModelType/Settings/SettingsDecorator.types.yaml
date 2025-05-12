@@ -17,7 +17,7 @@ SettingsDecorator:
                 resolve: "@=query('pricingSettingsQuery')"
                 description: "Settings related to pricing"
             contactFormMainText:
-                type: String!
+                type: String
                 resolve: "@=query('contactFormMainTextQuery')"
                 description: "Main text for contact form"
             displayTimezone:

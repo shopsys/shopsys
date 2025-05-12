@@ -21,9 +21,9 @@ class ContactFormMainTextQuery extends AbstractQuery
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function contactFormMainTextQuery(): string
+    public function contactFormMainTextQuery(): ?string
     {
         return $this->contactFormSettingsFacade->getMainText($this->domain->getId());
     }
