@@ -2585,7 +2585,7 @@ type SeoSetting {
 "Represents settings of the current domain"
 type Settings {
   "Main text for contact form"
-  contactFormMainText: String!
+  contactFormMainText: String
   "Timezone that is used for displaying time"
   displayTimezone: String!
   "Returns true if Heureka is available for the current domain"
