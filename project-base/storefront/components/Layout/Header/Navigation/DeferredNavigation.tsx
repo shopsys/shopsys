@@ -1,4 +1,5 @@
 import { Navigation } from './Navigation';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
@@ -15,9 +16,13 @@ export const DeferredNavigation: FC = () => {
         return null;
     }
 
-    return shouldRender ? (
-        <Navigation navigation={navigationData.navigation} />
-    ) : (
-        <NavigationPlaceholder navigation={navigationData.navigation} />
+    return (
+        <Webline className="relative">
+            {shouldRender ? (
+                <Navigation navigation={navigationData.navigation} />
+            ) : (
+                <NavigationPlaceholder navigation={navigationData.navigation} />
+            )}
+        </Webline>
     );
 };

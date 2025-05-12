@@ -4,13 +4,8 @@ import { Webline } from './Webline/Webline';
 
 export const ErrorLayout: FC = ({ children }) => (
     <div className="flex h-full min-h-screen flex-col">
-        <header>
-            <Webline
-                className="relative mb-4"
-                wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-background-brand-less"
-            >
-                <Header simpleHeader />
-            </Webline>
+        <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
+            <Header simpleHeader />
         </header>
 
         <main className="mt-4 mb-10 flex flex-col gap-4">{children}</main>
