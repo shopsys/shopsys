@@ -131,10 +131,13 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 })
                 .toPromise();
 
-            const [brandDetailResponse] = await Promise.all([brandDetailResponsePromise, brandProductsResponsePromise]);
+            const [brandDetailResponse, brandProductsResponse] = await Promise.all([
+                brandDetailResponsePromise,
+                brandProductsResponsePromise,
+            ]);
 
             if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                const serverSideBrandDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     brandDetailResponse.error,
                     brandDetailResponse.data?.brand,
                     context.res,
@@ -142,8 +145,20 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     urlSlug,
                 );
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
+                if (serverSideBrandDetailErrorResponse) {
+                    return serverSideBrandDetailErrorResponse;
+                }
+
+                const serverSideBrandProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                    brandProductsResponse.error,
+                    brandProductsResponse.data?.products,
+                    context.res,
+                    domainConfig.url,
+                    urlSlug,
+                );
+
+                if (serverSideBrandProductsErrorResponse) {
+                    return serverSideBrandProductsErrorResponse;
                 }
             }
 
