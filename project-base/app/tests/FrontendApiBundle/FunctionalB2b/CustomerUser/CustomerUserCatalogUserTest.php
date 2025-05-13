@@ -57,7 +57,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
 
     public function testOrderPaymentSuccessfulContentQueryIsNotAllowed(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/PaymentSuccessfulPageContentQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/OrderSentPageContentQuery.graphql', [
             'orderUuid' => self::FAKE_UUID,
         ]);
 
@@ -66,7 +66,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
 
     public function testOrderPaymentFailedContentQueryIsNotAllowed(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/PaymentFailedPageContentQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/OrderSentPageContentQuery.graphql', [
             'orderUuid' => self::FAKE_UUID,
         ]);
 
