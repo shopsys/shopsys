@@ -8,13 +8,15 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TransportController extends AdminBaseController
 {
@@ -39,6 +41,7 @@ class TransportController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/new/')]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
     public function newAction(Request $request): Response
     {
         $transportData = $this->transportDataFactory->create();
@@ -78,6 +81,8 @@ class TransportController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $transport = $this->transportFacade->getById($id);
@@ -123,6 +128,7 @@ class TransportController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

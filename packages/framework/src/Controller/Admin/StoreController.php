@@ -10,13 +10,15 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Store\StoreFormType;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class StoreController extends AdminBaseController
 {
@@ -38,6 +40,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/list/')]
+    #[AccessControlRule([Roles::ROLE_STORE_VIEW])]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Store/list.html.twig', [
@@ -76,6 +79,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/new/')]
+    #[AccessControlRule([Roles::ROLE_STORE_FULL])]
     public function newAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -115,6 +119,8 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_STORE_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_STORE_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $store = $this->storeFacade->getById($id);
@@ -155,6 +161,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/delete/{id}', name: 'admin_store_delete', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_STORE_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -187,6 +194,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/setdefault/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_STORE_FULL])]
     public function setDefaultAction(int $id): Response
     {
         try {

@@ -745,6 +745,12 @@ msgstr "Zavřít"
 msgid "Close (Esc)"
 msgstr "Zavřít (Esc)"
 
+msgid "Closed days - full"
+msgstr "Svátky a interní dny - vše"
+
+msgid "Closed days - view"
+msgstr "Svátky a interní dny - zobrazení"
+
 msgid "Closing time"
 msgstr "Čas do"
 
@@ -1986,6 +1992,9 @@ msgstr "Feed \"{{ feedName }}\" na doméně s ID {{ domainId }} byl úspěšně 
 
 msgid "Feed \"{{ feedName }}\" successfully generated."
 msgstr "Feed \"{{ feedName }}\" byl úspěšně vygenerován."
+
+msgid "Feeds - full"
+msgstr "XML Feedy - vše"
 
 msgid "Feeds - view"
 msgstr "XML Feedy - zobrazení"
@@ -4419,6 +4428,9 @@ msgstr "Typ přenosu"
 
 msgid "Transfers"
 msgstr "Přenosy"
+
+msgid "Transfers - full"
+msgstr "Přehled chyb v přenosech - vše"
 
 msgid "Transfers - view"
 msgstr "Přehled chyb v přenosech - zobrazení"

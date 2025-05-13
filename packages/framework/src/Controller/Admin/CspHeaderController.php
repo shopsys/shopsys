@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\CspHeaderSetting\CspHeaderSettingFormType;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CspHeaderController extends AdminBaseController
 {
@@ -25,6 +27,7 @@ class CspHeaderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: 'superadmin/csp-header-setting/')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function settingAction(Request $request): Response
     {
         $formData = ['cspHeader' => $this->setting->get(Setting::CSP_HEADER)];

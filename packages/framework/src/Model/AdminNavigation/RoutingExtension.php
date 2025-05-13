@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RoutingExtension implements ExtensionInterface
 {
+    public const string ROUTE_NAME_EXTRA = 'route_name';
+
     /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
      */
@@ -28,6 +30,7 @@ class RoutingExtension implements ExtensionInterface
 
     /**
      * {@inheritdoc}
+     * Inspired by @see \Knp\Menu\Integration\Symfony\RoutingExtension::buildOptions()
      */
     public function buildOptions(array $options = []): array
     {
@@ -41,7 +44,6 @@ class RoutingExtension implements ExtensionInterface
                 $options['uri'] = null;
             }
 
-            // adding the item route to the extras under the 'routes' key (for the Silex RouteVoter)
             $options['extras']['routes'][] = [
                 'route' => $options['route'],
                 'parameters' => $params,
@@ -56,5 +58,8 @@ class RoutingExtension implements ExtensionInterface
      */
     public function buildItem(ItemInterface $item, array $options): void
     {
+        if (array_key_exists('route', $options)) {
+            $item->setExtra(static::ROUTE_NAME_EXTRA, $options['route']);
+        }
     }
 }

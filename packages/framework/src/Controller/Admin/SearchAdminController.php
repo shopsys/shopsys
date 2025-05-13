@@ -7,9 +7,11 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Knp\Menu\ItemInterface;
 use Normalizer;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SearchAdminController extends AdminBaseController
 {
@@ -26,6 +28,7 @@ class SearchAdminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/search/')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function searchAction(Request $request): Response
     {
         $searchString = $request->get('search');

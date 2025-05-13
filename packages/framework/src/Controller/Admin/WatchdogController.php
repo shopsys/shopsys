@@ -11,13 +11,15 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Watchdog\Exception\WatchdogNotFoundException;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogGridFactory;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class WatchdogController extends AdminBaseController
 {
@@ -50,6 +52,7 @@ class WatchdogController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/watchdog/list/')]
+    #[AccessControlRule([Roles::ROLE_WATCHDOG_VIEW])]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -85,6 +88,7 @@ class WatchdogController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/watchdog/detail/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_WATCHDOG_VIEW])]
     public function detailAction(Request $request, int $id): Response
     {
         $product = $this->productFacade->getById($id);
@@ -126,6 +130,7 @@ class WatchdogController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/watchdog/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_WATCHDOG_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

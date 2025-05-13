@@ -9,9 +9,11 @@ use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressAndRelatedInfoForm
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BillingAddressController extends AdminBaseController
 {
@@ -35,6 +37,8 @@ class BillingAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/billing-address/edit/{id}', name: 'admin_billing_address_edit', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $billingAddress = $this->billingAddressFacade->getById($id);

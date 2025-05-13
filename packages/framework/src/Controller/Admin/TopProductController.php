@@ -8,9 +8,11 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\TopProduct\TopProductsFormType;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TopProductController extends AdminBaseController
 {
@@ -31,6 +33,8 @@ class TopProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/top-product/list/')]
+    #[AccessControlRule([Roles::ROLE_TOP_PRODUCT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_TOP_PRODUCT_VIEW], ['GET'])]
     public function listAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

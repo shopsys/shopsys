@@ -12,9 +12,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CurrencyController extends AdminBaseController
 {
@@ -36,6 +38,7 @@ class CurrencyController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/currency/list/')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function listAction(): Response
     {
         $grid = $this->currencyInlineEdit->getGrid();
@@ -51,6 +54,7 @@ class CurrencyController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/currency/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -72,6 +76,7 @@ class CurrencyController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/currency/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function deleteAction(int $id): Response
     {
         try {

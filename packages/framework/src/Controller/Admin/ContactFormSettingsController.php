@@ -8,9 +8,11 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\ContactForm\ContactFormSettingsFormType;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ContactFormSettingsController extends AdminBaseController
 {
@@ -31,6 +33,8 @@ class ContactFormSettingsController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/contact-form/')]
+    #[AccessControlRule([Roles::ROLE_CONTACT_FORM_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_CONTACT_FORM_VIEW], ['GET'])]
     public function indexAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

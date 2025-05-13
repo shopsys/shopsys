@@ -28,9 +28,11 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class OrderController extends AdminBaseController
 {
@@ -76,6 +78,8 @@ class OrderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ORDER_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_ORDER_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $order = $this->orderFacade->getById($id);
@@ -131,6 +135,7 @@ class OrderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order/add-product/{orderId}', requirements: ['orderId' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    #[AccessControlRule([Roles::ROLE_ORDER_FULL])]
     public function addProductAction(Request $request, int $orderId): Response
     {
         $productId = (int)$request->request->get('productId');
@@ -160,6 +165,7 @@ class OrderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order/list/')]
+    #[AccessControlRule([Roles::ROLE_ORDER_VIEW])]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'orders';
@@ -276,6 +282,7 @@ class OrderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ORDER_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -301,6 +308,7 @@ class OrderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order/get-advanced-search-rule-form/', methods: ['post'])]
+    #[AccessControlRule([Roles::ROLE_ORDER_VIEW])]
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
@@ -318,6 +326,7 @@ class OrderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ORDER_VIEW])]
     public function previewAction(int $id): Response
     {
         $order = $this->orderFacade->getById($id);

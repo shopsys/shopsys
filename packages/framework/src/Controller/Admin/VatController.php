@@ -11,9 +11,11 @@ use Shopsys\FrameworkBundle\Form\Admin\Vat\VatSettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class VatController extends AdminBaseController
 {
@@ -35,6 +37,8 @@ class VatController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/list/')]
+    #[AccessControlRule([Roles::ROLE_VAT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_VAT_VIEW], ['GET'])]
     public function listAction(): Response
     {
         $grid = $this->vatInlineEdit->getGrid();
@@ -50,6 +54,7 @@ class VatController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_VAT_FULL])]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -88,6 +93,7 @@ class VatController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_VAT_FULL])]
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');

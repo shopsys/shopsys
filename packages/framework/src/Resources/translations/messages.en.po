@@ -745,6 +745,12 @@ msgstr ""
 msgid "Close (Esc)"
 msgstr ""
 
+msgid "Closed days - full"
+msgstr ""
+
+msgid "Closed days - view"
+msgstr ""
+
 msgid "Closing time"
 msgstr ""
 
@@ -1985,6 +1991,9 @@ msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} successfully schedule
 msgstr ""
 
 msgid "Feed \"{{ feedName }}\" successfully generated."
+msgstr ""
+
+msgid "Feeds - full"
 msgstr ""
 
 msgid "Feeds - view"
@@ -4418,6 +4427,9 @@ msgid "Transfer type"
 msgstr ""
 
 msgid "Transfers"
+msgstr ""
+
+msgid "Transfers - full"
 msgstr ""
 
 msgid "Transfers - view"

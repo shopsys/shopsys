@@ -14,9 +14,11 @@ use Shopsys\FrameworkBundle\Model\LanguageConstant\Exception\LanguageConstantNot
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LanguageConstantController extends AdminBaseController
 {
@@ -39,6 +41,7 @@ class LanguageConstantController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/list/')]
+    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_VIEW])]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData())->handleRequest($request);
@@ -63,6 +66,8 @@ class LanguageConstantController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/edit/')]
+    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_VIEW], ['GET'])]
     public function editAction(Request $request): Response
     {
         $key = $request->query->get('key');
@@ -125,6 +130,7 @@ class LanguageConstantController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/delete/')]
+    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_FULL])]
     public function deleteAction(Request $request): Response
     {
         $key = $request->query->get('key');

@@ -11,13 +11,15 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SliderController extends AdminBaseController
 {
@@ -43,6 +45,7 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/list/')]
+    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_VIEW])]
     public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
@@ -75,6 +78,7 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/new/')]
+    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_FULL])]
     public function newAction(Request $request): Response
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
@@ -116,6 +120,8 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
@@ -161,6 +167,7 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

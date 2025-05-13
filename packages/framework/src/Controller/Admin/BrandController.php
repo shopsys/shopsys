@@ -16,10 +16,12 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BrandController extends AdminBaseController
 {
@@ -49,6 +51,8 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/brand/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_BRAND_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_BRAND_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $brand = $this->brandFacade->getById($id);
@@ -88,6 +92,7 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/brand/list/')]
+    #[AccessControlRule([Roles::ROLE_BRAND_VIEW])]
     public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
@@ -121,6 +126,7 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/brand/new/')]
+    #[AccessControlRule([Roles::ROLE_BRAND_FULL])]
     public function newAction(Request $request): RedirectResponse|Response
     {
         $brandData = $this->brandDataFactory->create();
@@ -159,6 +165,7 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/brand/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_BRAND_FULL])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

@@ -30,3 +30,11 @@ parameters:
     shopsys.performance_test.page.duration_milliseconds.warning: 1000
     shopsys.performance_test.page.query_count.critical: 300
     shopsys.performance_test.page.query_count.warning: 100
+
+    shopsys.route_names_excluded_from_access_control_check:
+        - '2fa_login'
+        - '2fa_login_check'
+        - 'admin_access_denied'
+        - 'admin_login'
+        - 'admin_login_check'
+        - 'admin_logout'

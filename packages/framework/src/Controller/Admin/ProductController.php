@@ -28,12 +28,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductGridFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ProductController extends AdminBaseController
 {
@@ -75,6 +77,8 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $product = $this->productFacade->getById($id);
@@ -121,6 +125,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/new/')]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_FULL])]
     public function newAction(Request $request): Response
     {
         try {
@@ -164,6 +169,8 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/list/')]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_VIEW], ['GET'])]
     public function listAction(Request $request): Response
     {
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
@@ -228,6 +235,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -253,6 +261,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/get-advanced-search-rule-form/', methods: ['post'])]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_VIEW])]
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
@@ -270,6 +279,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/create-variant/')]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_FULL])]
     public function createVariantAction(Request $request): Response
     {
         $form = $this->createForm(VariantFormType::class);
@@ -320,6 +330,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/visibility/{productId}')]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_VIEW])]
     public function visibilityAction(int $productId): Response
     {
         $product = $this->productFacade->getById($productId);
@@ -335,6 +346,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/edit/catnum-exists')]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_VIEW])]
     public function catnumExistsAction(Request $request): Response
     {
         $catnum = $request->get('catnum');
@@ -356,6 +368,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/product/names-by-catnums', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
+    #[AccessControlRule([Roles::ROLE_PRODUCT_VIEW])]
     public function productNamesByCatnumsAction(Request $request): JsonResponse
     {
         $catnums = $request->get('catnums');

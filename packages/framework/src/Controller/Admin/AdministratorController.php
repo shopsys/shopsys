@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -28,7 +29,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -67,6 +68,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/list/')]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_VIEW])]
     public function listAction(): Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
@@ -96,6 +98,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function editAction(Request $request, int $id): Response
     {
         $this->denyAccessUnlessHimselfOrGranted($request, $id);
@@ -189,6 +192,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/my-account/')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function myAccountAction(): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
@@ -204,6 +208,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/new/')]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
     public function newAction(Request $request): Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
@@ -244,6 +249,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -283,6 +289,7 @@ class AdministratorController extends AdminBaseController
         name: 'admin_administrator_enable-two-factor-authentication',
         requirements: ['id' => '\d+'],
     )]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function enableTwoFactorAuthenticationAction(
         Request $request,
         int $id,
@@ -410,6 +417,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/disable-two-factor-authentication/{id}', name: 'admin_administrator_disable-two-factor-authentication', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function disableTwoFactorAuthenticationAction(Request $request, int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
@@ -515,6 +523,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/send-reset-password/{id}', name: 'admin_administrator_send-reset-password', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function sendResetPasswordAction(int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
@@ -536,6 +545,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/set-new-password/', name: 'admin_administrator_set-new-password')]
+    #[AccessControlRule(['PUBLIC_ACCESS'])]
     public function setNewPasswordAction(Request $request): Response
     {
         $email = $request->query->get('email');

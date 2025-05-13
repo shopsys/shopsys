@@ -14,13 +14,14 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AdminBaseController
 {
@@ -54,6 +55,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/dashboard/')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function dashboardAction(): Response
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
@@ -243,6 +245,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/schedule/{serviceId}')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
@@ -258,6 +261,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/disable/{serviceId}')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function cronDisableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
@@ -273,6 +277,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/enable/{serviceId}')]
+    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function cronEnableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
@@ -288,6 +293,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/detail/{serviceId}')]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function cronDetailAction(string $serviceId): Response
     {
         if ($this->getParameter('shopsys.display_cron_overview_for_superadmin_only') === true) {

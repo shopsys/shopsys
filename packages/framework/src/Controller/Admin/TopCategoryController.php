@@ -8,9 +8,11 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory\TopCategoriesFormType;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TopCategoryController extends AdminBaseController
 {
@@ -31,6 +33,8 @@ class TopCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/top-category/list/')]
+    #[AccessControlRule([Roles::ROLE_TOP_CATEGORY_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_TOP_CATEGORY_VIEW], ['GET'])]
     public function listAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

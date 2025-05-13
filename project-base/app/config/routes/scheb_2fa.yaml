@@ -1,6 +1,6 @@
 2fa_login:
     defaults:
-        _controller: "scheb_two_factor.form_controller:form"
+        _controller: "scheb_two_factor.form_controller::form"
     path: /%admin_url%/2fa
 
 2fa_login_check:

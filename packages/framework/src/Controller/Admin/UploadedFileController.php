@@ -18,10 +18,12 @@ use Shopsys\FrameworkBundle\Form\Admin\UploadedFile\UploadedFileFormType;
 use Shopsys\FrameworkBundle\Form\MultiLocaleBasicFileUploadType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class UploadedFileController extends AdminBaseController
 {
@@ -49,7 +51,8 @@ class UploadedFileController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/uploaded-file/')]
+    #[Route(path: '/uploaded-file/list')]
+    #[AccessControlRule([Roles::ROLE_FILES_VIEW])]
     public function listAction(Request $request): Response
     {
         $quickSearchData = new QuickSearchFormData();
@@ -73,6 +76,8 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/edit/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FILES_FULL], ['POST'])]
+    #[AccessControlRule([Roles::ROLE_FILES_VIEW], ['GET'])]
     public function editAction(Request $request, int $id): Response
     {
         $uploadedFile = $this->uploadedFileFacade->getById($id);
@@ -119,6 +124,7 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/new/')]
+    #[AccessControlRule([Roles::ROLE_FILES_FULL])]
     public function newAction(Request $request): Response
     {
         $uploadedFileData = $this->uploadedFileDataFactory->create();
@@ -169,6 +175,7 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/delete/{id}', requirements: ['id' => '\d+'])]
+    #[AccessControlRule([Roles::ROLE_FILES_FULL])]
     public function deleteAction(int $id): Response
     {
         try {

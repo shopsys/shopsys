@@ -109,6 +109,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Order/Order.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
+                __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
             ],
             CyclomaticComplexitySniff::class => [
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',
@@ -132,6 +133,7 @@ return ECSConfig::configure()
             ForbiddenDumpSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/DateTimeHelper/Exception/CannotParseDateTimeException.php',
                 __DIR__ . '/packages/framework/src/Twig/VarDumperExtension.php',
+                __DIR__ . '/packages/framework/src/Model/Security/AccessControl/RouteAccessControlDataProvider.php',
             ],
             ForceLateStaticBindingForProtectedConstantsSniff::class => [
                 __DIR__ . '/project-base',

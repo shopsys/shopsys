@@ -739,6 +739,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
 
+    Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider:
+        arguments:
+            $projectRootDirectory: '%kernel.project_dir%'
+            $cacheDirectory: '%kernel.cache_dir%'
+
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
             - '%kernel.environment%'
@@ -752,8 +757,6 @@ services:
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent, method: onSecurityInteractiveLogin }
-
-    Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting: ~
 
     Shopsys\FrameworkBundle\Model\Security\Roles: ~
 

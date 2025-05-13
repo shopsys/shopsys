@@ -1,7 +1,8 @@
 # Adding a New Administration Page
 
-In this cookbook, we will add a new page to the administration, namely a new dashboard page with Twitter updates.
+In this cookbook, we will add a new page to the administration, namely a new dashboard page with X.com updates.
 We will see how to create a new admin controller, what template to extend, and how to extend the menu along with the breadcrumb navigation.
+We will also cover how to set up access control for the new page.
 
 ## New admin controller
 
@@ -12,53 +13,51 @@ Create a class extending `AdminBaseController` in `src/Controller/Admin` directo
 namespace App\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DashboardController extends AdminBaseController
 {
-    /**
-     * @Route("/dashboard/twitter/")
-     */
-    public function twitterAction()
+    #[Route('/dashboard/x/')]
+    public function xAction()
     {
-        return $this->render('Admin/Content/Dashboard/twitter.html.twig');
+        return $this->render('Admin/Content/Dashboard/x.html.twig');
     }
 }
 ```
 
-The `Admin` directory is already configured to use [routing by annotations](https://symfony.com/doc/3.4/routing.html), as it is the easiest to use.
-By adding the `@Route("/dashboard/twitter/")` annotation, you are creating a route named `admin_dashboard_twitter` (`admin_` + lowercase controller name + `_` + lowercase action name).
+The `Admin` directory is already configured to use [routing by attributes](https://symfony.com/doc/current/routing.html#creating-routes-as-attributes), as it is the easiest to use.
+By adding the `#[Route('/dashboard/x/')]` attribute, you are creating a route named `admin_dashboard_x` (`admin_` + lowercase controller name + `_` + lowercase action name).
 
-This newly added route should be available under the URL [http://127.0.0.1:8000/admin/**dashboard/twitter/**](http://127.0.0.1:8000/admin/dashboard/twitter/) by default.
+This newly added route should be available under the URL [http://127.0.0.1:8000/admin/**dashboard/x/**](http://127.0.0.1:8000/admin/dashboard/x/) by default.
 If you try to access the page, it will fail on loading a non-existing template, which we will fix in the next step.
 
 If you'd like to create something more complicated, you can require other services in the controller's constructor, which will be autowired.
 
 ## Twig template
 
-Create a new Twig template named `twitter.html.twig` in `templates/Admin/Content` (you'll have to create the directory).
+Create a new Twig template named `x.html.twig` in `templates/Admin/Content` (you'll have to create the directory).
 
 The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig` and extend its blocks `title`, `h1` and `block main_content`:
 
 ```twig
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% block title %}- {{ 'Tweets by @ShopsysFW'|trans }}{% endblock %}
+{% block title %}- {{ 'Tweets by @shopsyscz'|trans }}{% endblock %}
 {% block h1 %}{{ 'Updates from Shopsys Platform'|trans }}{% endblock %}
 
 {% block main_content %}
-    <a class="twitter-timeline" data-lang="{{ app.request.locale }}" data-theme="light" href="https://twitter.com/ShopsysFW"></a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <a class="x-timeline" data-lang="{{ app.request.locale }}" data-theme="light" href="https://x.com/shopsyscz"></a>
+    <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
 {% endblock %}
 ```
 
-The page's content is just a simple [Twitter widget](https://publish.twitter.com/), but you can put any content on your page.
+The page's content is just a simple [X.com widget](https://publish.x.com/), but you can put any content on your page.
 You can use the controller to pass some parameters to your template.
 Feel free to examine other controllers for inspiration.
 
 If you're new to Twig, you can take a look at [Symfony Templating documentation](http://symfony.com/doc/current/templating.html).
 
-Now, the page should load correctly and display the newest tweets of [@ShopsysFW](https://twitter.com/ShopsysFW).
+Now, the page should load correctly and display the newest tweets of [@shopsyscz](https://x.com/shopsyscz).
 But to access it, you still need to open a specific URL...
 
 ## Side menu and breadcrumbs
@@ -98,7 +97,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $dashboardMenu = $event->getMenu();
 
         $dashboardMenu->addChild('default', ['route' => 'admin_default_dashboard', 'label' => t('Default dashboard')]);
-        $dashboardMenu->addChild('twitter', ['route' => 'admin_dashboard_twitter', 'label' => t('Tweets by @ShopsysFW')]);
+        $dashboardMenu->addChild('twitter', ['route' => 'admin_dashboard_x', 'label' => t('Tweets by @shopsyscz')]);
 
         $this->removeLink($dashboardMenu);
     }
@@ -115,6 +114,70 @@ The event subscriber should be auto-discovered by Symfony, reconfiguring the men
 
 ![Dashboard admin menu after the modification](img/dashboard-menu-after.png)
 
+## Access control
+
+When adding a new administrator page, you need to decide which [administrator roles](../administration/admin-rights.md) should have access to it.
+For the new agenda, you will probably need to create a new role. Usually, a `VIEW`/`FULL` pair of roles is used, so let's follow the convention here as well. In `Roles.php`, add the new roles, define theirs translations, and put them into the hierarchy:
+
+```php
+
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Security;
+
+use Override;
+use Shopsys\FrameworkBundle\Model\Security\Roles as BaseRoles;
+
+class Roles extends BaseRoles
+{
+    public const string ROLE_X_VIEW = 'ROLE_X_VIEW';
+    public const string ROLE_X_FULL = 'ROLE_X_FULL';
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    protected static function addRolesToHierarchy(array $rolesHierarchy): array
+    {
+         return static::addRolePairsToHierarchy($rolesHierarchy, [static::ROLE_X_FULL => static::ROLE_X_VIEW]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    protected function addRolesToGrid(array $rolesGrid): array
+    {
+        $rolePair = [
+            static::ROLE_X_FULL => t('X.com feed - full'),
+            static::ROLE_X_VIEW => t('X.com feed - view'),
+        ];
+
+        return $this->addRolePairsToGrid($rolesGrid, [$rolePair]);
+    }
+}
+
+```
+
+After that, you need to cover your new route with the access control rules. Let's say that the administrator needs to have full rights to perform POST requests and view rights for GET requests:
+
+```diff
+// src/Controller/Admin/DashboardController.php
+
++ use App\Model\Security\Roles;
++ use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+
+    #[Route('/dashboard/x/')]
++   #[AccessControlRule([Roles::ROLE_X_FULL], ['POST'])]
++   #[AccessControlRule([Roles::ROLE_X_VIEW], ['GET'])]
+    public function xAction()
+    {
+        return $this->render('Admin/Content/Dashboard/x.html.twig');
+    }
+```
+
 ## Conclusion
 
 We've seen how to add a new simple page into the administration with a route and its own place in the side menu.
@@ -123,4 +186,6 @@ A similar approach could be used to add more complicated parametrized pages usin
 Also, we've not only added a new item to the menu, but we've modified some parameters of an already existing menu item, removing the link from it.
 This can be used to alter the menu in a more significant way.
 
-To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
+Finally, we have added access control rules to the new page, so it is only accessible to users with the appropriate roles.
+
+To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where the menu is created.
