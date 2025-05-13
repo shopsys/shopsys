@@ -4,6 +4,9 @@ export const DEFAULT_PAGE_SIZE = 28;
 export const DEFAULT_ORDERS_SIZE = 28;
 export const DEFAULT_BLOG_PAGE_SIZE = 6;
 export const DEFAULT_SORT = TypeProductOrderingModeEnum.Priority as const;
+// Align PRODUCT_LIST_LIMIT with the API limit
+export const PRODUCT_LIST_LIMIT = 100;
+
 /**
  * For those that are set to "true", we optimistically navigate out from a SEO category when a value of that type is changed
  * This setting needs to mirror the API functionality in the following way
