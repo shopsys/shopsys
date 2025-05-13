@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Payment\AbstractPaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\AbstractTransportTypeEnum;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
-use Shopsys\MakerBundle\Maker\BaseMaker;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -88,9 +87,6 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(CategoryAutomatedFilterInterface::class)
             ->addTag('shopsys.category_automated_filter');
-
-        $container->registerForAutoconfiguration(BaseMaker::class)
-            ->addTag('maker.command');
     }
 
     /**
