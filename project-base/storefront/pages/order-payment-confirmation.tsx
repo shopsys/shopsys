@@ -115,13 +115,6 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                                   : FlowTypesEnum.PaymentFailed
                         }
                     />
-                    {order.isPaid && orderPaymentPageStatus === TypePaymentContentPageStatusEnum.Successful && (
-                        <RegistrationAfterOrder
-                            orderEmail={orderEmail as string | undefined}
-                            orderUrlHash={orderUrlHash as string | undefined}
-                            orderUuid={orderUuid}
-                        />
-                    )}
 
                     <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
                         <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
