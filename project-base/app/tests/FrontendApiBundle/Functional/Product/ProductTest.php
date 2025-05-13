@@ -130,6 +130,7 @@ class ProductTest extends GraphQlTestCase
                         name
                         slug
                     }
+                    vatPercent
                 }
             }
         ';
@@ -450,6 +451,7 @@ class ProductTest extends GraphQlTestCase
                             'slug' => $this->urlGenerator->generate('front_product_detail', ['id' => $this->product->getId()]),
                         ],
                     ],
+                    'vatPercent' => '21.000000',
                 ],
             ],
         ];

@@ -692,6 +692,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
 
+    Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider:
+        arguments:
+            $paymentTypeEnums: !tagged shopsys.payment_type_enum
+
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
@@ -773,6 +777,10 @@ services:
     Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory:
         arguments:
             - '@monolog.logger.cron'
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider:
+        arguments:
+            $transportTypeEnums: !tagged shopsys.transport_type_enum
 
     Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail: ~
 

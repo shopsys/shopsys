@@ -38,7 +38,6 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             cart = null;
         }
     }
-
     return {
         fetchCart: () => {
             if (isWithCart) {
@@ -51,7 +50,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         pickupPlace: getSelectedPickupPlace(cart?.transport, cart?.selectedPickupPlaceIdentifier, packeteryPickupPoint),
         payment: cart?.payment ?? null,
         paymentGoPayBankSwift: cart?.paymentGoPayBankSwift ?? null,
-        promoCode: cart?.promoCode ?? null,
+        promoCodes: cart?.promoCodes ?? [],
         roundingPrice: cart?.roundingPrice ?? null,
         modifications: cart?.modifications ?? null,
     };

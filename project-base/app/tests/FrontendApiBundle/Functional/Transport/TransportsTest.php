@@ -49,7 +49,7 @@ class TransportsTest extends GraphQlTestCase
             [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'instruction' => null,
+                'instructions' => t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 0,
                 'daysUntilDelivery' => 5,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
@@ -65,11 +65,12 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
-                'instruction' => null,
+                'instructions' => null,
                 'position' => 1,
                 'daysUntilDelivery' => 4,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
@@ -87,6 +88,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -96,7 +98,7 @@ class TransportsTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $this->getLocaleForFirstDomain(),
                 ),
-                'instruction' => null,
+                'instructions' => t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 2,
                 'daysUntilDelivery' => 0,
                 'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
@@ -157,6 +159,7 @@ class TransportsTest extends GraphQlTestCase
                         ],
                     ],
                 ],
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -166,7 +169,7 @@ class TransportsTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $this->getLocaleForFirstDomain(),
                 ),
-                'instruction' => null,
+                'instructions' => t('Expect delivery by the end of next month', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 3,
                 'daysUntilDelivery' => 0,
                 'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
@@ -177,6 +180,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
             [
                 'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -186,7 +190,7 @@ class TransportsTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $this->getLocaleForFirstDomain(),
                 ),
-                'instruction' => null,
+                'instructions' => t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 4,
                 'daysUntilDelivery' => 2,
                 'transportTypeCode' => TransportTypeEnum::TYPE_PACKETERY,
@@ -196,6 +200,7 @@ class TransportsTest extends GraphQlTestCase
                     ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
+                'vatPercent' => '21.000000',
             ],
         ];
 

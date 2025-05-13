@@ -16,7 +16,7 @@ type OrderSummaryProps = {
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
-    const { cart, transport, payment, promoCode, roundingPrice, isCartFetchingOrUnavailable } = useCurrentCart();
+    const { cart, transport, payment, promoCodes, roundingPrice, isCartFetchingOrUnavailable } = useCurrentCart();
 
     if (isCartFetchingOrUnavailable) {
         return <CartLoading />;
@@ -25,6 +25,8 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
     if (!cart) {
         return null;
     }
+
+    const totalDiscount = cart.totalDiscountPrice;
 
     return (
         <>
@@ -59,7 +61,13 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                                 )}
                             </AnimatePresence>
 
-                            {promoCode && <PromoCode discount={cart.totalDiscountPrice} promoCode={promoCode} />}
+                            {promoCodes.length > 0 && (
+                                <PromoCode
+                                    key={promoCodes[0].code}
+                                    code={promoCodes[0].code}
+                                    discount={totalDiscount}
+                                />
+                            )}
                         </div>
 
                         <TotalPrice totalPrice={cart.totalPrice} />

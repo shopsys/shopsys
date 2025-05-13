@@ -14,7 +14,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 
 export const PromoCode: FC = () => {
-    const { promoCode } = useCurrentCart();
+    const { promoCodes } = useCurrentCart();
     const [formProviderMethods, defaultValues] = usePromoCodeForm();
     const formMeta = usePromoCodeFormMeta(formProviderMethods);
     const { t } = useTranslation();
@@ -26,9 +26,10 @@ export const PromoCode: FC = () => {
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
 
-    if (promoCode !== null) {
+    if (promoCodes.length > 0) {
         return null;
     }
+
     return (
         <div className="flex flex-col gap-2.5">
             <div tid={TIDs.blocks_promocode_add_button}>
@@ -39,7 +40,6 @@ export const PromoCode: FC = () => {
                     onChange={() => setIsContentVisible(!isContentVisible)}
                 />
             </div>
-
             <AnimatePresence initial={false}>
                 {isContentVisible && (
                     <FormProvider {...formProviderMethods}>
@@ -67,6 +67,7 @@ export const PromoCode: FC = () => {
                                     }}
                                 />
                             </div>
+
                             <SubmitButton
                                 className="self-start"
                                 isWithDisabledLook={!formProviderMethods.formState.isValid}

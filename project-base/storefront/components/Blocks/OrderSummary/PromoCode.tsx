@@ -5,18 +5,17 @@ import {
     OrderSummaryRowWrapper,
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
-import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import { TypePromoCode } from 'graphql/types';
+import { TypePrice } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type PromoCodeProps = {
-    promoCode: TypePromoCode;
-    discount: TypePriceFragment;
+    code: string;
+    discount: TypePrice;
 };
 
-export const PromoCode: FC<PromoCodeProps> = ({ discount, promoCode }) => {
+export const PromoCode: FC<PromoCodeProps> = ({ discount, code }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
@@ -24,10 +23,10 @@ export const PromoCode: FC<PromoCodeProps> = ({ discount, promoCode }) => {
         <OrderSummaryRowWrapper>
             <OrderSummaryContent>
                 <OrderSummaryRow>
-                    <OrderSummaryTextAndImage>{`${t('Promo code')}: ${promoCode.code}`}</OrderSummaryTextAndImage>
+                    <OrderSummaryTextAndImage>{`${t('Promo code')}: ${code}`}</OrderSummaryTextAndImage>
                     {isPriceVisible(discount.priceWithVat) && Number(discount.priceWithVat) > 0 && (
                         <OrderSummaryPrice>
-                            <strong>-{formatPrice(discount.priceWithVat)}</strong>
+                            <p className="text-sm font-bold">-{formatPrice(discount.priceWithVat)}</p>
                         </OrderSummaryPrice>
                     )}
                 </OrderSummaryRow>

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -27,6 +28,7 @@ class CartWatcherFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResultFactory $cartWithModificationsResultFactory
      */
     public function __construct(
@@ -38,6 +40,7 @@ class CartWatcherFacade
         protected readonly TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
         protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected readonly CartPromoCodeFacade $cartPromoCodeFacade,
+        protected readonly OrderFacade $orderFacade,
         protected readonly CartWithModificationsResultFactory $cartWithModificationsResultFactory,
     ) {
     }
@@ -57,7 +60,10 @@ class CartWatcherFacade
 
         $this->em->flush();
 
-        return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
+        $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
+        $this->setPromoCodes($cart);
+
+        return $this->cartWithModificationsResult;
     }
 
     /**
@@ -110,10 +116,30 @@ class CartWatcherFacade
         foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
             try {
                 $this->currentPromoCodeFacade->getValidatedPromoCode($promoCode->getCode(), $cart);
-            } catch (PromoCodeException $exception) {
+            } catch (PromoCodeException) {
                 $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
                 $this->cartWithModificationsResult->addChangedPromoCode($promoCode->getCode());
             }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    protected function setPromoCodes(Cart $cart): void
+    {
+        $orderData = $this->orderFacade->createOrderDataFromCart($cart, $this->domain->getCurrentDomainConfig());
+
+        if ($orderData->promoCode === null) {
+            return;
+        }
+
+        foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
+            if ($promoCode->getCode() !== $orderData->promoCode) {
+                continue;
+            }
+
+            $this->cartWithModificationsResult->addPromoCode($promoCode);
         }
     }
 }

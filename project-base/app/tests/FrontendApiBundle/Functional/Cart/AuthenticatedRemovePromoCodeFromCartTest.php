@@ -6,10 +6,10 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\PromoCodeAssertionTrait;
 
@@ -33,7 +33,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
 
         self::assertNotNull($this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCode->getCode(), Domain::FIRST_DOMAIN_ID));
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
     }
 
     public function testPromoCodeIsRemovedFromCartAfterDeletion(): void
@@ -46,14 +46,14 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         // if promo code is deleted, CartWatcher cannot possibly know about it and report modification
         self::assertEmpty($data['modifications']['promoCodeModifications']['noLongerApplicablePromoCode']);
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     public function applyValidPromoCodeToCustomerCart(): PromoCode
     {
@@ -73,7 +73,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         // refresh promo code, so we're able to work with it as with an entity
         return $this->getReferenceForDomain($promoCodeReference, 1, PromoCode::class);

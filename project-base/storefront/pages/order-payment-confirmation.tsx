@@ -20,47 +20,64 @@ import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/q
 import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { PaymentTypeEnum } from 'types/payment';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
+export type OrderPaymentConfirmationUrlQuery = {
+    orderIdentifier: string | undefined;
+    orderEmail: string | undefined;
+    orderUrlHash?: string | undefined;
+    orderPaymentStatusPageValidityHash: string | undefined;
+};
+
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
 
-    const { orderIdentifier, orderPaymentStatusPageValidityHash, orderEmail, orderUrlHash } = useRouter().query;
+    const { orderIdentifier, orderEmail, orderUrlHash, orderPaymentStatusPageValidityHash } = useRouter()
+        .query as OrderPaymentConfirmationUrlQuery;
     const orderUuid = getStringFromUrlQuery(orderIdentifier);
+    const urlHash = getStringFromUrlQuery(orderUrlHash);
     const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
-    const paymentStatusData = useUpdatePaymentStatus(orderUuid, orderPaymentStatusPageValidityHashParam);
+
+    const paymentStatusData = useUpdatePaymentStatus(orderUuid!, orderPaymentStatusPageValidityHashParam);
+
+    const [{ data: orderData, fetching: isOrderFetching }] = useOrderDetailByHashQuery({
+        variables: { urlHash },
+        pause: !urlHash || !paymentStatusData,
+    });
+
+    const order = orderData?.order;
 
     const [
         { data: failedContentData, fetching: isOrderPaymentFailedContentFetching, error: isOrderPaymentFailedError },
     ] = useOrderPaymentFailedContentQuery({
         variables: { orderUuid },
-        pause: !paymentStatusData || paymentStatusData.UpdatePaymentStatus.isPaid,
+        pause: !order || order.isPaid,
     });
-    const [{ data: successContentData, fetching: isOrderPaymentSuccessfulContentFetching }] =
-        useOrderPaymentSuccessfulContentQuery({
-            variables: { orderUuid },
-            pause: !paymentStatusData || !paymentStatusData.UpdatePaymentStatus.isPaid,
-        });
-
-    const paymentSessionExpiredErrorMessage = getPaymentSessionExpiredErrorMessage(isOrderPaymentFailedError, t);
-
-    const [{ data: orderData }] = useOrderDetailByHashQuery({
-        variables: { urlHash: orderUrlHash as string },
-        pause: !orderUrlHash,
+    const [
+        {
+            data: successContentData,
+            fetching: isOrderPaymentSuccessfulContentFetching,
+            error: isOrderPaymentSuccessError,
+        },
+    ] = useOrderPaymentSuccessfulContentQuery({
+        variables: { orderUuid },
+        pause: !order || !order.isPaid,
     });
+
+    const paymentSessionExpiredErrorMessage = getPaymentSessionExpiredErrorMessage(
+        t,
+        isOrderPaymentFailedError,
+        isOrderPaymentSuccessError,
+    );
+
+    const isFetchingData =
+        isOrderFetching || isOrderPaymentFailedContentFetching || isOrderPaymentSuccessfulContentFetching;
 
     if (paymentSessionExpiredErrorMessage) {
         return (
-            <CommonLayout
-                pageTypeOverride="order-confirmation"
-                title={t('Order sent')}
-                isFetchingData={
-                    !paymentStatusData || isOrderPaymentFailedContentFetching || isOrderPaymentSuccessfulContentFetching
-                }
-            >
+            <CommonLayout isFetchingData={isFetchingData} pageTypeOverride="order-confirmation" title={t('Order sent')}>
                 <Webline>
                     <ConfirmationPageContent
                         content={paymentSessionExpiredErrorMessage}
@@ -72,15 +89,12 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
         );
     }
 
-    const isFetchingData =
-        !paymentStatusData || isOrderPaymentFailedContentFetching || isOrderPaymentSuccessfulContentFetching;
-
-    if (!orderData?.order) {
+    if (!order) {
         return null;
     }
 
-    const orderPayment = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
-    const orderTransport = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
+    const orderPayment = order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
+    const orderTransport = order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
 
     return (
         <>
@@ -90,33 +104,37 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                 <Webline>
                     <PaymentStatus
                         failedContentData={failedContentData}
-                        paymentStatusData={paymentStatusData}
+                        orderData={orderData}
                         successContentData={successContentData}
                     />
 
                     <OrderConfirmationStepper
                         flow={
-                            successContentData && paymentStatusData?.UpdatePaymentStatus.isPaid
+                            successContentData && order.isPaid
                                 ? FlowTypesEnum.PaymentSuccess
                                 : FlowTypesEnum.PaymentFailed
                         }
                     />
+                    {order.isPaid && successContentData && (
+                        <RegistrationAfterOrder
+                            orderEmail={orderEmail as string | undefined}
+                            orderUrlHash={orderUrlHash as string | undefined}
+                            orderUuid={orderUuid}
+                        />
+                    )}
 
                     <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
                         <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
-                            {failedContentData &&
-                                paymentStatusData?.UpdatePaymentStatus.payment.type === PaymentTypeEnum.GoPay && (
-                                    <PaymentsInOrderSelect
-                                        orderUuid={orderUuid}
-                                        paymentTransactionCount={
-                                            paymentStatusData.UpdatePaymentStatus.paymentTransactionsCount
-                                        }
-                                    />
-                                )}
+                            {failedContentData && order.hasExternalPayment && (
+                                <PaymentsInOrderSelect
+                                    orderUuid={orderUuid}
+                                    paymentTransactionCount={order.paymentTransactionsCount}
+                                />
+                            )}
 
-                            {successContentData && paymentStatusData?.UpdatePaymentStatus.isPaid && (
+                            {successContentData && order.isPaid && (
                                 <>
-                                    <OrderCustomerInfo order={orderData.order} />
+                                    <OrderCustomerInfo order={order} />
 
                                     <RegistrationAfterOrder
                                         orderEmail={orderEmail as string | undefined}
@@ -128,22 +146,19 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         </div>
 
                         <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
-                            <OrderConfirmationProducts items={orderData.order.items} />
+                            <OrderConfirmationProducts items={order.items} />
 
                             <OrderConfirmationSummary
-                                promoCode={orderData.order.promoCode}
-                                totalPrice={orderData.order.totalPrice}
+                                promoCode={order.promoCode}
+                                totalPrice={order.totalPrice}
                                 payment={{
-                                    name: orderPayment?.name ?? orderData.order.payment.name,
-                                    price:
-                                        orderPayment?.totalPrice.priceWithVat ??
-                                        orderData.order.payment.price.priceWithVat,
+                                    name: orderPayment?.name ?? order.payment.name,
+                                    price: orderPayment?.totalPrice.priceWithVat ?? order.payment.price.priceWithVat,
                                 }}
                                 transport={{
-                                    name: orderTransport?.name ?? orderData.order.transport.name,
+                                    name: orderTransport?.name ?? order.transport.name,
                                     price:
-                                        orderTransport?.totalPrice.priceWithVat ??
-                                        orderData.order.transport.price.priceWithVat,
+                                        orderTransport?.totalPrice.priceWithVat ?? order.transport.price.priceWithVat,
                                 }}
                             />
                         </div>

@@ -7,9 +7,9 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -38,21 +38,21 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ]);
         $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        $query = 'query{
-            cart(cartInput: {
+        $query = 'query {
+            cart (cartInput: {
                 cartUuid: "' . $cartUuid . '"
             }){
                 uuid
-                items{
+                items {
                     uuid
                     quantity
                 }
-                totalPrice{
+                totalPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
                 }
-                totalDiscountPrice{
+                totalDiscountPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
@@ -97,6 +97,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ];
 
         $addToCartResult = $addAnotherToCartResponse['data']['AddToCart'];
+
         $this->assertSame($totalPriceExpected, $addToCartResult['cart']['totalPrice']);
         $this->assertSame($totalDiscountPriceExpected, $addToCartResult['cart']['totalDiscountPrice']);
     }

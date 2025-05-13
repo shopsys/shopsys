@@ -28,20 +28,19 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
 /**
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
  * @method string|null getShortDescription(\App\Model\Product\Product $product)
  * @method string getLink(\App\Model\Product\Product $product)
  * @method \App\Model\Category\Category[] getCategories(\App\Model\Product\Product $product)
- * @method \App\Model\Product\Product[] getAccessories(\App\Model\Product\Product $product)
+ * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
  * @method string|null getSeoH1(\App\Model\Product\Product $product)
  * @method string|null getSeoTitle(\App\Model\Product\Product $product)
  * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
- * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
- * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
- * @method \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[] getHreflangLinks(\App\Model\Product\Product $product)
  * @method int getOrderingPriority(\App\Model\Product\Product $product)
- * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[] getHreflangLinks(\App\Model\Product\Product $product)
  * @method bool isVisible(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getVariants(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getVariantsCount(\App\Model\Product\Product $product)
@@ -54,7 +53,9 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
  * @method array getProductVideos(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat getVat(\App\Model\Product\Product $product)
  * @method string getSlug(\App\Model\Product\Product $product)
+ * @method string getVatPercent(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {

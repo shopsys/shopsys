@@ -48,8 +48,7 @@ class OrderDataFactory
      */
     public function createFromOrder(Order $order): OrderData
     {
-        $orderData = $this->createInstance();
-        $orderData = $this->fillZeroPrices($orderData);
+        $orderData = $this->create();
 
         $this->fillFromOrder($orderData, $order);
 

@@ -9,9 +9,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
@@ -39,9 +37,7 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade $transportValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
      * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
@@ -52,36 +48,28 @@ class TransportAndPaymentWatcherFacade
         protected readonly TransportValidationFacade $transportValidationFacade,
         protected readonly CartPaymentFacade $cartPaymentFacade,
         protected readonly PaymentValidationFacade $paymentValidationFacade,
-        protected readonly OrderProcessor $orderProcessor,
-        protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly OrderFacade $orderFacade,
     ) {
     }
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult $cartWithModificationsResult
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
      */
     public function checkTransportAndPayment(
         CartWithModificationsResult $cartWithModificationsResult,
         Cart $cart,
-    ): CartWithModificationsResult {
+    ): void {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
         $this->checkTransport($cart);
 
         $domainId = $this->domain->getId();
 
-        $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
-        $orderData = $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
+        $orderData = $this->orderFacade->createOrderDataFromCart($cart, $this->domain->getCurrentDomainConfig());
 
         $productsPrice = $orderData->getProductsTotalPriceAfterAppliedDiscounts();
 
-        $isFreeTransportAndPaymentPromoCodeApplied = $orderInput->isFreeTransportAndPaymentPromoCodeApplied();
+        $isFreeTransportAndPaymentPromoCodeApplied = $orderData->freeTransportAndPaymentApplied;
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId, $isFreeTransportAndPaymentPromoCodeApplied)) {
             $amountForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingAmount(
@@ -102,8 +90,6 @@ class TransportAndPaymentWatcherFacade
         $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);
 
         $this->checkPayment($cart);
-
-        return $this->cartWithModificationsResult;
     }
 
     /**

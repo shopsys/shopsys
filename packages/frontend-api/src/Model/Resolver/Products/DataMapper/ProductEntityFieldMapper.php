@@ -348,4 +348,13 @@ class ProductEntityFieldMapper
             ];
         }, $product->getProductVideos());
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return string
+     */
+    public function getVatPercent(Product $product): string
+    {
+        return $product->getVatForDomain($this->domain->getId())->getPercent();
+    }
 }

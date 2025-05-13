@@ -395,8 +395,8 @@ type Cart {
   payment: Payment
   "Selected bank swift code of goPay payment bank transfer"
   paymentGoPayBankSwift: String
-  "Applied promo code if provided"
-  promoCode: PromoCode
+  "Applied promo codes if provided"
+  promoCodes: [PromoCode!]!
   "Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa."
   remainingAmountForFreeTransport: Money
   "Rounding amount if payment has rounding allowed"
@@ -1261,6 +1261,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   variants: [Variant!]!
   "Number of visible variants"
   variantsCount: Int!
+  vatPercent: String!
 }
 
 scalar Money
@@ -1465,6 +1466,8 @@ type Order {
   email: String!
   "The customer's first name"
   firstName: String
+  "Indicates whether the order has an external payment"
+  hasExternalPayment: Boolean!
   "Indicates whether order payment is still being processed with GoPay payment type"
   hasPaymentInProcess: Boolean!
   "Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program"
@@ -1836,7 +1839,7 @@ type Payment {
   "Payment images"
   images(type: String = null): [Image!]!
   "Localized payment instruction (domain dependent)"
-  instruction: String
+  instructions: String
   "Payment image by params"
   mainImage(type: String = null): Image
   "Payment name"
@@ -1848,14 +1851,21 @@ type Payment {
   "List of assigned transports"
   transports: [Transport!]!
   "Type of payment"
-  type: String!
+  type: PaymentTypeEnum!
   "UUID"
   uuid: Uuid!
+  vatPercent: String!
 }
 
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
+}
+
+"One of the possible methods of the payment type"
+enum PaymentTypeEnum {
+  basic
+  goPay
 }
 
 type PersonalData {
@@ -1988,6 +1998,7 @@ interface Product {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
+  vatPercent: String!
 }
 
 "A connection to a list of items."
@@ -2485,6 +2496,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
+  vatPercent: String!
 }
 
 input RemoveCustomerUserDataInput {
@@ -2724,7 +2736,7 @@ type Transport {
   "Transport images"
   images(type: String = null): [Image!]!
   "Localized transport instruction (domain dependent)"
-  instruction: String
+  instructions: String
   "Pointer telling if the transport is of type personal pickup"
   isPersonalPickup: Boolean!
   "Transport image by params"
@@ -2743,6 +2755,7 @@ type Transport {
   transportTypeCode: TransportTypeEnum!
   "UUID"
   uuid: Uuid!
+  vatPercent: String!
 }
 
 "One of the possible methods of the transport type"
@@ -2833,6 +2846,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
+  vatPercent: String!
 }
 
 type VideoToken {

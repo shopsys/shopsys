@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -430,6 +431,20 @@ class Order
         }
 
         return $paymentTransactions;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction|null
+     */
+    public function getLastGoPayTransaction(): ?PaymentTransaction
+    {
+        $lastTransaction = $this->paymentTransactions->last();
+
+        if ($lastTransaction->getPayment()?->isGoPay()) {
+            return $lastTransaction;
+        }
+
+        return null;
     }
 
     /**
@@ -1291,5 +1306,13 @@ class Order
         }
 
         return $totalWeight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasExternalPayment(): bool
+    {
+        return $this->getPayment()->getType() !== PaymentTypeEnum::TYPE_BASIC;
     }
 }

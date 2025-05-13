@@ -15,4 +15,5 @@ fragment TransportWithAvailablePaymentsFragment on Transport {
     daysUntilDelivery
     transportTypeCode
     isPersonalPickup
+    vatPercent
 }

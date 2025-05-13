@@ -28,7 +28,6 @@ There is a list of all the repositories maintained by the monorepo:
 - [shopsys/php-image](https://github.com/shopsys/php-image)
 - [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
 - [shopsys/administration](https://github.com/shopsys/administration)
-- [shopsys/convertim](https://github.com/shopsys/convertim)
 - [shopsys/maker](https://github.com/shopsys/maker)
 
 Packages are formatted by release version.

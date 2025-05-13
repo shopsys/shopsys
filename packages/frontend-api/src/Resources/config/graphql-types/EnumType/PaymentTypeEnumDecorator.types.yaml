@@ -1,0 +1,10 @@
+PaymentTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of the possible methods of the payment type"
+        values:
+            basic:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_BASIC")'
+            goPay:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_GOPAY")'

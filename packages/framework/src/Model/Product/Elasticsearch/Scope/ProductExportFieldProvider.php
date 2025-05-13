@@ -50,6 +50,7 @@ class ProductExportFieldProvider
     public const string AVAILABLE_STORES_COUNT = 'available_stores_count';
     public const string STORE_AVAILABILITIES_INFORMATION = 'store_availabilities_information';
     public const string AVAILABILITY_STATUS = 'availability_status';
+    public const string VAT_PERCENT = 'vat_percent';
 
     public const string IS_SALE_EXCLUSION = 'is_sale_exclusion';
 

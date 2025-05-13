@@ -30,6 +30,9 @@ class PaymentResolverMap extends ResolverMap
                 'goPayPaymentMethod' => function (Payment $payment) {
                     return $payment->getGoPayPaymentMethodByDomainId($this->domain->getId());
                 },
+                'vatPercent' => function (Payment $payment) {
+                    return $payment->getVatForDomain($this->domain->getId())->getPercent();
+                },
             ],
         ];
     }

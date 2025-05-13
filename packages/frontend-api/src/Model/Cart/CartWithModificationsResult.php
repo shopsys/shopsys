@@ -8,6 +8,7 @@ use LogicException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -76,6 +77,11 @@ class CartWithModificationsResult
     protected ?Money $remainingAmountForFreeTransport = null;
 
     protected ?PriceInterface $roundingPrice = null;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
+     */
+    protected array $promoCodes = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
@@ -270,18 +276,19 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\PromoCodeData|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function getPromoCode(): ?PromoCodeData
+    public function getPromoCode(): ?PromoCode
     {
-        if ($this->cart->getFirstAppliedPromoCode() === null) {
-            return null;
-        }
+        return $this->cart->getFirstAppliedPromoCode();
+    }
 
-        return new PromoCodeData(
-            $this->cart->getFirstAppliedPromoCode()->getCode(),
-            $this->cart->getFirstAppliedPromoCode()->getDiscountType(),
-        );
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
+     */
+    public function getPromoCodes(): array
+    {
+        return $this->promoCodes;
     }
 
     /**
@@ -402,5 +409,13 @@ class CartWithModificationsResult
     public function setRoundingPrice(?PriceInterface $roundingPrice): void
     {
         $this->roundingPrice = $roundingPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    public function addPromoCode(PromoCode $promoCode): void
+    {
+        $this->promoCodes[] = $promoCode;
     }
 }

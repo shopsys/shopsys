@@ -13,7 +13,6 @@ import { TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { PaymentTypeEnum } from 'types/payment';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -46,7 +45,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
         );
 
-    const notPaid = order.payment.type === PaymentTypeEnum.GoPay && !order.isPaid && !order.hasPaymentInProcess;
+    const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
 
     return (
         <>
@@ -64,9 +63,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         {formatPrice(order.totalPrice.priceWithVat)}
 
                         <OrderPaymentStatusBar
+                            orderHasExternalPayment={order.hasExternalPayment}
                             orderHasPaymentInProcess={order.hasPaymentInProcess}
                             orderIsPaid={order.isPaid}
-                            orderPaymentType={order.payment.type}
                         />
                     </OrderItemColumnInfo>
                 )}

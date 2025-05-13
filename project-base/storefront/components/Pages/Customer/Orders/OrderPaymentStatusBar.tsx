@@ -1,9 +1,8 @@
 import useTranslation from 'next-translate/useTranslation';
-import { PaymentTypeEnum } from 'types/payment';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OrderPaymentStatusBarProps = {
-    orderPaymentType: string;
+    orderHasExternalPayment: boolean;
     orderIsPaid: boolean;
     orderHasPaymentInProcess: boolean;
 };
@@ -26,12 +25,12 @@ const OrderPaymentStatus: FC<{
 };
 
 export const OrderPaymentStatusBar: FC<OrderPaymentStatusBarProps> = ({
-    orderPaymentType,
+    orderHasExternalPayment,
     orderIsPaid,
     className,
     orderHasPaymentInProcess,
 }) => {
-    if (orderPaymentType !== PaymentTypeEnum.GoPay) {
+    if (!orderHasExternalPayment) {
         return null;
     }
 

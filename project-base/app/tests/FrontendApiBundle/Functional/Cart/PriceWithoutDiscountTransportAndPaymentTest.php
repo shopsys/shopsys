@@ -11,12 +11,12 @@ use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Cart\CartFacade;
-use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -54,7 +54,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
             ],
         );
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         $testingTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);

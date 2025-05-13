@@ -1,3 +1,4 @@
-import { PaymentTypeEnum } from 'types/payment';
+import { TypePaymentTypeEnum } from 'graphql/types';
 
-export const getIsPaymentWithPaymentGate = (paymentType: string) => paymentType === PaymentTypeEnum.GoPay;
+export const getIsPaymentWithPaymentGate = (paymentType: TypePaymentTypeEnum) =>
+    paymentType === TypePaymentTypeEnum.GoPay;

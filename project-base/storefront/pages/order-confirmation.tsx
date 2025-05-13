@@ -16,14 +16,13 @@ import {
     TypeOrderSentPageContentQueryVariables,
     useOrderSentPageContentQuery,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
-import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { PaymentTypeEnum } from 'types/payment';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -33,7 +32,7 @@ export type OrderConfirmationUrlQuery = {
     orderUuid: string | undefined;
     companyNumber: string | undefined;
     orderEmail: string | undefined;
-    orderPaymentType: string | undefined;
+    orderPaymentType: TypePaymentTypeEnum | undefined;
     orderUrlHash?: string | undefined;
     orderPaymentStatusPageValidityHash: string | undefined;
 };
@@ -69,7 +68,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     }
 
     const stepperFlow =
-        orderData.order.payment.type === PaymentTypeEnum.GoPay && orderData.order.isPaid
+        orderData.order.hasExternalPayment && orderData.order.isPaid
             ? FlowTypesEnum.PaymentSuccess
             : FlowTypesEnum.PaymentAwaiting;
 
@@ -90,7 +89,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         content={orderSentPageContentData?.orderSentPageContent}
                         heading={t('Your order was created')}
                     >
-                        {orderPaymentType === PaymentTypeEnum.GoPay ? (
+                        {orderPaymentType === TypePaymentTypeEnum.GoPay ? (
                             <GoPayGateway orderUuid={orderUuid!} />
                         ) : undefined}
                     </ConfirmationPageContent>

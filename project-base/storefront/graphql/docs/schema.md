@@ -156,6 +156,7 @@
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
+    * [PaymentTypeEnum](#paymenttypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -3214,11 +3215,11 @@ Selected bank swift code of goPay payment bank transfer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="cart.promocode">promoCode</strong></td>
-<td valign="top"><a href="#promocode">PromoCode</a></td>
+<td colspan="2" valign="top"><strong id="cart.promocodes">promoCodes</strong></td>
+<td valign="top">[<a href="#promocode">PromoCode</a>!]!</td>
 <td>
 
-Applied promo code if provided
+Applied promo codes if provided
 
 </td>
 </tr>
@@ -6021,6 +6022,11 @@ Number of visible variants
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.vatpercent">vatPercent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -6502,6 +6508,15 @@ The customer's email address
 <td>
 
 The customer's first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.hasexternalpayment">hasExternalPayment</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the order has an external payment
 
 </td>
 </tr>
@@ -7570,7 +7585,7 @@ Payment images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="payment.instruction">instruction</strong></td>
+<td colspan="2" valign="top"><strong id="payment.instructions">instructions</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7635,7 +7650,7 @@ List of assigned transports
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="payment.type">type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#paymenttypeenum">PaymentTypeEnum</a>!</td>
 <td>
 
 Type of payment
@@ -7650,6 +7665,11 @@ Type of payment
 UUID
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="payment.vatpercent">vatPercent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -8721,6 +8741,11 @@ UUID
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.vatpercent">vatPercent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -9560,7 +9585,7 @@ Transport images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="transport.instruction">instruction</strong></td>
+<td colspan="2" valign="top"><strong id="transport.instructions">instructions</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9658,6 +9683,11 @@ Code of transport type
 UUID
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="transport.vatpercent">vatPercent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -10033,6 +10063,11 @@ List of product's unique selling propositions
 UUID
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.vatpercent">vatPercent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -12433,6 +12468,29 @@ New
 </tbody>
 </table>
 
+### PaymentTypeEnum
+
+One of the possible methods of the payment type
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>basic</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>goPay</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalDataAccessRequestTypeEnum
 
 One of two possible types for personal data access request
@@ -13797,6 +13855,11 @@ List of product's unique selling propositions
 UUID
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.vatpercent">vatPercent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

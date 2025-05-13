@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
@@ -25,9 +26,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  */
 class Payment extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
-    protected const GEDMO_SORTABLE_LAST_POSITION = -1;
-    public const TYPE_GOPAY = 'goPay';
-    public const TYPE_BASIC = 'basic';
+    protected const int GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
@@ -135,7 +134,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->czkRounding = $paymentData->czkRounding;
         $this->type = $paymentData->type;
 
-        if ($paymentData->type !== self::TYPE_GOPAY) {
+        if ($paymentData->type !== PaymentTypeEnum::TYPE_GOPAY) {
             $this->resetGopayPaymentMethods();
         } else {
             foreach ($this->domains as $paymentDomain) {
@@ -354,7 +353,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function isGoPay(): bool
     {
-        return $this->type === self::TYPE_GOPAY;
+        return $this->type === PaymentTypeEnum::TYPE_GOPAY;
     }
 
     /**
@@ -497,7 +496,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected function getGatewayPayments(): array
     {
         return [
-            self::TYPE_GOPAY,
+            PaymentTypeEnum::TYPE_GOPAY,
         ];
     }
 
@@ -507,5 +506,14 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function isGatewayPayment(): bool
     {
         return in_array($this->type, $this->getGatewayPayments(), true);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVatForDomain(int $domainId): Vat
+    {
+        return $this->getPaymentDomain($domainId)->getVat();
     }
 }

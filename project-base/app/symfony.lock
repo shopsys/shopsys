@@ -666,9 +666,6 @@
     "shopsys/coding-standards": {
         "version": "v9.1.1"
     },
-    "shopsys/convertim": {
-        "version": "17.0.x-dev"
-    },
     "shopsys/form-types-bundle": {
         "version": "v9.1.1"
     },

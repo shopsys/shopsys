@@ -2,7 +2,7 @@ query PaymentsQuery {
     payments {
         name,
         description,
-        instruction,
+        instructions,
         position,
         type,
         price {
@@ -24,5 +24,6 @@ query PaymentsQuery {
             imageLargeUrl
             paymentGroup
         }
+        vatPercent
     }
 }

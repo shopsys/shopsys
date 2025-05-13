@@ -1,4 +1,4 @@
-import { OrderItemColumnInfo, OrderItemRowInfo, ElementWithImage } from './OrderItemElements';
+import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
 import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
@@ -8,7 +8,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { PaymentTypeEnum } from 'types/payment';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
@@ -34,7 +33,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
             (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
         );
 
-    const notPaid = order.payment.type === PaymentTypeEnum.GoPay && !order.isPaid && !order.hasPaymentInProcess;
+    const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
 
     return (
         <div className="bg-backgroundMore vl:flex-row flex flex-col flex-wrap justify-between gap-4 rounded-xl p-5">
@@ -62,9 +61,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                             {formatPrice(order.totalPrice.priceWithVat)}
 
                             <OrderPaymentStatusBar
+                                orderHasExternalPayment={order.hasExternalPayment}
                                 orderHasPaymentInProcess={order.hasPaymentInProcess}
                                 orderIsPaid={order.isPaid}
-                                orderPaymentType={order.payment.type}
                             />
                         </OrderItemColumnInfo>
                     )}

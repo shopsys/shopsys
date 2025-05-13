@@ -136,3 +136,6 @@ OrderDecorator:
             customerUser:
                 type: "BaseCustomerUser"
                 description: "The registered customer user who made the order (or null if the order was made by an unregistered user)"
+            hasExternalPayment:
+                type: "Boolean!"
+                description: "Indicates whether the order has an external payment"

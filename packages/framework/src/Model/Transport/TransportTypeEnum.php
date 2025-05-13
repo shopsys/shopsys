@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
-use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
-
-class TransportTypeEnum extends AbstractEnum
+class TransportTypeEnum extends AbstractTransportTypeEnum
 {
     public const string TYPE_COMMON = 'common';
     public const string TYPE_PACKETERY = 'packetery';

@@ -9,7 +9,7 @@ mutation RemovePromoCodeFromCart(
         }
     ) {
        uuid
-        promoCode {
+        promoCodes {
             code
             type
         }

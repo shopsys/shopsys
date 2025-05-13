@@ -6,10 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -23,6 +25,8 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -70,6 +74,8 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -101,6 +107,8 @@ class OrderFacade
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly OrderProcessor $orderProcessor,
     ) {
     }
 
@@ -429,5 +437,33 @@ class OrderFacade
     public function getAllWithoutTrackingNumberByTransportType(string $transportType): array
     {
         return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    public function createOrderDataFromCart(Cart $cart, DomainConfig $domainConfig): OrderData
+    {
+        $orderData = $this->orderDataFactory->create();
+
+        return $this->fillOrderDataFromCart($orderData, $cart, $domainConfig);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    protected function fillOrderDataFromCart(OrderData $orderData, Cart $cart, DomainConfig $domainConfig): OrderData
+    {
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
+
+        return $this->orderProcessor->process(
+            $orderInput,
+            $orderData,
+        );
     }
 }
