@@ -1339,6 +1339,8 @@ type Mutation {
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
   "Set default delivery address by Uuid"
   SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CurrentCustomerUser!
+  "set order payment status page validity hash, so it's possible to safely return to the payment status page"
+  SetOrderPaymentStatusPageValidityHashMutation(orderPaymentStatusPageValidityHash: String!, orderUuid: Uuid!): String!
   "check payment status of order after callback from payment service"
   UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
 }
@@ -1478,6 +1480,8 @@ type Order {
   isPaid: Boolean!
   "All items in the order including payment and transport"
   items: [OrderItem!]!
+  "URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible."
+  lastExternalPaymentUrl: String
   "The customer's last name"
   lastName: String
   "Other information related to the order"
@@ -1673,6 +1677,13 @@ enum OrderItemTypeEnum {
   transport
 }
 
+type OrderPaymentPageContent {
+  "HTML content for status page after payment. The content is determined by the payment status."
+  content: String!
+  "Status indicating the current state of the payment page content."
+  status: PaymentContentPageStatusEnum!
+}
+
 type OrderPaymentsConfig {
   "All available payment methods for the order (excluding the current one)"
   availablePayments: [Payment!]!
@@ -1855,6 +1866,13 @@ type Payment {
   "UUID"
   uuid: Uuid!
   vatPercent: String!
+}
+
+"Represents the status of a payment content page after the payment process"
+enum PaymentContentPageStatusEnum {
+  FAILED
+  IN_PROCESS
+  SUCCESSFUL
 }
 
 type PaymentSetupCreationData {
@@ -2242,12 +2260,10 @@ type Query {
   orderItems(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int): OrderItemConnection!
   "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
   orderItemsSearch(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
-  "Returns HTML content for order with failed payment."
-  orderPaymentFailedContent(orderUuid: Uuid!): String!
+  "Returns HTML content for order payment page depending on the state of the payment."
+  orderPaymentPageContent(orderUuid: Uuid!): OrderPaymentPageContent!
   "Returns payments available for the given order"
   orderPayments(orderUuid: Uuid!): OrderPaymentsConfig!
-  "Returns HTML content for order with successful payment."
-  orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
   orders(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int): OrderConnection
   "Returns HTML content for order sent page."
