@@ -322,7 +322,7 @@ class ReadyCategorySeoMixFacade
                 // slider parameter, minimal and maximal value are the same (see checkPossibilityToFindReadyCategorySeoMix method),
                 // so it does not matter which one is used for grabbing the text
                 $text = $parameterFilterData['minimalValue'];
-                $parameterValueId = $this->parameterFacade->getParameterValueIdByText((string)$text, $currentLocale);
+                $parameterValueId = $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale((string)$text, (string)$text, $currentLocale);
             } else {
                 $parameterUuid = reset($parameterFilterData['values']);
 

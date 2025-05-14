@@ -300,8 +300,9 @@ class CategorySeoTest extends GraphQlTestCase
         $flagNew = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
         $parameterUsb = $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class);
         $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
-        $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextAndLocale(
+        $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(
             t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            null,
             $firstDomainLocale,
         );
 

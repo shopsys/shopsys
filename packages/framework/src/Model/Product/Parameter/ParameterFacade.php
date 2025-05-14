@@ -158,22 +158,30 @@ class ParameterFacade
 
     /**
      * @param string $valueText
+     * @param string|null $numericValue
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function getParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
-    {
-        return $this->parameterRepository->getParameterValueByValueTextAndLocale($valueText, $locale);
+    public function getParameterValueByValueTextNumericValueAndLocale(
+        string $valueText,
+        ?string $numericValue,
+        string $locale,
+    ): ParameterValue {
+        return $this->parameterRepository->getParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
     }
 
     /**
      * @param string $valueText
+     * @param string|null $numericValue
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
      */
-    public function findParameterValueByValueTextAndLocale(string $valueText, string $locale): ?ParameterValue
-    {
-        return $this->parameterRepository->findParameterValueByValueTextAndLocale($valueText, $locale);
+    public function findParameterValueByValueTextNumericValueAndLocale(
+        string $valueText,
+        ?string $numericValue,
+        string $locale,
+    ): ?ParameterValue {
+        return $this->parameterRepository->findParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
     }
 
     /**
@@ -325,9 +333,7 @@ class ParameterFacade
             $parameterValueData->text = $parameterValueConversionData->newValueText;
             $parameterValueData->numericValue = $parameterValueConversionData->newValueText;
 
-            $newParameterValue = $this->parameterValueFactory->create($parameterValueData);
-            $this->em->persist($newParameterValue);
-            $this->em->flush();
+            $newParameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
 
             $this->parameterRepository->updateParameterValueInProductsByConversion($parameter, $parameterValue, $newParameterValue);
             $newParameterValues[] = $newParameterValue;

@@ -382,8 +382,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById(self::PARAMETER_HDMI);
 
-        $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
+        $parameterValue = $parameterFacade->getParameterValueByValueTextNumericValueAndLocale(
             t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+            null,
             $this->firstDomainLocale,
         );
 

@@ -169,8 +169,9 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById($this->getReference(ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS, Parameter::class)->getId());
 
-        $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
+        $parameterValue = $parameterFacade->getParameterValueByValueTextNumericValueAndLocale(
             t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+            null,
             $this->firstDomainLocale,
         );
 
