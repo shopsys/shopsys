@@ -25,6 +25,7 @@
             "Shopsys\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/src/",
             "Shopsys\\ProductFeed\\LuigisBoxBundle\\": "packages/product-feed-luigis-box/src/",
             "Shopsys\\ArticleFeed\\LuigisBoxBundle\\": "packages/article-feed-luigis-box/src/",
+            "Shopsys\\AiToolsBundle\\": "packages/ai-tools/src/",
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
             "Shopsys\\LuigisBoxBundle\\": "packages/luigis-box/src/",
@@ -57,6 +58,7 @@
             "Tests\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/tests/",
             "Tests\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/tests/",
             "Tests\\ProductFeed\\LuigisBoxBundle\\": "packages/product-feed-luigis-box/tests/",
+            "Tests\\AiToolsBundle\\": "packages/ai-tools/tests/",
             "Tests\\LuigisBoxBundle\\": "packages/luigis-box/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
             "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
@@ -291,6 +293,7 @@
         "shopsys/product-feed-heureka-delivery": "self.version",
         "shopsys/product-feed-luigis-box": "self.version",
         "shopsys/product-feed-zbozi": "self.version",
+        "shopsys/ai-tools": "self.version",
         "shopsys/s3-bridge": "self.version"
     }
 }

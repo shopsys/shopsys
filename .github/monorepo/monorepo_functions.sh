@@ -41,6 +41,7 @@ get_all_packages() {
         monorepo-tools \
         php-image \
         luigis-box \
+        ai-tools \
         project-base"
 }
 

@@ -1,0 +1,50 @@
+{
+    "name": "shopsys/ai-tools",
+    "type": "library",
+    "description": "Plugin extending the shopsys platform with AI tools",
+    "keywords": ["AI", "plugin", "Shopsys Platform", "SSFW", "SSP"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shopsys\\AiToolsBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\AiToolsBundle\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "doctrine/dbal": "^3.8.5",
+        "doctrine/doctrine-bundle": "^2.5.7",
+        "doctrine/orm": "^2.11.2",
+        "doctrine/persistence": "^3.3.3",
+        "shopsys/form-types-bundle": "17.0.x-dev",
+        "shopsys/framework": "17.0.x-dev",
+        "shopsys/migrations": "17.0.x-dev",
+        "shopsys/plugin-interface": "17.0.x-dev",
+        "symfony/config": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/form": "^6.4",
+        "symfony/http-kernel": "^6.4",
+        "symfony/translation": "^6.4",
+        "twig/twig": "^3.14.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.2.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true
+        }
+    }
+}

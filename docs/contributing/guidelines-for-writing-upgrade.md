@@ -54,6 +54,7 @@ Each upgrade file must have a link to the main UPGRADE.md file with general info
 - shopsys/luigis-box
 - shopsys/administration
 - shopsys/convertim
+- shopsys/ai-tools
 
 Each section must contain instructions relevant only to the package they cover, and the sections have to be ordered as they are in the list above.
 
