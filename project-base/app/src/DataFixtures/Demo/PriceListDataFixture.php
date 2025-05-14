@@ -53,19 +53,6 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainConfig->getId(), Vat::class);
 
             $priceListData = $this->priceListDataFactory->create();
-            $priceListData->name = t('Special offers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
-            $priceListData->domainId = $domainConfig->getId();
-            $priceListData->validFrom = new DateTimeImmutable('2023-01-10 08:30:00');
-            $priceListData->validTo = new DateTimeImmutable('2084-01-10 08:30:00');
-            $priceListData->priceListProductPricesData = [
-                $this->createPriceListProductPriceData('27', '42', $domainConfig->getId(), $currencyCzk, $vat),
-                $this->createPriceListProductPriceData('28', '50', $domainConfig->getId(), $currencyCzk, $vat),
-                $this->createPriceListProductPriceData('54', '10123', $domainConfig->getId(), $currencyCzk, $vat),
-            ];
-            $priceList = $this->priceListFacade->create($priceListData);
-            $this->addReferenceForDomain(self::ACTIVE_SPECIAL_OFFERS_REFERENCE, $priceList, $domainConfig->getId());
-
-            $priceListData = $this->priceListDataFactory->create();
             $priceListData->name = t('Blue wednesday', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $priceListData->domainId = $domainConfig->getId();
             $priceListData->validFrom = new DateTimeImmutable('2023-11-10 00:00:00');
@@ -100,6 +87,19 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             ];
             $priceList = $this->priceListFacade->create($priceListData);
             $this->addReferenceForDomain(self::FUTURE_PROMOTED_PRODUCTS_REFERENCE, $priceList, $domainConfig->getId());
+
+            $priceListData = $this->priceListDataFactory->create();
+            $priceListData->name = t('Special offers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
+            $priceListData->domainId = $domainConfig->getId();
+            $priceListData->validFrom = new DateTimeImmutable('2023-01-10 08:30:00');
+            $priceListData->validTo = new DateTimeImmutable('2084-01-10 08:30:00');
+            $priceListData->priceListProductPricesData = [
+                $this->createPriceListProductPriceData('27', '42', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('28', '50', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('54', '10123', $domainConfig->getId(), $currencyCzk, $vat),
+            ];
+            $priceList = $this->priceListFacade->create($priceListData);
+            $this->addReferenceForDomain(self::ACTIVE_SPECIAL_OFFERS_REFERENCE, $priceList, $domainConfig->getId());
         }
     }
 
