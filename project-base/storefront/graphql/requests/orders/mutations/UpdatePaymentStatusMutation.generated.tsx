@@ -10,7 +10,7 @@ export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename: 'Order', isPaid: boolean, number: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename: 'Order', isPaid: boolean, number: string, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } } };
 
 
       export interface PossibleTypesResultData {
