@@ -79,14 +79,13 @@ class CustomerUserFormType extends AbstractType
                 'label' => t('ID'),
                 'data' => $this->customerUser->getId(),
             ]);
-            $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                'label' => t('Domain'),
-                'data' => $this->customerUser->getDomainId(),
-            ]);
             $builderSystemDataGroup->add('activated', DisplayOnlyType::class, [
                 'label' => t('Active'),
                 'data' => $this->customerUser->isActivated() ? t('Yes') : t('No'),
-                'position' => ['after' => 'formId'],
+            ]);
+            $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
+                'label' => t('Domain'),
+                'data' => $this->customerUser->getDomainId(),
             ]);
             $pricingGroups = $this->pricingGroupFacade->getByDomainId($this->customerUser->getDomainId());
         } else {
@@ -181,7 +180,16 @@ class CustomerUserFormType extends AbstractType
                     new Constraints\Callback([$this, 'validateUniqueEmail']),
                 ],
                 'label' => t('Email'),
-            ])
+            ]);
+
+        if ($this->customerUser === null) {
+            $builderPersonalDataGroup->add('sendRegistrationMail', CheckboxType::class, [
+                'required' => false,
+                'label' => t('Send confirmation email about registration to customer'),
+            ]);
+        }
+
+        $builderPersonalDataGroup
             ->add('telephone', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -192,15 +200,6 @@ class CustomerUserFormType extends AbstractType
                 ],
                 'label' => t('Telephone'),
             ]);
-
-        if ($this->customerUser === null) {
-            $builderPersonalDataGroup->add('sendRegistrationMail', CheckboxType::class, [
-                'required' => false,
-                'label' => t('Send confirmation email about registration to customer'),
-                'position' => ['after' => 'email'],
-            ]);
-        }
-
 
         if ($this->customerUser instanceof CustomerUser) {
             $builderSystemDataGroup->add('createdAt', DisplayOnlyType::class, [

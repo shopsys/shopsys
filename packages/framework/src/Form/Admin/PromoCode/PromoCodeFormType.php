@@ -69,7 +69,12 @@ class PromoCodeFormType extends AbstractType
     {
         $this->promoCode = $options['promo_code'];
 
-        $this->buildBaseGroup($builder);
+        if ($options['mass_generate']) {
+            $builder->add($this->addMassGenerationGroup($builder));
+            $builder->remove('code');
+        }
+
+        $this->buildBaseGroup($builder, $options);
         $this->buildLimitsFormGroup($builder);
         $this->buildTimeValidationFormGroup($builder);
         $this->buildFlagsFormGroup($builder);
@@ -84,9 +89,6 @@ class PromoCodeFormType extends AbstractType
         ]);
 
         if ($options['mass_generate']) {
-            $builder->add($this->addMassGenerationGroup($builder));
-            $builder->remove('code');
-
             $actionBar->add('saveAndDownloadCsv', SubmitType::class, [
                 'label' => t('Create and download CSV'),
                 'position' => [
@@ -100,22 +102,33 @@ class PromoCodeFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      */
-    private function buildBaseGroup(FormBuilderInterface $builder): void
+    private function buildBaseGroup(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('code', TextType::class, [
-                'label' => t('Promo code'),
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter promo code',
-                    ]),
-                ],
-            ])
-            ->add('domainId', HiddenType::class, [
-                'data' => $this->getDomainId(),
-            ])
+        if (!$options['mass_generate']) {
+            $builder
+                ->add('code', TextType::class, [
+                    'label' => t('Promo code'),
+                    'required' => true,
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Please enter promo code',
+                        ]),
+                    ],
+                ]);
+        }
+
+        if ($this->promoCode instanceof PromoCode) {
+            $builder->add('formId', DisplayOnlyType::class, [
+                'label' => t('ID'),
+                'data' => $this->promoCode->getId(),
+            ]);
+        }
+
+        $builder->add('domainId', HiddenType::class, [
+            'data' => $this->getDomainId(),
+        ])
             ->add('shownDomainId', DomainType::class, [
                 'mapped' => false,
                 'label' => t('Domain'),
@@ -134,14 +147,6 @@ class PromoCodeFormType extends AbstractType
                 'label' => t('Remaining number of uses'),
                 'required' => false,
             ]);
-
-        if ($this->promoCode instanceof PromoCode) {
-            $builder->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
-                'data' => $this->promoCode->getId(),
-                'position' => ['after' => 'code'],
-            ]);
-        }
     }
 
     /**
@@ -321,7 +326,6 @@ class PromoCodeFormType extends AbstractType
     {
         $builderMassPromoCodeGroup = $builder->create('massPromoCodeGroup', GroupType::class, [
             'label' => t('Bulk promo code generation'),
-            'position' => 'first',
         ]);
 
         $builderMassPromoCodeGroup
