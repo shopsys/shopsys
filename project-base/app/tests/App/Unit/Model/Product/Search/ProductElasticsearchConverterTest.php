@@ -26,7 +26,7 @@ class ProductElasticsearchConverterTest extends TestCase
 
         $mapping = Json::decode(
             file_get_contents($mappingFile),
-            Json::FORCE_ARRAY,
+            true,
         );
 
         $productFieldsInMapping = array_keys($mapping['mappings']['properties']);

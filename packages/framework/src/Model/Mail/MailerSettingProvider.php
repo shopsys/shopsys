@@ -32,7 +32,7 @@ class MailerSettingProvider
     {
         $mailWhitelist = $this->mailSettingFacade->getMailWhitelist($domainId);
 
-        return $mailWhitelist !== null ? Json::decode($mailWhitelist, Json::FORCE_ARRAY) : [];
+        return $mailWhitelist !== null ? Json::decode($mailWhitelist, true) : [];
     }
 
     /**

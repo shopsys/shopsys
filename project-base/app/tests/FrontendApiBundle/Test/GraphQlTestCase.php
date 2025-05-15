@@ -86,8 +86,8 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     ): void {
         $this->assertQueryWithExpectedArray(
             $query,
-            Json::decode($jsonExpected, Json::FORCE_ARRAY),
-            Json::decode($jsonVariables, Json::FORCE_ARRAY),
+            Json::decode($jsonExpected, true),
+            Json::decode($jsonVariables, true),
         );
     }
 
@@ -103,7 +103,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertSame(200, $response->getStatusCode());
 
         $result = $response->getContent();
-        $this->assertEquals($expected, Json::decode($result, Json::FORCE_ARRAY), $result);
+        $this->assertEquals($expected, Json::decode($result, true), $result);
     }
 
     /**
@@ -115,7 +115,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     {
         $content = $this->getResponseForQuery($query, $variables)->getContent();
 
-        return Json::decode($content, Json::FORCE_ARRAY);
+        return Json::decode($content, true);
     }
 
     /**

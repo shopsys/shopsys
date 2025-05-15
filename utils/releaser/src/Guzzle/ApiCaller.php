@@ -29,7 +29,7 @@ final class ApiCaller
 
         $json = $response->getBody()->getContents();
 
-        return Json::decode($json, Json::FORCE_ARRAY);
+        return Json::decode($json, true);
     }
 
     /**

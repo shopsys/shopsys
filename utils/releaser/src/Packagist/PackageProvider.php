@@ -24,7 +24,7 @@ final class PackageProvider
     {
         $url = 'https://packagist.org/packages/list.json?vendor=' . $organization;
         $remoteContent = FileSystem::read($url);
-        $json = Json::decode($remoteContent, Json::FORCE_ARRAY);
+        $json = Json::decode($remoteContent, true);
 
         $this->ensureIsValidResponse($json, $url);
 
@@ -71,7 +71,7 @@ final class PackageProvider
     {
         $url = 'https://repo.packagist.org/p2/' . $package . '.json';
         $remoteContent = FileSystem::read($url);
-        $json = Json::decode($remoteContent, Json::FORCE_ARRAY);
+        $json = Json::decode($remoteContent, true);
 
         if (!isset($json['packages'][$package])) {
             return [];

@@ -126,7 +126,7 @@ class SeoSettingFacade
     {
         $domainJson = $this->setting->get(self::SEO_ALTERNATIVE_DOMAINS);
 
-        $data = $domainJson !== null ? Json::decode($domainJson, Json::FORCE_ARRAY) : [];
+        $data = $domainJson !== null ? Json::decode($domainJson, true) : [];
 
         foreach ($data as $group) {
             if (in_array($domainId, $group, true)) {
@@ -144,7 +144,7 @@ class SeoSettingFacade
     {
         $dataJson = $this->setting->get(self::SEO_ALTERNATIVE_DOMAINS);
 
-        return $dataJson !== null ? Json::decode($dataJson, Json::FORCE_ARRAY) : [];
+        return $dataJson !== null ? Json::decode($dataJson, true) : [];
     }
 
     /**

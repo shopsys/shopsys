@@ -20,7 +20,7 @@ class ComposerJsonFileManipulator
         string $version,
     ): void {
         foreach ($fileInfos as $fileInfo) {
-            $jsonContent = Json::decode($fileInfo->getContents(), Json::FORCE_ARRAY);
+            $jsonContent = Json::decode($fileInfo->getContents(), true);
 
             foreach ($packageNames as $packageName) {
                 $jsonContent = $this->replaceVersion($jsonContent, $packageName, $version);

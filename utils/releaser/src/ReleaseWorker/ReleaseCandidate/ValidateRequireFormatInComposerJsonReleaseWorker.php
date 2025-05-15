@@ -51,7 +51,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
         foreach ($this->composerJsonFilesProvider->provideAll() as $splFileInfo) {
-            $jsonContent = Json::decode($splFileInfo->getContents(), Json::FORCE_ARRAY);
+            $jsonContent = Json::decode($splFileInfo->getContents(), true);
 
             $this->validateVersions($jsonContent, 'require', $splFileInfo);
             $this->validateVersions($jsonContent, 'require-dev', $splFileInfo);
