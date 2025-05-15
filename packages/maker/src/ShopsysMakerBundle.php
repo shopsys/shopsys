@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\MakerBundle;
 
 use Override;
+use Shopsys\MakerBundle\Maker\BaseMaker;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -18,6 +19,9 @@ class ShopsysMakerBundle extends AbstractBundle
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->import('../config/services.yaml');
+
+        $builder->registerForAutoconfiguration(BaseMaker::class)
+            ->addTag('maker.command');
     }
 
     /**
