@@ -214,6 +214,7 @@
     "Max transaction count reached": "Max transaction count reached",
     "Maximum file size is {{ max }}": "Maximum file size is {{ max }}",
     "Maximum files count is {{ max }}": "Maximum files count is {{ max }}",
+    "Menu": "Menu",
     "Message": "Message",
     "metatagSiteName": "Shopsys Platform",
     "mins count_one": "min",

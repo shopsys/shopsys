@@ -7,7 +7,7 @@ import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 
 export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation }) => (
     <nav>
-        <ul className="relative hidden w-full lg:flex">
+        <ul className="relative hidden w-full overflow-hidden lg:flex">
             {navigation.map((navigationItem, index) => {
                 const hasChildren = !!navigationItem.categoriesByColumns.length;
 

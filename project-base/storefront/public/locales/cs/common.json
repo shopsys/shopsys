@@ -226,6 +226,7 @@
     "Max transaction count reached": "Maximílní počet transakcí byl dosažen",
     "Maximum file size is {{ max }}": "Maximální velikost souboru je {{ max }}",
     "Maximum files count is {{ max }}": "Maximální počet souborů je {{ max }}",
+    "Menu": "Menu",
     "Message": "Zpráva",
     "metatagSiteName": "Shopsys Platform",
     "mins count_one": "min",

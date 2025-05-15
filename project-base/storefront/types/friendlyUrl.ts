@@ -36,6 +36,7 @@ export const FriendlyPagesTypes = {
     complaintList: 'front_customer_complaint_list',
     orderList: 'front_customer_order_list',
     account: 'front_customer_account',
+    login: 'front_login',
 } as const;
 
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
@@ -54,6 +55,7 @@ export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = 
     complaintList: '/customer/complaints',
     orderList: '/customer/orders',
     account: '/customer/account',
+    login: '/login',
 } as const;
 
 export type FriendlyPagesTypesKey = keyof typeof FriendlyPagesTypes;

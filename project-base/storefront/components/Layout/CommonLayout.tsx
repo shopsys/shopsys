@@ -58,7 +58,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <div className="flex h-full min-h-screen flex-col">
                 <NotificationBars />
 
-                <header className="from-backgroundBrand to-backgroundBrandLess bg-linear-to-tr/srgb">
+                <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
                     <Header />
                     <DeferredNavigation />
                 </header>
