@@ -3307,7 +3307,7 @@ export type TypeSeoSetting = {
 export type TypeSettings = {
   __typename?: 'Settings';
   /** Main text for contact form */
-  contactFormMainText: Scalars['String']['output'];
+  contactFormMainText: Maybe<Scalars['String']['output']>;
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
   /** Returns true if Heureka is available for the current domain */

@@ -55,7 +55,7 @@ export const ContactContent: FC = () => {
             <VerticalStack gap="sm">
                 <h1>{t('Write to us')}</h1>
 
-                {settingsData?.settings?.contactFormMainText !== undefined && (
+                {settingsData?.settings?.contactFormMainText && (
                     <div dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }} />
                 )}
 

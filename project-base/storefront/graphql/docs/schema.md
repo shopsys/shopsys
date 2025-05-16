@@ -8974,7 +8974,7 @@ Represents settings of the current domain
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong id="settings.contactformmaintext">contactFormMainText</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Main text for contact form
