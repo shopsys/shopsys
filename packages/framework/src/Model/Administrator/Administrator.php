@@ -203,7 +203,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->roles = new ArrayCollection();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
         $this->uuid = Uuid::uuid4()->toString();
-        $this->displayOnlyDomainIds = null;
         $this->selectedLocale = $administratorData->selectedLocale;
         $this->setData($administratorData);
     }

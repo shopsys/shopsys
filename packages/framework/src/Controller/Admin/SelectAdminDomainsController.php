@@ -58,7 +58,7 @@ class SelectAdminDomainsController extends AdminBaseController
             if (count($data) === 0) {
                 $this->addErrorFlash(t('Please select at least one domain.'));
             } else {
-                if (array_values($data) === $this->domain->getAllIds()) {
+                if (count($data) === count($this->domain->getAllIds())) {
                     $data = [];
                 }
 
