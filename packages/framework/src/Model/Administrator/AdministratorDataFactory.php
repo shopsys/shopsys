@@ -33,7 +33,6 @@ class AdministratorDataFactory
     {
         $administratorData = $this->createInstance();
 
-        $administratorData->displayOnlyDomainIds = $this->domain->getAllIds();
         $administratorData->selectedLocale = $this->administratorLocalizationFacade->getDefaultAdminLocale();
 
         return $administratorData;
