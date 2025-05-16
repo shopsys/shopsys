@@ -73,6 +73,7 @@
     * [OrderItem](#orderitem)
     * [OrderItemConnection](#orderitemconnection)
     * [OrderItemEdge](#orderitemedge)
+    * [OrderPaymentPageContent](#orderpaymentpagecontent)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
@@ -156,6 +157,7 @@
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
+    * [PaymentContentPageStatusEnum](#paymentcontentpagestatusenum)
     * [PaymentTypeEnum](#paymenttypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
@@ -870,11 +872,11 @@ Returns list of searched order items that can be paginated using `first`, `last`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="query.orderpaymentfailedcontent">orderPaymentFailedContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong id="query.orderpaymentpagecontent">orderPaymentPageContent</strong></td>
+<td valign="top"><a href="#orderpaymentpagecontent">OrderPaymentPageContent</a>!</td>
 <td>
 
-Returns HTML content for order with failed payment.
+Returns HTML content for order payment page depending on the state of the payment.
 
 </td>
 </tr>
@@ -889,20 +891,6 @@ Returns HTML content for order with failed payment.
 <td>
 
 Returns payments available for the given order
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="query.orderpaymentsuccessfulcontent">orderPaymentSuccessfulContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Returns HTML content for order with successful payment.
 
 </td>
 </tr>
@@ -1881,6 +1869,25 @@ Set default delivery address by Uuid
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.setorderpaymentstatuspagevalidityhashmutation">SetOrderPaymentStatusPageValidityHashMutation</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+set order payment status page validity hash, so it's possible to safely return to the payment status page
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderPaymentStatusPageValidityHash</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
@@ -6566,6 +6573,15 @@ All items in the order including payment and transport
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.lastexternalpaymenturl">lastExternalPaymentUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7007,6 +7023,39 @@ A cursor for use in pagination.
 <td>
 
 The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderPaymentPageContent
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderpaymentpagecontent.content">content</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+HTML content for status page after payment. The content is determined by the payment status.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderpaymentpagecontent.status">status</strong></td>
+<td valign="top"><a href="#paymentcontentpagestatusenum">PaymentContentPageStatusEnum</a>!</td>
+<td>
+
+Status indicating the current state of the payment page content.
 
 </td>
 </tr>
@@ -12464,6 +12513,33 @@ In progress
 New
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### PaymentContentPageStatusEnum
+
+Represents the status of a payment content page after the payment process
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>FAILED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>IN_PROCESS</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>SUCCESSFUL</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>

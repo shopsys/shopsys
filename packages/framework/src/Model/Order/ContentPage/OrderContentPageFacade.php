@@ -62,6 +62,17 @@ class OrderContentPageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string
+     */
+    public function getPaymentInProcessPageContent(Order $order): string
+    {
+        $orderSentPageContent = $this->orderContentPageSettingFacade->getPaymentInProcessPageContent($order->getDomainId());
+
+        return $this->replaceVariables($order, $orderSentPageContent);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $orderSentPageContent
      * @return string
      */

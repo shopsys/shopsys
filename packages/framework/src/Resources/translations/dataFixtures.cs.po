@@ -22,6 +22,9 @@ msgstr "<p> Platba pro objednávku číslo {number} proběhla úspěšně. <br /
 msgid "<p> Payment for order number {number} has failed. <br /><br /> Please contact us to resolve the issue. </p>"
 msgstr "<p> Platba pro objednávku číslo {number} nebyla úspěšná. <br /><br /> Prosím kontaktujte nás pro vyřešení problému. </p>"
 
+msgid "<p> You’ve successfully selected a payment method. We’re now waiting for confirmation from the payment provider. </p> <p> If you haven’t completed the payment yet, please check your email for payment instructions. </p> <p> <a href=\"{order_detail_url}\">Show order detail</a> </p>"
+msgstr "<p> Úspěšně jste si zvolili platební metodu. Nyní čekáme na potvrzení od poskytovatele plateb. </p> <p> Pokud jste platbu ještě nedokončili, zkontrolujte prosím svůj e-mail, kde najdete pokyny k platbě. </p> <p> <a href=\"{order_detail_url}\">Zobrazit detail objednávky</a> </p>"
+
 msgid "Administrator reset password request"
 msgstr "Požadavek na resetování hesla administrátora"
 

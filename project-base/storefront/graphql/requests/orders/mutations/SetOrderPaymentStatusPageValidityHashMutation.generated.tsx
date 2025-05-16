@@ -3,12 +3,13 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeOrderPaymentSuccessfulContentQueryVariables = Types.Exact<{
+export type TypeSetOrderPaymentStatusPageValidityHashMutationVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
+  orderPaymentStatusPageValidityHash: Types.Scalars['String']['input'];
 }>;
 
 
-export type TypeOrderPaymentSuccessfulContentQuery = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
+export type TypeSetOrderPaymentStatusPageValidityHashMutation = { __typename?: 'Mutation', SetOrderPaymentStatusPageValidityHashMutation: string };
 
 
       export interface PossibleTypesResultData {
@@ -94,12 +95,15 @@ export type TypeOrderPaymentSuccessfulContentQuery = { __typename?: 'Query', ord
       export default result;
     
 
-export const OrderPaymentSuccessfulContentQueryDocument = gql`
-    query OrderPaymentSuccessfulContentQuery($orderUuid: Uuid!) {
-  orderPaymentSuccessfulContent(orderUuid: $orderUuid)
+export const SetOrderPaymentStatusPageValidityHashMutationDocument = gql`
+    mutation SetOrderPaymentStatusPageValidityHashMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String!) {
+  SetOrderPaymentStatusPageValidityHashMutation(
+    orderUuid: $orderUuid
+    orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
+  )
 }
     `;
 
-export function useOrderPaymentSuccessfulContentQuery(options: Omit<Urql.UseQueryArgs<TypeOrderPaymentSuccessfulContentQueryVariables>, 'query'>) {
-  return Urql.useQuery<TypeOrderPaymentSuccessfulContentQuery, TypeOrderPaymentSuccessfulContentQueryVariables>({ query: OrderPaymentSuccessfulContentQueryDocument, ...options });
+export function useSetOrderPaymentStatusPageValidityHashMutation() {
+  return Urql.useMutation<TypeSetOrderPaymentStatusPageValidityHashMutation, TypeSetOrderPaymentStatusPageValidityHashMutationVariables>(SetOrderPaymentStatusPageValidityHashMutationDocument);
 };

@@ -31,6 +31,8 @@ class PaymentTransactionDataFactory
         $paymentTransactionData->paidAmount = $paymentTransaction->getPaidAmount();
         $paymentTransactionData->externalPaymentIdentifier = $paymentTransaction->getExternalPaymentIdentifier();
         $paymentTransactionData->externalPaymentStatus = $paymentTransaction->getExternalPaymentStatus();
+        $paymentTransactionData->externalPaymentSubStatus = $paymentTransaction->getExternalPaymentSubStatus();
+        $paymentTransactionData->externalPaymentUrl = $paymentTransaction->getExternalPaymentUrl();
         $paymentTransactionData->refundedAmount = $paymentTransaction->getRefundedAmount();
 
         return $paymentTransactionData;

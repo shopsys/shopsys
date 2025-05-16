@@ -39,7 +39,11 @@
             {{ paymentTransaction.externalPaymentIdentifier }}
         </td>
         <td>
-            {{ paymentTransaction.externalPaymentStatus }}
+            {{ paymentTransaction.externalPaymentStatus|translate_payment_transaction_status }}
+            {% if paymentTransaction.externalPaymentSubStatus %}
+                <br>
+                ({{ paymentTransaction.externalPaymentSubStatus|translate_payment_transaction_sub_status }})
+            {% endif %}
         </td>
         <td class="text-right">
             {{ paymentTransaction.paidAmount|priceWithCurrency(order.currency) }}

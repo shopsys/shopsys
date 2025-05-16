@@ -8,6 +8,8 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage;
+use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderSentPageNotAvailableUserError;
 
@@ -16,11 +18,40 @@ class OrderSentPageContentQuery extends AbstractQuery
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade $orderContentPageFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageFactory $paymentContentPageFactory
      */
     public function __construct(
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly OrderContentPageFacade $orderContentPageFacade,
+        protected readonly PaymentContentPageFactory $paymentContentPageFactory,
     ) {
+    }
+
+    /**
+     * @param string $orderUuid
+     * @return \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage
+     */
+    public function orderPaymentPageContentQuery(string $orderUuid): PaymentContentPage
+    {
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+        $this->assertDateTimeIsRecent($order->getOrderPaymentStatusPageValidFrom());
+
+        if ($order->isPaid()) {
+            return $this->paymentContentPageFactory->createSuccessful(
+                $this->orderContentPageFacade->getPaymentSuccessfulPageContent($order),
+            );
+        }
+
+        if ($order->hasPaymentInProcess()) {
+            return $this->paymentContentPageFactory->createInProcess(
+                $this->orderContentPageFacade->getPaymentInProcessPageContent($order),
+            );
+        }
+
+        return $this->paymentContentPageFactory->createFailed(
+            $this->orderContentPageFacade->getPaymentFailedPageContent($order),
+        );
     }
 
     /**
@@ -34,32 +65,6 @@ class OrderSentPageContentQuery extends AbstractQuery
         $this->assertDateTimeIsRecent($order->getCreatedAt());
 
         return $this->orderContentPageFacade->getOrderSentPageContent($order);
-    }
-
-    /**
-     * @param string $orderUuid
-     * @return string
-     */
-    public function orderPaymentSuccessfulContentQuery(string $orderUuid): string
-    {
-        $order = $this->orderApiFacade->getByUuid($orderUuid);
-
-        $this->assertDateTimeIsRecent($order->getOrderPaymentStatusPageValidFrom());
-
-        return $this->orderContentPageFacade->getPaymentSuccessfulPageContent($order);
-    }
-
-    /**
-     * @param string $orderUuid
-     * @return string
-     */
-    public function orderPaymentFailedContentQuery(string $orderUuid): string
-    {
-        $order = $this->orderApiFacade->getByUuid($orderUuid);
-
-        $this->assertDateTimeIsRecent($order->getOrderPaymentStatusPageValidFrom());
-
-        return $this->orderContentPageFacade->getPaymentFailedPageContent($order);
     }
 
     /**

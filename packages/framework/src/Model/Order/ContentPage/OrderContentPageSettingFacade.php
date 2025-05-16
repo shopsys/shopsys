@@ -8,9 +8,10 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class OrderContentPageSettingFacade
 {
-    protected const ORDER_SENT_PAGE_CONTENT = 'orderSubmittedText';
-    protected const PAYMENT_SUCCESSFUL_PAGE_CONTENT = 'paymentSuccessfulText';
-    protected const PAYMENT_FAILED_PAGE_CONTENT = 'paymentFailedText';
+    protected const string ORDER_SENT_PAGE_CONTENT = 'orderSubmittedText';
+    protected const string PAYMENT_SUCCESSFUL_PAGE_CONTENT = 'paymentSuccessfulText';
+    protected const string PAYMENT_FAILED_PAGE_CONTENT = 'paymentFailedText';
+    protected const string PAYMENT_IN_PROCESS_PAGE_CONTENT = 'paymentInProcessText';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -48,6 +49,15 @@ class OrderContentPageSettingFacade
     }
 
     /**
+     * @param int $domainId
+     * @return string
+     */
+    public function getPaymentInProcessPageContent(int $domainId): string
+    {
+        return $this->setting->getForDomain(static::PAYMENT_IN_PROCESS_PAGE_CONTENT, $domainId);
+    }
+
+    /**
      * @param string $content
      * @param int $domainId
      */
@@ -72,5 +82,14 @@ class OrderContentPageSettingFacade
     public function setPaymentFailedPageContent(string $content, int $domainId): void
     {
         $this->setting->setForDomain(static::PAYMENT_FAILED_PAGE_CONTENT, $content, $domainId);
+    }
+
+    /**
+     * @param string $content
+     * @param int $domainId
+     */
+    public function setPaymentInProcessPageContent(string $content, int $domainId): void
+    {
+        $this->setting->setForDomain(static::PAYMENT_IN_PROCESS_PAGE_CONTENT, $content, $domainId);
     }
 }

@@ -102,10 +102,12 @@ OrderDecorator:
             note:
                 type: "String"
                 description: "Other information related to the order"
-
             urlHash:
                 type: "String!"
                 description: "Unique url hash that can be used to "
+            lastExternalPaymentUrl:
+                type: "String"
+                description: "URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible."
             paymentTransactionsCount:
                 type: "Int!"
                 description: "Count of the payment transactions related to the order"

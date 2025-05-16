@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeOrderPaymentFailedContentQueryVariables = Types.Exact<{
+export type TypeOrderPaymentPageContentQueryVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type TypeOrderPaymentFailedContentQuery = { __typename?: 'Query', orderPaymentFailedContent: string };
+export type TypeOrderPaymentPageContentQuery = { __typename?: 'Query', orderPaymentPageContent: { __typename: 'OrderPaymentPageContent', content: string, status: Types.TypePaymentContentPageStatusEnum } };
 
 
       export interface PossibleTypesResultData {
@@ -94,12 +94,16 @@ export type TypeOrderPaymentFailedContentQuery = { __typename?: 'Query', orderPa
       export default result;
     
 
-export const OrderPaymentFailedContentQueryDocument = gql`
-    query OrderPaymentFailedContentQuery($orderUuid: Uuid!) {
-  orderPaymentFailedContent(orderUuid: $orderUuid)
+export const OrderPaymentPageContentQueryDocument = gql`
+    query OrderPaymentPageContentQuery($orderUuid: Uuid!) {
+  orderPaymentPageContent(orderUuid: $orderUuid) {
+    __typename
+    content
+    status
+  }
 }
     `;
 
-export function useOrderPaymentFailedContentQuery(options: Omit<Urql.UseQueryArgs<TypeOrderPaymentFailedContentQueryVariables>, 'query'>) {
-  return Urql.useQuery<TypeOrderPaymentFailedContentQuery, TypeOrderPaymentFailedContentQueryVariables>({ query: OrderPaymentFailedContentQueryDocument, ...options });
+export function useOrderPaymentPageContentQuery(options: Omit<Urql.UseQueryArgs<TypeOrderPaymentPageContentQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrderPaymentPageContentQuery, TypeOrderPaymentPageContentQueryVariables>({ query: OrderPaymentPageContentQueryDocument, ...options });
 };

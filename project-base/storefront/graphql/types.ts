@@ -1534,6 +1534,8 @@ export type TypeMutation = {
   RequestPersonalDataAccess: TypePersonalDataPage;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: TypeCurrentCustomerUser;
+  /** set order payment status page validity hash, so it's possible to safely return to the payment status page */
+  SetOrderPaymentStatusPageValidityHashMutation: Scalars['String']['output'];
   /** check payment status of order after callback from payment service */
   UpdatePaymentStatus: TypeOrder;
 };
@@ -1714,6 +1716,12 @@ export type TypeMutationSetDefaultDeliveryAddressArgs = {
 };
 
 
+export type TypeMutationSetOrderPaymentStatusPageValidityHashMutationArgs = {
+  orderPaymentStatusPageValidityHash: Scalars['String']['input'];
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+
 export type TypeMutationUpdatePaymentStatusArgs = {
   orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
@@ -1874,6 +1882,8 @@ export type TypeOrder = {
   isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
   items: Array<TypeOrderItem>;
+  /** URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible. */
+  lastExternalPaymentUrl: Maybe<Scalars['String']['output']>;
   /** The customer's last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Other information related to the order */
@@ -2072,6 +2082,14 @@ export type TypeOrderItemsFilterInput = {
   productUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Filter order items by type */
   type: InputMaybe<TypeOrderItemTypeEnum>;
+};
+
+export type TypeOrderPaymentPageContent = {
+  __typename?: 'OrderPaymentPageContent';
+  /** HTML content for status page after payment. The content is determined by the payment status. */
+  content: Scalars['String']['output'];
+  /** Status indicating the current state of the payment page content. */
+  status: TypePaymentContentPageStatusEnum;
 };
 
 export type TypeOrderPaymentsConfig = {
@@ -2282,6 +2300,13 @@ export type TypePaymentMainImageArgs = {
 export type TypePaymentPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
+
+/** Represents the status of a payment content page after the payment process */
+export enum TypePaymentContentPageStatusEnum {
+  Failed = 'FAILED',
+  InProcess = 'IN_PROCESS',
+  Successful = 'SUCCESSFUL'
+}
 
 export type TypePaymentSetupCreationData = {
   __typename?: 'PaymentSetupCreationData';
@@ -2699,10 +2724,8 @@ export type TypeQuery = {
   orderItems: TypeOrderItemConnection;
   /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords */
   orderItemsSearch: TypeOrderItemConnection;
-  /** Returns HTML content for order with failed payment. */
-  orderPaymentFailedContent: Scalars['String']['output'];
-  /** Returns HTML content for order with successful payment. */
-  orderPaymentSuccessfulContent: Scalars['String']['output'];
+  /** Returns HTML content for order payment page depending on the state of the payment. */
+  orderPaymentPageContent: TypeOrderPaymentPageContent;
   /** Returns payments available for the given order */
   orderPayments: TypeOrderPaymentsConfig;
   /** Returns HTML content for order sent page. */
@@ -2896,12 +2919,7 @@ export type TypeQueryOrderItemsSearchArgs = {
 };
 
 
-export type TypeQueryOrderPaymentFailedContentArgs = {
-  orderUuid: Scalars['Uuid']['input'];
-};
-
-
-export type TypeQueryOrderPaymentSuccessfulContentArgs = {
+export type TypeQueryOrderPaymentPageContentArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 

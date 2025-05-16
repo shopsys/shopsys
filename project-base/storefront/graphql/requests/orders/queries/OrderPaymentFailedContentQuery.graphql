@@ -1,3 +1,0 @@
-query OrderPaymentFailedContentQuery($orderUuid: Uuid!) {
-    orderPaymentFailedContent(orderUuid: $orderUuid)
-}

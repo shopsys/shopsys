@@ -355,6 +355,9 @@ msgstr ""
 msgid "Apply to selected products"
 msgstr ""
 
+msgid "Approved with zero amount"
+msgstr ""
+
 msgid "Area"
 msgstr ""
 
@@ -446,6 +449,18 @@ msgid "Background color"
 msgstr ""
 
 msgid "Bank account number"
+msgstr ""
+
+msgid "Bank account payment declined"
+msgstr ""
+
+msgid "Bank payment confirmed by advice"
+msgstr ""
+
+msgid "Bank payment confirmed by statement"
+msgstr ""
+
+msgid "Bank transfer not completed"
 msgstr ""
 
 msgid "Banner"
@@ -620,6 +635,9 @@ msgid "Cannot read file."
 msgstr ""
 
 msgid "Canonical URL"
+msgstr ""
+
+msgid "Cardholder canceled the payment"
 msgstr ""
 
 msgid "Cart manipulation and order creation"
@@ -907,6 +925,9 @@ msgstr ""
 msgid "Copy administrator role group"
 msgstr ""
 
+msgid "Could not reach authorization centre"
+msgstr ""
+
 msgid "Countries"
 msgstr ""
 
@@ -1144,6 +1165,9 @@ msgstr ""
 msgid "Customer has no orders so far."
 msgstr ""
 
+msgid "Customer has not given PSD2 consent"
+msgstr ""
+
 msgid "Customer last name"
 msgstr ""
 
@@ -1232,6 +1256,42 @@ msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} 
 msgstr ""
 
 msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgstr ""
+
+msgid "Declined by issuer - account error"
+msgstr ""
+
+msgid "Declined by issuer - card blocked"
+msgstr ""
+
+msgid "Declined by issuer - card expired"
+msgstr ""
+
+msgid "Declined by issuer - insufficient funds"
+msgstr ""
+
+msgid "Declined by issuer - invalid CVV"
+msgstr ""
+
+msgid "Declined by issuer - limit reached"
+msgstr ""
+
+msgid "Declined by issuer - payment card error"
+msgstr ""
+
+msgid "Declined by issuer - payment not allowed"
+msgstr ""
+
+msgid "Declined by issuer - problem at issuer's side"
+msgstr ""
+
+msgid "Declined by issuer - technical issues"
+msgstr ""
+
+msgid "Declined by issuer - wrong card number"
+msgstr ""
+
+msgid "Declined in the 3DS server"
 msgstr ""
 
 msgid "Default VAT rate"
@@ -1532,6 +1592,12 @@ msgid "Drag your files here"
 msgstr ""
 
 msgid "Duplicate"
+msgstr ""
+
+msgid "Duplicate transaction"
+msgstr ""
+
+msgid "Duplicate transaction reversal"
 msgstr ""
 
 msgid "Duration (mm:ss)"
@@ -3157,6 +3223,12 @@ msgstr ""
 msgid "Overwrite Price list"
 msgstr ""
 
+msgid "PSD2 payment declined"
+msgstr ""
+
+msgid "PSD2 requested account not found"
+msgstr ""
+
 msgid "Package tracking"
 msgstr ""
 
@@ -3280,6 +3352,9 @@ msgstr ""
 msgid "Payment canceled"
 msgstr ""
 
+msgid "Payment canceled by customer"
+msgstr ""
+
 msgid "Payment created"
 msgstr ""
 
@@ -3289,13 +3364,43 @@ msgstr ""
 msgid "Payment has expired"
 msgstr ""
 
+msgid "Payment in process page content"
+msgstr ""
+
 msgid "Payment instructions"
+msgstr ""
+
+msgid "Payment is being processed in the Bitcoin network"
+msgstr ""
+
+msgid "Payment made after expiration"
 msgstr ""
 
 msgid "Payment method chosen"
 msgstr ""
 
 msgid "Payment method name"
+msgstr ""
+
+msgid "Payment not completed"
+msgstr ""
+
+msgid "Payment not completed - Customer is not authorized to perform transaction"
+msgstr ""
+
+msgid "Payment not completed - Duplicate payment"
+msgstr ""
+
+msgid "Payment not completed - Reason was shown to customer"
+msgstr ""
+
+msgid "Payment not completed - Sum of credited amounts exceeded total amount"
+msgstr ""
+
+msgid "Payment not completed - User not authorized"
+msgstr ""
+
+msgid "Payment not completed yet"
 msgstr ""
 
 msgid "Payment paid"
@@ -3314,6 +3419,9 @@ msgid "Payment transactions"
 msgstr ""
 
 msgid "Payment type"
+msgstr ""
+
+msgid "Payment was not paid in full"
 msgstr ""
 
 msgid "Payments"
@@ -3755,6 +3863,9 @@ msgid "SEO page"
 msgstr ""
 
 msgid "SEO pages"
+msgstr ""
+
+msgid "SMS was sent but not delivered yet"
 msgstr ""
 
 msgid "Sales including/excluding VAT settings"
@@ -4246,6 +4357,9 @@ msgstr ""
 msgid "Tax number"
 msgstr ""
 
+msgid "Technical error on issuer's side"
+msgstr ""
+
 msgid "Telephone"
 msgstr ""
 
@@ -4492,6 +4606,9 @@ msgstr ""
 msgid "Unable to add product"
 msgstr ""
 
+msgid "Unable to deliver SMS"
+msgstr ""
+
 msgid "Unable to load list of language constants"
 msgstr ""
 
@@ -4522,7 +4639,13 @@ msgstr ""
 msgid "Units - view"
 msgstr ""
 
+msgid "Unknown configuration"
+msgstr ""
+
 msgid "Unlimited"
+msgstr ""
+
+msgid "Unsupported payment card region"
 msgstr ""
 
 msgid "Unsupported two factor authentication method"
@@ -4679,6 +4802,12 @@ msgid "Visibility for unlogged customers"
 msgstr ""
 
 msgid "Visible on homepage"
+msgstr ""
+
+msgid "Waiting for an offline transfer to be finished"
+msgstr ""
+
+msgid "Waiting for an online bank transfer to be completed"
 msgstr ""
 
 msgid "Warehouse"
