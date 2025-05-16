@@ -1,6 +1,7 @@
 {% block price_and_vat_table_by_domains_row %}
     <div class="form-line">
-        {% for domainId, price in pricesIndexedByDomainId %}
+        {% for domainId in enabledDomainIds %}
+            {% set price = pricesIndexedByDomainId[domainId] %}
             <div class="form-line__box js-entity-url-list-domain-{{ domainId }}">
                 {% if isMultidomain() %}
                     <div class="form-line__box__title">
