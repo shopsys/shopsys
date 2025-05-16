@@ -395,7 +395,7 @@ class AdministratorController extends AdminBaseController
      */
     protected function validateEmailCode(string $code, ExecutionContextInterface $context): void
     {
-        if ($code !== $this->getCurrentAdministrator()->getEmailAuthCode()) {
+        if ($this->getCurrentAdministrator()->getEmailAuthCode() === null || $code !== $this->getCurrentAdministrator()->getEmailAuthCode()) {
             $context->addViolation(t('Entered code is not valid'));
         }
     }

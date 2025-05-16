@@ -560,17 +560,10 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEmailAuthCode(): string
+    public function getEmailAuthCode(): ?string
     {
-        if ($this->emailAuthenticationCode === null) {
-            throw new LogicException(sprintf(
-                "You should not call '%s' when 2FA by email is not enabled. Maybe it is a bug.",
-                __METHOD__,
-            ));
-        }
-
         return $this->emailAuthenticationCode;
     }
 
