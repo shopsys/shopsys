@@ -43,7 +43,7 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
 
     return {
         title: preferredTitle ?? defaultTitle ?? fallbackTitle,
-        titleSuffix: fallbackTitleSuffix,
+        titleSuffix: fallbackTitleSuffix ?? '',
         description: preferredDescription ?? defaultDescription ?? fallbackDescription,
         ogTitle: preferredOgTitle,
         ogDescription: preferredOgDescription,
