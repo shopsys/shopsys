@@ -39,6 +39,7 @@ class PriceAndVatTableByDomainsType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars['pricesIndexedByDomainId'] = $options['pricesIndexedByDomainId'];
+        $view->vars['enabledDomainIds'] = $this->domain->getAdminEnabledDomainIds();
     }
 
     /**
@@ -71,10 +72,10 @@ class PriceAndVatTableByDomainsType extends AbstractType
             'render_form_row' => false,
         ]);
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $vatsIndexedByDomainId->add((string)$domainId, ChoiceType::class, [
+        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
+            $vatsIndexedByDomainId->add((string)$domainConfig->getId(), ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->vatFacade->getAllForDomain($domainId),
+                'choices' => $this->vatFacade->getAllForDomain($domainConfig->getId()),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
@@ -83,7 +84,7 @@ class PriceAndVatTableByDomainsType extends AbstractType
                 'label' => t('VAT'),
             ]);
 
-            $entityPricesByDomainId->add((string)$domainId, MoneyType::class, [
+            $entityPricesByDomainId->add((string)$domainConfig->getId(), MoneyType::class, [
                 'scale' => 6,
                 'required' => true,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
