@@ -4,3 +4,4 @@ arrange:
     - guidelines-for-project-documentation.md
     - how-to-write-an-upgradable-application.md
     - upgrade-your-project-with-rector.md
+    - how-to-switch-between-projects-on-macos-with-mutagen.md
