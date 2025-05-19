@@ -728,7 +728,6 @@ jobs:
                     fi
             -   name: Check icons are dumped and committed
                 run: |
-                    docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     docker compose exec -T php-fpm php bin/console ux:icons:lock
                     docker compose cp php-fpm:/var/www/html/project-base/app/assets/icons/ ./project-base/app/assets/
                     if [ -n "$(git status --porcelain)" ]; then
