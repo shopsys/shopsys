@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdminDomainsFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
@@ -18,10 +19,12 @@ class SelectAdminDomainsController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory $administratorDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly AdministratorDataFactory $administratorDataFactory,
         protected readonly AdministratorFacade $administratorFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -30,11 +33,9 @@ class SelectAdminDomainsController extends AdminBaseController
      */
     public function renderFormAction(): Response
     {
-        $administrator = $this->getCurrentAdministrator();
+        $form = $this->createForm(AdminDomainsFormType::class, $this->domain->getAdminEnabledDomainIds());
 
-        $form = $this->createForm(AdminDomainsFormType::class, $administrator->getDisplayOnlyDomainIds());
-
-        return $this->renderForm('@ShopsysFramework/Admin/Form/adminDomainsForm.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Form/adminDomainsForm.html.twig', [
             'form' => $form,
         ]);
     }
@@ -57,6 +58,10 @@ class SelectAdminDomainsController extends AdminBaseController
             if (count($data) === 0) {
                 $this->addErrorFlash(t('Please select at least one domain.'));
             } else {
+                if (count($data) === count($this->domain->getAllIds())) {
+                    $data = [];
+                }
+
                 $administrator = $this->getCurrentAdministrator();
                 $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
                 $administratorData->displayOnlyDomainIds = $data;

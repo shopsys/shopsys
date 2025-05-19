@@ -167,8 +167,8 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $roleGroup;
 
     /**
-     * @var int[]
-     * @ORM\Column(type="simple_array", nullable=false)
+     * @var int[]|null
+     * @ORM\Column(type="simple_array", nullable=true)
      */
     protected $displayOnlyDomainIds;
 
@@ -203,7 +203,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->roles = new ArrayCollection();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
         $this->uuid = Uuid::uuid4()->toString();
-        $this->displayOnlyDomainIds = [];
         $this->selectedLocale = $administratorData->selectedLocale;
         $this->setData($administratorData);
     }
