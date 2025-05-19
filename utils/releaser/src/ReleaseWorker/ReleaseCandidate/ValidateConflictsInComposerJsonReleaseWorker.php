@@ -58,7 +58,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
         $isPassing = true;
 
         foreach ($this->composerJsonFilesProvider->provideAll() as $fileInfo) {
-            $jsonContent = Json::decode($fileInfo->getContents(), Json::FORCE_ARRAY);
+            $jsonContent = Json::decode($fileInfo->getContents(), true);
 
             if (!isset($jsonContent[self::CONFLICT_SECTION])) {
                 continue;

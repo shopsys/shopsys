@@ -39,7 +39,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
             return [];
         }
 
-        return Json::decode($item, Json::FORCE_ARRAY);
+        return Json::decode($item, true);
     }
 
     /**

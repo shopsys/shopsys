@@ -24,7 +24,7 @@ final class PackageProvider
     {
         $url = 'https://packagist.org/packages/list.json?vendor=' . $organization;
         $remoteContent = FileSystem::read($url);
-        $json = Json::decode($remoteContent, Json::FORCE_ARRAY);
+        $json = Json::decode($remoteContent, true);
 
         $this->ensureIsValidResponse($json, $url);
 
@@ -69,15 +69,15 @@ final class PackageProvider
      */
     private function getPackageVersions(string $package): array
     {
-        $url = 'https://repo.packagist.org/p/' . $package . '.json';
+        $url = 'https://repo.packagist.org/p2/' . $package . '.json';
         $remoteContent = FileSystem::read($url);
-        $json = Json::decode($remoteContent, Json::FORCE_ARRAY);
+        $json = Json::decode($remoteContent, true);
 
         if (!isset($json['packages'][$package])) {
             return [];
         }
 
-        return array_keys($json['packages'][$package]);
+        return array_map(static function ($pkg) { return $pkg['version']; }, $json['packages'][$package]);
     }
 
     /**

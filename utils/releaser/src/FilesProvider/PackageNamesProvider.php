@@ -24,7 +24,7 @@ class PackageNamesProvider
         $packageNames = [];
 
         foreach ($this->composerJsonFilesProvider->provideExcludingMonorepoComposerJson() as $composerFileInfo) {
-            $jsonContent = Json::decode($composerFileInfo->getContents(), Json::FORCE_ARRAY);
+            $jsonContent = Json::decode($composerFileInfo->getContents(), true);
 
             $packageNames[] = $jsonContent['name'];
         }

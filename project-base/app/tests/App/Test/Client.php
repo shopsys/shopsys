@@ -93,7 +93,7 @@ class Client extends KernelBrowser
      */
     public function getResponseData(): array
     {
-        return Json::decode((string)$this->getResponse()->getContent(), Json::FORCE_ARRAY);
+        return Json::decode((string)$this->getResponse()->getContent(), true);
     }
 
     /**
