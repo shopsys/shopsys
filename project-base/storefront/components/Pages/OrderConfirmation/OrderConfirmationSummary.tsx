@@ -7,16 +7,17 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type OrderConfirmationSummaryProps = {
-    promoCode: string | null;
+    promoCode: string | null | undefined;
     payment: {
-        name: string;
-        price: string;
+        name: string | undefined;
+        price: string | undefined;
     };
     transport: {
-        name: string;
-        price: string;
+        name: string | undefined;
+        price: string | undefined;
     };
     totalPrice: TypePriceFragment;
+    roundingPrice?: TypePriceFragment | null;
 };
 
 export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
@@ -24,6 +25,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
     payment,
     transport,
     totalPrice,
+    roundingPrice,
 }) => {
     const formatPrice = useFormatPrice();
     const { t } = useTranslation();
@@ -31,14 +33,33 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
     return (
         <div className="bg-backgroundMore font-secondary flex flex-col gap-4 rounded-xl p-8 text-sm font-semibold">
             <div className="flex items-center justify-between gap-4">
-                {t('Transport')}&nbsp;- {transport.name}
-                {isPriceVisible(transport.price) && <span>{formatPrice(transport.price)}</span>}
+                {t('Transport')}
+                {transport.name ? (
+                    <>&nbsp;- {transport.name}</>
+                ) : (
+                    <span className="text-textSubtle">{t('Choose transport')}</span>
+                )}
+                {transport.price && isPriceVisible(transport.price) && <span>{formatPrice(transport.price)}</span>}
             </div>
 
-            <div className="flex items-center justify-between gap-4">
-                {t('Payment')}&nbsp;- {payment.name}
-                {isPriceVisible(transport.price) && <span>{formatPrice(payment.price)}</span>}
-            </div>
+            {transport.name && (
+                <div className="flex items-center justify-between gap-4">
+                    {t('Payment')}
+                    {payment.name ? (
+                        <>&nbsp;- {payment.name}</>
+                    ) : (
+                        <span className="text-textSubtle">{t('Choose payment')}</span>
+                    )}
+                    {payment.price && isPriceVisible(payment.price) && <span>{formatPrice(payment.price)}</span>}
+                </div>
+            )}
+
+            {roundingPrice && isPriceVisible(roundingPrice.priceWithVat) && (
+                <div className="flex items-center justify-between gap-4">
+                    {t('Rounding')}
+                    <span>{formatPrice(roundingPrice.priceWithVat)}</span>
+                </div>
+            )}
 
             {promoCode && (
                 <div className={twJoin('flex items-center justify-between gap-4')}>

@@ -105,11 +105,7 @@ describe('Contact Information Page Tests', () => {
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
     });
 
@@ -131,11 +127,7 @@ describe('Contact Information Page Tests', () => {
             fillInNoteInThirdStep(orderNote);
             loseFocus();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
+                blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             });
         },
     );
@@ -153,11 +145,7 @@ describe('Contact Information Page Tests', () => {
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form before logout', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         cy.logout();
@@ -166,11 +154,7 @@ describe('Contact Information Page Tests', () => {
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty contact information form after logout', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
         checkThatContactInformationWasRemovedFromLocalStorage();
     });

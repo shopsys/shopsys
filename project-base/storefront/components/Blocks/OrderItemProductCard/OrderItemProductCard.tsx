@@ -1,5 +1,6 @@
 import { OrderItemProductPrice } from './OrderItemProductPrice';
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
@@ -30,6 +31,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                     className="size-auto max-h-20 max-w-20 mix-blend-multiply"
                     height={80}
                     src={mainImage?.url}
+                    tid={TIDs.order_summary_cart_item_image}
                     width={80}
                 />
                 <div className="flex flex-1 items-center justify-between gap-2.5">

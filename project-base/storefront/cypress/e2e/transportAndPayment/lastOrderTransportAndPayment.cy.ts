@@ -40,7 +40,6 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -60,7 +59,6 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -72,15 +70,10 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfPaymentByName(payment.cash.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        changeOpeningHoursDayOfWeekWithDateToStaticString('Wednesday 30.10.2024');
-        changeOpeningHoursStatusToEmptyString();
-        changeOpeningHoursRangesToStaticString('8:00 - 18:00');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.opening_hours },
                 { tid: TIDs.footer_copyright },
             ],
         });

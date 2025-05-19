@@ -1,12 +1,7 @@
-import { PromoCode } from './PromoCode';
-import { SingleProduct } from './SingleProduct';
-import { TotalPrice } from './TotalPrice';
-import { TransportAndPayment } from './TransportAndPayment';
-import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { Adverts } from 'components/Blocks/Adverts/Adverts';
+import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
-import { AnimatePresence } from 'framer-motion';
+import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
 import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
@@ -26,54 +21,39 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
         return null;
     }
 
-    const totalDiscount = cart.totalDiscountPrice;
-
     return (
-        <>
-            <Adverts className="mb-4" positionName="cartPreview" />
+        <div className="vl:col-span-1 flex flex-col gap-2">
+            <h4>{t('Your order')}</h4>
 
-            <div className="vl:max-w-md w-full">
-                <h4 className="mb-3">{t('Your order')}</h4>
+            {cart.items.map((item) => (
+                <OrderItemProductCard
+                    key={item.uuid}
+                    availability={item.product.availability}
+                    fullName={item.product.fullName}
+                    mainImage={item.product.mainImage}
+                    price={item.product.price}
+                    quantity={item.quantity}
+                    unit={item.product.unit.name}
+                />
+            ))}
 
-                <div className="bg-backgroundMore vl:m-0 rounded-sm">
-                    <div className="relative flex flex-col px-5 py-3">
-                        <div className="mb-5">
-                            <ul>
-                                {cart.items.map((item) => (
-                                    <SingleProduct key={item.uuid} item={item} />
-                                ))}
-                            </ul>
-                        </div>
+            <div className="relative">
+                {isTransportOrPaymentLoading && (transport || payment) && <LoaderWithOverlay className="w-8" />}
 
-                        <div>
-                            {isTransportOrPaymentLoading && (transport || payment) && (
-                                <LoaderWithOverlay className="w-8" />
-                            )}
-                            <AnimatePresence initial={false}>
-                                {(transport || payment) && (
-                                    <AnimateCollapseDiv className="!flex w-full" keyName="transport-order-summary">
-                                        <TransportAndPayment
-                                            payment={payment}
-                                            roundingPrice={roundingPrice}
-                                            transport={transport}
-                                        />
-                                    </AnimateCollapseDiv>
-                                )}
-                            </AnimatePresence>
-
-                            {promoCodes.length > 0 && (
-                                <PromoCode
-                                    key={promoCodes[0].code}
-                                    code={promoCodes[0].code}
-                                    discount={totalDiscount}
-                                />
-                            )}
-                        </div>
-
-                        <TotalPrice totalPrice={cart.totalPrice} />
-                    </div>
-                </div>
+                <OrderConfirmationSummary
+                    promoCode={promoCodes[0]?.code}
+                    roundingPrice={roundingPrice}
+                    totalPrice={cart.totalPrice}
+                    payment={{
+                        name: payment?.name,
+                        price: payment?.price.priceWithVat,
+                    }}
+                    transport={{
+                        name: transport?.name,
+                        price: transport?.price.priceWithVat,
+                    }}
+                />
             </div>
-        </>
+        </div>
     );
 };

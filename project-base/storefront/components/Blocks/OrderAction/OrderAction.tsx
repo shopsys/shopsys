@@ -1,16 +1,13 @@
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TIDs } from 'cypress/tids';
-import { twJoin } from 'tailwind-merge';
 
 type OrderActionProps = {
     buttonBack: string;
     buttonNext: string;
     hasDisabledLook: boolean;
-    withGapBottom?: boolean;
-    withGapTop?: boolean;
     backStepClickHandler?: () => void;
     nextStepClickHandler?: () => void;
     shouldShowSpinnerOnNextStepButton?: boolean;
@@ -22,31 +19,25 @@ export const OrderAction: FC<OrderActionProps> = ({
     hasDisabledLook,
     backStepClickHandler,
     nextStepClickHandler,
-    withGapBottom,
-    withGapTop,
     shouldShowSpinnerOnNextStepButton,
 }) => {
     return (
-        <div
-            className={twJoin(
-                'flex flex-col flex-wrap items-center lg:w-full lg:flex-row lg:justify-between',
-                withGapBottom && 'mb-12 lg:mb-24',
-                withGapTop && 'mt-8',
-            )}
-        >
-            <div className="order-2 lg:order-1">
-                <Button tid={TIDs.blocks_orderaction_back} variant="inverted" onClick={backStepClickHandler}>
-                    <ArrowIcon className={twJoin('relative top-0 mr-1 size-4 rotate-90')} />
-                    {buttonBack}
-                </Button>
-            </div>
-            <div className="order-1 mb-8 ml-auto w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
-                <SubmitButton isWithDisabledLook={hasDisabledLook} onClick={nextStepClickHandler}>
-                    {shouldShowSpinnerOnNextStepButton && <SpinnerIcon className="w-5" />}
-                    <span>{buttonNext}</span>
-                    <ArrowIcon className="relative top-0 ml-1 size-4 -rotate-90" />
-                </SubmitButton>
-            </div>
+        <div className="my-5 flex flex-col-reverse items-center justify-between gap-4 md:my-10 md:flex-row">
+            <Button size="large" tid={TIDs.blocks_orderaction_back} variant="inverted" onClick={backStepClickHandler}>
+                <ArrowSecondaryIcon className="size-3 rotate-90" />
+                {buttonBack}
+            </Button>
+
+            <SubmitButton
+                isWithDisabledLook={hasDisabledLook}
+                size="xlarge"
+                tid={TIDs.blocks_orderaction_next}
+                onClick={nextStepClickHandler}
+            >
+                {shouldShowSpinnerOnNextStepButton && <SpinnerIcon className="size-4" />}
+                <span>{buttonNext}</span>
+                <ArrowSecondaryIcon className="size-4 -rotate-90" />
+            </SubmitButton>
         </div>
     );
 };

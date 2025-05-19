@@ -50,11 +50,7 @@ describe('Create Order Tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -79,11 +75,7 @@ describe('Create Order Tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -108,11 +100,7 @@ describe('Create Order Tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -141,11 +129,7 @@ describe('Create Order Tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -171,11 +155,7 @@ describe('Create Order Tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
+            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickOnSendOrderButton();
@@ -202,11 +182,7 @@ describe('Create Order Tests', () => {
             fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
             loseFocus();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
+                blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             });
 
             clickOnSendOrderButton();
@@ -247,11 +223,7 @@ describe('Create Order Tests', () => {
             fillInNoteInThirdStep(orderNote);
             loseFocus();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
+                blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             });
 
             clickOnSendOrderButton();

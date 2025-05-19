@@ -5,11 +5,10 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type OpeningStatusProps = {
     status: TypeStoreOpeningStatusEnum;
-    isDynamic?: boolean;
     className?: string;
 };
 
-export const OpeningStatus: FC<OpeningStatusProps> = ({ status, isDynamic = false, className }) => {
+export const OpeningStatus: FC<OpeningStatusProps> = ({ status, className }) => {
     const { t } = useTranslation();
 
     const statusText = (status: TypeStoreOpeningStatusEnum): string => {
@@ -35,10 +34,7 @@ export const OpeningStatus: FC<OpeningStatusProps> = ({ status, isDynamic = fals
     };
 
     return (
-        <Flag
-            className={twMergeCustom('text-textInverted', className, statusClasses[status])}
-            type={isDynamic ? 'dynamic' : 'custom'}
-        >
+        <Flag className={twMergeCustom('text-textInverted text-nowrap', className, statusClasses[status])}>
             {statusText(status)}
         </Flag>
     );
