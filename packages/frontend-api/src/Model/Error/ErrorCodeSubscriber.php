@@ -27,7 +27,7 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
             $code = $previousError->getCode();
         }
 
-        if ($error instanceof Exception && $error instanceof UserErrorWithCodeInterface) {
+        if ($error instanceof UserErrorWithCodeInterface) {
             $userCode = $error->getUserErrorCode();
             $code = $error->getCode();
         }

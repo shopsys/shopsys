@@ -176,7 +176,7 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
         $promoCodeFacade->method('getHighestLimitByPromoCodeAndTotalPrice')->willReturn(new PromoCodeLimit('1', '10'));
 
         $discountCalculation = $this->createMock(DiscountCalculation::class);
-        $discountCalculation->method('calculatePercentageDiscountRoundedByCurrency')->willReturnOnConsecutiveCalls(...$discountPrices);
+        $discountCalculation->method('calculatePercentageDiscountRoundedByCurrency')->willReturnOnConsecutiveCalls(...array_values($discountPrices));
 
         $numberFormatterExtension = $this->createMock(NumberFormatterExtension::class);
         $numberFormatterExtension->method('formatPercent')->willReturn('10%');

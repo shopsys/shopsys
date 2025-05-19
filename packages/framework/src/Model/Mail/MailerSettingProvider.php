@@ -40,7 +40,7 @@ class MailerSettingProvider
      */
     public function isWhitelistForced(): bool
     {
-        return $this->whitelistForced ?? false;
+        return $this->whitelistForced;
     }
 
     /**

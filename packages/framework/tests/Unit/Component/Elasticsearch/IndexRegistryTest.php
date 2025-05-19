@@ -23,9 +23,7 @@ class IndexRegistryTest extends TestCase
     {
         parent::setUp();
 
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domainMock */
         $domainMock = $this->createMock(Domain::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository $productExportRepositoryMock */
         $productExportRepositoryMock = $this->createMock(ProductExportRepository::class);
 
         $this->indexRegistry = new IndexRegistry([

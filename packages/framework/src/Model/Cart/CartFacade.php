@@ -64,7 +64,7 @@ class CartFacade
         Cart $cart,
         bool $isAbsoluteQuantity = false,
     ): AddProductResult {
-        if (!is_int($quantity) || $quantity <= 0) {
+        if ($quantity <= 0) {
             throw new InvalidQuantityException($quantity);
         }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Router\Security;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 class RouteCsrfProtectorTest extends TestCase
 {
+    #[DoesNotPerformAssertions]
     public function testSubRequest(): void
     {
         $annotationReader = new AnnotationReader();
@@ -30,11 +32,9 @@ class RouteCsrfProtectorTest extends TestCase
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
         $routeCsrfProtector->onKernelController($event);
-
-        // test is expecting exception is not thrown and assert true suppress warning about no assertions
-        $this->assertTrue(true);
     }
 
+    #[DoesNotPerformAssertions]
     public function testRequestWithoutProtection(): void
     {
         $annotationReader = new AnnotationReader();
@@ -49,9 +49,6 @@ class RouteCsrfProtectorTest extends TestCase
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
         $routeCsrfProtector->onKernelController($event);
-
-        // test is expecting exception is not thrown and assert true suppress warning about no assertions
-        $this->assertTrue(true);
     }
 
     public function testRequestWithProtection(): void

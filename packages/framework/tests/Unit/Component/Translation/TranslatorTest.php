@@ -17,7 +17,7 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 
 class TranslatorTest extends TestCase
 {
-    private MockObject|SymfonyTranslator|DataCollectorTranslator $originalTranslatorMock;
+    private MockObject|SymfonyTranslator $originalTranslatorMock;
 
     private MockObject|TranslatorBagInterface|DataCollectorTranslator $originalTranslatorBagMock;
 

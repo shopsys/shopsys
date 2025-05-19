@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
-use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Request;
@@ -247,9 +246,7 @@ class GridTest extends TestCase
             $routeCsrfProtectorMock,
             $twigMock,
         );
-        $gridView = $grid->createView();
-
-        $this->assertInstanceOf(GridView::class, $gridView);
+        $grid->createView();
     }
 
     public function testCreateViewWithPaging()
@@ -275,9 +272,7 @@ class GridTest extends TestCase
             $twigMock,
         );
         $grid->enablePaging();
-        $gridView = $grid->createView();
-
-        $this->assertInstanceOf(GridView::class, $gridView);
+        $grid->createView();
     }
 
     public function testEnableDragAndDrop()

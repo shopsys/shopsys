@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
 class RequestStack extends BaseRequestStack
 {
-    private ?SessionInterface $session;
+    private ?SessionInterface $session = null;
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container

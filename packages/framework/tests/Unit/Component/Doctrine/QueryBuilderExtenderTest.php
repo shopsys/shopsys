@@ -21,7 +21,6 @@ class QueryBuilderExtenderTest extends TestCase
 {
     public function testAddFirstJoinToQueryBuilder(): void
     {
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -49,7 +48,6 @@ class QueryBuilderExtenderTest extends TestCase
         string $expectedJoinedEntity,
         array $extensionMap,
     ): void {
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -99,7 +97,6 @@ class QueryBuilderExtenderTest extends TestCase
 
     public function testDifferentAlias()
     {
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -130,7 +127,6 @@ class QueryBuilderExtenderTest extends TestCase
 
     public function testAddSameAliasForDifferentEntity(): void
     {
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();

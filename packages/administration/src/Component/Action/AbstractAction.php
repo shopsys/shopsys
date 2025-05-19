@@ -151,7 +151,7 @@ abstract class AbstractAction
     /**
      * @return array
      */
-    final public function renderData(): ?array
+    final public function renderData(): array
     {
         return [
             'template' => $this->getTemplate(),

@@ -29,7 +29,7 @@ class FileExtensionMaxLengthValidator extends ConstraintValidator
             throw new InvalidArgumentException('Value must be instance of ' . File::class);
         }
 
-        if (!is_int($constraint->limit) || $constraint->limit < 0) {
+        if ($constraint->limit <= 0) {
             throw new ConstraintDefinitionException('Limit must be integer and greater than zero.');
         }
 

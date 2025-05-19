@@ -123,7 +123,7 @@ class CustomerUploadedFilesBatchLoader
             $sortedCustomerUploadedFiles[] = $allCustomerUploadedFileIndexedByBatchLoadDataId[$fileBatchLoadData->getId()];
         }
 
-        return array_values($sortedCustomerUploadedFiles);
+        return $sortedCustomerUploadedFiles;
     }
 
     /**

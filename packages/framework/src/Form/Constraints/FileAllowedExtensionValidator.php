@@ -8,7 +8,6 @@ use Override;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
@@ -27,12 +26,6 @@ class FileAllowedExtensionValidator extends ConstraintValidator
 
         if (!$value instanceof File) {
             throw new InvalidArgumentException('Value must be instance of ' . File::class);
-        }
-
-        if (!is_array($constraint->extensions)) {
-            throw new ConstraintDefinitionException(
-                'Extensions parameter of FileAllowedExtensionsValidator must be array.',
-            );
         }
 
         if (!in_array(strtolower($value->getExtension()), $constraint->extensions, true)) {

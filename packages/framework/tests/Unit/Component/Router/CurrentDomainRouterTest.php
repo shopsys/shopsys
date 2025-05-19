@@ -52,7 +52,6 @@ class CurrentDomainRouterTest extends TestCase
         $this->assertSame($generateResult, $currentDomainRouter->generate(''));
         $this->assertSame($matchResult, $currentDomainRouter->match($pathInfo));
 
-        /** @var string $routeCollection */
         $routeCollection = $currentDomainRouter->getRouteCollection();
 
         $this->assertSame($getRouteCollectionResult, $routeCollection);

@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory;
@@ -77,8 +76,6 @@ class HeurekaFeedItemTest extends TestCase
     public function testMinimalHeurekaFeedItemIsCreatable(): void
     {
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
-
-        self::assertInstanceOf(HeurekaFeedItem::class, $heurekaFeedItem);
 
         self::assertEquals(1, $heurekaFeedItem->getId());
         self::assertEquals(1, $heurekaFeedItem->getSeekId());

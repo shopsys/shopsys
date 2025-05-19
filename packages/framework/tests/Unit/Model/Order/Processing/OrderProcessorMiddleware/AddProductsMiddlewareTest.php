@@ -155,7 +155,7 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
     private function createAddProductsMiddleware(array $quantifiedItemPrices): AddProductsMiddleware
     {
         $quantifiedProductPriceCalculation = $this->createMock(QuantifiedProductPriceCalculation::class);
-        $quantifiedProductPriceCalculation->method('calculatePrice')->willReturnOnConsecutiveCalls(...$quantifiedItemPrices);
+        $quantifiedProductPriceCalculation->method('calculatePrice')->willReturnOnConsecutiveCalls(...array_values($quantifiedItemPrices));
 
         return new AddProductsMiddleware(
             $quantifiedProductPriceCalculation,

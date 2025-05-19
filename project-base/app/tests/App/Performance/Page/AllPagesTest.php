@@ -225,8 +225,6 @@ class AllPagesTest extends KernelTestCase
         switch ($overallStatus) {
             case PerformanceTestSampleQualifier::STATUS_OK:
             case PerformanceTestSampleQualifier::STATUS_WARNING:
-                $this->assertTrue(true);
-
                 return;
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
             default:

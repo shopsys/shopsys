@@ -211,20 +211,16 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertSame('main product string', $foundProduct->getStringField());
 
         $foundManyToOneUnidirectionalEntity = $foundProduct->getManyToOneUnidirectionalEntity();
-        $this->assertInstanceOf(UnidirectionalEntity::class, $foundManyToOneUnidirectionalEntity);
         $this->assertSame('many-to-one unidirectional', $foundManyToOneUnidirectionalEntity->getName());
 
         $foundOneToOneUnidirectionalEntity = $foundProduct->getOneToOneUnidirectionalEntity();
-        $this->assertInstanceOf(UnidirectionalEntity::class, $foundOneToOneUnidirectionalEntity);
         $this->assertSame('one-to-one unidirectional', $foundOneToOneUnidirectionalEntity->getName());
 
         $foundOneToOneBidirectionalEntity = $foundProduct->getOneToOneBidirectionalEntity();
-        $this->assertInstanceOf(ProductOneToOneBidirectionalEntity::class, $foundOneToOneBidirectionalEntity);
         $this->assertSame('one-to-one bidirectional', $foundOneToOneBidirectionalEntity->getName());
         $this->assertSame($foundProduct, $foundOneToOneBidirectionalEntity->getProduct());
 
         $foundOneToOneSelfReferencingEntity = $foundProduct->getOneToOneSelfReferencingEntity();
-        $this->assertInstanceOf(ExtendedProduct::class, $foundOneToOneSelfReferencingEntity);
         $this->assertSame(self::ONE_TO_ONE_SELF_REFERENCING_PRODUCT_ID, $foundOneToOneSelfReferencingEntity->getId());
 
         $foundOneToManyBidirectionalEntities = $foundProduct->getOneToManyBidirectionalEntities();
@@ -351,20 +347,16 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertSame('main category string', $foundCategory->getStringField());
 
         $foundManyToOneUnidirectionalEntity = $foundCategory->getManyToOneUnidirectionalEntity();
-        $this->assertInstanceOf(UnidirectionalEntity::class, $foundManyToOneUnidirectionalEntity);
         $this->assertSame('many-to-one unidirectional', $foundManyToOneUnidirectionalEntity->getName());
 
         $foundOneToOneUnidirectionalEntity = $foundCategory->getOneToOneUnidirectionalEntity();
-        $this->assertInstanceOf(UnidirectionalEntity::class, $foundOneToOneUnidirectionalEntity);
         $this->assertSame('one-to-one unidirectional', $foundOneToOneUnidirectionalEntity->getName());
 
         $foundOneToOneBidirectionalEntity = $foundCategory->getOneToOneBidirectionalEntity();
-        $this->assertInstanceOf(CategoryOneToOneBidirectionalEntity::class, $foundOneToOneBidirectionalEntity);
         $this->assertSame('one-to-one bidirectional', $foundOneToOneBidirectionalEntity->getName());
         $this->assertSame($foundCategory, $foundOneToOneBidirectionalEntity->getCategory());
 
         $foundOneToOneSelfReferencingEntity = $foundCategory->getOneToOneSelfReferencingEntity();
-        $this->assertInstanceOf(ExtendedCategory::class, $foundOneToOneSelfReferencingEntity);
         $this->assertSame(self::ONE_TO_ONE_SELF_REFERENCING_CATEGORY_ID, $foundOneToOneSelfReferencingEntity->getId());
 
         $foundOneToManyBidirectionalEntities = $foundCategory->getOneToManyBidirectionalEntities();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
@@ -11,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
-use Symfony\Bridge\Monolog\Logger;
 
 class CronModuleExecutorTest extends TestCase
 {
@@ -89,7 +89,6 @@ class CronModuleExecutorTest extends TestCase
         $cronTimeResolver = new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);
 
-        /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
         $bytesHelper = new BytesHelper();
 

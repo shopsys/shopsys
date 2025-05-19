@@ -64,12 +64,10 @@ class LoginMutation extends AbstractMutation
     {
         $input = $argument['input'];
 
-        if ($this->loginRateLimiter !== null) {
-            $limit = $this->loginRateLimiter->consume($this->requestStack->getCurrentRequest());
+        $limit = $this->loginRateLimiter->consume($this->requestStack->getCurrentRequest());
 
-            if (!$limit->isAccepted()) {
-                throw new TooManyLoginAttemptsUserError('Too many login attempts. Try again later.');
-            }
+        if (!$limit->isAccepted()) {
+            throw new TooManyLoginAttemptsUserError('Too many login attempts. Try again later.');
         }
 
         try {

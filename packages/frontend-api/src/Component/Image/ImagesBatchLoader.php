@@ -117,7 +117,7 @@ class ImagesBatchLoader
             $sortedImages[] = $allImagesIndexedByImageBatchLoadDataId[$imageBatchLoadData->getId()];
         }
 
-        return array_values($sortedImages);
+        return $sortedImages;
     }
 
     /**

@@ -119,7 +119,7 @@ class FilesBatchLoader
             $sortedFiles[] = $allFilesIndexedByFileBatchLoadDataId[$fileBatchLoadData->getId()];
         }
 
-        return array_values($sortedFiles);
+        return $sortedFiles;
     }
 
     /**
