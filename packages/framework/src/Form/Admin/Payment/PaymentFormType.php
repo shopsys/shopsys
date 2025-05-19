@@ -88,11 +88,19 @@ class PaymentFormType extends AbstractType
             ->add('enabled', DomainsType::class, [
                 'required' => false,
                 'label' => t('Display on'),
-            ])
-            ->add('hidden', YesNoType::class, [
-                'required' => false,
-                'label' => t('Hidden'),
-            ])
+            ]);
+
+        if ($payment !== null) {
+            $this->addHiddenByGoPayWarning(
+                $options['data'],
+                $builderBasicInformationGroup,
+            );
+        }
+
+        $builderBasicInformationGroup->add('hidden', YesNoType::class, [
+            'required' => false,
+            'label' => t('Hidden'),
+        ])
             ->add('transports', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->transportFacade->getAll(),
@@ -136,13 +144,6 @@ class PaymentFormType extends AbstractType
                     'class' => 'js-payment-gopay-payment-method',
                 ],
             ]);
-
-        if ($payment !== null) {
-            $this->addHiddenByGoPayWarning(
-                $options['data'],
-                $builderBasicInformationGroup,
-            );
-        }
 
         $builderPriceGroup = $builder->create('prices', GroupType::class, [
             'label' => t('Prices'),
@@ -305,7 +306,6 @@ class PaymentFormType extends AbstractType
             'data' => t('This payment method is hidden by GoPay on domains: %domains%', [
                 '%domains%' => implode(', ', $domainNames),
             ]),
-            'position' => ['after' => 'enabled'],
         ]);
     }
 }
