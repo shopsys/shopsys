@@ -14,7 +14,7 @@ type ToggleSwitchProps = NativeProps & {
 
 export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
     ({ id, name, onChange, value, onBlur }, toggleSwitchForwardedRef) => (
-        <div className="relative h-6">
+        <div className="relative flex h-6 w-11 items-center justify-center">
             <input
                 aria-checked={value}
                 checked={value}
@@ -23,8 +23,8 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                 ref={toggleSwitchForwardedRef}
                 type="checkbox"
                 className={twJoin(
-                    'z-above peer h-6 w-11 rounded-full outline-none',
-                    'focus-visible:ring-inputBorderActive focus-visible:ring-2 focus-visible:ring-offset-2',
+                    'peer h-5 w-10 outline-none',
+                    'focus-visible:ring-inputBorderActive focus-visible:ring-2 focus-visible:ring-offset-4',
                 )}
                 onBlur={onBlur}
                 onChange={onChange}
@@ -32,11 +32,11 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
             <label
                 htmlFor={id}
                 className={twJoin(
-                    'absolute top-0 left-0 h-6 w-11 cursor-pointer rounded-full',
-                    "after:my-0.5 after:ml-0.5 after:block after:size-5 after:rounded-full after:transition-all after:content-['']",
+                    'absolute size-full cursor-pointer rounded-full',
+                    'bg-input-border-default peer-not-checked:hover:bg-input-border-hovered',
+                    "after:bg-icon-inverted hover:after:bg-fill-accent-less after:my-0.5 after:ml-0.5 after:block after:size-5 after:rounded-full after:transition-all after:content-['']",
                     'peer-checked:after:ml-5.5 peer-checked:after:block',
-                    'bg-icon-less after:bg-icon-inverted',
-                    'peer-checked:bg-icon-accent',
+                    'peer-checked:bg-input-fill',
                 )}
             >
                 <span className="sr-only">{name}</span>
