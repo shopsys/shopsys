@@ -80,7 +80,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
         <div className={twMergeCustom('flex w-full flex-col items-center gap-6', className)}>
             {!!filteredAvailablePayments?.length && (
                 <div className="flex w-full flex-col gap-4">
-                    <h3 className={isPaymentByCardAvailable ? 'text-textError' : ''}>
+                    <h3 className={isPaymentByCardAvailable ? 'text-text-error' : ''}>
                         {isPaymentByCardAvailable
                             ? t('Repeat payment or change your payment method')
                             : t('Change order payment')}

@@ -101,7 +101,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                 )}
                         </div>
                     ) : (
-                        <span className="text-text text-sm">{orderItem.name}</span>
+                        <span className="text-text-default text-sm">{orderItem.name}</span>
                     )}
                 </div>
 

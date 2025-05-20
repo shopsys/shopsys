@@ -89,13 +89,13 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         <div
                             className={twJoin(
                                 'flex size-8 items-center justify-center rounded-full sm:size-11',
-                                'bg-backgroundError text-text-inverted',
+                                'bg-background-error text-text-inverted',
                             )}
                         >
                             <WalletIcon className="size-4 sm:size-6" />
                         </div>
 
-                        <h5 className={twJoin('text-center text-xs sm:text-sm lg:text-base', 'text-textError')}>
+                        <h5 className={twJoin('text-center text-xs sm:text-sm lg:text-base', 'text-text-error')}>
                             {t('Payment failed')}
                         </h5>
                     </div>

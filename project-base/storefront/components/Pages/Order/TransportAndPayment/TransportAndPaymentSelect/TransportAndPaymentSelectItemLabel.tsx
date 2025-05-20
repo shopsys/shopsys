@@ -65,9 +65,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     </div>
 
                     {description && (
-                        <div
-                            className={twJoin(pickupPlaceDetail ? 'text-text-default' : 'text-text-subtle', 'text-xs')}
-                        >
+                        <div className={twJoin(pickupPlaceDetail ? 'text-text-default' : 'text-text-less', 'text-xs')}>
                             {description}
                         </div>
                     )}
@@ -79,7 +77,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                     'text-xs',
                                     (showChangeButton || isActive) && !description
                                         ? 'text-text-default'
-                                        : 'text-text-subtle',
+                                        : 'text-text-less',
                                 )}
                             >
                                 {pickupPlaceDetail.name}, {pickupPlaceDetail.city}, {pickupPlaceDetail.street}
@@ -123,7 +121,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 </div>
 
                 {price && isPriceVisible(price.priceWithVat) && (
-                    <div className={twJoin('text-text ml-auto', pickupPlaceDetail && 'hidden md:block')}>
+                    <div className={twJoin('text-text-default ml-auto', pickupPlaceDetail && 'hidden md:block')}>
                         {formatPrice(price.priceWithVat)}
                     </div>
                 )}
@@ -132,13 +130,13 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
             {pickupPlaceDetail && (
                 <div className="-ml-7 flex items-center justify-between md:hidden">
                     {daysUntilDelivery !== undefined && (
-                        <div className="text-textSuccess text-xs">
+                        <div className="text-text-success text-xs">
                             {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                         </div>
                     )}
 
                     {price && isPriceVisible(price.priceWithVat) && (
-                        <div className="text-text ml-auto">{formatPrice(price.priceWithVat)}</div>
+                        <div className="text-text-default ml-auto">{formatPrice(price.priceWithVat)}</div>
                     )}
                 </div>
             )}

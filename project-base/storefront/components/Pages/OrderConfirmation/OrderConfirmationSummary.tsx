@@ -37,7 +37,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
                 {transport.name ? (
                     <>&nbsp;- {transport.name}</>
                 ) : (
-                    <span className="text-textSubtle">{t('Choose transport')}</span>
+                    <span className="text-text-less">{t('Choose transport')}</span>
                 )}
                 {transport.price && isPriceVisible(transport.price) && <span>{formatPrice(transport.price)}</span>}
             </div>
@@ -48,7 +48,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
                     {payment.name ? (
                         <>&nbsp;- {payment.name}</>
                     ) : (
-                        <span className="text-textSubtle">{t('Choose payment')}</span>
+                        <span className="text-text-less">{t('Choose payment')}</span>
                     )}
                     {payment.price && isPriceVisible(payment.price) && <span>{formatPrice(payment.price)}</span>}
                 </div>

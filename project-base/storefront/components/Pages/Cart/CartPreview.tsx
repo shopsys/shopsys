@@ -30,7 +30,7 @@ export const CartPreview: FC = () => {
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
 
             {promoCodes.length > 0 && (
-                <div className="border-borderAccentLess mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
+                <div className="border-border-less mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <p>{t('Promo code')}</p>
@@ -49,23 +49,12 @@ export const CartPreview: FC = () => {
 
                     {isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
                         mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
-                            <div
-                                className="flex items-center justify-between"
-                                tid={TIDs.pages_cart_cartpreview_discount}
-                            >
+                            <div className="flex items-center justify-between">
                                 <p>{t('The amount of discounts')}</p>
 
                                 <span className="text-price-discounted whitespace-nowrap">
                                     {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
                                 </span>
-
-                                <button
-                                    className="text-link-default hover:text-link-hovered text-xs underline hover:no-underline"
-                                    tid={TIDs.blocks_promocode_promocodeinfo_code}
-                                    onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
-                                >
-                                    {t('Remove')}
-                                </button>
                             </div>
                         )}
                 </div>
