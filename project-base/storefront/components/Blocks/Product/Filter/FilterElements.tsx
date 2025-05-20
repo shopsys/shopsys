@@ -36,7 +36,7 @@ export const FilterGroupContentItem: FC<{ isDisabled: boolean; keyName?: string 
     isDisabled,
     keyName,
 }) => (
-    <AnimateAppearSlideY className={twJoin('!block', isDisabled && 'pointer-events-none opacity-30')} keyName={keyName}>
+    <AnimateAppearSlideY className={twJoin('!block', isDisabled && 'opacity-30')} keyName={keyName}>
         {children}
     </AnimateAppearSlideY>
 );

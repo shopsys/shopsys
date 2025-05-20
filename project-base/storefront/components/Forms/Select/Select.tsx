@@ -83,7 +83,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                 <div
                     className={twMergeCustom(
                         'border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered group flex h-14 rounded-md border-2',
-                        isOpen && 'rounded-b-none',
+                        isOpen && 'border-input-border-active rounded-b-none',
                         (isDisabled || isLoading) &&
                             'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
                         selectClassName,
@@ -113,7 +113,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         </>
                     ) : (
                         <button
-                            className="w-full px-3 pt-5 text-left focus-visible:outline-hidden"
+                            className="w-full cursor-pointer px-3 pt-5 text-left focus-visible:outline-hidden"
                             disabled={isDisabled}
                             id={tid}
                             tid={tid}

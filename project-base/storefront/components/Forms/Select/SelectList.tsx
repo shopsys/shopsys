@@ -63,7 +63,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             <button
                 type="button"
                 className={twJoin(
-                    'font-secondary flex w-full items-center justify-between gap-2 p-3',
+                    'font-secondary hover:text-input-text-hovered hover:bg-fill-accent-less flex w-full cursor-pointer items-center justify-between gap-2 p-3',
                     option.value === activeOption?.value && 'text-input-text-active',
                     option.isDisabled && 'text-input-text-disabled',
                 )}

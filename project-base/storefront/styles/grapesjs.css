@@ -1,6 +1,6 @@
 @layer components {
     .gjs-template-header-bg {
-        @apply from-backgroundBrand to-backgroundBrandLess bg-linear-to-tr/srgb;
+        @apply from-background-brand to-background-brand-less bg-linear-to-tr/srgb;
     }
 
     .gjp-template-header-search-button {

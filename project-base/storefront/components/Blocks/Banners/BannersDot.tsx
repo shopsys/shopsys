@@ -46,6 +46,7 @@ export const BannersDot: FC<BannersDotProps> = ({
                 'vl:flex vl:h-auto vl:w-full vl:rounded-none vl:bg-background-more vl:px-5 vl:py-2 vl:text-left vl:text-text-default',
                 'vl:after:absolute vl:after:inset-0 vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:border-t-[1px] vl:after:border-border-less vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r-[1px]',
                 isActive && 'bg-text-accent vl:bg-background-default vl:text-text-accent',
+                'hover:bg-background-most',
             )}
             onClick={() => moveToSlide(index)}
         >
