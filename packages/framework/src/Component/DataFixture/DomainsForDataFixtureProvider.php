@@ -12,7 +12,7 @@ class DomainsForDataFixtureProvider
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    protected array $allowedDemoDataDomains = [];
+    protected ?array $allowedDemoDataDomains = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -20,11 +20,6 @@ class DomainsForDataFixtureProvider
     public function __construct(
         protected readonly Domain $domain,
     ) {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($domainConfig->isAllowedInDataFixtures()) {
-                $this->allowedDemoDataDomains[$domainConfig->getId()] = $domainConfig;
-            }
-        }
     }
 
     /**
@@ -32,7 +27,15 @@ class DomainsForDataFixtureProvider
      */
     public function getAllowedDemoDataDomains(): array
     {
-        return array_values($this->allowedDemoDataDomains);
+        if ($this->allowedDemoDataDomains === null) {
+            foreach ($this->domain->getAll() as $domainConfig) {
+                if ($domainConfig->isAllowedInDataFixtures()) {
+                    $this->allowedDemoDataDomains[$domainConfig->getId()] = $domainConfig;
+                }
+            }
+        }
+
+        return $this->allowedDemoDataDomains;
     }
 
     /**
@@ -64,7 +67,9 @@ class DomainsForDataFixtureProvider
      */
     public function getFirstAllowedDomainConfig(): DomainConfig
     {
-        return reset($this->allowedDemoDataDomains);
+        $allowedDomains = $this->getAllowedDemoDataDomains();
+
+        return reset($allowedDomains);
     }
 
     /**
@@ -73,6 +78,6 @@ class DomainsForDataFixtureProvider
      */
     public function isDomainIdAllowed(int $domainId): bool
     {
-        return array_key_exists($domainId, $this->allowedDemoDataDomains);
+        return array_key_exists($domainId, $this->getAllowedDemoDataDomains());
     }
 }
