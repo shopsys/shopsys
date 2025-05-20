@@ -35,6 +35,7 @@ const nextConfig = {
         cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn: process.env.SENTRY_DSN ?? '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
+        sentryFeedbackEnable: process.env.SENTRY_FEEDBACK_ENABLE === '1',
         errorDebuggingLevel: process.env.ERROR_DEBUGGING_LEVEL,
         showSymfonyToolbar: process.env.SHOW_SYMFONY_TOOLBAR,
         shouldUseDefer: process.env.SHOULD_USE_DEFER === '1',
