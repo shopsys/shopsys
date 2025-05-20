@@ -82,10 +82,10 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
             <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
                 <div
                     className={twMergeCustom(
-                        'border-inputBorder bg-inputBackground text-inputText hover:border-inputBorderHovered group flex h-14 rounded-md border-2',
-                        isOpen && 'rounded-b-none',
+                        'border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered group flex h-14 rounded-md border-2',
+                        isOpen && 'border-input-border-active rounded-b-none',
                         (isDisabled || isLoading) &&
-                            'border-inputBorderDisabled bg-inputBackgroundDisabled text-inputTextDisabled pointer-events-none cursor-no-drop',
+                            'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
                         selectClassName,
                     )}
                 >
@@ -98,7 +98,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
                                     'h-full w-full bg-transparent px-3 !text-base focus-visible:outline-hidden',
-                                    'placeholder:text-inputPlaceholder placeholder:hover:text-inputPlaceholderHovered placeholder:focus:text-inputPlaceholderActive placeholder:disabled:text-inputPlaceholderDisabled',
+                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
                                 onChange={(e) => comboBoxConfig.setSearchValue(e.target.value)}
@@ -113,7 +113,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         </>
                     ) : (
                         <button
-                            className="w-full px-3 pt-5 text-left focus-visible:outline-hidden"
+                            className="w-full cursor-pointer px-3 pt-5 text-left focus-visible:outline-hidden"
                             disabled={isDisabled}
                             id={tid}
                             tid={tid}
@@ -122,7 +122,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         >
                             <div
                                 className={twJoin(
-                                    'font-secondary text-inputPlaceholder group-hover:text-inputPlaceholderHovered absolute transition-all',
+                                    'font-secondary text-input-placeholder-default group-hover:text-input-placeholder-hovered absolute transition-all',
                                     isOpen || activeOption
                                         ? 'top-[9px] text-sm'
                                         : 'top-1/2 -translate-y-1/2 text-base font-semibold',
@@ -130,11 +130,13 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             >
                                 {label}
 
-                                {isRequired && <span className="text-textError ml-1">*</span>}
+                                {isRequired && <span className="text-text-error ml-1">*</span>}
                             </div>
 
                             {activeOption?.label && (
-                                <div className="font-secondary text-inputText font-semibold">{activeOption.label}</div>
+                                <div className="font-secondary text-input-text-default font-semibold">
+                                    {activeOption.label}
+                                </div>
                             )}
                         </button>
                     )}
@@ -146,13 +148,13 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     {onResetSelect && activeOption && !isLoading && (
-                        <button type="reset" onClick={onResetSelect}>
+                        <button className="cursor-pointer" type="reset" onClick={onResetSelect}>
                             <RemoveIcon className="hover:text-red mx-1 size-4 transition active:scale-95" />
                         </button>
                     )}
 
                     <button
-                        className="pr-3 focus-visible:outline-hidden"
+                        className="cursor-pointer pr-3 focus-visible:outline-hidden"
                         disabled={isDisabled}
                         type="button"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}

@@ -1,7 +1,7 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
-import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -110,10 +110,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                             key={checkedFlag.flag.uuid}
                                             onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
                                         >
-                                            <ProductFlag
-                                                name={checkedFlag.flag.name}
-                                                rgbColor={checkedFlag.flag.rgbColor}
-                                            />
+                                            <Flag className="py-0.5" rgbBgColor={checkedFlag.flag.rgbColor}>
+                                                {checkedFlag.flag.name}
+                                            </Flag>
                                             <SelectedParametersIcon />
                                         </SelectedParametersListItem>
                                     ))}
@@ -201,7 +200,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                                     >
                                                         {selectedValue.rgbHex && selectedValue.rgbHex !== '' && (
                                                             <div
-                                                                className="border-text mr-2 h-4 w-4 rounded-sm border"
+                                                                className="border-icon-default mr-2 size-4 rounded-sm border"
                                                                 style={{ backgroundColor: selectedValue.rgbHex }}
                                                             />
                                                         )}
@@ -216,7 +215,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         </AnimatePresence>
 
                         <div
-                            className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
+                            className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
                             onClick={resetAllFilterQueries}
                         >
                             {t('Clear all')}
@@ -228,7 +227,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     );
 };
 
-const SelectedParametersIcon: FC = () => <RemoveIcon className="group-hover:text-textError ml-3 w-3 cursor-pointer" />;
+const SelectedParametersIcon: FC = () => (
+    <RemoveBoldIcon className="group-hover:text-icon-inverted text-icon-less ml-2 w-3 cursor-pointer" />
+);
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,

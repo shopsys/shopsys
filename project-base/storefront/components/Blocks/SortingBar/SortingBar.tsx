@@ -70,9 +70,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
             </Button>
             <div
                 className={twJoin(
-                    'bg-background vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
+                    'bg-background-default vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
                     isSortMenuOpen
-                        ? 'z-aboveOverlay divide-borderAccentLess absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
+                        ? 'z-aboveOverlay divide-border-less absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
                         : 'hidden',
                 )}
             >
@@ -98,7 +98,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     );
                 })}
             </div>
-            <div className="font-secondary text-inputPlaceholder vl:block hidden text-xs">
+            <div className="font-secondary text-input-placeholder-default vl:block hidden text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}

@@ -29,4 +29,5 @@ export enum SkeletonEnum {
     Stores = 'stores',
     TransportAndPayment = 'transport-and-payment',
     Wishlist = 'wishlist',
+    UserConsent = 'user-consent',
 }

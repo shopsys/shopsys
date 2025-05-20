@@ -37,8 +37,8 @@ export const CartStep: FC<CartStepProps> = ({
                     className={twJoin(
                         'flex size-11 items-center justify-center rounded-full',
                         step === activeStep
-                            ? 'bg-textAccent text-textInverted'
-                            : 'bg-backgroundAccentLess text-textAccent',
+                            ? 'bg-text-accent text-text-inverted'
+                            : 'bg-background-accent-less text-text-accent',
                     )}
                 >
                     <h4>{step}</h4>
@@ -47,8 +47,8 @@ export const CartStep: FC<CartStepProps> = ({
                 <h4
                     className={twJoin(
                         'text-xs lg:text-lg',
-                        !isDisabled && 'group-hover:text-linkHovered',
-                        step === activeStep ? 'text-link' : '',
+                        !isDisabled && 'group-hover:text-link-hovered',
+                        step === activeStep ? 'text-link-default' : '',
                     )}
                 >
                     {label}

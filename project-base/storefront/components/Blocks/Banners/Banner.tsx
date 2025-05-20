@@ -1,7 +1,8 @@
 import { BannerImage } from './BannerImage';
-import { CarouselState, getBannerOrderCSSProperty, getRGBColorString, getYIQContrastTextColor } from './bannersUtils';
+import { CarouselState, getBannerOrderCSSProperty } from './bannersUtils';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { twJoin } from 'tailwind-merge';
+import { getRGBColorString, getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';
 
 type BannerProps = {

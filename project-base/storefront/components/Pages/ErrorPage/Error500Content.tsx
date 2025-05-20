@@ -21,7 +21,7 @@ export const Error500Content: FC<Error500ContentProps> = ({ err }) => {
                 </ErrorPage>
                 {isWithToastAndConsoleErrorDebugging && err && (
                     <div className="my-3 flex justify-center">
-                        <div className="bg-backgroundMore rounded-sm">
+                        <div className="bg-background-more rounded-sm">
                             <div className="p-3">
                                 <p>{err}</p>
                             </div>

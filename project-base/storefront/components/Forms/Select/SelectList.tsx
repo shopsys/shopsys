@@ -53,10 +53,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             tabIndex={option.isDisabled ? -1 : 0}
             tid={`${tid}${index}`}
             className={twMergeCustom(
-                'hover:bg-inputBackgroundHovered list-none font-semibold focus-visible:outline-hidden',
-                option.isDisabled &&
-                    'bg-inputBackgroundDisabled text-inputTextDisabled pointer-events-none cursor-no-drop',
-                'focus:bg-inputBackgroundHovered',
+                'hover:bg-input-bg-hovered list-none font-semibold focus-visible:outline-hidden',
+                option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
+                'focus:bg-input-bg-hovered',
             )}
             onClick={!option.isDisabled ? () => onSelectOption(option) : undefined}
             onKeyDown={(e) => handleKeyDown(e)}
@@ -64,9 +63,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             <button
                 type="button"
                 className={twJoin(
-                    'font-secondary flex w-full items-center justify-between gap-2 p-3',
-                    option.value === activeOption?.value && 'text-inputTextActive',
-                    option.isDisabled && 'text-inputTextDisabled',
+                    'font-secondary hover:text-input-text-hovered hover:bg-fill-accent-less flex w-full cursor-pointer items-center justify-between gap-2 p-3',
+                    option.value === activeOption?.value && 'text-input-text-active',
+                    option.isDisabled && 'text-input-text-disabled',
                 )}
             >
                 {itemBeforeText && itemBeforeText}
@@ -74,7 +73,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 {option.label}
 
                 {option.count !== undefined && (
-                    <span className="font-secondary text-inputPlaceholder font-normal whitespace-nowrap">
+                    <span className="font-secondary text-input-placeholder-default font-normal whitespace-nowrap">
                         ({option.count})
                     </span>
                 )}
@@ -87,7 +86,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     if (infinityScrollConfig && infinityScrollConfig.dataLength >= infinityScrollConfig.pageSize) {
         return (
             <AnimateCollapseDiv
-                className="z-above border-inputBorder bg-background hover:border-inputBorderHovered absolute right-0 left-0 !block rounded-b-md border-2 border-t-0"
+                className="z-above border-input-border-default bg-background-default hover:border-input-border-hovered absolute right-0 left-0 !block rounded-b-md border-2 border-t-0"
                 keyName={tid}
             >
                 <InfiniteScroll
@@ -117,9 +116,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             keyName={tid}
             className={twMergeCustom(
                 '!overflow-y-auto',
-                'z-above bg-background absolute right-0 left-0 !block max-h-[144px] rounded-b-md lg:max-h-[200px]',
-                'border-inputBorder hover:border-inputBorderHovered border-2 border-t-0',
-                '[&::-webkit-scrollbar-thumb]:bg-inputPlaceholder [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
+                'z-above bg-background-default absolute right-0 left-0 !block max-h-[144px] rounded-b-md lg:max-h-[200px]',
+                'border-input-border-default hover:border-input-border-hovered border-2 border-t-0',
+                '[&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
                 listClassName,
             )}
         >

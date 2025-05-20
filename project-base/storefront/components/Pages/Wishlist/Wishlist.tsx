@@ -19,9 +19,9 @@ export const Wishlist: FC = () => {
     return (
         <VerticalStack gap="md">
             <Webline>
-                {isProductListFetching && <SkeletonModuleWishlist />}
-
                 <h1 className="mb-4">{title}</h1>
+
+                {isProductListFetching && <SkeletonModuleWishlist />}
 
                 {wishlist?.products && !isProductListFetching && (
                     <>

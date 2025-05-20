@@ -1,13 +1,13 @@
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LabelHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 
 type ColorLabelWrapperProps = NativeProps & {
     label?: string;
-    isLightColor: boolean;
     bgColor: string;
     count?: number;
     checked?: boolean;
@@ -16,7 +16,6 @@ type ColorLabelWrapperProps = NativeProps & {
 
 export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
     label,
-    isLightColor,
     bgColor,
     count,
     disabled,
@@ -29,34 +28,30 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
         <label
             htmlFor={htmlFor}
             className={twMergeCustom(
-                'text-inputText group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
-                disabled && 'text-inputTextDisabled cursor-no-drop opacity-60',
+                'text-input-text-default group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
+                disabled && 'text-input-text-disabled cursor-no-drop opacity-60',
             )}
         >
             <div
                 style={{ backgroundColor: bgColor }}
                 className={twMergeCustom(
-                    'border-text bg-inputBackground flex size-7 shrink-0 justify-center rounded-sm border transition',
-                    checked
-                        ? 'border-text'
-                        : 'group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
-                    disabled &&
-                        'border-inputBorderDisabled group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled outline-0 group-active:outline-0 active:scale-100',
-                    disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
+                    'border-icon-default bg-input-bg-default flex size-7 shrink-0 justify-center rounded-sm border transition',
+                    disabled && 'border-icon-default outline-0 group-active:outline-0 active:scale-100',
                 )}
             >
                 <CheckmarkIcon
                     className={twMergeCustom(
                         'h-full opacity-0 transition',
                         checked && 'opacity-100',
-                        isLightColor ? 'text-text' : 'text-textInverted',
-                        disabled && 'text-inputTextDisabled',
+                        getYIQContrastTextColor(bgColor),
                     )}
                 />
             </div>
             <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
-                {!!count && !checked && <div className="text-inputPlaceholder ml-auto font-normal">({count})</div>}
+                {!!count && !checked && (
+                    <div className="text-input-placeholder-default ml-auto font-normal">({count})</div>
+                )}
             </div>
         </label>
     </div>

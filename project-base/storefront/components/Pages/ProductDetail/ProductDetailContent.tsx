@@ -64,7 +64,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             usps={product.usps}
                         />
 
-                        <div className="bg-backgroundMore flex flex-col gap-4 rounded-xl p-3 sm:p-6">
+                        <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                             <ProductDetailPrice productPrice={product.price} />
 
                             <ProductDetailAvailability

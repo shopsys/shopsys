@@ -33,7 +33,7 @@
             @apply w-full;
 
             tr {
-                @apply odd:bg-tableBackgroundContrast;
+                @apply odd:bg-table-bg-contrast;
             }
 
             td,
@@ -42,19 +42,19 @@
             }
 
             th {
-                @apply text-tableText text-left leading-[26px] font-bold;
+                @apply text-text-default text-left leading-[26px] font-bold;
                 @apply lg:text-xl;
             }
 
             &.secondary {
-                @apply border-tableBackground border;
+                @apply border-table-bg-default border;
 
                 tr {
-                    @apply first:bg-tableBackgroundContrast bg-[transparent] first:[&_td]:font-bold;
+                    @apply first:bg-table-bg-contrast bg-[transparent] first:[&_td]:font-bold;
                 }
 
                 td {
-                    @apply border-tableBackground border text-left;
+                    @apply border-table-bg-default border text-left;
                 }
             }
         }

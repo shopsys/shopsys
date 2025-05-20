@@ -85,14 +85,14 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
     ];
 
     return (
-        <div className="bg-backgroundMore flex flex-col rounded-xl p-5">
+        <div className="bg-background-more flex flex-col rounded-xl p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
             <ul className="flex flex-col gap-2 py-5">
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
-                        <ThumbUp className="text-textAccent size-6" />
-                        <h5 className="text-textAccent">{text}</h5>
+                        <ThumbUp className="text-text-accent size-6" />
+                        <h5 className="text-text-accent">{text}</h5>
                     </li>
                 ))}
             </ul>

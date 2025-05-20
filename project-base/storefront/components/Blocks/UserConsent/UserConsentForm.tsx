@@ -65,28 +65,30 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 />
             </p>
 
-            <ToggleSwitchControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.marketing.name}
-                render={(toggleSwitch) => <ToggleContent name={t('Marketing')} toggleSwitch={toggleSwitch} />}
-            />
+            <div className="bg-background-more vl:p-8 flex flex-col gap-4 rounded-xl p-4">
+                <ToggleSwitchControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.marketing.name}
+                    render={(toggleSwitch) => <ToggleContent name={t('Marketing')} toggleSwitch={toggleSwitch} />}
+                />
 
-            <ToggleSwitchControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.statistics.name}
-                render={(toggleSwitch) => <ToggleContent name={t('Statistics')} toggleSwitch={toggleSwitch} />}
-            />
+                <ToggleSwitchControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.statistics.name}
+                    render={(toggleSwitch) => <ToggleContent name={t('Statistics')} toggleSwitch={toggleSwitch} />}
+                />
 
-            <ToggleSwitchControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.preferences.name}
-                render={(toggleSwitch) => <ToggleContent name={t('Preferences')} toggleSwitch={toggleSwitch} />}
-            />
+                <ToggleSwitchControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.preferences.name}
+                    render={(toggleSwitch) => <ToggleContent name={t('Preferences')} toggleSwitch={toggleSwitch} />}
+                />
+            </div>
 
-            <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
+            <div className="flex flex-wrap justify-end gap-3">
                 <Button size="small" onClick={saveUserConsentChoices}>
                     {t('Save choices')}
                 </Button>
@@ -104,8 +106,8 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 };
 
 const ToggleContent: FC<{ name: string; toggleSwitch: JSX.Element }> = ({ toggleSwitch, name }) => (
-    <div className="border-borderAccent my-2 flex justify-between border-b">
-        <span className="text-xl">{name}</span>
+    <div className="flex items-center justify-between">
+        <span>{name}</span>
         {toggleSwitch}
     </div>
 );

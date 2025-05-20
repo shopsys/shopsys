@@ -26,7 +26,7 @@ type LinkProps = NativePropsAnchor & {
     );
 
 const linkPlaceholderTwClassSegments = [
-    'inline-flex cursor-pointer items-center text-link outline-hidden hover:text-linkHovered',
+    'inline-flex cursor-pointer items-center text-link-default outline-hidden hover:text-link-hovered',
     'underline hover:underline',
 ];
 

@@ -26,6 +26,7 @@ type CUSTOM_PAGE_TYPES = [
     'contact',
     'wishlist',
     'customer-users',
+    'user-consent',
 ];
 
 export type PageType = FriendlyPagesTypesKey | CUSTOM_PAGE_TYPES[number];

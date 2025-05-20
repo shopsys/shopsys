@@ -18,11 +18,11 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
     return (
         <Webline className="z-above relative">
             <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-textInverted">{t('Magazine')}</h3>
+                <h3 className="text-text-inverted">{t('Magazine')}</h3>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        className="font-secondary text-textInverted hover:text-textInverted text-sm font-semibold tracking-wide no-underline hover:underline"
+                        className="font-secondary text-text-inverted hover:text-text-inverted text-sm font-semibold tracking-wide no-underline hover:underline"
                         href={blogUrl}
                         type="blogCategory"
                     >

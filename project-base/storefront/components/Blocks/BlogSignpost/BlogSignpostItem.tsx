@@ -34,24 +34,24 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
 
     const level1WrapperTwClassName = [
         'rounded-xl',
-        hasChildren && isActive && 'flex flex-col bg-background shadow-[inset_0_0_0_1px] shadow-borderAccentLess',
+        hasChildren && isActive && 'flex flex-col bg-background-default  shadow-[inset_0_0_0_1px] shadow-border-less',
         'max-vl:max-h-[400px] max-vl:overflow-auto vl:overflow-hidden',
     ];
 
     const level1ItemTwClassName = [
         'flex px-5 py-3',
-        (!hasChildren || !isActive) && 'bg-backgroundMore',
-        !hasChildren && isActive && 'bg-backgroundAccentLess',
+        (!hasChildren || !isActive) && 'bg-background-more',
+        !hasChildren && isActive && 'bg-background-accent-less',
     ];
     const level2ItemTwClassName = [
-        'flex items-center rounded-md py-2 px-2 bg-backgroundMore',
-        isActive && 'bg-backgroundAccentLess',
+        'flex items-center rounded-md py-2 px-2 bg-background-more',
+        isActive && 'bg-background-accent-less',
     ];
-    const level3ItemTwClassName = ['py-3 px-5 border-l border-borderAccentLess', isActive && 'border-backgroundAccent'];
+    const level3ItemTwClassName = ['py-3 px-5 border-l border-border-less', isActive && 'border-background-accent'];
 
-    const level1LinkTwClassName = ['font-semibold', isActive && 'text-link'];
-    const level2LinkTwClassName = ['font-semibold pl-2', isActive && 'text-link'];
-    const level3LinkTwClassName = isActive && 'text-link';
+    const level1LinkTwClassName = ['font-semibold', isActive && 'text-link-default'];
+    const level2LinkTwClassName = ['font-semibold pl-2', isActive && 'text-link-default'];
+    const level3LinkTwClassName = isActive && 'text-link-default';
 
     const level1ChildrenWrapperTwClassName = ['px-12 pb-3 flex flex-col gap-3'];
     const level2ChildrenWrapperTwClassName = ['px-3 mt-3'];
@@ -68,8 +68,8 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                 {isSecondLevel && hasChildren && (
                     <ArrowIcon
                         className={twMergeCustom(
-                            'text-textSubtle size-4 -rotate-90 cursor-pointer transition-all',
-                            isActive && 'text-link',
+                            'text-text-less size-4 -rotate-90 cursor-pointer transition-all',
+                            isActive && 'text-link-default',
                             isOpen && 'rotate-0',
                         )}
                         onClick={(e) => {
@@ -83,7 +83,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     href={blogCategory.link}
                     type="blogCategory"
                     className={twMergeCustom(
-                        'font-secondary text-text hover:text-linkHovered text-sm no-underline',
+                        'font-secondary text-text-default hover:text-link-hovered text-sm no-underline',
                         isFirstLevel && level1LinkTwClassName,
                         isSecondLevel && level2LinkTwClassName,
                         isThirdLevel && level3LinkTwClassName,

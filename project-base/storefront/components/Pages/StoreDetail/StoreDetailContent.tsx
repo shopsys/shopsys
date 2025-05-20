@@ -70,7 +70,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </StoreSection>
                     </div>
                     <div className="w-full lg:basis-1/2">
-                        <div className="bg-backgroundMore flex aspect-square w-full rounded-xl p-5">
+                        <div className="bg-background-more flex aspect-square w-full rounded-xl p-5">
                             <GoogleMap
                                 isDetail
                                 defaultZoom={15}

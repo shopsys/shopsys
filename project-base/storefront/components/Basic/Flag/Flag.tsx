@@ -1,26 +1,36 @@
 import { useRouter } from 'next/router';
+import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';
-
-export type FlagTypes = 'blog' | 'custom' | 'discount';
 
 type FlagProps = {
     href?: string;
-    type?: FlagTypes;
+    type?: 'blog' | 'discount';
+    rgbBgColor?: string;
 };
 
-export const Flag: FC<FlagProps> = ({ children, href, className, type = 'custom' }) => {
+export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColor }) => {
     const router = useRouter();
 
+    const textColor = rgbBgColor && getYIQContrastTextColor(rgbBgColor);
+
     const flagTwClass = twMergeCustom(
-        'inline-flex rounded-sm px-1.5 py-0.5 text-xs transition-all',
+        'inline-flex rounded-flag px-1.5 py-1 text-xs transition-all font-secondary font-semibold text-flag-text',
+        textColor,
+        href && 'cursor-pointer',
+        type === 'blog' && 'bg-secondary-500 hover:bg-background-accent-more',
+        type === 'discount' && 'bg-price-discounted',
         className,
-        type === 'blog' &&
-            'bg-textSubtle font-secondary font-semiBold text-xs !text-textInverted no-underline hover:bg-backgroundAccentMore hover:text-textInverted hover:!no-underline',
-        type === 'discount' && 'bg-priceDiscounted text-textInverted font-semiBold py-1',
     );
 
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (href) {
+            e.preventDefault();
+            router.push(href);
+        }
+    };
+
     return (
-        <div className={flagTwClass} onClick={() => href && router.push(href)}>
+        <div className={flagTwClass} style={{ backgroundColor: rgbBgColor }} onClick={handleClick}>
             {children}
         </div>
     );

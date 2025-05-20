@@ -25,13 +25,13 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
         <div
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             className={twMergeCustom(
-                'text-inputPlaceholder hover:text-inputPlaceholderHovered flex cursor-pointer items-center gap-2',
+                'text-text-less hover:text-text-accent flex cursor-pointer items-center gap-2',
                 className,
             )}
             onClick={toggleProductInWishlist}
         >
             {isProductInWishlist ? (
-                <HeartFilledIcon className="text-activeIconFull size-6" />
+                <HeartFilledIcon className="text-icon-accent-red size-6" />
             ) : (
                 <HeartIcon className="size-6" />
             )}

@@ -23,21 +23,21 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
     return (
         <li
             className={twMergeCustom(
-                'border-backgroundMore bg-backgroundMore group relative flex flex-col gap-2.5 rounded-xl border px-2.5 py-5 text-left transition select-none sm:px-5',
+                'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border px-2.5 py-5 text-left transition select-none sm:px-5',
                 size === 'small' && 'p-5',
-                'hover:border-borderAccentLess hover:bg-background',
+                'hover:border-border-less hover:bg-background',
                 className,
             )}
         >
             <ExtendedNextLink
-                className="text-text hover:text-link flex flex-col gap-2.5 no-underline select-none hover:no-underline"
+                className="text-text-default hover:text-link-default flex flex-col gap-2.5 no-underline select-none hover:no-underline"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
                 <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                <div className="font-secondary group-hover:text-link line-clamp-3 min-h-[3.75rem] text-sm font-semibold group-hover:underline">
+                <div className="font-secondary group-hover:text-link-default line-clamp-3 min-h-[3.75rem] text-sm font-semibold group-hover:underline">
                     {product.fullName}
                 </div>
 

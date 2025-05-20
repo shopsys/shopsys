@@ -8,9 +8,9 @@ import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import tinycolor from 'tinycolor2';
 import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
+import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { useCountdown } from 'utils/useCountdown';
 import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
 
@@ -47,7 +47,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                         <div
                             className={twJoin(
                                 'flex items-center justify-center text-center text-sm font-bold',
-                                tinycolor(item.rgbColor).isLight() ? 'text-text' : 'text-textInverted',
+                                getYIQContrastTextColor(item.rgbColor),
                             )}
                         >
                             {!!item.mainImage && (
@@ -70,9 +70,9 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                 </section>
             ))}
             {loggedAsUserEmail && (
-                <section className="bg-backgroundError py-2">
+                <section className="bg-background-error py-2">
                     <Webline>
-                        <div className="text-text flex items-center justify-center text-center text-sm font-bold">
+                        <div className="text-text-default flex items-center justify-center text-center text-sm font-bold">
                             <Trans
                                 defaultTrans="Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>"
                                 i18nKey="adminLoggedInAsCustomerWarning"

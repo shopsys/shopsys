@@ -20,7 +20,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     const [customerComplaintDetailUrl] = getInternationalizedStaticUrls(['/customer/complaint-detail'], url);
 
     return (
-        <div className="bg-backgroundMore vl:p-6 flex flex-col gap-5 rounded-md p-4">
+        <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
                 <Image
                     priority
@@ -102,11 +102,9 @@ const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
     wrapperClassName,
 }) => {
     return (
-        <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
-            <div className="flex flex-col gap-1">
-                <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('leading-none font-bold', valueClassName)}>{value}</span>
-            </div>
+        <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
+            <span className="text-sm">{title}</span>
+            <span className={twMergeCustom('font-bold', valueClassName)}>{value}</span>
         </div>
     );
 };

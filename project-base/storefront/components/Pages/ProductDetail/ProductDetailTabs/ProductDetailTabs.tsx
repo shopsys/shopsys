@@ -98,7 +98,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                         {groupParameters.map((parameter) => (
                                             <Row
                                                 key={parameter.uuid}
-                                                className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                                className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
                                             >
                                                 <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
                                                     <h6 className="leading-5">{parameter.name}</h6>
@@ -134,7 +134,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                             <Fragment key={parameter.uuid}>
                                                 <Row
                                                     key={parameter.uuid}
-                                                    className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                                    className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
                                                 >
                                                     <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
                                                         <h6 className="leading-5">{parameter.name}</h6>
@@ -178,7 +178,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             {files.map((file) => (
                                 <li key={file.url} className="">
                                     <a
-                                        className="bg-backgroundMore flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
+                                        className="bg-background-more flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
                                         href={file.url}
                                     >
                                         <DownloadIcon className="size-6" />

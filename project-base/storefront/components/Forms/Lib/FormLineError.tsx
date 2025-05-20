@@ -25,7 +25,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
         <div className="relative mt-2">
             <CrossIcon
                 className={twJoin(
-                    'text-inputError absolute flex w-4',
+                    'text-text-error absolute flex w-4',
                     isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && 'top-1/2 right-1 -translate-y-1/2',
@@ -34,7 +34,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                 )}
             />
             {error.message !== undefined && (
-                <span className={twJoin('font-secondary text-inputError text-sm', isCheckbox && 'block pr-6')}>
+                <span className={twJoin('font-secondary text-text-error text-sm', isCheckbox && 'block pr-6')}>
                     {error.message}
                 </span>
             )}

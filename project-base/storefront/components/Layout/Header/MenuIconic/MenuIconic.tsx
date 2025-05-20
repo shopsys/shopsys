@@ -23,7 +23,7 @@ export const MenuIconic: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const menuCountTwClass =
-        'absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-activeIconFull px-0.5 font-secondary text-[10px] font-bold leading-normal text-textInverted lg:-right-2 lg:-top-[6.5px]';
+        'absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-secondary text-[10px] font-bold leading-normal text-text-inverted lg:-right-2 lg:-top-[6.5px]';
 
     return (
         <ul className="flex lg:gap-7">

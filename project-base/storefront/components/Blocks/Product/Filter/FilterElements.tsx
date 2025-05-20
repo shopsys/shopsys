@@ -2,7 +2,7 @@ import { AnimateAppearSlideY } from 'components/Basic/Animations/AnimateAppearSl
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Tag } from 'components/Basic/Tag/Tag';
 import { twJoin } from 'tailwind-merge';
 
 export const FilterGroupWrapper: FC = ({ children }) => <div className="vl:py-5 py-4">{children}</div>;
@@ -14,12 +14,12 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
     isActive,
 }) => (
     <div
-        className="font-secondary text-text flex cursor-pointer items-center justify-between font-semibold uppercase"
+        className="font-secondary text-text-default flex cursor-pointer items-center justify-between font-semibold uppercase"
         onClick={onClick}
     >
         <h6 className="flex items-center gap-2.5">
             {title}
-            {isActive && <div className="bg-textSuccess vl:hidden size-2 rounded-full" />}
+            {isActive && <div className="bg-text-success vl:hidden size-2 rounded-full" />}
         </h6>
         <ArrowIcon className={twJoin('size-5 rotate-0 text-xs transition select-none', isOpen && 'rotate-180')} />
     </div>
@@ -36,7 +36,7 @@ export const FilterGroupContentItem: FC<{ isDisabled: boolean; keyName?: string 
     isDisabled,
     keyName,
 }) => (
-    <AnimateAppearSlideY className={twJoin('!block', isDisabled && 'pointer-events-none opacity-30')} keyName={keyName}>
+    <AnimateAppearSlideY className={twJoin('!block', isDisabled && 'opacity-30')} keyName={keyName}>
         {children}
     </AnimateAppearSlideY>
 );
@@ -45,8 +45,8 @@ export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }
     <button
         className={twJoin(
             'w-fit cursor-pointer border-none bg-none p-0 text-sm underline outline-hidden hover:bg-none hover:no-underline',
-            'text-link',
-            'hover:text-linkHovered',
+            'text-link-default',
+            'hover:text-link-hovered',
         )}
         onClick={onClick}
     >
@@ -55,7 +55,7 @@ export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }
 );
 
 export const SelectedParametersName: FC = ({ children }) => (
-    <p className="font-secondary text-inputPlaceholder text-xs font-semibold">{children}</p>
+    <p className="font-secondary text-input-placeholder-default text-xs font-semibold">{children}</p>
 );
 
 export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, keyName }) => (
@@ -65,7 +65,7 @@ export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, key
 );
 
 export const SelectedParametersListItem: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <LabelLink className="bg-backgroundAccentLess text-text group last-of-type:mr-6" onClick={onClick}>
+    <Tag className="bg-background-accent-less text-text-default group last-of-type:mr-6" onClick={onClick}>
         {children}
-    </LabelLink>
+    </Tag>
 );

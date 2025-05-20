@@ -24,7 +24,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     availability,
 }) => {
     return (
-        <li className="bg-backgroundMore font-secondary flex flex-col gap-1 rounded-xl p-4">
+        <li className="bg-background-more font-secondary flex flex-col gap-1 rounded-xl p-4">
             <div className="flex items-center gap-2.5">
                 <Image
                     alt={mainImage?.name || fullName}
@@ -41,9 +41,9 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                             className={twJoin(
                                 'text-xs font-semibold',
                                 availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                    'text-availabilityInStock',
+                                    'text-availability-in-stock',
                                 availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
-                                    'text-availabilityOutOfStock',
+                                    'text-availability-out-of-stock',
                             )}
                         >
                             {availability.name}

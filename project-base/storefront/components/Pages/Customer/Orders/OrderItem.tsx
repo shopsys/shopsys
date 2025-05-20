@@ -36,7 +36,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const notPaid = order.hasExternalPayment && !order.isPaid && !order.hasPaymentInProcess;
 
     return (
-        <div className="bg-backgroundMore vl:flex-row flex flex-col flex-wrap justify-between gap-4 rounded-xl p-5">
+        <div className="bg-background-more vl:flex-row flex flex-col flex-wrap justify-between gap-4 rounded-xl p-5">
             <div className="flex flex-1 flex-col gap-2.5">
                 <div className="vl:flex-row flex flex-col gap-x-8 gap-y-2">
                     <OrderItemColumnInfo title={t('Order number')}>

@@ -25,6 +25,6 @@ export const StyleguideTooltips: FC = () => {
 
 const TooltipBox: FC<{ label: string; placement?: Placement }> = ({ label, placement, children }) => (
     <Tooltip label={label} placement={placement}>
-        <div className="bg-backgroundBrandLess text-textInverted rounded-full px-2 py-1">{children}</div>
+        <div className="bg-background-brand-less text-text-inverted rounded-full px-2 py-1">{children}</div>
     </Tooltip>
 );

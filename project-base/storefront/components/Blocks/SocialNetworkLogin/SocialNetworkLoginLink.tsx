@@ -14,7 +14,7 @@ export const SocialNetworkLoginLink: FC<{ href: UrlObject; socialNetwork: TypeLo
             className={twJoin(
                 'flex size-14 items-center justify-center rounded-lg',
                 socialNetwork === TypeLoginTypeEnum.Facebook && 'bg-linear-to-b/srgb from-[#19AFFF] to-[#0062E0]',
-                socialNetwork === TypeLoginTypeEnum.Google && 'border-backgroundBrand border-2',
+                socialNetwork === TypeLoginTypeEnum.Google && 'border-background-brand border-2',
                 socialNetwork === TypeLoginTypeEnum.Seznam && 'bg-[#CC0000]',
             )}
         >

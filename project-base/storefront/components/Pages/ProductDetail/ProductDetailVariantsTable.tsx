@@ -38,11 +38,11 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
 
     return (
         <Webline>
-            <ul className="divide-borderAccent grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
+            <ul className="divide-border-default grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
                 {variants.map((variant, index) => (
                     <li
                         key={variant.uuid}
-                        className="border-borderAccent mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border p-2 md:max-w-none lg:flex-row lg:border-0"
+                        className="border-border-default mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border p-2 md:max-w-none lg:flex-row lg:border-0"
                         tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
                     >
                         <div className="relative h-48 w-full lg:h-16 lg:w-16" tid={TIDs.product_detail_main_image}>

@@ -28,7 +28,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                 <header>
                     <Webline
                         className="relative"
-                        wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess lg:pb-6"
+                        wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-background-brand-less lg:pb-6"
                     >
                         <Header simpleHeader />
                     </Webline>
@@ -45,7 +45,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                 </main>
 
                 <footer className="mt-auto h-fit">
-                    <Webline wrapperClassName="bg-backgroundAccentLess">
+                    <Webline wrapperClassName="bg-background-accent-less">
                         <Footer simpleFooter />
                     </Webline>
                 </footer>

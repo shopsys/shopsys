@@ -25,14 +25,14 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                     initial={{ translateX: '100%' }}
                     transition={{ duration: 0.2 }}
                     className={twMergeCustom(
-                        'z-aboveOverlay bg-background pointer-events-auto fixed top-0 right-0 h-dvh min-w-[315px] overflow-y-auto rounded-none p-5',
+                        'z-aboveOverlay bg-background-default pointer-events-auto fixed top-0 right-0 h-dvh min-w-[315px] overflow-y-auto rounded-none p-5',
                         className,
                     )}
                 >
                     <div className="mb-10 flex flex-row justify-between pr-1">
                         <span className="w-full text-center text-base">{title}</span>
                         <RemoveIcon
-                            className="text-borderAccent w-4 cursor-pointer"
+                            className="text-border-default w-4 cursor-pointer"
                             onClick={() => setIsActive(false)}
                         />
                     </div>

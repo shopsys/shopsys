@@ -107,9 +107,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                 <div
                     key={address.uuid}
                     className={twJoin(
-                        'border-borderAccentLess bg-background relative flex w-full justify-between rounded-md border-2 p-4',
+                        'border-border-less bg-background-default relative flex w-full justify-between rounded-md border-2 p-4',
                         defaultDeliveryAddress?.uuid === address.uuid
-                            ? 'border-borderAccent bg-backgroundAccentLess'
+                            ? 'border-border-default bg-background-accent-less'
                             : canManagePersonalData
                               ? 'cursor-pointer'
                               : '',

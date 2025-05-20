@@ -43,7 +43,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <span
-                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
+                                        className="font-secondary text-input-placeholder-default mr-4 text-sm font-semibold"
                                         tid={TIDs.blog_article_publication_date}
                                     >
                                         {formatDate(article.publishDate, 'l')}
@@ -68,9 +68,9 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h5 className="text-textInverted">{article.name}</h5>
+                        <h5 className="text-text-inverted">{article.name}</h5>
 
-                        <p className={twJoin('text-textInverted font-normal', !isPlaceholder && 'hidden')}>
+                        <p className={twJoin('text-text-inverted font-normal', !isPlaceholder && 'hidden')}>
                             {article.perex}
                         </p>
                     </div>

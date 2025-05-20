@@ -36,7 +36,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 >
                     <div className="relative">
                         <UserIcon className="size-6" />
-                        <div className="bg-actionPrimaryBackground absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full" />
+                        <div className="bg-button-primary-bg-default absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full" />
                     </div>
                     <span className="hidden lg:inline-block">{t('My account')}</span>
                 </MenuIconicItemLink>

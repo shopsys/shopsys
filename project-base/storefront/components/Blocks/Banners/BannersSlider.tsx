@@ -116,7 +116,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                 className={twJoin(
                     'relative',
                     sliderItems.length > 4 &&
-                        "vl:after:absolute vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-backgroundDark vl:after:bg-linear-to-r/srgb vl:after:from-background vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
+                        "vl:after:absolute vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-background-dark vl:after:bg-linear-to-r/srgb vl:after:from-background-default vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
                 )}
             >
                 <div

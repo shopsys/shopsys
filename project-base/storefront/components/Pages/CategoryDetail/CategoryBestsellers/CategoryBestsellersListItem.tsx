@@ -28,7 +28,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     return (
         <ExtendedNextLink
-            className="hover:bg-background flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:no-underline"
+            className="hover:bg-background-default flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:no-underline"
             draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
@@ -43,7 +43,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 />
             </div>
             <div className="flex w-full flex-col justify-between gap-x-4 gap-y-2.5 select-text md:flex-row md:items-center">
-                <span className="font-secondary text-text line-clamp-5 max-w-80 flex-1 items-center text-sm font-semibold">
+                <span className="font-secondary text-text-default line-clamp-5 max-w-80 flex-1 items-center text-sm font-semibold">
                     <ProductFlags
                         flags={product.flags}
                         percentageDiscount={product.price.percentageDiscount}

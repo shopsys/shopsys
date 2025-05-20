@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import { TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
@@ -31,9 +30,9 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     tid,
     isActive = false,
 }) => {
-    const menuIconicSubItemLinkTwClass = twJoin(
-        'flex items-center px-3 py-4 text-sm text-text no-underline font-semibold hover:no-underline gap-5 hover:text-text',
-        isActive && 'text-textAccent',
+    const menuIconicSubItemLinkTwClass = twMergeCustom(
+        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default',
+        isActive && 'text-text-accent',
     );
 
     if (href) {
@@ -61,7 +60,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, className, tid, href, title, type, onClick, onTouchEnd }, _) => {
         const menuIconicItemLinkTwClass =
-            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-linkInverted no-underline transition-colors hover:text-linkInvertedHovered hover:no-underline font-secondary';
+            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
         if (href) {
             return (
@@ -103,9 +102,9 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 > = ({ children, isActive = false }) => (
     <li
         className={twMergeCustom(
-            'border-background bg-backgroundMore h-14 rounded-xl border',
-            'hover:border-borderAccentLess hover:bg-background',
-            isActive && 'border-borderAccentLess bg-background',
+            'border-background-default bg-background-more h-14 rounded-xl border',
+            'hover:border-border-less hover:bg-background-default',
+            isActive && 'border-border-less bg-background-default',
         )}
     >
         {children}
@@ -138,7 +137,7 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
                 <AnimateAppearDiv
                     className={twMergeCustom(
                         `z-cart pointer-events-auto absolute top-[54px] hidden origin-top`,
-                        'bg-background vl:block rounded-xl p-5',
+                        'bg-background-default vl:block rounded-xl p-5',
                         'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
                         positionClasses,
                     )}

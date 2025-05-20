@@ -27,9 +27,9 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         href={blogArticle.link}
                         type="blogArticle"
                         className={twJoin(
-                            'border-backgroundMore group flex w-full flex-col gap-y-6 rounded-xl border p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
-                            'bg-backgroundMore no-underline',
-                            'hover:border-borderAccentLess hover:bg-background hover:no-underline',
+                            'border-background-more group flex w-full flex-col gap-y-6 rounded-xl border p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
+                            'bg-background-more no-underline',
+                            'hover:border-border-less hover:bg-background-default hover:no-underline',
                         )}
                     >
                         <div className="w-full text-center md:w-[250px] lg:w-80">
@@ -67,7 +67,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 </div>
                             </div>
 
-                            <h2 className="h5 text-text group-hover:text-link mb-0 !font-bold group-hover:underline max-md:text-base">
+                            <h2 className="h5 text-text-default group-hover:text-link-default mb-0 !font-bold group-hover:underline max-md:text-base">
                                 {blogArticle.name}
                             </h2>
 

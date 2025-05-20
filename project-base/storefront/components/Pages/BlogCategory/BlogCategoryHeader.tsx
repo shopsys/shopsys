@@ -11,7 +11,7 @@ export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, descrip
     return (
         <Webline width="xxl">
             <div
-                className="bg-textAccent rounded-xl"
+                className="bg-text-accent rounded-xl"
                 style={
                     image?.url
                         ? {
@@ -21,10 +21,10 @@ export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, descrip
                 }
             >
                 <Webline className="py-14">
-                    <h1 className="text-textInverted mb-3">{title}</h1>
+                    <h1 className="text-text-inverted mb-3">{title}</h1>
                     {description && (
                         <p
-                            className="text-textInverted [&_*]:text-textInverted [&_*]:hover:text-textInverted"
+                            className="text-text-inverted [&_*]:text-text-inverted [&_*]:hover:text-text-inverted"
                             dangerouslySetInnerHTML={{ __html: description }}
                         />
                     )}

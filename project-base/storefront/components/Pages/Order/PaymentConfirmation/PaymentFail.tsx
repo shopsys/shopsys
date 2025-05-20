@@ -17,7 +17,7 @@ export const PaymentFail: FC<PaymentFailProps> = ({ orderPaymentFailedContent })
         <ConfirmationPageContent
             content={orderPaymentFailedContent}
             heading={t('Your payment was not successful')}
-            headingClassName="text-textError"
+            headingClassName="text-text-error"
         />
     );
 };

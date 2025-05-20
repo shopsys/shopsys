@@ -20,15 +20,15 @@ import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
 
 const emptyCartTwClassName = [
-    'bg-none text-actionPrimaryText border-actionPrimaryText',
-    'group-hover:bg-actionPrimaryBackgroundHovered group-hover:text-actionPrimaryTextHovered group-hover:border-actionPrimaryBorderHovered',
-    'group-active:bg-actionPrimaryBackgroundActive group-active:text-actionPrimaryTextActive group-active:border-actionPrimaryBorderActive',
+    'bg-none text-button-primary-text-default border-button-primary-text-default',
+    'group-hover:bg-button-primary-bg-hovered group-hover:text-button-primary-text-hovered group-hover:border-button-primary-border-hovered',
+    'group-active:bg-button-primary-bg-active group-active:text-button-primary-text-active group-active:border-button-primary-border-active',
 ];
 
 const nonEmptyCartTwClassName = [
-    'bg-actionPrimaryBackground text-actionPrimaryText border-actionPrimaryBorder',
-    'group-hover:bg-actionPrimaryBackgroundHovered group-hover:text-actionPrimaryTextHovered group-hover:border-actionPrimaryBorderHovered',
-    'group-active:bg-actionPrimaryBackgroundActive group-active:text-actionPrimaryTextActive group-active:border-actionPrimaryBorderActive',
+    'bg-button-primary-bg-default text-button-primary-text-default border-button-primary-border-default',
+    'group-hover:bg-button-primary-bg-hovered group-hover:text-button-primary-text-hovered group-hover:border-button-primary-border-hovered',
+    'group-active:bg-button-primary-bg-active group-active:text-button-primary-text-active group-active:border-button-primary-border-active',
 ];
 
 export const CartInHeader: FC = ({ className }) => {
@@ -63,7 +63,7 @@ export const CartInHeader: FC = ({ className }) => {
                     <Loader
                         className={twJoin(
                             'z-overlay absolute inset-0 flex h-full w-full items-center',
-                            'bg-backgroundMore justify-center rounded-lg py-2 opacity-50',
+                            'bg-background-more justify-center rounded-lg py-2 opacity-50',
                         )}
                     />
                 )}
@@ -100,10 +100,10 @@ export const CartInHeader: FC = ({ className }) => {
                     <div
                         className={twJoin(
                             'relative flex h-full w-full items-center justify-center rounded-md border p-3 no-underline transition-colors hover:no-underline',
-                            'border-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
+                            'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
                             isActiveDelayed &&
-                                'hover:border-actionPrimaryBorderHovered hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered',
-                            'active:border-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
+                                'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
+                            'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
                         )}
                         onClick={() => setIsActive(!isActive)}
                     >

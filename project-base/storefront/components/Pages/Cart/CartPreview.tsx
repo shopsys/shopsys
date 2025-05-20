@@ -26,11 +26,11 @@ export const CartPreview: FC = () => {
     }
 
     return (
-        <div className="bg-backgroundMore font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
+        <div className="bg-background-more font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
 
             {promoCodes.length > 0 && (
-                <div className="border-borderAccentLess mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
+                <div className="border-border-less mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <p>{t('Promo code')}</p>
@@ -38,7 +38,7 @@ export const CartPreview: FC = () => {
                             <Flag type="discount">{promoCodes[0].code}</Flag>
 
                             <button
-                                className="text-link hover:text-linkHovered text-xs underline hover:no-underline"
+                                className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
                                 tid={TIDs.blocks_promocode_promocodeinfo_code}
                                 onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
@@ -47,15 +47,12 @@ export const CartPreview: FC = () => {
                         </div>
                     </div>
 
-                    {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
+                    {isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
                         mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
-                            <div
-                                className="flex items-center justify-between"
-                                tid={TIDs.pages_cart_cartpreview_discount}
-                            >
+                            <div className="flex items-center justify-between">
                                 <p>{t('The amount of discounts')}</p>
 
-                                <span className="text-priceDiscounted whitespace-nowrap">
+                                <span className="text-price-discounted whitespace-nowrap">
                                     {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
                                 </span>
                             </div>
@@ -69,12 +66,12 @@ export const CartPreview: FC = () => {
                         <div className="flex items-center justify-between">
                             <p>{t('Total')}</p>
 
-                            <span className="text-price text-lg whitespace-nowrap sm:text-2xl">
+                            <span className="text-price-default text-lg whitespace-nowrap sm:text-2xl">
                                 {formatPrice(cart.totalItemsPrice.priceWithVat)}
                             </span>
                         </div>
 
-                        <span className="text-priceBefore text-right text-sm whitespace-nowrap">
+                        <span className="text-price-before text-right text-sm whitespace-nowrap">
                             {formatPrice(cart.totalItemsPrice.priceWithoutVat)} {t('without VAT')}
                         </span>
                     </div>

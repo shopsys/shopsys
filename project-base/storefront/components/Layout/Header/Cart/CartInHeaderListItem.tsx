@@ -23,7 +23,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     return (
         <li
             key={uuid}
-            className="border-borderAccentLess relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b py-3 last:border-b-[3px] lg:flex-nowrap"
+            className="border-border-less relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b py-3 last:border-b-[3px] lg:flex-nowrap"
         >
             <div className="flex min-h-20 w-full flex-row items-center gap-x-6">
                 <ExtendedNextLink
@@ -42,7 +42,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </ExtendedNextLink>
 
                 <ExtendedNextLink
-                    className="font-secondary text-tableText hover:text-link flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
+                    className="font-secondary text-text-default hover:text-link-default flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
                     href={productSlug}
                     type="product"
                 >
@@ -55,7 +55,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </div>
 
                 {isPriceVisible(product.price.priceWithVat) && (
-                    <div className="font-secondary text-price w-28 font-bold break-words lg:text-right">
+                    <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                     </div>
                 )}

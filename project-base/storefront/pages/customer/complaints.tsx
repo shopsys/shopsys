@@ -77,7 +77,7 @@ const ComplaintsPage: FC = () => {
                     </div>
                 )}
                 <SearchInput
-                    className="border-inputBorder w-full border"
+                    className="border-input-border-default w-full border"
                     label={t('Search for a product you complained about')}
                     shouldShowSpinnerInInput={complaintsDataFetching}
                     value={searchQueryValue}

@@ -7,7 +7,7 @@ export const ErrorLayout: FC = ({ children }) => (
         <header>
             <Webline
                 className="relative mb-4"
-                wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
+                wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-background-brand-less"
             >
                 <Header simpleHeader />
             </Webline>
@@ -16,7 +16,7 @@ export const ErrorLayout: FC = ({ children }) => (
         <main className="mt-4 mb-10 flex flex-col gap-4">{children}</main>
 
         <footer className="mt-auto h-fit">
-            <Webline wrapperClassName="bg-backgroundAccentLess">
+            <Webline wrapperClassName="bg-background-accent-less">
                 <Footer simpleFooter />
             </Webline>
         </footer>

@@ -21,7 +21,7 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                         storeAvailability.store && (
                             <li
                                 key={index}
-                                className="border-borderAccent flex w-full items-center justify-between gap-4 border-b py-4"
+                                className="border-border-default flex w-full items-center justify-between gap-4 border-b py-4"
                             >
                                 <strong className="w-36">{storeAvailability.store.storeName}</strong>
 
@@ -29,9 +29,9 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     className={twJoin(
                                         'flex-1 pr-3 text-sm',
                                         storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.InStock &&
-                                            'text-availabilityInStock',
+                                            'text-availability-in-stock',
                                         storeAvailability.availabilityStatus ===
-                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
+                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
                                     )}
                                 >
                                     {storeAvailability.availabilityInformation}

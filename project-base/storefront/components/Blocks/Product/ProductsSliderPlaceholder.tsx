@@ -55,7 +55,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
 type SliderButtonPlaceholderProps = { type: 'prev' | 'next' };
 
 const SliderButtonPlaceholder: FC<SliderButtonPlaceholderProps> = ({ type }) => (
-    <button className="text-text hover:text-textAccent disabled:text-textDisabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto">
+    <button className="text-text-default hover:text-text-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto">
         <ArrowSecondaryIcon className={twJoin('w-5', type === 'prev' ? 'rotate-90' : '-rotate-90')} />
     </button>
 );

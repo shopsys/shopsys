@@ -1,4 +1,5 @@
 import { UserConsentForm } from './UserConsentForm';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -22,10 +23,10 @@ export const UserConsent: FC<{ url: string }> = ({ url }) => {
     }
 
     return (
-        <div className="z-maximum fixed bottom-0 left-0 flex w-full justify-end">
-            <div className="border-borderAccent bg-backgroundMore absolute right-4 bottom-3 w-[calc(100vw-32px)] max-w-lg rounded-sm border-4 p-5 shadow-md">
+        <div className="z-maximum bg-background-default border-border-default fixed right-5 bottom-5 rounded-xl border-5 p-4">
+            <VerticalStack gap="sm">
                 <UserConsentForm onSetCallback={onSetCallback} />
-            </div>
+            </VerticalStack>
         </div>
     );
 };

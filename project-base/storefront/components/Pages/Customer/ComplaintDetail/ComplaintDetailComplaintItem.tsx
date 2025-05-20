@@ -45,7 +45,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         width={80}
                     />
                 </div>
-                <div className="border-b-borderLess vl:flex-row vl:items-center vl:gap-5 flex w-full flex-col flex-wrap justify-between gap-3 border-b last:border-none">
+                <div className="border-b-border-less vl:flex-row vl:items-center vl:gap-5 flex w-full flex-col flex-wrap justify-between gap-3 border-b last:border-none">
                     {complaintItem.product?.isVisible ? (
                         <ExtendedNextLink className="w-fit" href={complaintItem.product.slug} type="product">
                             {complaintItem.productName}
@@ -101,12 +101,12 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         <li
                             key={index}
                             className={twJoin(
-                                'outline-borderAccent vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
+                                'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
                                 isWithAdditionalImages && 'relative',
                             )}
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}
                         >
-                            <div className="bg-backgroundMore size-full rounded-md p-1">
+                            <div className="bg-background-more size-full rounded-md p-1">
                                 <Image
                                     alt={file.anchorText || `${complaintItem.productName}-${index}`}
                                     className="aspect-square max-h-full object-contain mix-blend-multiply"
@@ -118,7 +118,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                             </div>
 
                             {isWithAdditionalImages && (
-                                <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
+                                <div className="bg-overlay-image absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
                                     +{galleryAdditionalItemsCount}
                                 </div>
                             )}

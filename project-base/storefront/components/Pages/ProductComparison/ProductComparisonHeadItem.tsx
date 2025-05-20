@@ -78,7 +78,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 />
             </div>
             <Button
-                className="bg-background absolute top-0 right-3 p-2 sm:right-5"
+                className="bg-background-default absolute top-0 right-3 p-2 sm:right-5"
                 variant="inverted"
                 onClick={() => {
                     toggleProductInComparison();

@@ -13,11 +13,11 @@ export const FooterContact: FC = () => {
             <div className="h4 mb-3 text-center uppercase">{t('Follow Us')}</div>
 
             <div
-                className="border-borderAccent flex h-24 w-full max-w-xs overflow-hidden rounded-sm border-2"
+                className="border-border-default flex h-24 w-full max-w-xs overflow-hidden rounded-sm border-2"
                 tid={TIDs.footer_social_links}
             >
                 <FooterContactSocialsItem href="#" title="Instagram">
-                    <InstagramIcon className="text-text w-8" />
+                    <InstagramIcon className="text-text-default w-8" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
                     <FacebookIcon className="w-11 text-[#1877f2]" />
@@ -46,7 +46,7 @@ const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ childre
 );
 
 const FooterContactLangsItem: FC<{ href: string; text: string }> = ({ children, href, text }) => (
-    <a className="text-link hover:text-linkHovered flex items-center hover:no-underline" href={href}>
+    <a className="text-link-default hover:text-link-hovered flex items-center hover:no-underline" href={href}>
         {children}
         <span className="ml-2 text-sm">{text}</span>
     </a>

@@ -18,7 +18,7 @@ export const DeferredFilterAndSortingBar: FC<SortingBarProps> = ({ ...sortingBar
     const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
 
     return shouldRender ? (
-        <div className="vl:border-b vl:border-borderAccentLess relative flex flex-col items-center justify-between gap-2.5 sm:flex-row">
+        <div className="vl:border-b vl:border-border-less relative flex flex-col items-center justify-between gap-2.5 sm:flex-row">
             <Button
                 className="vl:hidden w-full flex-1 justify-start sm:w-auto"
                 variant="secondary"

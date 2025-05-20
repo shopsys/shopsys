@@ -49,7 +49,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
     return (
         <>
-            <div className="bg-backgroundMore vl:flex-row flex flex-col flex-wrap justify-between gap-5 rounded-xl p-5">
+            <div className="bg-background-more vl:flex-row flex flex-col flex-wrap justify-between gap-5 rounded-xl p-5">
                 <OrderItemColumnInfo title={t('Order number')}>
                     <span tid={TIDs.order_detail_number}>{order.number}</span>
                 </OrderItemColumnInfo>
@@ -89,13 +89,13 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         <div
                             className={twJoin(
                                 'flex size-8 items-center justify-center rounded-full sm:size-11',
-                                'bg-backgroundError text-textInverted',
+                                'bg-background-error text-text-inverted',
                             )}
                         >
                             <WalletIcon className="size-4 sm:size-6" />
                         </div>
 
-                        <h5 className={twJoin('text-center text-xs sm:text-sm lg:text-base', 'text-textError')}>
+                        <h5 className={twJoin('text-center text-xs sm:text-sm lg:text-base', 'text-text-error')}>
                             {t('Payment failed')}
                         </h5>
                     </div>
@@ -153,7 +153,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 </OrderDetailRowInfo>
             )}
 
-            <div className="bg-backgroundMore rounded-xl p-5">
+            <div className="bg-background-more rounded-xl p-5">
                 <div tid={TIDs.order_detail_items}>
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
@@ -174,7 +174,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 'flex items-center justify-between gap-2',
                                 isPriceVisible(order.totalPrice.priceWithVat) &&
                                     isPriceVisible(order.totalPrice.priceWithoutVat) &&
-                                    'border-borderAccentLess border-b-[3px] pb-4',
+                                    'border-border-less border-b-[3px] pb-4',
                             )}
                         >
                             {t('Promo code')}
@@ -192,7 +192,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </strong>
 
-                                    <span className="text-priceBefore text-sm">
+                                    <span className="text-price-before text-sm">
                                         {formatPrice(order.totalPrice.priceWithoutVat)} {t('without VAT')}
                                     </span>
                                 </div>
@@ -219,10 +219,10 @@ type OrderDetailRowInfoProps = {
 export const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
         <div
-            className="vl:flex-row vl:gap-3 vl:items-center bg-backgroundMore flex flex-col gap-1 rounded-xl p-5 text-sm"
+            className="vl:flex-row vl:gap-3 vl:items-center bg-background-more flex flex-col gap-1 rounded-xl p-5 text-sm"
             tid={tid}
         >
-            <span className="text-textSubtle font-secondary min-w-[100px] font-semibold">{title}</span>
+            <span className="text-text-less font-secondary min-w-[100px] font-semibold">{title}</span>
             {children}
         </div>
     );

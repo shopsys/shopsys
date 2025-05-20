@@ -43,18 +43,18 @@ export const FilterPanel: FC<FilterPanelProps> = ({
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     return (
-        <div className="z-aboveOverlay bg-background vl:z-above flex h-full flex-col pb-1">
+        <div className="z-aboveOverlay bg-background-default vl:z-above flex h-full flex-col pb-1">
             <div className="vl:hidden flex items-center justify-between p-5">
                 <h5>{t('Product filter')}</h5>
                 <span className="inline-flex size-4 cursor-pointer" onClick={() => setIsFilterPanelOpen(false)}>
-                    <RemoveIcon className="text-inputPlaceholder hover:text-inputPlaceholderHovered w-6" />
+                    <RemoveIcon className="text-input-placeholder-default hover:text-input-placeholder-hovered w-6" />
                 </span>
             </div>
 
             <div className="vl:static vl:overflow-visible vl:px-0 h-full overflow-y-scroll px-5">
                 {shouldDisplayInStockFilter && <FilterGroupInStock inStockCount={filterOptions.inStock} />}
 
-                <div className="divide-borderAccentLess divide-y">
+                <div className="divide-border-less divide-y">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
                             initialMaxPrice={filterOptions.maximalPrice}
@@ -103,7 +103,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 </div>
             </div>
 
-            <div className="bg-backgroundMore vl:hidden flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-4">
+            <div className="bg-background-more vl:hidden flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-4">
                 <Button className="ml:auto" size="large" onClick={() => setIsFilterPanelOpen(false)}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>

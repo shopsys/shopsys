@@ -27,7 +27,7 @@ const ProductComparisonHeadStickyWrapper = ({ children }: { children: React.Reac
     return (
         <div
             className={twJoin(
-                'z-menu border-borderAccentLess bg-tableBackgroundContrast fixed top-0 left-0 w-full overflow-hidden border-b-2 px-5',
+                'z-menu border-border-less bg-table-bg-contrast fixed top-0 left-0 w-full overflow-hidden border-b-2 px-5',
                 tableStickyHeadActive ? 'flex' : 'hidden',
             )}
         >

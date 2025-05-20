@@ -42,7 +42,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
     };
 
     return (
-        <div className="bg-backgroundMore vl:p-6 flex flex-col gap-5 rounded-md p-4">
+        <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
                 <Image
                     priority
@@ -91,7 +91,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             <OrderedItemColumnInfo
                                 title={t('Price')}
                                 value={formatPrice(orderedItem.totalPrice.priceWithVat)}
-                                valueClassName="text-price"
+                                valueClassName="text-price-default"
                                 wrapperClassName="min-w-[80px]"
                             />
                         )}
@@ -120,11 +120,9 @@ type OrderedItemColumnInfoProps = {
 
 const OrderedItemColumnInfo: FC<OrderedItemColumnInfoProps> = ({ title, value, valueClassName, wrapperClassName }) => {
     return (
-        <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
-            <div className="flex flex-col gap-1">
-                <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('leading-none font-bold', valueClassName)}>{value}</span>
-            </div>
+        <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
+            <span className="text-sm">{title}</span>
+            <span className={twMergeCustom('font-bold', valueClassName)}>{value}</span>
         </div>
     );
 };

@@ -30,8 +30,8 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'border-backgroundMore bg-backgroundMore relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
-                    'text-text hover:border-borderAccentLess hover:bg-background hover:text-text hover:no-underline',
+                    'border-background-more bg-background-more relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                    'text-text-default hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
                     className,
                 )}
             >

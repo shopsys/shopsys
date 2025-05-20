@@ -25,8 +25,8 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
             <div className="flex flex-wrap items-center gap-x-2">
                 <div
                     className={twMergeCustom(
-                        'font-secondary text-price text-2xl font-bold whitespace-nowrap',
-                        isSpecialPrice && 'text-priceBefore text-base font-semibold line-through',
+                        'font-secondary text-price-default text-2xl font-bold whitespace-nowrap',
+                        isSpecialPrice && 'text-price-before text-base font-semibold line-through',
                     )}
                 >
                     {formatPrice(productPrice.basicPrice.priceWithVat)}
@@ -36,7 +36,7 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
                     <>
                         <Flag type="discount">-{productPrice.percentageDiscount}%</Flag>
 
-                        <div className="font-secondary text-priceDiscounted text-2xl font-bold whitespace-nowrap">
+                        <div className="font-secondary text-price-discounted text-2xl font-bold whitespace-nowrap">
                             {formatPrice(productPrice.priceWithVat)}
                         </div>
                     </>

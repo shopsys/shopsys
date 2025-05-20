@@ -40,10 +40,10 @@ export const NavigationItem: FC<NavigationItemProps> = ({
                 skeletonType={skeletonType}
                 className={twJoin(
                     'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold group-first-of-type:pl-0',
-                    'text-linkInverted no-underline',
-                    'hover:text-linkInvertedHovered group-hover:text-linkInvertedHovered group-hover:no-underline hover:no-underline',
-                    'active:text-linkInvertedHovered',
-                    'disabled:text-linkInvertedDisabled',
+                    'text-link-inverted-default no-underline',
+                    'hover:text-link-inverted-hovered group-hover:text-link-inverted-hovered group-hover:no-underline hover:no-underline',
+                    'active:text-link-inverted-hovered',
+                    'disabled:text-link-inverted-disabled',
                 )}
             >
                 {navigationItem.name}
@@ -56,8 +56,8 @@ export const NavigationItem: FC<NavigationItemProps> = ({
                         >
                             <ArrowIcon
                                 className={twJoin(
-                                    'text-linkInverted size-5',
-                                    isMenuOpenedDelayed && 'group-hover:text-linkInvertedHovered',
+                                    'text-link-inverted-default size-5',
+                                    isMenuOpenedDelayed && 'group-hover:text-link-inverted-hovered',
                                 )}
                             />
                         </m.div>
@@ -68,7 +68,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
             <AnimatePresence initial={false}>
                 {hasChildren && isMenuOpenedDelayed && (
                     <AnimateNavigationMenu
-                        className="z-menu bg-background absolute right-0 left-0 !grid grid-cols-4 gap-11 px-10 shadow-md"
+                        className="z-menu bg-background-default absolute right-0 left-0 !grid grid-cols-4 gap-11 px-10 shadow-md"
                         disableAnimation={isAnimationDisabled}
                     >
                         <NavigationItemColumn

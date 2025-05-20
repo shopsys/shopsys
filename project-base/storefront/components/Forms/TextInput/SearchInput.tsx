@@ -35,7 +35,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <div className="border-borderAccent relative w-full rounded-md border">
+        <div className="border-border-default relative w-full rounded-md border">
             <input
                 autoComplete="off"
                 placeholder={label}
@@ -44,10 +44,10 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'border-inputBackground bg-inputBackground text-inputText placeholder:text-inputPlaceholder peer mb-0 h-12 w-full rounded-md border-2 pr-20 pl-11',
-                    '[&:-internal-autofill-selected]:!bg-inputBackground [&:-webkit-autofill]:!bg-inputBackground [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
-                    '[&:-webkit-autofill]:hover:!bg-inputBackgroundHovered [&:-webkit-autofill]:hover:!shadow-inner',
-                    '[&:-webkit-autofill]:focus:!bg-inputBackgroundActive [&:-webkit-autofill]:focus:!shadow-inner',
+                    'border-input-bg-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer mb-0 h-12 w-full rounded-md border-2 pr-20 pl-11',
+                    '[&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
+                    '[&:-webkit-autofill]:hover:!bg-input-bg-hovered [&:-webkit-autofill]:hover:!shadow-inner',
+                    '[&:-webkit-autofill]:focus:!bg-input-fill [&:-webkit-autofill]:focus:!shadow-inner',
                     '[&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
                     'focus:outline-hidden',
                     value ? 'pr-7' : 'pr-4',
@@ -63,7 +63,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="text-inputPlaceholder w-4" />
+                <SearchIcon className="text-icon-less hover:text-icon-accent w-4" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (
@@ -71,11 +71,11 @@ export const SearchInput: FC<SearchInputProps> = ({
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
                     onClick={onClear}
                 >
-                    <CloseIcon className="text-inputTextDisabled w-4" />
+                    <CloseIcon className="text-icon-less hover:text-icon-accent w-4" />
                 </div>
             )}
             {shouldShowSpinnerInInput && (
-                <SpinnerIcon className="text-inputText absolute top-1/2 right-3 w-5 -translate-y-1/2" />
+                <SpinnerIcon className="text-icon-less absolute top-1/2 right-3 w-5 -translate-y-1/2" />
             )}
         </div>
     );

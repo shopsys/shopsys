@@ -55,16 +55,16 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
 
     const wrapperTwClass = twMergeCustom(
         'border-2 p-10 text-center rounded-md border-dashed cursor-pointer',
-        !isDragActive && 'border-inputBorder bg-inputBackground hover:border-inputBorderHovered',
-        isDragActive && 'border-inputBorderActive bg-inputBackgroundActive',
-        error && 'border-inputError',
+        !isDragActive && 'border-input-border-default bg-input-bg-default hover:border-input-border-hovered',
+        isDragActive && 'border-input-border-active bg-input-fill',
+        error && 'border-input-border-error',
     );
     const labelTwClass = twMergeCustom(
-        'text-inputPlaceholder hover:text-inputPlaceholderHovered',
-        isDragActive && 'text-inputPlaceholderHovered',
+        'text-input-placeholder-default hover:text-input-placeholder-hovered',
+        isDragActive && 'text-input-placeholder-hovered',
     );
     const listItemTwClass = 'flex my-1 justify-between items-center group';
-    const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-linkHovered transition-colors duration-300';
+    const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-link-hovered transition-colors duration-300';
 
     return (
         <Controller

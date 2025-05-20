@@ -48,7 +48,7 @@ export const SkeletonPageStore: FC = () => (
                 </div>
 
                 <div className="basis-1/2">
-                    <div className="bg-backgroundMore flex aspect-square w-full rounded-xl p-5">
+                    <div className="bg-skeleton-less flex aspect-square w-full rounded-xl p-5">
                         <Skeleton className="h-full w-full" />
                     </div>
                 </div>

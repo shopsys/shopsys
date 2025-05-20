@@ -19,6 +19,7 @@ export const UserConsentContent: FC = () => {
         <Webline width="lg">
             <VerticalStack gap="sm">
                 <h1>{t('User consent')}</h1>
+
                 <UserConsentForm onSetCallback={onSetCallback} />
             </VerticalStack>
         </Webline>

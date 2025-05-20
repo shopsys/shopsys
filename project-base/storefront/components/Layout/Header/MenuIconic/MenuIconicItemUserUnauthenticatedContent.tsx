@@ -15,18 +15,18 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
 
     return (
         <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8">
-            <div className="bg-backgroundBrandLess text-textInverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
+            <div className="bg-background-brand-less text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
                 <h4>{t('Benefits of registration')}</h4>
                 <div className="my-4">
-                    <p className="text-textInverted">
+                    <p className="text-text-inverted">
                         <CheckmarkIcon className="mr-2" />
                         {t('Faster checkout for purchases')}
                     </p>
-                    <p className="text-textInverted">
+                    <p className="text-text-inverted">
                         <CheckmarkIcon className="mr-2" />
                         {t('Simplified complaint process')}
                     </p>
-                    <p className="text-textInverted">
+                    <p className="text-text-inverted">
                         <CheckmarkIcon className="mr-2" />
                         {t('Order history for easy reordering')}
                     </p>
