@@ -1,5 +1,5 @@
-import { getYIQContrastTextColor } from 'components/Blocks/Banners/bannersUtils';
 import { useRouter } from 'next/router';
+import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';
 
 type FlagProps = {

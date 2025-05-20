@@ -1,13 +1,13 @@
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LabelHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 
 type ColorLabelWrapperProps = NativeProps & {
     label?: string;
-    isLightColor: boolean;
     bgColor: string;
     count?: number;
     checked?: boolean;
@@ -16,7 +16,6 @@ type ColorLabelWrapperProps = NativeProps & {
 
 export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
     label,
-    isLightColor,
     bgColor,
     count,
     disabled,
@@ -36,21 +35,15 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             <div
                 style={{ backgroundColor: bgColor }}
                 className={twMergeCustom(
-                    'border-text bg-input-bg-default flex size-7 shrink-0 justify-center rounded-sm border transition',
-                    checked
-                        ? 'border-text'
-                        : 'group-hover:border-input-border-hovered group-active:border-input-border-hovered',
-                    disabled &&
-                        'border-input-border-disabled group-hover:border-input-border-disabled group-hover:bg-input-border-disabled group-active:border-input-border-disabled outline-0 group-active:outline-0 active:scale-100',
-                    disabled && checked && 'bg-input-border-disabled group-hover:bg-input-border-disabled',
+                    'border-icon-default bg-input-bg-default flex size-7 shrink-0 justify-center rounded-sm border transition',
+                    disabled && 'border-icon-default outline-0 group-active:outline-0 active:scale-100',
                 )}
             >
                 <CheckmarkIcon
                     className={twMergeCustom(
                         'h-full opacity-0 transition',
                         checked && 'opacity-100',
-                        isLightColor ? 'text-text-default' : 'text-text-inverted',
-                        disabled && 'text-input-text-disabled',
+                        getYIQContrastTextColor(bgColor),
                     )}
                 />
             </div>

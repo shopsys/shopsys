@@ -1,6 +1,5 @@
 import { ColorLabelWrapper } from 'components/Forms/Lib/ColorLabelWrapper';
 import { InputHTMLAttributes } from 'react';
-import tinycolor from 'tinycolor2';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -27,15 +26,7 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
     value,
     onChange,
 }) => (
-    <ColorLabelWrapper
-        bgColor={bgColor}
-        checked={value}
-        count={count}
-        disabled={disabled}
-        htmlFor={id}
-        isLightColor={tinycolor(bgColor).isLight()}
-        label={label}
-    >
+    <ColorLabelWrapper bgColor={bgColor} checked={value} count={count} disabled={disabled} htmlFor={id} label={label}>
         <input
             aria-label={label}
             checked={value}
