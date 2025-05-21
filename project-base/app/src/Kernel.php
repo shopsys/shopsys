@@ -29,7 +29,7 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+    private const string CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
     #[Override]
     public function boot(): void
@@ -60,13 +60,29 @@ class Kernel extends BaseKernel
         ContainerBuilder $builder,
     ): void {
         $configDir = $this->getConfigDir();
+        $isMonorepo = false;
+
+        if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
+            $isMonorepo = true;
+        }
+
+        $container->parameters()->set('shopsys.is_monorepo', $isMonorepo);
+
+        if ($isMonorepo) {
+            $frameworkRootDir = $builder->getParameter('kernel.project_dir') . '/../../packages/framework/';
+        } else {
+            $frameworkRootDir = $builder->getParameter('kernel.project_dir') . '/vendor/shopsys/framework/';
+        }
+
+
+        $container->import($frameworkRootDir . 'src/Resources/config/packages_registry.yaml');
 
         $container->import($configDir . '/{packages}/*' . self::CONFIG_EXTS);
         $container->import($configDir . '/{packages}/' . $this->environment . '/**/*' . self::CONFIG_EXTS);
         $container->import($configDir . '/{services}' . self::CONFIG_EXTS);
         $container->import($configDir . '/{services}_' . $this->environment . self::CONFIG_EXTS);
 
-        if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
+        if ($isMonorepo) {
             $container->import(__DIR__ . '/../../../parameters_monorepo.yaml');
         }
 

@@ -9,10 +9,14 @@ class RouteAccessControlDataProvider
     /**
      * @param string $projectRootDirectory
      * @param string $cacheDirectory
+     * @param string $frameworkRootDirectory
+     * @param array $packagesRegistry
      */
     public function __construct(
         protected readonly string $projectRootDirectory,
         protected readonly string $cacheDirectory,
+        protected readonly string $frameworkRootDirectory,
+        protected readonly array $packagesRegistry,
     ) {
     }
 
@@ -46,18 +50,29 @@ class RouteAccessControlDataProvider
      */
     protected function getControllerDirectories(): array
     {
-        if (file_exists($this->projectRootDirectory . '/../../parameters_monorepo.yaml')) {
-            return [
-                $this->projectRootDirectory . '/src/Controller/Admin',
-                $this->projectRootDirectory . '/../../packages/framework/src/Controller/Admin',
-                $this->projectRootDirectory . '/../../packages/frontend-api/src/Controller',
-            ];
+        $controllerDirectories = [
+            $this->projectRootDirectory . '/src/Controller/Admin',
+        ];
+
+        foreach ($this->packagesRegistry as $package) {
+            $expectedControllerPath = $this->getResolvedPackagePath($package['path']) . '/src/Controller';
+
+            if (is_dir($expectedControllerPath)) {
+                $controllerDirectories[] = $expectedControllerPath;
+            }
         }
 
-        return [
-            $this->projectRootDirectory . '/src/Controller/Admin',
-            $this->projectRootDirectory . '/vendor/shopsys/framework/src/Controller/Admin',
-            $this->projectRootDirectory . '/vendor/shopsys/frontend-api/src/Controller',
-        ];
+        return $controllerDirectories;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    protected function getResolvedPackagePath(string $path): string
+    {
+        $path = str_replace(['%shopsys.framework.root_dir%', '//'], [$this->frameworkRootDirectory, '/'], $path);
+
+        return rtrim($path, '/');
     }
 }

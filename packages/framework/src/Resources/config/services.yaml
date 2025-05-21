@@ -743,6 +743,8 @@ services:
         arguments:
             $projectRootDirectory: '%kernel.project_dir%'
             $cacheDirectory: '%kernel.cache_dir%'
+            $frameworkRootDirectory: '%shopsys.framework.root_dir%'
+            $packagesRegistry: '%shopsys.packages.registry%'
 
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
