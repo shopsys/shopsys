@@ -81,12 +81,15 @@ class ArticleDataFixture extends AbstractReferenceFixture
             ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'For press',
                 self::ATTRIBUTE_NAME_KEY => t('For press', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                self::ATTRIBUTE_TEXT_KEY => t(
+                self::ATTRIBUTE_TEXT_KEY => '<div class="gjs-text-with-image">
+<div data-image-position="left" data-image-type="outside-layout" class="gjs-text-with-image-inner gjs-text-with-image-float-left gjs-text-with-image-type-outside-layout">
+<img data-image-position="left" src="' . $domainConfig->getUrl() . '/content/images/blogArticle/600.jpg" class="image">
+<div class="gjs-text-ckeditor text" data-gjs-type="text">' . t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $locale,
-                ) . '|||[gjc-comp-ProductList&#61;9177759,91765223,9176522,91765782,8981537,8981538,9176578]|||',
+                ) . '</div></div></div>|||[gjc-comp-ProductList&#61;9177759,91765223,9176522,91765782,8981537,8981538,9176578]|||',
                 self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_FOOTER_1,
             ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'Goods care',
