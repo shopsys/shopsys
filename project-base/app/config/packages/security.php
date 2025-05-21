@@ -88,6 +88,7 @@ function getRouteAccessControlRules(ContainerBuilder $container): array
         $container->getParameter('kernel.cache_dir'),
         $frameworkRootDir,
         $container->getParameter('shopsys.packages.registry'),
+        $container->getParameter('kernel.environment'),
     );
 
     return $routeAccessControlDataProvider->findAll();

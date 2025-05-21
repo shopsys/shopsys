@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security\AccessControl;
 
+use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+
 class RouteAccessControlDataProvider
 {
     /**
@@ -11,12 +13,14 @@ class RouteAccessControlDataProvider
      * @param string $cacheDirectory
      * @param string $frameworkRootDirectory
      * @param array $packagesRegistry
+     * @param string $environment
      */
     public function __construct(
         protected readonly string $projectRootDirectory,
         protected readonly string $cacheDirectory,
         protected readonly string $frameworkRootDirectory,
         protected readonly array $packagesRegistry,
+        protected readonly string $environment,
     ) {
     }
 
@@ -26,8 +30,9 @@ class RouteAccessControlDataProvider
     public function findAll(): array
     {
         $accessControlCacheFile = $this->cacheDirectory . '/access_control_rules.php';
+        $isDev = $this->environment === EnvironmentType::DEVELOPMENT;
 
-        if (file_exists($accessControlCacheFile)) {
+        if (!$isDev && file_exists($accessControlCacheFile)) {
             $accessControlRulesArray = require $accessControlCacheFile;
             $routeAccessControlRules = [];
 
@@ -39,7 +44,9 @@ class RouteAccessControlDataProvider
 
             $routeAccessControlRules = $accessControlRulesAttributeFinder->findAll($this->getControllerDirectories());
 
-            file_put_contents($accessControlCacheFile, sprintf('<?php return %s;', var_export($routeAccessControlRules, true)));
+            if (!$isDev) {
+                file_put_contents($accessControlCacheFile, sprintf('<?php return %s;', var_export($routeAccessControlRules, true)));
+            }
         }
 
         return $routeAccessControlRules;
