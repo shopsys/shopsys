@@ -1,4 +1,4 @@
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
+import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
@@ -77,7 +77,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     relatedProducts={product.relatedProducts}
                 />
 
-                {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
+                <DeferredProductDetailAccessories accessories={product.accessories} />
 
                 <DeferredLastVisitedProducts currentProductCatnum={product.catalogNumber} />
             </VerticalStack>
