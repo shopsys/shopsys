@@ -6,6 +6,7 @@ import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/Filte
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -53,7 +54,9 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                         />
                     </div>
 
-                    <BrandDetailProductsWrapper brand={brand} paginationScrollTargetRef={paginationScrollTargetRef} />
+                    <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                        <BrandDetailProductsWrapper brand={brand} />
+                    </PaginationProvider>
                 </div>
             </FilteredProductsWrapper>
 

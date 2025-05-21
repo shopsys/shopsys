@@ -3,7 +3,7 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import React, { RefObject } from 'react';
+import { RefObject } from 'react';
 import { SwipeableHandlers } from 'react-swipeable';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';

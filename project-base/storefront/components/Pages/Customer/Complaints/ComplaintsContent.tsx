@@ -2,6 +2,7 @@ import { ComplaintItem } from './ComplaintItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -37,7 +38,9 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({ isFetching, item
                 ))}
             </div>
 
-            <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
+            <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                <Pagination totalCount={totalCount || 0} />
+            </PaginationProvider>
         </div>
     );
 };

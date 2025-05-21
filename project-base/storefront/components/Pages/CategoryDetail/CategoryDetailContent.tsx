@@ -7,6 +7,7 @@ import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisit
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -72,10 +73,9 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         />
                     </div>
 
-                    <DeferredCategoryDetailProductsWrapper
-                        category={category}
-                        paginationScrollTargetRef={paginationScrollTargetRef}
-                    />
+                    <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                        <DeferredCategoryDetailProductsWrapper category={category} />
+                    </PaginationProvider>
                 </div>
             </FilteredProductsWrapper>
 

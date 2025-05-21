@@ -1,5 +1,4 @@
-import { getOffsetPageAndLoadMore } from './getOffsetPageAndLoadMore';
-import { DEFAULT_PAGE_SIZE, PRODUCT_LIST_LIMIT } from 'config/constants';
+import { getOffsetPage } from './getOffsetPage';
 import { Redirect } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
@@ -10,10 +9,8 @@ export const getRedirectWithOffsetPage = (
     currentLoadMore: number,
     currentSlug: string,
     currentQuery: ParsedUrlQuery,
-    pageSize = DEFAULT_PAGE_SIZE,
-    productListLimit = PRODUCT_LIST_LIMIT,
 ): { redirect: Redirect } | undefined => {
-    const updatedQueries = getOffsetPageAndLoadMore(currentPage, currentLoadMore, pageSize, productListLimit);
+    const updatedQueries = getOffsetPage(currentPage, currentLoadMore);
 
     if (!updatedQueries) {
         return undefined;

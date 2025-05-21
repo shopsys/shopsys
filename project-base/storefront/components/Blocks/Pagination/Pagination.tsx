@@ -1,8 +1,9 @@
 import { Button } from 'components/Forms/Button/Button';
+import { usePaginationContext } from 'components/providers/PaginationProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
+import { Fragment, MouseEventHandler, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
@@ -11,10 +12,10 @@ import { useUpdateLoadMoreQuery } from 'utils/queryParams/useUpdateLoadMoreQuery
 import { useUpdatePaginationQuery } from 'utils/queryParams/useUpdatePaginationQuery';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { usePagination } from 'utils/ui/usePagination';
+import { useScrollRestoration } from 'utils/ui/useScrollRestoration';
 
 type PaginationProps = {
     totalCount: number;
-    paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
     pageSize?: number;
@@ -23,12 +24,12 @@ type PaginationProps = {
 
 export const Pagination: FC<PaginationProps> = ({
     totalCount,
-    paginationScrollTargetRef,
     hasNextPage,
     isWithLoadMore,
     pageSize = DEFAULT_PAGE_SIZE,
-    type = 'defualt',
+    type = 'default',
 }) => {
+    const { paginationScrollTargetRef } = usePaginationContext();
     const router = useRouter();
     const isDesktop = useMediaMin('sm');
     const currentPage = useCurrentPageQuery();
@@ -39,6 +40,11 @@ export const Pagination: FC<PaginationProps> = ({
     const paginationButtons = usePagination(totalCount, currentPageWithLoadMore, !isDesktop, pageSize);
     const { t } = useTranslation();
 
+    useScrollRestoration({
+        scrollTargetRef: paginationScrollTargetRef,
+        shouldScroll: currentPage > 1,
+    });
+
     if (!paginationButtons || paginationButtons.length === 1) {
         return null;
     }
@@ -48,7 +54,6 @@ export const Pagination: FC<PaginationProps> = ({
 
     const onChangePage = (pageNumber: number) => () => {
         updatePagination(pageNumber);
-
         // timeout for safari scroll
         setTimeout(() => {
             if (paginationScrollTargetRef?.current) {
@@ -65,7 +70,7 @@ export const Pagination: FC<PaginationProps> = ({
 
     return (
         <div className="vl:flex-row mt-5 flex flex-col items-center justify-between gap-5">
-            {isWithLoadMore && hasNextPage && (
+            {isWithLoadMore && hasNextPage && loadMoreCount > 0 && (
                 <Button className="px-3" variant="inverted" onClick={loadMore}>
                     {t('Load {{ count }} more {{ items }}', { count: loadMoreCount, items: itemsLabel })}
                 </Button>
