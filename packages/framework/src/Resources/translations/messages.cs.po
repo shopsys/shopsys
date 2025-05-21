@@ -3478,6 +3478,9 @@ msgstr "Překontrolujte prosím zadané hodnoty.<br>"
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
 
+msgid "Please replace this text with your own content."
+msgstr "Prosím nahraďte tento text vlastním obsahem."
+
 msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
 msgstr "Naskenujte prosím níže uvedený QR kód pomocí aplikace pro generování jednorázových přístupových kódů (jako je Google Authenticator)."
 

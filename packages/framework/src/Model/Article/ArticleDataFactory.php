@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class ArticleDataFactory
@@ -12,10 +13,12 @@ class ArticleDataFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper
      */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
+        protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
     ) {
     }
 
@@ -58,7 +61,10 @@ class ArticleDataFactory
     protected function fillFromArticle(ArticleData $articleData, Article $article)
     {
         $articleData->name = $article->getName();
-        $articleData->text = $article->getText();
+        $articleData->text = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat(
+            $article->getText(),
+            $this->domain->getDomainConfigById($article->getDomainId())->getLocale(),
+        );
         $articleData->seoTitle = $article->getSeoTitle();
         $articleData->seoMetaDescription = $article->getSeoMetaDescription();
         $articleData->domainId = $article->getDomainId();
