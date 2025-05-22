@@ -36,7 +36,11 @@ export const DeferredBlogPreview: FC = () => {
         <Webline width="xxl">
             <div
                 className={bgImageTwClass}
-                style={{ backgroundImage: `url(${blogData?.mainBlogCategoryMainImage?.url})` }}
+                style={
+                    blogData?.mainBlogCategoryMainImage?.url
+                        ? { backgroundImage: `url(${blogData.mainBlogCategoryMainImage.url})` }
+                        : {}
+                }
             >
                 {shouldRender ? (
                     <BlogPreview
