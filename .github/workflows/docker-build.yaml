@@ -636,27 +636,12 @@ jobs:
                     docker compose run cypress-regenerate
                 env:
                     GROUP: ${{ matrix.group }}
-            -   name: Commit generated snapshots for ${{ matrix.group }}
+            -   name: Upload generated snapshots for ${{ matrix.group }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
-                id: commit-snapshots
-                run: |
-                    cp -rf snapshots/* project-base/storefront/cypress/snapshots/
-                    git config --global user.name 'ShopsysBot'
-                    git config --global user.email 'shopsysbot@users.noreply.github.com'
-                    git add project-base/storefront/cypress/snapshots/e2e
-                    if ! git diff --cached --quiet; then
-                        git commit -m "regenerate screenshots for ${{ matrix.group }}"
-                    else
-                        echo "No changes to commit."
-                    fi
-            -   name: Push changes for ${{ matrix.group }}
-                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
-                run: |
-                    git config --global user.name 'ShopsysBot'
-                    git config --global user.email 'shopsysbot@users.noreply.github.com'
-                    git fetch origin
-                    git rebase origin/${{ github.head_ref }}
-                    git push origin ${{ github.head_ref }} --force-with-lease
+                uses: actions/upload-artifact@v4
+                with:
+                    name: cypress-snapshots-${{ matrix.group }}
+                    path: ./snapshots
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -669,12 +654,42 @@ jobs:
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
+    push-regenerated-snapshots:
+        name: Push regenerated snapshots
+        needs: [tests-storefront-acceptance-regenerate]
+        if: |
+            always() && !failure() && !cancelled() &&
+            needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.head_ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.head_ref }}
+            -   name: Download all snapshot artifacts
+                uses: actions/download-artifact@v4
+                with:
+                    path: ./snapshots
+                    pattern: cypress-snapshots-*
+                    merge-multiple: true
+            -   name: Commit and push all snapshots
+                run: |
+                    git config --global user.name 'ShopsysBot'
+                    git config --global user.email 'shopsysbot@users.noreply.github.com'
+                    cp -rf snapshots/* project-base/storefront/cypress/snapshots/
+                    git add project-base/storefront/cypress/snapshots/e2e
+                    if ! git diff --cached --quiet; then
+                        git commit -m "regenerate all screenshots"
+                        git push origin ${{ github.head_ref }} --force-with-lease
+                    else
+                        echo "No changes to commit."
+                    fi
     tests-storefront-acceptance-regenerate-remove-label:
         name: Remove "regenerate screenshots" label
-        needs: tests-storefront-acceptance-regenerate
+        needs: [tests-storefront-acceptance-regenerate, push-regenerated-snapshots]
         if: |
-            always() && 
-            !failure() && 
+            always() &&
+            !failure() &&
             !cancelled()
         runs-on: ubuntu-22.04
         env:
@@ -1024,7 +1039,7 @@ jobs:
         if: |
             always()
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, unit-test-storefront]
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront,]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
