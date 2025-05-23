@@ -1,55 +1,94 @@
 import { CollapsibleDescriptionWithImage } from 'app/_components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'app/_components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
+import { getEndCursor } from 'app/_components/Blocks/Product/Filter/utils/getEndCursor';
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
-import { ProductsListWrapper } from 'app/_components/Blocks/Product/ProductsList/ProductsListWrapper';
+import { productListTwClass } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
 import { SimpleNavigation } from 'app/_components/Blocks/SimpleNavigation/SimpleNavigation';
 import { FilterAndSortingBarWrapper } from 'app/_components/Blocks/SortingBar/FilterAndSortingBarWrapper';
 import { AdvancedSeoCategories } from 'app/_components/Page/CategoryDetail/AdvancedSeoCategories';
 import { CategoryBestsellers } from 'app/_components/Page/CategoryDetail/CategoryBestsellers/CategoryBestsellers';
+import { CategoryDetailContent } from 'app/_components/Page/CategoryDetail/CategoryDetailContent';
+import { CategoryDetailPagination } from 'app/_components/Page/CategoryDetail/CategoryDetailPagination';
+import { CategoryDetailProductsServer } from 'app/_components/Page/CategoryDetail/CategoryDetailProductsServer';
 import { getCategoryDetailQuery } from 'app/_queries/getCategoryDetailQuery';
-import { SkeletonModuleProductList } from 'components/Blocks/Skeleton/SkeletonModuleProductList';
+import { getCategoryProductsQuery } from 'app/_queries/getCategoryProductsQuery';
+import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { TypeCategoryProductsQuery } from 'graphql/requests/products/queries/CategoryProductsQuery.ssr';
 import { TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'utils/queryParamNames';
 
 type CategoryPageProps = {
     params: Promise<{
         categorySlug: string;
     }>;
-    searchParams: Promise<{
-        sort: TypeProductOrderingModeEnum | undefined;
-        filter: TypeProductFilter | undefined;
-        page: number | undefined;
-    }>;
-};
-
-const getOrderingMode = (sort: TypeProductOrderingModeEnum | undefined) => {
-    return sort !== undefined &&
-        Object.values(TypeProductOrderingModeEnum).includes(sort as TypeProductOrderingModeEnum)
-        ? sort
-        : TypeProductOrderingModeEnum.Priority;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+    // searchParams: Promise<{
+    //     sort: TypeProductOrderingModeEnum | undefined;
+    //     filter: TypeProductFilter | undefined;
+    //     page: number | undefined;
+    //     lm: number | undefined;
+    // }>
 };
 
 const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) => {
     const { categorySlug } = await params;
-    const { sort, filter, page } = await searchParams;
+    const resolvedSearchParams = await searchParams;
 
-    const orderingMode = getOrderingMode(sort);
-    const currentPage = page ?? 1;
+    const currentPage =
+        typeof resolvedSearchParams[PAGE_QUERY_PARAMETER_NAME] === 'string'
+            ? Number(resolvedSearchParams[PAGE_QUERY_PARAMETER_NAME])
+            : 1;
 
-    const categoryData = await getCategoryDetailQuery(categorySlug, orderingMode, filter);
+    const currentLoadMore =
+        typeof resolvedSearchParams[LOAD_MORE_QUERY_PARAMETER_NAME] === 'string'
+            ? Number(resolvedSearchParams[LOAD_MORE_QUERY_PARAMETER_NAME])
+            : 0;
+
+    const sort =
+        typeof resolvedSearchParams[SORT_QUERY_PARAMETER_NAME] === 'string'
+            ? (resolvedSearchParams[SORT_QUERY_PARAMETER_NAME] as TypeProductOrderingModeEnum)
+            : TypeProductOrderingModeEnum.Priority;
+
+    const filter =
+        typeof resolvedSearchParams[FILTER_QUERY_PARAMETER_NAME] === 'string'
+            ? (resolvedSearchParams[FILTER_QUERY_PARAMETER_NAME] as unknown as TypeProductFilter)
+            : undefined;
+
+    const categoryData = await getCategoryDetailQuery(categorySlug, sort, filter);
 
     if (!categoryData) {
         return notFound();
     }
 
+    const endCursors: string[] = [];
+
+    let lastPromise: Promise<TypeCategoryProductsQuery | undefined> | null = null;
+
+    for (let i = 0; i < currentLoadMore + 1; i++) {
+        endCursors.push(getEndCursor(currentPage, i, DEFAULT_PAGE_SIZE));
+        lastPromise = getCategoryProductsQuery(
+            categorySlug,
+            getEndCursor(currentPage, i, DEFAULT_PAGE_SIZE),
+            sort,
+            filter,
+            DEFAULT_PAGE_SIZE,
+        );
+    }
+
+    console.log('🧪 lastPromise', lastPromise);
+
     // const title = useSeoTitleWithPagination(categoryData.products.totalCount, categoryData.name, categoryData.seoH1);
     const title = categoryData.name;
-
-    // console.log('🔀 sort', sort);
-    // console.log('🔍 filter', filter);
-    // console.log('📄 page', page);
 
     return (
         <VerticalStack gap="md">
@@ -64,8 +103,6 @@ const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) =
             <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={categoryData.children} />
 
             <FilteredProductsWrapper>
-                {/* <FilterPanelWrapper params={params} /> */}
-
                 <div className="flex flex-1 flex-col gap-5">
                     <CategoryBestsellers products={categoryData.bestsellers} />
 
@@ -78,17 +115,34 @@ const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) =
                         />
                     </div>
 
-                    {/* <DeferredCategoryDetailProductsWrapper
-                        category={category}
-                        paginationScrollTargetRef={paginationScrollTargetRef}
-                    /> */}
+                    <CategoryDetailContent categoryDetail={categoryData}>
+                        {endCursors.map((endCursor) => (
+                            <Suspense
+                                key={`batch:${endCursor}`}
+                                fallback={
+                                    <div className={productListTwClass}>
+                                        {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, skeletonIndex) => (
+                                            <SkeletonModuleProductListItem
+                                                key={`batch:${endCursor}-skeleton:${skeletonIndex}`}
+                                            />
+                                        ))}
+                                    </div>
+                                }
+                            >
+                                <CategoryDetailProductsServer
+                                    categorySlug={categorySlug}
+                                    endCursor={endCursor}
+                                    filter={filter}
+                                    orderingMode={sort}
+                                />
+                            </Suspense>
+                        ))}
 
-                    <Suspense
-                        key={`${categorySlug}-${sort}-${JSON.stringify(filter)}`}
-                        fallback={<SkeletonModuleProductList />}
-                    >
-                        <ProductsListWrapper categorySlug={categorySlug} filter={filter} orderingMode={orderingMode} />
-                    </Suspense>
+                        <CategoryDetailPagination
+                            categoryDetailTotalCount={categoryData.products.totalCount}
+                            hasNextPage={(await lastPromise)?.products.pageInfo.hasNextPage}
+                        />
+                    </CategoryDetailContent>
                 </div>
             </FilteredProductsWrapper>
 

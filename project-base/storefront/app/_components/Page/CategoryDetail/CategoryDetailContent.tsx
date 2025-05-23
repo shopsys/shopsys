@@ -1,88 +1,25 @@
-import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
-import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
-import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
-import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
-import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
-import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
-import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
-import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
-import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import dynamic from 'next/dynamic';
+'use client';
+
+import { CategoryDetailProvider } from 'components/providers/CategoryDetailProvider';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.ssr';
 import { useRef } from 'react';
-import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
-
-const AdvancedSeoCategories = dynamic(() =>
-    import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
-);
-
-const CategoryBestsellers = dynamic(() =>
-    import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
-);
 
 type CategoryDetailContentProps = {
-    category: TypeCategoryDetailFragment;
-    isFetchingVisible: boolean;
+    categoryDetail: TypeCategoryDetailFragment;
+    header?: React.ReactNode;
 };
 
-export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category, isFetchingVisible }) => {
+export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ children, categoryDetail }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
-    const currentPage = useCurrentPageQuery();
-
-    const title = useSeoTitleWithPagination(category.products.totalCount, category.name, category.seoH1);
-
-    const pageViewEvent = useGtmFriendlyPageViewEvent(category);
-    useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
 
     return (
-        <VerticalStack gap="md">
-            <CollapsibleDescriptionWithImage
-                currentPage={currentPage}
-                description={category.description}
-                imageName={category.images[0]?.name || category.name}
-                imageUrl={category.images[0]?.url}
-                title={title}
-            />
-
-            <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={category.children} />
-
-            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
-                <DeferredFilterPanel
-                    categoryAutomatedFilters={category.automatedFilters}
-                    defaultOrderingMode={category.products.defaultOrderingMode}
-                    orderingMode={category.products.orderingMode}
-                    originalSlug={category.originalCategorySlug}
-                    productFilterOptions={category.products.productFilterOptions}
-                    slug={category.slug}
-                    totalCount={category.products.totalCount}
-                />
-
-                <div className="flex flex-1 flex-col gap-5">
-                    {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
-
-                    <div className="vl:flex-col flex flex-col-reverse">
-                        <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
-
-                        <DeferredFilterAndSortingBar
-                            sorting={category.products.orderingMode}
-                            totalCount={category.products.totalCount}
-                        />
-                    </div>
-
-                    <DeferredCategoryDetailProductsWrapper
-                        category={category}
-                        paginationScrollTargetRef={paginationScrollTargetRef}
-                    />
-                </div>
-            </FilteredProductsWrapper>
-
-            {!!category.readyCategorySeoMixLinks.length && (
-                <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
-            )}
-
-            <DeferredLastVisitedProducts />
-        </VerticalStack>
+        <div ref={paginationScrollTargetRef}>
+            <CategoryDetailProvider
+                categoryDetailUuid={categoryDetail.uuid}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+            >
+                {children}
+            </CategoryDetailProvider>
+        </div>
     );
 };
