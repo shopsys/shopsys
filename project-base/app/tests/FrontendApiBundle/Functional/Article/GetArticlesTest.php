@@ -4,15 +4,25 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
+use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Article\Article;
+use App\Model\Category\Category;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticlesTest extends GraphQlTestCase
 {
     private const ARTICLES_TOTAL_COUNT = 20;
     private const QUERY_PATH = __DIR__ . '/../_graphql/query/ArticlesQuery.graphql';
+
+    /**
+     * @inject
+     */
+    private DomainRouterFactory $domainRouterFactory;
 
     public function testGetArticles(): void
     {
@@ -145,6 +155,9 @@ class GetArticlesTest extends GraphQlTestCase
     private function getExpectedArticles(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $firstDomainId = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getId();
+        $homepageUrl = $this->generateUrlForHomepageOnDomain($firstDomainId);
+        $categoryElectronicsUrl = $this->generateUrlForCategoryOnDomain(CategoryDataFixture::CATEGORY_ELECTRONICS, $firstDomainId);
 
         return [
             [
@@ -229,7 +242,7 @@ class GetArticlesTest extends GraphQlTestCase
                             </div>
                             <div class="gjs-text-with-image">
                                 <div class="gjs-text-with-image-inner gjs-text-with-image-float-left gjs-text-with-image-type-outside-layout">
-                                    <img src="/content/images/blogArticle/default/600.jpg" class="image" />
+                                    <img src="' . $homepageUrl . 'content/images/blogArticle/default/600.jpg" class="image" />
                                     <div class="gjs-text-ckeditor text">
                                         Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed
                                         placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a
@@ -286,10 +299,10 @@ class GetArticlesTest extends GraphQlTestCase
                             <div class="gjs-text-ckeditor">
                                 <h6 id="i1dz5h" draggable="true">H6 Imegson</h6>
                             </div>
-                            <img src="/content/images/blogArticle/default/601.jpg" class="image-position-left" />
+                            <img src="' . $homepageUrl . 'content/images/blogArticle/default/601.jpg" class="image-position-left" />
                         </div>
                     </div>
-                    <a class="gjs-button-link button-link-position-center" title="More products" href="/electronics">
+                    <a class="gjs-button-link button-link-position-center" title="More products" href="' . $categoryElectronicsUrl . '">
                         <div class="gjs-text-ckeditor text">More products</div>
                     </a>
             </div>',
@@ -462,5 +475,33 @@ class GetArticlesTest extends GraphQlTestCase
                 'seoMetaDescription' => null,
             ],
         ];
+    }
+
+    /**
+     * @param int $domainId
+     * @return string
+     */
+    private function generateUrlForHomepageOnDomain(int $domainId): string
+    {
+        $router = $this->domainRouterFactory->getRouter($domainId);
+
+        return $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    /**
+     * @param string $categoryReferenceName
+     * @param int $domainId
+     * @return string
+     */
+    private function generateUrlForCategoryOnDomain(string $categoryReferenceName, int $domainId): string
+    {
+        $router = $this->domainRouterFactory->getRouter($domainId);
+        $categoryReference = $this->getReference($categoryReferenceName, Category::class);
+
+        return $router->generate(
+            'front_product_list',
+            ['id' => $categoryReference->getId()],
+            UrlGeneratorInterface::RELATIVE_PATH,
+        );
     }
 }

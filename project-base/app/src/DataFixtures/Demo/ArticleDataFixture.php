@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ArticleDataFixture extends AbstractReferenceFixture
 {
@@ -35,10 +38,12 @@ class ArticleDataFixture extends AbstractReferenceFixture
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
         private readonly ArticleFacade $articleFacade,
         private readonly ArticleDataFactory $articleDataFactory,
+        private readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -61,6 +66,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private function getDataForArticles(DomainConfig $domainConfig): array
     {
         $locale = $domainConfig->getLocale();
+        $homepageUrl = $this->generateUrlForHomepageOnDomain($domainConfig->getId());
 
         return [
             [
@@ -134,7 +140,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                                 >
                                     <img
                                         data-image-position="left"
-                                        src="/content/images/blogArticle/default/600.jpg"
+                                        src="' . $homepageUrl . 'content/images/blogArticle/default/600.jpg"
                                         class="image"
                                     />
                                     <div class="gjs-text-ckeditor text" data-gjs-type="text">
@@ -213,7 +219,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                             </div>
                             <img
                                 data-image-position="left"
-                                src="/content/images/blogArticle/default/601.jpg"
+                                src="' . $homepageUrl . 'content/images/blogArticle/default/601.jpg"
                                 class="image-position-left"
                             />
                         </div>
@@ -223,7 +229,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                         backgroundcolor="#00C8B7"
                         class="gjs-button-link button-link-position-center"
                         title="More products"
-                        href="/electronics"
+                        href="' . $this->generateUrlForCategoryOnDomain(CategoryDataFixture::CATEGORY_ELECTRONICS, $domainConfig->getId()) . '"
                     >
                         <div class="gjs-text-ckeditor text" data-gjs-type="text">More products</div>
                     </a>
@@ -351,5 +357,33 @@ class ArticleDataFixture extends AbstractReferenceFixture
         if ($referenceName !== null) {
             $this->addReferenceForDomain($referenceName, $article, $articleData->domainId);
         }
+    }
+
+    /**
+     * @param int $domainId
+     * @return string
+     */
+    private function generateUrlForHomepageOnDomain(int $domainId): string
+    {
+        $router = $this->domainRouterFactory->getRouter($domainId);
+
+        return $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    /**
+     * @param string $categoryReferenceName
+     * @param int $domainId
+     * @return string
+     */
+    private function generateUrlForCategoryOnDomain(string $categoryReferenceName, int $domainId): string
+    {
+        $router = $this->domainRouterFactory->getRouter($domainId);
+        $categoryReference = $this->getReference($categoryReferenceName, Category::class);
+
+        return $router->generate(
+            'front_product_list',
+            ['id' => $categoryReference->getId()],
+            UrlGeneratorInterface::RELATIVE_PATH,
+        );
     }
 }
