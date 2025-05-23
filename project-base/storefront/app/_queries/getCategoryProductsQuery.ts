@@ -26,13 +26,13 @@ export async function getCategoryProductsQuery(
         },
     );
 
-    if (!result.data?.products.edges) {
-        return null;
-    }
+    // if (!result.data?.products.edges) {
+    //     return null;
+    // }
 
-    const productsData = result.data.products.edges.map((edge) => edge?.node);
+    // const productsData = result.data.products.edges.map((edge) => edge?.node);
 
-    const products = productsData.filter((product) => product !== null && product !== undefined);
+    // const products = productsData.filter((product) => product !== null && product !== undefined);
 
-    return products;
+    return result.data;
 }
