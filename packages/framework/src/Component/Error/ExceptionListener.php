@@ -11,7 +11,7 @@ use Twig\Error\RuntimeError;
 
 final class ExceptionListener
 {
-    private ?Throwable $lastThrowable;
+    private ?Throwable $lastThrowable = null;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event

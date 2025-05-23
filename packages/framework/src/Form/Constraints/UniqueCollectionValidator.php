@@ -31,13 +31,6 @@ class UniqueCollectionValidator extends ConstraintValidator
             );
         }
 
-        if (!is_bool($constraint->allowEmpty)) {
-            throw new InvalidOptionsException(
-                'Option "allowEmpty" must be boolean',
-                ['allowEmpty'],
-            );
-        }
-
         foreach ($values as $index1 => $value1) {
             foreach ($values as $index2 => $value2) {
                 if ($index1 !== $index2) {

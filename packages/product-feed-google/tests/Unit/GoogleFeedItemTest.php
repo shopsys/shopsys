@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
@@ -165,8 +164,6 @@ class GoogleFeedItemTest extends TestCase
     public function testMinimalGoogleFeedItemIsCreatable(): void
     {
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
-
-        self::assertInstanceOf(GoogleFeedItem::class, $googleFeedItem);
 
         self::assertEquals(1, $googleFeedItem->getId());
         self::assertEquals(1, $googleFeedItem->getSeekId());

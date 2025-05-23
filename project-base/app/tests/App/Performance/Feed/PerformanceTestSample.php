@@ -15,7 +15,7 @@ class PerformanceTestSample
 
     private int $statusCode;
 
-    private ?string $message;
+    private ?string $message = null;
 
     /**
      * @var string[]

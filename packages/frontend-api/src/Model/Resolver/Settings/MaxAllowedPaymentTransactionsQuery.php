@@ -23,7 +23,6 @@ class MaxAllowedPaymentTransactionsQuery extends AbstractQuery
      */
     public function maxAllowedPaymentTransactionsQuery(): int
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Order\Order $orderClass */
         $orderClass = $this->entityNameResolver->resolve(Order::class);
 
         return $orderClass::MAX_TRANSACTION_COUNT;

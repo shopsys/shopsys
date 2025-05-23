@@ -44,7 +44,6 @@ class FilterQuery extends BaseFilterQuery
     #[Override]
     public function search(string $text): BaseFilterQuery
     {
-        /** @var \App\Model\Product\Search\FilterQuery $clonedQuery */
         $clonedQuery = clone $this;
 
         $clonedQuery->match = [

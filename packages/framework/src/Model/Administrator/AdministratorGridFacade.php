@@ -12,19 +12,13 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\RememberGridLimitExcep
 class AdministratorGridFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface;
-     */
-    protected EntityManagerInterface $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory $administratorGridLimitFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
+        protected readonly EntityManagerInterface $em,
         protected readonly AdministratorGridLimitFactory $administratorGridLimitFactory,
     ) {
-        $this->em = $em;
     }
 
     /**

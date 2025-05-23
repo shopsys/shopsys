@@ -5,7 +5,3 @@ services:
         class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsExtension
         tags:
             - phpstan.properties.readWriteExtension
-    -
-        class: Shopsys\CodingStandards\Phpstan\GedmoExtension
-        tags:
-            - phpstan.properties.readWriteExtension

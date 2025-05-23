@@ -7,7 +7,6 @@ namespace Tests\ProductFeed\HeurekaDeliveryBundle\Unit;
 use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataMissingException;
-use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItem;
 use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItemFactory;
 
 class HeurekaDeliveryFeedItemTest extends TestCase
@@ -26,8 +25,6 @@ class HeurekaDeliveryFeedItemTest extends TestCase
             'id' => 1,
             'stockQuantity' => 5,
         ]);
-
-        self::assertInstanceOf(HeurekaDeliveryFeedItem::class, $heurekaDeliveryFeedItem);
 
         self::assertEquals(1, $heurekaDeliveryFeedItem->getId());
         self::assertEquals(1, $heurekaDeliveryFeedItem->getSeekId());

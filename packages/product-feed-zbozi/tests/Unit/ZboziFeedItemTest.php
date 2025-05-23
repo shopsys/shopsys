@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem;
 use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData;
@@ -101,8 +100,6 @@ class ZboziFeedItemTest extends TestCase
     public function testMinimalZboziFeedItemIsCreatable()
     {
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
-
-        self::assertInstanceOf(ZboziFeedItem::class, $zboziFeedItem);
 
         self::assertEquals(1, $zboziFeedItem->getId());
         self::assertEquals(1, $zboziFeedItem->getSeekId());

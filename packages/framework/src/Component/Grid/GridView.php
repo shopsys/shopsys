@@ -171,16 +171,12 @@ class GridView
             return;
         }
 
-        if ($actionColumn instanceof GridRowActionInterface) {
-            if ($actionColumn->validate($row) === false) {
-                return;
-            }
-
-            $renderData = $actionColumn->renderData();
-            echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
-
+        if ($actionColumn->validate($row) === false) {
             return;
         }
+
+        $renderData = $actionColumn->renderData();
+        echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
     }
 
     /**

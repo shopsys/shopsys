@@ -74,7 +74,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $order = $this->createOrder($currency, $status, $country);
-        /** @var \App\Model\Product\Product $product */
         $product = $this->createMock(Product::class);
         $price = new Price(Money::create(1), Money::create(1));
         $orderItem = new OrderItem($order, 'test', $price, '1', 1, OrderItemTypeEnum::TYPE_PRODUCT, 'ks', 'cat');

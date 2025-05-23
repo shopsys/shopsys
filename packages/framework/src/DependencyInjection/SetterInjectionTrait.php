@@ -7,6 +7,9 @@ namespace Shopsys\FrameworkBundle\DependencyInjection;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 
+/**
+ * @phpstan-ignore trait.unused
+ */
 trait SetterInjectionTrait
 {
     /**

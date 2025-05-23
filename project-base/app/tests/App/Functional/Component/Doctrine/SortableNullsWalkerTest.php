@@ -13,7 +13,6 @@ class SortableNullsWalkerTest extends TransactionFunctionalTestCase
 {
     public function testWalkOrderByItemAsc()
     {
-        /** @var \Doctrine\ORM\QueryBuilder $queryBuilder */
         $queryBuilder = $this->em->createQueryBuilder();
 
         $queryBuilder
@@ -29,7 +28,6 @@ class SortableNullsWalkerTest extends TransactionFunctionalTestCase
 
     public function testWalkOrderByItemDesc()
     {
-        /** @var \Doctrine\ORM\QueryBuilder $queryBuilder */
         $queryBuilder = $this->em->createQueryBuilder();
 
         $queryBuilder
@@ -45,7 +43,6 @@ class SortableNullsWalkerTest extends TransactionFunctionalTestCase
 
     public function testWalkOrderByItemWithoutOrdering()
     {
-        /** @var \Doctrine\ORM\QueryBuilder $queryBuilder */
         $queryBuilder = $this->em->createQueryBuilder();
 
         $queryBuilder

@@ -70,22 +70,20 @@ class ScalarProperty extends Property
         }
 
         // Handling additional 'options' array (e.g., 'default', 'comment')
-        if (is_array($this->options)) {
-            $optionStrings = [];
+        $optionStrings = [];
 
-            foreach ($this->options as $key => $value) {
-                if (is_string($value)) {
-                    $optionStrings[] = sprintf('"%s"="%s"', $key, addslashes($value));
-                } elseif (is_bool($value)) {
-                    $optionStrings[] = sprintf('"%s"=%s', $key, $value ? 'true' : 'false');
-                } elseif (is_numeric($value)) {
-                    $optionStrings[] = sprintf('"%s"=%d', $key, $value);
-                }
+        foreach ($this->options as $key => $value) {
+            if (is_string($value)) {
+                $optionStrings[] = sprintf('"%s"="%s"', $key, addslashes($value));
+            } elseif (is_bool($value)) {
+                $optionStrings[] = sprintf('"%s"=%s', $key, $value ? 'true' : 'false');
+            } elseif (is_numeric($value)) {
+                $optionStrings[] = sprintf('"%s"=%d', $key, $value);
             }
+        }
 
-            if (count($optionStrings) > 0) {
-                $options[] = sprintf('options={%s}', implode(', ', $optionStrings));
-            }
+        if (count($optionStrings) > 0) {
+            $options[] = sprintf('options={%s}', implode(', ', $optionStrings));
         }
 
         return [sprintf('@ORM\Column(%s)', implode(', ', $options))];
