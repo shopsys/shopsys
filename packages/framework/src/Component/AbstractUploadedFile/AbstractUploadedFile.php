@@ -99,7 +99,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
             throw new InvalidFileKeyException($key);
         }
 
-        $this->temporaryFilename = '';
+        $this->temporaryFilename = null;
     }
 
     /**
