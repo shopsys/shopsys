@@ -7,8 +7,10 @@ export type ProductDetailRelatedProductsTabProps = {
 };
 
 export const ProductDetailRelatedProductsTab: FC<ProductDetailRelatedProductsTabProps> = ({ relatedProducts }) => (
-    <ProductsSlider
-        gtmProductListName={GtmProductListNameType.product_detail_related_products}
-        products={relatedProducts}
-    />
+    <div className="mt-10">
+        <ProductsSlider
+            gtmProductListName={GtmProductListNameType.product_detail_related_products}
+            products={relatedProducts}
+        />
+    </div>
 );
