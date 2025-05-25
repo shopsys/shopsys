@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\OpenAi\OpenAiModelEnum;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentDataFactory;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentFacade;
+use Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModel;
 
-class AgentDataFixture extends AbstractReferenceFixture
+class AgentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const AGENT_ASTROLOG_KEY = 'astrolog';
 
@@ -34,16 +36,25 @@ class AgentDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager): void
     {
         $agentData = $this->agentDataFactory->create();
-        $agentData->name = 'Astrolog ' . OpenAiModelEnum::GPT_3_5_TURBO;
+        $agentData->name = 'Astrolog ' . AiModelDataFixture::GPT_3_5_TURBO;
         $agentData->internalKey = self::AGENT_ASTROLOG_KEY;
         $agentData->enabled = true;
-        $agentData->model = OpenAiModelEnum::GPT_3_5_TURBO;
+        $agentData->aiModel = $this->getReference(AiModelDataFixture::GPT_3_5_TURBO, AiModel::class);
         $agentData->setup = 'Jsi asistent pro výklad snů jako bys byl astrolog.';
 
         $agent = $this->agentFacade->create($agentData);
         $this->addReference(self::AGENT_ASTROLOG_KEY, $agent);
 
+        // This agent bellow is added through migration
         $agent = $this->agentFacade->findAgentByInternalKey(self::AGENT_ARTICLE_GENERATOR_KEY);
         $this->addReference(self::AGENT_ARTICLE_GENERATOR_KEY, $agent);
+    }
+
+
+    public function getDependencies()
+    {
+        return [
+            AiModelDataFixture::class,
+        ];
     }
 }

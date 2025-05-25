@@ -36,12 +36,6 @@ class Agent
 
     /**
      * @var string
-     * @ORM\Column(type="string")
-     */
-    protected $model;
-
-    /**
-     * @var string
      * @ORM\Column(type="text")
      */
     protected $setup;
@@ -66,6 +60,13 @@ class Agent
     protected $vectorStores;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModel
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModel")
+     * @ORM\JoinColumn(name="ai_model_id", referencedColumnName="id")
+     */
+    protected $aiModel;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\AgentData $agentData
      */
     public function __construct(AgentData $agentData)
@@ -81,7 +82,7 @@ class Agent
     {
         $this->name = $agentData->name;
         $this->enabled = $agentData->enabled;
-        $this->model = $agentData->model;
+        $this->aiModel = $agentData->aiModel;
         $this->setup = $agentData->setup;
         $this->internalKey = $agentData->internalKey;
         $this->availableAiFunctions = $agentData->availableAiFunctions;
@@ -124,11 +125,11 @@ class Agent
     }
 
     /**
-     * @return string
+     * @return \Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModel
      */
-    public function getModel()
+    public function getAiModel()
     {
-        return $this->model;
+        return $this->aiModel;
     }
 
     /**

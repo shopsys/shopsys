@@ -13,7 +13,10 @@ use Shopsys\FrameworkBundle\Model\Chat\Agent\Agent;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentData;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner;
 use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\FunctionRunnerSetup;
+use Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModel;
+use Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModelFacade;
 use Shopsys\FrameworkBundle\Model\Chat\VectorStore\VectorStoreFacade;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,6 +33,7 @@ class AgentFormType extends AbstractType
     public function __construct(
         protected readonly DynamicFunctionRunner $dynamicFunctionRunner,
         protected readonly VectorStoreFacade $vectorStoreFacade,
+        protected readonly AiModelFacade $aiModelFacade,
     ) {
     }
 
@@ -58,9 +62,11 @@ class AgentFormType extends AbstractType
                 'label' => t('Enabled'),
                 'required' => false,
             ])
-            ->add('model', ChoiceType::class, [
-                'label' => t('Model'),
-                'choices' => array_combine(OpenAiModelEnum::ALL, OpenAiModelEnum::ALL),
+            ->add('aiModel', EntityType::class, [
+                'class'        => AiModel::class,
+                'choice_label' => 'name',
+                'label'        => t('Model'),
+                'required'     => true,
             ])
             ->add('setup', TextareaType::class, [
                 'label' => t('Setup'),

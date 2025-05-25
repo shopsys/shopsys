@@ -179,7 +179,7 @@ class ChatController extends AdminBaseController
 
         $grid->addColumn('question', 'm.question', t('Question'));
         $grid->addColumn('name', 'a.name', t('Agent name'));
-        $grid->addColumn('model', 'a.model', t('Model'));
+        $grid->addColumn('model', 'am.name', t('Model'));
 
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

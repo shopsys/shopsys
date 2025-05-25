@@ -31,7 +31,7 @@ class AgentDataFactory
         $agentData = $this->createInstance();
         $agentData->name = $agent->getName();
         $agentData->enabled = $agent->isEnabled();
-        $agentData->model = $agent->getModel();
+        $agentData->aiModel = $agent->getAiModel();
         $agentData->setup = $agent->getSetup();
         $agentData->internalKey = $agent->getInternalKey();
         $agentData->availableAiFunctions = $agent->getAvailableAiFunctions();

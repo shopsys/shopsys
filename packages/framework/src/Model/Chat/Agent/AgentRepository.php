@@ -55,7 +55,10 @@ class AgentRepository
      */
     public function getAllAgentsQueryBuilder(): QueryBuilder
     {
-        return $this->getRepository()->createQueryBuilder('a');
+        return $this->getRepository()
+            ->createQueryBuilder('a')
+            ->addSelect('m')
+            ->join('a.aiModel', 'm');
     }
 
     /**

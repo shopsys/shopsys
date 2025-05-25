@@ -62,9 +62,10 @@ class ChatRepository
      */
     public function getAllChatsQueryBuilder(): QueryBuilder
     {
-        return $this->em->createQueryBuilder()->select('ch, a, m')
+        return $this->em->createQueryBuilder()->select('ch, a, m, am')
             ->from(Chat::class, 'ch')
             ->join('ch.agent', 'a')
+            ->join('a.aiModel', 'am')
             ->leftJoin('ch.messages', 'm', Join::WITH, 'm.id = (SELECT MIN(m2.id) FROM ' . ChatMessage::class . ' m2 WHERE m2.chat = ch)')
         ;
     }

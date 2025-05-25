@@ -1,6 +1,6 @@
 {% if chat is defined %}
     <div class="chat__info">{{ 'Agent name'|trans }}: {{ chat.agent.name }}</div>
-    <div class="chat__info">{{ 'Model'|trans }}: {{ chat.agent.model }}</div>
+    <div class="chat__info">{{ 'Model'|trans }}: {{ chat.agent.aiModel.name }}</div>
     <div class="chat__info">{{ 'Total tokens'|trans }}: {{ chat.totalTokens }}</div>
 {% endif %}
 {% for info in information %}

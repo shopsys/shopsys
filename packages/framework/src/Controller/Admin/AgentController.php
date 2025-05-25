@@ -198,7 +198,7 @@ class AgentController extends AdminBaseController
         $grid->setDefaultOrder('id');
 
         $grid->addColumn('name', 'a.name', t('Name'));
-        $grid->addColumn('model', 'a.model', t('Model'));
+        $grid->addColumn('model', 'm.name', t('Model'));
         $grid->addColumn('enabled', 'a.enabled', t('Enabled'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

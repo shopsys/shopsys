@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Chat\Agent;
 
+use Shopsys\FrameworkBundle\Model\Chat\AiModel\AiModel;
+
 class AgentData
 {
     /**
@@ -17,9 +19,9 @@ class AgentData
     public $enabled;
 
     /**
-     * @var string|null
+     * @var AiModel|null
      */
-    public $model;
+    public $aiModel;
 
     /**
      * @var string|null

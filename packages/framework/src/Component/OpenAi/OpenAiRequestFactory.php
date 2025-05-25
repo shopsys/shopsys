@@ -38,7 +38,7 @@ class OpenAiRequestFactory
     public function getOpenAiChatRequest(Chat $chat): array
     {
         $request = [];
-        $request['model'] = $chat->getAgent()->getModel();
+        $request['model'] = $chat->getAgent()->getAiModel()->getId();
         $request['messages'] = $this->getMessages($chat);
 
         $functions = $this->openAiFunctionCallingFactory->getFunctions($chat->getAgent());
