@@ -9,6 +9,7 @@ use App\Model\Product\Flag\FlagDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
@@ -25,10 +26,12 @@ final class FlagDataFixture extends AbstractReferenceFixture
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly FlagFacade $flagFacade,
         private readonly FlagDataFactory $flagDataFactory,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -40,7 +43,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
     {
         $flagData = $this->createFlagData('#f7d631');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -49,7 +52,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->createFlagData('#ee1c25');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -58,7 +61,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->createFlagData('#2bba51');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('New', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -67,7 +70,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->createFlagData('#3110e8');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Made in CZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -76,7 +79,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->createFlagData('#b01c1f');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Made in SK', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -85,7 +88,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->createFlagData('#000000');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -94,7 +97,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->createFlagData('#30a1ba');
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Price hit', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
