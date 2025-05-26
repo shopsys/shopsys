@@ -1,6 +1,3 @@
-imports:
-    - { resource: packages_registry.yaml }
-
 services:
     _defaults:
         autoconfigure: true

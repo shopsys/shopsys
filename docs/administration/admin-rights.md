@@ -27,3 +27,28 @@ The most important settings in the security config are:
 - the access control coverage of all the controller actions is checked automatically by the `access-control-rules-check` [phing](../introduction/console-commands-for-application-management-phing-targets.md) target (it is a part of `standards` check)
 
 If a particular page or section is restricted for the given administrator, it is automatically removed from the menu, see `Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItemsGrantedRolesSubscriber`.
+
+## Overriding #[AccessControlRule] attribute from your project
+
+If you need to override the `#[AccessControlRule]` attribute on your project, you have to override Controller action and add the attribute there.
+For example, if you want to make `someAction` accessible for all admins, you can do that like this:
+
+```php
+#[Override]
+#[AccessControlRule([Roles::ROLE_ADMIN])
+public function someAction(Request $request): Response
+{
+    // ...
+}
+```
+
+In case you want to make the action accessible for everyone, you can use an empty array:
+
+```php
+#[Override]
+#[AccessControlRule([])
+public function someAction(Request $request): Response
+{
+    // ...
+}
+```

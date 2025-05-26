@@ -66,7 +66,7 @@
         </exec>
     </target>
 
-    <target name="access-control-rules-check" description="Checks access control rules in the project.">
+    <target name="access-control-rules-check" depends="clean" description="Checks access control rules in the project.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:check-access-control-rules"/>

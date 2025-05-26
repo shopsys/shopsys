@@ -1,16 +1,17 @@
 <?php
 
-use App\Environment;
 use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Config\SecurityConfig;
 
 /**
  * If your IDE does not recognize the SecurityConfig class, be sure to mark the "/var/cache/dev/Symfony" folder as not excluded
  * @see https://symfony.com/doc/current/configuration.html#using-php-configbuilders
  */
-return static function (SecurityConfig $security): void {
+return static function (SecurityConfig $security, ContainerBuilder $container): void {
     $roleHierarchy = [...Roles::getRolesHierarchy(), ...CustomerUserRole::getRolesHierarchy()];
 
     foreach ($roleHierarchy as $role => $inheritedRoles) {
@@ -34,7 +35,7 @@ return static function (SecurityConfig $security): void {
             ->roles($roles);
     }
 
-    foreach (getRouteAccessControlRules() as $routeAccessControlRule) {
+    foreach (getRouteAccessControlRules($container) as $routeAccessControlRule) {
         $accessControlRule = $routeAccessControlRule->accessControlRule;
         $accessControlConfig = $security->accessControl();
         $accessControlConfig
@@ -72,11 +73,23 @@ return static function (SecurityConfig $security): void {
 /**
  * @return \Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlData[]
  */
-function getRouteAccessControlRules(): array
+function getRouteAccessControlRules(ContainerBuilder $container): array
 {
-    $projectRootDirectory = __DIR__ . '/../..';
-    $cacheDirectory = sprintf('%s/var/cache/%s', $projectRootDirectory, Environment::getEnvironment());
-    $routeAccessControlDataProvider = new RouteAccessControlDataProvider($projectRootDirectory, $cacheDirectory);
+    $isMonorepo = $container->getParameter('shopsys.is_monorepo');
+
+    if ($isMonorepo) {
+        $frameworkRootDir = $container->getParameter('kernel.project_dir') . '/../../packages/framework/';
+    } else {
+        $frameworkRootDir = $container->getParameter('kernel.project_dir') . '/vendor/shopsys/framework/';
+    }
+
+    $routeAccessControlDataProvider = new RouteAccessControlDataProvider(
+        $container->getParameter('kernel.project_dir'),
+        $container->getParameter('kernel.cache_dir'),
+        $frameworkRootDir,
+        $container->getParameter('shopsys.packages.registry'),
+        $container->getParameter('kernel.environment'),
+    );
 
     return $routeAccessControlDataProvider->findAll();
 }
