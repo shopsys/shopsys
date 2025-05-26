@@ -2595,7 +2595,7 @@ type SeoSetting {
   "Document's title that is shown in a browser's title"
   title: String!
   "Complement to title"
-  titleAddOn: String!
+  titleAddOn: String
 }
 
 "Represents settings of the current domain"

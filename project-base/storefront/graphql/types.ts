@@ -3318,7 +3318,7 @@ export type TypeSeoSetting = {
   /** Document's title that is shown in a browser's title */
   title: Scalars['String']['output'];
   /** Complement to title */
-  titleAddOn: Scalars['String']['output'];
+  titleAddOn: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents settings of the current domain */

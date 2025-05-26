@@ -8997,7 +8997,7 @@ Document's title that is shown in a browser's title
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="seosetting.titleaddon">titleAddOn</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Complement to title
