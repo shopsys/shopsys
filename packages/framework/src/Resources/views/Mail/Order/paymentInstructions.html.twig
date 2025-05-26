@@ -1,2 +1,2 @@
 {% trans_default_domain 'customerMessages' %}
-{% trans into orderLocale %}Instructions{% endtrans %}: {{ order.paymentItem.payment.instructions|raw }}<br/>
+{% trans into orderLocale %}Instructions{% endtrans %}: {{ order.paymentItem.payment.instructions(orderLocale)|raw }}<br/>
