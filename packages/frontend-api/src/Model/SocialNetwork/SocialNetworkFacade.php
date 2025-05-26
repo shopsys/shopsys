@@ -92,12 +92,13 @@ class SocialNetworkFacade
             }
             $adapter->disconnect();
 
+            $productListUuids = $session->get(SocialNetworkController::PRODUCT_LIST_UUIDS);
             $loginResultData = $this->loginAsUserFacade->runLoginSteps(
                 $customerUser,
                 $type,
                 $isRegistration,
-                explode(',', $session->get(SocialNetworkController::PRODUCT_LIST_UUIDS)),
-                $session->get(SocialNetworkController::SHOULD_OVERWRITE_CART),
+                $productListUuids !== null ? explode(',', $productListUuids) : [],
+                $session->get(SocialNetworkController::SHOULD_OVERWRITE_CART, false),
                 $session->get(SocialNetworkController::CART_UUID),
                 (string)$userProfile->identifier,
             );
