@@ -28,7 +28,13 @@ msgstr ""
 msgid "Administrator reset password request"
 msgstr ""
 
+msgid "Authentication code"
+msgstr ""
+
 msgid "Dear administrator.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
+msgstr ""
+
+msgid "Dear customer,<br/> <br/> your two factor authentication code is: {authentication_code}<br/> <br/> Best regards"
 msgstr ""
 
 msgid "New product inquiry received"

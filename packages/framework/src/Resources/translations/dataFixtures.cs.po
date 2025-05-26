@@ -28,8 +28,14 @@ msgstr "<p> Úspěšně jste si zvolili platební metodu. Nyní čekáme na potv
 msgid "Administrator reset password request"
 msgstr "Požadavek na resetování hesla administrátora"
 
+msgid "Authentication code"
+msgstr "Autentifikační kód"
+
 msgid "Dear administrator.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
 msgstr "Vážený administrátore.<br /><br />Můžete nastavit nové heslo následujícím odkazem: <a href=\"{new_password_url}\">{new_password_url}</a>"
+
+msgid "Dear customer,<br/> <br/> your two factor authentication code is: {authentication_code}<br/> <br/> Best regards"
+msgstr "Vážený zákazníku,<br/> <br/> váš dvoufaktorový ověřovací kód je: {authentication_code}<br/> <br/> S pozdravem"
 
 msgid "New product inquiry received"
 msgstr "Byla přijata nová poptávka produktu"

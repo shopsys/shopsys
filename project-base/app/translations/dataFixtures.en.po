@@ -472,9 +472,6 @@ msgstr ""
 msgid "Article text for search testing, the search phrase is &#34;Dina&#34;."
 msgstr ""
 
-msgid "Authentication code"
-msgstr ""
-
 msgid "BROTHER PT-H300"
 msgstr ""
 
@@ -722,9 +719,6 @@ msgid "Dear customer,<br/> <br/> you can finish registration and set new passwor
 msgstr ""
 
 msgid "Dear customer,<br/> <br/> your registration is completed.<br/> <br/> Name: {first_name} {last_name}<br /> Email: {email}<br/> <br/> E-shop: <a href=\"{url}\">link</a><br /> Login page: <a href=\"{login_page}\">Log in</a><br/> <br/> Best regards"
-msgstr ""
-
-msgid "Dear customer,<br/> <br/> your two factor authentication code is: {authentication_code}<br/> <br/> Best regards"
 msgstr ""
 
 msgid "Dear customer,<br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/> <br/> To download your personal information please click <a href=\"{url}\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
