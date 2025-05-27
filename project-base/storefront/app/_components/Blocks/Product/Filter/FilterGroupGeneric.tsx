@@ -8,14 +8,14 @@ import {
     ShowAllButton,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
+import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterFieldType = 'flags' | 'brands';
 
