@@ -1,12 +1,12 @@
 'use client';
 
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
+import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { getPriceRounded } from 'utils/mappers/price';
-import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupPriceProps = {
     title: string;

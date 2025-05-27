@@ -1,9 +1,9 @@
 'use client';
 
+import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import useTranslation from 'next-translate/useTranslation';
-import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupInStockProps = {
     inStockCount: number;
