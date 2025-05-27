@@ -4,23 +4,19 @@ import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
+import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { TypeCategoryAutomatedFilterEnum, TypeProductFilter } from 'graphql/types';
+import { TypeCategoryAutomatedFilterEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
 import { isPriceVisible } from 'utils/mappers/price';
 
 export type FilterPanelProps = {
-    currentFilter: TypeProductFilter;
-    // currentFilter: FilterOptionsUrlQueryType    ;
     productFilterOptions: TypeProductFilterOptionsFragment;
-    // defaultOrderingMode?: TypeProductOrderingModeEnum | null;
-    // orderingMode: TypeProductOrderingModeEnum | null;
-    // originalSlug: string | null;
-    // slug: string;
     totalCount: number;
     categoryAutomatedFilters?: string[];
 };
@@ -30,16 +26,16 @@ const DEFAULT_NUMBER_OF_SHOWN_BRANDS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_PARAMETERS = 5;
 
 export const FilterPanel: FC<FilterPanelProps> = ({
-    currentFilter,
     productFilterOptions: filterOptions,
     totalCount,
     categoryAutomatedFilters,
 }) => {
     const { t } = useTranslation();
-    // const { resetAllFilterQueries } = useUpdateFilterQuery();
-    const activePriceFilter = currentFilter.minimalPrice !== null || currentFilter.maximalPrice !== null;
-    const activeFlagFilter = !!currentFilter.flags?.length;
-    const activeBrandFilter = !!currentFilter.brands?.length;
+    const { resetAllFilterQueries } = useUpdateFilterQuery();
+    const currentFilter = useCurrentFilterQuery();
+    const activePriceFilter = currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined;
+    const activeFlagFilter = !!currentFilter?.flags?.length;
+    const activeBrandFilter = !!currentFilter?.brands?.length;
     const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
     const shouldDisplayInStockFilter =
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
@@ -87,8 +83,8 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     )}
 
                     {filterOptions.parameters?.map((parameter, index) => {
-                        const activeParamFilter = !!currentFilter.parameters?.find(
-                            (currentParameter) => currentParameter.parameter === parameter.uuid,
+                        const activeParamFilter = !!currentFilter?.parameters?.find(
+                            (currentParameter: { parameter: string }) => currentParameter.parameter === parameter.uuid,
                         );
 
                         return (
@@ -110,9 +106,9 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
 
-                {/* <Button size="large" variant="inverted" onClick={resetAllFilterQueries}>
+                <Button size="large" variant="inverted" onClick={resetAllFilterQueries}>
                     {t('Clear all')}
-                </Button> */}
+                </Button>
             </div>
         </div>
     );

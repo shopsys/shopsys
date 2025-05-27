@@ -1,6 +1,8 @@
 'use client';
 
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
+import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
@@ -11,8 +13,6 @@ import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlic
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;
@@ -47,7 +47,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     <div className="flex flex-wrap items-center gap-y-2">
                         <AnimatePresence initial={false}>
                             {!!currentFilter?.onlyInStock && (
-                                <SelectedParametersList keyName="filter-only-in-stock">
+                                <SelectedParametersList key="filter-only-in-stock" keyName="filter-only-in-stock">
                                     <SelectedParametersName>{t('Availability')}</SelectedParametersName>
                                     <SelectedParametersListItem onClick={() => updateFilterInStockQuery(false)}>
                                         {t('Only goods in stock')}
@@ -58,7 +58,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
                             {(currentFilter?.minimalPrice !== undefined ||
                                 currentFilter?.maximalPrice !== undefined) && (
-                                <SelectedParametersList keyName="filter-minmax-price">
+                                <SelectedParametersList key="filter-minmax-price" keyName="filter-minmax-price">
                                     <SelectedParametersName>{t('Price')}</SelectedParametersName>
                                     <SelectedParametersListItem
                                         onClick={() => {
@@ -87,7 +87,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                             )}
 
                             {!!checkedBrands?.length && (
-                                <SelectedParametersList keyName="selected-brands">
+                                <SelectedParametersList key="selected-brands" keyName="selected-brands">
                                     <SelectedParametersName>{t('Brands')}</SelectedParametersName>
                                     {checkedBrands.map(
                                         (checkedBrand) =>
@@ -105,7 +105,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                             )}
 
                             {!!checkedFlags.length && (
-                                <SelectedParametersList keyName="selected-flags">
+                                <SelectedParametersList key="selected-flags" keyName="selected-flags">
                                     <SelectedParametersName>{t('Flags')}</SelectedParametersName>
                                     {checkedFlags.map((checkedFlag) => (
                                         <SelectedParametersListItem
@@ -161,7 +161,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
                                     return (
                                         <SelectedParametersList
-                                            key={selectedParameterOptions.uuid}
+                                            key={`parameter-${selectedParameterOptions.uuid}`}
                                             keyName={selectedParameterOptions.uuid}
                                         >
                                             <SelectedParametersName>
@@ -230,7 +230,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     );
 };
 
-const SelectedParametersIcon: FC = () => <RemoveIcon className="group-hover:text-textError ml-3 w-3 cursor-pointer" />;
+const SelectedParametersIcon: FC = () => <RemoveIcon className="ml-3 w-3 cursor-pointer" />;
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,

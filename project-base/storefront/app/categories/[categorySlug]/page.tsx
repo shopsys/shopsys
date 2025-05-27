@@ -1,5 +1,7 @@
 import { CollapsibleDescriptionWithImage } from 'app/_components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
 import { FilteredProductsWrapper } from 'app/_components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
+import { FilterPanelSection } from 'app/_components/Blocks/Product/Filter/FilterPanelSection';
+import { FilterSelectedParameters } from 'app/_components/Blocks/Product/Filter/FilterSelectedParameters';
 import { getEndCursor } from 'app/_components/Blocks/Product/Filter/utils/getEndCursor';
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { productListTwClass } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
@@ -16,10 +18,11 @@ import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/Skelet
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeCategoryProductsQuery } from 'graphql/requests/products/queries/CategoryProductsQuery.ssr';
-import { TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -32,12 +35,6 @@ type CategoryPageProps = {
         categorySlug: string;
     }>;
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-    // searchParams: Promise<{
-    //     sort: TypeProductOrderingModeEnum | undefined;
-    //     filter: TypeProductFilter | undefined;
-    //     page: number | undefined;
-    //     lm: number | undefined;
-    // }>
 };
 
 const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) => {
@@ -59,10 +56,7 @@ const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) =
             ? (resolvedSearchParams[SORT_QUERY_PARAMETER_NAME] as TypeProductOrderingModeEnum)
             : TypeProductOrderingModeEnum.Priority;
 
-    const filter =
-        typeof resolvedSearchParams[FILTER_QUERY_PARAMETER_NAME] === 'string'
-            ? (resolvedSearchParams[FILTER_QUERY_PARAMETER_NAME] as unknown as TypeProductFilter)
-            : undefined;
+    const filter = getMappedProductFilter(resolvedSearchParams[FILTER_QUERY_PARAMETER_NAME]) || undefined;
 
     const categoryData = await getCategoryDetailQuery(categorySlug, sort, filter);
 
@@ -85,9 +79,14 @@ const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) =
         );
     }
 
-    console.log('🧪 lastPromise', lastPromise);
-
-    // const title = useSeoTitleWithPagination(categoryData.products.totalCount, categoryData.name, categoryData.seoH1);
+    // {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
+    // const firstImageUrl = categoryData?.images[0]?.url; // for OG tags
+    // useHandleDefaultFiltersUpdate(categoryData?.products);
+    // const seoTitle = useSeoTitleWithPagination(
+    //     categoryData.products.totalCount,
+    //     categoryData.name,
+    //     categoryData.seoTitle,
+    // );
     const title = categoryData.name;
 
     return (
@@ -103,11 +102,17 @@ const CategoryDetailPage = async ({ params, searchParams }: CategoryPageProps) =
             <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={categoryData.children} />
 
             <FilteredProductsWrapper>
+                <FilterPanelSection
+                    categoryAutomatedFilters={categoryData.automatedFilters}
+                    productFilterOptions={categoryData.products.productFilterOptions}
+                    totalCount={categoryData.products.totalCount}
+                />
+
                 <div className="flex flex-1 flex-col gap-5">
                     <CategoryBestsellers products={categoryData.bestsellers} />
 
                     <div className="vl:flex-col flex flex-col-reverse">
-                        {/* <FilterSelectedParameters filterOptions={category.products.productFilterOptions} /> */}
+                        <FilterSelectedParameters filterOptions={categoryData.products.productFilterOptions} />
 
                         <FilterAndSortingBarWrapper
                             sorting={categoryData.products.orderingMode}
