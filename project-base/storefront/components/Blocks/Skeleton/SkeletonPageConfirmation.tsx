@@ -3,7 +3,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 
 export const SkeletonPageConfirmation: FC = () => (
     <Webline>
-        <Skeleton className="h-8 w-96 lg:h-10" />
+        <Skeleton className="h-8 md:w-96 lg:h-10" />
 
         <div className="mt-4 flex flex-col gap-1">
             <Skeleton className="h-6 w-3/4" />
