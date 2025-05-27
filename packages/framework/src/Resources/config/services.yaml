@@ -733,6 +733,10 @@ services:
             $redisClient: '@snc_redis.product_recalculation_queue'
             $isDeduplicationActive: '@=env("defined:MESSENGER_TRANSPORT_DSN") and not (parameter("kernel.environment") matches "/^(test|acc)$/")'
 
+    Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageFailedListener:
+        arguments:
+            $monologQueueLogger: '@monolog.logger.queue'
+
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
