@@ -1,0 +1,110 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\AiToolsBundle\Model\Chat\Agent;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class AgentFacade
+{
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentFactory $agentFactory
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentRepository $agentRepository
+     */
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly AgentFactory $agentFactory,
+        protected readonly AgentRepository $agentRepository,
+    ) {
+    }
+
+    /**
+     * @return \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent[]
+     */
+    public function getEnabledAgents(): array
+    {
+        return $this->agentRepository->getEnabledAgents();
+    }
+
+    /**
+     * @param string $internalKey
+     * @return \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent|null
+     */
+    public function findAgentByInternalKey($internalKey): ?Agent
+    {
+        return $this->agentRepository->findAgentByInternalKey($internalKey);
+    }
+
+    /**
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentData $agentData
+     * @return \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent
+     */
+    public function create(AgentData $agentData): Agent
+    {
+        $agent = $this->agentFactory->create($agentData);
+        $this->em->persist($agent);
+        $this->em->flush();
+
+        return $agent;
+    }
+
+    /**
+     * @param int $id
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentData $agentData
+     * @return \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent
+     */
+    public function edit(int $id, AgentData $agentData): Agent
+    {
+        $agent = $this->getById($id);
+        $agent->edit($agentData);
+        $this->em->flush();
+
+        return $agent;
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent
+     */
+    public function getById(int $id): Agent
+    {
+        $agent = $this->agentRepository->findById($id);
+
+        if ($agent === null) {
+            throw new NotFoundHttpException(sprintf('Agent with id "%s" does not exist.', $id));
+        }
+
+        return $agent;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        $agent = $this->getById($id);
+        $this->em->remove($agent);
+        $this->em->flush();
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent[]
+     */
+    public function getAllExceptId(int $id): array
+    {
+        return $this->agentRepository->getAllExceptId($id);
+    }
+
+    /**
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\Agent $agent
+     * @return bool
+     */
+    public function isAgentUsed(Agent $agent): bool
+    {
+        return $this->agentRepository->isAgentUsed($agent);
+    }
+}

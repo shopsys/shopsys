@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace Shopsys\AiToolsBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Override;

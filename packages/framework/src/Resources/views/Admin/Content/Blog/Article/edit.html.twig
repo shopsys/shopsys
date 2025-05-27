@@ -5,7 +5,7 @@
 
 {% block main_content %}
     {{ parent() }}
-    {% include '@ShopsysFramework/Admin/Content/Chat/aiChat.html.twig'
+    {% include  '@ShopsysAiTools/Admin/Content/Chat/aiChat.html.twig'
         with {identifier: blogArticle.uuid, agentInternalIdentifier: 'articleGenerator'}
     %}
 {% endblock %}

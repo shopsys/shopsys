@@ -1,0 +1,21 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Vector stores overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Vector stores overview'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('shopsys_aitools_admin_vectorstore_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new vector store'|trans }}
+        </a>
+        <a href="{{ url('shopsys_aitools_admin_vectorstore_load') }}" class="btn btn--primary btn--medium wrap-bar__btn">
+            {{ 'Load vector stores from API'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+
+    {{ gridView.render() }}
+
+{% endblock %}

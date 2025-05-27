@@ -1,0 +1,166 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\AiToolsBundle\Model\Chat\Agent;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="chat_agents")
+ * @ORM\Entity
+ */
+class Agent
+{
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
+    protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    protected $setup;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $internalKey;
+
+    /**
+     * @var string[]
+     * @ORM\Column(type="json")
+     */
+    protected $availableAiFunctions = [];
+
+    /**
+     * @var \Shopsys\AiToolsBundle\Model\Chat\VectorStore\VectorStore[]|\Doctrine\Common\Collections\ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Shopsys\AiToolsBundle\Model\Chat\VectorStore\VectorStore")
+     * @ORM\JoinTable(name="chat_agent_chat_vector_stores")
+     */
+    protected $vectorStores;
+
+    /**
+     * @var \Shopsys\AiToolsBundle\Model\Chat\AiModel\AiModel
+     * @ORM\ManyToOne(targetEntity="Shopsys\AiToolsBundle\Model\Chat\AiModel\AiModel")
+     * @ORM\JoinColumn(nullable=false, name="ai_model_id", referencedColumnName="id")
+     */
+    protected $aiModel;
+
+    /**
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentData $agentData
+     */
+    public function __construct(AgentData $agentData)
+    {
+        $this->vectorStores = new ArrayCollection();
+        $this->setData($agentData);
+    }
+
+    /**
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentData $agentData
+     */
+    protected function setData(AgentData $agentData): void
+    {
+        $this->name = $agentData->name;
+        $this->enabled = $agentData->enabled;
+        $this->aiModel = $agentData->aiModel;
+        $this->setup = $agentData->setup;
+        $this->internalKey = $agentData->internalKey;
+        $this->availableAiFunctions = $agentData->availableAiFunctions;
+
+        foreach ($agentData->vectorStores as $vectorStore) {
+            $this->vectorStores->add($vectorStore);
+        }
+    }
+
+    /**
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentData $agentData
+     */
+    public function edit(AgentData $agentData): void
+    {
+        $this->setData($agentData);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @return \Shopsys\AiToolsBundle\Model\Chat\AiModel\AiModel
+     */
+    public function getAiModel()
+    {
+        return $this->aiModel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSetup()
+    {
+        return $this->setup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInternalKey()
+    {
+        return $this->internalKey;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableAiFunctions()
+    {
+        return $this->availableAiFunctions;
+    }
+
+    /**
+     * @return \Shopsys\AiToolsBundle\Model\Chat\VectorStore\VectorStore[]
+     */
+    public function getVectorStores()
+    {
+        return $this->vectorStores->getValues();
+    }
+}

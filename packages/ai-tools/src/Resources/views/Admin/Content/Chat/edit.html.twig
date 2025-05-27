@@ -1,0 +1,11 @@
+{% extends '@ShopsysAiTools/Admin/Content/Chat/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing chat'|trans }}{% endblock %}
+{% block h1 %}{{ 'Editing chat'|trans }}{% endblock %}
+
+{% block main_content %}
+    {% include '@ShopsysAiTools/Admin/Content/Chat/chatHistory.html.twig'
+        with {chat: chat, debug: true}
+    %}
+    {{ parent() }}
+{% endblock %}

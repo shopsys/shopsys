@@ -603,11 +603,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
 
-    Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner:
-        arguments:
-            $aiFunctionList: '%app.ai_function_list%'
-            $locator: !tagged_locator { tag: 'app.ai_dynamic_service', index_by: 'class' }
-
     Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail: ~
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail: ~

@@ -6,3 +6,8 @@ shopsys_framework:
     prefix: /%admin_url%
     resource: "@ShopsysFrameworkBundle/Controller/Admin"
     type: attribute
+
+ai_tools:
+    prefix: /%admin_url%
+    resource: "@ShopsysAiToolsBundle/Controller/Admin"
+    type: attribute

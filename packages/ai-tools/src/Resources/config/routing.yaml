@@ -1,0 +1,8 @@
+controllers:
+    resource: '../src/Controller/'
+    type: attribute
+
+# Idk, jestli to jest potrzebne, ale w administracji jest
+crud_controllers:
+    resource: .
+    type: crud_controller

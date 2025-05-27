@@ -1,0 +1,14 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('shopsys_aitools_admin_aimodel_edit', { id: row.m.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No ai models found. You have to fetch them first.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'ai models'|trans %}
+    {{ parent() }}
+{% endblock %}

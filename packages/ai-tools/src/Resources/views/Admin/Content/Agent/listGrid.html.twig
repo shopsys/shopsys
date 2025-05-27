@@ -1,0 +1,14 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('shopsys_aitools_admin_agent_edit', { id: row.a.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No agents found. You have to create some first.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'agents'|trans %}
+    {{ parent() }}
+{% endblock %}

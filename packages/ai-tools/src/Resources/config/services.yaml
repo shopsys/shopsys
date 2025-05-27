@@ -6,3 +6,22 @@ services:
 
     Shopsys\AiToolsBundle\:
         resource: '../../*'
+
+    Shopsys\AiToolsBundle\Component\Ai\Client\AIClientFactory:
+        arguments:
+            $clients: !tagged_iterator { tag: 'app.ai_client', index_by: 'alias' }
+
+    Shopsys\AiToolsBundle\Component\Ai\Client\OpenAi\OpenAIClient:
+        tags:
+            - { name: 'app.ai_client', alias: 'openai' }
+
+    Shopsys\AiToolsBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner:
+        arguments:
+            $aiFunctionList: '%app.ai_function_list%'
+            $locator: !tagged_locator { tag: 'app.ai_dynamic_service', index_by: 'class' }
+
+#    Shopsys\AiToolsBundle\Model\AdminNavigation\SideMenuBuilderListener: ~
+
+#    app.admin_configure_menu_listener:
+#        class: Shopsys\AiToolsBundle\Model\AdminNavigation\SideMenuBuilderListener
+#        tags: [ kernel.event_listener ]

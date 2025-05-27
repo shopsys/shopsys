@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'AI Chats overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'AI Chats overview'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('shopsys_aitools_admin_chat_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new chat'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+
+    {{ gridView.render() }}
+
+{% endblock %}

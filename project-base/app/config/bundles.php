@@ -10,6 +10,7 @@ return [
     Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
     Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
     Prezent\Doctrine\TranslatableBundle\PrezentDoctrineTranslatableBundle::class => ['all' => true],
+    Shopsys\AiToolsBundle\ShopsysAiToolsBundle::class => ['all' => true],
     Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
     Shopsys\MigrationBundle\ShopsysMigrationBundle::class => ['all' => true],
     Shopsys\ProductFeed\HeurekaBundle\ShopsysProductFeedHeurekaBundle::class => ['all' => true],

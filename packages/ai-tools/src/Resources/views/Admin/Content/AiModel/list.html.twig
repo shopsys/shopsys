@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'AI Models overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'AI Models overview'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('shopsys_aitools_admin_aimodel_fetch') }}" class="btn btn--primary wrap-bar__btn">
+            {{ 'Fetch openai models'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+
+    {{ gridView.render() }}
+
+{% endblock %}

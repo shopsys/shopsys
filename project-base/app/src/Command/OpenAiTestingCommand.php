@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\DataFixtures\Demo\AgentDataFixture;
 use Exception;
 use Override;
+use Shopsys\AiToolsBundle\Component\Ai\Application\AiChatSessionFacade;
+use Shopsys\AiToolsBundle\DataFixtures\AgentDataFixture;
+use Shopsys\AiToolsBundle\Model\Chat\Agent\AgentFacade;
+use Shopsys\AiToolsBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner;
+use Shopsys\AiToolsBundle\Model\Chat\ChatDataFactory;
+use Shopsys\AiToolsBundle\Model\Chat\ChatFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\OpenAi\OpenAiClient;
-use Shopsys\FrameworkBundle\Model\Chat\Agent\AgentFacade;
-use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner;
-use Shopsys\FrameworkBundle\Model\Chat\ChatDataFactory;
-use Shopsys\FrameworkBundle\Model\Chat\ChatFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,11 +27,12 @@ class OpenAiTestingCommand extends Command
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\OpenAi\OpenAiClient $openAiClient
-     * @param \Shopsys\FrameworkBundle\Model\Chat\ChatFacade $chatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Chat\ChatDataFactory $chatDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\AgentFacade $agentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner $functionCallingFacade
+     * @param \Shopsys\AiToolsBundle\Model\Chat\ChatFacade $chatFacade
+     * @param \Shopsys\AiToolsBundle\Model\Chat\ChatDataFactory $chatDataFactory
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\AgentFacade $agentFacade
+     * @param \Shopsys\AiToolsBundle\Model\Chat\Agent\FunctionCalling\DynamicFunctionRunner $functionCallingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\AiToolsBundle\Component\Ai\Application\AiChatSessionFacade $aiChatSessionFacade
      */
     public function __construct(
         protected readonly OpenAIClient $openAiClient,
@@ -39,6 +41,7 @@ class OpenAiTestingCommand extends Command
         protected readonly AgentFacade $agentFacade,
         protected readonly DynamicFunctionRunner $functionCallingFacade,
         protected readonly Domain $domain,
+        protected readonly AiChatSessionFacade $aiChatSessionFacade,
     ) {
         parent::__construct();
     }
@@ -74,12 +77,12 @@ class OpenAiTestingCommand extends Command
         } catch (Exception $exception) {
             $chatData = $this->chatDataFactory->create();
             $chatData->identifier = $userIdentifier;
-            $chatData->agent = $this->agentFacade->findAgentByInternalKey(AgentDataFixture::AGENT_ASTROLOG_KEY);
+            $chatData->agent = $this->agentFacade->findAgentByInternalKey(AgentDataFixture::AGENT_ARTICLE_GENERATOR_KEY);
 
             $chat = $this->chatFacade->create($chatData);
         }
 
-        $this->chatFacade->handleQuestion($chat, $question);
+        $this->aiChatSessionFacade->ask($chat, $question);
 
         $output->writeln('<fg=green>Chat: </fg=green>' . $chat->getWholeCommunication());
 

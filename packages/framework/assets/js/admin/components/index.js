@@ -1,7 +1,7 @@
 import './advert';
 import './AdministratorForm';
 import './AdvancedSearch';
-import './AiChat';
+import '../../../../../ai-tools/src/Assets/js/admin/components/AiChat';
 import './AjaxConfirm';
 import './Article';
 import './CategoryDeleteConfirm';

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use DateTimeZone;
+use Shopsys\AiToolsBundle\Model\Chat\Agent\FunctionCalling\AiFunction;
 use Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
@@ -13,7 +14,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainExce
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
-use Shopsys\FrameworkBundle\Model\Chat\Agent\FunctionCalling\AiFunction;
 use Symfony\Component\HttpFoundation\Request;
 
 class Domain implements DomainIdsProviderInterface

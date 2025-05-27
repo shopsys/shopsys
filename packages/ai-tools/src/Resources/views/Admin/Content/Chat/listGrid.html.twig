@@ -1,0 +1,14 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_question %}
+    <a href="{{ url('shopsys_aitools_admin_chat_edit', { identifier: row.ch.identifier }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No chats found. You have to create some first.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'chats'|trans %}
+    {{ parent() }}
+{% endblock %}
