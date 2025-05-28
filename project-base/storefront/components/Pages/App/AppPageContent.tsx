@@ -52,12 +52,12 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />
-            <DeferredGtmHeadScript />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
             <Component {...pageProps} />
             <DeferredSymfonyDebugToolbar />
             <DeferredUserConsent url={pageProps.domainConfig.url} />
             <Portal />
+            <DeferredGtmHeadScript />
         </div>
     );
 };
