@@ -542,7 +542,16 @@ jobs:
                 if: env.SHOULD_RUN_TESTS == 'true'
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
-                    docker compose up -d --wait
+                    for i in {1..2}; do
+                        if docker compose up -d --wait; then
+                            break
+                        else
+                            echo "Attempt $i failed, retrying..."
+                            docker compose down --remove-orphans || true
+                            sleep 5
+                            [ $i -eq 2 ] && exit 1
+                        fi
+                    done
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests for ${{ matrix.group }}
                 if: env.SHOULD_RUN_TESTS == 'true'
