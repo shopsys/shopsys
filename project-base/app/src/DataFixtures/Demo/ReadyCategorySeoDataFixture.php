@@ -59,10 +59,10 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             'flagId' => 3,
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRIORITY,
             'parameterValueIdsByParameterIds' => [
-                $this->getReference(ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('2 l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
-                $this->getReference(ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('400 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
-                $this->getReference(ParameterDataFixture::PARAM_PRESSURE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('15 bar', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
-                $this->getReference(ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('600 ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('2 l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('400 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_PRESSURE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('15 bar', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('600 ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
             ],
         ];
 
@@ -87,7 +87,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $selectedCategorySeoMixCombinationArray['flagId'] = 2;
         $selectedCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
@@ -100,8 +100,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
-            $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
@@ -133,9 +133,9 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $selectedCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $selectedCategorySeoMixCombinationArray['flagId'] = null;
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
-            $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
-            $this->getReference(ParameterDataFixture::PARAM_RESOLUTION, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_RESOLUTION, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
@@ -151,7 +151,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
 
         $selectedCategorySeoMixCombinationArray['flagId'] = null;
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
@@ -166,7 +166,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
@@ -220,8 +220,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $technologyParameter = $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class);
         $hdmiParameter = $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class);
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
-            $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
+            $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale),
+            $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale),
         ];
         $this->createReadyCategorySeoMix(
             $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray),
@@ -244,7 +244,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             'flagId' => $newFlag->getId(),
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_DESC,
             'parameterValueIdsByParameterIds' => [
-                $usbParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
+                $usbParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale),
             ],
         ];
         $this->createReadyCategorySeoMix(
@@ -320,12 +320,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
 
     /**
      * @param string $parameterValueTranslation
+     * @param string|null $numericValue
      * @param string $locale
      * @return int
      */
-    private function getParameterValueId(string $parameterValueTranslation, string $locale): int
+    private function getParameterValueId(string $parameterValueTranslation, ?string $numericValue, string $locale): int
     {
-        return $this->parameterFacade->getParameterValueByValueTextAndLocale($parameterValueTranslation, $locale)->getId();
+        return $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale($parameterValueTranslation, $numericValue, $locale)->getId();
     }
 
     /**

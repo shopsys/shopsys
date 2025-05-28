@@ -70,10 +70,11 @@ class ProductParameterValueDataFactory
 
         foreach ($productParameterValuesLocalizedData->valueTextsByLocale as $locale => $valueText) {
             if ($valueText !== null) {
+                $isSliderWithNumericValue = $productParameterValuesLocalizedData->parameter->isSlider() && is_numeric($valueText);
                 $productParameterValueData = $this->create();
                 $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
 
-                $parameterValue = $this->parameterFacade->findParameterValueByValueTextAndLocale($valueText, $locale);
+                $parameterValue = $this->parameterFacade->findParameterValueByValueTextNumericValueAndLocale($valueText, $isSliderWithNumericValue ? $valueText : null, $locale);
 
                 if ($parameterValue === null) {
                     $parameterValueData = $this->parameterValueDataFactory->create();
@@ -82,7 +83,7 @@ class ProductParameterValueDataFactory
                 }
                 $parameterValueData->text = $valueText;
 
-                if ($productParameterValuesLocalizedData->parameter->isSlider()) {
+                if ($isSliderWithNumericValue) {
                     $parameterValueData->numericValue = $valueText;
                 }
 

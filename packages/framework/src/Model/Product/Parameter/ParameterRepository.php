@@ -196,14 +196,33 @@ class ParameterRepository
     }
 
     /**
+     * @param string $valueText
+     * @param string|null $numericValue
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
+     */
+    public function findParameterValueByValueTextNumericValueAndLocale(
+        string $valueText,
+        ?string $numericValue,
+        string $locale,
+    ): ?ParameterValue {
+        return $this->getParameterValueRepository()->findOneBy([
+            'text' => $valueText,
+            'numericValue' => $numericValue,
+            'locale' => $locale,
+        ]);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
     public function findOrCreateParameterValueByParameterValueData(
         ParameterValueData $parameterValueData,
     ): ParameterValue {
-        $parameterValue = $this->findParameterValueByValueTextAndLocale(
+        $parameterValue = $this->findParameterValueByValueTextNumericValueAndLocale(
             $parameterValueData->text,
+            $parameterValueData->numericValue,
             $parameterValueData->locale,
         );
 
@@ -225,31 +244,22 @@ class ParameterRepository
 
     /**
      * @param string $valueText
+     * @param string|null $numericValue
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function getParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
-    {
-        $parameterValue = $this->findParameterValueByValueTextAndLocale($valueText, $locale);
+    public function getParameterValueByValueTextNumericValueAndLocale(
+        string $valueText,
+        ?string $numericValue,
+        string $locale,
+    ): ParameterValue {
+        $parameterValue = $this->findParameterValueByValueTextNumericValueAndLocale($valueText, $numericValue, $locale);
 
         if ($parameterValue === null) {
             throw new ParameterValueNotFoundException();
         }
 
         return $parameterValue;
-    }
-
-    /**
-     * @param string $valueText
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
-     */
-    public function findParameterValueByValueTextAndLocale(string $valueText, string $locale): ?ParameterValue
-    {
-        return $this->getParameterValueRepository()->findOneBy([
-            'text' => $valueText,
-            'locale' => $locale,
-        ]);
     }
 
     /**
@@ -737,6 +747,7 @@ class ParameterRepository
             ->from(ParameterValue::class, 'pv')
             ->where('pv.text = :text')
             ->andWhere('pv.locale = :locale')
+            ->andWhere('pv.numericValue IS NULL')
             ->setParameters([
                 'text' => $text,
                 'locale' => $locale,

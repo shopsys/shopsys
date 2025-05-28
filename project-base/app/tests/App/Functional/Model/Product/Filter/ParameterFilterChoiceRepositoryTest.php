@@ -47,7 +47,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
         $parameterParameterValuePair = [
             $this->getReference(ParameterDataFixture::PARAM_COVER, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')],
             $this->getReference(ParameterDataFixture::PARAM_PAGES_COUNT, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain('48'), $this->getParameterValueIdForFirstDomain('50'), $this->getParameterValueIdForFirstDomain('55')],
-            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('150'), $this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain('50')],
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('150', true), $this->getParameterValueIdForFirstDomain('250', true), $this->getParameterValueIdForFirstDomain('50', true)],
         ];
 
         foreach ($parameterParameterValuePair as $parameterId => $parameterValues) {
