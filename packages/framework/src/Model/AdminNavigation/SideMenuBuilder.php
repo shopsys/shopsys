@@ -104,6 +104,7 @@ class SideMenuBuilder
     public const string NEW_ADMINISTRATOR = 'new';
     public const string EDIT_ADMINISTRATOR = 'edit';
     public const string ENABLE_TWO_FACTOR_AUTHENTICATION = 'enable-two-factor-authentication';
+    public const string DISABLE_TWO_FACTOR_AUTHENTICATION = 'disable-two-factor-authentication';
     public const string LIST_ADMINISTRATOR_ROLE_GROUP = 'role_groups';
     public const string NEW_ADMINISTRATOR_ROLE_GROUP = 'new';
     public const string EDIT_ADMINISTRATOR_ROLE_GROUP = 'edit';
@@ -668,6 +669,10 @@ class SideMenuBuilder
         $administratorViewMenu->addChild(
             static::ENABLE_TWO_FACTOR_AUTHENTICATION,
             ['route' => 'admin_administrator_enable-two-factor-authentication', 'label' => t('Enable two-factor authentication'), 'display' => false],
+        );
+        $administratorViewMenu->addChild(
+            static::DISABLE_TWO_FACTOR_AUTHENTICATION,
+            ['route' => 'admin_administrator_disable-two-factor-authentication', 'label' => t('Disable two factor authentication'), 'display' => false],
         );
 
         $administratorRoleGroupMenu = $menu->addChild(static::LIST_ADMINISTRATOR_ROLE_GROUP, ['route' => 'admin_administratorrolegroup_list', 'label' => t('Role Groups')]);
