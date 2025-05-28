@@ -37,6 +37,7 @@ const ImageComponent: FC<ImageProps> = ({ src, hash, ...props }) => {
             loader={loader}
             overrideSrc={finalImageUrl as string}
             src={finalImageUrl}
+            unoptimized={shouldLoadFallbackImage}
             onError={onError}
             {...props}
         />
