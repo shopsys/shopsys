@@ -2,6 +2,7 @@ import { OrderItem } from './OrderItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -44,12 +45,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
                 />
             ))}
 
-            <Pagination
-                hasNextPage={hasNextPage}
-                pageSize={DEFAULT_ORDERS_SIZE}
-                paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={totalCount || 0}
-            />
+            <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />
+            </PaginationProvider>
         </div>
     );
 };

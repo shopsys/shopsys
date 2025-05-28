@@ -1,18 +1,16 @@
-import { getOffsetPageAndLoadMore } from './getOffsetPageAndLoadMore';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { getOffsetPage } from './getOffsetPage';
 import { Redirect } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
-import { PAGE_QUERY_PARAMETER_NAME, LOAD_MORE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 
 export const getRedirectWithOffsetPage = (
     currentPage: number,
     currentLoadMore: number,
     currentSlug: string,
     currentQuery: ParsedUrlQuery,
-    pageSize = DEFAULT_PAGE_SIZE,
 ): { redirect: Redirect } | undefined => {
-    const updatedQueries = getOffsetPageAndLoadMore(currentPage, currentLoadMore, pageSize);
+    const updatedQueries = getOffsetPage(currentPage, currentLoadMore);
 
     if (!updatedQueries) {
         return undefined;

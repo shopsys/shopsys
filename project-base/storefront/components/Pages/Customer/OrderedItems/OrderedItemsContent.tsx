@@ -2,6 +2,7 @@ import { OrderedItem } from './OrderedItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -36,7 +37,9 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ isFetching, 
                     <OrderedItem key={item.uuid} orderedItem={item} />
                 ))}
             </div>
-            <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
+            <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                <Pagination totalCount={totalCount || 0} />
+            </PaginationProvider>
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
@@ -47,7 +48,9 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                         />
                     </div>
 
-                    <FlagDetailProductsWrapper flag={flag} paginationScrollTargetRef={paginationScrollTargetRef} />
+                    <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                        <FlagDetailProductsWrapper flag={flag} />
+                    </PaginationProvider>
                 </div>
             </FilteredProductsWrapper>
 

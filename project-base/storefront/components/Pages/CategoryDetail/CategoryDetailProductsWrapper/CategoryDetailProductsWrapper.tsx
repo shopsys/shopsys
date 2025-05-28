@@ -5,7 +5,7 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
-import { RefObject, useMemo } from 'react';
+import { useMemo } from 'react';
 
 export type CategoryDetailProductsWrapperProps = {
     category: TypeCategoryDetailFragment;
@@ -13,7 +13,6 @@ export type CategoryDetailProductsWrapperProps = {
     areProductsFetching: boolean;
     isLoadingMoreProducts: boolean;
     hasNextPage: boolean;
-    paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
 export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProps> = ({
@@ -22,7 +21,6 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
     areProductsFetching,
     isLoadingMoreProducts,
     hasNextPage,
-    paginationScrollTargetRef,
 }) => {
     const gtmProductListName = useMemo(
         () => getCategoryOrSeoCategoryGtmProductListName(category.originalCategorySlug),
@@ -40,12 +38,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
                 isLoadingMoreProducts={isLoadingMoreProducts}
                 products={products}
             />
-            <Pagination
-                isWithLoadMore
-                hasNextPage={hasNextPage}
-                paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={category.products.totalCount}
-            />
+            <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={category.products.totalCount} />
         </>
     );
 };

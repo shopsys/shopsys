@@ -6,15 +6,9 @@ import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-type DeferredCategoryDetailProductsWrapperProps = Pick<
-    CategoryDetailProductsWrapperProps,
-    'category' | 'paginationScrollTargetRef'
->;
+type DeferredCategoryDetailProductsWrapperProps = Pick<CategoryDetailProductsWrapperProps, 'category'>;
 
-export const DeferredCategoryDetailProductsWrapper: FC<DeferredCategoryDetailProductsWrapperProps> = ({
-    category,
-    paginationScrollTargetRef,
-}) => {
+export const DeferredCategoryDetailProductsWrapper: FC<DeferredCategoryDetailProductsWrapperProps> = ({ category }) => {
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
     const { products, areProductsFetching, hasNextPage, isLoadingMoreProducts } = useProductsData(
@@ -34,7 +28,6 @@ export const DeferredCategoryDetailProductsWrapper: FC<DeferredCategoryDetailPro
             category={category}
             hasNextPage={hasNextPage}
             isLoadingMoreProducts={isLoadingMoreProducts}
-            paginationScrollTargetRef={paginationScrollTargetRef}
             products={mappedProducts}
         />
     ) : (

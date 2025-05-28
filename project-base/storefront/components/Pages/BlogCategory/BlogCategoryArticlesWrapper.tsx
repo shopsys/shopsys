@@ -1,6 +1,7 @@
 import { BlogArticlesList } from './BlogArticlesList';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
@@ -48,14 +49,15 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
                 articlesContent
             )}
 
-            <Pagination
-                isWithLoadMore
-                hasNextPage={hasNextPage}
-                pageSize={DEFAULT_BLOG_PAGE_SIZE}
-                paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={blogCategoryTotalCount}
-                type="blog"
-            />
+            <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                <Pagination
+                    isWithLoadMore
+                    hasNextPage={hasNextPage}
+                    pageSize={DEFAULT_BLOG_PAGE_SIZE}
+                    totalCount={blogCategoryTotalCount}
+                    type="blog"
+                />
+            </PaginationProvider>
         </div>
     );
 };

@@ -116,7 +116,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 })
                 .toPromise();
 
-            const [categoryDetailResponse] = await Promise.all([
+            const [categoryDetailResponse, categoryProductsResponse] = await Promise.all([
                 categoryDetailResponsePromise,
                 categoryProductsResponsePromise,
             ]);
@@ -124,7 +124,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
 
             if (getIsRedirectedFromSsr(context.req.headers)) {
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                const serverSideCategoryDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     categoryDetailResponse.error,
                     categoryDetailResponse.data?.category,
                     context.res,
@@ -132,8 +132,20 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     urlSlug,
                 );
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
+                if (serverSideCategoryDetailErrorResponse) {
+                    return serverSideCategoryDetailErrorResponse;
+                }
+
+                const serverSideCategoryProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                    categoryProductsResponse.error,
+                    categoryProductsResponse.data?.products,
+                    context.res,
+                    domainConfig.url,
+                    urlSlug,
+                );
+
+                if (serverSideCategoryProductsErrorResponse) {
+                    return serverSideCategoryProductsErrorResponse;
                 }
             }
 

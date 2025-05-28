@@ -6,6 +6,7 @@ import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/Filte
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -54,12 +55,13 @@ export const SearchProducts: FC = () => {
                         />
                     </div>
 
-                    <SearchProductsContent
-                        areSearchProductsFetching={areSearchProductsFetching}
-                        isLoadingMoreSearchProducts={isLoadingMoreSearchProducts}
-                        paginationScrollTargetRef={paginationScrollTargetRef}
-                        searchProductsData={searchProductsData}
-                    />
+                    <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
+                        <SearchProductsContent
+                            areSearchProductsFetching={areSearchProductsFetching}
+                            isLoadingMoreSearchProducts={isLoadingMoreSearchProducts}
+                            searchProductsData={searchProductsData}
+                        />
+                    </PaginationProvider>
                 </div>
             </FilteredProductsWrapper>
         </div>

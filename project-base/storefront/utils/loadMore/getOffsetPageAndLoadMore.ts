@@ -1,14 +1,13 @@
 import { calculatePageSize } from './calculatePageSize';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
-
-const PRODUCT_LIST_LIMIT = 310;
+import { DEFAULT_PAGE_SIZE, PRODUCT_LIST_LIMIT } from 'config/constants';
 
 export const getOffsetPageAndLoadMore = (
     currentPage: number,
     currentLoadMore: number,
     pageSize = DEFAULT_PAGE_SIZE,
+    productListLimit = PRODUCT_LIST_LIMIT,
 ) => {
-    const loadedProductsDifference = calculatePageSize(currentLoadMore, pageSize) - PRODUCT_LIST_LIMIT;
+    const loadedProductsDifference = calculatePageSize(currentLoadMore, pageSize) - productListLimit;
 
     if (loadedProductsDifference <= 0) {
         return undefined;
