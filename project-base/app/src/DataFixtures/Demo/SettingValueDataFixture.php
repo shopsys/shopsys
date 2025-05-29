@@ -131,11 +131,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId,
             );
             $this->setting->setForDomain(
-                SeoSettingFacade::SEO_ROBOTS_TXT_CONTENT,
-                "Crawl-delay: 3\nRequest-rate: 300/1m",
-                $domainId,
-            );
-            $this->setting->setForDomain(
                 Setting::TRANSFER_DAYS_BETWEEN_STOCKS,
                 7,
                 $domainId,
