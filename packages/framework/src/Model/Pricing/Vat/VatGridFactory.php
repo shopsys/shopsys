@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -28,9 +29,10 @@ class VatGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -47,13 +49,13 @@ class VatGridFactory implements GridFactoryInterface
             return $row;
         });
 
-        $grid = $this->gridFactory->create('vatList', $dataSource);
+        $grid = $this->gridFactory->create('vatList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'v.name', t('Name'), true);
         $grid->addColumn('percent', 'v.percent', t('Percent'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_vat_deleteconfirm', ['id' => 'v.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Vat/listGrid.html.twig');
 

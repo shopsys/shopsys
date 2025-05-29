@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -26,13 +27,14 @@ class ParameterGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(?string $editRole): Grid
     {
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getCurrentLocaleForTranslatableEntities();
-        $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource());
+        $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource(), $editRole);
 
         if (count($locales) > 1) {
             $grid->addColumn(
@@ -70,7 +72,7 @@ class ParameterGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
-            ->setConfirmMessage(t(
+            ?->setConfirmMessage(t(
                 'Do you really want to remove this parameter?'
                 . ' Deleting the parameter will remove this parameter from the products and parameters'
                 . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',

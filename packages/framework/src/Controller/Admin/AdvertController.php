@@ -123,7 +123,7 @@ class AdvertController extends AdminBaseController
             },
         );
 
-        $grid = $this->gridFactory->create('advertList', $dataSource);
+        $grid = $this->gridFactory->create('advertList', $dataSource, Roles::ROLE_ADVERT_FULL);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 
@@ -135,7 +135,7 @@ class AdvertController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_advert_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_advert_delete', ['id' => 'a.id'])
-            ->setConfirmMessage(t('Do you really want to remove this advert?'));
+            ?->setConfirmMessage(t('Do you really want to remove this advert?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Advert/listGrid.html.twig', [
             'advertPositionNames' => $this->advertPositionRegistry->getAllLabelsIndexedByNames(),

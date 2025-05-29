@@ -41,7 +41,7 @@ class ParameterController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_PARAMETER_VIEW])]
     public function listAction(): Response
     {
-        $grid = $this->parameterGridFactory->create();
+        $grid = $this->parameterGridFactory->create(Roles::ROLE_PARAMETER_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/Parameter/list.html.twig', [
             'gridView' => $grid->createView(),

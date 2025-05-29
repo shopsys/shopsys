@@ -166,7 +166,7 @@ class ParameterGroupController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
 
-        $grid = $this->gridFactory->create('parameterGroupsList', $dataSource);
+        $grid = $this->gridFactory->create('parameterGroupsList', $dataSource, Roles::ROLE_PARAMETER_GROUP_FULL);
 
         $grid->addColumn('name', 'pgt.name', t('Name'));
         $grid->setDefaultOrder('pg.position');
@@ -174,7 +174,7 @@ class ParameterGroupController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_parametergroup_edit', ['id' => 'pg.id']);
         $grid->addDeleteActionColumn('admin_parametergroup_delete', ['id' => 'pg.id'])
-            ->setConfirmMessage(t('Do you really want to remove this parameter groups? By deleting this parameter group you will '
+            ?->setConfirmMessage(t('Do you really want to remove this parameter groups? By deleting this parameter group you will '
                 . 'unset all groups by associated parameters. This step is irreversible!'));
 
         $grid->enableDragAndDrop(ParameterGroup::class);

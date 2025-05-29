@@ -45,7 +45,7 @@ class NotificationBarController extends AdminBaseController
         $queryBuilder = $this->notificationBarFacade->getAllByDomainIdQueryBuilderForGrid($this->adminDomainTabsFacade->getSelectedDomainId());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'nb.id');
 
-        $grid = $this->gridFactory->create('NotificationBarList', $dataSource);
+        $grid = $this->gridFactory->create('NotificationBarList', $dataSource, Roles::ROLE_NOTIFICATION_BAR_FULL);
 
         $grid->addColumn('visible', 'visibility', t('Visibility'), true)->setClassAttribute('table-col table-col-10');
         $grid->addColumn('text', 'nb.text', t('Text'));
@@ -53,7 +53,7 @@ class NotificationBarController extends AdminBaseController
         $grid->addColumn('validityTo', 'nb.validityTo', t('Valid to'), true);
         $grid->addEditActionColumn('admin_notificationbar_edit', ['id' => 'nb.id']);
         $grid->addDeleteActionColumn('admin_notificationbar_delete', ['id' => 'nb.id'])
-            ->setConfirmMessage(t('Do you really want to remove this notification bar?'));
+            ?->setConfirmMessage(t('Do you really want to remove this notification bar?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/NotificationBar/listGrid.html.twig');
 

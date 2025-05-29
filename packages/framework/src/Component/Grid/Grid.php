@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException;
+use Shopsys\FrameworkBundle\Component\Grid\Exception\GridEditRoleNotSetException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -86,19 +88,24 @@ class Grid
 
     /**
      * @param string $id
+     * @param string|null $editRole
      * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      * @param \Twig\Environment $twig
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      */
     public function __construct(
         protected readonly string $id,
+        protected readonly ?string $editRole,
         protected readonly DataSourceInterface $dataSource,
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
         protected readonly Environment $twig,
+        protected readonly Security $security,
     ) {
         if ($id === '') {
             $message = 'Grid id cannot be empty.';
@@ -192,20 +199,24 @@ class Grid
      * @param string $route
      * @param array $bindingRouteParams
      * @param array $additionalRouteParams
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
+     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn|null
      */
     public function addDeleteActionColumn(
         string $route,
         array $bindingRouteParams = [],
         array $additionalRouteParams = [],
-    ): ActionColumn {
-        return $this->addActionColumn(
-            ActionColumn::TYPE_DELETE,
-            t('Delete'),
-            $route,
-            $bindingRouteParams,
-            $additionalRouteParams,
-        );
+    ): ?ActionColumn {
+        if ($this->canEdit()) {
+            return $this->addActionColumn(
+                ActionColumn::TYPE_DELETE,
+                t('Delete'),
+                $route,
+                $bindingRouteParams,
+                $additionalRouteParams,
+            );
+        }
+
+        return null;
     }
 
     /**
@@ -224,7 +235,9 @@ class Grid
      */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService): void
     {
-        $this->inlineEditService = $inlineEditService;
+        if ($this->canEdit()) {
+            $this->inlineEditService = $inlineEditService;
+        }
     }
 
     /**
@@ -753,5 +766,17 @@ class Grid
         }
 
         $this->columnsById = [...$orderedColumns, ...$this->columnsById];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canEdit(): bool
+    {
+        if ($this->editRole === null) {
+            throw new GridEditRoleNotSetException();
+        }
+
+        return $this->security->isGranted($this->editRole);
     }
 }

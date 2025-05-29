@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class PriceListGridFactory
 {
@@ -38,7 +39,7 @@ class PriceListGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pl.id');
 
-        $grid = $this->gridFactory->create('priceList', $dataSource);
+        $grid = $this->gridFactory->create('priceList', $dataSource, Roles::ROLE_PRICE_LIST_FULL);
 
         $grid->enablePaging();
         $grid->setDefaultOrder('lastUpdate', DataSourceInterface::ORDER_DESC);
@@ -57,7 +58,7 @@ class PriceListGridFactory
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_pricelist_edit', ['id' => 'pl.id']);
         $grid->addDeleteActionColumn('admin_pricelist_delete', ['id' => 'pl.id'])
-            ->setConfirmMessage(
+            ?->setConfirmMessage(
                 t('Do you really want to remove this product list? Special prices for products in this list will be removed.'),
             );
         $grid->addActionColumn('download', 'Export CSV', 'admin_pricelist_export', ['id' => 'pl.id']);

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -28,9 +29,10 @@ class OrderStatusGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -40,14 +42,14 @@ class OrderStatusGridFactory implements GridFactoryInterface
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'os.id');
 
-        $grid = $this->gridFactory->create('orderStatusList', $dataSource);
+        $grid = $this->gridFactory->create('orderStatusList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'ost.name', t('Name'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_orderstatus_deleteconfirm', ['id' => 'os.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/OrderStatus/listGrid.html.twig', [
             'TYPE_NEW' => OrderStatusTypeEnum::TYPE_NEW,

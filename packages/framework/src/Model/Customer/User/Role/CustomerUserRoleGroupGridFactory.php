@@ -26,15 +26,16 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->getGridQueryBuilder();
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cug.id');
 
-        $grid = $this->gridFactory->create('customerUserRoleGroupsList', $dataSource);
+        $grid = $this->gridFactory->create('customerUserRoleGroupsList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'cugt.name', t('Role group name'), true);
@@ -42,7 +43,7 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_superadmin_customer_user_role_group_edit', ['id' => 'cug.id']);
         $grid->addDeleteActionColumn('admin_superadmin_customer_user_role_group_delete', ['id' => 'cug.id'])
-            ->setConfirmMessage(t('Do you really want to remove this customer user role group?'));
+            ?->setConfirmMessage(t('Do you really want to remove this customer user role group?'));
 
         return $grid;
     }

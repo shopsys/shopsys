@@ -57,14 +57,14 @@ class SliderController extends AdminBaseController
             ->addOrderBy('s.id');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('sliderItemList', $dataSource);
+        $grid = $this->gridFactory->create('sliderItemList', $dataSource, Roles::ROLE_SLIDER_ITEM_FULL);
         $grid->enableDragAndDrop(SliderItem::class);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->addColumn('link', 's.link', t('Link'));
         $grid->addEditActionColumn('admin_slider_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_slider_delete', ['id' => 's.id'])
-            ->setConfirmMessage(t('Do you really want to remove this page?'));
+            ?->setConfirmMessage(t('Do you really want to remove this page?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Slider/listGrid.html.twig');
 

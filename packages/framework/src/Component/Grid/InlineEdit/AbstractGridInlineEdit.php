@@ -63,7 +63,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      */
     public function getGrid(): Grid
     {
-        $grid = $this->gridFactory->create();
+        $grid = $this->gridFactory->create($this->getEditRole());
 
         if ($this->canEdit()) {
             $grid->setInlineEditService($this);

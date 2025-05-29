@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -26,9 +27,10 @@ class PricingGroupGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -38,12 +40,12 @@ class PricingGroupGridFactory implements GridFactoryInterface
             ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
 
-        $grid = $this->gridFactory->create('pricingGroupList', $dataSource);
+        $grid = $this->gridFactory->create('pricingGroupList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'pg.name', t('Name'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_pricinggroup_deleteconfirm', ['id' => 'pg.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Pricing/Groups/listGrid.html.twig');
 

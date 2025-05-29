@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -26,9 +27,10 @@ class CurrencyGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -36,7 +38,7 @@ class CurrencyGridFactory implements GridFactoryInterface
             ->from(Currency::class, 'c');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
 
-        $grid = $this->gridFactory->create('currencyList', $dataSource);
+        $grid = $this->gridFactory->create('currencyList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'c.name', t('Name'), true);
         $grid->addColumn('code', 'c.code', t('Code'), true);
@@ -46,7 +48,7 @@ class CurrencyGridFactory implements GridFactoryInterface
         $grid->addColumn('roundingPlacesPriceWithoutVat', 'c.roundingPlacesPriceWithoutVat', t('Rounding places of price without VAT and VAT amount'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_currency_deleteconfirm', ['id' => 'c.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->setTheme(
             '@ShopsysFramework/Admin/Content/Currency/listGrid.html.twig',

@@ -244,7 +244,7 @@ class ArticleController extends AdminBaseController
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
         $gridId = $articlePlacement;
-        $grid = $this->gridFactory->create($gridId, $dataSource);
+        $grid = $this->gridFactory->create($gridId, $dataSource, Roles::ROLE_ARTICLE_FULL);
         $grid->setDefaultOrder('position');
 
         $grid->addColumn('name', 'a.name', t('Name'));
@@ -252,7 +252,7 @@ class ArticleController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_article_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_article_deleteconfirm', ['id' => 'a.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->enableMultipleDragAndDrop();
         $grid->setTheme('@ShopsysFramework/Admin/Content/Article/listGrid.html.twig');

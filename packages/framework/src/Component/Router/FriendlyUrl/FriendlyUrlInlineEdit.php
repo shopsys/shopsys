@@ -64,7 +64,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     public function getGrid(): Grid
     {
         $this->gridFactory->setQuickSearchFormData($this->getGridQuickSearchFormData());
-        $grid = $this->gridFactory->create();
+        $grid = $this->gridFactory->create($this->getEditRole());
 
         $grid->setInlineEditService($this);
 
