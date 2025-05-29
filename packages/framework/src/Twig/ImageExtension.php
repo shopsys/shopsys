@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -73,9 +74,10 @@ class ImageExtension extends AbstractExtension
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param array $attributes
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    protected function getImageUrl(object $imageOrEntity, array $attributes): string
+    protected function getImageUrl(object $imageOrEntity, array $attributes, DomainConfig $domainConfig): string
     {
         $width = null;
         $height = null;
@@ -90,56 +92,65 @@ class ImageExtension extends AbstractExtension
 
         try {
             return $this->imageUrlWithSizeHelper->limitSizeInImageUrl($this->imageFacade->getImageUrl(
-                $this->domain->getCurrentDomainConfig(),
+                $domainConfig,
                 $imageOrEntity,
                 $attributes['type'],
             ), $width, $height);
         } catch (ImageNotFoundException $e) {
-            return $this->getEmptyImageUrl();
+            return $this->getEmptyImageUrl($domainConfig);
         }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param array $attributes
+     * @param int|null $domainId
      * @return string
      */
-    public function getImageHtml(object $imageOrEntity, array $attributes = []): string
+    public function getImageHtml(object $imageOrEntity, array $attributes = [], ?int $domainId = null): string
     {
         $this->preventDefault($attributes);
+
+        if ($domainId !== null) {
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+        } else {
+            $domainConfig = $this->domain->getCurrentDomainConfig();
+        }
 
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
-            $attributes['src'] = $this->getImageUrl($image, $attributes);
-            $attributes['alt'] = $image->getName();
+            $attributes['src'] = $this->getImageUrl($image, $attributes, $domainConfig);
+            $attributes['alt'] = $image->getName($domainConfig->getLocale());
 
             return $this->getImageHtmlByEntityName($attributes, $entityName);
         } catch (ImageNotFoundException $e) {
-            return $this->getNoimageHtml($attributes);
+            return $this->getNoimageHtml($domainConfig, $attributes);
         }
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param array $attributes
      * @return string
      */
-    protected function getNoimageHtml(array $attributes = []): string
+    protected function getNoimageHtml(DomainConfig $domainConfig, array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
         $entityName = 'noimage';
-        $attributes['src'] = $this->getEmptyImageUrl();
+        $attributes['src'] = $this->getEmptyImageUrl($domainConfig);
 
         return $this->getImageHtmlByEntityName($attributes, $entityName);
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    protected function getEmptyImageUrl(): string
+    protected function getEmptyImageUrl(DomainConfig $domainConfig): string
     {
-        return $this->domain->getUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
+        return $domainConfig->getUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
     }
 
     /**
