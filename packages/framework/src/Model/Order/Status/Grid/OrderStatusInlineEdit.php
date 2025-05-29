@@ -11,12 +11,16 @@ use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataE
 use Shopsys\FrameworkBundle\Form\Admin\Order\Status\OrderStatusFormType;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class OrderStatusInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory $orderStatusGridFactory
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory $orderStatusDataFactory
@@ -24,20 +28,21 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         OrderStatusGridFactory $orderStatusGridFactory,
+        Security $security,
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly OrderStatusDataFactory $orderStatusDataFactory,
         protected readonly Domain $domain,
     ) {
-        parent::__construct($orderStatusGridFactory);
+        parent::__construct($orderStatusGridFactory, $security);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     * @return int
+     * @return int|string
      */
     #[Override]
-    protected function createEntityAndGetId($orderStatusData)
+    protected function createEntityAndGetId(mixed $orderStatusData): int|string
     {
         if (!$this->domain->hasAdminAllDomainsEnabled()) {
             throw new InvalidFormDataException([
@@ -51,29 +56,38 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int $orderStatusId
+     * @param int|string $orderStatusId
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
     #[Override]
-    protected function editEntity($orderStatusId, $orderStatusData)
+    protected function editEntity(int|string $orderStatusId, mixed $orderStatusData): void
     {
         $this->orderStatusFacade->edit($orderStatusId, $orderStatusData);
     }
 
     /**
-     * @param int|null $orderStatusId
+     * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
     #[Override]
-    public function getForm($orderStatusId)
+    public function getForm(int|string|null $rowId): FormInterface
     {
-        if ($orderStatusId !== null) {
-            $orderStatus = $this->orderStatusFacade->getById((int)$orderStatusId);
+        if ($rowId !== null) {
+            $orderStatus = $this->orderStatusFacade->getById((int)$rowId);
             $orderStatusData = $this->orderStatusDataFactory->createFromOrderStatus($orderStatus);
         } else {
             $orderStatusData = $this->orderStatusDataFactory->create();
         }
 
         return $this->formFactory->create(OrderStatusFormType::class, $orderStatusData);
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    protected function getEditRole(): string
+    {
+        return Roles::ROLE_ORDER_STATUS_FULL;
     }
 }
