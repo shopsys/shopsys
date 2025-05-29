@@ -51,14 +51,14 @@ In `Debian` application run these commands:
 
 - `sudo apt update`
 - `sudo apt install -y --no-install-recommends wget`
-- `wget --no-check-certificate https://raw.githubusercontent.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh`
+- `wget --no-check-certificate https://raw.githubusercontent.com/shopsys/shopsys/HEAD/project-base/scripts/install-docker-wsl-debian.sh`
 - `sudo bash install-docker-wsl-debian.sh`
 - You can delete the downloaded file at the end of installation using `rm install-docker-wsl-debian.sh` command.
 - To ensure everything is working alright, restart `Docker Desktop` and `Debian` applications.
 
 !!! note
 
-    If you prefer to know more about what is happening during installation, open [install-docker-wsl-debian.sh](https://github.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh) script and run all commands manually.
+    If you prefer to know more about what is happening during installation, open [install-docker-wsl-debian.sh](https://github.com/shopsys/shopsys/HEAD/project-base/scripts/install-docker-wsl-debian.sh) script and run all commands manually.
 
 ## Installation of Shopsys Platform
 
@@ -113,11 +113,11 @@ After the script is finished with installing the application, you can skip all t
 
 #### Option 2
 
-If you prefer to know more about what is happening during installation, continue with the steps [#2.1 - #2.3](#21-create-docker-composeyml-and-docker-syncyml-file).
+If you prefer to know more about what is happening during installation, continue with the steps [#2.1 - #2.3](#21-create-docker-composeyml).
 
-#### 2.1 Create docker-compose.yml and docker-sync.yml file
+#### 2.1 Create docker-compose.yml
 
-Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose.yml.dist`]({{github.link}}/project-base/docker/conf/docker-compose.yml.dist).
 
 ```sh
 cp docker/conf/docker-compose.yml.dist docker-compose.yml
@@ -139,7 +139,7 @@ docker compose up -d
 
 !!! note
 
-    During installation there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During installation there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.3 Setup the application
 

@@ -49,7 +49,7 @@ If you want to know more about what is happening during installation, continue w
 
 #### 2.1 Create docker-compose.yml file
 
-Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose.yml.dist`]({{github.link}}/project-base/docker/conf/docker-compose.yml.dist).
 
 ```sh
 cp docker/conf/docker-compose.yml.dist docker-compose.yml
@@ -70,7 +70,7 @@ docker compose up -d --build
 
 !!! note
 
-    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.4 Set up the application
 

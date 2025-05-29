@@ -87,7 +87,7 @@ $this->sql('ALTER TABLE products ALTER ext_id DROP DEFAULT');
 !!! hint
 
     In this step, you were using Phing target `db-migrations-generate`.<br>
-    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)_
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md).
 
 Run the migration to create the column in your database:
 
@@ -164,7 +164,7 @@ class ProductDataFactory extends BaseProductDataFactory
 }
 ```
 
-Your `ProductDataFactory` is already registered in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml)
+Your `ProductDataFactory` is already registered in [`services.yaml`]({{github.link}}/project-base/app/config/services.yaml)
 as an alias for the original class.
 
 ```yaml
@@ -218,7 +218,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     If you want to change the order for your newly created field, please look at the section [Changing order of groups and fields](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
 
-Overwrite the `setData()` method in your' Product' class.
+Overwrite the `setData()` method in your `Product` class.
 
 ```php
 namespace App\Model\Product;
@@ -266,13 +266,62 @@ class ProductDataFactory extends BaseProductDataFactory
 }
 ```
 
-## Front-end
+## GraphQL Frontend API
 
-To display your new attribute on a front-end page, you can modify the corresponding template directly
-as it is a part of your open-box, e.g., [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig).
+To add your new attribute into the frontend API, so it can be displayed on the storefront, you need to modify the API definition, which is
+already a part of your open-box project base: [`Product.types.yaml`]({{github.link}}/project-base/app/config/graphql/types/ModelType/Product/Product.types.yaml).
 
-```twig
-{{ product.extId }}
+```yaml
+Product:
+    # ...
+    config:
+        fields:
+            # ...
+            extId:
+                type: 'String'
+                description: 'External ID of the product'
+```
+
+The corresponding product data are then fetched automatically from the `Product` entity or from the elasticsearch index.
+For more information about the API, refer to [the frontend-api docs](../frontend-api/introduction-to-frontend-api.md).
+
+## Export data to elasticsearch index
+
+To export your new `extId` field to the elasticsearch index, you need to modify the [`ProductExportRepository`]({{github.link}}/project-base/app/src/Model/Product/Elasticsearch/ProductExportRepository.php) class:
+
+```diff
+protected function getExportedFieldValue(int $domainId, BaseProduct $product, string $locale, string $field): mixed
+{
+    // ...
++   'extId' => $product->getExtId(),
+    default => parent::getExportedFieldValue($domainId, $product, $locale, $field),
+}
+```
+
+For more information about the elasticsearch usage in Shopsys Platform, check the [Elasticsearch documentation section](../model/elasticsearch.md).
+
+## Storefront
+
+Now, we will display the `extId` in the storefront on the product detail page. First, we need to extend the GraphQL query to include the `extId` field.
+Edit [`ProductDetailInterfaceFragment`]({{github.link}}/project-base/storefront/graphql/requests/products/fragments/ProductDetailInterfaceFragment.graphql) file in your project:
+
+```diff
+fragment ProductDetailInterfaceFragment on Product {
+    // ...
++   extId
+}
+```
+
+Finally, you can use the `extId` within a product detail component:
+
+```tsx
+{
+    product.extId && (
+        <div>
+            {t('External ID')}: {product.extId}
+        </div>
+    );
+}
 ```
 
 ## Data fixtures
@@ -281,7 +330,7 @@ You can modify data fixtures in `src/DataFixtures/` of your project.
 
 ### Random `extId`
 
-If you want to add a unique random `extId` for products from data fixtures, you can add it in the `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you want to add a unique random `extId` for products from data fixtures, you can add it in the `createProduct` method of [`ProductDataFixture.php`]({{github.link}}/project-base/app/src/DataFixtures/Demo/ProductDataFixture.php).
 You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random numbers like this:
 
 ```diff
@@ -354,7 +403,7 @@ You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random num
 
 ### Specific `extId`
 
-If you need to add specific `extId` to products in the data fixture, you will have to update the creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you need to add specific `extId` to products in the data fixture, you will have to update the creation of products in [`ProductDataFixture::load`]({{github.link}}/project-base/app/src/DataFixtures/Demo/ProductDataFixture.php).
 
 ```diff
 

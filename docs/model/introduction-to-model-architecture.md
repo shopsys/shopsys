@@ -17,7 +17,7 @@ The domain of Shopsys Platform is e-commerce.
 
 Each domain has its logic which is the higher level rules for how objects of the domain model interact with one another.
 
-Domain model of Shopsys Platform is located in [`Shopsys\FrameworkBundle\Model`](https://github.com/shopsys/framework/tree/master/src/Model).
+Domain model of Shopsys Platform is located in [`Shopsys\FrameworkBundle\Model`](https://github.com/shopsys/framework/tree/HEAD/src/Model).
 Its concept is to separate behavior and properties of objects from its persistence.
 This separation is suitable for code reusability, easier testing and it fulfills the Single Responsibility Principle.
 

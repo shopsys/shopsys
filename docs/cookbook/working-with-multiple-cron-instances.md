@@ -15,7 +15,7 @@ You do not have to register the instance anywhere else.
 We just edited the earlier created configuration to place our `ImportProductsCronModule` to the different cron instance.
 
 ```diff
-# config/services/cron.yaml
+# app/config/cron.yaml
 
 services:
     _defaults:

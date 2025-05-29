@@ -1,5 +1,10 @@
 # Installation Using Docker on Production Server
 
+!!! warning
+
+    This article is not maintained anymore and is not up to date with the latest version of Shopsys Platform. Instead, we maintain [shopsys/deployment](https://github.com/shopsys/deployment) repository that contains the latest deployment scripts and instructions for Shopsys Platform.
+    However, the article still might be useful as an inspiration on how to set up a production server for Shopsys Platform using Docker. [Pull requests](https://github.com/shopsys/shopsys/compare) for updating this article are welcome.
+
 This guide shows you how to install and configure production server applications needed for your project based on [Shopsys Platform](https://github.com/shopsys/project-base).  
 We do not want to setup each application manually and we want to have separate runtime for each one.
 We use docker containers, built from docker images and php source code from git repository to have everything setup correctly and fast.
@@ -122,7 +127,7 @@ We need to allow access to database from docker network that will operate on 192
 echo host all all 192.168.0.1/16 md5 >> /var/lib/pgsql/12/data/pg_hba.conf
 ```
 
-We edit configuration file `/var/lib/pgsql/12/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](https://github.com/shopsys/shopsys/blob/master/project-base/docker/postgres/postgres.conf).
+We edit configuration file `/var/lib/pgsql/12/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf]({{github.link}}/project-base/app/docker/postgres/postgres.conf).
 We also allow to establish connection via localhost and 192.168.0.1 subnet by modifying one line in `postgresql.conf`.
 
 ```ini
@@ -290,7 +295,7 @@ With `t` parameter we set the name of built image.
 
 !!! note
 
-    During the build of `production target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the build of `production target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 If we are building the image on different server than production server, we can push built image into docker registry of production server via ssh.
 We use `-oStrictHostKeyChecking=no` argument to have ssh connection without the prompt that asks about adding target server record into `known_hosts` ssh configuration.

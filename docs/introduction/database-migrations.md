@@ -1,6 +1,6 @@
 # Database Migrations
 
-In Shopsys Platform we use [Doctrine migrations bundle](https://symfony.com/doc/master/bundles/DoctrineMigrationsBundle/index.html) with a few modifications.
+In Shopsys Platform we use [Doctrine migrations bundle](https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html) with a few modifications.
 Our [MigrationsBundle](https://github.com/shopsys/migrations) supports the installation of database migrations from all registered bundles and also enables controlling their order or even skipping some.
 
 ## Where to store migrations

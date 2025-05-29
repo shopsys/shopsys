@@ -29,4 +29,4 @@ We will change `dev-master` dependency to a released tag like `v7.0.0-alpha1` du
 
 !!! note
 
-    During composer installation there will be installed 3-rd party software as dependencies of Shopsys Platform with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During composer installation there will be installed 3-rd party software as dependencies of Shopsys Platform with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)

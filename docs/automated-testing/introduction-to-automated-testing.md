@@ -103,7 +103,7 @@ These tests use a separate database not to affect your application data, so you 
 
 #### Advantages:
 
-- demo data can be used for testing with [`PersistentReferenceFacade`](https://github.com/shopsys/framework/blob/master/src/Component/DataFixture/PersistentReferenceFacade.php)
+- demo data can be used for testing with [`PersistentReferenceFacade`]({{github.link}}/packages/framework/src/Component/DataFixture/PersistentReferenceFacade.php)
 
 #### Disadvantages:
 
@@ -114,20 +114,16 @@ These tests use a separate database not to affect your application data, so you 
 - higher level testing of collaboration of units
 - low-level testing of components that are hard to unit-test
 
-#### Example:
-
-See test class [`\Tests\App\Functional\Model\Cart\CartFacadeTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Functional/Model/Cart/CartFacadeTest.php). Notice usage of demo data instead of preparing own entities.
-
 #### Choose base test class
 
 We have two base classes that you can choose from
 
-##### [`\Tests\App\Test\TransactionFunctionalTestCase`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Test/TransactionFunctionalTestCase.php)
+##### [`\Tests\App\Test\TransactionFunctionalTestCase`]({{github.link}}/project-base/app/tests/App/Test/TransactionFunctionalTestCase.php)
 
 All tests are isolated from each other thanks to database transactions. This means they can be executed in any order, as each has the same starting conditions.
 `TransactionFunctionalTestCase` is always a safe choice.
 
-##### [`\Tests\App\Test\FunctionalTestCase`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Test/FunctionalTestCase.php)
+##### [`\Tests\App\Test\FunctionalTestCase`]({{github.link}}/project-base/app/tests/App/Test/FunctionalTestCase.php)
 
 Tests do not use database transactions, so they are quicker.
 Use `FunctionalTestCase` if you are sure that you won't commit anything to the database.
@@ -144,10 +140,6 @@ When you need to check your direct response from the application by accessing it
 #### Disadvantages:
 
 - tests can be slower than functional or unit tests
-
-#### Example:
-
-See test class [`\Tests\App\Functional\Controller\HomepageControllerTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Functional/Controller/HomepageControllerTest.php).
 
 ### HTTP smoke tests
 
@@ -170,7 +162,7 @@ You will no longer cause _500 Server Error_ on some random page by a seemingly u
 
 #### Example:
 
-See configuration of HTTP smoke (and [performance](#performance-tests)) tests in [`\Tests\App\Smoke\Http\RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php).
+See configuration of HTTP smoke (and [performance](#performance-tests)) tests in [`\Tests\App\Smoke\Http\RouteConfigCustomization`]({{github.link}}/project-base/app/tests/App/Smoke/Http/RouteConfigCustomization.php).
 
 !!! tip
 
@@ -189,7 +181,7 @@ More information can be found in [Running Acceptance Tests](running-acceptance-t
 - end-to-end testing
 - cover errors that occur only in the browser
 - can test JavaScript code
-- demo data can be used for testing with [`PersistentReferenceFacade`](https://github.com/shopsys/framework/blob/master/src/Component/DataFixture/PersistentReferenceFacade.php)
+- demo data can be used for testing with [`PersistentReferenceFacade`]({{github.link}}/packages/framework/src/Component/DataFixture/PersistentReferenceFacade.php)
 
 #### Disadvantages:
 
@@ -204,7 +196,7 @@ More information can be found in [Running Acceptance Tests](running-acceptance-t
 
 #### Example:
 
-See acceptance test for product filter in administration in [`\Tests\App\Acceptance\acceptance\AdminProductAdvancedSearchCest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Acceptance/acceptance/AdminProductAdvancedSearchCest.php). Notice the usage of auto-wired Page objects [`LoginPage`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Acceptance/acceptance/PageObject/Admin/LoginPage.php) and [`ProductAdvancedSearchPage`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Acceptance/acceptance/PageObject/Admin/ProductAdvancedSearchPage.php). They provide a way to reuse code that interacts with user interface.
+See acceptance test for product filter in administration in [`\Tests\App\Acceptance\acceptance\AdminProductAdvancedSearchCest`]({{github.link}}/project-base/app/tests/App/Acceptance/acceptance/AdminProductAdvancedSearchCest.php). Notice the usage of auto-wired Page objects [`LoginPage`]({{github.link}}/project-base/app/tests/App/Acceptance/acceptance/PageObject/Admin/LoginPage.php) and [`ProductAdvancedSearchPage`]({{github.link}}/project-base/app/tests/App/Acceptance/acceptance/PageObject/Admin/ProductAdvancedSearchPage.php). They provide a way to reuse code that interacts with user interface.
 
 ### Performance tests
 
@@ -230,9 +222,9 @@ It is advised to run these tests on a separate server that is not under load at 
 
 #### Example:
 
-See configuration of performance (and [HTTP smoke](#http-smoke-tests)) tests in [`\Tests\App\Smoke\Http\RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php).
+See configuration of performance (and [HTTP smoke](#http-smoke-tests)) tests in [`\Tests\App\Smoke\Http\RouteConfigCustomization`]({{github.link}}/project-base/app/tests/App/Smoke/Http/RouteConfigCustomization.php).
 
-For testing the performance of something other than controller actions, see the implementation of the feed performance test in [`\Tests\App\Performance\Feed\AllFeedsTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Performance/Feed/AllFeedsTest.php).
+For testing the performance of something other than controller actions, see the implementation of the feed performance test in [`\Tests\App\Performance\Feed\AllFeedsTest`]({{github.link}}/project-base/app/tests/App/Performance/Feed/AllFeedsTest.php).
 
 ## How many tests should you write
 
