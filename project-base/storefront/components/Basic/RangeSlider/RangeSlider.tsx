@@ -9,6 +9,7 @@ import {
     KeyboardEventHandler,
     useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -49,7 +50,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     isDisabled,
 }) => {
     const { t } = useTranslation();
-    const step = getStep(min, max);
+    const step = useMemo(() => getStep(min, max), [min, max]);
 
     const [minValueInput, setMinValueInput] = useState(min);
     const [minValueThumb, setMinValueThumb] = useState(min);
@@ -58,33 +59,33 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const [maxValueThumb, setMaxValueThumb] = useState(max);
 
     const range = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        if (minValue < min) {
-            setMinValueThumb(min);
-            setMinValueInput(min);
-        } else if (minValue > maxValue) {
-            setMinValueThumb(maxValue);
-            setMinValueInput(maxValue);
-        } else {
-            setMinValueThumb(minValue);
-            setMinValueInput(minValue);
-        }
-    }, [maxValue, minValue, min]);
+
+    const normalizeMinValue = (value: number) => Math.max(min, Math.min(value, maxValue));
+    const normalizeMaxValue = (value: number) => Math.min(max, Math.max(value, minValue));
 
     useEffect(() => {
-        if (maxValue > max) {
-            setMaxValueThumb(max);
-            setMaxValueInput(max);
-        } else if (maxValue < minValue) {
-            setMaxValueThumb(minValue);
-            setMaxValueInput(minValue);
-        } else {
-            setMaxValueThumb(maxValue);
-            setMaxValueInput(maxValue);
-        }
-    }, [maxValue, minValue, max]);
+        const value = normalizeMinValue(minValue);
+        setMinValueThumb(value);
+        setMinValueInput(value);
+    }, [minValue, normalizeMinValue]);
+
+    useEffect(() => {
+        const value = normalizeMaxValue(maxValue);
+        setMaxValueThumb(value);
+        setMaxValueInput(value);
+    }, [maxValue, normalizeMaxValue]);
 
     const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+
+    useEffect(() => {
+        const minPercent = getPercent(minValueThumb);
+        const maxPercent = getPercent(maxValueThumb);
+
+        if (range.current) {
+            range.current.style.left = `${minPercent}%`;
+            range.current.style.width = `${maxPercent - minPercent}%`;
+        }
+    }, [getPercent, maxValueThumb, minValueThumb]);
 
     const onBlurMinHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         const value = parseFloat(event.currentTarget.value);
@@ -129,27 +130,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
 
     const handleMinValueThumbCallback = () => setMinValueCallback(minValueThumb);
     const handleMaxValueThumbCallback = () => setMaxValueCallback(maxValueThumb);
-
-    // Set width of the range to decrease from the left side
-    useEffect(() => {
-        const minPercent = getPercent(minValueThumb);
-        const maxPercent = getPercent(maxValueThumb);
-
-        if (range.current) {
-            range.current.style.left = `${minPercent}%`;
-            range.current.style.width = `${maxPercent - minPercent}%`;
-        }
-    }, [getPercent, maxValueThumb, minValueThumb]);
-
-    // Set width of the range to decrease from the right side
-    useEffect(() => {
-        const minPercent = getPercent(minValueThumb);
-        const maxPercent = getPercent(maxValueThumb);
-
-        if (range.current) {
-            range.current.style.width = `${maxPercent - minPercent}%`;
-        }
-    }, [getPercent, maxValueThumb, minValueThumb]);
 
     return (
         <>

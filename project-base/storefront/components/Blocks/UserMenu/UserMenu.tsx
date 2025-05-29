@@ -16,6 +16,7 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { usePathname } from 'next/navigation';
+import { memo } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
@@ -27,7 +28,7 @@ type UserMenuProps = {
     className?: string;
 };
 
-export const UserMenu: FC<UserMenuProps> = ({ className }) => {
+const UserMenuComp: FC<UserMenuProps> = ({ className }) => {
     const { t } = useTranslation();
     const pathname = usePathname();
     const logout = useLogout();
@@ -169,3 +170,5 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
         </div>
     );
 };
+
+export const UserMenu = memo(UserMenuComp);
