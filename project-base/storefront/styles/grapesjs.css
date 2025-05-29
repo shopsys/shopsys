@@ -3,7 +3,7 @@
         @apply from-background-brand to-background-brand-less bg-linear-to-tr/srgb;
     }
 
-    .gjp-template-header-search-button {
+    .gjs-template-header-search-button {
         @apply top-1/2 left-3 -translate-y-1/2;
     }
 }
