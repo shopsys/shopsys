@@ -24,10 +24,10 @@ class DatabaseSearchingHelper
     }
 
     /**
-     * @param string|null $string
+     * @param string $string
      * @return string
      */
-    public function getFullTextLikeSearchString(?string $string): string
+    public function getFullTextLikeSearchString(string $string): string
     {
         return '%' . self::getLikeSearchString($string) . '%';
     }

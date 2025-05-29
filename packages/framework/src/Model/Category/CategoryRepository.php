@@ -12,8 +12,6 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\Exception\RootCategoryNotFoundException;
@@ -344,64 +342,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param string|null $searchText
-     * @param int $domainId
-     * @param string $locale
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForSearchVisible(
-        ?string $searchText,
-        int $domainId,
-        string $locale,
-        int $page,
-        int $limit,
-    ): PaginationResult {
-        $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder($domainId, $locale, $searchText);
-        $queryBuilder->orderBy($this->orderByCollationHelper->createOrderByForLocale('ct.name', $locale));
-
-        $queryPaginator = new QueryPaginator($queryBuilder);
-
-        return $queryPaginator->getResult($page, $limit);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getVisibleByDomainIdAndSearchText(int $domainId, string $locale, ?string $searchText): array
-    {
-        $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder(
-            $domainId,
-            $locale,
-            $searchText,
-        );
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string|null $searchText
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function getVisibleByDomainIdAndSearchTextQueryBuilder(
-        int $domainId,
-        string $locale,
-        ?string $searchText,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId);
-        $this->addTranslation($queryBuilder, $locale);
-        $this->filterBySearchText($queryBuilder, $searchText);
-
-        return $queryBuilder;
-    }
-
-    /**
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -476,9 +416,9 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string|null $searchText
+     * @param string $searchText
      */
-    public function filterBySearchText(QueryBuilder $queryBuilder, ?string $searchText): void
+    public function filterBySearchText(QueryBuilder $queryBuilder, string $searchText): void
     {
         $queryBuilder->andWhere(
             'NORMALIZED(ct.name) LIKE NORMALIZED(:searchText)',

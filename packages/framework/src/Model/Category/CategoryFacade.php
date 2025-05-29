@@ -307,21 +307,6 @@ class CategoryFacade
     }
 
     /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getVisibleByDomainAndSearchText($domainId, $locale, $searchText)
-    {
-        return $this->categoryRepository->getVisibleByDomainIdAndSearchText(
-            $domainId,
-            $locale,
-            $searchText,
-        );
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
@@ -339,24 +324,6 @@ class CategoryFacade
     public function getAllTranslatedWithoutBranch(Category $category, string $locale): array
     {
         return $this->categoryRepository->getAllTranslatedWithoutBranch($category, $locale);
-    }
-
-    /**
-     * @param string|null $searchText
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getSearchAutocompleteCategories($searchText, $limit)
-    {
-        $page = 1;
-
-        return $this->categoryRepository->getPaginationResultForSearchVisible(
-            $searchText,
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $page,
-            $limit,
-        );
     }
 
     /**
