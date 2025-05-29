@@ -880,6 +880,9 @@ msgstr ""
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr ""
 
+msgid "Confirm code and disable two-factor authentication"
+msgstr ""
+
 msgid "Confirm code and enable two-factor authentication"
 msgstr ""
 

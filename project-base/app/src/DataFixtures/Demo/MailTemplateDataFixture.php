@@ -15,7 +15,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail;
-use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory;
 
 class MailTemplateDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -52,8 +51,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             $this->createPersonalInformationExportMailTemplate($locale, $manager, $domainId);
 
             $this->createCustomerActivationMailTemplate($locale, $manager, $domainId);
-
-            $this->createAdminTwoFactorAuthenticationMailTemplate($locale, $manager, $domainId);
 
             $this->createAdministratorResetPasswordMailTemplate($locale, $manager, $domainId);
         }
@@ -417,31 +414,5 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
-    }
-
-    /**
-     * @param string $locale
-     * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param int $domainId
-     */
-    private function createAdminTwoFactorAuthenticationMailTemplate(
-        string $locale,
-        ObjectManager $manager,
-        int $domainId,
-    ): void {
-        $mailTemplateData = $this->mailTemplateDataFactory->create();
-        $mailTemplateData->sendMail = true;
-
-        $mailTemplateData->subject = t('
-            Authentication code
-            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('
-            Dear customer,<br/>
-            <br/>
-            your two factor authentication code is: {authentication_code}<br/>
-            <br/>
-            Best regards
-            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $this->createMailTemplate($manager, TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateData, $domainId);
     }
 }

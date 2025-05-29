@@ -472,9 +472,6 @@ msgstr "Článek pro testování vyhledávání"
 msgid "Article text for search testing, the search phrase is &#34;Dina&#34;."
 msgstr "Text článku pro testování vyhledávání, vyhledávací fráze je &#34;Dina&#34;."
 
-msgid "Authentication code"
-msgstr "Autentifikační kód"
-
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
 
@@ -723,9 +720,6 @@ msgstr "Vážený zákazníku,<br/> <br/> můžete dokončit registraci a nastav
 
 msgid "Dear customer,<br/> <br/> your registration is completed.<br/> <br/> Name: {first_name} {last_name}<br /> Email: {email}<br/> <br/> E-shop: <a href=\"{url}\">link</a><br /> Login page: <a href=\"{login_page}\">Log in</a><br/> <br/> Best regards"
 msgstr "Vážený zákazníku,<br/> <br/> vaše registrace je dokončena.<br/> <br/> Jméno: {first_name} {last_name}<br /> E-mail: {email}<br/> <br/> E -shop: <a href=\"{url}\">odkaz</a><br /> Přihlašovací stránka: <a href=\"{login_page}\">Přihlásit se</a><br/> < br/> S pozdravem"
-
-msgid "Dear customer,<br/> <br/> your two factor authentication code is: {authentication_code}<br/> <br/> Best regards"
-msgstr "Vážený zákazníku,<br/> <br/> váš dvoufaktorový ověřovací kód je: {authentication_code}<br/> <br/> S pozdravem"
 
 msgid "Dear customer,<br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/> <br/> To download your personal information please click <a href=\"{url}\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
 msgstr "Vážený zákazníku,<br/> na základě Vašeho emailu {email} Vám zasíláme odkaz, kde si můžete stáhnout Vaše osobní údaje registrované v našem internetovém obchodě v čitelném formátu. Kliknutím na odkaz se dostanete na stránku, kde si budete moci stáhnout tyto informace, které máme v evidenci v našem internetovém obchodě {domain}.<br/> <br/> Chcete-li stáhnout své osobní údaje, klikněte na < a href=\"{url}\">zde</a>.<br/> Odkaz je platný po dobu následujících 24 hodin.<br/> <br/> S pozdravem<br /> Tým {domain}"

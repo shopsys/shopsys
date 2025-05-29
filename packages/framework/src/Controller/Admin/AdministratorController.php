@@ -334,7 +334,7 @@ class AdministratorController extends AdminBaseController
     protected function enableEmailTwoFactorAuthentication(Request $request, Administrator $administrator): Response
     {
         $formSendEmail = $this->createSendEmailForm();
-        $formVerification = $this->createVerificationForm($this->validateEmailCode(...));
+        $formVerification = $this->createVerificationForm($this->validateEmailCode(...), $administrator);
 
         $formSendEmail->handleRequest($request);
 
@@ -367,7 +367,7 @@ class AdministratorController extends AdminBaseController
         Request $request,
         Administrator $administrator,
     ): Response {
-        $form = $this->createVerificationForm($this->validateGoogleAuthCode(...));
+        $form = $this->createVerificationForm($this->validateGoogleAuthCode(...), $administrator);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -442,7 +442,7 @@ class AdministratorController extends AdminBaseController
         }
 
         $formSendEmail = $this->createSendEmailForm();
-        $formVerification = $this->createVerificationForm($codeValidationCallback);
+        $formVerification = $this->createVerificationForm($codeValidationCallback, $administrator);
 
         $formSendEmail->handleRequest($request);
 
@@ -469,10 +469,13 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @param callable $twoFactorCodeValidationCallback
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createVerificationForm(callable $twoFactorCodeValidationCallback): FormInterface
-    {
+    protected function createVerificationForm(
+        callable $twoFactorCodeValidationCallback,
+        Administrator $administrator,
+    ): FormInterface {
         $form = $this->createForm(FormType::class);
         $form->add(
             'code',
@@ -485,7 +488,12 @@ class AdministratorController extends AdminBaseController
                 ],
             ],
         );
-        $form->add('verify', SubmitType::class, ['label' => t('Confirm code and enable two-factor authentication')]);
+
+        $label = $administrator->isEnabledTwoFactorAuth()
+            ? t('Confirm code and disable two-factor authentication')
+            : t('Confirm code and enable two-factor authentication');
+
+        $form->add('verify', SubmitType::class, ['label' => $label]);
 
         return $form;
     }
