@@ -16,6 +16,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
 use Shopsys\AdministrationBundle\Component\Doctrine\Util\ObjectNameHelper;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,6 +110,7 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
+    #[CsrfProtection]
     public function deleteAction(int $id): RedirectResponse
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface $handler */

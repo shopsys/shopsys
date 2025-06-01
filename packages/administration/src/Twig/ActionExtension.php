@@ -10,10 +10,9 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface
 use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
-use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
-use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
+use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -21,10 +20,9 @@ use Twig\TwigFunction;
 class ActionExtension extends AbstractExtension
 {
     public function __construct(
-        private readonly CrudControllerRegistry $crudControllerRegistry,
-        private readonly CrudRouteProvider $crudRouteProvider,
         private readonly AdministrationRouter $router,
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
+        private readonly RouteCsrfProtector $csrfProtector,
     ) {
     }
 
@@ -39,13 +37,14 @@ class ActionExtension extends AbstractExtension
                 'action_url',
                 $this->generateActionUrl(...),
             ),
+            new TwigFunction(
+                'action_has_access',
+                $this->checkActionAccess(...),
+            ),
         ];
     }
 
-    /**
-     * @return string|null Return null if user does not have access to the action
-     */
-    private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): ?string
+    private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): string
     {
         if ($actionRoute === null) {
             return 'javascript:void(0)';
@@ -56,32 +55,36 @@ class ActionExtension extends AbstractExtension
         }
 
         if ($actionRoute instanceof CrudActionRouteData) {
-            $routeItem = $this->crudRouteProvider->generate(
-                $this->crudControllerRegistry->getItem($actionRoute->getCrudController()),
-                $actionRoute->getActionType(),
-            );
-
             $parameters = $actionRoute->getId($data) !== null ? ['id' => $actionRoute->getId($data)] : [];
 
-            return $this->generateByRoute($routeItem->getRouteName(), $parameters);
+            if ($this->csrfProtector->isActionProtected($actionRoute->getCrudController(), $actionRoute->getActionType()->value . 'Action')) {
+                $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->csrfProtector->getCsrfTokenByRoute($actionRoute->getRouteName());
+            }
+
+            return $this->router->generate($actionRoute->getRouteName(), $parameters);
         }
 
         if ($actionRoute instanceof RouteActionRouteData) {
-            return $this->generateByRoute($actionRoute->getRouteName(), $actionRoute->getRouteParameters($data));
+            return $this->router->generate($actionRoute->getRouteName(), $actionRoute->getRouteParameters($data));
         }
 
         throw new InvalidArgumentException('Action has invalid route type');
     }
 
-    private function generateByRoute(string $routeName, array $parameters): ?string
+    private function checkActionAccess(?ActionRouteInterface $actionRoute): bool
     {
-        // Generate URL first to ensure that route exists and parameters are valid
-        $url = $this->router->generate($routeName, $parameters);
-
-        if (!$this->routeAccessChecker->hasAccess($routeName, HttpMethod::GET)) {
-            return null;
+        if ($actionRoute === null) {
+            return true;
         }
 
-        return $url;
+        if ($actionRoute instanceof UrlActionRouteData) {
+            return true;
+        }
+
+        if ($actionRoute instanceof CrudActionRouteData || $actionRoute instanceof RouteActionRouteData) {
+            return $this->routeAccessChecker->hasAccess($actionRoute->getRouteName(), HttpMethod::GET);
+        }
+
+        return false;
     }
 }

@@ -25,7 +25,7 @@ final class CrudRouteProvider
             'entityId' => false,
         ],
         ActionType::DETAIL->value => [
-            'path' => '/{id}/detail',
+            'path' => '/detail/{id}',
             'routeName' => 'detailAction',
             'entityId' => true,
         ],
@@ -35,12 +35,12 @@ final class CrudRouteProvider
             'entityId' => false,
         ],
         ActionType::EDIT->value => [
-            'path' => '/{id}/edit',
+            'path' => '/edit/{id}',
             'routeName' => 'editAction',
             'entityId' => true,
         ],
         ActionType::DELETE->value => [
-            'path' => '/{id}/delete',
+            'path' => '/delete/{id}',
             'routeName' => 'deleteAction',
             'entityId' => true,
         ],
