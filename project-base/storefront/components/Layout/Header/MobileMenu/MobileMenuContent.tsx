@@ -3,7 +3,7 @@ import { SubMenu } from './MobileMenuSubItems';
 import { mapNavigationMenuItems } from './mobileMenuUtils';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
-import { AnimationSequence, useAnimate } from 'framer-motion';
+import { AnimationSequence, useAnimate, useReducedMotion } from 'framer-motion';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
@@ -26,6 +26,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
     const [historyMenuGroups, setHistoryMenuGroups] = useState<MenuItem[][] | undefined>();
     const [currentMenuItems, setCurrentMenuItems] = useState<MenuItem[]>(mapNavigationMenuItems(navigationItems));
     const [scope, animate] = useAnimate();
+    const shouldReduceMotion = useReducedMotion();
 
     const currentGroupTitle = currentMenuItems[0].parentItem;
 
@@ -36,12 +37,20 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
 
     const handleExpandClick = (navigationItem: MenuItem) => {
         const slideAwayThenTeleportIntoViewSequence: AnimationSequence = [
-            ['#animation-visible-element', { transform: 'translateX(-120%)' }, { duration: 0.2, type: 'tween' }],
+            [
+                '#animation-visible-element',
+                { transform: 'translateX(-120%)' },
+                { duration: shouldReduceMotion ? 0 : 0.2, type: 'tween' },
+            ],
             ['#animation-visible-element', { transform: 'translateX(0)' }, { duration: 0 }],
         ];
 
         const slideIntoViewThenTeleportAwaySequence: AnimationSequence = [
-            ['#animation-hidden-element', { transform: 'translateX(0)' }, { duration: 0.2, type: 'tween' }],
+            [
+                '#animation-hidden-element',
+                { transform: 'translateX(0)' },
+                { duration: shouldReduceMotion ? 0 : 0.2, type: 'tween' },
+            ],
             ['#animation-hidden-element', { transform: 'translateX(120%)' }, { duration: 0 }],
         ];
 
@@ -55,11 +64,19 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
     const handleBackClick = (historyMenuGroups: MenuItem[][]) => {
         const teleportAwayThenSlideIntoViewSequence: AnimationSequence = [
             ['#animation-visible-element', { transform: 'translateX(-120%)' }, { duration: 0 }],
-            ['#animation-visible-element', { transform: 'translateX(0)' }, { duration: 0.2, type: 'tween' }],
+            [
+                '#animation-visible-element',
+                { transform: 'translateX(0)' },
+                { duration: shouldReduceMotion ? 0 : 0.2, type: 'tween' },
+            ],
         ];
         const teleportIntoViewThenSlideAwaySequence: AnimationSequence = [
             ['#animation-hidden-element', { transform: 'translateX(0)' }, { duration: 0 }],
-            ['#animation-hidden-element', { transform: 'translateX(120%)' }, { duration: 0.2, type: 'tween' }],
+            [
+                '#animation-hidden-element',
+                { transform: 'translateX(120%)' },
+                { duration: shouldReduceMotion ? 0 : 0.2, type: 'tween' },
+            ],
         ];
 
         animate(teleportAwayThenSlideIntoViewSequence);

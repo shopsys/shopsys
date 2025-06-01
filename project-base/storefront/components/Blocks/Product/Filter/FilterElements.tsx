@@ -24,7 +24,7 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
             type="button"
             onClick={onClick}
         >
-            <h6 className="flex items-center gap-2.5">
+            <h6 className="flex items-center gap-2.5 text-left">
                 {title}
                 {isActive && <div className="bg-background-success vl:hidden size-2 rounded-full" />}
             </h6>

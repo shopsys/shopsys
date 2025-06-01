@@ -3,7 +3,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { NavigationItemColumn } from 'components/Layout/Header/Navigation/NavigationItemColumn';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -22,6 +22,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
     const hasChildren = !!navigationItem.categoriesByColumns.length;
     const isMenuOpenedDelayed = useDebounce(isMenuOpened && true, 200);
     const skeletonType = getNavigationLinkSkeletonType(navigationItem);
+    const shouldReduceMotion = useReducedMotion();
 
     return (
         <li
@@ -29,7 +30,9 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
             onMouseLeave={() => setIsMenuOpened(false)}
             onMouseEnter={() => {
                 setIsMenuOpened(true);
-                handleAnimations();
+                if (!shouldReduceMotion) {
+                    handleAnimations();
+                }
             }}
         >
             <ExtendedNextLink
@@ -49,7 +52,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
                         <m.div
                             animate={{ rotate: isMenuOpenedDelayed ? 180 : 0 }}
                             className="ml-2 flex items-start"
-                            transition={{ type: 'tween', duration: 0.2 }}
+                            transition={shouldReduceMotion ? {} : { type: 'tween', duration: 0.2 }}
                         >
                             <ArrowIcon
                                 className={twJoin(
@@ -66,7 +69,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, isAnim
                 {hasChildren && isMenuOpenedDelayed && (
                     <AnimateNavigationMenu
                         className="z-menu bg-background-default absolute right-0 left-0 !grid grid-cols-4 gap-11 px-10 shadow-md"
-                        disableAnimation={isAnimationDisabled}
+                        disableAnimation={isAnimationDisabled || !!shouldReduceMotion}
                     >
                         <NavigationItemColumn
                             className="py-12"

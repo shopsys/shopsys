@@ -7,7 +7,7 @@ import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserC
 import { DeferredGtmHeadScript } from 'gtm/DeferredGtmHeadScript';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
-import { ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 import { twJoin } from 'tailwind-merge';
 import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -52,7 +52,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />
-            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+            <ToastContainer autoClose={6000} position="top-center" theme="colored" transition={Slide} />
             <Component {...pageProps} />
             <DeferredSymfonyDebugToolbar />
             <DeferredUserConsent url={pageProps.domainConfig.url} />
