@@ -76,7 +76,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     );
 
     return (
-        <div className="flex flex-col" tid={TIDs.banners_slider}>
+        <div className="flex flex-col" data-tid={TIDs.banners_slider}>
             <div {...handlers}>
                 <ExtendedNextLink
                     className="block rounded-t-xl rounded-b-none !no-underline select-text"

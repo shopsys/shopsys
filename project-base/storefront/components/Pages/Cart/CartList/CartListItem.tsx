@@ -48,7 +48,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     return (
         <div
             className="bg-background-more vl:flex-nowrap vl:p-5 relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-4"
-            tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
+            data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
             <div className="vl:basis-auto vl:items-center vl:pr-0 vl:pt-0 flex basis-full gap-2.5 pt-6 pr-8">
                 <div className="flex size-20 shrink-0">
@@ -69,7 +69,10 @@ export const CartListItem: FC<CartListItemProps> = ({
                 </div>
 
                 <div className="vl:flex-1 vl:flex-row vl:items-center vl:gap-8 flex flex-col items-start gap-2 xl:gap-16">
-                    <div className="vl:w-48 flex flex-col gap-2 tracking-wide" tid={TIDs.pages_cart_list_item_name}>
+                    <div
+                        className="vl:w-48 flex flex-col gap-2 tracking-wide"
+                        data-tid={TIDs.pages_cart_list_item_name}
+                    >
                         <ExtendedNextLink
                             className="font-secondary text-text-default hover:text-text-accent text-sm font-semibold no-underline hover:underline"
                             href={productSlug}

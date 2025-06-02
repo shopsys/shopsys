@@ -42,7 +42,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 {!!product.mainImage && (
                     <div
                         className="mb-4 flex h-12 w-24 items-center justify-center md:mb-0"
-                        tid={TIDs.add_to_cart_popup_image}
+                        data-tid={TIDs.add_to_cart_popup_image}
                     >
                         <Image
                             alt={product.mainImage.name || product.fullName}
@@ -54,7 +54,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     </div>
                 )}
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
-                    <div className="block break-words" tid={TIDs.blocks_product_addtocartpopup_product_name}>
+                    <div className="block break-words" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
                         <ExtendedNextLink
                             href={productUrl}
                             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}

@@ -39,9 +39,9 @@ export const SearchInput: FC<SearchInputProps> = ({
             <input
                 aria-label={label}
                 autoComplete="off"
+                data-tid={TIDs.layout_header_search_autocomplete_input}
                 placeholder={label}
                 role="searchbox"
-                tid={TIDs.layout_header_search_autocomplete_input}
                 type="search"
                 value={value}
                 className={twMergeCustom(

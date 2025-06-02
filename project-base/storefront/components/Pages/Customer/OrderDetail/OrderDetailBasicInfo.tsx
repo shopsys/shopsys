@@ -51,11 +51,11 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
         <>
             <div className="bg-background-more vl:flex-row flex flex-col flex-wrap justify-between gap-5 rounded-xl p-5">
                 <OrderItemColumnInfo title={t('Order number')}>
-                    <span tid={TIDs.order_detail_number}>{order.number}</span>
+                    <span data-tid={TIDs.order_detail_number}>{order.number}</span>
                 </OrderItemColumnInfo>
 
                 <OrderItemColumnInfo title={t('Date of order')}>
-                    <span tid={TIDs.order_detail_creation_date}>{formatDate(order.creationDate)}</span>
+                    <span data-tid={TIDs.order_detail_creation_date}>{formatDate(order.creationDate)}</span>
                 </OrderItemColumnInfo>
 
                 {isPriceVisible(order.totalPrice.priceWithVat) && (
@@ -149,7 +149,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             )}
 
             <div className="bg-background-more rounded-xl p-5">
-                <div tid={TIDs.order_detail_items}>
+                <div data-tid={TIDs.order_detail_items}>
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
                             key={orderItem.name}
@@ -215,7 +215,7 @@ export const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, ch
     return (
         <div
             className="vl:flex-row vl:gap-3 vl:items-center bg-background-more flex flex-col gap-1 rounded-xl p-5 text-sm"
-            tid={tid}
+            data-tid={tid}
         >
             <span className="text-text-less font-secondary min-w-[100px] font-semibold">{title}</span>
             {children}

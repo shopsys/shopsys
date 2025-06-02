@@ -55,7 +55,6 @@ export const Link: FC<LinkProps> = ({
         href: isExternal ? href : undefined,
         rel,
         target,
-        tid: tid ?? TIDs.basic_link,
     };
 
     const content = isButton ? (
@@ -68,14 +67,14 @@ export const Link: FC<LinkProps> = ({
 
     if (isExternal) {
         return (
-            <a {...props} tabIndex={0}>
+            <a {...props} data-tid={tid ?? TIDs.basic_link} tabIndex={0}>
                 {content}
             </a>
         );
     }
 
     return (
-        <ExtendedNextLink {...props} passHref href={href}>
+        <ExtendedNextLink {...props} passHref href={href} tid={tid ?? TIDs.basic_link}>
             {content}
         </ExtendedNextLink>
     );

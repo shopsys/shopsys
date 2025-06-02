@@ -193,6 +193,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
+                    data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
                     max={MAX_CART_ITEM_QUANTITY}
                     min={min}
@@ -238,8 +239,9 @@ type SpinboxButtonProps = {
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, ...props }) => (
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, ...props }) => (
     <button
+        data-tid={tid}
         tabIndex={disabled ? -1 : 0}
         className={twMergeCustom([
             'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-md border-none',

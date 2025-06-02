@@ -9,7 +9,7 @@ type ImageProps = {
 
 const fallbackImageSrc = '/images/optimized-noimage.webp';
 
-const ImageComponent: FC<ImageProps> = ({ src, hash, ...props }) => {
+const ImageComponent: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
     const imageUrl = src ?? null;
     const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
     const shouldLoadFallbackImage = !!error || !imageUrl;
@@ -34,6 +34,7 @@ const ImageComponent: FC<ImageProps> = ({ src, hash, ...props }) => {
 
     return (
         <NextImage
+            data-tid={tid}
             loader={loader}
             overrideSrc={finalImageUrl as string}
             src={finalImageUrl}

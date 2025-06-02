@@ -52,8 +52,8 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     const SelectListItems = options.map((option, index) => (
         <li
             key={option.label}
+            data-tid={`${tid}${index}`}
             tabIndex={option.isDisabled ? -1 : 0}
-            tid={`${tid}${index}`}
             className={twMergeCustom(
                 'hover:bg-input-bg-hovered list-none font-semibold focus-visible:outline-hidden',
                 option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',

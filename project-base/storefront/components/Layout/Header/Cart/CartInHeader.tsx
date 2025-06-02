@@ -48,7 +48,7 @@ export const CartInHeader: FC = ({ className }) => {
         <>
             <div
                 className={twMergeCustom('vl:flex group relative', isActive && 'z-aboveOverlay', className)}
-                tid={TIDs.header_cart}
+                data-tid={TIDs.header_cart}
                 title={t('Cart')}
                 onClick={() => !isDesktop && setIsActive(!isActive)}
                 onMouseEnter={() => isDesktop && setIsActive(true)}

@@ -94,11 +94,11 @@ export const Popup: FC<PopupProps> = ({
                         aria-describedby={ariaDescribedBy}
                         aria-labelledby={ariaLabelledBy}
                         aria-modal="true"
+                        data-tid={TIDs.layout_popup}
                         exit={{ opacity: 0, scale: 0.8 }}
                         ref={popupRef}
                         role="dialog"
                         tabIndex={-1}
-                        tid={TIDs.layout_popup}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
                             'z-aboveOverlay bg-background-default fixed flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-sm p-1 shadow-2xl',

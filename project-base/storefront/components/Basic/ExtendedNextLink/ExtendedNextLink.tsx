@@ -31,6 +31,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     type,
     skeletonType,
     className,
+    tid,
     ...props
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -65,6 +66,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
         <NextLink
             as={isDynamic ? href : as}
             className={twMergeCustom('focus-visible:ring-2', className)}
+            data-tid={tid}
             prefetch={false}
             tabIndex={0}
             href={

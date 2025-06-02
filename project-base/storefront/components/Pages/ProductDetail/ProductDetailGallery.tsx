@@ -50,7 +50,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                 <div
                     className={twJoin('vl:order-2 relative flex w-full justify-center')}
                     data-src={mainImage?.url}
-                    tid={TIDs.product_detail_main_image}
+                    data-tid={TIDs.product_detail_main_image}
                 >
                     <Image
                         priority

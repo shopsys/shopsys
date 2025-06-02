@@ -141,7 +141,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
-        <div className="relative" tid={tid}>
+        <div className="relative" data-tid={tid}>
             {isWithControls && (
                 <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />

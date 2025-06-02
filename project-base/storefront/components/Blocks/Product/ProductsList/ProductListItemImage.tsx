@@ -32,7 +32,7 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
     })();
 
     return (
-        <div className="flex items-center justify-center" tid={tid || TIDs.product_list_item_image}>
+        <div className="flex items-center justify-center" data-tid={tid || TIDs.product_list_item_image}>
             <Image
                 alt={product.mainImage?.name || product.fullName}
                 className={twJoin('object-contain mix-blend-multiply', imageSizeClassName)}

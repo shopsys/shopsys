@@ -21,7 +21,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
     return (
         <>
             <div
-                tid={TIDs.my_account_link}
+                data-tid={TIDs.my_account_link}
                 title={t('Login')}
                 className={twMergeCustom(
                     'group lg:relative lg:flex',

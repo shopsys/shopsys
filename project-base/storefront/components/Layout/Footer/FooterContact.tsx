@@ -14,7 +14,7 @@ export const FooterContact: FC = () => {
 
             <div
                 className="border-border-default flex h-24 w-full max-w-xs overflow-hidden rounded-sm border-2"
-                tid={TIDs.footer_social_links}
+                data-tid={TIDs.footer_social_links}
             >
                 <FooterContactSocialsItem href="#" title="Instagram">
                     <InstagramIcon className="text-text-default w-8" />

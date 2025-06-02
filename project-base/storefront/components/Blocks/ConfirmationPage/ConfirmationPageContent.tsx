@@ -22,7 +22,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                     <div
                         className="order-confirmation-page-text-wrapper"
                         dangerouslySetInnerHTML={{ __html: content }}
-                        tid={TIDs.order_confirmation_page_text_wrapper}
+                        data-tid={TIDs.order_confirmation_page_text_wrapper}
                     />
                     {children}
                 </>

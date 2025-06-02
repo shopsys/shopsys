@@ -21,7 +21,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
         <>
             <div
                 className={twMergeCustom('group lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
-                tid={TIDs.my_account_link}
+                data-tid={TIDs.my_account_link}
                 title={t('My account')}
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}

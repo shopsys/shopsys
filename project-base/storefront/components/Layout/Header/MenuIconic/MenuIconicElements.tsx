@@ -54,8 +54,8 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     return (
         <button
             className={twJoin(menuIconicSubItemLinkTwClass, 'outline-none')}
+            data-tid={tid}
             tabIndex={0}
-            tid={tid}
             onClick={onClick}
         >
             {children}
@@ -86,8 +86,8 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
 
         return (
             <button
+                data-tid={tid}
                 tabIndex={0}
-                tid={tid}
                 title={title}
                 type="button"
                 className={twMergeCustom(

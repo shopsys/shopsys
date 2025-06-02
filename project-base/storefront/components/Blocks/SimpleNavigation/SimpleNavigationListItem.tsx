@@ -25,7 +25,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     const linkType = linkTypeOverride ?? getLinkType(listedItem.__typename);
 
     return (
-        <li tid={tid}>
+        <li data-tid={tid}>
             <ExtendedNextLink
                 href={href}
                 type={linkType}
@@ -36,7 +36,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 )}
             >
                 {itemImage && (
-                    <div className="shrink-0" tid={TIDs.simple_navigation_image}>
+                    <div className="shrink-0" data-tid={TIDs.simple_navigation_image}>
                         <Image
                             priority
                             alt={itemImage.name || listedItem.name}

@@ -71,8 +71,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
         return (
             <li
+                data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 ref={ref}
-                tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
                     'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border pb-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',

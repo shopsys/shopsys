@@ -7,7 +7,7 @@ export const EmptyCart: FC = () => {
 
     return (
         <Webline>
-            <p className="my-28 text-center text-2xl" tid={TIDs.cart_page_empty_cart_text}>
+            <p className="my-28 text-center text-2xl" data-tid={TIDs.cart_page_empty_cart_text}>
                 {t('Your cart is currently empty.')}
             </p>
         </Webline>

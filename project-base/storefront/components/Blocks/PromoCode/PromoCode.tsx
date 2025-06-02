@@ -32,7 +32,7 @@ export const PromoCode: FC = () => {
 
     return (
         <div className="flex flex-col gap-2.5">
-            <div tid={TIDs.blocks_promocode_add_button}>
+            <div data-tid={TIDs.blocks_promocode_add_button}>
                 <Checkbox
                     id="promo-code"
                     label={t('I have a discount coupon')}

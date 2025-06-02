@@ -16,8 +16,8 @@ export const HeaderContact: FC = () => {
 
                     <a
                         className="text-text-inverted hover:text-text-inverted rounded-md font-bold no-underline focus-visible:ring-1"
+                        data-tid={TIDs.simple_header_contact}
                         href={'tel:' + dummyData.phone}
-                        tid={TIDs.simple_header_contact}
                     >
                         {dummyData.phone}
                     </a>

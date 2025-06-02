@@ -39,8 +39,8 @@ export const CartPreview: FC = () => {
 
                             <button
                                 className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
+                                data-id={TIDs.blocks_promocode_promocodeinfo_code}
                                 tabIndex={0}
-                                tid={TIDs.blocks_promocode_promocodeinfo_code}
                                 onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
                                 {t('Remove')}
@@ -63,7 +63,7 @@ export const CartPreview: FC = () => {
 
             {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
                 isPriceVisible(cart.totalItemsPrice.priceWithoutVat) && (
-                    <div className="flex flex-col justify-between gap-2" tid={TIDs.pages_cart_cartpreview_total}>
+                    <div className="flex flex-col justify-between gap-2" data-tid={TIDs.pages_cart_cartpreview_total}>
                         <div className="flex items-center justify-between">
                             <p>{t('Total')}</p>
 

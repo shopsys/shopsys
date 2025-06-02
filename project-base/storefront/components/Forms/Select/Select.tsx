@@ -94,9 +94,9 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     {comboBoxConfig ? (
                         <>
                             <input
+                                data-tid={tid}
                                 id={tid}
                                 placeholder={placeholder}
-                                tid={tid}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
                                     'h-full w-full bg-transparent px-3 !text-base focus-visible:outline-hidden',
@@ -116,10 +116,10 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     ) : (
                         <button
                             className="w-full cursor-pointer px-3 pt-5 text-left focus-visible:outline-hidden"
+                            data-tid={tid}
                             disabled={isDisabled}
                             id={tid}
                             tabIndex={-1}
-                            tid={tid}
                             type="button"
                             onClick={() => onSelectToggleOpenHandler(!isOpen)}
                         >

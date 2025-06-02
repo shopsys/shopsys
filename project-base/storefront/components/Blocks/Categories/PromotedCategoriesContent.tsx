@@ -47,7 +47,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                         >
                             {itemImage && (
                                 <div
-                                    tid={TIDs.simple_navigation_image}
+                                    data-tid={TIDs.simple_navigation_image}
                                     className={twJoin(
                                         'relative flex items-center justify-center',
                                         'vl:size-full size-[60px] lg:size-[100px]',

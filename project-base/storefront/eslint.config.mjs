@@ -144,7 +144,7 @@ export default [{
         "react-hooks/rules-of-hooks": "error",
 
         "react/no-unknown-property": ["error", {
-            ignore: ["jsx", "global", "tid"],
+            ignore: ["jsx", "global", "tid", "data-tid"],
         }],
 
         "react/jsx-curly-brace-presence": ["error", {

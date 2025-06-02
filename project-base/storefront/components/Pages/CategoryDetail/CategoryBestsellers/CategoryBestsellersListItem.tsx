@@ -44,7 +44,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             </div>
 
             <div className="flex w-full flex-col justify-between gap-x-4 gap-y-2.5 select-text md:flex-row md:items-center">
-                <span className="font-secondary text-text-default line-clamp-5 max-w-80 flex-1 items-center text-sm font-semibold">
+                <div className="font-secondary text-text-default line-clamp-5 max-w-80 flex-1 items-center text-sm font-semibold">
                     <ProductFlags
                         flags={product.flags}
                         percentageDiscount={product.price.percentageDiscount}
@@ -52,7 +52,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                     />
 
                     {product.fullName}
-                </span>
+                </div>
 
                 <ProductAvailability
                     availability={product.availability}

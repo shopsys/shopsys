@@ -72,7 +72,7 @@ export const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
     return (
         <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
             <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold', valueClassName)} tid={tid}>
+            <span className={twMergeCustom('font-bold', valueClassName)} data-tid={tid}>
                 {value}
             </span>
         </div>

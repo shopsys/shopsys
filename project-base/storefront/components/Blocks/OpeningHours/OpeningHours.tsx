@@ -73,7 +73,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
 
             <div
                 className={twMergeCustom('text-text-default flex flex-col gap-1 self-baseline text-xs', className)}
-                tid={TIDs.opening_hours}
+                data-tid={TIDs.opening_hours}
             >
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
@@ -87,11 +87,11 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
-                            <h6 className="w-44" tid={TIDs.opening_hours_day_of_week_with_date}>
+                            <h6 className="w-44" data-tid={TIDs.opening_hours_day_of_week_with_date}>
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
                             </h6>
 
-                            <span tid={TIDs.opening_hours_ranges}>
+                            <span data-tid={TIDs.opening_hours_ranges}>
                                 {isClosedWholeDay ? (
                                     <>{t('Closed')}</>
                                 ) : (
@@ -106,8 +106,8 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                             {isToday && (
                                 <OpeningStatus
                                     className="self-baseline sm:self-auto"
+                                    data-tid={TIDs.opening_hours_status}
                                     status={openingHours.status}
-                                    tid={TIDs.opening_hours_status}
                                 />
                             )}
                         </div>

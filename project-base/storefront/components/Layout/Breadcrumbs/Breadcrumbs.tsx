@@ -52,7 +52,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 
                 <span
                     className="font-secondary hidden text-xs font-semibold lg:inline-block"
-                    tid={TIDs.breadcrumbs_tail}
+                    data-tid={TIDs.breadcrumbs_tail}
                 >
                     {lastBreadcrumb.name}
                 </span>
@@ -62,7 +62,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 };
 
 export const BreadcrumbsSpan: FC = ({ tid }) => (
-    <span className="text-border-default hidden items-center lg:flex" tid={tid}>
+    <span className="text-border-default hidden items-center lg:flex" data-tid={tid}>
         <ArrowIcon className="size-4 -rotate-90" />
     </span>
 );

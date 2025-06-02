@@ -46,7 +46,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         <>
             <PacketeryContainer />
 
-            <div tid={TIDs.pages_order_transport}>
+            <div data-tid={TIDs.pages_order_transport}>
                 <div className="h4 mb-3">{t('Choose transport')}</div>
                 <ul>
                     <AnimatePresence initial={false}>
@@ -146,8 +146,8 @@ type ResetButtonProps = { text: string; onClick: () => void };
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid }) => (
     <button
         className="bg-background-more hover:bg-background-most flex w-full cursor-pointer items-center rounded-xl px-5 py-3 text-sm"
+        data-tid={tid}
         tabIndex={0}
-        tid={tid}
         onClick={onClick}
     >
         <ArrowIcon className="mr-2 size-4" />

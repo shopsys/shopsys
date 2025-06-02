@@ -21,7 +21,7 @@ export const FreeTransportRange: FC = () => {
     const amountFormatted = formatPrice(totalPriceRemaining);
 
     return (
-        <div className="flex w-full flex-col gap-2.5 lg:gap-1" data-testid={testIdentifier}>
+        <div className="flex w-full flex-col gap-2.5 lg:gap-1" data-tid={testIdentifier}>
             <h4 className="text-sm">
                 {totalPriceRemaining > 0
                     ? t('Buy for {{ amount }} and get free shipping!', { amount: amountFormatted })

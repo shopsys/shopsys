@@ -73,9 +73,9 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             })}
                         </p>
                     )}
-                    <div className="flex w-44 items-center xl:block xl:text-right" tid={TIDs.store_opening_status}>
+                    <div className="flex w-44 items-center xl:block xl:text-right" data-tid={TIDs.store_opening_status}>
                         <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
-                        <p className="ml-2.5 text-xs" tid={TIDs.store_opening_hours}>
+                        <p className="ml-2.5 text-xs" data-tid={TIDs.store_opening_hours}>
                             {getTodayOpeningHours(store.openingHours)}
                         </p>
                     </div>

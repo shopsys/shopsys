@@ -11,7 +11,7 @@ export const FooterCopyright: FC = () => {
         <>
             <div
                 className="text-text-disabled flex items-center justify-center text-center text-sm"
-                tid={TIDs.footer_copyright}
+                data-tid={TIDs.footer_copyright}
             >
                 {t('footerCopyright', { currentYear })}
             </div>

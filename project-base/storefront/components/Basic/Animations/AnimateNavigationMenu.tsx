@@ -9,9 +9,9 @@ export const AnimateNavigationMenu: FC<
         key={keyName}
         animate="visible"
         className={className}
+        data-tid={tid}
         exit="hidden"
         initial="hidden"
-        tid={tid}
         variants={disableAnimation ? undefined : fadeAnimation}
         {...props}
     >
