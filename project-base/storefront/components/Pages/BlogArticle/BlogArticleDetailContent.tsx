@@ -37,8 +37,8 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5">
                     <ArticleDate
                         className="mr-4"
-                        date={formatDate(blogArticle.publishDate, 'l')}
-                        tid={TIDs.blog_article_publication_date}
+                        data-tid={TIDs.blog_article_publication_date}
+                        date={formatDate(blogArticle.publishDate)}
                     />
 
                     <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">

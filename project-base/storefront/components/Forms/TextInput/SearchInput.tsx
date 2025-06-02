@@ -40,6 +40,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 aria-label={label}
                 autoComplete="off"
                 data-tid={TIDs.layout_header_search_autocomplete_input}
+                id="search-input"
                 placeholder={label}
                 role="searchbox"
                 type="search"

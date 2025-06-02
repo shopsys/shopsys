@@ -54,8 +54,8 @@ export const BannersDot: FC<BannersDotProps> = ({
             )}
             onClick={() => moveToSlide(index)}
         >
-            <h6 className="vl:line-clamp-4 hidden wrap-anywhere">{sliderItem.name}</h6>
-            <div
+            <span className="h6 vl:line-clamp-4 hidden wrap-anywhere">{sliderItem.name}</span>
+            <span
                 className={twMergeCustom(
                     'z-above bg-text-accent vl:block absolute top-0 left-0 hidden h-[3px] w-0 transition-all duration-[0s] ease-linear',
                 )}

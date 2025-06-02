@@ -58,7 +58,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 )}
             >
                 {(inputType === 'checkbox' || inputType === 'radio') && (
-                    <div
+                    <span
                         className={twMergeCustom(
                             'border-input-border-default bg-input-bg-default group-hover:bg-fill-accent-less flex size-5 min-w-5 border p-[3px] transition',
                             inputType === 'checkbox' ? 'rounded-checkbox' : 'rounded-full p-[5px]',
@@ -87,19 +87,19 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                                 )}
                             />
                         )}
-                    </div>
+                    </span>
                 )}
 
-                <div className="flex w-full justify-between">
-                    <div className="w-full">
+                <span className="flex w-full justify-between">
+                    <span className="w-full">
                         {label}
                         {required && <span className="text-text-error ml-1">*</span>}
-                    </div>
+                    </span>
 
                     {!!count && !checked && (
-                        <div className="text-input-placeholder-default ml-auto font-normal">({count})</div>
+                        <span className="text-input-placeholder-default ml-auto font-normal">({count})</span>
                     )}
-                </div>
+                </span>
             </label>
         )}
     </div>

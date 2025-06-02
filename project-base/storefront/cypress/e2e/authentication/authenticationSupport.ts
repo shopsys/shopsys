@@ -101,7 +101,7 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
         .should('have.attr', 'placeholder', placeholder.postCode)
         .type(generatedData.postcode, { force: true });
 
-    cy.get('[for="registration-form-gdprAgreement"]').find('div').first().click();
+    cy.get('[for="registration-form-gdprAgreement"]').find('span').first().click();
 };
 
 export const clearAndFillInRegistrationFormPasswords = (password: string) => {

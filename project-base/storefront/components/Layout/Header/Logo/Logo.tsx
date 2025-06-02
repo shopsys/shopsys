@@ -18,8 +18,11 @@ export const Logo: FC = () => (
             <Image
                 priority
                 alt="Shopsys logo"
-                className={twMergeCustom('flex w-32 max-w-full p-1 lg:w-40')}
+                className={twMergeCustom('flex w-32 max-w-full lg:w-40')}
+                height={38}
+                sizes="(max-width: 1023px) 128px, 160px"
                 src={imageLogoInverted}
+                width={160}
             />
         </ExtendedNextLink>
     </>

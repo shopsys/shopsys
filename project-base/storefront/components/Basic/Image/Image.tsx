@@ -28,6 +28,22 @@ const ImageComponent: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
 
     const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl;
 
+    // Extract src from StaticImageData object if needed
+    const getSrcFromImageUrl = (imageUrl: typeof finalImageUrl): string => {
+        if (typeof imageUrl === 'string') {
+            return imageUrl;
+        }
+
+        // Handle StaticImageData objects that have src property
+        if (typeof imageUrl === 'object') {
+            return (imageUrl as any).src || '';
+        }
+
+        return '';
+    };
+
+    const finalSrc = getSrcFromImageUrl(finalImageUrl);
+
     useEffect(() => {
         setError(null);
     }, [src]);
@@ -36,7 +52,7 @@ const ImageComponent: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
         <NextImage
             data-tid={tid}
             loader={loader}
-            overrideSrc={finalImageUrl as string}
+            overrideSrc={finalSrc}
             src={finalImageUrl}
             unoptimized={shouldLoadFallbackImage}
             onError={onError}

@@ -22,14 +22,14 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
             backgroundColor: getRGBColorString(banner.rgbBackgroundColor, banner.opacity),
         }}
     >
-        <h1
+        <span
             className={twJoin(
-                'vl:mb-5 mb-2.5 line-clamp-5 wrap-anywhere',
+                'h1 vl:mb-5 mb-2.5 line-clamp-5 wrap-anywhere',
                 getYIQContrastTextColor(banner.rgbBackgroundColor),
             )}
         >
             {banner.name}
-        </h1>
+        </span>
         {banner.description && (
             <p className={twJoin('line-clamp-10 wrap-anywhere', getYIQContrastTextColor(banner.rgbBackgroundColor))}>
                 {banner.description}

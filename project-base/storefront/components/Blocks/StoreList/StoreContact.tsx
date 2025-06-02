@@ -1,5 +1,6 @@
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
+import { removeSpaces } from 'utils/removeSpaces';
 
 type StoreContactItemProps = {
     email: string | null;
@@ -7,6 +8,8 @@ type StoreContactItemProps = {
 };
 
 export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
+    const cleanPhone = removeSpaces(phone ?? '');
+
     return (
         <div className="inline-flex flex-col gap-2">
             {email && (
@@ -22,7 +25,7 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
             {phone && (
                 <a
                     className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
-                    href={'tel:' + phone}
+                    href={'tel:' + cleanPhone}
                     tabIndex={0}
                 >
                     <PhoneIcon className="size-5" />

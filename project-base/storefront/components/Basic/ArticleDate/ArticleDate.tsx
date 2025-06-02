@@ -8,7 +8,11 @@ type ArticleDate = {
 
 export const ArticleDate: FC<ArticleDate> = ({ date, tid, className }) => {
     return (
-        <time className={twJoin('font-secondary text-text-less text-sm font-semibold', className)} tid={tid}>
+        <time
+            className={twJoin('font-secondary text-text-less text-sm font-semibold', className)}
+            data-tid={tid}
+            dateTime={date}
+        >
             {date}
         </time>
     );
