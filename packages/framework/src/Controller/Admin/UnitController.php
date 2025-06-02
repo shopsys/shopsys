@@ -59,7 +59,7 @@ class UnitController extends AdminBaseController
             $unit = $this->unitFacade->getById($id);
             $isUnitDefault = $this->unitFacade->isUnitDefault($unit);
 
-            if ($this->unitFacade->isUnitUsed($unit) || $isUnitDefault) {
+            if ($isUnitDefault || $this->unitFacade->isUnitUsed($unit)) {
                 if ($isUnitDefault) {
                     $message = t(
                         'Unit "%name%" set as default. For deleting existing unit you have to choose new default unit. '
@@ -103,6 +103,10 @@ class UnitController extends AdminBaseController
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
+
+        if ($newId !== null) {
+            $newId = (int)$newId;
+        }
 
         try {
             $fullName = $this->unitFacade->getById($id)->getName();
