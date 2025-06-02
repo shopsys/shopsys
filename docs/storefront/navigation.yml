@@ -22,3 +22,4 @@ arrange:
     - web-vitals.md
     - error-handling.md
     - component-deferring.md
+    - debugging.md
