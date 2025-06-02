@@ -43,7 +43,8 @@ class Version20241205094315 extends AbstractMigration implements ContainerAwareI
                                     <div style="text-align: center; margin: 20px 0;">
                                         <a data-cke-saved-href="{product_url}" 
                                             href="{product_url}"
-                                            style="display: inline-block; padding: 15px 30px; font-size: 16px; color: #fff; background-color: #00c8b7; text-decoration: none; border-radius: 5px;">
+                                            style="display: inline-block; padding: 15px 30px; font-size: 16px; color: #fff; background-color: #00c8b7; text-decoration: none; border-radius: 5px;"
+                                            tabindex="0">
                                             Buy Now
                                         </a>
                                     </div>

@@ -30,7 +30,7 @@ class Version20241212064226 extends AbstractMigration implements ContainerAwareI
                 ResetPasswordMail::MAIL_TEMPLATE_NAME,
                 t('Administrator reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainLocale),
                 t('Dear administrator.<br /><br />'
-                    . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainLocale),
+                    . 'You can set a new password following this link: <a href="{new_password_url}" tabindex="0">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainLocale),
                 $domainId,
             );
         }

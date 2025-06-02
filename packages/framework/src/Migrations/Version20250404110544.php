@@ -46,7 +46,7 @@ class Version20250404110544 extends AbstractMigration implements ContainerAwareI
                     If you haven’t completed the payment yet, please check your email for payment instructions.
                 </p>
                 <p>
-                    <a href="{order_detail_url}">Show order detail</a>
+                    <a href="{order_detail_url}" tabindex="0">Show order detail</a>
                 </p>',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,

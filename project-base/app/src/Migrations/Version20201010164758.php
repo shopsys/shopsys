@@ -24,10 +24,10 @@ final class Version20201010164758 extends AbstractMigration implements Container
         foreach ($this->getAllDomainIds() as $domainId) {
             if ($domainId === 2) {
                 $subject = 'Dokončení registrace';
-                $body = 'Vážený zákazníku,<br /><br />na tomto odkazu můžete dokončit registraci a nastavit si své nové heslo: <a href="{activation_url}">{activation_url}</a>';
+                $body = 'Vážený zákazníku,<br /><br />na tomto odkazu můžete dokončit registraci a nastavit si své nové heslo: <a href="{activation_url}" tabindex="0">{activation_url}</a>';
             } else {
                 $subject = 'Registration completion';
-                $body = 'Dear customer,<br /><br />you can finish registration and set new password via this link: <a href="{activation_url}">{activation_url}</a>';
+                $body = 'Dear customer,<br /><br />you can finish registration and set new password via this link: <a href="{activation_url}" tabindex="0">{activation_url}</a>';
             }
             $this->sql(
                 'INSERT INTO mail_templates (name, domain_id, send_mail, subject, body) 
