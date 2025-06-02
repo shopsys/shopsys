@@ -1,7 +1,4 @@
 import {
-    changeOpeningHoursDayOfWeekWithDateToStaticString,
-    changeOpeningHoursRangesToStaticString,
-    changeOpeningHoursStatusToEmptyString,
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,

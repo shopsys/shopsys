@@ -87,11 +87,11 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
-                            <h6 className="w-44" data-tid={TIDs.opening_hours_day_of_week_with_date}>
+                            <h6 className="w-44">
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
                             </h6>
 
-                            <span data-tid={TIDs.opening_hours_ranges}>
+                            <span>
                                 {isClosedWholeDay ? (
                                     <>{t('Closed')}</>
                                 ) : (
@@ -104,11 +104,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                             </span>
 
                             {isToday && (
-                                <OpeningStatus
-                                    className="self-baseline sm:self-auto"
-                                    data-tid={TIDs.opening_hours_status}
-                                    status={openingHours.status}
-                                />
+                                <OpeningStatus className="self-baseline sm:self-auto" status={openingHours.status} />
                             )}
                         </div>
                     );
