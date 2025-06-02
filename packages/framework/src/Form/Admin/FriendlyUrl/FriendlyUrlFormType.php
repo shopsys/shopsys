@@ -87,6 +87,8 @@ class FriendlyUrlFormType extends AbstractType
                 'redirectCode',
                 ChoiceType::class,
                 [
+                    'multiple' => false,
+                    'expanded' => true,
                     'placeholder' => t('Choose type of redirect'),
                     'choices' => [
                         t('301 (Permanent redirect)') => 301,

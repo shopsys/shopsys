@@ -72,7 +72,7 @@ class RequiredSettingExtension extends AbstractExtension
         }
 
         return $this->twig->render(
-            '@ShopsysFramework/Components/RequiredSettings/requiredSettings.html.twig',
+            '@ShopsysAdministration/partial/_required_settings.html.twig',
             [
                 'requiredSettingsMessages' => $this->requiredSettingsMessages,
             ],
@@ -96,9 +96,10 @@ class RequiredSettingExtension extends AbstractExtension
     {
         if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
             $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Some required email templates are not fully set.</a>',
+                '<a %class% href="%url%">Some required email templates are not fully set.</a>',
                 [
                     '%url%' => $this->router->generate('admin_mail_template'),
+                    '%class%' => 'class="alert-link"',
                 ],
             );
         }
@@ -108,9 +109,10 @@ class RequiredSettingExtension extends AbstractExtension
     {
         if ($this->unitFacade->getCount() === 0) {
             $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no units, you need to create some.</a>',
+                '<a %class% href="%url%">There are no units, you need to create some.</a>',
                 [
                     '%url%' => $this->router->generate('admin_unit_list'),
+                    '%class%' => 'class="alert-link"',
                 ],
             );
         }
@@ -122,9 +124,10 @@ class RequiredSettingExtension extends AbstractExtension
             $this->unitFacade->getDefaultUnit();
         } catch (UnitNotFoundException) {
             $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Default unit is not set.</a>',
+                '<a %class% href="%url%">Default unit is not set.</a>',
                 [
                     '%url%' => $this->router->generate('admin_unit_list'),
+                    '%class%' => 'class="alert-link"',
                 ],
             );
         }
@@ -134,9 +137,10 @@ class RequiredSettingExtension extends AbstractExtension
     {
         if ($this->stockFacade->getCount() === 0) {
             $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no warehouses, you need to create some.</a>',
+                '<a %class% href="%url%">There are no warehouses, you need to create some.</a>',
                 [
                     '%url%' => $this->router->generate('admin_stock_list'),
+                    '%class%' => 'class="alert-link"',
                 ],
             );
         }
@@ -146,9 +150,10 @@ class RequiredSettingExtension extends AbstractExtension
     {
         if ($this->countryFacade->getCount() === 0) {
             $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no countries, you need to create some.</a>',
+                '<a %class% href="%url%">There are no countries, you need to create some.</a>',
                 [
                     '%url%' => $this->router->generate('admin_country_list'),
+                    '%class%' => 'class="alert-link"',
                 ],
             );
         }
@@ -161,30 +166,33 @@ class RequiredSettingExtension extends AbstractExtension
 
             if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">Term and conditions article for domain %domainName% is not set.</a>',
+                    '<a %class% href="%url%">Term and conditions article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->router->generate('admin_legalconditions_termsandconditions'),
                         '%domainName%' => $domainConfig->getName(),
+                        '%class%' => 'class="alert-link"',
                     ],
                 );
             }
 
             if ($this->setting->getForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">Privacy policy article for domain %domainName% is not set.</a>',
+                    '<a %class% href="%url%">Privacy policy article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->router->generate('admin_legalconditions_privacypolicy'),
                         '%domainName%' => $domainConfig->getName(),
+                        '%class%' => 'class="alert-link"',
                     ],
                 );
             }
 
             if ($this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">User consent policy article for domain %domainName% is not set.</a>',
+                    '<a %class% href="%url%">User consent policy article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->router->generate('admin_userconsentpolicy_setting'),
                         '%domainName%' => $domainConfig->getName(),
+                        '%class%' => 'class="alert-link"',
                     ],
                 );
             }
@@ -212,7 +220,7 @@ class RequiredSettingExtension extends AbstractExtension
 
         foreach ($sliderParametersWithoutTheirsNumericValueFilled as $parameter) {
             $message .= sprintf(
-                '<li><a href="%s">%s</a></li>',
+                '<li><a class="alert-link" href="%s">%s</a></li>',
                 $this->router->generate('admin_parametervalues_edit', ['id' => $parameter->getId()]),
                 $parameter->getName(),
             );

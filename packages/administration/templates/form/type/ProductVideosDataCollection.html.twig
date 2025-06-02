@@ -1,0 +1,31 @@
+{% macro productVideoRow(formData) %}
+    <div class="col">
+        {{ form_widget(formData) }}
+        {{ form_errors(formData) }}
+    </div>
+    <div class="col-auto">
+        <button class="js-remove-row btn btn-icon">{{ ux_icon('delete') }}</button>
+    </div>
+{% endmacro %}
+
+{% block _product_form_videosGroup_widget %}
+    <div class="js-form-group">
+        <div class="js-videos-collection"
+             data-prototype="{{ _self.productVideoRow(form.children.productVideosData.vars.prototype)|escape }}"
+             data-index="{{ form.children.productVideosData.children|length }}"
+        >
+            {% for productVideosDataRow in form.children.productVideosData %}
+                <div class="row mb-3 border-bottom">
+                    {{ _self.productVideoRow(productVideosDataRow) }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% do form.setRendered() %}
+
+        <span class="js-videos-collection-add-row btn">
+            {{ ux_icon('plus') }}
+            {{ 'Add another video'|trans }}
+        </span>
+    </div>
+{% endblock %}

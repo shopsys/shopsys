@@ -1,0 +1,11 @@
+{# @var requiredSettingsMessages string[] #}
+<div class="alert alert-warning d-flex" role="alert">
+    <div>
+        {{ ux_icon('warning', {class: 'alert-icon'}) }}
+    </div>
+    <div>
+        {% for message in requiredSettingsMessages %}
+            <div>{{ message|raw }}</div>
+        {% endfor %}
+    </div>
+</div>

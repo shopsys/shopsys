@@ -1,0 +1,13 @@
+{% extends '@ShopsysAdministration/content/customer/user/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing customer'|trans }} - {{ customerUser.customerUserfullName }}{% endblock %}
+
+{% block pre_title %}{{ 'Editing customer'|trans }}{% endblock %}
+{% block h1 %}{{ customerUser.customerUserfullName }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ ssoLoginAsUserUrl }}" target="_blank" class="btn btn-light">
+        {{ ux_icon('forward-page') }}
+        {{ 'Log in as user'|trans }}
+    </a>
+{% endblock %}

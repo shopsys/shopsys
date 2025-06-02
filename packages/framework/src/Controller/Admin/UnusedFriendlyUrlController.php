@@ -41,7 +41,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
         $this->friendlyUrlInlineEdit->setGridQuickSearchFormData($quickSearchForm->getData());
         $unusedFriendlyUrlInlineEditGrid = $this->friendlyUrlInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/UnusedFriendlyUrl/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/unusedFriendlyUrl/list.html.twig', [
             'quickSearchForm' => $quickSearchForm->createView(),
             'gridView' => $unusedFriendlyUrlInlineEditGrid->createView(),
         ]);
@@ -54,10 +54,12 @@ class UnusedFriendlyUrlController extends AdminBaseController
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/unused-friendly-url/delete/{domainId}/{slug}', requirements: [
-        'domainId' => '\d+',
-        'slug' => '.+',
-    ], name: 'admin_unused_friendly_url_delete')]
+    #[Route(path: '/unused-friendly-url/delete/{domainId}/{slug}',
+        name: 'admin_unused_friendly_url_delete',
+        requirements: [
+            'domainId' => '\d+',
+            'slug' => '.+',
+        ])]
     #[AccessControlRule([Roles::ROLE_FRIENDLY_URL_FULL])]
     public function deleteAction(Request $request, int $domainId, string $slug): Response
     {

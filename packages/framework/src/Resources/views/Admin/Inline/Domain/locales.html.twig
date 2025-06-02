@@ -1,29 +1,27 @@
 {% if isMultidomain() %}
-    <div class="in-domain" role="tablist">
-        {% for domainConfig in domainConfigs %}
-            {% if domainConfig.id is same as selectedDomainId %}
-                <span class="in-domain__item in-domain__item--active">
-                    <span class="in-image in-image--normal">
-                        <span class="in-image__in">
-                            {{ localeFlag(domainConfig.locale, null, true, 32, 22) }}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title text-secondary">{{ 'Switch locale'|trans }}</div>
+            <div class="btn-list " role="tablist">
+                {% for domainConfig in domainConfigs %}
+                    {% if domainConfig.id is same as(selectedDomainId) %}
+                        <span class="btn active">
+                            <span class="me-3">
+                                {{ localeFlag(domainConfig.locale, null, true, 32, 22) }}
+                            </span>
+                            {{ domainConfig.locale|upper }}
                         </span>
-                    </span>
-                    <span class="in-domain__item__name">
-                        {{ domainConfig.locale|upper }}
-                    </span>
-                </span>
-            {% else %}
-                <a class="in-domain__item" href="{{ url('admin_domain_selectdomain', {id: domainConfig.id}) }}">
-                    <span class="in-image in-image--normal">
-                        <span class="in-image__in">
-                            {{ localeFlag(domainConfig.locale, null, true, 32, 22) }}
-                        </span>
-                    </span>
-                    <span class="in-domain__item__name">
-                        {{ domainConfig.locale|upper }}
-                    </span>
-                </a>
-            {% endif %}
-        {% endfor %}
+                    {% else %}
+                        <a class="btn"
+                           href="{{ url('admin_domain_selectdomain', {id: domainConfig.id}) }}">
+                            <span class="me-3">
+                                {{ localeFlag(domainConfig.locale, null, true, 32, 22) }}
+                            </span>
+                            {{ domainConfig.locale|upper }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endif %}

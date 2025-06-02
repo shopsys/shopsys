@@ -63,7 +63,6 @@ class PromoCodeGridFactory implements GridFactoryInterface
         $grid->addColumn('code', 'pc.code', t('Code'), true);
         $grid->addColumn('percent', 'pc.percent', t('Discount'));
         $grid->addColumn('prefix', 'pc.prefix', t('Prefix'));
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         if ($withEditButton === true) {
             $grid->addEditActionColumn('admin_promocode_edit', ['id' => 'pc.id']);
@@ -74,7 +73,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
 
         $grid->addActionColumn('duplicate', t('Duplicate'), 'admin_promocode_new', ['fillFromPromoCodeId' => 'pc.id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/PromoCode/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/promoCode/listGrid.html.twig');
 
         return $grid;
     }

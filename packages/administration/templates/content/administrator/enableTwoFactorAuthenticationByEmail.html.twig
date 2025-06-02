@@ -1,0 +1,31 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}
+    - {{ 'Enable two factor authentication by email'|trans }}
+{% endblock %}
+
+{% block h1 %}{{ 'Enable two factor authentication by email'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col">
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="card-title">1. {{ 'Request a one-time passcode by email '|trans }}</h2>
+                    <div class="card-subtitle">
+                        {{ 'Please use the button below to send the one-time passcode to your email address.'|trans }}
+                    </div>
+                    {{ form(formSendEmail) }}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="card-title">2. {{ 'Confirm one-time passcode'|trans }}</h2>
+                    {{ form(formVerification) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

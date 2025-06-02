@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Countries overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Countries'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_country_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new country'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}

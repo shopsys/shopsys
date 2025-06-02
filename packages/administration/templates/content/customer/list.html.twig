@@ -1,0 +1,27 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Customers overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Customers'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_customer_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new customer'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        info_message: 'Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?.'|trans,
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ gridView.render() }}
+{% endblock %}

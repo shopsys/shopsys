@@ -1,0 +1,38 @@
+{% block ckeditor_row -%}
+    {{ block('textarea_row') }}
+{%- endblock ckeditor_row %}
+
+{% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' %}
+{% block base_ckeditor_widget %}
+    <div class="js-cke-preview" id="{{ id }}-preview">
+        <div class="card">
+            <div class="card-body overflow-hidden" style="min-height: 92px; max-height: 200px;">
+                {{ value|raw }}
+            </div>
+            <div class="card-footer p-0">
+                <div class="btn btn-primary btn-sm w-100 js-cke-preview-edit">{{ 'Edit'|trans }}</div>
+            </div>
+        </div>
+    </div>
+
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+
+    {% if enable and not async %}
+        {{ block('_ckeditor_javascript') }}
+    {% endif %}
+{% endblock %}
+
+{% block ckeditor_widget %}
+    {% if localized is defined %}
+        <div class="in-ckeditor">
+            {{ block('base_ckeditor_widget') }}
+        </div>
+        <span class="input__flag">
+            {{ localeFlag(locale) }}
+        </span>
+    {% else %}
+        <div class="in-ckeditor">
+            {{ block('base_ckeditor_widget') }}
+        </div>
+    {% endif %}
+{% endblock ckeditor_widget %}

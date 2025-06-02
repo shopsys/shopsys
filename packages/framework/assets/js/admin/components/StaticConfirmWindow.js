@@ -21,7 +21,7 @@ export default class StaticConfirmWindow {
             content: $(event.currentTarget).data('confirm-message'),
             buttonCancel: true,
             buttonContinue: true,
-            urlContinue: urlToContinue
+            urlContinue: $(event.currentTarget).data('confirm-contiue-url')
         });
     }
 

@@ -1,0 +1,11 @@
+{{ form_start(quickSearchForm) }}
+<div class="mb-3">
+    <div class="input-group input-group-flat">
+        {{ form_widget(quickSearchForm.text) }}
+        <span class="input-group-text">
+            {{ info_icon('Searching searches in <ul> <li>complaint number</li><li>complaint email</li><li>order number</li><li>delivery last name</li><li>delivery company name</li><li>last name from order</li><li>email from order</li><li>complaint author last name</li><li>complaint author company name</ul> It is possible to use wildcards * and ?'|trans) }}
+        </span>
+        {{ form_widget(quickSearchForm.submit, { label: 'Search [verb]'|trans, attr: { class: 'btn'}, full_name: '' }) }}
+    </div>
+</div>
+{{ form_end(quickSearchForm) }}

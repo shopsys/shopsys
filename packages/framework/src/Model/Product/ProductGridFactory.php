@@ -46,12 +46,12 @@ class ProductGridFactory
         $grid->addColumn('visibility', 'visibility', t('Visibility'))
             ->setClassAttribute('text-center table-col table-col-10');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
+        
         $grid->addEditActionColumn('admin_product_edit', ['id' => 'p.id']);
         $grid->addDeleteActionColumn('admin_product_delete', ['id' => 'p.id'])
             ->setConfirmMessage(t('Do you really want to remove this product?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Product/listGrid.html.twig', [
+        $grid->setTheme('@ShopsysAdministration/content/product/listGrid.html.twig', [
             'VARIANT_TYPE_MAIN' => Product::VARIANT_TYPE_MAIN,
             'VARIANT_TYPE_VARIANT' => Product::VARIANT_TYPE_VARIANT,
             'TYPE_INQUIRY' => ProductTypeEnum::TYPE_INQUIRY,
@@ -82,7 +82,7 @@ class ProductGridFactory
         $gridViewParameters['VARIANT_TYPE_MAIN'] = Product::VARIANT_TYPE_MAIN;
         $gridViewParameters['VARIANT_TYPE_VARIANT'] = Product::VARIANT_TYPE_VARIANT;
         $gridViewParameters['TYPE_INQUIRY'] = ProductTypeEnum::TYPE_INQUIRY;
-        $grid->setTheme('@ShopsysFramework/Admin/Content/ProductPicker/listGrid.html.twig', $gridViewParameters);
+        $grid->setTheme('@ShopsysAdministration/content/productPicker/listGrid.html.twig', $gridViewParameters);
 
         return $grid;
     }

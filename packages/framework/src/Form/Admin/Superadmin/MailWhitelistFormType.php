@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Superadmin;
 
 use Override;
+use Shopsys\AdministrationBundle\Form\SwitchType;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailWhitelistCollectionType;
@@ -44,9 +45,9 @@ final class MailWhitelistFormType extends AbstractType
         }
 
         $builder
-            ->add('mailWhitelistEnabled', YesNoType::class, [
+            ->add('mailWhitelistEnabled', SwitchType::class, [
                 'label' => t('Enable whitelist'),
-                'required' => true,
+                'required' => false,
             ])
             ->add('messageMailWhitelist', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,

@@ -13,7 +13,7 @@ There are a few customizations on top of the standard [KnpMenu](https://symfony.
 The template is not configured globally (via `config/packages/twig.yaml`) but instead, the template is provided during the rendering in a Twig template:
 
 ```twig
-{{ knp_menu_render('admin_side_menu', {template: 'ShopsysFrameworkBundle:Admin/Menu:side_menu.html.twig'}) }}`.
+{{ knp_menu_render('admin_side_menu', {template: '@ShopsysAdministration/partial/side_menu.html.twig'}) }}`.
 ```
 
 The menu template works similarly to the default `knp_menu.html.twig`, but it uses BEM classes and supports a few custom features.

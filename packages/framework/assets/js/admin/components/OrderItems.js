@@ -34,8 +34,8 @@ export default class OrderItems {
                 });
         } else {
             $items.find('.js-order-item-remove')
-                .removeClass('text-disabled')
-                .tooltip('destroy');
+                .removeClass('text-disabled');
+            // .tooltip('destroy');
         }
     }
 

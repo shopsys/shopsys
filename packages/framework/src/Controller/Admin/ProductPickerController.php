@@ -133,7 +133,7 @@ class ProductPickerController extends AdminBaseController
             $request,
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/ProductPicker/list.html.twig', $viewParameters);
+        return $this->render('@ShopsysAdministration/content/productPicker/list.html.twig', $viewParameters);
     }
 
     /**

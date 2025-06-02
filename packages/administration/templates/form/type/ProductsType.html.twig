@@ -1,0 +1,42 @@
+{% block products_widget %}
+    <div class="card">
+        <div class="list-group list-group-flush list-group-hoverable overflow-auto" style="max-height: 35rem">
+            {% for key, productForm in form %}
+                {% set product = form.vars.products[key] %}
+
+                <div class="list-group-item">
+                    <div class="row align-items-center">
+                        {% if sortable %}
+                            <div class="col-auto">
+                                <span class="js-products-picker-item-handle cursor-move">
+                                    <span class="in-icon in-icon--move svg svg-move"></span>
+                                </span>
+                            </div>
+                        {% endif %}
+
+                        <div class="col-auto">
+                            <span class="avatar avatar-1" style="background-image: url({{ image_url(product) }})"></span>
+                        </div>
+
+                        <div class="col text-truncate js-products-picker-item-product-name">
+                            {% if product is not null %}
+                                <a href="{{ url('admin_product_edit', {id: product.id}) }}" target="_blank">
+                                    <span>{{ product.name }}</span>&nbsp;{{ ux_icon('tabler:external-link') }}
+                                </a>
+
+                                <div class="d-block text-secondary text-truncate mt-n1">{{ product.catnum }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-auto">
+                            <a href="#" class="list-group-item-actions">
+                                {{ ux_icon('tabler:x', {width: 24, height: 24}) }}
+                            </a>
+                            {{ form_widget(productForm, {attr: {class: 'js-products-picker-item-input list-group-item-actions'}}) }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

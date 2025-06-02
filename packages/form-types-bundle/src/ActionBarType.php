@@ -81,6 +81,7 @@ final class ActionBarType extends AbstractType
             $builder->add('back_link', LinkType::class, [
                 'link' => $backLink,
                 'label' => $options['back_label'],
+                'attr' => ['class' => 'me-2'],
             ]);
         }
 

@@ -1,3 +1,21 @@
+<div class="dropdown-menu overflow-auto" style="max-height: 300px">
+    {{ form_start(form, {'action': path('admin_domains_filter'), 'method': 'POST'}) }}
+    {% for child in form.domains %}
+        {{ form_widget(child, { inFormChoice: true, 'attr': {'class': 'form-check-input m-0 me-2'} }) }}
+        {{ form_label(child) }}
+    {% endfor %}
+
+    <div class="dropdown-divider"></div>
+
+    <div class="form-check">
+        <input type="checkbox" id="admin_domains_form_check_all" class="form-check-input m-0 me-2 js-domains-select-all-checkbox">
+        <label class="form-check-label" for="admin_domains_form_check_all">{{ 'All'|trans }}</label>
+    </div>
+    {{ form_widget(form.apply) }}
+    {{ form_end(form) }}
+</div>
+
+{#
 <div class="js-toggle-menu-submenu box-dropdown__options js-domains-select">
     {{ form_start(form, {'action': path('admin_domains_filter'), 'method': 'POST'}) }}
     <ul class="domain-filter__list">
@@ -21,3 +39,4 @@
     </div>
     {{ form_end(form) }}
 </div>
+#}

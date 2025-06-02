@@ -1,0 +1,41 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}
+    - {{ 'Enable two factor authentication by Google Authenticator'|trans }}
+{% endblock %}
+
+{% block h1 %}{{ 'Enable two factor authentication by Google Authenticator'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col">
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="card-title">1. {{ 'Scan QR code'|trans }}</h2>
+                    <div class="card-subtitle">
+                        {{ 'Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator).'|trans }}
+                    </div>
+                    <div class="text-center">
+                        <img src="{{ qrCodeDataUri }}" />
+                    </div>
+                    <div class="text-secondary mb-2">
+                        {{ 'If you cannot scan the QR code, you can manually enter the following secret key:'| trans }}
+                    </div>
+                    <div class="input-icon">
+                        <input type="text" value="{{ googleAuthenticatorSecret }}" class="form-control" readonly="">
+                        {# @todo add copy to clipboard or remove icon #}
+                        <span class="input-icon-addon">{{ ux_icon('duplicate') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="card-title">2. {{ 'Confirm one-time passcode'|trans }}</h2>
+                    {{ form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

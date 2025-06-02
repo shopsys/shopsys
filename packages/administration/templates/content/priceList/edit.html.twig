@@ -1,0 +1,13 @@
+{% extends '@ShopsysAdministration/content/priceList/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing price list'|trans }} - {{ priceList.name }}{% endblock %}
+
+{% block pre_title %}{{ 'Editing price list'|trans }}{% endblock %}
+{% block h1 %}{{ priceList.name }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ protectedUrl('admin_pricelist_export', {id: priceList.id}) }}" class="btn">
+        {{ ux_icon('download') }}
+        {{ 'Export CSV'|trans }}
+    </a>
+{% endblock %}

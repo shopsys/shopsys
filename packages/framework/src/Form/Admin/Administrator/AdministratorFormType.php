@@ -144,6 +144,7 @@ class AdministratorFormType extends AbstractType
                 'placeholder' => t('-- Select a role --'),
                 'multiple' => true,
                 'label' => t('Role'),
+                'form_attr' => true,
                 'attr' => [
                     'class' => 'js-role-group-custom',
                 ],

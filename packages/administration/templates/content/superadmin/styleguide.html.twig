@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Styleguide'|trans }}{% endblock %}
+{% block h1 %}{{ 'Styleguide'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+    {{ form_end(form) }}
+{% endblock %}

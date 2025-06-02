@@ -1,0 +1,31 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}
+    - {{ 'Disable two factor authentication'|trans }}
+{% endblock %}
+
+{% block h1 %}{{ 'Disable two factor authentication'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="card card-md">
+        <div class="card-body">
+            {% if administrator.emailAuthEnabled %}
+                <h2 class="card-title mb-2">1. {{ 'Request authentication code' }}</h2>
+                <div class="mb-3">
+                    {{ form(formSendEmail) }}
+                </div>
+            {% endif %}
+
+            <h2 class="card-title">
+                2.
+                {% if administrator.emailAuthEnabled %}
+                    {{ 'Enter a 6 digit authentication from your email.'|trans }}
+                {% elseif administrator.googleAuthenticatorEnabled %}
+                    {{ 'Enter a 6 digit authentication from your two factor authentication mobile application.'|trans }}
+                {% endif %}
+            </h2>
+            {# @todo: change submit button label to disable #}
+            {{ form(formVerification) }}
+        </div>
+    </div>
+{% endblock %}

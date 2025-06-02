@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Styleguide\StyleguideFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\MailWhitelistFormType;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -78,7 +79,7 @@ class SuperadminController extends AdminBaseController
             return $this->redirectToRoute('admin_superadmin_pricing');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/pricing.html.twig', [
+        return $this->render('@ShopsysAdministration/content/superadmin/pricing.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -90,7 +91,7 @@ class SuperadminController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function urlsAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
+        return $this->render('@ShopsysAdministration/content/superadmin/urlsListGrid.html.twig');
     }
 
     /**
@@ -104,7 +105,7 @@ class SuperadminController extends AdminBaseController
         $formData = [];
 
         foreach ($this->moduleList->getNames() as $moduleName) {
-            $formData['modules'][$moduleName] = $this->moduleFacade->isEnabled($moduleName);
+            $formData[$moduleName] = $this->moduleFacade->isEnabled($moduleName);
         }
 
         $form = $this->createForm(ModulesFormType::class, $formData, ['module_list' => $this->moduleList]);
@@ -113,7 +114,7 @@ class SuperadminController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            foreach ($formData['modules'] as $moduleName => $isEnabled) {
+            foreach ($formData as $moduleName => $isEnabled) {
                 $this->moduleFacade->setEnabled($moduleName, $isEnabled);
             }
 
@@ -122,19 +123,25 @@ class SuperadminController extends AdminBaseController
             return $this->redirectToRoute('admin_superadmin_modules');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/modules.html.twig', [
+        return $this->render('@ShopsysAdministration/content/superadmin/modules.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/superadmin/css-documentation/')]
+    #[Route(path: '/superadmin/styleguide/')]
     #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
-    public function cssDocumentationAction(): Response
+    public function styleguideAction(Request $request): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
+        $form = $this->createForm(StyleguideFormType::class);
+        $form->handleRequest($request);
+
+        return $this->render('@ShopsysAdministration/content/superadmin/styleguide.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -169,7 +176,7 @@ class SuperadminController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/mailWhitelist.html.twig', [
+        return $this->render('@ShopsysAdministration/content/superadmin/mailWhitelist.html.twig', [
             'form' => $form->createView(),
         ]);
     }

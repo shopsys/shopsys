@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Parameter groups overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Parameter groups'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_parametergroup_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new parameter group'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ grid.render() }}
+{% endblock %}

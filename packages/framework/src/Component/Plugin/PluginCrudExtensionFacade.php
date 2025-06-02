@@ -31,7 +31,7 @@ class PluginCrudExtensionFacade
             ]);
 
             $builderExtensionGroup->add($key, $crudExtension->getFormTypeClass(), [
-                'render_form_row' => false,
+                'block_prefix' => 'no_row_block',
                 'property_path' => sprintf('%s[%s]', $name, $key),
             ]);
 

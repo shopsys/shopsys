@@ -82,7 +82,7 @@ class DeliveryAddressController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/deliveryAddress/new.html.twig', [
             'form' => $form->createView(),
             'customer' => $customer,
         ]);
@@ -142,7 +142,7 @@ class DeliveryAddressController extends AdminBaseController
             t('Editing delivery address - %name%', ['%name%' => $deliveryAddress->getFullAddress()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/deliveryAddress/edit.html.twig', [
             'form' => $form->createView(),
             'deliveryAddress' => $deliveryAddress,
         ]);

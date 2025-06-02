@@ -1,0 +1,19 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Extended SEO categories'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Extended SEO categories'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_categoryseo_newcategory') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}{{ 'Create'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ gridView.render() }}
+
+{% endblock %}

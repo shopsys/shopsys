@@ -47,7 +47,7 @@ class NavigationController extends AdminBaseController
             $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Navigation/itemsList.html.twig', [
+        return $this->render('@ShopsysAdministration/content/navigation/itemsList.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -88,7 +88,7 @@ class NavigationController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Navigation/Item/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/navigation/item/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -132,7 +132,7 @@ class NavigationController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Navigation/Item/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/navigation/item/edit.html.twig', [
             'form' => $form->createView(),
             'item' => $navigationItem,
         ]);

@@ -59,12 +59,12 @@ class TransportGridFactory implements GridFactoryInterface
         $grid->addColumn('name', 'tt.name', t('Name'));
         $grid->addColumn('prices', 'prices', t('Prices'));
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
+        
         $grid->addEditActionColumn('admin_transport_edit', ['id' => 't.id']);
         $grid->addDeleteActionColumn('admin_transport_delete', ['id' => 't.id'])
             ->setConfirmMessage(t('Do you really want to remove this shipping?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Transport/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/transport/listGrid.html.twig');
 
         return $grid;
     }

@@ -1,0 +1,32 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Promo codes'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Promo codes'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_promocode_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create promo code'|trans }}
+    </a>
+
+    <a href="{{ url('admin_promocode_newmassgenerate') }}" class="btn btn-secondary">
+        {{ ux_icon('plus') }}
+        {{ 'Create bulk promo codes'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        placeholder: 'Search by code...'|trans
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ gridView.render() }}
+{% endblock %}

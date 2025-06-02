@@ -1,0 +1,58 @@
+{% block _store_form_userInformation_openingHours_widget %}
+    {% import _self as self %}
+    {% set dayNamesIndexedByDayNumber = {
+        1: 'Monday'|trans,
+        2: 'Tuesday'|trans,
+        3: 'Wednesday'|trans,
+        4: 'Thursday'|trans,
+        5: 'Friday'|trans,
+        6: 'Saturday'|trans,
+        7: 'Sunday'|trans,
+    } %}
+
+    {% for openingHours in form %}
+        <div class="row py-3{{ not loop.last ? ' border-bottom' }}">
+            <div class="col-3">
+                <strong>{{ dayNamesIndexedByDayNumber[openingHours.vars.value.dayOfWeek] }}</strong>
+            </div>
+            {% set rangesForm = openingHours.openingHoursRanges %}
+
+            <div class="js-opening-hours-form-group col">
+                <div class="js-opening-hours" data-prototype="{{ self.openingHoursRangeRow(rangesForm.vars.prototype)|escape }}" data-index="{{ rangesForm|length }}">
+                    {% for key, range in rangesForm %}
+                        {{ self.openingHoursRangeRow(range, key) }}
+                        {{ form_errors(range) }}
+                    {% else %}
+                        {% do rangesForm.setRendered %}
+                    {% endfor %}
+                </div>
+
+                <a href="#" class="js-opening-hours-item-add btn">
+                    {{ ux_icon('plus') }}
+                    {{ 'Add opening hours'|trans }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% macro openingHoursRangeRow(openingHoursRange, index) %}
+    <div class="js-opening-hours-item row g-2 align-items-center mb-3" data-index="{{ index }}">
+        <div class="col">
+            {{ form_widget(openingHoursRange.openingTime) }}
+            {{ form_errors(openingHoursRange.openingTime) }}
+        </div>
+
+        <div class="col-auto">—</div>
+
+        <div class="col">
+            {{ form_widget(openingHoursRange.closingTime) }}
+            {{ form_errors(openingHoursRange.closingTime) }}
+        </div>
+
+        <div class="col-auto">
+            <a href="#" class="js-opening-hours-item-remove">{{ ux_icon('delete') }}</a>
+        </div>
+    </div>
+    {% do openingHoursRange.setRendered %}
+{% endmacro %}

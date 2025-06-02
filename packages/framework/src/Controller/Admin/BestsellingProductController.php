@@ -38,7 +38,7 @@ class BestsellingProductController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/product/bestselling-product/list/')]
+    #[Route(path: '/product/bestsellingProduct/list/')]
     #[AccessControlRule([Roles::ROLE_BESTSELLING_PRODUCT_VIEW])]
     public function listAction(Request $request): Response
     {
@@ -53,7 +53,7 @@ class BestsellingProductController extends AdminBaseController
             $domainId,
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/BestsellingProduct/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/bestsellingProduct/list.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'selectedDomainId' => $domainId,
             'bestsellingProductsInCategories' => $bestsellingProductsInCategories,
@@ -64,7 +64,7 @@ class BestsellingProductController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/product/bestselling-product/detail/')]
+    #[Route(path: '/product/bestsellingProduct/detail/')]
     #[AccessControlRule([Roles::ROLE_BESTSELLING_PRODUCT_FULL], ['POST'])]
     #[AccessControlRule([Roles::ROLE_BESTSELLING_PRODUCT_VIEW], ['GET'])]
     public function detailAction(Request $request): Response
@@ -107,7 +107,7 @@ class BestsellingProductController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem($category->getName());
 
-        return $this->render('@ShopsysFramework/Admin/Content/BestsellingProduct/detail.html.twig', [
+        return $this->render('@ShopsysAdministration/content/bestsellingProductdetail.html.twig', [
             'form' => $form->createView(),
             'categoryName' => $category->getName(),
         ]);

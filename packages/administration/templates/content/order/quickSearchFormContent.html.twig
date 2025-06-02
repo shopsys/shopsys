@@ -1,0 +1,11 @@
+{{ form_start(quickSearchForm) }}
+<div class="mb-3">
+    <div class="input-group input-group-flat">
+        {{ form_widget(quickSearchForm.text) }}
+        <span class="input-group-text">
+            {{ info_icon('Searching searches in <ul> <li>order number</li><li>registered customer email</li><li>customer\'s email in order</li><li>customer\'s last name</li><li>company name.'|trans) }}
+        </span>
+        {{ form_widget(quickSearchForm.submit, { label: 'Search [verb]'|trans, attr: { class: 'btn'}, full_name: '' }) }}
+    </div>
+</div>
+{{ form_end(quickSearchForm) }}

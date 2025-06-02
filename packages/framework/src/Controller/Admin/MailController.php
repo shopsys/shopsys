@@ -60,7 +60,7 @@ class MailController extends AdminBaseController
     {
         $grid = $this->mailTemplateGridFactory->create();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Mail/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/mail/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -124,7 +124,7 @@ class MailController extends AdminBaseController
             t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Mail/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/mail/edit.html.twig', [
             'form' => $form->createView(),
             'mailTemplateName' => $mailTemplateVariables->getReadableName(),
             'bodyVariables' => $mailTemplateVariables->getBodyVariables(),
@@ -197,7 +197,7 @@ class MailController extends AdminBaseController
             $this->addSuccessFlash(t('Email settings modified.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Mail/setting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/mail/setting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -238,7 +238,7 @@ class MailController extends AdminBaseController
             return $this->createInvalidResponse($form);
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Mail/mailTemplateSend.html.twig', [
+        return $this->render('@ShopsysAdministration/content/mail/mailTemplateSend.html.twig', [
             'form' => $form->createView(),
         ]);
     }

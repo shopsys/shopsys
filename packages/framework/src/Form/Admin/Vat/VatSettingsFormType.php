@@ -36,9 +36,6 @@ class VatSettingsFormType extends AbstractType
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),
-            'attr' => [
-                'class' => 'wrap-divider wrap-divider--bottom',
-            ],
         ]);
 
         $builderSettingsGroup

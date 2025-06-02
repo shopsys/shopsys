@@ -1,0 +1,39 @@
+{% extends '@ShopsysAdministration/content/administrator/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing administrator'|trans }} - {{ administrator.realName }}{% endblock %}
+
+{% block pre_title %}{{ 'Edit administrator'|trans }}{% endblock %}
+{% block h1 %}{{ administrator.realName }}{% endblock %}
+
+{% block admin_log %}
+    {% if lastAdminActivities|length > 0 %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <h2>{{ 'Administrator activities history'|trans }}</h2>
+                <ul class="timeline">
+                    {% for adminActivity in lastAdminActivities %}
+                        <li class="timeline-event">
+                            <div class="timeline-event-icon">
+                                {{ ux_icon('tabler:lock') }}
+                            </div>
+                            <div class="card timeline-event-card">
+                                <div class="card-body">
+                                    <div class="text-secondary float-end">
+                                        {{ 'Last action' }}:
+                                        {{ adminActivity.lastActionTime|formatDateTime }}
+                                    </div>
+                                    <h4 class="mb-2">{{ 'Administrator logged in' }}</h4>
+                                    <div class="text-secondary">
+                                        {{ adminActivity.loginTime|formatDateTime }}
+                                        {{ 'from IP' }}
+                                        {{ adminActivity.ipAddress }}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

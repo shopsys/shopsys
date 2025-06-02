@@ -43,7 +43,7 @@ class ParameterController extends AdminBaseController
     {
         $grid = $this->parameterGridFactory->create();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Parameter/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/parameter/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -87,7 +87,7 @@ class ParameterController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Parameter/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/parameter/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -132,7 +132,7 @@ class ParameterController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Parameter/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/parameter/edit.html.twig', [
             'form' => $form->createView(),
             'parameter' => $parameter,
         ]);

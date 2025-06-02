@@ -37,10 +37,10 @@ If you'd like to create something more complicated, you can require other servic
 
 Create a new Twig template named `x.html.twig` in `templates/Admin/Content` (you'll have to create the directory).
 
-The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig` and extend its blocks `title`, `h1` and `block main_content`:
+The template should extend `'@ShopsysAdministration/layout/layout_with_panel.html.twig` and extend its blocks `title`, `h1` and `block main_content`:
 
 ```twig
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}- {{ 'Tweets by @shopsyscz'|trans }}{% endblock %}
 {% block h1 %}{{ 'Updates from Shopsys Platform'|trans }}{% endblock %}

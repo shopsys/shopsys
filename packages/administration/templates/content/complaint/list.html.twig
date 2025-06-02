@@ -1,0 +1,47 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Complaints overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Complaints'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                <li class="nav-item">
+                    <a href="#quick"
+                       class="nav-link{{ not isAdvancedSearchFormSubmitted ? ' active' }}"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Quick search'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#advanced"
+                       class="nav-link{{ isAdvancedSearchFormSubmitted ? ' active' }}"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Advanced search'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="tab-pane{{ not isAdvancedSearchFormSubmitted ? ' active show' }}" id="quick">
+                    {% include '@ShopsysAdministration/content/complaint/quickSearchFormContent.html.twig'
+                        with {quickSearchForm: quickSearchForm} %}
+                </div>
+                <div class="tab-pane{{ isAdvancedSearchFormSubmitted ? ' active show' }}" id="advanced">
+                    {% include '@ShopsysAdministration/content/complaint/advancedSearch/advancedSearch.html.twig'
+                        with {advancedSearchForm: advancedSearchForm} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
+    {{ gridView.render() }}
+{% endblock %}

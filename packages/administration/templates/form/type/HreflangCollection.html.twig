@@ -1,0 +1,36 @@
+{% macro hreflangSettingRow(hreflangItem, index) %}
+    <tr class="js-hreflang-setting-item js-form-group" data-index="{{ index }}">
+        <td>
+            {{ form_widget(hreflangItem) }}
+            {{ form_errors(hreflangItem) }}
+        </td>
+        <td>
+            <a href="#" class="js-hreflang-setting-item-remove">{{ ux_icon('delete') }}</a>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block hreflang_setting_collection_widget %}
+    {% import _self as self %}
+    <div id="{{ form.vars.id }}" class="js-form-group">
+        <table class="table" id="hreflang-setting">
+            <tbody class="js-hreflang-setting" data-prototype="{{ self.hreflangSettingRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+
+                {% for key, hreflangItem in form %}
+                    {{ self.hreflangSettingRow(hreflangItem, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+
+                <tr class="js-hreflang-setting-empty-item">
+                    <td colspan="4">{{ 'Add some alternate language combinations'|trans }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="#" class="js-hreflang-setting-item-add btn">
+            {{ ux_icon('plus') }}
+            {{ 'Add language combination'|trans }}
+        </a>
+    </div>
+{% endblock %}

@@ -104,7 +104,7 @@ class DefaultController extends AdminBaseController
         $ordersValueTrend = $this->getTrendDifference($previousValueOfOrders, $currentValueOfOrders);
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/Default/index.html.twig',
+            '@ShopsysAdministration/content/default/index.html.twig',
             [
                 'registeredInLastTwoWeeksLabels' => $registeredInLastTwoWeeksDates,
                 'registeredInLastTwoWeeksValues' => $registeredInLastTwoWeeksCounts,
@@ -210,32 +210,23 @@ class DefaultController extends AdminBaseController
 
         $cronListGrid = $this->gridFactory->create('cronList', $dataSource);
 
-        $cronListGrid->addColumn('name', 'name', t('Name'), false);
-        $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'), false);
-        $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'), false);
-        $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'), false);
-        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (mm:ss)'), false)->setClassAttribute(
-            'table-col',
-        );
-        $cronListGrid->addColumn('minimalDuration', 'minimalDuration', t('Min duration (mm:ss)'), false)->setClassAttribute(
-            'table-col',
-        );
-        $cronListGrid->addColumn('averageDuration', 'averageDuration', t('Avg duration (mm:ss)'), false)->setClassAttribute(
-            'table-col',
-        );
-
-        $cronListGrid->addColumn('maximalDuration', 'maximalDuration', t('Max duration (mm:ss)'), false)->setClassAttribute(
-            'table-col',
-        );
-        $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col');
+        $cronListGrid->addColumn('name', 'name', t('Name'));
+        $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'));
+        $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'));
+        $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'));
+        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration'));
+        $cronListGrid->addColumn('minimalDuration', 'minimalDuration', t('Min duration'));
+        $cronListGrid->addColumn('averageDuration', 'averageDuration', t('Avg duration'));
+        $cronListGrid->addColumn('maximalDuration', 'maximalDuration', t('Max duration'));
+        $cronListGrid->addColumn('status', 'status', t('Status'));
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute(
-                'table-grid__cell--actions column--superadmin',
-            );
+            $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute('w-1 text-end');
         }
 
-        $cronListGrid->setTheme('@ShopsysFramework/Admin/Content/Default/cronListGrid.html.twig');
+        $cronListGrid->setTitle(t('Cron overview (%instanceName%)', ['%instanceName%' => $instanceName]));
+
+        $cronListGrid->setTheme('@ShopsysAdministration/content/default/cronListGrid.html.twig');
 
         return $cronListGrid->createView();
     }
@@ -322,27 +313,26 @@ class DefaultController extends AdminBaseController
 
         $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource);
 
-        $cronRunsListGrid->addColumn('startedAt', 'cmr.startedAt', t('Started at'), false);
-        $cronRunsListGrid->addColumn('finishedAt', 'cmr.finishedAt', t('Finished at'), false);
-        $cronRunsListGrid->addColumn('duration', 'cmr.duration', t('Duration (mm:ss)'), false)->setClassAttribute(
-            'table-col table-col-10',
-        );
-        $cronRunsListGrid->addColumn('status', 'cmr.status', t('Status'), false)->setClassAttribute('table-col table-col-10');
+        $cronRunsListGrid->addColumn('startedAt', 'cmr.startedAt', t('Started at'));
+        $cronRunsListGrid->addColumn('finishedAt', 'cmr.finishedAt', t('Finished at'));
+        $cronRunsListGrid->addColumn('duration', 'cmr.duration', t('Duration (mm:ss)'));
+        $cronRunsListGrid->addColumn('status', 'cmr.status', t('Status'));
         $cronRunsListGrid->setTheme(
-            '@ShopsysFramework/Admin/Content/Default/cronModuleRunsListGrid.html.twig',
+            '@ShopsysAdministration/content/default/cronModuleRunsListGrid.html.twig',
             [
                 'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
             ],
         );
         $cronRunsListGrid->enablePaging();
         $cronRunsListGrid->setDefaultLimit(100);
+        $cronRunsListGrid->setTitle(t('Cron runs'));
 
         $this->breadcrumbOverrider->overrideLastItem(
             t('Cron detail - %name%', ['%name%' => $cronConfig->getReadableName() ?? $cronModule->getServiceId()]),
         );
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/Default/cronDetail.html.twig',
+            '@ShopsysAdministration/content/default/cronDetail.html.twig',
             [
                 'cronRunsGridView' => $cronRunsListGrid->createView(),
                 'cronGraphValues' => array_column($data, 'duration'),

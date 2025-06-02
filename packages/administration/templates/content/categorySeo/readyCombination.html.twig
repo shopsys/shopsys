@@ -1,0 +1,47 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% set title = 'Extended SEO category - editing the combination with SEO values'|trans %}
+
+{% block title %}- {{ title }}{% endblock %}
+
+{% block pre_title %}{{ 'Extended SEO category'|trans }}{% endblock %}
+{% block h1 %}{{ 'Edit the combination with SEO values'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3 class="card-title">{{ 'Filter summary' }}</h3>
+            <div class="datagrid">
+                {{ _self.infoLine('Domain'|trans, selectedCategorySeoMixCombinationDomainConfig.name) }}
+
+                {% if flagName %}
+                    {{ _self.infoLine('Flag'|trans, flagName) }}
+                {% endif %}
+
+                {{ _self.infoLine('Ordering'|trans, getOrderingNameByOrderingId(selectedCategorySeoMixCombination.ordering)) }}
+            </div>
+        </div>
+    </div>
+
+    {% if parameterValueNamesIndexedByParameterNames|length %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">{{ 'Filtered parameters' }}</h3>
+                <div class="datagrid">
+                    {% for parameterName, parameterValueName in parameterValueNamesIndexedByParameterNames %}
+                        {{ _self.infoLine(parameterName, parameterValueName) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {{ form(form) }}
+{% endblock %}
+
+{% macro infoLine(label, value) %}
+    <div class="datagrid-item">
+        <div class="datagrid-title">{{ label }}</div>
+        <div class="datagrid-content">{{ value }}</div>
+    </div>
+{% endmacro %}

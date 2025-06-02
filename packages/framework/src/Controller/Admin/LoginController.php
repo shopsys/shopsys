@@ -94,7 +94,7 @@ class LoginController extends AdminBaseController
         $lastUserName = $this->authenticationUtils->getLastUsername();
         $request->getSession()->remove(SecurityRequestAttributes::LAST_USERNAME);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Login/loginForm.html.twig', [
+        return $this->render('@ShopsysAdministration/content/login/loginForm.html.twig', [
             'form' => $form->createView(),
             'lastUsername' => $lastUserName,
             'error' => $error,
@@ -140,7 +140,7 @@ class LoginController extends AdminBaseController
         try {
             $this->administratorLoginFacade->loginByMultidomainToken($request, $multidomainLoginToken);
         } catch (InvalidTokenException) {
-            return $this->render('@ShopsysFramework/Admin/Content/Login/loginFailed.html.twig');
+            return $this->render('@ShopsysAdministration/content/login/loginFailed.html.twig');
         }
         $redirectTo = $originalReferer ?? $this->generateUrl('admin_default_dashboard');
 

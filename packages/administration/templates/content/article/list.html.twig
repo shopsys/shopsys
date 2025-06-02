@@ -1,0 +1,60 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Articles overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Articles'|trans }}{% endblock %}
+
+
+{% block btn %}
+    <a href="{{ url('admin_article_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new article'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    <div class="js-multiple-grids-rows-unified">
+        {% if articlesCountOnSelectedDomain > 0 %}
+            <div class="mb-3">
+                {{ gridViewFooter1.render() }}
+            </div>
+
+            <div class="mb-3">
+                {{ gridViewFooter2.render() }}
+            </div>
+
+            <div class="mb-3">
+                {{ gridViewFooter3.render() }}
+            </div>
+
+            <div class="mb-3">
+                {{ gridViewFooter4.render() }}
+            </div>
+
+            <div class="mb-3">
+                {{ gridViewNone.render() }}
+            </div>
+
+            {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+                {% block fixed_bar_content %}
+                    <button class="js-multiple-grids-save-all-button btn btn--disabled" data-drag-and-drop-url-save-ordering="{{ url('admin_article_saveordering') }}" type="button">{{ 'Save changes in order'|trans }}</button>
+                {% endblock %}
+            {% endembed %}
+        {% else %}
+            <div class="card">
+                <div class="empty">
+                    <div class="empty-icon">
+                        {{ ux_icon('notes-off', { class: 'text-secondary' }) }}
+                    </div>
+                    <p class="empty-title">{{ 'No articles found on this domain. You have to create some first.'|trans }}</p>
+                    <p class="empty-subtitle text-secondary">
+                        {{ 'Try adjusting your search or filter to find what you’re looking for, or create a new one if needed.'|trans }}
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

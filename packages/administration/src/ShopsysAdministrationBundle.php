@@ -12,6 +12,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class ShopsysAdministrationBundle extends AbstractBundle
@@ -57,5 +58,29 @@ class ShopsysAdministrationBundle extends AbstractBundle
                 $thirdPartyBundlesViewFileLocator->locate('TwigBundle') => 'Twig',
             ],
         ]);
+
+        $this->autoRegisterFormThemes($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $builder
+     */
+    public function autoRegisterFormThemes(ContainerBuilder $builder): void
+    {
+        $finder = new Finder();
+        $themeDir = __DIR__ . '/../templates/form';
+        $themes = [];
+
+        if (is_dir($themeDir)) {
+            foreach ($finder->files()->in($themeDir)->name('*.html.twig') as $file) {
+                $themes[] = sprintf('@ShopsysAdministration/form/%s', $file->getRelativePathname());
+            }
+        }
+
+        if ($themes !== []) {
+            $builder->prependExtensionConfig('twig', [
+                'form_themes' => $themes,
+            ]);
+        }
     }
 }

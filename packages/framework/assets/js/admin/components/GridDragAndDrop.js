@@ -3,9 +3,9 @@ import 'jquery-ui/ui/widgets/mouse';
 import 'jquery-ui-touch-punch';
 import formChangeInfo from './FormChangeInfo';
 import Ajax from '../../common/utils/Ajax';
-import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import ModalWindow from '../utils/ModalWindow';
 
 export default class GridDragAndDrop {
 
@@ -52,9 +52,9 @@ export default class GridDragAndDrop {
 
     highlightChanges ($grid, highlight) {
         if (highlight) {
-            $grid.find('.js-drag-and-drop-grid-submit').removeClass('btn--disabled');
+            $grid.find('.js-drag-and-drop-grid-submit').removeAttr('disabled'); // removeClass('btn--disabled');
         } else {
-            $grid.find('.js-drag-and-drop-grid-submit').addClass('btn--disabled');
+            $grid.find('.js-drag-and-drop-grid-submit').attr('disabled', 'disabled'); // addClass('btn--disabled');
         }
     }
 
@@ -68,12 +68,12 @@ export default class GridDragAndDrop {
 
             $gridsOnPage.on('update', function () {
                 formChangeInfo.showInfo();
-                $saveAllButton.removeClass('btn--disabled');
+                $saveAllButton.removeAttr('disabled'); // removeClass('btn--disabled');
             });
 
             $gridsOnPage.on('save', function () {
                 formChangeInfo.removeInfo();
-                $saveAllButton.addClass('btn--disabled');
+                $saveAllButton.attr('disabled', 'disabled'); // addClass('btn--disabled');
             });
 
             $saveAllButton.click(function () {
@@ -100,7 +100,7 @@ export default class GridDragAndDrop {
                 _this.highlightChanges($grid, false);
 
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saved')
                 });
             }

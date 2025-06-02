@@ -68,7 +68,7 @@ class ConfirmDeleteResponseFactory
         }
 
         $renderedResponse = $this->twigEnvironment->render(
-            '@ShopsysFramework/Components/ConfirmDelete/setNewAndDelete.html.twig',
+            '@ShopsysFramework/Components/ConfirmDelete/set_new_and_delete.html.twig',
             [
                 'message' => $message,
                 'route' => $route,

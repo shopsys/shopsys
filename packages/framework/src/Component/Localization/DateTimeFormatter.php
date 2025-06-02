@@ -26,7 +26,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param string|null $locale
      * @return string|bool
      */
-    public function format(DateTime $value, $dateType, $timeType, $locale)
+    public function format(\DateTimeInterface $value, $dateType, $timeType, $locale)
     {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,

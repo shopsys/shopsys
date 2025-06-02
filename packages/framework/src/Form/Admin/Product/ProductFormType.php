@@ -7,8 +7,8 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\AdministrationBundle\Form\SwitchType;
 use Shopsys\FormTypesBundle\MultidomainType;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
@@ -156,8 +156,8 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createShortDescriptionsUspGroup($builder));
         $builder->add($this->createParametersGroup($builder));
         $builder->add($this->createSeoGroup($builder, $product));
-        $builder->add($this->createImagesGroup($builder, $options));
-        $builder->add($this->createFilesGroup($builder, $options));
+        //$builder->add($this->createImagesGroup($builder, $options));
+        //$builder->add($this->createFilesGroup($builder, $options));
         $builder->add($this->createAccessoriesGroup($builder, $product));
         $builder->add($this->createVideosGroup($builder));
         $builder->add('actionBar', ActionBarType::class, [
@@ -391,7 +391,7 @@ final class ProductFormType extends AbstractType
         ]);
 
         $builderDisplayAvailabilityGroup
-            ->add('hidden', YesNoType::class, [
+            ->add('hidden', SwitchType::class, [
                 'required' => false,
                 'label' => t('Hide product'),
             ]);
@@ -399,7 +399,7 @@ final class ProductFormType extends AbstractType
         $builderDisplayAvailabilityGroup->add('domainHidden', MultidomainType::class, [
             'label' => t('Hide on domain'),
             'required' => false,
-            'entry_type' => YesNoType::class,
+            'entry_type' => SwitchType::class,
         ]);
 
         $builderDisplayAvailabilityGroup
@@ -413,7 +413,7 @@ final class ProductFormType extends AbstractType
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
                 'label' => t('Selling end date'),
             ])
-            ->add('sellingDenied', YesNoType::class, [
+            ->add('sellingDenied', SwitchType::class, [
                 'required' => false,
                 'label' => t('Exclude from sale on whole eshop'),
                 'attr' => [
@@ -426,7 +426,7 @@ final class ProductFormType extends AbstractType
             ->add('saleExclusion', MultidomainType::class, [
                 'label' => t('Exclude from sale on domains'),
                 'required' => false,
-                'entry_type' => YesNoType::class,
+                'entry_type' => SwitchType::class,
             ]);
 
         if (
@@ -470,16 +470,6 @@ final class ProductFormType extends AbstractType
                 'label' => t('Unit'),
             ]);
 
-        $builderStockGroup = $builder->create('stockGroup', FormType::class, [
-            'render_form_row' => false,
-            'inherit_data' => true,
-            'attr' => [
-                'class' => 'form-line__js',
-            ],
-        ]);
-
-        $builderDisplayAvailabilityGroup->add($builderStockGroup);
-
         $builderDisplayAvailabilityGroup
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
@@ -512,7 +502,6 @@ final class ProductFormType extends AbstractType
             $stockGroupBuilder->add('productStockData', CollectionType::class, [
                 'required' => false,
                 'entry_type' => ProductStockFormType::class,
-                'render_form_row' => false,
             ]);
         }
 

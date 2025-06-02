@@ -28,6 +28,7 @@ yarn-error.log
 /assets/js/bundles
 /assets/public/admin_svg.less
 /assets/public/frontend_svg.less
+/assets/public/admin/fonts
 
 /.phpunit.cache
 

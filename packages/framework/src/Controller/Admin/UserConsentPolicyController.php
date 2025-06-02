@@ -61,7 +61,7 @@ class UserConsentPolicyController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/UserConsentPolicy/setting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/userConsentPolicy/setting.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -1,0 +1,22 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'List of language constants'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Language constants'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::localeTabsAction')) }}
+
+    {% if gridView is not null %}
+        {{ form_start(quickSearchForm) }}
+            {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+                form_input: quickSearchForm.text,
+                form_submit: quickSearchForm.submit,
+                info_message: 'Searching searches in Key, Original translation and User translation.'|trans,
+            } %}
+        {{ form_end(quickSearchForm) }}
+
+        {{ gridView.render() }}
+    {% endif %}
+{% endblock %}

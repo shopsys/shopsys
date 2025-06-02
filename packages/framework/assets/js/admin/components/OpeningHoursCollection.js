@@ -3,7 +3,6 @@ import { addNewItemToCollection, removeItemFromCollection } from '../validation/
 
 export default class OpeningHoursCollection {
     static init ($container) {
-        const $openingHoursItemAdd = $container.filterAllNodes('.js-opening-hours-item-add');
         const $openingHoursCollection = $container.filterAllNodes('.js-opening-hours');
 
         $openingHoursCollection.on('click', '.js-opening-hours-item-remove', function (event) {
@@ -15,7 +14,7 @@ export default class OpeningHoursCollection {
             event.preventDefault();
         });
 
-        $openingHoursItemAdd.on('click', function () {
+        $container.on('click', '.js-opening-hours-item-add', function (event) {
             const $collection = $(this).closest('.js-opening-hours-form-group').find('.js-opening-hours');
             const index = $collection.data('index');
 
@@ -29,12 +28,10 @@ export default class OpeningHoursCollection {
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
 
             addNewItemToCollection('.js-opening-hours', index);
 
             event.preventDefault();
-            return false;
         });
     }
 }

@@ -1,35 +1,39 @@
 import Register from '../utils/Register';
-import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 
 export default class CopyToClipboard {
+    constructor () {
+        const copyNodes = document.getElementsByClassName('js-copy-to-clipboard');
 
-    constructor ($container) {
-        const $copyNodes = $container.filterAllNodes('.js-copy-to-clipboard[data-content]');
+        for (let node of copyNodes) {
+            let tooltip = new bootstrap.Tooltip(node, {
+                placement: 'right'
+            });
 
-        $copyNodes.tooltip();
-        $copyNodes.click((event) => _this.onClick(event));
+            node.addEventListener('click', (event) => {
+                const content = node.getAttribute('data-bs-original-title');
 
-        const _this = this;
+                navigator.clipboard.writeText(content).then(() => {
+                    node.setAttribute('title', Translator.trans('Copied to clipboard!'));
+                    node.setAttribute('data-bs-original-title', Translator.trans('Copied to clipboard!'));
+
+                    tooltip.dispose();
+                    tooltip = new bootstrap.Tooltip(node, {
+                        placement: 'right'
+                    });
+                    tooltip.show();
+
+                    node.setAttribute('data-bs-original-title', content);
+                    node.setAttribute('title', content);
+                });
+            });
+        }
     }
 
-    onClick (event) {
-        const content = $(event.currentTarget).data('content');
-        navigator.clipboard.writeText(content).then(() => {
-            $(event.currentTarget).attr('title', Translator.trans('Copied to clipboard!'));
-
-            $(event.currentTarget).tooltip('destroy');
-            $(event.currentTarget).tooltip('show');
-
-            $(event.currentTarget).attr('title', content);
-            $(event.currentTarget).attr('data-original-title', content);
-        });
-    }
-
-    static init ($container) {
+    static init () {
         // eslint-disable-next-line no-new
-        new CopyToClipboard($container);
+        new CopyToClipboard();
     }
 }
 
-(new Register()).registerCallback(CopyToClipboard.init, 'CopyToClipboard.init');
+new Register().registerCallback(CopyToClipboard.init, 'CopyToClipboard.init');

@@ -1,18 +1,25 @@
 {{ message|raw }}
 
+{# @todo: ajax modal rewrite #}
+
 {# buttons should be consistent with the result of Shopsys.window JS function in Resources/scripts/admin/window.js #}
-<div class="window__actions">
-    <a
-        href="#"
-        class="window__actions__btn window-button-cancel btn btn--default"
-        onclick="$(this).closest('.window').trigger('windowClose'); return false;"
-    >
-        {{ 'No'|trans }}
-    </a>
-    <a
-        href="{{ url(route, routeParams) }}"
-        class="window__actions__btn window-button-continue btn js-confirm-delete-direct-link test-window-button-continue"
-    >
-        {{ 'Yes'|trans }}
-    </a>
-</div>
+
+    <div class="w-100">
+        <div class="row">
+            <div class="col">
+                <a href="#"
+                   class="btn w-100"
+                   data-bs-dismiss="modal"
+                >
+                    {{ 'No'|trans }}
+                </a>
+            </div>
+            <div class="col">
+                <a href="{{ url(route, routeParams) }}"
+                   class="btn btn-primary w-100 js-confirm-delete-direct-link test-window-button-continue"
+                >
+                    {{ 'Yes'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>

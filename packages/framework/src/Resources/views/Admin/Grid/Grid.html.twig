@@ -1,56 +1,68 @@
 {% block grid %}
-    <div class="js-grid" {% apply spaceless %}
-        data-total-count="{{ grid.totalCount }}"
-        data-grid-id="{{ grid.id|escape('html_attr') }}"
-        {% if grid.inlineEdit %}
-            data-inline-edit-service-name="{{ grid.inlineEditService.serviceName }}"
-            data-inline-edit-url-get-form="{{ url('admin_grid_getform') }}"
-            data-inline-edit-url-save-form="{{ url('admin_grid_saveform') }}"
-        {% endif %}
-        {% if grid.dragAndDrop %}
-            data-drag-and-drop-ordering-entity-class="{{ grid.orderingEntityClass }}"
-            data-drag-and-drop-url-save-ordering="{{ url('admin_grid_saveordering') }}"
-        {% endif %}
-    {% endapply %}>
+    <div class="js-grid card"
+         data-total-count="{{ grid.totalCount }}"
+         data-grid-id="{{ grid.id|escape('html_attr') }}"
+            {% if grid.inlineEdit %}
+                data-inline-edit-service-name="{{ grid.inlineEditService.serviceName }}"
+                data-inline-edit-url-get-form="{{ url('admin_grid_getform') }}"
+                data-inline-edit-url-save-form="{{ url('admin_grid_saveform') }}"
+            {% endif %}
+            {% if grid.dragAndDrop %}
+                data-drag-and-drop-ordering-entity-class="{{ grid.orderingEntityClass }}"
+                data-drag-and-drop-url-save-ordering="{{ url('admin_grid_saveordering') }}"
+            {% endif %}
+    >
+        {% if grid.rows is not empty or grid.inlineEdit or grid.multipleDragAndDrop %}
 
-    {% if grid.inlineEdit and grid.inlineEditService.canAddNewRow %}
-        {{ gridView.renderBlock('grid_inline_edit_add_button') }}
-    {% endif %}
 
-    {% if grid.rows is not empty or grid.inlineEdit or grid.multipleDragAndDrop %}
-        <div class="js-inline-edit-data-container{% if grid.rows is empty and grid.inlineEdit %} hidden{% endif %}">
-            <div class="">
-                {% if grid.enabledPaging %}
-                    <div class="margin-bottom-20">
-                        {{ gridView.renderBlock('grid_pager') }}
-                    </div>
-                {% endif %}
-            </div>
-            <div class="table-touch js-table-touch">
-                <table class="table-grid js-table-grid">
+            {% if grid.title %}
+                <div class="card-header d-flex align-items-center">
+                    <h2 class="card-title">
+                        {{ gridView.renderBlock('grid_multiple_drag_and_drop_title', { grid_title: grid.title }) }}
+                    </h2>
+                </div>
+            {% endif %}
+
+            {% if grid.inlineEdit and grid.inlineEditService.canAddNewRow %}
+                <div class="card-header d-flex align-items-center">
+                    {{ gridView.renderBlock('grid_inline_edit_add_button') }}
+                </div>
+            {% elseif grid.enabledPaging %}
+                <div class="card-header d-flex align-items-center">
+                    {{ gridView.renderBlock('grid_pager') }}
+                </div>
+            {% endif %}
+
+            <div class="table-responsive js-table-touch">
+                <table class="table table-striped table-hover js-table-grid">
                     {{ gridView.renderBlock('grid_titles') }}
                     {{ gridView.renderBlock('grid_rows') }}
                 </table>
             </div>
-            <div class="">
-                {% if grid.enabledPaging %}
-                    <div class="margin-top-25">
-                        {{ gridView.renderBlock('grid_pager') }}
-                    </div>
-                {% endif %}
-                {% if grid.dragAndDrop %}
-                    <div class="margin-top-25">
-                        <button class="js-drag-and-drop-grid-submit btn btn--disabled" type="button">{{ 'Save changes in order'|trans }}</button>
-                    </div>
-                {% endif %}
+
+            {% if grid.enabledPaging %}
+                <div class="card-footer d-flex align-items-center">
+                    {{ gridView.renderBlock('grid_pager') }}
+                </div>
+            {% endif %}
+
+            {% if grid.dragAndDrop %}
+                <div class="card-footer d-flex align-items-center">
+                    <button class="js-drag-and-drop-grid-submit ms-auto btn btn-secondary" disabled type="button">{{ 'Save changes in order'|trans }}</button>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="empty">
+                <div class="empty-icon">
+                    {{ ux_icon('notes-off', { class: 'text-secondary' }) }}
+                </div>
+                <p class="empty-title">{{ gridView.renderBlock('grid_no_data') }}</p>
+                <p class="empty-subtitle text-secondary">
+                    {{ 'Try adjusting your search or filter to find what you’re looking for, or create a new one if needed.'|trans }}
+                </p>
             </div>
-        </div>
-    {% else %}
-        <div class="in-message in-message--info js-inline-edit-no-data">
-            {{ gridView.renderBlock('grid_no_data') }}
-        </div>
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block grid_no_data %}
@@ -64,31 +76,28 @@
 {% block grid_value_cell_edit %}
     {% if form[column.id] is defined %}
         {{ form_widget(form[column.id]) }}
-    {% endif -%}
+    {% endif %}
 {% endblock %}
 
 {% block grid_titles %}
     <thead>
-        <tr class="table-grid__row">
+        <tr>
             {% if grid.dragAndDrop or grid.multipleDragAndDrop %}
-                <th class="table-grid__cell"></th>
+                <th class="w-1"></th>
             {% endif %}
             {% if grid.enabledSelecting %}
-                <th class="table-grid__cell table-grid__cell--choice">
-                    <label>
-                        <input type="checkbox" class="js-grid-mass-action-select-all css-checkbox" />
-                        <span class="css-checkbox__image"></span>
-                    </label>
+                <th class="w-1">
+                    <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="{{ 'Select all'|trans }}">
                 </th>
             {% endif %}
             {% for column in grid.columnsById %}
-                <th class="table-grid__cell {% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
+                <th class="{% if column.classAttribute %}{{ column.classAttribute }}{% endif %}">
                     {{ gridView.renderTitleCell(column) }}
                 </th>
             {% endfor %}
             {% if grid.actionColumns is not empty or grid.inlineEdit %}
-                <th class="table-grid__cell table-grid__cell--actions {{ grid.actionColumnClassAttribute }}" >{{ 'Modifications'|trans }}</th>
-            {% endif  %}
+                <th class="text-end {{ grid.actionColumnClassAttribute }}">{{ 'Modifications'|trans }}</th>
+            {% endif %}
         </tr>
     </thead>
 {% endblock %}
@@ -100,20 +109,21 @@
         {% else %}
             {% set orderBy = column.id %}
         {% endif %}
-        <a class="in-sort-arrows" href="{{ gridView.url({'order': orderBy}) }}">
-            <span class="in-sort-arrows__link {% if grid.orderSourceColumnName == column.id %} active{% endif %}">{{ column.title }}</span>
+        <a href="{{ gridView.url({'order': orderBy}) }}" class="{{ grid.orderSourceColumnName == column.id ? 'link-primary' : 'link-secondary' }}">
+            {{ column.title }}
+
             {% if grid.orderSourceColumnName == column.id %}
                 {% if grid.orderDirection == 'desc' %}
-                    <span class="in-sort-arrows__item in-sort-arrows__item--down"></span>
+                    {{ ux_icon('chevron-down', {class: "icon icon-sm"}) }}
                 {% else %}
-                    <span class="in-sort-arrows__item in-sort-arrows__item--up"></span>
+                    {{ ux_icon('chevron-up', {class: "icon icon-sm"}) }}
                 {% endif %}
             {% endif %}
             {% if column.help is not null %}
                 <span title="{{ column.help }}"
-                    class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
+                      class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
                     {% if grid.orderSourceColumnName == column.id %}
                         style="margin-left: 20px;"
                     {% endif %}
@@ -126,9 +136,9 @@
         {{ column.title }}
         {% if column.help is not null %}
             <span title="{{ column.help }}"
-                class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
-                data-toggle="tooltip"
-                data-placement="bottom"
+                  class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
             >
                 {{ ux_icon('info') }}
             </span>
@@ -139,8 +149,8 @@
 {% block grid_rows %}
     <tbody class="js-inline-edit-rows {% if grid.dragAndDrop %}js-drag-and-drop-grid-rows{% endif %}">
         {% if grid.multipleDragAndDrop %}
-            <tr class="table-grid__row js-grid-row-holder display-none">
-                <td colspan="100" class="table-grid__cell">
+            <tr class="js-grid-row-holder">
+                <td colspan="100" class="align-middle">
                     {{ gridView.renderBlock('grid_multiple_drag_and_drop_row_holder') }}
                 </td>
             </tr>
@@ -163,55 +173,51 @@
 {% endblock %}
 
 {% block grid_row %}
-    <tr class="table-grid__row {{ cycle(['odd', 'even'], loopIndex) }} js-grid-row test-grid-row"
+    <tr class="js-grid-row test-grid-row"
             {% if grid.inlineEdit and row is not null %} data-inline-edit-row-id="{{ grid.getRowId(row)|json_encode() }}"{% endif %}
             {% if (grid.dragAndDrop or grid.multipleDragAndDrop) and row is not null %} data-drag-and-drop-grid-row-id="{{ grid.getRowId(row)|json_encode() }}"{% endif %}
     >
         {% if (grid.dragAndDrop or grid.multipleDragAndDrop) %}
-            <td class="table-grid__cell {% if (row is not null) %}table-grid__cell--move{% endif %}">
+            <td class="align-middle">
                 {% if (row is not null) %}{{ ux_icon('move', { class: 'cursor-move' }) }}{% endif %}
             </td>
         {% endif %}
         {% if grid.enabledSelecting %}
-            <td class="table-grid__cell table-grid__cell--choice">
+            <td class="align-middle">
                 <label>
                     <input
-                        class="js-grid-mass-action-select-row css-checkbox"
-                        type="checkbox"
-                        name="g[{{ grid.id|escape('html_attr') }}][selectedRowIds][]"
-                        value="{{ grid.getRowId(row)|json_encode() }}"
-                        {% if grid.isRowSelected(row) %}checked="checked"{% endif %}
+                            class="js-grid-mass-action-select-row form-check-input m-0 align-middle"
+                            type="checkbox"
+                            name="g[{{ grid.id|escape('html_attr') }}][selectedRowIds][]"
+                            value="{{ grid.getRowId(row)|json_encode() }}"
+                            {% if grid.isRowSelected(row) %}checked="checked"{% endif %}
+                            aria-label="{{ 'Select row'|trans }}"
                     />
-                    <span class="css-checkbox__image"></span>
                 </label>
             </td>
         {% endif %}
         {% for column in grid.columnsById %}
-            <td class="table-grid__cell js-grid-column-{{ column.id }} test-grid-column-{{ column.id }}{% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
+            <td class="align-middle js-grid-column-{{ column.id }} test-grid-column-{{ column.id }}{% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
                 {{ gridView.renderCell(column, row, form|default(null)) }}
             </td>
         {% endfor %}
         {% if grid.actionColumns|length > 0 or grid.inlineEdit %}
-            <td class="table-grid__cell--actions js-inline-edit-unmatched-inputs">
+            <td class="js-inline-edit-unmatched-inputs text-end w-1 text-nowrap align-middle">
                 {% if grid.inlineEdit and form is defined %}
-                    <div class="form-inline-edit js-inline-edit-buttons">
-                        <div class="form-inline-edit__item">
-                            <a href="#" class="js-inline-edit-save test-inline-edit-save in-icon in-icon--save" title="{{ 'Save changes'|trans }}">
-                                {{ ux_icon('checked') }}
-                            </a>
-                        </div>
-                        <div class="form-inline-edit__item">
-                            <a href="#" class="js-inline-edit-cancel in-icon in-icon--cancel" title="{{ 'Discard changes'|trans }}">
-                                {{ ux_icon('delete') }}
-                            </a>
-                        </div>
+                    <div class="js-inline-edit-buttons">
+                        <a href="#" class="btn btn-sm btn-success js-inline-edit-save test-inline-edit-save" title="{{ 'Save changes'|trans }}">
+                            {{ ux_icon('checked') }}
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary js-inline-edit-cancel" title="{{ 'Discard changes'|trans }}">
+                            {{ ux_icon('delete') }}
+                        </a>
                     </div>
-                    <span class="js-inline-edit-saving">
-                        <span class="in-icon in-icon--spinner">{{ ux_icon('gear') }}</span>
-                    </span>
+                    <div class="js-inline-edit-saving">
+                        <div class="spinner-border"></div>
+                    </div>
                 {% else %}
                     {% if grid.inlineEdit %}
-                        <a href="#" class="js-inline-edit-edit test-inline-edit-edit in-icon in-icon--edit" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
+                        <a href="#" class="px-1 link-secondary js-inline-edit-edit test-inline-edit-edit" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
                     {% endif %}
                     {% for actionColumn in grid.actionColumns %}
                         {{ gridView.renderActionCell(actionColumn, row)|raw }}
@@ -220,8 +226,8 @@
                 {% if form is defined %}
                     {% if not render_rest is defined or render_rest %}
                         {{- form_rest(form) -}}
-                    {% endif -%}
-                {% endif -%}
+                    {% endif %}
+                {% endif %}
             </td>
         {% endif %}
     </tr>
@@ -238,131 +244,125 @@
         {% set icon = actionColumn.type %}
     {% endif %}
     <a
-        class="in-icon in-icon--{{ actionColumn.type }} table-action{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %}"
-        {% if actionColumn.ajaxConfirm %}
-            data-ajax-confirm-on-open="true"
-        {% endif %}
+            class="px-1 link-secondary{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %}"
+            {% if actionColumn.ajaxConfirm %}
+                data-ajax-confirm-on-open="true"
+            {% endif %}
             href="{{ actionColumn.targetUrl(row) }}"
-            title = "{{ actionColumn.title }}"
-        {% if actionColumn.confirmMessage is not empty -%}
-            data-confirm-window
-            data-confirm-message="{{ actionColumn.confirmMessage }}"
-            data-confirm-contiue-url="{{ actionColumn.targetUrl(row) }}"
-        {%- endif %}
+            title="{{ actionColumn.title }}"
+            {% if actionColumn.confirmMessage is not empty %}
+                data-confirm-window
+                data-confirm-status="{{ actionColumn.type is same as('delete') ? 'danger' : 'info' }}"
+                data-confirm-message="{{ actionColumn.confirmMessage }}"
+                data-confirm-continue-url="{{ actionColumn.targetUrl(row) }}"
+            {% endif %}
     >{{ ux_icon(icon) }}</a>
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    <div class="in-grid-control__item in-grid-control__item--show {% if pageCount > 0 %}in-grid-control__item--wide{% endif %} ">
-        {{ 'Displaying'|trans }} {{ entityName|default('records'|trans)|trim }}
-        {{ grid.paginationResults.fromItem }} - {{ grid.paginationResults.toItem }} {{ 'from'|trans }} {{ grid.totalCount }}
+    <div class="d-flex align-items-center">
+        <div class="text-secondary">
+            {{ 'Displaying'|trans }}
+
+            <div class="dropdown d-inline-block mx-2">
+                <a href="#" class="btn dropdown-toggle btn-sm" data-bs-toggle="dropdown">{{ grid.limit }}</a>
+                <div class="dropdown-menu">
+                    {% for value in grid.allowedLimits %}
+                        {% if value is not same as(grid.limit) %}
+                            <a class="dropdown-item" href="{{ gridView.url({'limit' : value}, 'page') }}">{{ value }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {{ entityName|default('records'|trans)|trim }}:
+            {{ grid.paginationResults.fromItem }} - {{ grid.paginationResults.toItem }} {{ 'from'|trans }} {{ grid.totalCount }}
+        </div>
     </div>
 {% endblock %}
 
 {% block grid_pager_selectpage %}
-    {% apply spaceless %}
-        <ul class="in-paging">
+    <ul class="pagination m-auto">
 
-            {% if grid.page > 1 %}
-                <li class="in-paging__item in-paging__item--prev">
-                    <a href="{{ gridView.url({'page': grid.page - 1}) }}">
-                        {{ ux_icon('arrow') }}
-                    </a>
-                </li>
-
-                <li class="in-paging__item">
-                    <a href="{{ gridView.url({'page': 1}) }}">1</a>
-                </li>
-            {% endif %}
-
-            {% set pagerExpand = 2 %}
-
-            {% if grid.page > pagerExpand + 2 %}
-                <li class="in-paging__item">
-                    <span>...</span>
-                </li>
-
-            {% endif %}
-
-            {% for page in ((grid.page - pagerExpand)..(grid.page))|filter(page => page > 1 and page < grid.page) %}
-                <li class="in-paging__item">
-                    <a href="{{ gridView.url({'page': page}) }}">{{ page }}</a>
-                </li>
-            {% endfor %}
-            <li class="in-paging__item">
-                <strong>{{ grid.page }}</strong>
+        {% if grid.page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ gridView.url({'page': grid.page - 1}) }}">
+                    {{ ux_icon('chevron-left') }}
+                </a>
             </li>
 
-            {% for page in ((grid.page + 1)..(grid.page + pagerExpand))|filter(page => page > grid.page and page < grid.pageCount) %}
-                <li class="in-paging__item">
-                    <a href="{{ gridView.url({'page': page}) }}">{{ page }}</a>
-                </li>
-            {% endfor %}
+            <li class="page-item">
+                <a class="page-link" href="{{ gridView.url({'page': 1}) }}">1</a>
+            </li>
+        {% endif %}
 
-            {% if grid.page <= grid.pageCount - pagerExpand - 2 %}
-                <li class="in-paging__item">
-                    <span>...</span>
-                </li>
-            {% endif %}
+        {% set pagerExpand = 2 %}
 
-            {% if grid.page < grid.pageCount %}
-                <li class="in-paging__item">
-                    <a href="{{ gridView.url({'page': grid.pageCount}) }}">{{ grid.pageCount }}</a>
-                </li>
-                <li class="in-paging__item in-paging__item--next">
-                    <a href="{{ gridView.url({'page': grid.page + 1}) }}">
-                        {{ ux_icon('arrow') }}
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
+        {% if grid.page > pagerExpand + 2 %}
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
 
-    {% endapply %}
+        {% endif %}
+
+        {% for page in ((grid.page - pagerExpand)..(grid.page))|filter(page => page > 1 and page < grid.page) %}
+            <li class="page-item">
+                <a class="page-link" href="{{ gridView.url({'page': page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+        <li class="page-item active">
+            <span class="page-link">{{ grid.page }}</span>
+        </li>
+
+        {% for page in ((grid.page + 1)..(grid.page + pagerExpand))|filter(page => page > grid.page and page < grid.pageCount) %}
+            <li class="page-item">
+                <a class="page-link" href="{{ gridView.url({'page': page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        {% if grid.page <= grid.pageCount - pagerExpand - 2 %}
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        {% endif %}
+
+        {% if grid.page < grid.pageCount %}
+            <li class="page-item">
+                <a class="page-link" href="{{ gridView.url({'page': grid.pageCount}) }}">{{ grid.pageCount }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{ gridView.url({'page': grid.page + 1}) }}">
+                    {{ ux_icon('chevron-right') }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 {% endblock %}
 
 {% block grid_pager_results_perpage %}
-    <div class="in-grid-control__item in-grid-control__item--settings">
-        <div class="js-grid-go-to in-grid-control__item__go">
-            <span class="in-grid-control__item__go__text">{{ 'Go to page:'|trans }}</span>
-            <div class="in-grid-control__item__go__block form-type-and-go">
-                <input
-                        type="number"
-                        min="1"
-                        max="{{ grid.pageCount }}"
-                        value="{{ grid.page }}"
-                        class="current input form-type-and-go__input js-grid-go-to-input"
-                        size="2"
-                />
-                <a class="btn btn--neutral form-type-and-go__btn js-grid-go-to-button" href="#" data-url="{{ gridView.url({'page' : '--page--'}) }}">
-                    {{ ux_icon('arrow-strong') }}
-                </a>
-            </div>
-        </div>
-        <div class="in-grid-control__item__go in-grid-control__item__go--select">
-            <span class="in-grid-control__item__go__text">
-                {{ 'Items per page:'|trans }}
-            </span>
-            <div class="in-grid-control__item__go__block">
-                <select onchange="window.location = '{{ gridView.url({'limit' : '--limit--'}, 'page')|escape('js') }}'.replace('--limit--', this.value);" class="input">
-                    {% for value in grid.allowedLimits %}
-                        <option value="{{ value }}"{% if (value == grid.limit) %} selected="selected"{% endif %}>{{ value }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+    <div class="d-flex align-items-center js-grid-go-to">
+        <div class="text-secondary text-nowrap me-2">{{ 'Go to page:'|trans }}</div>
+        <div class="input-group">
+            <input
+                    type="number"
+                    min="1"
+                    max="{{ grid.pageCount }}"
+                    value="{{ grid.page }}"
+                    class="form-control form-control-sm js-grid-go-to-input"
+                    style="min-width: 4em"
+            />
+            <a class="btn btn-sm js-grid-go-to-button" href="#" data-url="{{ gridView.url({'page' : '--page--'}) }}">{{ ux_icon('arrow-strong') }}</a>
         </div>
     </div>
 {% endblock %}
 
 {% block grid_pager %}
-    <div class="in-grid-control">
-        {{ gridView.renderBlock('grid_pager_totalcount', { 'pageCount': grid.pageCount }) }}
-        {% if grid.pageCount > 1 %}
-            <div class="in-grid-control__item in-grid-control__item--paging">
-                {{ gridView.renderBlock('grid_pager_selectpage') }}
-            </div>
-        {% endif %}
-        {{ gridView.renderBlock('grid_pager_results_perpage') }}
-    </div>
+    {{ gridView.renderBlock('grid_pager_totalcount', { 'pageCount': grid.pageCount }) }}
+
+    {{ gridView.renderBlock('grid_pager_selectpage') }}
+
+    {{ gridView.renderBlock('grid_pager_results_perpage') }}
+
 {% endblock %}
 
 {% block grid_value_cell_type_boolean %}
@@ -375,15 +375,15 @@
 
 {% block grid_value_cell_id_visible %}
     {% if value %}
-        {% set visibilityClass = 'in-icon--visible' %}
+        {% set visibilityClass = 'text-green' %}
         {% set visibilityIcon = 'visible' %}
         {% set visibilityTitle = 'Yes'|trans %}
     {% else %}
-        {% set visibilityClass = 'in-icon--invisible' %}
+        {% set visibilityClass = 'text-secondary' %}
         {% set visibilityIcon = 'invisible' %}
         {% set visibilityTitle = 'No'|trans %}
     {% endif %}
-    <span class="in-icon {{ visibilityClass }}"
+    <span class="{{ visibilityClass }}"
           title="{{ visibilityTitle }}"
     >{{ ux_icon(visibilityIcon) }}</span>
 {% endblock %}
@@ -409,34 +409,36 @@
 {% endblock %}
 
 {% block grid_hidden_inputs %}
-    {% apply spaceless %}
-        {% set name = name|default('') %}
-        {% if parameter is iterable %}
-            {% for key, value in parameter %}
-                {% set currentParameter = parameter %}
-                {% set parameter = value %}
-                {% set currentName = name %}
-                {% if name != '' %}
-                    {% set name = name ~ '[' ~ key ~ ']' %}
-                {% else %}
-                    {% set name = key %}
-                {% endif %}
+    {% set name = name|default('') %}
+    {% if parameter is iterable %}
+        {% for key, value in parameter %}
+            {% set currentParameter = parameter %}
+            {% set parameter = value %}
+            {% set currentName = name %}
+            {% if name != '' %}
+                {% set name = name ~ '[' ~ key ~ ']' %}
+            {% else %}
+                {% set name = key %}
+            {% endif %}
 
-                    {{ block('grid_hidden_inputs') }}
-                {% set parameter = currentParameter %}
-                {% set name = currentName %}
-            {% endfor %}
-        {% else %}
-            <input type="hidden" name="{{ name }}" value="{{ parameter }}" />
-        {% endif %}
-    {% endapply %}
+            {{ block('grid_hidden_inputs') }}
+            {% set parameter = currentParameter %}
+            {% set name = currentName %}
+        {% endfor %}
+    {% else %}
+        <input type="hidden" name="{{ name }}" value="{{ parameter }}" />
+    {% endif %}
 {% endblock %}
 
 {% block grid_inline_edit_add_button %}
-    <div class="wrap-bar">
-        <a href="#" class="btn btn--primary btn--plus wrap-bar__btn js-inline-edit-add test-inline-edit-add">
-            <i class="btn__icon">+</i>
+    <div class="ms-auto">
+        <a href="#" class="btn btn-primary js-inline-edit-add test-inline-edit-add">
+            {{ ux_icon('plus') }}
             {{ addEntity|default('Create record'|trans) }}
         </a>
     </div>
+{% endblock %}
+
+{% block grid_multiple_drag_and_drop_title %}
+    {{ grid_title }}
 {% endblock %}

@@ -1,0 +1,27 @@
+:root {
+    --page-padding-bottom: 5rem;
+    font-size: 18px;
+
+    --tblr-primary: #009bd9;
+}
+
+// make popover and tooltip wider
+.popover {
+    --tblr-popover-max-width: 30rem;
+}
+
+.tooltip {
+    --tblr-tooltip-max-width: 300px;
+}
+
+// fix empty space on the left (https://github.com/tabler/tabler/issues/2271)
+@media (min-width: 992px) {
+    :host,
+    :root {
+        margin-left: 0;
+    }
+}
+
+body {
+    overflow-y: scroll;
+}

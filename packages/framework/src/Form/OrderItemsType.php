@@ -108,7 +108,6 @@ class OrderItemsType extends AbstractType
             ->addAllowedTypes('order', [Order::class])
             ->setDefaults([
                 'inherit_data' => true,
-                'render_form_row' => false,
             ]);
     }
 }

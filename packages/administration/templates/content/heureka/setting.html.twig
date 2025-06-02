@@ -1,0 +1,23 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Heureka - Verified by Customer'|trans }}{% endblock %}
+{% block h1 %}{{ 'Heureka - Verified by Customer'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {% if form is not null %}
+        {{ form(form) }}
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+                <div class="empty">
+                    <div class="empty-icon">
+                        {{ ux_icon('notes-off', { class: 'text-secondary' }) }}
+                    </div>
+                    <p class="empty-title">Heureka - Verified by Customer service does not support the language of this domain.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -57,7 +57,7 @@ class StockController extends AdminBaseController
     {
         $grid = $this->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Stock/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/stock/list.html.twig', [
             'gridView' => $grid->createView(),
             'settingsForm' => $this->getStockSettingsForm()->createView(),
         ]);
@@ -71,7 +71,7 @@ class StockController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_STOCK_VIEW], ['GET'])]
     public function settingsAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/Stock/settings.html.twig', [
+        return $this->render('@ShopsysAdministration/content/stock/settings.html.twig', [
             'form' => $this->getStockSettingsForm()->createView(),
         ]);
     }
@@ -163,7 +163,7 @@ class StockController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Stock/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/stock/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -207,7 +207,7 @@ class StockController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing warehouse - %name%', ['%name%' => $stock->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Stock/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/stock/edit.html.twig', [
             'form' => $form->createView(),
             'stock' => $stock,
         ]);
@@ -228,9 +228,10 @@ class StockController extends AdminBaseController
             $this->stockFacade->changeDefaultStock($stock);
 
             $this->addSuccessFlashTwig(
-                t('Warehouse <strong>{{ name }}</strong> was set as default.'),
+                t('Warehouse <strong><a href="{{ url }}">{{ name }}</a></strong> was set as default.'),
                 [
                     'name' => $stock->getName(),
+                    'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
                 ],
             );
         } catch (StockNotFoundException) {
@@ -287,14 +288,14 @@ class StockController extends AdminBaseController
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
+        
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
             ->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Stock/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/stock/listGrid.html.twig');
 
         return $grid;
     }

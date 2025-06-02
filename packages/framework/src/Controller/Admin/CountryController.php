@@ -43,7 +43,7 @@ class CountryController extends AdminBaseController
     {
         $grid = $this->countryGridFactory->create();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Country/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/country/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -85,7 +85,7 @@ class CountryController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing country - %name%', ['%name%' => $country->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Country/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/country/edit.html.twig', [
             'form' => $form->createView(),
             'country' => $country,
         ]);
@@ -129,7 +129,7 @@ class CountryController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Country/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/country/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

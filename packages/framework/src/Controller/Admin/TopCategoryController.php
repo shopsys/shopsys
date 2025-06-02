@@ -56,7 +56,7 @@ class TopCategoryController extends AdminBaseController
             $this->addSuccessFlash(t('Product settings on the main page successfully changed'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/TopCategory/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/topCategory/list.html.twig', [
             'form' => $form->createView(),
         ]);
     }

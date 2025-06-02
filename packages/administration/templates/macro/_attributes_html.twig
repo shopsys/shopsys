@@ -1,0 +1,10 @@
+{% macro render(attr) %}
+    {% for attrname, attrvalue in attr %}
+        {{ " " }}
+        {% if attrvalue is same as(true) %}
+            {{ attrname }}="{{ attrname }}"
+        {% elseif attrvalue is not same as(false) %}
+            {{ attrname }}="{{ attrvalue }}"
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

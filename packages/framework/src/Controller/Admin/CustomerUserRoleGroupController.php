@@ -44,7 +44,7 @@ class CustomerUserRoleGroupController extends AdminBaseController
     {
         $grid = $this->gridFactory->create();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/roleGroup/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -85,7 +85,7 @@ class CustomerUserRoleGroupController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/roleGroupnew.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -129,7 +129,7 @@ class CustomerUserRoleGroupController extends AdminBaseController
             t('Editing customer user role group - %name%', ['%name%' => $customerUserRoleGroup->getName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/roleGroup/edit.html.twig', [
             'form' => $form->createView(),
             'customerUserRoleGroup' => $customerUserRoleGroup,
         ]);

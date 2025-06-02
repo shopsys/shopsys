@@ -53,6 +53,7 @@ class CurrencySettingsFormType extends AbstractType
                     ],
                 ],
             ])
+            // @todo: actionBar in rendercontroller does not work properly
             ->add('actionBar', ActionBarType::class, [
                 'save_label' => t('Save changes'),
             ]);

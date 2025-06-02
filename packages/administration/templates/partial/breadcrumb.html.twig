@@ -1,0 +1,23 @@
+<ol class="breadcrumb breadcrumb-arrows">
+    {% for item in knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('admin_side_menu')) %}
+        {% if item.item.name == 'root' %}
+            <li class="breadcrumb-item">
+                <a href="{{ url('admin_default_dashboard') }}">
+                    {{ ux_icon('house') }}
+                </a>
+            </li>
+        {% elseif loop.last %}
+            <li class="breadcrumb-item active">
+                {{ breadcrumbOverrider.lastItemOverridden ? breadcrumbOverrider.lastItemLabel : item.label }}
+            </li>
+        {% else %}
+            {% if item.uri is not null %}
+                <li class="breadcrumb-item">
+                    <a href="{{ item.uri }}">{{ item.label }}</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item">{{ item.label }}</li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</ol>

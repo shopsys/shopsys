@@ -1,0 +1,11 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'User consent policy settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'User consent policy settings'|trans }}{% endblock %}
+
+{% block main_content %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form(form) }}
+{% endblock %}

@@ -1,0 +1,27 @@
+{#
+@var form_input: FormTypeInterface
+@var form_submit: FormTypeInterface
+@var info_message: string
+@var placeholder: string
+#}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title text-secondary">
+            {{ title|default('Quick search'|trans) }}
+        </h2>
+        <div class="input-group input-group-flat">
+            {{ form_widget(form_input, { attr: { placeholder: placeholder|default(null) } }) }}
+            {% if info_message|default(false) %}
+                <span class="input-group-text">
+                    {{ info_icon(info_message) }}
+                </span>
+            {% endif %}
+
+            {{ form_widget(form_submit, {
+                label: 'Search [verb]'|trans,
+                attr: { class: 'btn' },
+                full_name: ''
+            }) }}
+        </div>
+    </div>
+</div>

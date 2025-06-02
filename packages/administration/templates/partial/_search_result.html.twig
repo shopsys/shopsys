@@ -1,0 +1,6 @@
+{% for result in results %}
+    <div class="list-group-item py-1 px-3 js-search-item border-start-0">
+        <a href="{{ result['uri'] }}" class="text-body d-block stretched-link" style="outline: none; box-shadow: none;">{{ result['label'] }}</a>
+        <div class="text-secondary small text-truncate mt-n1">{{ '(' ~ result['pathLabels']|join(' > ') ~ ')' }}</div>
+    </div>
+{% endfor %}

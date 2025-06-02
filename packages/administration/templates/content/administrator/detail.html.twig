@@ -1,0 +1,32 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Administrator'|trans }}{% endblock %}
+{% block h1 %}{{ 'Administrator'|trans }}{% endblock %}
+
+{% block btn %}
+    {% if administrator is defined and app.user.id == administrator.id %}
+        {% if administrator.enabledTwoFactorAuth %}
+            <a href="{{ url('admin_administrator_disable-two-factor-authentication', {'id': administrator.id}) }}" class="btn btn-light">
+                {{ 'Disable two factor authentication'|trans }}
+            </a>
+        {% else %}
+            <div class="dropdown">
+                <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">{{ 'Enable two factor authentication' }}</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'google_auth'}) }}">
+                        {{ 'Enable two factor authentication by Google Authenticator'|trans }}
+                    </a>
+                    <a class="dropdown-item" href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'email'}) }}">
+                        {{ 'Enable two factor authentication by email'|trans }}
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+
+    {% block admin_log %}{% endblock %}
+{% endblock %}

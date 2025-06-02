@@ -60,7 +60,7 @@ class LegalConditionsController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/LegalConditions/termsAndConditions.html.twig', [
+        return $this->render('@ShopsysAdministration/content/legalConditions/termsAndConditions.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -99,7 +99,7 @@ class LegalConditionsController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/LegalConditions/privacyPolicy.html.twig', [
+        return $this->render('@ShopsysAdministration/content/legalConditions/privacyPolicy.html.twig', [
             'form' => $form->createView(),
         ]);
     }

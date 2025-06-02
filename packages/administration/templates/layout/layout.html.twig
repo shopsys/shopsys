@@ -1,0 +1,142 @@
+{% extends '@ShopsysAdministration/layout/base.html.twig' %}
+
+{% block html_body %}
+    <div class="page">
+        {% if isMailerSettingUnusual() %}
+            {# @todo fix on mobile #}
+            <div class="alert alert-important alert-danger py-0 mb-0 ms-8 text-center rounded-0 d-none d-" role="alert" style="margin-left: 15rem">
+                {{ getMailerSettingInfo() }}
+            </div>
+        {% endif %}
+
+        {% block aside %}{% endblock %}
+
+        {% block header %}
+            <header class="navbar navbar-expand-md sticky-top d-print-none">
+                <div class="container-fluid">
+                    <button class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            {# @todo what about navbar menu id? check responsive #}
+                            data-bs-target="#navbar-menu"
+                            aria-controls="navbar-menu"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                    >
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="col-5 d-none d-xxl-block">
+                        <div class="dropdown">
+                            <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                                <div class="input-group input-group-flat">
+                                    <span class="input-group-text">{{ ux_icon('search') }}</span>
+                                    <input type="text"
+                                           class="form-control js-search-input"
+                                           placeholder="{{ "Search by section name…"|trans }}"
+                                           data-search-callback-url="{{ url('admin_searchadmin_search') }}"
+                                           aria-label="Search navigation"
+                                    >
+                                    <span class="input-group-text d-sm-none d-md-flex">{{ 'type&nbsp;%key%&nbsp;to search'|trans({'%key%': '<kbd>/</kbd>'})|raw }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-card js-search-results">
+                            <span class="dropdown-header text-end">
+                                <small>{{ 'use %keyTab% or %keyShiftTab%'|trans({'%keyTab%': '<kbd class="small">tab</kbd>', '%keyShiftTab%': '<kbd class="small">shift+tab</kbd>'})|raw }}</small>
+                            </span>
+                            <div class="list-group list-group-flush overflow-auto js-search-results__window" style="max-height: 35rem"></div>
+                        </div>
+                    </div>
+
+                    <div class="navbar-nav flex-row order-md-last ms-auto">
+                        {% if isMultidomain() %}
+                            {% if allowedAdminLocales()|length > 1 %}
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       data-bs-toggle="dropdown"
+                                       href="#"
+                                       role="button"
+                                       aria-expanded="false"
+                                       title="{{ 'Switch locale'|trans }}"
+                                    >
+                                        <span class="nav-link-icon">{{ localeFlag(app.user.selectedLocale) }}</span>
+                                    </a>
+                                    <ul class="dropdown-menu overflow-auto" style="max-height: 300px">
+                                        {% for locale in allowedAdminLocales() %}
+                                            <li>
+                                                <a href="{{ url('admin_localization_selectlocale', { locale: locale }) }}"
+                                                   class="dropdown-item"
+                                                   title="{{ languageName(locale, locale) }}"
+                                                >
+                                                    <span class="dropdown-item-icon">{{ localeFlag(locale, locale) }}</span>
+                                                    {{ languageName(locale, locale) }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon">{{ ux_icon('filter') }}</span>
+                                    {{ 'Domain filter'|trans }}
+                                </a>
+                                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\SelectAdminDomainsController::renderFormAction')) }}
+                            </div>
+                        {% endif %}
+
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                <span class="nav-link-icon">{{ ux_icon('forward-page') }}</span>
+                                {{ 'Go to Frontend'|trans }}
+                            </a>
+                            <ul class="dropdown-menu overflow-auto" style="max-height: 300px">
+                                {% for domainConfig in getDomain().getAll() %}
+                                    <li>
+                                        <a href="{{ domainConfig.url }}"
+                                           target="_blank"
+                                           class="dropdown-item"
+                                           title="{{ domainConfig.name }}"
+                                        >
+                                            {{ domainConfig.url }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="nav-item dropdown">
+                            <a href="#"
+                               class="nav-link dropdown-toggle d-flex lh-1 text-reset p-0"
+                               data-bs-toggle="dropdown"
+                               aria-label="{{ 'Open user menu'|trans }}"
+                            >
+                                <span class="avatar avatar-sm  rounded-circle">
+                                    {{ ux_icon('person-man') }}
+                                </span>
+                                <div class="d-none d-xl-block ps-2">
+                                    {{ app.user.realName }}
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <a href="{{ url('admin_administrator_myaccount') }}" class="dropdown-item" title="{{ 'My account'|trans }}">
+                                    {{ ux_icon('user-settings', {class: 'icon dropdown-item-icon'}) }} {{ 'My account'|trans }}
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ url('admin_logout', { _csrf_token: csrf_token('admin_logout')}) }}" class="dropdown-item" title="{{ 'Log out'|trans }}">
+                                    {{ ux_icon('logout', {class: 'icon dropdown-item-icon'}) }} {{ 'Log out'|trans }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block footer %}{% endblock %}
+    </div>
+{% endblock %}

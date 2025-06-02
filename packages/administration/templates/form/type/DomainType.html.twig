@@ -1,0 +1,18 @@
+{% block domain_widget %}
+    {% if isMultidomain() and domainConfigs|length > 1 %}
+        <select {{ block('widget_attributes') }}>
+            {% for domainConfig in domainConfigs %}
+                <option value="{{ domainConfig.id }}"{{ domainConfig.id == form.vars.value ? ' selected=""' : '' }}>
+                    {% if displayUrl %}
+                        {{ domainConfig.url }}
+                    {% else %}
+                        {{ domainConfig.name }}
+                    {% endif %}
+                </option>
+            {% endfor %}
+        </select>
+    {% else %}
+        <span class="input-group-text">{{ getDomain().url }}</span>
+        <input type="hidden" {{ block('widget_attributes') }} value="{{ getDomain().id }}" />
+    {% endif %}
+{% endblock domain_widget %}

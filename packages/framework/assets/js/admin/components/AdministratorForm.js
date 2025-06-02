@@ -4,17 +4,19 @@ export default class AdministratorForm {
 
     constructor ($container) {
         const $roleGroupInput = $container.find('.js-role-group-select');
-        const $rolesCustomInputLine = $container.find('.js-role-group-custom').closest('.form-line');
+        const $rolesCustomInputLine = $container.find('.js-role-group-custom').closest('div.row');
+
+        console.log($container.find('.js-role-group-custom'));
 
         if ($roleGroupInput.val() !== '') {
-            $rolesCustomInputLine.addClass('display-none');
+            $rolesCustomInputLine.addClass('d-none');
         }
 
         $roleGroupInput.on('change', function () {
             if ($(this).val() === '') {
-                $rolesCustomInputLine.removeClass('display-none');
+                $rolesCustomInputLine.removeClass('d-none');
             } else {
-                $rolesCustomInputLine.addClass('display-none');
+                $rolesCustomInputLine.addClass('d-none');
             }
         });
     }

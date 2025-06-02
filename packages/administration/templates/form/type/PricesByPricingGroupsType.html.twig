@@ -1,0 +1,33 @@
+{% block prices_by_pricing_groups_row %}
+    <div class="row mb-3">
+        <div class="col">
+            <h4>{{ inputPriceLabel({ isSimple: true }) }}</h4>
+        </div>
+        <div class="col text-end">
+            <h4>{{ 'Selling prices'|trans }}</h4>
+        </div>
+    </div>
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block pricing_group_price_input_row %}
+    {% set domainId = form.parent.vars.domain_id %}
+
+    <div class="row mb-3 align-items-center">
+        {{ form_label(form) }}
+        <div class="col">{{ form_widget(form, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}</div>
+        {% if form.vars.product_price %}
+            <div class="col-2 text-end">
+                {{ form.vars.product_price.price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}<br>
+                <span class="small">{{ 'Excl. VAT'|trans }}</span>
+            </div>
+            <div class="col-2 text-end">
+                <strong>
+                    {{ form.vars.product_price.price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}<br>
+                </strong>
+                <span class="small">{{ 'Incl. VAT'|trans }}</span>
+            </div>
+        {% endif %}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

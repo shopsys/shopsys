@@ -39,7 +39,7 @@ class OrderStatusController extends AdminBaseController
     {
         $grid = $this->orderStatusInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/OrderStatus/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/orderStatus/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }

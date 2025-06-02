@@ -1,0 +1,121 @@
+{% extends 'knp_menu_base.html.twig' %}
+
+{% block root %}
+    {% if options.renderNavElement is defined and options.renderNavElement %}
+        <nav class="panel">
+            {{ block('list') -}}
+        </nav>
+    {% else %}
+        {{ block('list') -}}
+    {% endif %}
+{% endblock %}
+
+{% block compressed_root %}
+    {{- block('root') -}}
+{% endblock %}
+
+{% block list %}
+    {% if item.level == 0 %}
+        <ul class="sidebar navbar-nav pt-lg-3">
+            {% for item in item.children %}
+                {{ block('item') }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block item %}
+    <li class="nav-item active">
+        {%- if item.hasChildren -%}
+            {{ block('dropdown_element') }}
+        {%- else -%}
+            {{ block('simple_element') }}
+        {%- endif -%}
+    </li>
+{% endblock %}
+
+{% block simple_element %}
+    <li class="nav-item">
+        <a class="{{ 'nav-link' ~ (matcher.isCurrent(item) ? ' ' ~ 'show' : '') }}" href="{{ item.uri ?? '#' }}">
+            {{ block('label') }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block dropdown_element %}
+    <li class="nav-item dropdown">
+        <a class="{{ 'nav-link dropdown-toggle' ~ (matcher.isAncestor(item) ? ' active' : '') }}"
+           href="#navbar-extra"
+           data-bs-toggle="dropdown"
+           data-bs-auto-close="false"
+           role="button"
+           aria-expanded="false"
+        >
+            {{ block('label') }}
+        </a>
+        <div class="{{ 'dropdown-menu' ~ (matcher.isAncestor(item) ? ' show' : '') }}">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    {% for child in item.children %}
+                        {%- set superadmin = child.extra('superadmin', false) -%}
+                        {{ _self.render_children(child, matcher, superadmin) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </li>
+{% endblock %}
+
+{% block label %}
+    {%- set icon = item.extra('icon')|default(null) -%}
+    {%- if icon is not null -%}
+        <span class="nav-link-icon d-md-none d-lg-inline-block">{{ ux_icon(icon) }}</span>
+    {%- endif -%}
+
+    <span class="nav-link-title">
+        {%- if options.allow_safe_labels and item.getExtra('safe_label', false) -%}
+            {{ item.label|raw }}
+        {%- else -%}
+            {{ item.label }}
+        {%- endif -%}
+    </span>
+{% endblock %}
+
+{% macro render_children(child, matcher, superadmin) %}
+    {% if child.displayed %}
+        {{ block('submenu_link') }}
+
+        {% if child.hasChildren %}
+            {% for sub_item in child.children %}
+                {%- set superadmin = sub_item.extra('superadmin', superadmin) -%}
+                {{ _self.render_children(sub_item, matcher, superadmin) }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% block submenu_link %}
+    {% set class = ['dropdown-item'] %}
+
+    {% if child.uri is same as(null) %}
+        {% set class = class|merge(['disabled text-secondary']) %}
+    {% endif %}
+
+    {% if matcher.isCurrent(child) or matcher.isAncestor(child) %}
+        {% set class = class|merge(['active']) %}
+    {% endif %}
+
+    {% if superadmin %}
+        {% set class = class|merge(['text-red']) %}
+    {% endif %}
+
+
+    <a class="{{ class|join(' ') }}" href="{{ child.uri }}">
+        {% if child.level > 2 %}
+            <span class="nav-link-icon">
+                {{ ux_icon('arrow-strong', {class: 'icon dropdown-item-icon'}) }}
+            </span>
+        {% endif %}
+        {{ child.label }}
+    </a>
+{% endblock %}

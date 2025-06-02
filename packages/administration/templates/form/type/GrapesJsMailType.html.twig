@@ -1,0 +1,15 @@
+{% block grapes_js_mail_widget %}
+    <div class="d-none">{{ form_widget(form) }}</div>
+    <button
+            type="button"
+            class="btn btn-info js-grapesjs-mail-button"
+            data-textarea-id="{{ form.vars.id }}"
+            data-template="{{ getMailTemplate('')|escape }}"
+            data-elfinder-url="{{ url('elfinder', {instance: 'grapesJs'}) }}"
+            data-variables="{{ form.vars.body_variables|json_encode }}"
+            data-custom-plugins="{{ form.vars.custom_plugins|json_encode }}"
+    >
+        {{ ux_icon('pencil') }}
+        {{ 'Edit'|trans }}
+    </button>
+{% endblock %}

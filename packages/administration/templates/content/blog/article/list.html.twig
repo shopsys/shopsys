@@ -1,0 +1,28 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Blog articles'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Blog articles'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_blogarticle_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new blog article'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        info_message: 'Searching searches in name. It is possible to use wildcards * and ?.'|trans,
+        placeholder: 'Search by name...'|trans
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
+    {{ gridView.render() }}
+{% endblock %}

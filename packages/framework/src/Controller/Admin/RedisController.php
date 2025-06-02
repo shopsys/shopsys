@@ -46,6 +46,6 @@ class RedisController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function showAction(Request $request): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/StorefrontCache/clean.html.twig');
+        return $this->render('@ShopsysAdministration/content/storefrontCache/clean.html.twig');
     }
 }

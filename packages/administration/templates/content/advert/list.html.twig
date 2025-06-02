@@ -1,0 +1,19 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Advertising system'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Advertising system'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_advert_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new advertising'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

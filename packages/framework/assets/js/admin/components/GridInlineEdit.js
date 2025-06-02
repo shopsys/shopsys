@@ -27,7 +27,6 @@ export default class GridInlineEdit {
             .off('click', '.js-inline-edit-add')
             .on('click', '.js-inline-edit-add', function () {
                 $grid.find('.js-inline-edit-no-data').remove();
-                $grid.find('.js-inline-edit-data-container').removeClass('hidden');
                 _this.addNewRow($grid);
                 return false;
             });
@@ -37,6 +36,7 @@ export default class GridInlineEdit {
             .on('click', '.js-inline-edit-cancel', function () {
                 const $formRow = $(this).closest('.js-grid-editing-row');
                 // eslint-disable-next-line no-new
+                $('#windowModal').modal('show');
                 new Window({
                     content: Translator.trans('Do you really want to discard all changes?'),
                     buttonCancel: true,
@@ -60,7 +60,7 @@ export default class GridInlineEdit {
         $grid
             .off('keyup', '.js-grid-editing-row input')
             .on('keyup', '.js-grid-editing-row input', function (event) {
-                if (event.keyCode == KeyCodes.ENTER) {
+                if (event.keyCode === KeyCodes.ENTER) {
                     _this.saveRow($(event.target).closest('.js-grid-editing-row'), $grid);
                 }
                 return false;

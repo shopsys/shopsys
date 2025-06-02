@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Asset\Packages;
 use Twig\Extension\AbstractExtension;
@@ -21,6 +22,7 @@ class LocalizationExtension extends AbstractExtension
         protected readonly string $webDir,
         protected readonly Packages $assetPackages,
         protected readonly Localization $localization,
+        protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
     ) {
     }
 
@@ -33,7 +35,16 @@ class LocalizationExtension extends AbstractExtension
         return [
             new TwigFunction('localeFlag', $this->getLocaleFlagHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('languageName', $this->getTitle(...), ['is_safe' => ['html']]),
+            new TwigFunction('allowedAdminLocales', $this->getAllowedAdminLocales(...), ['is_safe' => ['html']]),
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedAdminLocales(): array
+    {
+        return $this->administratorLocalizationFacade->getAllowedAdminLocales();
     }
 
     /**

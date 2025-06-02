@@ -1,6 +1,7 @@
 {{ ux_icon('info', {
-    class: 'cursor-help js-tooltip in-icon--info ' ~ additionalClasses,
-    'data-toggle': 'tooltip',
-    'data-placement': tooltipPlacement,
-    'title': message
+    class: 'cursor-help in-icon--info ' ~ additionalClasses,
+    'data-bs-toggle': "popover",
+    'data-bs-content': message,
+    'data-bs-trigger': "hover",
+    "data-bs-html": 'true',
 }) }}

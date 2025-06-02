@@ -1,0 +1,8 @@
+{% block message_row %}
+    <div class="alert alert-{{ form.vars.message_level }}" role="alert">
+        <div class="alert-icon">
+            {{ ux_icon(form.vars.message_level, {class: 'icon alert-icon'}) }}
+        </div>
+        {{ data|raw }}
+    </div>
+{% endblock %}

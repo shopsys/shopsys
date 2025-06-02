@@ -15,6 +15,7 @@ Encore
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
+    .addEntry('countup', './assets/js/admin/countup.js')
     .addEntry('admin', './assets/js/admin/admin.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -59,20 +60,16 @@ Encore
 ;
 
 Encore
-    .addEntry('admin-style', './assets/styles/admin/main.less')
-    .addEntry('admin-wysiwyg', './assets/styles/admin/wysiwyg.less')
+    .addEntry('admin-style', './assets/styles/admin/main.scss')
     .addPlugin(
         new StylelintPlugin({
             configFile: '.stylelintrc',
-            files: 'assets/styles/**/*.less'
+            files: 'assets/styles/**/*.scss',
         })
     )
-    .enableLessLoader(function (options) {
-        options.lessOptions = {
-            math: 'always'
-        };
-    })
-    .enablePostCssLoader();
+    .enableSassLoader()
+    .enablePostCssLoader()
+;
 
 Encore.addAliases({
     'jquery-ui': 'jquery-ui/ui/widgets',

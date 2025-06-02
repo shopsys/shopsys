@@ -87,7 +87,7 @@ class CategoryController extends AdminBaseController
             t('Editing category - %name%', ['%name%' => $category->getName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Category/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/category/edit.html.twig', [
             'form' => $form->createView(),
             'category' => $category,
         ]);
@@ -127,7 +127,7 @@ class CategoryController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Category/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/category/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -156,7 +156,7 @@ class CategoryController extends AdminBaseController
             );
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/category/list.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'isForAllDomains' => ($selectedDomainId === null),
             'domainFilterNamespace' => $domainFilterNamespace,

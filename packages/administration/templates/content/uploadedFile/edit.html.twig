@@ -1,0 +1,66 @@
+{% extends '@ShopsysAdministration/content/uploadedFile/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing file'|trans }} - {{ entity.getNameWithExtension() }}{% endblock %}
+
+{% block pre_title %}{{ 'Editing file'|trans }}{% endblock %}
+{% block h1 %}{{ entity.getNameWithExtension() }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ uploadedFileUrl(entity) }}" class="btn btn-secondary">
+        {{ ux_icon('download', { class: 'icon' }) }}
+        {{ 'Download'|trans }}
+    </a>
+
+    <a href="#"
+       class="btn btn-outline-danger"
+       data-confirm-window
+       data-confirm-status="danger"
+       data-confirm-message="{{ 'Do you really want to delete this file? It will be permanently deleted and unassigned from related records.'|trans }}"
+       data-confirm-contiue-url="{{ deleteUrl }}"
+    >
+        {{ ux_icon('trash', { class: 'icon' }) }}
+        {{ 'Delete file'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content_inner %}
+    <div class="flex-reverse-column">
+        <div class="margin-top-20">
+            {{ form_row(form.products) }}
+        </div>
+        <div class="flex-row form-bg-color">
+            <div class="width-50-percent">
+                <div class="form-line">
+                    <span class="form-line__label padding-left-20">{{ 'File'|trans }}:</span>
+                    <div class="list-files__wrap">
+                        <ul class="list-files">
+                            <li class="list-files__item full-width">
+                                <div class="list-files__item__in">
+                                    <div class="list-files__item__file">
+                                        {% if uploadedFileExists(entity) %}
+                                            <a href="{{ uploadedFileUrl(entity) }}" target="_blank" rel="noopener">
+                                                {{ uploadedFilePreview(entity) }}
+                                            </a>
+                                        {% else %}
+                                            {{ uploadedFilePreview(entity) }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="list-files__item__info">
+                                        <span>{{ entity.nameWithExtension }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="width-50-percent">
+                {{ form_row(form.files) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_rest(form) }}
+        </div>
+    </div>
+{% endblock %}

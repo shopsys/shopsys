@@ -1,0 +1,22 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Bestsellers of the category'|trans }} {{ categoryName }}{% endblock %}
+{% block h1 %}{{ 'Bestsellers of the category'|trans }} {{ categoryName }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+            <div class="js-form-group">
+                {{ form_errors(form.products) }}
+
+                <div id="{{ form.products.vars.id }}">
+                    {% for productForm in form.products %}
+                        <div class="js-bestselling-product-container">
+                            {{ form_widget(productForm) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FormTypesBundle\DivWrapperType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionsType;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionType;
@@ -28,7 +29,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -432,12 +432,10 @@ class OrderFormType extends AbstractType
             ])
             ->add(
                 $builderShippingAddressGroup
-                    ->create('deliveryAddressFields', FormType::class, [
-                        'inherit_data' => true,
+                    ->create('deliveryAddressFields', DivWrapperType::class, [
                         'attr' => [
-                            'class' => 'form-line__js js-delivery-address-fields',
+                            'class' => 'js-delivery-address-fields',
                         ],
-                        'render_form_row' => false,
                     ])
                     ->add('deliveryFirstName', TextType::class, [
                         'label' => t('First name'),

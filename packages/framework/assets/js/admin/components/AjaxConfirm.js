@@ -1,7 +1,8 @@
 import Ajax from '../../common/utils/Ajax';
-import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
 import ConfirmDelete from './ConfirmDelete';
+import ModalWindow from '../utils/ModalWindow';
+import Translator from 'bazinga-translator';
 
 export default class AjaxConfirm {
 
@@ -14,14 +15,21 @@ export default class AjaxConfirm {
                     url: $(this).attr('href'),
                     context: this,
                     success: function (data) {
-                        // eslint-disable-next-line no-new
-                        new Window({
-                            content: data
+                        const content
+                            = '<h3>'
+                                + Translator.trans('Are you sure?')
+                            + '</h3>'
+                            + '<div class="text-secondary">'
+                                + data
+                            + '</div>';
+
+                        void new ModalWindow({
+                            content: content,
+                            modalStatus: 'danger'
                         });
                         const onOpen = $(_this).data('ajax-confirm-on-open');
                         if (onOpen) {
-                            // eslint-disable-next-line no-new
-                            new ConfirmDelete(this);
+                            void new ConfirmDelete(this);
                         }
                     }
                 });

@@ -1,0 +1,12 @@
+{% extends '@ShopsysAdministration/content/stock/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing warehouse'|trans }} - {{ stock.name }}{% endblock %}
+
+
+{% block h1 %}{{ 'Editing warehouse'|trans }} - {{ stock.name }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ protectedUrl('admin_stock_setdefault', { id: stock.id }) }}" class="btn btn-secondary{% if stock.default %} disabled{% endif %}">
+        {{ 'Set as default'|trans }}
+    </a>
+{% endblock %}

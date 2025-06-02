@@ -1,0 +1,38 @@
+{% block multidomain_row %}
+    <div class="mb-3">
+        {{ form_label(form) }}
+
+        {{ form_help(form) }}
+
+        {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\Locale\\LocalizedType::LAYOUT_INLINE') %}
+            <fieldset>
+                {% for child in form %}
+                    <div class="input-group input-group-flat mb-3">
+                    <span class="input-group-text">
+                        {{ domain_icon(child.vars.attr['data-domain-id']) }}
+                    </span>
+                        {{- form_widget(child) -}}
+                    </div>
+                {% endfor %}
+            </fieldset>
+        {% else %}
+            {% for child in form %}
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="card-body">
+                                {{ domain_icon(child.vars.attr['data-domain-id']) }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body">
+                                {{- form_widget(child) -}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

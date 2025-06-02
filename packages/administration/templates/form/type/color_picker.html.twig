@@ -1,0 +1,11 @@
+{% block color_picker_widget %}
+    <div>
+        <div class="clr-field"{% if value is not empty %} style="color: {{ value }}"{% endif %}>
+            <button type="button" aria-labelledby="clr-open-label"></button>
+            <input type="text" class="form-control d-block js-coloris"{% if value is not empty %} value="{{ value }}"{% endif %}></div>
+    </div>
+
+{#
+    {% set attr = attr|merge({'class': ((attr.class|default('') ~ ' js-color-picker input')|trim)}) %}
+    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>#}
+{% endblock color_picker_widget %}

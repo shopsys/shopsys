@@ -1,0 +1,104 @@
+{# {% extends 'bootstrap_5_layout.html.twig' %} #}
+{% extends 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{%- block textarea_widget -%}
+    {% set attr = attr|merge({'data-bs-toggle': 'autosize'}) %}
+    {{- parent() -}}
+{%- endblock textarea_widget -%}
+
+{# {% block form_start %}
+    <div class="card">
+        <div class="card-body">
+    {{- parent() -}}
+{% endblock %}
+
+{% block form_end %}
+    {{- parent() -}}
+    </div>
+    </div>
+{% endblock %} #}
+
+{% block no_row_block_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{%- block form_help -%}
+    {%- if help is not empty -%}
+        <a tabindex="0" class="form-help"
+           data-bs-toggle="popover"
+           data-bs-placement="left"
+           data-bs-trigger="focus"
+           data-bs-html="{{ help_html ? 'true' : 'false' }}"
+           data-bs-content="{{- block('form_help_content') -}}">?</a>
+    {%- endif -%}
+{%- endblock form_help %}
+
+{% block form_help_content -%}
+    {%- if translation_domain is same as(false) -%}
+        {{- help -}}
+    {%- else -%}
+        {{- help|trans(help_translation_parameters, translation_domain) -}}
+    {%- endif -%}
+{%- endblock form_help_content %}
+
+{% block row_grosup_row %}
+    <div class="card p-2">
+        {% if label %}
+            <div class="card-title">
+                {{ label }}
+            </div>
+        {% endif %}
+        <div class="card-body">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block column_group_row %}
+    <div class="{{ row_attr.class|default('col') }}">
+        <div class="card p-2">
+            {% if label %}
+                <div class="card-title">
+                    {{ label }}
+                </div>
+            {% endif %}
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block action_bar_row %}
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            {% for child in form %}
+                {{- form_widget(child) -}}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block link_widget %}
+    <a href="{{ link }}">{{ label }}</a>
+{% endblock %}
+
+{% block checkbox_row -%}
+    <div{% with {attr: row_attr|merge({class: (row_attr.class|default('mb-3') ~ ' row')|trim})} %}{{ block('attributes') }}{% endwith %}>{#- -#}
+        <div class="{{ block('form_group_class') }}">
+            {{- form_widget(form) -}}
+            {{- form_help(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
+{%- endblock checkbox_row %}
+
+{% block form_label %}
+    {% if render_form_row|default(true) is same as(true) %}
+        {{- parent() -}}
+    {% endif %}
+{% endblock %}
+
+{% block form_group_class %}
+    {% if render_form_row|default(true) is same as(true) %}
+        {{- parent() -}}
+    {% endif %}
+{% endblock %}

@@ -22,7 +22,7 @@ class BreadcrumbController extends AdminBaseController
      */
     public function indexAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Inline/Breadcrumb/breadcrumb.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/breadcrumb.html.twig', [
             'breadcrumbOverrider' => $this->breadcrumbOverrider,
         ]);
     }

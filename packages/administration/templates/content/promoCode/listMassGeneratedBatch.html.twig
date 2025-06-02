@@ -1,0 +1,15 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Promo codes - generated batches'|trans }}{% endblock %}
+{% block h1 %}{{ 'Promo codes - generated batches'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+    {% if downloadBatchId is not null %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                document.location.href = '{{ url('admin_promocode_downloadmassgeneratebatch', {batchId: downloadBatchId}) }}';
+            });
+        </script>
+    {% endif %}
+{% endblock %}

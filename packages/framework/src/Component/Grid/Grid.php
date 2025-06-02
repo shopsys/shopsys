@@ -84,6 +84,8 @@ class Grid
 
     protected bool $multipleDragAndDrop = false;
 
+    protected ?string $title = null;
+
     /**
      * @param string $id
      * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
@@ -753,5 +755,21 @@ class Grid
         }
 
         $this->columnsById = [...$orderedColumns, ...$this->columnsById];
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
     }
 }

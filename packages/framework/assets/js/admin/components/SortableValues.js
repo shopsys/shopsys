@@ -48,6 +48,7 @@ export default class SortableValues {
         const $select = $option.closest('.js-sortable-values-input');
 
         $option.prop('disabled', true);
+        // @todo rewrite to tom-select
         $select.val('').trigger('change.select2');
     }
 

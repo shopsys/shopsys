@@ -324,8 +324,12 @@ export default class CustomizeBundle {
     }
 
     static findOrCreateErrorList ($formInput, elementName) {
+
         const errorListClass = CustomizeBundle.getErrorListClass(elementName);
         let $errorList = $('.' + errorListClass);
+
+        return $errorList;
+
         if ($errorList.length === 0) {
             $errorList = $($.parseHTML(
                 '<div class="in-message in-message--danger js-validation-errors-list ' + errorListClass + '">'

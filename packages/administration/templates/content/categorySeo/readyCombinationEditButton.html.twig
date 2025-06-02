@@ -1,0 +1,12 @@
+<a title="{{ 'Edit'|trans }}"
+   class="px-1{{ existsReadyCategorySeoMix ? '' : ' text-reset' }}"
+   href="{{ url('admin_categoryseo_readycombination',
+       {
+           'categoryId': categoryId,
+           'categorySeoFilterFormTypeAllQueries': categorySeoFilterFormTypeAllQueries,
+           'selectedCategorySeoMixCombinationJson': selectedCategorySeoMixCombinationJson
+       }
+   ) }}"
+>
+    {{ ux_icon('pencil') }}
+</a>

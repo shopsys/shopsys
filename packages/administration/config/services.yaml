@@ -32,3 +32,8 @@ services:
     Shopsys\AdministrationBundle\Controller\:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
+
+    Shopsys\AdministrationBundle\Twig\Runtime\DomainIconRuntime:
+        arguments:
+            - '%kernel.project_dir%'
+        tags: ['twig.runtime']

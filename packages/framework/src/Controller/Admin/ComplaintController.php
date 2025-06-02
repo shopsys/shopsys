@@ -82,7 +82,7 @@ class ComplaintController extends AdminBaseController
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Complaint/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/complaint/list.html.twig', [
             'gridView' => $this->complaintGridFactory->createView($queryBuilder, $this->getCurrentAdministrator()),
             'domains' => $this->domain->getAll(),
             'domainFilterNamespace' => $domainFilterNamespace,
@@ -131,7 +131,7 @@ class ComplaintController extends AdminBaseController
         );
 
 
-        return $this->render('@ShopsysFramework/Admin/Content/Complaint/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/complaint/edit.html.twig', [
             'form' => $form->createView(),
             'complaint' => $complaint,
             'domains' => $this->domain->getAll(),
@@ -151,7 +151,7 @@ class ComplaintController extends AdminBaseController
             $request->get('newIndex'),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Complaint/AdvancedSearch/ruleForm.html.twig', [
+        return $this->render('@ShopsysAdministration/content/complaint/advancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),
         ]);
     }

@@ -64,6 +64,6 @@ class FilePickerController extends AdminBaseController
         $viewParameters['gridView'] = $grid->createView();
         $viewParameters['quickSearchForm'] = $quickSearchForm->createView();
 
-        return $this->render('@ShopsysFramework/Admin/Content/FilePicker/list.html.twig', $viewParameters);
+        return $this->render('@ShopsysAdministration/content/filePicker/list.html.twig', $viewParameters);
     }
 }

@@ -1,0 +1,21 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}
+    - {{ 'Shippings and payments'|trans }}
+{% endblock %}
+
+{% block h1 %}
+    {{ 'Shippings and payments'|trans }}
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\TransportController::listAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\PaymentController::listAction')) }}
+
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            <button class="js-drag-and-drop-grid-submit-all btn btn--disabled" type="button">{{ 'Save changes in order'|trans }}</button>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

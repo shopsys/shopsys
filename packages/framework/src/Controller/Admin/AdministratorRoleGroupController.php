@@ -51,13 +51,13 @@ class AdministratorRoleGroupController extends AdminBaseController
 
         $grid->addColumn('name', 'arg.name', t('Role name'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
+        
         $grid->addEditActionColumn('admin_administratorrolegroup_edit', ['id' => 'arg.id']);
         $grid->addActionColumn('document-copy', 'Copy', 'admin_administratorrolegroup_copy', ['id' => 'arg.id']);
         $grid->addDeleteActionColumn('admin_administratorrolegroup_delete', ['id' => 'arg.id'])
             ->setConfirmMessage(t('Do you really want to remove this administrator role group?'));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Administrator/RoleGroup/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/administrator/roleGroup/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -101,7 +101,7 @@ class AdministratorRoleGroupController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Administrator/RoleGroup/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/administrator/roleGroupnew.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -156,7 +156,7 @@ class AdministratorRoleGroupController extends AdminBaseController
             t('Editing administrator role group - %name%', ['%name%' => $administratorRoleGroup->getName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Administrator/RoleGroup/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/administrator/roleGroup/edit.html.twig', [
             'form' => $form->createView(),
             'administratorRoleGroup' => $administratorRoleGroup,
         ]);
@@ -183,7 +183,7 @@ class AdministratorRoleGroupController extends AdminBaseController
 
             $this->breadcrumbOverrider->overrideLastItem(t('New administrator role group'));
 
-            return $this->render('@ShopsysFramework/Admin/Content/Administrator/RoleGroup/new.html.twig', [
+            return $this->render('@ShopsysAdministration/content/administrator/roleGroupnew.html.twig', [
                 'form' => $form->createView(),
             ]);
         } catch (AdministratorRoleGroupNotFoundException $ex) {

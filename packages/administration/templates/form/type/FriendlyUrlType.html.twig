@@ -1,0 +1,17 @@
+{% block friendly_url_widget %}
+    <div class="js-entity-url-list-new-row form-line__friendly-url mb-2" data-index="{{ form.vars.name }}">
+        <div class="row g-2">
+            <div class="col input-group">
+                {{ form_widget(form.domain) }}
+                <span class="input-group-text">/</span>
+                {{ form_widget(form.slug) }}
+            </div>
+            <div class="col-auto">
+                <button class="js-entity-url-list-new-row-delete-button btn btn-icon" type="button">
+                    {{ ux_icon('delete') }}
+                </button>
+            </div>
+        </div>
+        {{ form_errors(form.slug) }}
+    </div>
+{% endblock %}

@@ -842,10 +842,6 @@ class SideMenuBuilder
             static::PRICING,
             ['route' => 'admin_superadmin_pricing', 'label' => t('Sales including/excluding VAT settings')],
         );
-        $superadminMenu->addChild(
-            static::CSS_DOCS,
-            ['route' => 'admin_superadmin_cssdocumentation', 'label' => t('CSS documentation')],
-        );
         $superadminMenu->addChild(static::LIST_URL, ['route' => 'admin_superadmin_urls', 'label' => t('URL addresses')]);
         $superadminMenu->addChild(
             static::MAIL_WHITELIST,
