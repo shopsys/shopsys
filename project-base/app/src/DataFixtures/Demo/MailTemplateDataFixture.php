@@ -125,7 +125,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             <br/>
             you will be contacted when the order state changes.<br/>
             <br/>
-            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Order number: <a href="{order_detail_url}" tabindex="0">{number}</a><br/>
             Date and time of creation: {date}<br/>
             {note}<br/>
             {transport_info}<br/>
@@ -161,7 +161,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             <br/>
             we have started processing your order.<br/>
             <br/>
-            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Order number: <a href="{order_detail_url}" tabindex="0">{number}</a><br/>
             Date and time of creation: {date}<br/>
             {note}<br/>
             {transport_info}<br/>
@@ -197,7 +197,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             <br/>
             your order has been successfully completed.<br/>
             <br/>
-            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Order number: <a href="{order_detail_url}" tabindex="0">{number}</a><br/>
             Date and time of creation: {date}<br/>
             {note}<br/>
             {transport_info}<br/>
@@ -233,7 +233,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             <br/>
             your order has been cancelled.<br/>
             <br/>
-            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Order number: <a href="{order_detail_url}" tabindex="0">{number}</a><br/>
             Date and time of creation: {date}<br/>
             {note}<br/>
             {transport_info}<br/>
@@ -265,7 +265,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->body = t('
             Dear customer,<br/><br/>
-            you can set a new password following this <a href="{new_password_url}">link</a>.<br/><br/>
+            you can set a new password following this <a href="{new_password_url}" tabindex="0">link</a>.<br/><br/>
             Best regards
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
@@ -290,7 +290,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->body = t('
             Dear administrator,<br/><br/>
-            you can set a new password following this <a href="{new_password_url}">link</a>.<br/><br/>
+            you can set a new password following this <a href="{new_password_url}" tabindex="0">link</a>.<br/><br/>
             Best regards
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
@@ -321,8 +321,8 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             Name: {first_name} {last_name}<br />
             Email: {email}<br/>
             <br/>
-            E-shop: <a href="{url}">link</a><br />
-            Login page: <a href="{login_page}">Log in</a><br/>
+            E-shop: <a href="{url}" tabindex="0">link</a><br />
+            Login page: <a href="{login_page}" tabindex="0">Log in</a><br/>
             <br/>
             Best regards
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -351,7 +351,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             <br/>
             based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all thepersonal details which we have in evidence in our online store {domain}.<br/>
             <br/>
-            To overview your personal information please click <a href="{url}">here</a>.<br/>
+            To overview your personal information please click <a href="{url}" tabindex="0">here</a>.<br/>
             The link is valid for next 24 hours.<br/>
             <br/>
             Best regards<br />
@@ -381,7 +381,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             Dear customer,<br/>
             based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/>
             <br/>
-            To download your personal information please click <a href="{url}">here</a>.<br/>
+            To download your personal information please click <a href="{url}" tabindex="0">here</a>.<br/>
             The link is valid for next 24 hours.<br/>
             <br/>
             Best regards<br />
@@ -408,7 +408,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData->body = t('
             Dear customer,<br/>
             <br/>
-            you can finish registration and set new password via this <a href="{activation_url}">link</a>.<br/>
+            you can finish registration and set new password via this <a href="{activation_url}" tabindex="0">link</a>.<br/>
             <br/>
             Best regards
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
