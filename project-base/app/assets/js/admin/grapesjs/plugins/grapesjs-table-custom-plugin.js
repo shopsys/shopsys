@@ -112,8 +112,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
 
     editor.Blocks.add('tableCustom', {
         id: 'table-custom',
-        label: Translator.trans('Table'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'fa fa-table' },
         content: {
             type: 'table-custom',
@@ -161,24 +160,18 @@ export default grapesjs.plugins.add('table-custom', editor => {
                 traits: [
                     {
                         type: 'number',
-                        label: Translator.trans('Rows'),
                         name: 'rows',
                         min: 1,
                     },
                     {
                         type: 'number',
-                        label: Translator.trans('Columns'),
                         name: 'columns',
                         min: 1,
                     },
                     {
                         type: 'select',
-                        label: Translator.trans('Variant'),
                         name: 'variant',
-                        options: [
-                            { id: 'default', name: Translator.trans('Default') },
-                            { id: 'secondary', name: Translator.trans('Secondary') },
-                        ],
+                        options: [{ id: 'default' }, { id: 'secondary' }],
                     },
                 ],
             },

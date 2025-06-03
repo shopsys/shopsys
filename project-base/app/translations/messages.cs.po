@@ -4,44 +4,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "Alt"
-msgstr "Alt"
-
 msgid "Basic objects"
 msgstr "Basic"
 
-msgid "Button link"
-msgstr "Tlačítko s odkazem"
-
-msgid "Catalog numbers"
-msgstr "Katalogová čísla"
-
-msgid "Center"
-msgstr "Na střed"
-
 msgid "Close"
 msgstr "Zavřít"
-
-msgid "Color of button"
-msgstr "Barva tlačítka"
-
-msgid "Column 1"
-msgstr "Sloupec 1"
-
-msgid "Column 2"
-msgstr "Sloupec 2"
-
-msgid "Column 3"
-msgstr "Sloupec 3"
-
-msgid "Columns"
-msgstr "Sloupce"
-
-msgid "Default"
-msgstr "Základní"
-
-msgid "File"
-msgstr "Soubor"
 
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím znovu později."
@@ -52,107 +19,35 @@ msgstr "GTM ID"
 msgid "GTM creative"
 msgstr ""
 
-msgid "Height"
-msgstr "Výška"
-
-msgid "Href"
-msgstr "Href"
-
-msgid "Image"
-msgstr "Obrázek"
-
 msgid "Insert variable"
 msgstr "Vložit proměnnou"
 
 msgid "Insert your text here"
 msgstr "Zde vložte text"
 
-msgid "Inside layout"
-msgstr "Rozložení uvnitř"
-
-msgid "Left"
-msgstr "Vlevo"
-
 msgid "Link"
 msgstr "Odkaz"
-
-msgid "Link Block"
-msgstr "Blok odkazu"
-
-msgid "List of products"
-msgstr "Seznam produktů"
 
 msgid "Mandatory variables"
 msgstr "Povinné proměnné"
 
-msgid "Map"
-msgstr "Mapa"
-
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
-
-msgid "Open in new window"
-msgstr "Otevírat v novém okně"
 
 msgid "Optional variables"
 msgstr "Volitelné proměnné"
 
-msgid "Outside layout"
-msgstr "Rozložení vně"
-
-msgid "Path to file"
-msgstr "Cesta k souboru"
-
-msgid "Position of button"
-msgstr "Pozice tlačítka"
-
-msgid "Position of image"
-msgstr "Pozice obrázku"
-
-msgid "Position of link"
-msgstr "Zarovnání odkazu"
-
-msgid "Product image"
-msgstr "Obrázek produktu"
-
 msgid "Related products"
 msgstr "Související produkty"
-
-msgid "Right"
-msgstr "Vpravo"
-
-msgid "Rows"
-msgstr "Řádky"
 
 msgid "Save"
 msgstr "Uložit"
 
-msgid "Secondary"
-msgstr "Sekundární"
-
-msgid "Src"
-msgstr "Src"
-
 msgid "TOP"
 msgstr "TOP"
 
-msgid "Table"
-msgstr "Tabulka"
-
 msgid "Terms-and-conditions.html"
 msgstr "Obchodni-podminky.html"
-
-msgid "Text"
-msgstr "Text"
-
-msgid "Text with image"
-msgstr "Text s obrázkem"
-
-msgid "Title"
-msgstr "Title"
-
-msgid "Type of image"
-msgstr "Typ obrázku"
 
 msgid "Unsupported file type"
 msgstr "Nepodporovaný typ souboru"
@@ -165,15 +60,6 @@ msgstr "Nahrát obrázek"
 
 msgid "Upload image for mobile devices"
 msgstr "Nahrát obrázek pro mobilní zařízení"
-
-msgid "Variant"
-msgstr "Varianta"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Width"
-msgstr "Šířka"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"

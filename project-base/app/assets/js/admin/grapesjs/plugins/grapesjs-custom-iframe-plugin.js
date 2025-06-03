@@ -1,4 +1,3 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 const IFRAME_WIDTH_ATTRIBUTE = 'width';
@@ -23,18 +22,15 @@ export default grapesjs.plugins.add('custom-iframe', editor => {
                 traits: [
                     {
                         type: 'text',
-                        label: Translator.trans('Src'),
                         name: 'src',
                     },
                     {
                         type: 'text',
-                        label: Translator.trans('Width'),
                         name: IFRAME_WIDTH_ATTRIBUTE,
                         placeholder: '100%',
                     },
                     {
                         type: 'text',
-                        label: Translator.trans('Height'),
                         name: IFRAME_HEIGHT_ATTRIBUTE,
                     },
                 ],
@@ -46,7 +42,7 @@ export default grapesjs.plugins.add('custom-iframe', editor => {
         label: 'Iframe',
         type: 'iframe',
         content: '<iframe class="gjs-iframe" style="width: 100%"></iframe>',
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         selectable: true,
         attributes: { class: 'fa fa-crop' },
     });

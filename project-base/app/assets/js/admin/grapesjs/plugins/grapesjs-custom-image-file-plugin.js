@@ -1,12 +1,10 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('custom-image-file', editor => {
     editor.Blocks.add('image-file', {
         select: true,
         activate: true,
-        label: Translator.trans('File'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'fa fa-regular fa-file' },
         content: {
             type: 'image-file',
@@ -31,7 +29,6 @@ export default grapesjs.plugins.add('custom-image-file', editor => {
                     {
                         type: 'text',
                         name: 'path',
-                        label: Translator.trans('Path to file'),
                     },
                 ],
             },

@@ -1,12 +1,10 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('mail-custom-image-with-variable', editor => {
     editor.Blocks.add('mail-custom-image-with-variable', {
         select: true,
         activate: true,
-        label: Translator.trans('Product image'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-image' },
         content: {
             type: 'mail-custom-image-with-variable',

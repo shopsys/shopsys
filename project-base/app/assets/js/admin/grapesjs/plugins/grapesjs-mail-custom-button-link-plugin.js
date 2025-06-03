@@ -1,14 +1,13 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 const linkPositionDataAttribute = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
 
-export default grapesjs.plugins.add('mail-custom-button-link', (editor) => {
+export default grapesjs.plugins.add('mail-custom-button-link', editor => {
     editor.Blocks.add('button-link', {
         id: 'button-link',
-        label: Translator.trans('Button link'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         content:
             `<div style="width: 100%">
                 <a data-gjs-type='button-link'
@@ -34,35 +33,36 @@ export default grapesjs.plugins.add('mail-custom-button-link', (editor) => {
                     transition: all 0.2s ease;
                     color: #fff;
                 ">
-                    <div class="gjs-text-ckeditor text">`
-            + Translator.trans('Insert your text here')
-            + `</div>
+                    <div class="gjs-text-ckeditor text">` +
+            Translator.trans('Insert your text here') +
+            `</div>
                 </a>
             </div>`,
-        attributes: { class: 'fa fa-external-link' }
+        attributes: { class: 'fa fa-external-link' },
     });
 
     editor.DomComponents.addType('button-link', {
-        isComponent: (element) => element.tagName === 'A',
+        isComponent: element => element.tagName === 'A',
 
         model: {
-            init () {
+            init() {
                 this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
                 this.on(`change:attributes:${BUTTON_COLOR_ATTRIBUTE}`, this.handleColorChange);
             },
 
-            handleLinkPositionChange (component) {
+            handleLinkPositionChange(component) {
                 component.setStyle({
                     ...component.getStyle(),
-                    'margin': this.getAttributes()[linkPositionDataAttribute] === 'center'
-                        ? '0.75rem auto'
-                        : this.getAttributes()[linkPositionDataAttribute] === 'right'
-                            ? '0.75rem 0 0.75rem auto'
-                            : '0.75rem auto 0.75rem 0'
+                    margin:
+                        this.getAttributes()[linkPositionDataAttribute] === 'center'
+                            ? '0.75rem auto'
+                            : this.getAttributes()[linkPositionDataAttribute] === 'right'
+                              ? '0.75rem 0 0.75rem auto'
+                              : '0.75rem auto 0.75rem 0',
                 });
             },
 
-            handleColorChange (component) {
+            handleColorChange(component) {
                 component.setStyle({
                     ...component.getStyle(),
                     'background-color': this.getAttributes()[BUTTON_COLOR_ATTRIBUTE].includes('#')
@@ -70,58 +70,50 @@ export default grapesjs.plugins.add('mail-custom-button-link', (editor) => {
                         : `#${this.getAttributes()[BUTTON_COLOR_ATTRIBUTE]}`,
                     'border-color': this.getAttributes()[BUTTON_COLOR_ATTRIBUTE].includes('#')
                         ? this.getAttributes()[BUTTON_COLOR_ATTRIBUTE]
-                        : `#${this.getAttributes()[BUTTON_COLOR_ATTRIBUTE]}`
+                        : `#${this.getAttributes()[BUTTON_COLOR_ATTRIBUTE]}`,
                 });
             },
             defaults: {
                 attributes: {
                     [linkPositionDataAttribute]: 'center',
-                    [BUTTON_COLOR_ATTRIBUTE]: '#00C8B7'
+                    [BUTTON_COLOR_ATTRIBUTE]: '#00C8B7',
                 },
                 traits: [
                     {
                         type: 'input',
                         name: 'title',
-                        label: Translator.trans('Title')
                     },
                     {
                         type: 'input',
                         name: 'href',
-                        label: Translator.trans('Href')
                     },
                     {
                         type: 'select',
                         name: linkPositionDataAttribute,
-                        label: Translator.trans('Position of button'),
                         options: [
                             {
                                 id: 'left',
-                                label: Translator.trans('Left')
                             },
                             {
                                 id: 'center',
-                                label: Translator.trans('Center')
                             },
                             {
                                 id: 'right',
-                                label: Translator.trans('Right')
-                            }
-                        ]
+                            },
+                        ],
                     },
                     {
                         type: 'checkbox',
                         name: 'target',
-                        label: Translator.trans('Open in new window'),
                         valueTrue: '_blank',
-                        valueFalse: ''
+                        valueFalse: '',
                     },
                     {
-                        label: Translator.trans('Color of button'),
                         type: 'input',
-                        name: BUTTON_COLOR_ATTRIBUTE
-                    }
-                ]
-            }
-        }
+                        name: BUTTON_COLOR_ATTRIBUTE,
+                    },
+                ],
+            },
+        },
     });
 });
