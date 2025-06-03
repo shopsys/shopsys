@@ -192,9 +192,7 @@ export default class InitGrapesJs {
 
     static openGrapesMailEditor (event, textareaId, elfinderUrl, templateHtml, bodyVariables, customPlugins) {
         InitGrapesJs.setupBodyForGrapesJsEditor();
-        const editableContent = $('#' + textareaId).val();
         const $templateHtml = $('<div>' + templateHtml + '</div>');
-        $templateHtml.find('.gjs-editable').append(editableContent);
 
         const variables = JSON.parse(JSON.stringify(bodyVariables));
 
@@ -269,6 +267,13 @@ export default class InitGrapesJs {
                     isMail: true
                 }
             },
+            styleManager: {
+                clearProperties: true,
+                appendTo: document.querySelector('#panels')
+            },
+            selectorManager: {
+                componentFirst: true
+            },
             assetManager: {
                 custom: {
                     open (props) {
@@ -290,6 +295,23 @@ export default class InitGrapesJs {
                         };
                     }
                 }
+            }
+        });
+
+        editor.addStyle(`
+            .gjs-editable {
+                min-height: 50px !important;
+            }
+        `);
+
+        editor.once('load', () => {
+            editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
+
+            const editableContent = $('#' + textareaId).val();
+            const $gjsEditable = editor.getWrapper().find('.gjs-editable')[0];
+
+            if ($gjsEditable) {
+                $gjsEditable.append(editableContent);
             }
         });
 

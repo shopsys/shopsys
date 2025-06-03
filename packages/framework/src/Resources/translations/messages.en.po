@@ -3478,6 +3478,9 @@ msgstr ""
 msgid "Please fill all default values before creating a product"
 msgstr ""
 
+msgid "Please replace this text with your own content."
+msgstr ""
+
 msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
 msgstr ""
 

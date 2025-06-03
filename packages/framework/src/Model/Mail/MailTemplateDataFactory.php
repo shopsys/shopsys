@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 
@@ -11,9 +14,16 @@ class MailTemplateDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper
      */
-    public function __construct(protected readonly UploadedFileDataFactory $uploadedFileDataFactory)
-    {
+    public function __construct(
+        protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
+        protected readonly Domain $domain,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
+    ) {
     }
 
     /**
@@ -57,7 +67,10 @@ class MailTemplateDataFactory
         $mailTemplateData->name = $mailTemplate->getName();
         $mailTemplateData->bccEmail = $mailTemplate->getBccEmail();
         $mailTemplateData->subject = $mailTemplate->getSubject();
-        $mailTemplateData->body = $mailTemplate->getBody();
+        $mailTemplateData->body = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat(
+            $mailTemplate->getBody(),
+            $this->domain->getDomainConfigById($mailTemplate->getDomainId())->getLocale(),
+        );
         $mailTemplateData->sendMail = $mailTemplate->isSendMail();
         $mailTemplateData->orderStatus = $mailTemplate->getOrderStatus();
         $mailTemplateData->complaintStatus = $mailTemplate->getComplaintStatus();
