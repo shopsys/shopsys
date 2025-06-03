@@ -17,15 +17,8 @@ import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { getInitialProductListState } from 'app/_utils/getInitalProductListState';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { LazyMotion, MotionConfig } from 'framer-motion';
-import { TypeSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.ssr';
-import { TypeCustomerUserRoleEnum } from 'graphql/types';
-import { Locale } from 'i18n-config';
 import { headers } from 'next/headers';
-import { use } from 'react';
-import { CurrentCustomerType } from 'types/customer';
-import { Dictionary } from 'types/translation';
 import framerMotionPlugins from 'utils/animations/framerMotionPlugins';
-import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getDictionary } from 'utils/getDictionary';
 
 type ProvidersProps = {
@@ -71,31 +64,45 @@ export function ProvidersWrapper({
 
     return (
         <CookiesStoreProvider cookieStoreStateFromServer={cookieStoreStateFromServer}>
-            <AppConfigProvider
-                domainConfig={domainConfig}
-                settings={settingsResult.data.settings}
-                staticRewritePaths={staticRewritePaths}
-            >
-                <TranslationProvider dictionary={dictionary} lang={lang}>
-                    <AuthProvider user={user}>
-                        <AuthorizationProvider customerUserRoles={customerUserRoles}>
-                            <MotionConfig reducedMotion="user">
-                                <LazyMotion features={framerMotionPlugins}>
-                                    <ProductListProvider initialState={initialProductListState}>
-                                        <ToastifyProvider>
-                                            <AuthInfo isUserLoggedIn={!!user} />
-                                            <CookiesStoreSync />
-                                            <BroadcastChannelProvider />
-                                            {children}
-                                            <Portal />
-                                        </ToastifyProvider>
-                                    </ProductListProvider>
-                                </LazyMotion>
-                            </MotionConfig>
-                        </AuthorizationProvider>
-                    </AuthProvider>
-                </TranslationProvider>
-            </AppConfigProvider>
+            <DomainConfigProvider domainConfig={domainConfig}>
+                <AppConfigProvider
+                    domainConfig={domainConfig}
+                    settings={settingsData.value.data.settings}
+                    staticRewritePaths={STATIC_REWRITE_PATHS[domainConfig.url]}
+                >
+                    <TranslationProvider dictionary={dictionary} lang={lang}>
+                        <AuthProvider user={user.status === 'fulfilled' ? user.value : undefined}>
+                            <AuthorizationProvider customerUserRoles={customerUserRoles}>
+                                <ProductListProvider
+                                    initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
+                                >
+                                    <MotionConfig reducedMotion="user">
+                                        <LazyMotion features={framerMotionPlugins}>
+                                            <html lang={lang}>
+                                                {/* <head>
+                                            <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
+                                        </head> */}
+                                                {/* suppressHydrationWarning for ignoring grammarly extension */}
+                                                <body suppressHydrationWarning>
+                                                    <ToastifyProvider>
+                                                        <AuthInfo
+                                                            isUserLoggedIn={user.status === 'fulfilled' && !!user.value}
+                                                        />
+                                                        <CookiesStoreSync />
+                                                        <BroadcastChannelProvider />
+                                                        {children}
+                                                        <Portal />
+                                                    </ToastifyProvider>
+                                                </body>
+                                            </html>
+                                        </LazyMotion>
+                                    </MotionConfig>
+                                </ProductListProvider>
+                            </AuthorizationProvider>
+                        </AuthProvider>
+                    </TranslationProvider>
+                </AppConfigProvider>
+            </DomainConfigProvider>
         </CookiesStoreProvider>
     );
 }
