@@ -24,10 +24,10 @@ class ConfirmDeleteResponseFactory
     /**
      * @param string $message
      * @param string $route
-     * @param mixed $entityId
+     * @param int|string $entityId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createDeleteResponse($message, $route, $entityId)
+    public function createDeleteResponse(string $message, string $route, int|string $entityId): Response
     {
         $renderedTemplate = $this->twigEnvironment->render(
             '@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig',
@@ -49,12 +49,16 @@ class ConfirmDeleteResponseFactory
     /**
      * @param string $message
      * @param string $route
-     * @param mixed $entityId
+     * @param int|string $entityId
      * @param object[] $possibleReplacements
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createSetNewAndDeleteResponse($message, $route, $entityId, array $possibleReplacements)
-    {
+    public function createSetNewAndDeleteResponse(
+        string $message,
+        string $route,
+        int|string $entityId,
+        array $possibleReplacements,
+    ): Response {
         foreach ($possibleReplacements as $object) {
             if (!is_object($object) || !method_exists($object, 'getName') || !method_exists($object, 'getId')) {
                 $message = 'All items in argument 4 passed to ' . __METHOD__ . ' must be objects with methods getId and getName.';

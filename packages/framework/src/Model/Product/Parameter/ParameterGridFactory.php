@@ -72,7 +72,7 @@ class ParameterGridFactory implements GridFactoryInterface
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
             ->setConfirmMessage(t(
                 'Do you really want to remove this parameter?'
-                . ' Deleting the parameter will remove this parameter from the products and the possible landing page'
+                . ' Deleting the parameter will remove this parameter from the products and parameters'
                 . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',
             ));
 
