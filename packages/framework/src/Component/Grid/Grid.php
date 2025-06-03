@@ -113,8 +113,6 @@ class Grid
     }
 
     /**
-     * TODO: Use OptionResolver instead of array
-     *
      * @param string $id
      * @param string $sourceColumnName
      * @param string $title

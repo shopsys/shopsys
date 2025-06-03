@@ -13,17 +13,17 @@ class DummyImportTransferFacade extends AbstractBridgeImportTransfer
      */
     protected function processItem(array $bridgeData): void
     {
-        // TODO: Implement processItem() method.
+        // Implement processItem() method.
     }
 
     protected function doBeforeTransfer(): void
     {
-        // TODO: Implement doBeforeTransfer() method.
+        // Implement doBeforeTransfer() method.
     }
 
     protected function doAfterTransfer(): void
     {
-        // TODO: Implement doAfterTransfer() method.
+        // Implement doAfterTransfer() method.
     }
 
     /**

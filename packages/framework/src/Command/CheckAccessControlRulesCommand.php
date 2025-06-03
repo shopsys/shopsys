@@ -62,8 +62,6 @@ class CheckAccessControlRulesCommand extends Command
     }
 
     /**
-     * TODO Using DomainRouterFactory should be a temporary solution that could be replaced with the new administration router when available (it is implemented in tl-language-domains branch)
-     *
      * @return string[]
      */
     protected function getRuteNamesThatShouldBeCovered(): array
