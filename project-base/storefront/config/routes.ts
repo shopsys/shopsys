@@ -1,7 +1,5 @@
 export const routes = [
     {
-        '/about': '/about',
-        '/app': '/app',
         '/_feedback': '/_feedback',
         '/abandoned-cart/:cartUuid': '/abandoned-cart/:cartUuid',
         '/brands-overview': '/brands-overview',
@@ -39,8 +37,6 @@ export const routes = [
         '/wishlist': '/wishlist',
     },
     {
-        '/about': '/about',
-        '/app': '/app',
         '/_feedback': '/_feedback',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
         '/brands-overview': '/prehled-znacek',
