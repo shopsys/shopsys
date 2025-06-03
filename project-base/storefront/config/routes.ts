@@ -81,6 +81,8 @@ export const routes = [
     },
     {
         '/': '/',
+        '/about': '/about',
+        '/app': '/app',
         '/_feedback': '/_feedback',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
         '/brands-overview': '/prehlad-znaciek',

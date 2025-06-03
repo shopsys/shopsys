@@ -17,7 +17,9 @@ import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFro
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { getInitialProductListState } from 'app/_utils/getInitalProductListState';
 import { Portal } from 'components/Basic/Portal/Portal';
+import { LazyMotion, MotionConfig } from 'framer-motion';
 import { headers } from 'next/headers';
+import framerMotionPlugins from 'utils/animations/framerMotionPlugins';
 import { getDictionary } from 'utils/getDictionary';
 
 type ProvidersProps = {
@@ -55,23 +57,27 @@ export default async function Providers({ children }: ProvidersProps) {
                                 <ProductListProvider
                                     initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
                                 >
-                                    <html lang={lang}>
-                                        {/* <head>
+                                    <MotionConfig reducedMotion="user">
+                                        <LazyMotion features={framerMotionPlugins}>
+                                            <html lang={lang}>
+                                                {/* <head>
                                             <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
                                         </head> */}
-                                        {/* suppressHydrationWarning for ignoring grammarly extension */}
-                                        <body suppressHydrationWarning>
-                                            <ToastifyProvider>
-                                                <AuthInfo
-                                                    isUserLoggedIn={user.status === 'fulfilled' && !!user.value}
-                                                />
-                                                <CookiesStoreSync />
-                                                <BroadcastChannelProvider />
-                                                {children}
-                                                <Portal />
-                                            </ToastifyProvider>
-                                        </body>
-                                    </html>
+                                                {/* suppressHydrationWarning for ignoring grammarly extension */}
+                                                <body suppressHydrationWarning>
+                                                    <ToastifyProvider>
+                                                        <AuthInfo
+                                                            isUserLoggedIn={user.status === 'fulfilled' && !!user.value}
+                                                        />
+                                                        <CookiesStoreSync />
+                                                        <BroadcastChannelProvider />
+                                                        {children}
+                                                        <Portal />
+                                                    </ToastifyProvider>
+                                                </body>
+                                            </html>
+                                        </LazyMotion>
+                                    </MotionConfig>
                                 </ProductListProvider>
                             </AuthorizationProvider>
                         </AuthProvider>
