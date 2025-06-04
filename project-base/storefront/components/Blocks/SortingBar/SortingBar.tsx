@@ -7,7 +7,7 @@ import { DEFAULT_SORT } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
@@ -34,18 +34,26 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
     const { canSeePrices } = useAuthorization();
 
-    const sortOptionsLabels = {
-        [TypeProductOrderingModeEnum.Priority]: t('Priority'),
-        [TypeProductOrderingModeEnum.PriceAsc]: t('Price ascending'),
-        [TypeProductOrderingModeEnum.PriceDesc]: t('Price descending'),
-        [TypeProductOrderingModeEnum.Relevance]: t('Relevance'),
-        [TypeProductOrderingModeEnum.NameAsc]: t('Name ascending'),
-        [TypeProductOrderingModeEnum.NameDesc]: t('Name descending'),
-    };
-
-    const sortOptions = (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>
-        !canSeePrices ? !getIsPriceRelatedSortOption(sortOption) : true,
+    const sortOptionsLabels = useMemo(
+        () => ({
+            [TypeProductOrderingModeEnum.Priority]: t('Priority'),
+            [TypeProductOrderingModeEnum.PriceAsc]: t('Price ascending'),
+            [TypeProductOrderingModeEnum.PriceDesc]: t('Price descending'),
+            [TypeProductOrderingModeEnum.Relevance]: t('Relevance'),
+            [TypeProductOrderingModeEnum.NameAsc]: t('Name ascending'),
+            [TypeProductOrderingModeEnum.NameDesc]: t('Name descending'),
+        }),
+        [t],
     );
+
+    const sortOptions = useMemo(
+        () =>
+            (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>
+                !canSeePrices ? !getIsPriceRelatedSortOption(sortOption) : true,
+            ),
+        [customSortOptions, canSeePrices],
+    );
+
     const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
 
     const handleChangeSort = (sortOption: TypeProductOrderingModeEnum) => {

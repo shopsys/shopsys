@@ -1,6 +1,7 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
+import { memo } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'utils/twMerge';
@@ -12,7 +13,7 @@ type SimpleNavigationProps = {
     linkTypeOverride?: PageType;
 };
 
-export const SimpleNavigation: FC<SimpleNavigationProps> = ({
+const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
     listedItems,
     isWithoutSlider,
     className,
@@ -48,3 +49,5 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
         </Webline>
     );
 };
+
+export const SimpleNavigation = memo(SimpleNavigationComp);

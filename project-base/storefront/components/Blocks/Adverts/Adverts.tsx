@@ -2,6 +2,7 @@ import { AdvertImage } from './AdvertImage';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { memo, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type PositionNameType = 'footer' | 'header' | 'cartPreview' | 'productListSecondRow';
@@ -13,20 +14,31 @@ type AdvertsProps = {
     isSingle?: boolean;
 };
 
-export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCategory, className, isSingle }) => {
+const AdvertsComp: FC<AdvertsProps> = ({ positionName, withWebline, currentCategory, className, isSingle }) => {
     const [{ data: advertsData }] = useAdvertsQuery({
         variables: {
             categoryUuid: currentCategory?.uuid || null,
             positionNames: getPositionNames(positionName),
         },
     });
-    const advertsForPosition = advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [];
-    const displayedAdverts =
-        isSingle && advertsForPosition.length
-            ? [advertsForPosition[Math.floor(Math.random() * advertsForPosition.length)]]
-            : advertsForPosition;
 
-    const content = !!displayedAdverts.length && (
+    const advertsForPosition = useMemo(
+        () => advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [],
+        [advertsData?.adverts, positionName],
+    );
+
+    const displayedAdverts = useMemo(() => {
+        if (isSingle && advertsForPosition.length) {
+            return [advertsForPosition[Math.floor(Math.random() * advertsForPosition.length)]];
+        }
+        return advertsForPosition;
+    }, [isSingle, advertsForPosition]);
+
+    if (!displayedAdverts.length) {
+        return null;
+    }
+
+    const content = (
         <div className={twJoin(!withWebline && className)}>
             {displayedAdverts.map((advert) => {
                 if (advert.__typename === 'AdvertImage') {
@@ -38,11 +50,11 @@ export const Adverts: FC<AdvertsProps> = ({ positionName, withWebline, currentCa
         </div>
     );
 
-    if (withWebline && content) {
+    if (withWebline) {
         return <Webline className={className}>{content}</Webline>;
     }
 
-    return content || null;
+    return content;
 };
 
 const getPositionNames = (positionName: PositionNameType) => {
@@ -56,3 +68,5 @@ const getPositionNames = (positionName: PositionNameType) => {
 
     return ['cartPreview'];
 };
+
+export const Adverts = memo(AdvertsComp);

@@ -5,7 +5,7 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 const NUMBER_OF_VISIBLE_ITEMS = 3;
@@ -14,7 +14,7 @@ type CategoryBestsellersProps = {
     products: TypeListedProductFragment[];
 };
 
-export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) => {
+const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => {
     const { t } = useTranslation();
     const [isCollapsed, setIsCollapsed] = useState(true);
     const shownProducts = products.filter((_, index) => index + 1 <= NUMBER_OF_VISIBLE_ITEMS || !isCollapsed);
@@ -60,3 +60,5 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
         </div>
     );
 };
+
+export const CategoryBestsellers = memo(CategoryBestsellersComp);
