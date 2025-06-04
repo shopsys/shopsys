@@ -89,8 +89,6 @@ final class CrudConfig
     }
 
     /**
-     * TODO: Do something with $menuSection to be able to use some Enum instead of string
-     *
      * Sets where the crud controller will be displayed in the side menu.
      *
      * @param string $menuSection Name of root level menu section
