@@ -7,6 +7,7 @@ import { ListedItemPropType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type SimpleNavigationProps = {
+    title?: string;
     listedItems: ListedItemPropType[];
     isWithoutSlider?: true;
     itemClassName?: string;
@@ -14,6 +15,7 @@ type SimpleNavigationProps = {
 };
 
 const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
+    title,
     listedItems,
     isWithoutSlider,
     className,
@@ -26,7 +28,8 @@ const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
 
     return (
         <Webline>
-            <ul
+            {title && <h2 className="sr-only">{title}</h2>}
+            <nav
                 className={twMergeCustom(
                     !isWithoutSlider &&
                         'snap-x snap-mandatory auto-cols-[40%] grid-flow-col overflow-x-auto overflow-y-hidden overscroll-x-contain md:grid-flow-row',
@@ -45,7 +48,7 @@ const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
                         {listedItem.name}
                     </SimpleNavigationListItem>
                 ))}
-            </ul>
+            </nav>
         </Webline>
     );
 };

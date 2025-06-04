@@ -2,8 +2,10 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { SkeletonPageBrandsOverview } from 'components/Blocks/Skeleton/SkeletonPageBrandsOverview';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useBrandsQuery } from 'graphql/requests/brands/queries/BrandsQuery.generated';
+import useTranslation from 'next-translate/useTranslation';
 
 export const BrandsContent: FC = () => {
+    const { t } = useTranslation();
     const [{ data: brandsData, fetching: areBrandsFetching }] = useBrandsQuery();
 
     if (areBrandsFetching) {
@@ -18,5 +20,5 @@ export const BrandsContent: FC = () => {
         return null;
     }
 
-    return <SimpleNavigation isWithoutSlider listedItems={brandsData.brands} />;
+    return <SimpleNavigation isWithoutSlider listedItems={brandsData.brands} title={t('Brands')} />;
 };

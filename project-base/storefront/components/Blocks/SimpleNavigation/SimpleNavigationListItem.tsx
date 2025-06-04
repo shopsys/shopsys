@@ -25,36 +25,35 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     const linkType = linkTypeOverride ?? getLinkType(listedItem.__typename);
 
     return (
-        <li data-tid={tid}>
-            <ExtendedNextLink
-                href={href}
-                type={linkType}
-                className={twMergeCustom(
-                    'border-background-more bg-background-more relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
-                    'text-text-default hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
-                    className,
-                )}
-            >
-                {itemImage && (
-                    <div className="shrink-0" data-tid={TIDs.simple_navigation_image}>
-                        <Image
-                            priority
-                            alt={itemImage.name || listedItem.name}
-                            className="size-[60px] object-contain mix-blend-multiply"
-                            height={60}
-                            src={itemImage.url}
-                            width={60}
-                        />
-                    </div>
-                )}
+        <ExtendedNextLink
+            data-tid={tid}
+            href={href}
+            type={linkType}
+            className={twMergeCustom(
+                'border-background-more bg-background-more relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                'text-text-default hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
+                className,
+            )}
+        >
+            {itemImage && (
+                <div className="shrink-0" data-tid={TIDs.simple_navigation_image}>
+                    <Image
+                        priority
+                        alt={itemImage.name || listedItem.name}
+                        className="size-[60px] object-contain mix-blend-multiply"
+                        height={60}
+                        src={itemImage.url}
+                        width={60}
+                    />
+                </div>
+            )}
 
-                {icon}
+            {icon}
 
-                <div className="z-above text-sm font-semibold">{listedItem.name}</div>
-                {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
-                    <span className="ml-2 text-sm whitespace-nowrap">({listedItem.totalCount})</span>
-                )}
-            </ExtendedNextLink>
-        </li>
+            <div className="z-above text-sm font-semibold">{listedItem.name}</div>
+            {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
+                <span className="ml-2 text-sm whitespace-nowrap">({listedItem.totalCount})</span>
+            )}
+        </ExtendedNextLink>
     );
 };

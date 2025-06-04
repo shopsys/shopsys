@@ -11,6 +11,7 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -30,6 +31,7 @@ type CategoryDetailContentProps = {
 };
 
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category, isFetchingVisible }) => {
+    const { t } = useTranslation();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
@@ -48,7 +50,12 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 title={title}
             />
 
-            <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={category.children} />
+            <SimpleNavigation
+                isWithoutSlider
+                linkTypeOverride="category"
+                listedItems={category.children}
+                title={t('Subcategories')}
+            />
 
             <FilteredProductsWrapper>
                 <DeferredFilterPanel

@@ -23,7 +23,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults }) => {
             {!!searchResults.articlesSearch.length && (
                 <div>
                     <Webline>
-                        <h5 className="mb-2">{t('Found articles')}</h5>
+                        <h2 className="h5 mb-2">{t('Found articles')}</h2>
                     </Webline>
                     <SimpleNavigation isWithoutSlider listedItems={searchResults.articlesSearch} />
                 </div>
@@ -32,7 +32,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults }) => {
             {!!searchResults.brandSearch.length && (
                 <div>
                     <Webline>
-                        <h5 className="mb-2">{t('Found brands')}</h5>
+                        <h2 className="h5 mb-2">{t('Found brands')}</h2>
                     </Webline>
                     <SimpleNavigation isWithoutSlider listedItems={searchResults.brandSearch} />
                 </div>
@@ -41,7 +41,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults }) => {
             {!!mappedCategoriesSearchResults?.length && (
                 <div>
                     <Webline>
-                        <h5 className="mb-2">{t('Found categories')}</h5>
+                        <h2 className="h5 mb-2">{t('Found categories')}</h2>
                     </Webline>
                     <SimpleNavigation isWithoutSlider listedItems={mappedCategoriesSearchResults} />
                 </div>

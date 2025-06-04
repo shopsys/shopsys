@@ -27,7 +27,7 @@ export const SearchProducts: FC = () => {
     return (
         <div>
             <Webline>
-                <h5 className="mb-2">{t('Found products')}</h5>
+                <p className="h5 mb-2">{t('Found products')}</p>
             </Webline>
 
             <FilteredProductsWrapper>

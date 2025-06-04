@@ -70,7 +70,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                 </div>
                             )}
 
-                            <h4 className="vl:line-clamp-1 line-clamp-2">{category.name}</h4>
+                            <h3 className="h4 vl:line-clamp-1 line-clamp-2">{category.name}</h3>
                         </ExtendedNextLink>
                     </li>
                 );

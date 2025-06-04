@@ -36,7 +36,7 @@ export const DeferredPromotedProducts: FC = () => {
 
     return (
         <Webline>
-            <h3 className="mb-3">{t('News on offer')}</h3>
+            <h2 className="h3 mb-3">{t('News on offer')}</h2>
 
             {shouldRender ? (
                 <ProductsSlider

@@ -167,7 +167,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     }}
                                 />
                             )}
-                            <h5 className="mb-2">{orderItem?.name ?? t('Complaint item')}</h5>
+                            <span className="h5 mb-2">{orderItem?.name ?? t('Complaint item')}</span>
                             {isCreationWithoutOrder && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}

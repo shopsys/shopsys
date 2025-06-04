@@ -33,7 +33,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                 />
 
                 <div className="flex flex-col gap-1">
-                    <h5>
+                    <span className="h5">
                         {complaintItem.items[0].product?.isVisible ? (
                             <ExtendedNextLink href={complaintItem.items[0].product.slug} type="product">
                                 {complaintItem.items[0].productName}
@@ -41,7 +41,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         ) : (
                             complaintItem.items[0].productName
                         )}
-                    </h5>
+                    </span>
 
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <ComplaintItemColumnInfo

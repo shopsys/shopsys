@@ -46,6 +46,8 @@ export const TransportAndPaymentContent: FC = () => {
             isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsFetching}
             page="transport-and-payment"
         >
+            <h1 className="sr-only">{t('Transport and payment')}</h1>
+
             <OrderContentWrapper
                 activeStep={2}
                 isTransportOrPaymentLoading={isChangingTransportInCart || isChangingPaymentInOrder}

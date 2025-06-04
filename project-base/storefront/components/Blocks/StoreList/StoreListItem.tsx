@@ -61,7 +61,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             <div className="flex items-center justify-between gap-3.5">
                 <div className="w-full items-center justify-between xl:flex">
                     <div className="max-xl:mb-2.5 xl:w-[215px]">
-                        <h5>{store.name}</h5>
+                        <span className="h5">{store.name}</span>
                         <p className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
@@ -105,7 +105,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                         ) : null}
 
                         <InfoItem>
-                            <h5 className="mb-2">{t('Opening hours')}</h5>
+                            <p className="h5 mb-2">{t('Opening hours')}</p>
                             <OpeningHours openingHours={store.openingHours} />
                         </InfoItem>
 

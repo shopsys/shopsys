@@ -20,7 +20,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                     <ExtendedNextLink href={contactUrl}>{t('Write to us')}</ExtendedNextLink>
                     {footerArticles?.map((item) => (
                         <div key={item.title}>
-                            <h3>{item.title}</h3>
+                            <span className="h3">{item.title}</span>
                             <ul>
                                 {item.items.map((item) => (
                                     <li key={item.uuid}>

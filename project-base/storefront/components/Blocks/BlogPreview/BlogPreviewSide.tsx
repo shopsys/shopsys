@@ -68,7 +68,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h5 className="text-text-inverted">{article.name}</h5>
+                        <span className="h5 text-text-inverted">{article.name}</span>
 
                         <p className={twJoin('text-text-inverted font-normal', !isPlaceholder && 'hidden')}>
                             {article.perex}

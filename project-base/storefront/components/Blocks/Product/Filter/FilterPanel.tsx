@@ -52,7 +52,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             />
 
             <div className="vl:hidden flex items-center justify-between p-5">
-                <h5>{t('Product filter')}</h5>
+                <span className="h5">{t('Product filter')}</span>
                 <button
                     className="inline-flex size-4 cursor-pointer"
                     tabIndex={0}

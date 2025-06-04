@@ -23,7 +23,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
 
     return (
         <div className="vl:col-span-1 flex flex-col gap-2">
-            <h4>{t('Your order')}</h4>
+            <span className="h4">{t('Your order')}</span>
 
             {cart.items.map((item) => (
                 <OrderItemProductCard

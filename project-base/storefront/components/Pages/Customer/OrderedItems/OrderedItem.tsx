@@ -54,7 +54,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                     width={80}
                 />
                 <div className="flex flex-col gap-1">
-                    <h5>
+                    <span className="h5">
                         {orderedItem.product?.isVisible ? (
                             <ExtendedNextLink href={orderedItem.product.slug} type="product">
                                 {orderedItem.name}
@@ -62,7 +62,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         ) : (
                             orderedItem.name
                         )}
-                    </h5>
+                    </span>
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <OrderedItemColumnInfo
                             title={t('Order number')}

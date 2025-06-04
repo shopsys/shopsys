@@ -92,7 +92,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
                         <ThumbUp className="text-text-accent size-6" />
-                        <h5 className="text-text-accent">{text}</h5>
+                        <span className="h5 text-text-accent">{text}</span>
                     </li>
                 ))}
             </ul>
@@ -102,7 +102,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     className="flex flex-col gap-4"
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
-                    <h4>{t('Choose a password')}</h4>
+                    <span className="h4">{t('Choose a password')}</span>
 
                     <FormColumn className="gap-3">
                         <PasswordInputControlled

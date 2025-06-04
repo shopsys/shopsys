@@ -43,18 +43,18 @@ export const CartStep: FC<CartStepProps> = ({
                             : 'bg-background-accent-less text-text-accent',
                     )}
                 >
-                    <h4>{step}</h4>
+                    <span className="h4">{step}</span>
                 </div>
 
-                <h4
+                <h2
                     className={twJoin(
-                        'text-xs lg:text-lg',
+                        'font-secondary text-xs font-semibold lg:text-lg',
                         !isDisabled && 'group-hover:text-link-hovered',
                         step === activeStep ? 'text-link-default' : '',
                     )}
                 >
                     {label}
-                </h4>
+                </h2>
             </button>
         </li>
     );

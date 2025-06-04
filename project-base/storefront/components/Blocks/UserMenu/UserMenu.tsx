@@ -61,10 +61,10 @@ const UserMenuComp: FC<UserMenuProps> = ({ className }) => {
     return (
         <div className={twMergeCustom('flex flex-col gap-3', className)}>
             <div className="bg-background-accent-less flex flex-col gap-1 rounded-xl px-3 py-4">
-                <h5>
+                <span className="h5">
                     {user?.firstName} {user?.lastName}
-                </h5>
-                {user?.companyName && <h6 className="text-text-less">{user.companyName}</h6>}
+                </span>
+                {user?.companyName && <span className="h6 text-text-less">{user.companyName}</span>}
                 <span
                     className={twJoin(
                         'max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap',

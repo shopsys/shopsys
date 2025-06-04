@@ -74,11 +74,11 @@ export const CartListItem: FC<CartListItemProps> = ({
                         data-tid={TIDs.pages_cart_list_item_name}
                     >
                         <ExtendedNextLink
-                            className="font-secondary text-text-default hover:text-text-accent text-sm font-semibold no-underline hover:underline"
+                            className="font-secondary text-text-default hover:text-text-accent font-semibold no-underline hover:underline"
                             href={productSlug}
                             type="product"
                         >
-                            {product.fullName}
+                            <h3 className="text-sm lg:text-sm">{product.fullName}</h3>
                         </ExtendedNextLink>
 
                         <div className="text-text-less text-sm">

@@ -19,6 +19,8 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
 
     return (
         <VerticalStack gap="md">
+            <h1 className="sr-only">{t('Cart')}</h1>
+
             <Webline>
                 <CartSteps activeStep={1} domainUrl={url} />
 
@@ -33,7 +35,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     recommendationType={TypeRecommendationType.Basket}
                     render={(recommendedProductsContent) => (
                         <section>
-                            <h3 className="mb-3">{t('Recommended for you')}</h3>
+                            <p className="h3 mb-3">{t('Recommended for you')}</p>
                             {recommendedProductsContent}
                         </section>
                     )}

@@ -21,7 +21,7 @@ export const Countdown: FC<CountdownProps> = ({ endTime }) => {
 
     return (
         <div className="flex flex-col gap-2">
-            <h6>{t('Promo price expires in')}</h6>
+            <span className="h6">{t('Promo price expires in')}</span>
             <div className="flex items-center gap-2">
                 <CountdownItem unit={t('days count', { count: Number(countdown.days) })} value={countdown.days} />
                 <CountdownDivider />

@@ -103,7 +103,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (
                             <section>
-                                <h5 className="mb-3">{t('Recommended for you')}</h5>
+                                <h2 className="h5 mb-3">{t('Recommended for you')}</h2>
                                 {recommendedProductsContent}
                             </section>
                         )}

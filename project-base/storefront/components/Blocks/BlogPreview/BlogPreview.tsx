@@ -29,7 +29,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     return (
         <Webline className="z-above relative">
             <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-text-inverted">{t('Magazine')}</h3>
+                <h2 className="h3 text-text-inverted">{t('Magazine')}</h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink

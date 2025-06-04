@@ -26,6 +26,8 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
 
     return (
         <div className="bg-background-more relative rounded-xl p-5">
+            <h2 className="sr-only">{t('Bestsellers')}</h2>
+
             <div className="font-secondary mb-3 text-center text-lg font-semibold break-words">
                 {t('Do not want to choose? Choose certainty')}
             </div>

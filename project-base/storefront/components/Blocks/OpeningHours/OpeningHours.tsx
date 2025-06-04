@@ -87,9 +87,9 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
-                            <h6 className="w-44">
+                            <span className="h6 w-44">
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
-                            </h6>
+                            </span>
 
                             <span>
                                 {isClosedWholeDay ? (

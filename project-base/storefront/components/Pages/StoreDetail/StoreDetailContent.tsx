@@ -131,7 +131,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 const StoreSection: FC<{ title: string }> = ({ title, children }) => {
     return (
         <div>
-            <h5 className="mb-2">{title}</h5>
+            <p className="h5 mb-2">{title}</p>
             {children}
         </div>
     );

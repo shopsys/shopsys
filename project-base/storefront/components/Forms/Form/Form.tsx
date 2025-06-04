@@ -47,5 +47,5 @@ export const FormButtonWrapper: FC = ({ children, className }) => {
 };
 
 export const FormHeading: FC = ({ children, className }) => {
-    return <h4 className={twMergeCustom('mb-4', className)}>{children}</h4>;
+    return <p className={twMergeCustom('h4 mb-4', className)}>{children}</p>;
 };

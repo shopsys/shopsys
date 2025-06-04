@@ -47,7 +47,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <PacketeryContainer />
 
             <div data-tid={TIDs.pages_order_transport}>
-                <div className="h4 mb-3">{t('Choose transport')}</div>
+                <h3 className="h4 mb-3">{t('Choose transport')}</h3>
+
                 <ul>
                     <AnimatePresence initial={false}>
                         {!!transport && (
@@ -62,6 +63,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             </AnimateCollapseDiv>
                         )}
                     </AnimatePresence>
+
                     <AnimatePresence initial={false}>
                         {!transport && (
                             <AnimateCollapseDiv className="relative !block" keyName="transport-list">
@@ -77,6 +79,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         )}
                     </AnimatePresence>
                 </ul>
+
                 <AnimatePresence initial={false}>
                     {!!transport && (
                         <AnimateCollapseDiv className="relative !flex flex-col" keyName="transport-reset">
@@ -89,6 +92,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     )}
                 </AnimatePresence>
             </div>
+
             <AnimatePresence initial={false}>
                 {transport !== null && (
                     <AnimateCollapseDiv
@@ -100,7 +104,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />
                         )}
 
-                        <div className="h4 mb-3">{t('Choose payment')}</div>
+                        <h3 className="h4 mb-3">{t('Choose payment')}</h3>
 
                         <AnimatePresence initial={false}>
                             {!!payment && (
@@ -123,6 +127,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 </AnimateCollapseDiv>
                             )}
                         </AnimatePresence>
+
                         <AnimatePresence initial={false}>
                             {payment !== null && (
                                 <AnimateCollapseDiv className="relative !flex flex-col" keyName="payment-reset">

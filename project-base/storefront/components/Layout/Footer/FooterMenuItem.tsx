@@ -8,7 +8,7 @@ type FooterMenuItemProps = {
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
     <>
-        <h3 className="text-text-default mb-3 text-center uppercase lg:text-left">{title}</h3>
+        <p className="h3 text-text-default mb-3 text-center uppercase lg:text-left">{title}</p>
 
         <ul className="flex flex-col gap-1 lg:gap-4">
             {items.map((item) => (

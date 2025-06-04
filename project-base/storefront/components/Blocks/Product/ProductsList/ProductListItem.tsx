@@ -93,14 +93,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     <div className="flex w-full flex-col gap-2.5 px-2.5 pt-5 sm:px-5">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                        <div
+                        <h3
                             className={twJoin(
                                 'font-secondary group-hover:text-link-default grow overflow-hidden font-semibold break-words group-hover:underline',
-                                textSize === 'xs' ? 'text-xs' : 'text-sm',
+                                textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                             )}
                         >
                             {product.fullName}
-                        </div>
+                        </h3>
 
                         {product.__typename === 'MainVariant' && (
                             <div className="bg-background-default font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">

@@ -1,4 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandsContent } from 'components/Pages/Brands/BrandsContent';
 import { BrandsQueryDocument } from 'graphql/requests/brands/queries/BrandsQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -16,6 +17,10 @@ const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout title={t('Brands')}>
+            <Webline>
+                <h1 className="mb-4">{t('Brands')}</h1>
+            </Webline>
+
             <BrandsContent />
         </CommonLayout>
     );
