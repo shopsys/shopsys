@@ -55,8 +55,8 @@ For more information about translations, see [the separate article](./translatio
 
 ## How to set up deployment and production server?
 
-We recommend installation using the Docker for production.
-See how to install Shopsys Platform in production and how to proceed when deploying in the tutorial [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md).
+We recommend installation using Kubernetes for production.
+See how to install Shopsys Platform in production and how to proceed when deploying in the tutorial [Installation Using Kubernetes on Production Server](../installation/installation-using-kubernetes-on-production-server.md).
 
 ## How to set up the administration with a different locale/language (e.g., Czech)?
 

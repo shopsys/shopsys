@@ -53,8 +53,7 @@ which is fully ready as the base for building your Shopsys Platform project.
 For more detailed instructions, follow one of the installation guides:
 
 - [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/)
-- [Deployment to Google Cloud](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
-- [Installation on production server](https://docs.shopsys.com/en/latest/installation/installation-using-docker-on-production-server/)
+- [Installation on the production server](https://docs.shopsys.com/en/latest/installation/installation-using-kubernetes-on-production-server/)
 
 ## Documentation
 
