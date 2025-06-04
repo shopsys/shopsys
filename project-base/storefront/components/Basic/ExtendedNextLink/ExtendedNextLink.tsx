@@ -38,7 +38,8 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
-        const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick;
+        const isTargetBlank = props.target === '_blank';
+        const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick && !isTargetBlank;
 
         if (isTextSelected()) {
             e.preventDefault();
