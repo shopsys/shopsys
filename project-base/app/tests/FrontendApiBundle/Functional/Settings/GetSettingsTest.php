@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
-use App\Model\Order\Order;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -77,7 +76,6 @@ CONTENT,
             'seo' => [
                 'robotsTxtContent' => $data,
             ],
-            'maxAllowedPaymentTransactions' => Order::MAX_TRANSACTION_COUNT,
             'termsAndConditionsArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
             'privacyPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
             'userConsentPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),

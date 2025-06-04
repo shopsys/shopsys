@@ -58,7 +58,6 @@ class PaymentMutationTest extends GraphQlTestCase
         $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
-        $this->assertSame(2, $content['paymentTransactionsCount']);
         $this->assertSame(PaymentTypeEnum::TYPE_GOPAY, $content['payment']['type']);
 
 

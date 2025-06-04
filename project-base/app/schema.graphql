@@ -1490,8 +1490,6 @@ type Order {
   number: String!
   "Payment method applied to the order"
   payment: Payment!
-  "Count of the payment transactions related to the order"
-  paymentTransactionsCount: Int!
   "Selected pickup place identifier"
   pickupPlaceIdentifier: String
   "Billing address zip code"
@@ -1685,10 +1683,10 @@ type OrderPaymentPageContent {
 }
 
 type OrderPaymentsConfig {
-  "All available payment methods for the order (excluding the current one)"
+  "All currently available payment methods for the order (excluding the current one)"
   availablePayments: [Payment!]!
-  "Current payment method used in the order"
-  currentPayment: Payment!
+  "Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count."
+  currentPayment: Payment
 }
 
 "Status of order"
@@ -2608,8 +2606,6 @@ type Settings {
   heurekaEnabled: Boolean!
   "Main blog category URL and background image"
   mainBlogCategoryData: MainBlogCategoryData!
-  "Max allowed payment transactions (how many times is user allowed to try the same payment)"
-  maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
   pricing: PricingSetting!
   "Returns privacy policy article's url"

@@ -7,7 +7,6 @@ query SettingsQuery @redisCache(ttl: 3600) {
             ...SeoSettingFragment
         }
         contactFormMainText
-        maxAllowedPaymentTransactions
         displayTimezone
         heurekaEnabled
         mainBlogCategoryData {

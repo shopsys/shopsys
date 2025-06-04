@@ -1892,8 +1892,6 @@ export type TypeOrder = {
   number: Scalars['String']['output'];
   /** Payment method applied to the order */
   payment: TypePayment;
-  /** Count of the payment transactions related to the order */
-  paymentTransactionsCount: Scalars['Int']['output'];
   /** Selected pickup place identifier */
   pickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
   /** Billing address zip code */
@@ -2094,10 +2092,10 @@ export type TypeOrderPaymentPageContent = {
 
 export type TypeOrderPaymentsConfig = {
   __typename?: 'OrderPaymentsConfig';
-  /** All available payment methods for the order (excluding the current one) */
+  /** All currently available payment methods for the order (excluding the current one) */
   availablePayments: Array<TypePayment>;
-  /** Current payment method used in the order */
-  currentPayment: TypePayment;
+  /** Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count. */
+  currentPayment: Maybe<TypePayment>;
 };
 
 /** Status of order */
@@ -3332,8 +3330,6 @@ export type TypeSettings = {
   heurekaEnabled: Scalars['Boolean']['output'];
   /** Main blog category URL and background image */
   mainBlogCategoryData: TypeMainBlogCategoryData;
-  /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
-  maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
   pricing: TypePricingSetting;
   /** Returns privacy policy article's url */

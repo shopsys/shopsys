@@ -4,8 +4,8 @@ OrderPaymentsConfigDecorator:
     config:
         fields:
             currentPayment:
-                type: "Payment!"
-                description: "Current payment method used in the order"
+                type: "Payment"
+                description: "Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count."
             availablePayments:
                 type: "[Payment!]!"
-                description: "All available payment methods for the order (excluding the current one)"
+                description: "All currently available payment methods for the order (excluding the current one)"

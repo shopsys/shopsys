@@ -108,9 +108,6 @@ OrderDecorator:
             lastExternalPaymentUrl:
                 type: "String"
                 description: "URL for accessing the last payment transaction on a gateway without invoking the new payment transaction. Depending on the payment status, user might see the payment details or even retry the transaction if possible."
-            paymentTransactionsCount:
-                type: "Int!"
-                description: "Count of the payment transactions related to the order"
             isPaid:
                 type: "Boolean!"
                 description: "Indicates whether the order is paid successfully with GoPay payment type"

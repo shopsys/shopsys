@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeUpdatePaymentStatusFragment = { __typename: 'Order', isPaid: boolean, number: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } };
+export type TypeUpdatePaymentStatusFragment = { __typename: 'Order', isPaid: boolean, number: string, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } };
 
 
       export interface PossibleTypesResultData {
@@ -91,7 +91,6 @@ export const UpdatePaymentStatusFragment = gql`
   __typename
   isPaid
   number
-  paymentTransactionsCount
   payment {
     name
     type
