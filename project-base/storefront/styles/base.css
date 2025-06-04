@@ -135,6 +135,10 @@
         @apply !rounded-toast;
     }
 
+    .Toastify__toast-container {
+        @apply focus-visible:outline-none;
+    }
+
     .Toastify__toast-body {
         @apply !text-text-default;
         max-width: 90%;
@@ -161,7 +165,7 @@
     }
 
     .Toastify__close-button {
-        @apply !text-text-default !self-center !opacity-100;
+        @apply !text-text-default !self-center rounded-sm !opacity-100 focus-visible:ring-2;
     }
 
     /* fix gallery video start width and hide dummy image */
