@@ -2,6 +2,7 @@ import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
+import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
@@ -43,7 +44,13 @@ export const FilterPanel: FC<FilterPanelProps> = ({
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     return (
-        <div className="z-aboveOverlay bg-background-default vl:z-above flex h-full flex-col pb-1">
+        <div className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1">
+            <AccessibleLink
+                className="top-0 -translate-x-[1500rem] rounded-sm transition-transform focus-visible:top-0 focus-visible:translate-x-0"
+                href="#product-list"
+                title="Skip filters"
+            />
+
             <div className="vl:hidden flex items-center justify-between p-5">
                 <h5>{t('Product filter')}</h5>
                 <button

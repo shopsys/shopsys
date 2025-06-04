@@ -40,7 +40,11 @@ export const SearchProducts: FC = () => {
                     totalCount={searchProductsData.totalCount}
                 />
 
-                <div className="flex flex-1 scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
+                <div
+                    className="flex flex-1 scroll-mt-5 flex-col gap-5"
+                    id="product-list"
+                    ref={paginationScrollTargetRef}
+                >
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 

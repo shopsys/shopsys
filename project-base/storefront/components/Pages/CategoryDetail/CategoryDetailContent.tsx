@@ -61,7 +61,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     totalCount={category.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col gap-5">
+                <div className="flex flex-1 flex-col gap-5" id="product-list">
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
                     <div className="vl:flex-col flex scroll-mt-5 flex-col-reverse" ref={paginationScrollTargetRef}>

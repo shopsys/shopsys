@@ -38,7 +38,11 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                     totalCount={flag.products.totalCount}
                 />
 
-                <div className="flex flex-1 scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
+                <div
+                    className="flex flex-1 scroll-mt-5 flex-col gap-5"
+                    id="product-list"
+                    ref={paginationScrollTargetRef}
+                >
                     <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={flag.products.productFilterOptions} />
 

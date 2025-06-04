@@ -1,6 +1,7 @@
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { Footer } from 'components/Layout/Footer/Footer';
+import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -23,6 +24,8 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
             <SeoMeta defaultTitle={t('Order')} />
 
             <div className="flex h-full min-h-screen flex-col">
+                <AccessibilityNavigation simpleHeader />
+
                 <NotificationBars />
 
                 <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb lg:pb-6">

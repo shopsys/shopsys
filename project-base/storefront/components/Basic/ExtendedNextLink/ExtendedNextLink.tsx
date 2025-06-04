@@ -38,6 +38,15 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     const { url } = useDomainConfig();
 
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
+    const urlHref = isDynamic
+        ? {
+              pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
+              query: {
+                  [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
+                  ...queryParams,
+              },
+          }
+        : href;
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
@@ -67,19 +76,9 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
             as={isDynamic ? href : as}
             className={twMergeCustom('focus-visible:ring-2', className)}
             data-tid={tid}
+            href={urlHref}
             prefetch={false}
             tabIndex={0}
-            href={
-                isDynamic
-                    ? {
-                          pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
-                          query: {
-                              [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
-                              ...queryParams,
-                          },
-                      }
-                    : href
-            }
             onClick={handleOnClick}
             {...props}
         >

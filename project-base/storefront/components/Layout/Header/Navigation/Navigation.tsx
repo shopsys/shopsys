@@ -48,7 +48,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     };
 
     return (
-        <nav className="relative">
+        <nav className="relative" id="main-navigation">
             <ul
                 ref={navigationRef}
                 className={twJoin(

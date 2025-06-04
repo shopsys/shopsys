@@ -1,6 +1,7 @@
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 import { DeferredFooter } from './Footer/DeferredFooter';
 import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';
+import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
 import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
 import { NotificationBars } from './NotificationBars/NotificationBars';
@@ -56,6 +57,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             />
 
             <div className="flex h-full min-h-screen flex-col">
+                <AccessibilityNavigation />
+
                 <NotificationBars />
 
                 <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
@@ -63,7 +66,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     <DeferredNavigation />
                 </header>
 
-                <main className="mt-4 mb-10 flex flex-col">
+                <main className="mt-4 mb-10 flex flex-col" id="main-content">
                     <Adverts withWebline className="mb-4" positionName="header" />
                     {!!breadcrumbs && !isPageLoading && !isFetchingData && (
                         <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />

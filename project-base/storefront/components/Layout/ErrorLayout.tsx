@@ -1,9 +1,12 @@
 import { Footer } from './Footer/Footer';
+import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
 import { Webline } from './Webline/Webline';
 
 export const ErrorLayout: FC = ({ children }) => (
     <div className="flex h-full min-h-screen flex-col">
+        <AccessibilityNavigation />
+
         <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
             <Header simpleHeader />
         </header>

@@ -3,6 +3,7 @@ import { GrapesJs } from 'components/Basic/UserText/GrapesJs';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { NewsletterForm } from 'components/Layout/Footer/NewsletterForm/NewsletterForm';
 import { useFooterArticles } from 'components/Layout/Footer/footerUtils';
+import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityNavigation/AccessibilityNavigation';
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
 import { CartInHeader } from 'components/Layout/Header/Cart/CartInHeader';
 import { Logo } from 'components/Layout/Header/Logo/Logo';
@@ -21,6 +22,8 @@ const Index: FC = () => {
 
     return (
         <div className="flex h-full min-h-screen flex-col">
+            <AccessibilityNavigation />
+
             <NotificationBars />
 
             <header>
