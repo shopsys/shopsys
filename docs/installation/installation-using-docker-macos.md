@@ -67,7 +67,7 @@ sudo ifconfig lo0 alias 127.0.0.2 up
 
 #### 2.2. Create docker-compose.yml
 
-Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose-mac.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`]({{github.link}}/project-base/docker/conf/docker-compose-mac.yml.dist).
 
 ```sh
 cp docker/conf/docker-compose-mac.yml.dist docker-compose.yml
@@ -96,7 +96,7 @@ mutagen-compose up -d --build
 
 !!! note
 
-    During the build of the Docker containers there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the build of the Docker containers there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.5 Set up the application
 

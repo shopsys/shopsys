@@ -30,7 +30,7 @@ Besides the rules that are checked by automatic tools, we have few rules for whi
 <div class="js-bestselling-products list-products-line"></div>
 ```
 
-- Names in configuration files (e.g., [`parameters_common.yaml`](https://github.com/shopsys/project-base/blob/master/config/parameters_common.yaml)) are underscored
+- Names in configuration files (e.g., [`parameters_common.yaml`]({{github.link}}/project-base/app/config/parameters_common.yaml)) are underscored
 
 ```plaintext
 shopsys.display_cron_overview_for_superadmin_only

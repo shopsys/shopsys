@@ -27,7 +27,7 @@ always run the same, regardless of the environment.
 
 #### 3.1 docker-compose.yml
 
-[Docker-compose.yml](https://github.com/shopsys/shopsys/blob/HEAD/project-base/docker/conf/docker-compose.yml.dist) file contains the definitions of containers that will be created for the installation
+[Docker-compose.yml]({{github.link}}/project-base/docker/conf/docker-compose.yml.dist) file contains the definitions of containers that will be created for the installation
 of Shopsys Platform. Containers can communicate with each other. Data need to be saved
 into volumes, otherwise, these data will be lost after the container is closed.
 
@@ -62,7 +62,7 @@ The definition of volumes, example:
 
 #### 3.2 docker/php-fpm/Dockerfile
 
-[Dockerfile](https://github.com/shopsys/shopsys/blob/HEAD/project-base/app/docker/php-fpm/Dockerfile) is a text document that contains all the commands a user
+[Dockerfile]({{github.link}}/project-base/app/docker/php-fpm/Dockerfile) is a text document that contains all the commands a user
 should call on the command line to assemble an image. It is like some
 kind of recipe by which final image is cooked.
 
@@ -80,11 +80,11 @@ The official list of Dockerfile commands can be found on [Dockerfile reference](
 
 #### 3.3 docker/php-fpm/php-ini-overrides.ini
 
-[Php-ini-overrides.ini](https://github.com/shopsys/shopsys/blob/HEAD/project-base/app/docker/php-fpm/php-ini-overrides.ini) file contains php custom configuration which is used after installing php in a new container
+[Php-ini-overrides.ini]({{github.link}}/project-base/app/docker/php-fpm/php-ini-overrides.ini) file contains php custom configuration which is used after installing php in a new container
 
 #### 3.4 docker/nginx/nginx.conf
 
-[Nginx.conf](https://github.com/shopsys/shopsys/blob/HEAD/project-base/docker/nginx/nginx.conf) file contains Nginx configuration for new webserver container.
+[Nginx.conf]({{github.link}}/project-base/docker/nginx/nginx.conf) file contains Nginx configuration for new webserver container.
 
 #### 3.5 Images Distribution
 

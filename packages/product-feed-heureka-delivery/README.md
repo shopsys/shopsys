@@ -6,7 +6,7 @@ Plugin for [Shopsys Platform](https://www.shopsys-framework.com) responsible for
 
 For detailed information about the feed see [official documentation](https://sluzby.heureka.cz/napoveda/dostupnostni-feed/).
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
+This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
 
 ## Installation
 
@@ -22,7 +22,7 @@ composer require shopsys/product-feed-heureka-delivery
 
 ### Register cron
 
-For the bundle to download Heureka categories each day you need to add cron to your `config/services/cron.yaml` if it is not present yet:
+For the bundle to download Heureka categories each day you need to add cron to your `app/config/cron.yaml` if it is not present yet:
 
 ```yml
 Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
@@ -44,7 +44,7 @@ This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),
 please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
-Please, check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md) before contributing.
+Please check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/HEAD/CONTRIBUTING.md) before contributing.
 
 ## Support
 

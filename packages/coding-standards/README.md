@@ -7,7 +7,7 @@ Shopsys Coding Standards are based on [PSR-2](http://www.php-fig.org/psr/psr-2/)
 This project bundles tools along with predefined rulesets for automated checks of Shopsys Coding Standards that we use in many Shopsys projects.
 The repository also contains [few custom rules](#custom-rules).
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
+This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
 
 Provided tools:
 
@@ -24,15 +24,9 @@ php composer require shopsys/coding-standards
 
 ## Usage
 
-Create `easy-coding-standard.yml` config file in your project which includes predefined ruleset.
-You can also [customize the rules](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md#shopsyscoding-standards)
-and even add your own sniffs and fixers in the config.
-
-```yaml
-#easy-coding-standard.yml
-imports:
-    - { resource: '%vendor_dir%/shopsys/coding-standards/easy-coding-standard.yml' }
-```
+Create `ecs.php` config file in your project which includes predefined ruleset.
+You can take [the config from the project-base](https://github.com/shopsys/shopsys/blob/HEAD/project-base/app/ecs.php) repository as an inspiration.
+You can also customize the rules and even add your own sniffs and fixers in the config.
 
 In terminal, run following commands:
 
@@ -89,7 +83,7 @@ This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),
 please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
-Please, check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md) before contributing.
+Please check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/HEAD/CONTRIBUTING.md) before contributing.
 
 ## Support
 

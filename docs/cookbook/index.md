@@ -7,7 +7,6 @@
 - [Adding a New Administration Page](./adding-a-new-administration-page.md)
 - [Adding a New Advert Position](./adding-a-new-advert-position.md)
 - [Modifying a Template in Administration](./modifying-a-template-in-administration.md)
-- [Adding Ajax Load More Button into Pagination](./adding-ajax-load-more-button-into-pagination.md)
 - [Implementing a Basic Data Import](./basic-data-import.md)
 - [Import categories](./import-categories.md)
 - [Working with Multiple Cron Instances](./working-with-multiple-cron-instances.md)

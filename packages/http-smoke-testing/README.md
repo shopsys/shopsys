@@ -10,7 +10,7 @@ While this is not a very sophisticated check, it can answer the essential questi
 It prevents you from triggering _500 Server Error_ on some seemingly unrelated page when you are doing changes in shared code.
 Moreover, after initial configuration it is almost maintenance-free as it checks any new routes automatically.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
+This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
 
 ## Installation
 
@@ -194,7 +194,7 @@ This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),
 please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
-Please, check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md) before contributing.
+Please check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/HEAD/CONTRIBUTING.md) before contributing.
 
 ## Support
 

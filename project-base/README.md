@@ -6,7 +6,7 @@ Shopsys/project-base repository contains the fully ready base for building your 
 
 For more information about project, please see [shopsys/shopsys](https://github.com/shopsys/shopsys) readme.
 
-This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
+This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in its `CHANGELOG` file.
 
 ## Installation
 
@@ -23,7 +23,7 @@ Create new project on Shopsys Platform easily from this package following the [I
 
 For documentation of Shopsys Platform itself see [Shopsys Platform Knowledge Base](https://docs.shopsys.com/en/latest/).
 
-Documentation of the specific project built on Shopsys Platform should be in [Project Documentation](https://github.com/shopsys/project-base/blob/master/docs/index.md).
+Documentation of the specific project built on Shopsys Platform should be in [Project Documentation](https://github.com/shopsys/project-base/blob/{{ shopsys.version }}/docs/index.md).
 
 ## Contributing
 
@@ -34,7 +34,7 @@ This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),
 please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
-Please, check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md) before contributing.
+Please check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/HEAD/CONTRIBUTING.md) before contributing.
 
 ## Support
 

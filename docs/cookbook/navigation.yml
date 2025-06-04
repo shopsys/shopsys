@@ -7,7 +7,6 @@ arrange:
     - adding-a-new-administration-page.md
     - adding-a-new-advert-position.md
     - modifying-a-template-in-administration.md
-    - adding-ajax-load-more-button-into-pagination.md
     - basic-data-import.md
     - import-categories.md
     - working-with-multiple-cron-instances.md

@@ -14,7 +14,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (e.g., with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (e.g., with configured domains and an existing database structure), see [`build.xml`]({{github.link}}/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -55,8 +55,8 @@ For more information about translations, see [the separate article](./translatio
 
 ## How to set up deployment and production server?
 
-We recommend installation using the Docker for production.
-See how to install Shopsys Platform in production and how to proceed when deploying in the tutorial [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md).
+We recommend installation using Kubernetes for production.
+See how to install Shopsys Platform in production and how to proceed when deploying in the tutorial [Installation Using Kubernetes on Production Server](../installation/installation-using-kubernetes-on-production-server.md).
 
 ## How to set up the administration with a different locale/language (e.g., Czech)?
 
@@ -86,7 +86,7 @@ You can change the environment manually by using the command `php bin/console sh
 
 ## Are some periodic tasks part of Shopsys Platform (cron)?
 
-Yes, there is some prepared configuration for Shopsys Platform cron commands in a file `src/Resources/config/services/cron.yaml` in `FrameworkBundle`.
+Yes, there is some prepared configuration for Shopsys Platform cron commands in a file `app/config/cron.yaml` in `project-base`.
 Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Why are you using entity data instead of entities for Symfony forms?
@@ -96,9 +96,9 @@ because Symfony forms need setters for all fields and we don't want to mess enti
 
 ## What is the configuration file `services_test.yaml` good for?
 
-[`services_test.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yaml)
+[`services_test.yaml`]({{github.link}}/project-base/app/config/services_test.yaml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yaml`]({{github.link}}/project-base/app/config/services.yaml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?

@@ -1,10 +1,10 @@
 # Grid Data Sources
 
-As a data source, the [Grid Component](grid.md) requires an implementation of [`DataSourceInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/DataSourceInterface.php).
+As a data source, the [Grid Component](index.md) requires an implementation of [`DataSourceInterface`]({{github.link}}/packages/framework/src/Component/Grid/DataSourceInterface.php).
 
 You can find 4 implementations of the interface in Shopsys Platform.
 
-## [`QueryBuilderDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
+## [`QueryBuilderDataSource`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
 
 The most commonly used data source is created from Doctrine Query Builder.
 
@@ -25,7 +25,7 @@ QueryBuilderDataSource contains a third default parameter $hint which is pre-set
 This default setting overrides the default behavior of postgreSQL and in the case of large tables can cause the query to slow down.
 For this case and after considering all options, it is possible to set the hint to NULL and thus keep the default behavior of postgreSQL to speed up the query.
 
-## [`QueryBuilderWithRowManipulatorDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
+## [`QueryBuilderWithRowManipulatorDataSource`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
 
 This data source is created from query builder as well, and on top of it, it allows to define a callback that is applied on each row so additional data can be set this way,
 e.g., you can add some calculated price into the data set.
@@ -67,7 +67,7 @@ As in the case of QueryBuilderDataSource, it is possible to change the setting o
 - For large collections, create indexes over columns in conditions.
 - For columns in conditions where the LIKE "%something%" condition is used, use a trigram index instead of default B-tree index. (CREATE INDEX example_trgm_idx ON example USING gin (text_column gin_trgm_ops);)
 
-## [`ArrayDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/ArrayDataSource.php)
+## [`ArrayDataSource`]({{github.link}}/packages/framework/src/Component/Grid/ArrayDataSource.php)
 
 Data source that is created from an array. It is suitable when you need to display data that are not stored in the database.
 
@@ -89,7 +89,7 @@ foreach ($domain->getAll() as $domainConfig) {
 $dataSource = new ArrayDataSource($domainData, 'id');
 ```
 
-## [`MoneyConvertingDataSourceDecorator`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
+## [`MoneyConvertingDataSourceDecorator`]({{github.link}}/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
 
 A decorator that can be applied to any of the data sources described above. It converts monetary values in a data set to [`Money` value object](../../model/how-to-work-with-money.md#money-class).
 

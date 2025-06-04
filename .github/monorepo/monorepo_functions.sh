@@ -12,7 +12,6 @@ NC="\e[0m"
 # If you modify this list do not forget updating:
 #   \Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker
 #   /docs/introduction/monorepo.md
-#   docs/contributing/guidelines-for-writing-upgrade.md
 #   /CHANGELOG-XX.md
 #   /packages/framework/src/Resources/config/packages_registry.yaml
 #   project-base/app/config/bundles.php

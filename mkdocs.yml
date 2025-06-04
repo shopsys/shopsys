@@ -1,5 +1,10 @@
+current_version: 17.0
+
 extra_css:
     - _theme/main.css
+
+hooks:
+    - docs/_hooks/replace_links.py
 
 markdown_extensions:
     -   toc:

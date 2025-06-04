@@ -71,7 +71,7 @@ Right now, the Dashboard menu looks like this:
 
 Create a new [event subscriber](https://symfony.com/doc/current/event_dispatcher.html) and subscribe to the `ConfigureMenuEvent::SIDE_MENU_DASHBOARD` event.
 This is an event that will allow you to reconfigure the Dashboard menu and add a new item there.
-You can take a look at the class [`ConfigureMenuEvent`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see other events you can subscribe to.
+You can take a look at the class [`ConfigureMenuEvent`]({{github.link}}/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see other events you can subscribe to.
 
 You can put the subscriber right beside your new controller.
 
@@ -188,4 +188,4 @@ This can be used to alter the menu in a more significant way.
 
 Finally, we have added access control rules to the new page, so it is only accessible to users with the appropriate roles.
 
-To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where the menu is created.
+To see how the side menu works, you can see the [`SideMenuBuilder`]({{github.link}}/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where the menu is created.
