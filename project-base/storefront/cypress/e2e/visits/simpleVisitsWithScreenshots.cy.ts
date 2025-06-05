@@ -48,11 +48,10 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Category Detail] should visit category detail with screenshot', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryPersonalComputers);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'category detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
-                { tid: TIDs.simple_navigation_image },
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_copyright },
                 { tid: TIDs.category_bestseller_image },

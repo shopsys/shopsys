@@ -191,6 +191,7 @@ export const url = {
         editProfile: '/customer/edit-profile',
     },
     categoryElectronics: '/electronics',
+    categoryPersonalComputers: '/personal-computers-accessories',
     productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
     registration: '/registration',
     stores: '/stores',
