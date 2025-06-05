@@ -6,7 +6,13 @@
 
 {% block grid_value_cell_id_name %}
     {% if row.productType == TYPE_INQUIRY %}
-        <span class="in-letter cursor-help js-tooltip" title="{{ 'Upon inquiry'|trans }}">{{ 'Upon inquiry [abbreviation]'|trans }}</span>
+        <span class="cursor-help badge badge-pill bg-indigo-lt"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="{{ 'Upon inquiry'|trans }}"
+        >
+            {{ 'Upon inquiry [abbreviation]'|trans }}
+        </span>
     {% endif %}
     {% if row.variantType == VARIANT_TYPE_MAIN %}
         <span class="cursor-help badge badge-pill bg-lime-lt"
@@ -26,7 +32,9 @@
             {{ 'Variant [abbreviation]'|trans }}
         </span>
     {% endif %}
-    <a href="{{ url('admin_product_edit', { id: row.id }) }}">{{ row.name|productListDisplayNameByName }}</a>
+    {% block grid_value_cell_id_name_product_name %}
+        <a href="{{ url('admin_product_edit', { id: row.id }) }}">{{ row.name|productListDisplayNameByName }}</a>
+    {% endblock %}
 {% endblock %}
 
 {% block grid_value_cell_id_visibility %}

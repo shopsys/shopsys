@@ -38,6 +38,14 @@
                         {{ 'Advanced search'|trans }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="#bulk-edit"
+                       class="nav-link"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Bulk edit'|trans }}
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="card-body">
@@ -50,52 +58,29 @@
                     {% include '@ShopsysAdministration/content/product/advancedSearch/advancedSearch.html.twig'
                         with {advancedSearchForm: advancedSearchForm} %}
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="tab-pane" id="bulk-edit">
+                    {{ form_start(massActionForm) }}
 
-    {{ form_start(massActionForm) }}
-    <div class="wrap-divider wrap-divider--bottom">
-        <div class="js-product-list-with-filter">
-            <div class="box-mass-action" id="js-mass-action">
-                    <span class="box-mass-action__click" id="js-mass-action-button">
-                        {{ 'Bulk edit'|trans }}:
-                        {{ ux_icon('arrow', { class: 'box-mass-action__click__icon' }) }}
-                    </span>
-                <div class="box-mass-action__content">
-                    <strong class="box-mass-action__title">
-                        {{ 'Change for'|trans }}:
-                    </strong>
-                    <div class="box-mass-action__filter">
-                        <div class="box-mass-action__filter__line__item">
-                            {{ form_widget(massActionForm.selectType, { attr: { class: 'js-mass-action-select-type' } , isSimple: true }) }}
-                        </div>
+                    <div class="mb-2">
+                        <strong>{{ 'Change for'|trans }}:</strong>
+                        {{ form_widget(massActionForm.selectType, { attr: { class: 'js-mass-action-select-type' } , isSimple: true }) }}
                     </div>
-                    <div class="box-mass-action__filter">
-                        <strong class="box-mass-action__title">
-                            {{ 'Make modification'|trans }}:
-                        </strong>
 
-                        <div class="box-mass-action__filter__line">
-                            <div class="box-mass-action__filter__line__item">
+                    <div class="mb-2">
+                        <strong>{{ 'Make modification'|trans }}:</strong>
+                        <div class="row">
+                            <div class="col">
                                 {{ form_widget(massActionForm.action , { isSimple: true }) }}
                             </div>
-
-                            <div class="box-mass-action__filter__line__item">
+                            <div class="col">
                                 {{ form_widget(massActionForm.subject, { isSimple: true }) }}
                             </div>
-
-                            <div class="box-mass-action__filter__line__item">
+                            <div class="col">
                                 {{ form_widget(massActionForm.value, { attr: { class: 'js-mass-action-value' }, isSimple: true }) }}
                             </div>
                         </div>
-
-                        <div class="box-mass-action__filter__line box-mass-action__filter__line--submit">
-                            <div class="box-mass-action__filter__line__item">
-                                {{ form_widget(massActionForm.submit, { label: 'Make modification'|trans, attr: { class: 'btn btn--primary btn--medium js-mass-action-submit' } }) }}
-                            </div>
-                        </div>
                     </div>
+                    {{ form_widget(massActionForm.submit, { label: 'Make modification'|trans, attr: { class: 'btn js-mass-action-submit' } }) }}
                 </div>
             </div>
         </div>

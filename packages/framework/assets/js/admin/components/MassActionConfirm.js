@@ -23,8 +23,7 @@ export default class MassActionConfirm {
                         break;
                 }
 
-                // eslint-disable-next-line no-new
-                new Window({
+                void new Window({
                     content: Translator.trans('Do you really want to %action% %count% product?', { 'action': action, 'count': count }),
                     buttonCancel: true,
                     buttonContinue: true,

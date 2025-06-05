@@ -2,7 +2,7 @@ twig:
     debug: "%kernel.debug%"
     exception_controller: null
     form_themes:
-        #- '@ShopsysAdministration\form\theme.html.twig'
+        - '@ShopsysAdministration\form\theme.html.twig'
         #- '@ShopsysFramework/Admin/Form/Product/Price/priceListOverviewType.html.twig'
         #- '@ShopsysFramework/Admin/Form/Product/Price/pricesByPricingGroupsType.html.twig'
         #- '@ShopsysFramework/Admin/Form/Product/Price/productPricesWithVatSelectType.html.twig'

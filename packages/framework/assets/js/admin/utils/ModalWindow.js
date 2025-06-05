@@ -17,7 +17,7 @@ const defaults = {
 };
 
 const mainTemplate = `<div class="modal modal-blur fade" id="window-modal" tabindex="-1" aria-modal="true" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-body text-center py-4">
             </div> 
@@ -63,7 +63,7 @@ export default class ModalWindow {
         const $modalBody = $modal.find('.modal-body');
         const $modalContent = $modal.find('.modal-content');
 
-        $modalDialog.addClass(options.wide ? 'modal-lg' : 'modal-sm');
+        $modalDialog.addClass(options.wide ? 'modal-xl' : 'modal-sm');
 
         if (options.modalStatus) {
             const $modalStatus = $(modalStatusTemplate);

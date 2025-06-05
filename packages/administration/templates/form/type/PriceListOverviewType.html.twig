@@ -1,0 +1,36 @@
+{% block price_list_overview_widget %}
+    {% if specialPrices is not empty %}
+        {% set domainId = form.vars.attr['data-domain-id'] %}
+        <div class="table-responsive">
+            <table class="table card-table">
+                <thead>
+                    <tr>
+                        <th>{{ 'Price list'|trans }}</th>
+                        <th>{{ 'Valid from'|trans }}</th>
+                        <th>{{ 'Valid to'|trans }}</th>
+                        <th>{{ 'Special price' |trans }} {{ priceVatLabel() }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set isHighlighted = false %}
+                    {% for specialPrice in specialPrices %}
+                        <tr class="{{ not isHighlighted and specialPrice.isNowActive ? "table-success" }}">
+                            <td>
+                                <a href="{{ url('admin_pricelist_edit', {id: specialPrice.priceListId}) }}" target="_blank">
+                                    <span>{{ specialPrice.priceListName }}</span>&nbsp;
+                                    {{ ux_icon('forward-page') }}
+                                </a>
+                            </td>
+                            <td>{{ specialPrice.validFrom|formatDateTime }}</td>
+                            <td>{{ specialPrice.validTo|formatDateTime }}</td>
+                            <td>{{ specialPrice.price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</td>
+                        </tr>
+                        {% if not isHighlighted and specialPrice.isNowActive %}
+                            {% set isHighlighted = true %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

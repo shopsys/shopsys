@@ -8,18 +8,18 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use IntlDateFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class DateTimeAgoRuntime implements RuntimeExtensionInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
      */
     public function __construct(
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
-        protected readonly Localization $localization,
+        protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
     ) {
     }
 
@@ -42,7 +42,7 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
                 $dateTime,
                 IntlDateFormatter::MEDIUM,
                 IntlDateFormatter::MEDIUM,
-                $this->localization->getLocale(),
+                $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault(),
             );
         }
 
@@ -55,7 +55,7 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
                 $dateTime,
                 IntlDateFormatter::NONE,
                 IntlDateFormatter::MEDIUM,
-                $this->localization->getLocale(),
+                $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault(),
             );
     }
 }

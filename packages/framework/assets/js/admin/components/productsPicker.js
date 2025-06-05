@@ -1,8 +1,8 @@
-import 'magnific-popup';
 import 'jquery-ui/sortable';
 import 'jquery-ui/ui/widgets/mouse';
 import 'jquery-ui-touch-punch';
 import FormChangeInfo from './FormChangeInfo';
+import ModalWindow from '../utils/ModalWindow';
 import Register from '../../common/utils/Register';
 
 window.ProductsPickerInstances = {};
@@ -34,9 +34,16 @@ export default class ProductsPicker {
 
     openProductsPickerWindow () {
         const _this = this;
-        $.magnificPopup.open({
-            items: { src: _this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', _this.instanceId) },
-            type: 'iframe',
+        const url = _this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', _this.instanceId);
+
+        const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
+
+        new ModalWindow({
+            content: iframeContent,
+            buttonClose: true,
+            buttonCancel: false,
+            buttonContinue: false,
+            wide: true,
             closeOnBgClick: true
         });
 
@@ -47,7 +54,8 @@ export default class ProductsPicker {
         const _this = this;
 
         _this.productItems.push($item);
-        $item.find('.js-products-picker-item-button-delete').click(() => {
+        $item.find('.js-products-picker-item-button-delete').click((event) => {
+            event.preventDefault();
             _this.removeItem($item);
         });
     }
@@ -128,12 +136,15 @@ export default class ProductsPicker {
 
     static init ($container) {
         $container.filterAllNodes('.js-products-picker').each(function () {
-            // eslint-disable-next-line no-new
-            new ProductsPicker($(this));
+            void new ProductsPicker($(this));
         });
 
         $('.js-products-picker-close').click(() => {
-            window.parent.$.magnificPopup.instance.close();
+            // Close the modal from within the iframe using Bootstrap modal API
+            const modal = window.parent.document.querySelector('.modal.show');
+            if (modal) {
+                window.parent.bootstrap.Modal.getInstance(modal).hide();
+            }
         });
     }
 }

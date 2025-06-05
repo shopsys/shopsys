@@ -1,42 +1,84 @@
-{% block products_widget %}
-    <div class="card">
-        <div class="list-group list-group-flush list-group-hoverable overflow-auto" style="max-height: 35rem">
-            {% for key, productForm in form %}
-                {% set product = form.vars.products[key] %}
-
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        {% if sortable %}
-                            <div class="col-auto">
-                                <span class="js-products-picker-item-handle cursor-move">
-                                    <span class="in-icon in-icon--move svg svg-move"></span>
-                                </span>
-                            </div>
-                        {% endif %}
-
-                        <div class="col-auto">
-                            <span class="avatar avatar-1" style="background-image: url({{ image_url(product) }})"></span>
-                        </div>
-
-                        <div class="col text-truncate js-products-picker-item-product-name">
-                            {% if product is not null %}
-                                <a href="{{ url('admin_product_edit', {id: product.id}) }}" target="_blank">
-                                    <span>{{ product.name }}</span>&nbsp;{{ ux_icon('tabler:external-link') }}
-                                </a>
-
-                                <div class="d-block text-secondary text-truncate mt-n1">{{ product.catnum }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                                {{ ux_icon('tabler:x', {width: 24, height: 24}) }}
-                            </a>
-                            {{ form_widget(productForm, {attr: {class: 'js-products-picker-item-input list-group-item-actions'}}) }}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+{% block products_row %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">
+                {{- form_label(form) -}}
+            </h3>
+            <div class="card-actions">
+                {{- form_errors(form) -}}
+            </div>
         </div>
+        {{- form_widget(form) -}}
     </div>
 {% endblock %}
+
+{% block products_label -%}
+    {{ label }}
+{% endblock -%}
+
+{% block products_widget %}
+    {% import _self as self %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-products-picker')|trim}) %}
+    <div
+            {{ block('widget_attributes') }}
+            data-products-picker-prototype="{{ self.productsWidgetItem(null, form.vars.prototype, form.vars.sortable, disabled)|e }}"
+            data-products-picker-url="{{ url('admin_productpicker_pickmultiple', {jsInstanceId: '__js_instance_id__', allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
+            data-products-picker-main-product-id="{{ form.vars.main_product ? form.vars.main_product.id : '' }}"
+    >
+        <div class="card-body p-0">
+            <div class="list-group list-group-flush list-group-hoverable js-products-picker-items">
+                {% for key, productForm in form %}
+                    {{ self.productsWidgetItem(form.vars.products[key], productForm, form.vars.sortable, disabled) }}
+                {% endfor %}
+            </div>
+        </div>
+        {%- if disabled is same as false %}
+            <div class="card-footer">
+                <button type="button" class="btn js-products-picker-button-add">
+                    {{ ux_icon('plus') }}
+                    {{ label_button_add }}
+                </button>
+            </div>
+        {% endif -%}
+    </div>
+{% endblock %}
+
+{% macro productsWidgetItem(product, form, sortable, disabled) %}
+    <div class="list-group-item py-2 js-products-picker-item">
+        <div class="row align-items-center">
+            {% if sortable %}
+                <div class="col-auto">
+                    <span class="js-products-picker-item-handle cursor-move">
+                        {{ ux_icon('move') }}
+                    </span>
+                </div>
+            {% endif %}
+
+            <div class="col-auto">
+                {% if product is not null %}
+                    <span class="avatar avatar-sm" style="background-image: url({{ image_url(product) }})"></span>
+                {% else %}
+                    <span class="avatar avatar-sm"></span>
+                {% endif %}
+            </div>
+
+            <div class="col text-truncate js-products-picker-item-product-name">
+                {% if product is not null %}
+                    <a href="{{ url('admin_product_edit', {id: product.id}) }}" target="_blank">
+                        <span>{{ product.name }}</span>&nbsp;{{ ux_icon('forward-page') }}
+                    </a>
+                    <div class="d-block text-secondary text-truncate">{{ product.catnum }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-auto">
+                {%- if disabled is same as false %}
+                    <a href="#" class="list-group-item-actions js-products-picker-item-button-delete">
+                        {{ ux_icon('delete') }}
+                    </a>
+                    {{ form_widget(form, {attr: {class: 'js-products-picker-item-input d-none'}}) }}
+                {% endif -%}
+            </div>
+        </div>
+    </div>
+{% endmacro %}

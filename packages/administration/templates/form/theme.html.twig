@@ -102,3 +102,10 @@
         {{- parent() -}}
     {% endif %}
 {% endblock %}
+
+
+{% block money_widget %}
+    {% set value = value|cropZeros %}
+
+    {{ parent('money_widget') }}
+{% endblock money_widget %}

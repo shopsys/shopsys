@@ -13,136 +13,74 @@
         {{ form_errors(form.newUrls) }}
 
         {% for domainId, friendlyUrlForms in form.toDelete %}
-            <div class="card mb-3">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="card-body">
-                            {{ domain_icon(domainId) }}
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card-body js-entity-url-list-domain-{{ domainId }}">
-                            {% set mainUrl = findUrlByDomainId(form.vars.routeName, { id: entityId }, domainId) %}
-                            {% for slug, friendlyUrlForm in friendlyUrlForms %}
-                                {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][slug] %}
-                                <span class="js-entity-url-list-row-label">
-                                    {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
-                                    {% if mainUrl == absoluteUrl %}
-                                        <strong>{{ absoluteUrl }}</strong>
-                                    {% else %}
-                                        {{ absoluteUrl }}
-                                    {% endif %}
-                                    {{ form_widget(mainUrlRadioButton, { attr: { class: 'js-entity-url-list-select-main' } }) }}
-                                </span>
-                            {% endfor %}
-                        </div>
-                    </div>
+            <div class="card mb-3 js-entity-url-list-domain-{{ domainId }}">
+                <div class="card-header card-header-light py-2">
+                    <span>
+                        {{ domain_icon(domainId) }}
+                        {{ 'Domain'|trans }}
+                        <strong>{{ getDomainName(domainId) }}</strong>
+                    </span>
                 </div>
-            </div>
-        {% endfor %}
-
-        <div id="{{ form.newUrls.vars.id }}" class="js-entity-url-list-new-urls" data-new-url-prototype="{{ form_widget(form.newUrls.vars.prototype)|e }}">
-            {% for newUrlForm in form.newUrls %}
-                {{ form_widget(newUrlForm) }}
-            {% endfor %}
-        </div>
-        <div class="mt-2">
-            <button type="button" class="js-entity-url-list-button-add-url btn btn-secondary">
-                {{ ux_icon('plus') }}
-                {{ 'Add URL'|trans }}
-            </button>
-        </div>
-    </div>
-{% endblock %}
-
-{% block url_list_wsidget -%}
-    <div class="js-entity-url-list">
-        {{ form_errors(form.newUrls) }}
-
-        {% for domainId, friendlyUrlForms in form.toDelete %}
-            <div class="js-entity-url-list-domain-{{ domainId }}">
-                {% if isMultidomain() %}
-                    <div class="form-line__box__title">
-                        <span class="form-line__box__title__image">
-                            {{ domainIcon(domainId, 'large') }}
-                        </span>
-                        <strong class="form-line__box__title__name">
-                            {{ 'Domain %domainName%'|trans({'%domainName%' : getDomainName(domainId)}) }}
-                        </strong>
-                        {{ form_errors(form.mainFriendlyUrlsByDomainId[domainId]) }}
-                    </div>
-                {% endif %}
-                <div{% if isMultidomain() %} class="form-line__box__content"{% endif %}>
-                    <div class="form-choice-list js-entity-url-list-container">
-                        {% set mainUrl = findUrlByDomainId(form.vars.routeName, { id: entityId }, domainId) %}
-                        {% for slug, friendlyUrlForm in friendlyUrlForms %}
-                            <label class="js-entity-url-list-friendly-url form-selectgroup-item flex-fill">
-                                <input type="radio" name="form-payment" value="visa" class="form-selectgroup-input">
-                                <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                    <div class="me-3">
-                                        <span class="form-selectgroup-check"></span>
-                                    </div>
-                                    <div>
-                                        <span class="payment payment-provider-visa payment-xs me-2"></span>
-                                        ending in <strong>7998</strong>
-                                    </div>
-                                </div>
-                            </label>
-
-                            {# <label class="form-choice-list__item js-entity-url-list-friendly-url">
+                <div class="card-body js-entity-url-list-container">
+                    {% set mainUrl = findUrlByDomainId(form.vars.routeName, { id: entityId }, domainId) %}
+                    {% for slug, friendlyUrlForm in friendlyUrlForms %}
+                        {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
+                        {% set isMainUrl = mainUrl is same as(absoluteUrl) %}
+                        <div class="row align-items-baseline js-entity-url-list-friendly-url">
+                            <div class="col-auto{% if isMainUrl %} fw-bold{% endif %}">
                                 {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][slug] %}
-                                {{ form_widget(mainUrlRadioButton, { attr: { class: 'js-entity-url-list-select-main form-choice-list__input' } }) }}
-
-                                <span class="js-entity-url-list-row-label text-break-all">
-                                    {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
-                                    {% if mainUrl == absoluteUrl %}
-                                        <strong class="text-break-all">{{ absoluteUrl }}</strong>
-                                    {% else %}
-                                        {{ absoluteUrl }}
-                                    {% endif %}
-                                    {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox display-none'}}) }}
-                                </span>
-
-                                <a href="{{ absoluteUrl }}" title="{{ 'Open in a new tab'|trans }}" class="js-tooltip text-no-decoration in-icon in-icon--link form-choice-list__item__action form-choice-list__item__action--link"
-                                   target="_blank" data-toggle="tooltip" data-placement="top">
+                                {{ form_widget(mainUrlRadioButton, { label: absoluteUrl, attr: { class: 'js-entity-url-list-select-main' } }) }}
+                                <div class="d-none">
+                                    {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{{ absoluteUrl }}"
+                                   title="{{ 'Open in a new tab'|trans }}"
+                                   class="js-tooltip"
+                                   target="_blank"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                >
                                     {{ ux_icon('forward-page') }}
                                 </a>
+                            </div>
+                            <div class="col-auto">
+                                {% if isMainUrl %}
+                                    {{ info_icon('Main URL can\'t be deleted'|trans) }}
+                                {% else %}
+                                    <span class="js-entity-url-list-row-delete-revert-wrapper ms-3">
+                                        <span class="js-entity-url-list-row-delete-block">
+                                            <button class="btn btn-icon btn-link js-entity-url-list-row-delete-block-button" type="button">
+                                               {{ ux_icon('delete') }}
+                                            </button>
+                                        </span>
+                                        <span class="js-entity-url-list-row-revert-block d-none">
+                                            <button class="btn js-entity-url-list-row-revert-block-button" type="button">
+                                                {{ 'Return back'|trans }}
+                                            </button>
+                                            {{ info_icon('URL will be deleted after saving.'|trans) }}
+                                        </span>
+                                    </span>
+                                {% endif %}
 
-                                <span class="js-entity-url-list-row-delete-revert-wrapper">
-                                    <span class="js-entity-url-list-row-delete-block">
-                                        <button class="btn-no-style form-choice-list__item__action js-entity-url-list-row-delete-block-button" type="button">
-                                            <span class="in-icon in-icon--delete">{{ ux_icon('delete') }}</span>
-                                        </button>
-                                    </span>
-                                    <span class="js-entity-url-list-row-revert-block display-none">
-                                        <button class="btn js-entity-url-list-row-revert-block-button" type="button">
-                                            {{ 'Return back'|trans }}
-                                        </button>
-                                        {{ info_icon('URL will be deleted after saving.'|trans) }}
-                                    </span>
-                                </span>
-                                <span title="{{ 'Main URL can\'t be deleted'|trans }}"
-                                      class="js-entity-url-list-info-main-delete js-tooltip cursor-help display-none form-choice-list__item__action" data-toggle="tooltip" data-placement="top">
-                                    <span class="in-icon in-icon--info">{{ ux_icon('info') }}</span>
-                                </span>
-                            </label> #}
-                        {% endfor %}
-                    </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}
-
-
-        <div id="{{ form.newUrls.vars.id }}" class="js-entity-url-list-new-urls" data-new-url-prototype="{{ form_widget(form.newUrls.vars.prototype)|e }}">
+        <div id="{{ form.newUrls.vars.id }}"
+             class="js-entity-url-list-new-urls mb-3"
+             data-new-url-prototype="{{ form_widget(form.newUrls.vars.prototype)|e }}"
+        >
             {% for newUrlForm in form.newUrls %}
                 {{ form_widget(newUrlForm) }}
             {% endfor %}
         </div>
-        <div class="margin-top-5">
-            <button type="button" class="js-entity-url-list-button-add-url btn btn--plus">
-                <i class="btn__icon">+</i>
-                {{ 'Add URL'|trans }}
-            </button>
-        </div>
+        <button type="button" class="js-entity-url-list-button-add-url btn">
+            {{ ux_icon('plus') }}
+            {{ 'Add URL'|trans }}
+        </button>
     </div>
-{%- endblock -%}
+{% endblock %}

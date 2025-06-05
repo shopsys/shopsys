@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block product_visibilities %}
-
     {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
         {% set visibilityClass = 'text-green' %}
         {% set visibilityIcon = 'visible' %}
@@ -26,7 +25,7 @@
          data-visibility-url="{{ url('admin_product_visibility', {productId: product.id}) }}"
     >
         <button type="button" class="btn btn-link dropdown-toggle {{ visibilityClass }}" data-bs-toggle="dropdown">
-            {{ ux_icon(visibilityIcon) }}
+            {{ ux_icon(visibilityIcon) }} {{ 'Preview'|trans }}
         </button>
         <div class="dropdown-menu dropdown-menu-card" style="min-width: 20em">
             <div class="card">

@@ -1,0 +1,63 @@
+{% macro parameterRow(parameter, index) %}
+    {% set parameterUnit = parameter.parameter.vars.data.unit ?? null %}
+    <tr class="js-parameters-item js-form-group" data-index="{{ index }}">
+        <td>
+            {{ form_widget(parameter.parameter, { isSimple: true} ) }}
+        </td>
+        <td class="align-middle text-center">
+            {{ ux_icon('arrow-simple') }}
+        </td>
+        <td>
+            {% for locale, valueTextLocaleForm in parameter.valueTextsByLocale %}
+                <div class="row align-items-baseline">
+                    <div class="col-auto">{{ localeFlag(locale) }}</div>
+                    <div class="col">
+                        <div class="input-group mb-2">
+                            {{ form_widget(valueTextLocaleForm) }}
+                            {% if parameterUnit is not null %}
+                                <span class="input-group-text">{{ parameterUnit.getName(locale) }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+                {{ form_errors(valueTextLocaleForm) }}
+            {% endfor %}
+        </td>
+        <td class="align-middle">
+            <a href="#" class="js-parameters-item-remove">{{ ux_icon('delete') }}</a>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block product_parameter_value_row %}
+    {% import _self as self %}
+    <div class="js-form-group">
+        <table class="table" id="product_form_parameters">
+            <thead>
+                <tr>
+                    <th colspan="2">{{ 'Parameter'|trans }}</th>
+                    <th colspan="2">{{ 'Value'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody class="js-parameters" data-prototype="{{ self.parameterRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+                {% for key, parameter in form %}
+                    {{ self.parameterRow(parameter, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+
+                <tr class="js-parameters-empty-item">
+                    <td colspan="4">{{ 'Add some parameters'|trans }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <button type="button" class="js-parameters-item-add btn">
+                {{ ux_icon('plus') }}
+                {{ 'Add another parameter'|trans }}
+            </button>
+        </div>
+    </div>
+{% endblock %}
