@@ -3,6 +3,8 @@ import { getFormatDate } from 'app/_utils/formatting/getFormatDate';
 import { Webline } from 'components/Layout/Webline/Webline';
 import dayjs from 'dayjs';
 
+export const dynamic = 'force-dynamic';
+
 const GrapesJSTemplatePage = async () => {
     const { formatDate } = await getFormatDate();
 

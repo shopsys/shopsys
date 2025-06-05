@@ -3,6 +3,8 @@ import { UserConsentContent } from 'app/_components/Page/UserConsent/UserConsent
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { notFound } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 const UserConsentPage = async () => {
     const { data: settingsData, error: settingsError } = await getSettingsQuery();
 
