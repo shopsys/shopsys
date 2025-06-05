@@ -36,10 +36,12 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     useEffect(() => {
-        checkAndClearInterval();
-        startInterval();
+        const timer = setTimeout(() => {
+            startInterval();
+        }, SLIDER_AUTOMATIC_SLIDE_INTERVAL);
 
         return () => {
+            clearTimeout(timer);
             checkAndClearInterval();
         };
     }, []);
