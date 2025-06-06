@@ -63,6 +63,9 @@ importers:
       graphql-tag:
         specifier: ~2.12.6
         version: 2.12.6(graphql@16.8.2)
+      import-in-the-middle:
+        specifier: ^1.14.0
+        version: 1.14.0
       isomorphic-dompurify:
         specifier: ^2.26.0
         version: 2.26.0
