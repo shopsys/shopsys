@@ -68,19 +68,20 @@ const getOptimisticChangeTransportInCartResult = (
     ({
         __typename: 'Cart',
         items: cartQueryResult.cart?.items ?? null,
-        modifications: cartQueryResult.cart?.modifications ?? null,
-        payment: cartQueryResult.cart?.payment ?? null,
-        paymentGoPayBankSwift: cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
-        promoCode: cartQueryResult.cart?.promoCode ?? null,
-        remainingAmountWithVatForFreeTransport: cartQueryResult.cart?.remainingAmountWithVatForFreeTransport ?? null,
-        selectedPickupPlaceIdentifier: input.pickupPlaceIdentifier ?? null,
-        totalDiscountPrice: cartQueryResult.cart?.totalDiscountPrice ?? null,
-        totalItemsPrice: cartQueryResult.cart?.totalItemsPrice ?? null,
-        totalPrice: cartQueryResult.cart?.totalPrice ?? null,
+        totalPrice: cartQueryResult.cart?.totalPrice,
+        totalItemsPrice: cartQueryResult.cart?.totalItemsPrice,
+        totalDiscountPrice: cartQueryResult.cart?.totalDiscountPrice,
         uuid: cartQueryResult.cart?.uuid ?? null,
+        selectedPickupPlaceIdentifier: cartQueryResult.cart?.selectedPickupPlaceIdentifier ?? null,
+        paymentGoPayBankSwift: cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
+        remainingAmountForFreeTransport: cartQueryResult.cart?.remainingAmountForFreeTransport ?? null,
+        roundingPrice: cartQueryResult.cart?.roundingPrice ?? null,
+        modifications: cartQueryResult.cart?.modifications,
+        payment: cartQueryResult.cart?.payment,
+        promoCode: cartQueryResult.cart?.promoCode,
         transport:
             transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
-    }) as TypeChangeTransportInCartMutation['ChangeTransportInCart'];
+    }) as unknown as TypeChangeTransportInCartMutation['ChangeTransportInCart'];
 
 const getOptimisticChangePaymentInCartResult = (
     cartQueryResult: TypeCartQuery,
@@ -91,18 +92,19 @@ const getOptimisticChangePaymentInCartResult = (
     return {
         __typename: 'Cart',
         items: cartQueryResult.cart?.items ?? null,
-        modifications: cartQueryResult.cart?.modifications ?? null,
-        payment: optimisticPayment,
-        paymentGoPayBankSwift: optimisticPayment === null ? null : cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
-        promoCode: cartQueryResult.cart?.promoCode ?? null,
-        remainingAmountWithVatForFreeTransport: cartQueryResult.cart?.remainingAmountWithVatForFreeTransport ?? null,
-        selectedPickupPlaceIdentifier: cartQueryResult.cart?.selectedPickupPlaceIdentifier ?? null,
-        totalDiscountPrice: cartQueryResult.cart?.totalDiscountPrice ?? null,
-        totalItemsPrice: cartQueryResult.cart?.totalItemsPrice ?? null,
-        totalPrice: cartQueryResult.cart?.totalPrice ?? null,
+        totalPrice: cartQueryResult.cart?.totalPrice,
+        totalItemsPrice: cartQueryResult.cart?.totalItemsPrice,
+        totalDiscountPrice: cartQueryResult.cart?.totalDiscountPrice,
         uuid: cartQueryResult.cart?.uuid ?? null,
+        selectedPickupPlaceIdentifier: cartQueryResult.cart?.selectedPickupPlaceIdentifier ?? null,
+        paymentGoPayBankSwift: optimisticPayment === null ? null : cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
+        remainingAmountForFreeTransport: cartQueryResult.cart?.remainingAmountForFreeTransport ?? null,
+        roundingPrice: cartQueryResult.cart?.roundingPrice ?? null,
+        modifications: cartQueryResult.cart?.modifications,
+        payment: optimisticPayment,
+        promoCode: cartQueryResult.cart?.promoCode,
         transport: cartQueryResult.cart?.transport,
-    } as TypeChangePaymentInCartMutation['ChangePaymentInCart'];
+    } as unknown as TypeChangePaymentInCartMutation['ChangePaymentInCart'];
 };
 
 const getPaymentFromTransport = (

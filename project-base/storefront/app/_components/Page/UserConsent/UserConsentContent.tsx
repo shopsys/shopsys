@@ -1,7 +1,8 @@
 'use client';
 
 import { UserConsentForm } from 'app/_components/Blocks/UserConsent/UserConsentForm';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -17,8 +18,11 @@ export const UserConsentContent: FC = () => {
     }, [push, t]);
 
     return (
-        <SimpleLayout heading={t('User consent')}>
-            <UserConsentForm onSetCallback={onSetCallback} />
-        </SimpleLayout>
+        <Webline width="lg">
+            <VerticalStack gap="sm">
+                <h1>{t('User consent')}</h1>
+                <UserConsentForm onSetCallback={onSetCallback} />
+            </VerticalStack>
+        </Webline>
     );
 };

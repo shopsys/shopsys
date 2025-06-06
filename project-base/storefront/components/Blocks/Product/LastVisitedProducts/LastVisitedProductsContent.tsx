@@ -14,7 +14,7 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
         getLastVisitedProductsQuery(productsCatnums),
     ]);
 
-    const lastVisitedProducts = lastVisitedProductsResult.data?.productsByCatnums;
+    const lastVisitedProducts = lastVisitedProductsResult?.productsByCatnums;
 
     if (!lastVisitedProducts) {
         return null;

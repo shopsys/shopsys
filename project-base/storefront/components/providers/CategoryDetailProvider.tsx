@@ -3,13 +3,13 @@
 import { createContext, RefObject, useContext } from 'react';
 
 type CategoryDetailOverview = {
-    paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null> | null;
     categoryDetailUuid: string;
 };
 export const CategoryDetailContext = createContext<CategoryDetailOverview | undefined>(undefined);
 
 type CategoryDetailProviderProps = {
-    paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null> | null;
     categoryDetailUuid: string;
 };
 

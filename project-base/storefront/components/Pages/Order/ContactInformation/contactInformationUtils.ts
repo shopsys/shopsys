@@ -28,7 +28,6 @@ import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderE
 import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { SubmitHandler, UseFormReturn, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
@@ -43,6 +42,15 @@ import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
+
+export type OrderConfirmationUrlQuery = {
+    orderUuid: string | undefined;
+    companyNumber: string | undefined;
+    orderEmail: string | undefined;
+    orderPaymentType: string | undefined;
+    orderUrlHash?: string | undefined;
+    orderPaymentStatusPageValidityHash: string | undefined;
+};
 
 export const useContactInformationPageNavigation = () => {
     const { url } = useDomainConfig();
