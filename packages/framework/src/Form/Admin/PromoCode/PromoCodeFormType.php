@@ -106,8 +106,12 @@ class PromoCodeFormType extends AbstractType
      */
     private function buildBaseGroup(FormBuilderInterface $builder, array $options): void
     {
+        $baseGroup = $builder->create('baseGroup', GroupType::class, [
+            'label' => t('Basic information'),
+        ]);
+
         if (!$options['mass_generate']) {
-            $builder
+            $baseGroup
                 ->add('code', TextType::class, [
                     'label' => t('Promo code'),
                     'required' => true,
@@ -120,13 +124,13 @@ class PromoCodeFormType extends AbstractType
         }
 
         if ($this->promoCode instanceof PromoCode) {
-            $builder->add('formId', DisplayOnlyType::class, [
+            $baseGroup->add('formId', DisplayOnlyType::class, [
                 'label' => t('ID'),
                 'data' => $this->promoCode->getId(),
             ]);
         }
 
-        $builder->add('domainId', HiddenType::class, [
+        $baseGroup->add('domainId', HiddenType::class, [
             'data' => $this->getDomainId(),
         ])
             ->add('shownDomainId', DomainType::class, [
@@ -147,6 +151,8 @@ class PromoCodeFormType extends AbstractType
                 'label' => t('Remaining number of uses'),
                 'required' => false,
             ]);
+
+        $builder->add($baseGroup);
     }
 
     /**
@@ -181,7 +187,7 @@ class PromoCodeFormType extends AbstractType
 
         $limitsGroup->add(
             $limitsGroup->create('limits', PromoCodeLimitCollectionType::class, [
-                'label' => t('Limits'),
+                'label' => false,
                 'entry_type' => PromoCodeLimitType::class,
                 'entry_options' => ['discount' => $discountOptions],
                 'required' => false,
@@ -231,7 +237,7 @@ class PromoCodeFormType extends AbstractType
         ]);
 
         $flagsGroup->add('flags', PromoCodeFlagCollectionType::class, [
-            'label' => t('Flags'),
+            'label' => false,
             'entry_type' => PromoCodeFlagType::class,
             'entry_options' => ['label' => false],
             'required' => false,

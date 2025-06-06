@@ -1,0 +1,11 @@
+{% block action_bar_row %}
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            {% for child in form %}
+                <div class="d-inline ms-3">
+                    {{- form_widget(child) -}}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

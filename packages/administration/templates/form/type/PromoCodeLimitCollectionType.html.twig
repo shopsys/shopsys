@@ -1,0 +1,48 @@
+{% macro limitRow(limit, index) %}
+    <tr class="js-limits-item js-form-group" data-index="{{ index }}">
+        <td>
+            {{ form_widget(limit.fromPrice) }}
+            {{ form_errors(limit.fromPrice) }}
+        </td>
+        <td class="text-center align-middle">
+            {{ ux_icon('arrow-simple') }}
+        </td>
+        <td>
+            {{ form_widget(limit.discount) }}
+            {{ form_errors(limit.discount) }}
+        </td>
+        <td class="text-center align-middle">
+            <a href="#" class="js-limits-item-remove">{{ ux_icon('delete') }}</a>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block promo_code_limit_collection_widget %}
+    {% import _self as self %}
+    <div class="js-form-group">
+        <table class="table" id="promo_code_limits">
+            <thead>
+                <tr>
+                    <th colspan="2">{{ 'From'|trans }} {{ priceVatLabel() }}</th>
+                    <th colspan="2">{{ 'Discount'|trans }} {{ priceVatLabel() }}</th>
+                </tr>
+            </thead>
+            <tbody class="js-limits" data-prototype="{{ self.limitRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+                {% for key, limit in form %}
+                    {{ self.limitRow(limit, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+
+                <tr class="js-limits-empty-item">
+                    <td colspan="4">{{ 'Add limit'|trans }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn js-limits-item-add">
+            {{ ux_icon('plus') }}
+            {{ 'Add another limit'|trans }}
+        </button>
+    </div>
+{% endblock promo_code_limit_collection_widget %}

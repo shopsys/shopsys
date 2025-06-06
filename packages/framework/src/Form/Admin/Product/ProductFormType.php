@@ -118,7 +118,6 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Name prefix'),
-                'render_form_row' => false,
             ])
             ->add('name', LocalizedFullWidthType::class, [
                 'required' => false,
@@ -130,7 +129,6 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Name'),
-                'render_form_row' => false,
             ])
             ->add('nameSuffix', LocalizedFullWidthType::class, [
                 'required' => false,
@@ -140,7 +138,6 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Name suffix'),
-                'render_form_row' => false,
             ]);
 
         if ($this->isProductVariant($product) || $this->isProductMainVariant($product)) {
@@ -671,10 +668,7 @@ final class ProductFormType extends AbstractType
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
-            'attr' => [
-                'class' => 'wrap-border',
-            ],
-            'render_form_row' => false,
+            'label' => false,
         ]);
 
         if ($this->isProductVariant($product)) {
@@ -697,7 +691,6 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Variant alias'),
-                'render_form_row' => true,
             ]);
         }
 
@@ -766,7 +759,7 @@ final class ProductFormType extends AbstractType
                     ]),
                 ],
                 'error_bubbling' => false,
-                'render_form_row' => false,
+                'label' => false,
             ])
                 ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
 
@@ -911,7 +904,6 @@ final class ProductFormType extends AbstractType
             ->add(
                 $builder->create('productVideosData', CollectionType::class, [
                     'entry_type' => VideoTokenType::class,
-                    'render_form_row' => false,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'label' => false,

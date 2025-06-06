@@ -39,7 +39,6 @@ class FlagFormType extends AbstractType
                         ),
                     ],
                 ],
-                'render_form_row' => false,
             ]);
 
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
