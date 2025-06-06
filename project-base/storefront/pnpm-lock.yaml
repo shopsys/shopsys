@@ -53,6 +53,9 @@ importers:
       graphql-tag:
         specifier: ~2.12.6
         version: 2.12.6(graphql@16.8.2)
+      import-in-the-middle:
+        specifier: ^1.14.0
+        version: 1.14.0
       isomorphic-dompurify:
         specifier: ^2.22.0
         version: 2.22.0
@@ -119,6 +122,9 @@ importers:
       redis:
         specifier: ~4.7.0
         version: 4.7.0
+      require-in-the-middle:
+        specifier: ^7.5.2
+        version: 7.5.2
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -261,9 +267,6 @@ importers:
       i18next-parser:
         specifier: ~9.0.2
         version: 9.0.2
-      import-in-the-middle:
-        specifier: ^1.13.1
-        version: 1.13.1
       jsdom:
         specifier: ~24.0.0
         version: 24.0.0
@@ -276,9 +279,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ~0.6.11
         version: 0.6.11(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.2.5))(prettier@3.2.5)
-      require-in-the-middle:
-        specifier: ^7.5.2
-        version: 7.5.2
       tailwindcss:
         specifier: ~4.1.3
         version: 4.1.3
@@ -3756,8 +3756,8 @@ packages:
     resolution: {integrity: sha512-P9J71vT5nLlDeV8FHs5nNxaLbrpfAV5cF5srvbZfpwpcJoM/xZR3hiv+q+SAnuSmuGbXMWud063iIMx/V/EWZQ==}
     engines: {node: '>=12.2'}
 
-  import-in-the-middle@1.13.1:
-    resolution: {integrity: sha512-k2V9wNm9B+ysuelDTHjI9d5KPc4l8zAZTGqj+pcynvWkypZd857ryzN8jNC7Pg2YZXNMJcHRPpaDyCBbNyVRpA==}
+  import-in-the-middle@1.14.0:
+    resolution: {integrity: sha512-g5zLT0HaztRJWysayWYiUq/7E5H825QIiecMD2pI5QO7Wzr847l6GDvPvmZaDIdrDtS2w7qRczywxiK6SL5vRw==}
 
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
@@ -8665,7 +8665,7 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.57.2
       '@types/shimmer': 1.2.0
-      import-in-the-middle: 1.13.1
+      import-in-the-middle: 1.14.0
       require-in-the-middle: 7.5.2
       semver: 7.7.1
       shimmer: 1.2.1
@@ -9824,7 +9824,7 @@ snapshots:
       '@prisma/instrumentation': 6.6.0(@opentelemetry/api@1.9.0)
       '@sentry/core': 9.15.0
       '@sentry/opentelemetry': 9.15.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.30.0)
-      import-in-the-middle: 1.13.1
+      import-in-the-middle: 1.14.0
     transitivePeerDependencies:
       - supports-color
 
@@ -13236,7 +13236,7 @@ snapshots:
 
   import-from@4.0.0: {}
 
-  import-in-the-middle@1.13.1:
+  import-in-the-middle@1.14.0:
     dependencies:
       acorn: 8.14.1
       acorn-import-attributes: 1.9.5(acorn@8.14.1)
