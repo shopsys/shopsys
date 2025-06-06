@@ -7,8 +7,8 @@ import { DynamicBreadcrumbsSettings, StaticBreadcrumb, StaticBreadcrumbsSettings
 import { TranslationKeys } from 'types/translation';
 
 export const staticBreadcrumbsSettings: StaticBreadcrumbsSettings = {
-    '/customer': [{ name: 'Customer' }],
-    '/customer/change-password': [{ name: 'Customer', slug: '/customer/change-password' }],
+    '/customer': [{ name: 'Customer information', slug: '/customer' }],
+    '/customer/change-password': [{ name: 'Change password', slug: '/customer/change-password' }],
     '/customer/complaints': [{ name: 'My complaints', slug: '/customer/complaints' }],
     '/customer/new-complaint': [
         { name: 'My complaints', slug: '/customer/complaints' },
@@ -22,7 +22,7 @@ export const staticBreadcrumbsSettings: StaticBreadcrumbsSettings = {
     '/personal-data-export': [{ name: 'Personal data export' }],
     '/personal-data-overview': [{ name: 'Personal data overview' }],
     '/product-comparison': [{ name: 'Product comparison', slug: '/product-comparison' }],
-    '/registration': [{ name: 'Registration' }],
+    '/registration': [{ name: 'New customer registration' }],
     '/reset-password': [{ name: 'Reset password' }],
     '/search': [{ name: 'Search', slug: '/search' }],
     '/stores': [{ name: 'Department stores' }],

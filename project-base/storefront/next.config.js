@@ -144,35 +144,35 @@ const nextConfig = {
     },
 };
 
-// TODO: ❗❗❗ check current pages config ❗❗❗
-if (process.env.APP_ENV === 'production') {
-    module.exports = withBundleAnalyzer(withSentryConfig(nextConfig), {
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        telemetry: false,
-        unstable_sentryWebpackPluginOptions: {
-            disable: process.env.APP_ENV === 'development',
-            errorHandler: (err) => {
-                // eslint-disable-next-line no-console
-                console.warn('Sentry CLI Plugin: ' + err.message);
-            },
+/**
+ * @type {import('@sentry/nextjs/build/types/config/types').SentryBuildOptions}
+ */
+const sentryConfig = {
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    telemetry: false,
+    unstable_sentryWebpackPluginOptions: {
+        disable: process.env.APP_ENV === 'development',
+        errorHandler: (err) => {
+            // eslint-disable-next-line no-console
+            console.warn('Sentry CLI Plugin: ' + err.message);
         },
-        sourcemaps: {
-            deleteSourcemapsAfterUpload: true,
-        },
+    },
+    sourcemaps: {
+        deleteSourcemapsAfterUpload: true,
+    },
 
-        widenClientFileUpload: true,
-        reactComponentAnnotation: {
-            enabled: true,
-        },
-        disableLogger: true,
-        bundleSizeOptimizations: {
-            excludeDebugStatements: true,
-            // all bellow - remove (set false) if you want to use replays
-            excludeReplayShadowDom: false,
-            excludeReplayIframe: false,
-            excludeReplayWorker: false,
-        },
-    });
-} else {
-    module.exports = withBundleAnalyzer(nextConfig);
-}
+    widenClientFileUpload: true,
+    reactComponentAnnotation: {
+        enabled: true,
+    },
+    disableLogger: true,
+    bundleSizeOptimizations: {
+        excludeDebugStatements: true,
+        // all bellow - remove (set false) if you want to use replays
+        excludeReplayShadowDom: true,
+        excludeReplayIframe: true,
+        excludeReplayWorker: true,
+    },
+};
+
+module.exports = withBundleAnalyzer(withSentryConfig(nextConfig), sentryConfig);

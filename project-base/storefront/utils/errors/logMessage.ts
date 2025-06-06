@@ -9,7 +9,7 @@ export const logMessage = (message: string, extras: Array<SentryExtra> = [], lev
         console.warn(message, { extras });
     }
 
-    Sentry.withScope((scope) => {
+    Sentry.withScope((scope: any) => {
         extras.forEach((extra) => {
             scope.setExtra(extra.key, extra.data);
         });

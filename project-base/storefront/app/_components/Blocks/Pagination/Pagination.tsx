@@ -15,7 +15,7 @@ import { usePagination } from 'utils/ui/usePagination';
 
 type PaginationProps = {
     totalCount: number;
-    paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null> | null;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
     pageSize?: number;
@@ -71,7 +71,7 @@ export const Pagination: FC<PaginationProps> = ({
                     const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
                     const pageParams = urlPageNumber
                         ? new URLSearchParams({
-                              ...Object.fromEntries(searchParams?.entries() ?? []),
+                              ...Object.fromEntries(searchParams.entries()),
                               page: urlPageNumber,
                           }).toString()
                         : undefined;
