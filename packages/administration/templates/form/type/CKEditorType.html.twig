@@ -1,12 +1,8 @@
-{% block ckeditor_row -%}
-    {{ block('textarea_row') }}
-{%- endblock ckeditor_row %}
-
 {% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' %}
 {% block base_ckeditor_widget %}
     <div class="js-cke-preview" id="{{ id }}-preview">
         <div class="card">
-            <div class="card-body overflow-hidden" style="min-height: 92px; max-height: 200px;">
+            <div class="card-body overflow-hidden cursor-pointer" style="min-height: 92px; max-height: 200px;">
                 {{ value|raw }}
             </div>
             <div class="card-footer p-0">
@@ -35,4 +31,4 @@
             {{ block('base_ckeditor_widget') }}
         </div>
     {% endif %}
-{% endblock ckeditor_widget %}
+{% endblock %}
