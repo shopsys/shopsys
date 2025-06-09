@@ -1,5 +1,9 @@
 Mutation:
     type: object
+    config:
+        validation:
+            - Shopsys\FrontendApiBundle\Component\Constraints\MutationAntiXss:
+                excludedFields: "%shopsys.frontend_api.anti_xss_excluded_fields%"
     inherits:
         - 'MutationDecorator'
         - 'CustomerUserMutation'

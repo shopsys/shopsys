@@ -12,6 +12,9 @@ parameters:
     shopsys.allowed_admin_locales: ['en', 'cs']
     shopsys.cron_timezone: Europe/Prague
 
+    # List of fields that are excluded from AntiXSS validation in the Frontend API
+    shopsys.frontend_api.anti_xss_excluded_fields: []
+
     # Set to true to log validation errors with log level ERROR instead of INFO
     shopsys.frontend_api.validation_logged_as_error: false
 

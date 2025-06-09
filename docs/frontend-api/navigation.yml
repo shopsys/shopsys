@@ -4,3 +4,4 @@ arrange:
     - introduction-to-frontend-api.md
     - pagination.md
     - authentication.md
+    - validation.md

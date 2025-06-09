@@ -1,3 +1,4 @@
 parameters:
+    shopsys.frontend_api.anti_xss_excluded_fields: []
     shopsys.frontend_api.domains: []
     shopsys.frontend_api.validation_logged_as_error: false
