@@ -35,7 +35,12 @@ export const DeliveryAddress: FC<DeliveryAddressProps> = ({ defaultDeliveryAddre
             <FormHeading className="flex justify-between">
                 {t('Delivery addresses')}
                 {canManagePersonalData && (
-                    <Button size="small" variant="inverted" onClick={(e) => openDeliveryAddressPopup(e)}>
+                    <Button
+                        aria-haspopup="dialog"
+                        size="small"
+                        variant="inverted"
+                        onClick={(e) => openDeliveryAddressPopup(e)}
+                    >
                         {t('Add new address')}
                     </Button>
                 )}

@@ -76,6 +76,7 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             {...props}
         >
             <button
+                aria-controls={`tabs-content-${headingTextMobile}`}
                 aria-expanded={isActiveOnMobile}
                 className="bg-background-more font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
                 tabIndex={0}

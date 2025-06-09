@@ -19,6 +19,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
 
     return (
         <button
+            aria-haspopup="dialog"
             tabIndex={0}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             className={twMergeCustom(

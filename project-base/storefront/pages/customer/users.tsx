@@ -62,7 +62,12 @@ const UsersPage: FC = () => {
 
             <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('Customer users')} title={t('Customer users')}>
                 <div className="flex w-full flex-col gap-4">
-                    <Button className="w-fit" size="small" onClick={(e) => openManageCustomerUserPopup(e)}>
+                    <Button
+                        aria-haspopup="dialog"
+                        className="w-fit"
+                        size="small"
+                        onClick={(e) => openManageCustomerUserPopup(e)}
+                    >
                         {t('Add new user')}
                     </Button>
                     <CustomerUsersTable />

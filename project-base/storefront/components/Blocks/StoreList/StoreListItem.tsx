@@ -44,6 +44,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
 
     return (
         <button
+            aria-controls="store-info"
             aria-expanded={isExpanded}
             ref={itemRef}
             tabIndex={0}

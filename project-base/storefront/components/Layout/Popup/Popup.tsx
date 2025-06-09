@@ -1,11 +1,13 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import { twMergeCustom } from 'utils/twMerge';
+import { useFocusTrap } from 'utils/useFocusTrap';
 import { useKeypress } from 'utils/useKeyPress';
 import useWindowDimensions from 'utils/useWindowDimensions';
 
@@ -15,13 +17,38 @@ type PopupProps = {
     hideCloseButton?: boolean;
     contentClassName?: string;
     key?: string;
+    ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
 };
 
-export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, contentClassName, key }) => {
+export const Popup: FC<PopupProps> = ({
+    children,
+    hideCloseButton,
+    className,
+    contentClassName,
+    key,
+    ariaLabelledBy,
+    ariaDescribedBy,
+}) => {
+    const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const windowDimensions = useWindowDimensions();
     const [popupPositions, setPopupPositions] = useState({ left: 0, top: 0 });
     const popupRef = useRef<HTMLDivElement>(null);
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+    const previousFocusRef = useRef<HTMLElement | null>(null);
+
+    // Store the element that had focus before popup opened
+    useEffect(() => {
+        previousFocusRef.current = document.activeElement as HTMLElement;
+
+        // Restore focus when popup unmounts
+        return () => {
+            if (previousFocusRef.current) {
+                previousFocusRef.current.focus();
+            }
+        };
+    }, []);
 
     useKeypress('Escape', () => updatePortalContent(null));
 
@@ -34,12 +61,27 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
         }
     }, [windowDimensions, children]);
 
-    // Focus the popup when it appears
+    // Focus management when popup appears
     useEffect(() => {
         if (popupRef.current) {
-            popupRef.current.focus();
+            let focusTarget: HTMLElement;
+
+            if (!hideCloseButton && closeButtonRef.current) {
+                // Focus close button if available
+                focusTarget = closeButtonRef.current;
+            } else {
+                // Find first focusable element in content
+                const focusableElements = popupRef.current.querySelectorAll(
+                    'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+                );
+                focusTarget = focusableElements.length > 0 ? (focusableElements[0] as HTMLElement) : popupRef.current;
+            }
+
+            focusTarget.focus();
         }
-    }, []);
+    }, [hideCloseButton]);
+
+    useFocusTrap(popupRef);
 
     return (
         <div key={key}>
@@ -49,6 +91,8 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                     <m.div
                         key="popup"
                         animate={{ opacity: 1, scale: 1 }}
+                        aria-describedby={ariaDescribedBy}
+                        aria-labelledby={ariaLabelledBy}
                         aria-modal="true"
                         exit={{ opacity: 0, scale: 0.8 }}
                         ref={popupRef}
@@ -78,7 +122,9 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         {!hideCloseButton && (
                             <button
                                 className="text-icon-less hover:text-icon-accent focus-visible:outline-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm focus-visible:outline-2"
+                                ref={closeButtonRef}
                                 tabIndex={0}
+                                title={t('Close dialog')}
                                 onClick={() => updatePortalContent(null)}
                             >
                                 <RemoveIcon className="size-6" />

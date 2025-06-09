@@ -22,6 +22,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
 
     return (
         <button
+            aria-haspopup="dialog"
             tabIndex={tabIndex}
             title={t('Show stores availability')}
             className={twJoin(

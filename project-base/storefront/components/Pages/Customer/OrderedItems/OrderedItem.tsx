@@ -99,6 +99,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                 </div>
                 <div className="flex items-center gap-2 md:ml-auto">
                     <Button
+                        aria-haspopup="dialog"
                         className="w-full md:w-auto"
                         size="small"
                         onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}

@@ -148,6 +148,8 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         {canManagePersonalData && (
                             <div className="space-between mt-auto flex gap-2 pt-2">
                                 <Button
+                                    aria-haspopup="dialog"
+                                    aria-label={t('Delete')}
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"
@@ -156,6 +158,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                                     <RemoveIcon className="size-4" /> {t('Delete')}
                                 </Button>
                                 <Button
+                                    aria-haspopup="dialog"
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"
