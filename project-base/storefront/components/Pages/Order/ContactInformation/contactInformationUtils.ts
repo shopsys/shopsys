@@ -78,8 +78,6 @@ export const useCreateOrder = (
     const handleCreateOrderResult = useHandleCreateOrderResult();
 
     const createOrder: SubmitHandler<ContactInformation> = async (formValues) => {
-        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-confirmation' });
-
         const createOrderResult = await createOrderMutation(
             getCreateOrderMutationVariables(
                 cartUuid,
@@ -89,6 +87,10 @@ export const useCreateOrder = (
                 isPacketeryTransport(currentCart.transport?.transportTypeCode),
             ),
         );
+
+        if (createOrderResult.data?.CreateOrder) {
+            updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-confirmation' });
+        }
 
         handleCreateOrderResult(formProviderMethods, formMeta, createOrderResult, formValues);
     };
