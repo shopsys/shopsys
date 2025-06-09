@@ -39,11 +39,21 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
 
     if (href) {
         return (
-            <button className={flagTwClass} tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+            <button
+                className={flagTwClass}
+                style={{ backgroundColor: rgbBgColor }}
+                tabIndex={0}
+                onClick={handleClick}
+                onKeyDown={handleKeyDown}
+            >
                 {children}
             </button>
         );
     }
 
-    return <div className={flagTwClass}>{children}</div>;
+    return (
+        <div className={flagTwClass} style={{ backgroundColor: rgbBgColor }}>
+            {children}
+        </div>
+    );
 };

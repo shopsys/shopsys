@@ -76,8 +76,8 @@ const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) =>
     }
 
     return (
-        <a className={subMenuItemTwClass} tabIndex={0} onClick={onClick}>
+        <button className={subMenuItemTwClass} tabIndex={0} onClick={onClick}>
             {children}
-        </a>
+        </button>
     );
 };

@@ -97,16 +97,20 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         } else {
             setMinValueCallback(value);
         }
+        window.getSelection()?.removeAllRanges();
     };
 
     const onBlurMaxHandler: FocusEventHandler<HTMLInputElement> = (event) => {
         const value = parseFloat(event.currentTarget.value);
+
         if (value > max || isNaN(value)) {
             setMaxValueThumb(max);
             setMaxValueInput(max);
         } else {
             setMaxValueCallback(value);
         }
+
+        window.getSelection()?.removeAllRanges();
     };
 
     const onChangeMaxInputHandler: ChangeEventHandler<HTMLInputElement> = (event) =>

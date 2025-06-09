@@ -21,7 +21,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
             {articles.map((article) => (
                 <ArticleLink
                     key={article.uuid}
-                    className="vl:flex-row focus-visible:bg-backgroundMore/10 flex max-w-[410px] min-w-96 snap-start flex-col gap-5 no-underline hover:no-underline focus-visible:ring-0"
+                    className="vl:flex-row focus-visible:bg-background-more/10 flex max-w-[410px] min-w-96 snap-start flex-col gap-5 rounded-xl no-underline hover:no-underline focus-visible:ring-0 focus-visible:ring-offset-0"
                     href={article.link}
                 >
                     <Image

@@ -26,7 +26,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
             title={t('Show stores availability')}
             className={twJoin(
                 className,
-                'text-left text-sm',
+                'flex text-left text-sm',
                 availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availability-in-stock',
                 availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
             )}

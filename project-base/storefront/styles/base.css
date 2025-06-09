@@ -95,7 +95,7 @@
     }
 
     a {
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer text-sm underline outline-hidden hover:underline lg:text-base;
+        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline outline-hidden hover:underline focus-visible:ring-2 lg:text-base;
     }
 
     b,
@@ -184,18 +184,18 @@
     /* accessibility */
 
     input[type='checkbox']:focus + label > div:first-child {
-        @apply outline-inputBorderActive outline-2 outline-offset-2;
+        @apply outline-input-border-active outline-2 outline-offset-2;
     }
 
     input[type='radio']:focus + label > div:first-child {
-        @apply outline-inputBorderActive outline-2 outline-offset-2;
+        @apply outline-input-border-active outline-2 outline-offset-2;
     }
 
     .order-confirmation-page-text-wrapper a {
-        @apply rounded-md focus-visible:ring-2 focus-visible:ring-offset-2;
+        @apply rounded-md focus-visible:ring-2;
     }
 
-    .advert-wrapper a {
-        @apply inline-block rounded-md focus-visible:ring-2 focus-visible:ring-offset-2;
+    .promo-wrapper a {
+        @apply inline-block rounded-md focus-visible:ring-2;
     }
 }

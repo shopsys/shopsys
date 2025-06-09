@@ -35,7 +35,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <div className="border-border-default relative w-full rounded-md border">
+        <div className="relative w-full">
             <input
                 aria-label={label}
                 autoComplete="off"
@@ -46,7 +46,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'border-input-bg-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer mb-0 h-12 w-full rounded-md border-2 pr-20 pl-11',
+                    'border-input-border-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer mb-0 h-12 w-full rounded-md border pr-20 pl-11',
                     '[&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
                     '[&:-webkit-autofill]:hover:!bg-input-bg-hovered [&:-webkit-autofill]:hover:!shadow-inner',
                     '[&:-webkit-autofill]:focus:!bg-input-fill [&:-webkit-autofill]:focus:!shadow-inner',

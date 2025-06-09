@@ -92,7 +92,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                 type="button"
                 className={twMergeCustom(
                     menuIconicItemLinkTwClass,
-                    'focus-visible:outline-background focus-visible:outline-2',
+                    'focus-visible:outline-background-default focus-visible:outline-2',
                     className,
                 )}
                 onClick={onClick}

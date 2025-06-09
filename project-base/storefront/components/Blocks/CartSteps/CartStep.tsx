@@ -30,7 +30,7 @@ export const CartStep: FC<CartStepProps> = ({
                 tabIndex={0}
                 className={twJoin(
                     'group flex max-w-[70px] flex-col items-center gap-2.5 outline-hidden md:max-w-none lg:flex-row lg:gap-5',
-                    'focus-visible:ring-actionInvertedBorder rounded-md focus-visible:ring-2 focus-visible:ring-offset-4',
+                    'focus-visible:ring-button-inverted-border-default rounded-md focus-visible:ring-2 focus-visible:ring-offset-4',
                     isDisabled ? 'cursor-default' : 'cursor-pointer',
                 )}
                 onClick={() => onClickHandler(step, url, pageType)(activeStep)}

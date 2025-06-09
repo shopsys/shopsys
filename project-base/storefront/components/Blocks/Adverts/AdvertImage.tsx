@@ -40,7 +40,7 @@ export const AdvertImage: FC<AdvertImageProps> = ({ advert: { mainImage, mainIma
     }
 
     return (
-        <ExtendedNextLink href={link} target="_blank">
+        <ExtendedNextLink className="block" href={link} target="_blank">
             <ImageComponent altBackup={name} mainImage={mainImage} mainImageMobile={mainImageMobile} />
         </ExtendedNextLink>
     );

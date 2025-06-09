@@ -65,7 +65,7 @@ export const getButtonClassName = (
                 'active:outline-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
             isDisabled &&
                 'outline-button-primary-border-disabled bg-button-primary-bg-disabled text-button-primary-text-disabled',
-            'focus-visible:ring-button-primary-border',
+            'focus-visible:ring-button-primary-bg-active',
         ],
         variant === 'secondary' && [
             'outline-button-secondary-border-default bg-button-secondary-bg-default text-button-secondary-text-default',
@@ -75,7 +75,7 @@ export const getButtonClassName = (
                 'active:outline-button-secondary-border-active active:bg-button-secondary-bg-active active:text-button-secondary-text-active',
             isDisabled &&
                 'outline-button-secondary-border-disabled bg-button-secondary-bg-disabled text-button-secondary-text-disabled',
-            'focus-visible:ring-button-secondary-border',
+            'focus-visible:ring-button-secondary-bg-active',
         ],
         variant === 'inverted' && [
             'outline-button-inverted-border-default bg-button-inverted-bg-default text-button-inverted-text-default',
@@ -85,7 +85,7 @@ export const getButtonClassName = (
                 'active:outline-button-inverted-border-active active:bg-button-inverted-bg-active active:text-button-inverted-text-active',
             isDisabled &&
                 'outline-button-inverted-border-disabled bg-button-inverted-bg-disabled text-button-inverted-text-disabled',
-            'focus-visible:ring-button-inverted-border',
+            'focus-visible:ring-button-inverted-border-default',
         ],
         variant === 'transparent' && [
             'outline-1 outline-offset-[-1px] outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
@@ -95,7 +95,7 @@ export const getButtonClassName = (
                 'active:outline-button-transparent-border-active active:bg-button-transparent-bg-active active:text-button-transparent-text-active',
             isDisabled &&
                 'outline-button-transparent-border-disabled bg-button-transparent-bg-disabled text-button-transparent-text-disabled',
-            'focus-visible:ring-button-transparent-border',
+            'focus-visible:ring-button-transparent-bg-active',
         ],
         (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
     );

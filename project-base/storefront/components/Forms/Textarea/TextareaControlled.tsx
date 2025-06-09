@@ -24,6 +24,8 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
         if (textareaProps.onBlur) {
             textareaProps.onBlur(event);
         }
+
+        window.getSelection()?.removeAllRanges();
     };
 
     const onChangeHandler: ChangeEventHandler<HTMLTextAreaElement> = (event) => {

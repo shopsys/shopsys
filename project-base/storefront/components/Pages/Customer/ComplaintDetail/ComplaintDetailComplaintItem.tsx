@@ -120,7 +120,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                 </div>
 
                                 {isWithAdditionalImages && (
-                                    <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
+                                    <div className="bg-image-overlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
                                         +{galleryAdditionalItemsCount}
                                     </div>
                                 )}

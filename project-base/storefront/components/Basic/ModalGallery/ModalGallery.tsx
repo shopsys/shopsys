@@ -96,7 +96,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     aria-label={t('Gallery content')}
                     role="region"
                 >
-                    <SpinnerIcon aria-hidden="true" className="-z-above text-textInverted absolute w-16 opacity-50" />
+                    <SpinnerIcon aria-hidden="true" className="-z-above text-text-inverted absolute w-16 opacity-50" />
                     <AnimatePresence initial={false}>
                         {isImage && (
                             <AnimateSlideDiv
@@ -208,7 +208,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick,
         type="button"
         className={twMergeCustom(
             'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
-            'focus-visible:ring-offset-background focus-visible:ring-background-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+            'focus-visible:ring-offset-background focus-visible:ring-background-accent focus-visible:ring-2 focus-visible:outline-none',
             className,
         )}
         onClick={(e) => {
