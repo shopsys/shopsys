@@ -19,6 +19,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
 
     return (
         <button
+            tabIndex={0}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',

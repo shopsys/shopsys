@@ -143,6 +143,7 @@ type ResetButtonProps = { text: string; onClick: () => void };
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid }) => (
     <button
         className="bg-background-more hover:bg-background-most flex w-full cursor-pointer items-center rounded-xl px-5 py-3 text-sm"
+        tabIndex={0}
         tid={tid}
         onClick={onClick}
     >

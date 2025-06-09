@@ -48,6 +48,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <h5>{t('Product filter')}</h5>
                 <button
                     className="inline-flex size-4 cursor-pointer"
+                    tabIndex={0}
                     title={t('Close filter panel')}
                     type="button"
                     onClick={() => setIsFilterPanelOpen(false)}

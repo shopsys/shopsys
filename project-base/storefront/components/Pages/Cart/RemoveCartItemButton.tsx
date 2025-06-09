@@ -13,6 +13,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onRemoveFr
     return (
         <button
             className={className}
+            tabIndex={0}
             tid={TIDs.pages_cart_removecartitembutton}
             title={t('Remove from cart')}
             onClick={onRemoveFromCart}

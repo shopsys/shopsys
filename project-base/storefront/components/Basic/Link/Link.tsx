@@ -67,7 +67,11 @@ export const Link: FC<LinkProps> = ({
     );
 
     if (isExternal) {
-        return <a {...props}>{content}</a>;
+        return (
+            <a {...props} tabIndex={0}>
+                {content}
+            </a>
+        );
     }
 
     return (

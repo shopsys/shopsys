@@ -34,6 +34,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                 return (
                     <li key={index} ref={itemsRefs[index]}>
                         <button
+                            tabIndex={0}
                             title={t('Select image')}
                             className={twJoin(
                                 'flex h-20 w-20 snap-center items-center justify-center px-1 transition-opacity hover:opacity-100',

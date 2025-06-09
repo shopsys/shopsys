@@ -18,7 +18,7 @@ export const Webline: FC<WeblineProps> = ({ children, tid, wrapperClassName, cla
 
     if (!wrapperClassName) {
         return (
-            <section className={twMergeCustom(weblineClassName, className)} tid={tid}>
+            <section className={twMergeCustom(weblineClassName, className)} tabIndex={-1} tid={tid}>
                 {children}
             </section>
         );
@@ -26,7 +26,7 @@ export const Webline: FC<WeblineProps> = ({ children, tid, wrapperClassName, cla
 
     return (
         <section className={wrapperClassName}>
-            <div className={twMergeCustom(weblineClassName, className)} tid={tid}>
+            <div className={twMergeCustom(weblineClassName, className)} tabIndex={-1} tid={tid}>
                 {children}
             </div>
         </section>

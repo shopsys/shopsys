@@ -41,6 +41,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
                 name={name}
                 ref={checkboxForwardedRef}
                 required={required}
+                tabIndex={0}
                 type="checkbox"
                 value={value as any}
                 onChange={onChange}

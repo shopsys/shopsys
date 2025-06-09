@@ -45,6 +45,7 @@ export const SalesRepresentative: FC = () => {
                     <a
                         className="text-text-default rounded-md text-sm font-semibold no-underline focus-visible:ring-2 focus-visible:ring-offset-2"
                         href={`tel:${telephone}`}
+                        tabIndex={0}
                     >
                         {formatPhoneNumber(telephone)}
                     </a>
@@ -55,6 +56,7 @@ export const SalesRepresentative: FC = () => {
                     <MailIcon className="size-6" />
                     <a
                         href={`mailto:${email}`}
+                        tabIndex={0}
                         className={twJoin(
                             'text-text-default max-w-64 overflow-x-auto rounded-md text-sm font-semibold whitespace-nowrap no-underline',
                             'focus-visible:ring-2 focus-visible:ring-offset-2',

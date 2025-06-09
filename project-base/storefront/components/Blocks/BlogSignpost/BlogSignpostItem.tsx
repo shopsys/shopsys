@@ -69,6 +69,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
             >
                 {isSecondLevel && hasChildren && (
                     <button
+                        tabIndex={0}
                         title={t('Toggle blog category')}
                         type="button"
                         onClick={(e) => {

@@ -57,7 +57,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     i18nKey="userConsentPolicyLink"
                     components={{
                         link: userConsentPolicyArticleUrl ? (
-                            <a href={userConsentPolicyArticleUrl} rel="noreferrer" target="_blank" />
+                            <a href={userConsentPolicyArticleUrl} rel="noreferrer" tabIndex={0} target="_blank" />
                         ) : (
                             <span />
                         ),

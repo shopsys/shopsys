@@ -64,8 +64,9 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     return (
         <NextLink
             as={isDynamic ? href : as}
-            className={twMergeCustom('rounded-md focus-visible:ring-2', className)}
+            className={twMergeCustom('rounded-sm focus-visible:ring-2 focus-visible:ring-offset-2', className)}
             prefetch={false}
+            tabIndex={0}
             href={
                 isDynamic
                     ? {

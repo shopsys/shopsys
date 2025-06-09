@@ -13,6 +13,7 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
                 <a
                     className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
                     href={'mailto:' + email}
+                    tabIndex={0}
                 >
                     <MailIcon className="size-5" />
                     &nbsp;{email}
@@ -22,6 +23,7 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
                 <a
                     className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
                     href={'tel:' + phone}
+                    tabIndex={0}
                 >
                     <PhoneIcon className="size-5" />
                     &nbsp;{phone}

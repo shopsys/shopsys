@@ -46,6 +46,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         <button
             aria-expanded={isExpanded}
             ref={itemRef}
+            tabIndex={0}
             title={isExpanded ? t('Collapse store info') : t('Expand store info')}
             type="button"
             className={twMergeCustom(

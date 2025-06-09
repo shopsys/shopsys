@@ -23,6 +23,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
 
     return (
         <button
+            tabIndex={0}
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',

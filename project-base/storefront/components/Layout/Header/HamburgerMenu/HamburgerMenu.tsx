@@ -13,6 +13,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ onClick }) => {
     return (
         <button
             className={twJoin('text-link-inverted-default flex cursor-pointer items-center rounded-sm bg-none')}
+            tabIndex={0}
             title={t('Open menu')}
             type="button"
             onClick={onClick}

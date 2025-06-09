@@ -28,6 +28,7 @@ const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: bool
         <button
             aria-current={isActive ? 'true' : false}
             className="absolute -translate-x-1/2 -translate-y-full"
+            tabIndex={0}
             title="Location marker"
             type="button"
             onClick={onClick}

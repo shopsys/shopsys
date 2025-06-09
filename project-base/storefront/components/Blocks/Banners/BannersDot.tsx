@@ -41,6 +41,7 @@ export const BannersDot: FC<BannersDotProps> = ({
         <button
             key={sliderItem.uuid}
             ref={dotRef}
+            tabIndex={0}
             title={sliderItem.name}
             className={twMergeCustom(
                 'bg-icon-less group relative block size-4 cursor-pointer rounded-full transition',
@@ -48,6 +49,7 @@ export const BannersDot: FC<BannersDotProps> = ({
                 'vl:after:absolute vl:after:inset-0 vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:border-t-[1px] vl:after:border-border-less vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r-[1px]',
                 isActive && 'bg-text-accent vl:bg-background-default vl:text-text-accent',
                 'hover:bg-background-most',
+                'focus-visible:bg-background-accent focus-visible:text-text-inverted focus-visible:outline-none',
             )}
             onClick={() => moveToSlide(index)}
         >

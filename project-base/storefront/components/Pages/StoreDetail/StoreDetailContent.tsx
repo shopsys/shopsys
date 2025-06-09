@@ -97,6 +97,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 key={image.url}
                                 className="m-0.5 flex h-[190px] w-[280px] cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
                                 data-src={image.url}
+                                tabIndex={0}
                                 title={t('View store image')}
                                 type="button"
                                 onClick={() => setSelectedGalleryItemIndex(index)}

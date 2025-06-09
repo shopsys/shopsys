@@ -28,6 +28,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
             {isWithChildren && (
                 <button
                     className="text-text-default flex w-10 cursor-pointer items-center justify-end"
+                    tabIndex={0}
                     title={t('Expand menu')}
                     type="button"
                     onClick={onExpand}

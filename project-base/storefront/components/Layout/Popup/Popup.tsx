@@ -78,6 +78,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         {!hideCloseButton && (
                             <button
                                 className="text-icon-less hover:text-icon-accent focus-visible:outline-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm focus-visible:outline-2"
+                                tabIndex={0}
                                 onClick={() => updatePortalContent(null)}
                             >
                                 <RemoveIcon className="size-6" />

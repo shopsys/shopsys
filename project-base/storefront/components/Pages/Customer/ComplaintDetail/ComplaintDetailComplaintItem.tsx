@@ -100,6 +100,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     return (
                         <li key={index}>
                             <button
+                                tabIndex={0}
                                 title={t('View product image')}
                                 className={twJoin(
                                     'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',

@@ -76,6 +76,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
                 {!!historyMenuGroups?.length && (
                     <button
                         className="text-text-default flex cursor-pointer items-center justify-start gap-2 text-sm uppercase"
+                        tabIndex={0}
                         title={t('Back')}
                         onClick={() => handleBackClick(historyMenuGroups)}
                     >
@@ -89,6 +90,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
 
                 <button
                     className="text-text-default ml-auto flex size-5 cursor-pointer items-center justify-center"
+                    tabIndex={0}
                     title={t('Close')}
                     onClick={onMenuToggleHandler}
                 >

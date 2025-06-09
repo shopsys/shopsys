@@ -50,7 +50,7 @@ const ProductComparisonHeadStickyContent = ({ comparedProducts, tableMarginLeft 
                 className="flex max-w-[calc(182px+12px*2)] min-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-r-1 px-1 py-3 sm:max-w-[calc(205px+20px*2)] sm:min-w-[calc(205px+20px*2)]"
                 style={index === 0 ? { marginLeft: -tableMarginLeft } : undefined}
             >
-                <a className="relative h-16 w-16" href={product.slug}>
+                <a className="relative h-16 w-16" href={product.slug} tabIndex={0}>
                     <Image
                         fill
                         alt={product.mainImage?.name || product.fullName}
@@ -59,7 +59,7 @@ const ProductComparisonHeadStickyContent = ({ comparedProducts, tableMarginLeft 
                     />
                 </a>
                 <div className="ml-2 flex flex-1 flex-col">
-                    <a className="text-xs no-underline hover:no-underline" href={product.slug}>
+                    <a className="text-xs no-underline hover:no-underline" href={product.slug} tabIndex={0}>
                         {product.fullName}
                     </a>
                 </div>

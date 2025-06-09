@@ -204,6 +204,7 @@ type FloatingButtonProps = {
 
 const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick, ...buttonProps }) => (
     <button
+        tabIndex={0}
         type="button"
         className={twMergeCustom(
             'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',

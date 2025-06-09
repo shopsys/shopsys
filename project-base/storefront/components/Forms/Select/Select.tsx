@@ -151,7 +151,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     {onResetSelect && activeOption && !isLoading && (
-                        <button className="cursor-pointer" type="reset" onClick={onResetSelect}>
+                        <button className="cursor-pointer" tabIndex={0} type="reset" onClick={onResetSelect}>
                             <RemoveIcon className="hover:text-red mx-1 size-4 transition active:scale-95" />
                         </button>
                     )}
@@ -159,6 +159,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     <button
                         className="focus-visible:ring-input-border-active rounded-md pr-3 focus-visible:ring-2 focus-visible:outline-hidden"
                         disabled={isDisabled}
+                        tabIndex={0}
                         title={t('Open select')}
                         type="button"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}

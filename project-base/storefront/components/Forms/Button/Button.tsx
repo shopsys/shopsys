@@ -32,6 +32,7 @@ export const Button: FC<ButtonProps> = forwardRef(
         return (
             <button
                 className={twMergeCustom(getButtonClassName(variant, size, isDisabled, isWithDisabledLook), className)}
+                tabIndex={0}
                 tid={tid}
                 type={type}
                 {...props}

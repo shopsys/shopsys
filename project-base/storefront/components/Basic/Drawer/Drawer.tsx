@@ -32,8 +32,10 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                 >
                     <div className="flex flex-row justify-between">
                         <span className="w-full text-center text-base">{title}</span>
+
                         <button
                             className="text-icon-less focus-visible:ring-primary flex cursor-pointer items-center justify-center p-1 focus-visible:ring-2 focus-visible:outline-none"
+                            tabIndex={0}
                             title={t('Close')}
                             onClick={() => setIsActive(false)}
                         >

@@ -180,6 +180,7 @@ const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title 
     <button
         className="text-text-default hover:text-text-accent disabled:text-text-disabled focus-visible:ring-offset-background-default focus-visible:ring-background-accent cursor-pointer rounded-sm border-none p-1 outline-hidden transition focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-auto"
         disabled={isDisabled}
+        tabIndex={0}
         title={title}
         onClick={onClick}
     >

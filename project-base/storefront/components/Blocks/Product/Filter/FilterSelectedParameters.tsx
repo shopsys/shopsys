@@ -218,6 +218,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
                         <button
                             className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
+                            tabIndex={0}
                             type="button"
                             onClick={resetAllFilterQueries}
                         >
