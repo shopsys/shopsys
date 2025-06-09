@@ -117,6 +117,7 @@
         "symfony/polyfill-php80": "^1.24.0",
         "tracy/tracy": "^2.4.13",
         "twig/twig": "^3.14.0",
+        "voku/anti-xss": "^4.1",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {

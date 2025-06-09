@@ -622,6 +622,9 @@ msgstr "Tato částka musí být {{ limit }} nebo více."
 msgid "The email is already registered on given domain."
 msgstr "Tento email je na dané doméně již registrován."
 
+msgid "This field contains potentially dangerous content and cannot be processed."
+msgstr "Toto pole obsahuje potenciálně nebezpečný obsah a nelze ji zpracovat."
+
 msgid "This field must be empty"
 msgstr "Toto pole musí zůstat prázdné"
 
