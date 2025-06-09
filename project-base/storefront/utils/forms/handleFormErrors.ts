@@ -24,8 +24,16 @@ export const handleFormErrors = <T extends FieldValues>(
     }
 
     if (userError?.validation !== undefined) {
+        let formFieldNames: string[];
+
+        if (fields !== undefined) {
+            formFieldNames = Object.keys(fields).map((fieldKey) => fields[fieldKey].name);
+        } else {
+            formFieldNames = Object.keys(formProviderMethods.control._fields).map((fieldKey) => fieldKey);
+        }
+
         for (const fieldName in userError.validation) {
-            if (fields !== undefined && Object.keys(fields).some((fieldKey) => fields[fieldKey].name === fieldName)) {
+            if (formFieldNames.includes(fieldName)) {
                 formProviderMethods.setError(fieldName as Path<T>, userError.validation[fieldName]);
                 continue;
             }
