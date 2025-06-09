@@ -154,6 +154,7 @@
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [CategoryAutomatedFilterEnum](#categoryautomatedfilterenum)
     * [CustomerUserRoleEnum](#customeruserroleenum)
+    * [FriendlyUrlRouteEnum](#friendlyurlrouteenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
@@ -6075,6 +6076,15 @@ Target URL
 <td>
 
 Navigation item name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="navigationitem.routename">routeName</strong></td>
+<td valign="top"><a href="#friendlyurlrouteenum">FriendlyUrlRouteEnum</a></td>
+<td>
+
+Friendly route name if exists, NULL for unknown (e.g., external) links
 
 </td>
 </tr>
@@ -12377,6 +12387,55 @@ Available customer user roles
 </tr>
 <tr>
 <td valign="top"><strong>ROLE_API_CUSTOMER_SELF_MANAGE</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### FriendlyUrlRouteEnum
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>FRONT_ARTICLE_DETAIL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_BLOGARTICLE_DETAIL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_BLOGCATEGORY_DETAIL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_BRAND_DETAIL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_CATEGORY_SEO</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_FLAG_DETAIL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_PRODUCT_DETAIL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_PRODUCT_LIST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>FRONT_STORES_DETAIL</strong></td>
 <td></td>
 </tr>
 </tbody>

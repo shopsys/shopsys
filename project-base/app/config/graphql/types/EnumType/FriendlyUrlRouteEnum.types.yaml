@@ -1,0 +1,4 @@
+FriendlyUrlRouteEnum:
+    type: enum
+    config:
+        enumClass: App\Component\FriendlyUrl\FriendlyUrlRouteEnum

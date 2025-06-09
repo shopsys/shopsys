@@ -19,6 +19,7 @@ import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageFlag } from './SkeletonPageFlag';
 import { SkeletonPageForgotPassword } from './SkeletonPageForgotPassword';
 import { SkeletonPageHome } from './SkeletonPageHome';
+import { SkeletonPageLogin } from './SkeletonPageLogin';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
@@ -108,6 +109,8 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageForgotPassword />;
         case SkeletonEnum.Homepage:
             return <SkeletonPageHome />;
+        case SkeletonEnum.Login:
+            return <SkeletonPageLogin />;
         case SkeletonEnum.OrderConfirmation:
             return <SkeletonPageConfirmation />;
         case SkeletonEnum.Product:

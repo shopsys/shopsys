@@ -1248,6 +1248,18 @@ export type TypeFlagFilterOption = {
   isSelected: Scalars['Boolean']['output'];
 };
 
+export enum TypeFriendlyUrlRouteEnum {
+  FrontArticleDetail = 'FRONT_ARTICLE_DETAIL',
+  FrontBlogarticleDetail = 'FRONT_BLOGARTICLE_DETAIL',
+  FrontBlogcategoryDetail = 'FRONT_BLOGCATEGORY_DETAIL',
+  FrontBrandDetail = 'FRONT_BRAND_DETAIL',
+  FrontCategorySeo = 'FRONT_CATEGORY_SEO',
+  FrontFlagDetail = 'FRONT_FLAG_DETAIL',
+  FrontProductDetail = 'FRONT_PRODUCT_DETAIL',
+  FrontProductList = 'FRONT_PRODUCT_LIST',
+  FrontStoresDetail = 'FRONT_STORES_DETAIL'
+}
+
 export type TypeGoPayBankSwift = {
   __typename?: 'GoPayBankSwift';
   /** large image url */
@@ -1736,6 +1748,8 @@ export type TypeNavigationItem = {
   link: Scalars['String']['output'];
   /** Navigation item name */
   name: Scalars['String']['output'];
+  /** Friendly route name if exists, NULL for unknown (e.g., external) links */
+  routeName: Maybe<TypeFriendlyUrlRouteEnum>;
 };
 
 /** Represents a single column inside the navigation item */

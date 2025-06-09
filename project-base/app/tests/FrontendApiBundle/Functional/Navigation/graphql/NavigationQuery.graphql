@@ -1,0 +1,13 @@
+query NavigationQuery {
+    navigation {
+        name
+        link
+        routeName
+        categoriesByColumns {
+            columnNumber
+            categories {
+                name
+            }
+        }
+    }
+}

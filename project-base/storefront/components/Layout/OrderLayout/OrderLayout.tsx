@@ -25,13 +25,8 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
             <div className="flex h-full min-h-screen flex-col">
                 <NotificationBars />
 
-                <header>
-                    <Webline
-                        className="relative"
-                        wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-background-brand-less lg:pb-6"
-                    >
-                        <Header simpleHeader />
-                    </Webline>
+                <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb lg:pb-6">
+                    <Header simpleHeader />
                 </header>
 
                 <main className="mt-4 mb-10 flex flex-col">

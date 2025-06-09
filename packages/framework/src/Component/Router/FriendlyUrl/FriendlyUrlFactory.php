@@ -119,6 +119,6 @@ class FriendlyUrlFactory
             throw new RouteNotFoundException('Route "' . $routeName . '" not found.');
         }
 
-        return $route->getOption('multidomain') ?? true;
+        return $route->getOption(FriendlyUrlRouter::ROUTE_OPTION_MULTIDOMAIN) ?? true;
     }
 }

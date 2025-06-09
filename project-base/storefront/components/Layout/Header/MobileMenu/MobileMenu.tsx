@@ -1,4 +1,5 @@
 import { MobileMenuContent } from './MobileMenuContent';
+import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
 import { AnimatePresence, m } from 'framer-motion';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
@@ -38,11 +39,11 @@ export const MobileMenu: FC = () => {
                 {isMenuOpened && (
                     <m.div
                         animate={{ translateX: '0%' }}
-                        exit={{ translateX: '100%' }}
-                        initial={{ translateX: '100%' }}
+                        exit={{ translateX: '-100%' }}
+                        initial={{ translateX: '-100%' }}
                         transition={{ duration: 0.2, type: 'tween' }}
                         className={twJoin(
-                            'z-maximum bg-background-default fixed inset-0 max-h-screen w-full overflow-x-hidden overflow-y-auto p-8 shadow-md',
+                            'z-maximum bg-background-default pointer-events-auto fixed top-0 left-0 h-dvh w-[315px] overflow-x-hidden overflow-y-auto',
                         )}
                     >
                         <MobileMenuContent
@@ -52,6 +53,8 @@ export const MobileMenu: FC = () => {
                     </m.div>
                 )}
             </AnimatePresence>
+
+            {isMenuOpened && <Overlay isActive={isMenuOpened} onClick={handleMenuToggle} />}
         </>
     );
 };

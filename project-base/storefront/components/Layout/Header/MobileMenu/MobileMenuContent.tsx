@@ -2,11 +2,11 @@ import { DropdownMenuListItem } from './MobileMenuListItem';
 import { SubMenu } from './MobileMenuSubItems';
 import { mapNavigationMenuItems } from './mobileMenuUtils';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimationSequence, useAnimate } from 'framer-motion';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 export type MenuItem = {
@@ -28,6 +28,11 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
     const [scope, animate] = useAnimate();
 
     const currentGroupTitle = currentMenuItems[0].parentItem;
+
+    useEffect(() => {
+        // Set initial positions programmatically to ensure first navigation animations work correctly
+        animate('#animation-hidden-element', { transform: 'translateX(120%)' }, { duration: 0 });
+    }, []);
 
     const handleExpandClick = (navigationItem: MenuItem) => {
         const slideAwayThenTeleportIntoViewSequence: AnimationSequence = [
@@ -66,28 +71,28 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
     };
 
     return (
-        <div ref={scope}>
-            <div className="mb-5 flex py-3">
+        <div className="flex h-full flex-col" ref={scope}>
+            <div className="flex items-center p-5">
                 {!!historyMenuGroups?.length && (
                     <button
-                        className="text-text-default flex w-9 cursor-pointer items-center justify-start gap-2 text-sm uppercase"
+                        className="text-text-default flex cursor-pointer items-center justify-start gap-2 text-sm uppercase"
                         title={t('Back')}
                         onClick={() => handleBackClick(historyMenuGroups)}
                     >
-                        <ArrowIcon className="size-5 rotate-90" />
+                        <ArrowIcon className="text-borderAccent size-5 rotate-90" />
                     </button>
                 )}
 
-                {currentGroupTitle && (
-                    <span className="flex-1 text-center leading-5 uppercase">{currentGroupTitle}</span>
-                )}
+                <span className="h-6 flex-1 text-center text-base">
+                    {currentGroupTitle ? currentGroupTitle : t('Menu')}
+                </span>
 
                 <button
-                    className="text-text-default ml-auto flex w-9 cursor-pointer items-center justify-end gap-2 text-sm uppercase"
+                    className="text-text-default ml-auto flex size-5 cursor-pointer items-center justify-center"
                     title={t('Close')}
                     onClick={onMenuToggleHandler}
                 >
-                    <CloseIcon className="w-5" />
+                    <RemoveIcon />
                 </button>
             </div>
 
@@ -99,7 +104,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
             />
 
             <MenuItems
-                className="translate-x-[120%]"
+                className="absolute top-16"
                 id="animation-hidden-element"
                 menuItems={currentMenuItems}
                 onExpand={handleExpandClick}
@@ -118,7 +123,7 @@ const MenuItems: FC<{
     onNavigate: () => void;
 }> = ({ className, id, menuItems, onExpand, onNavigate }) => {
     return (
-        <div className={twJoin('divide-border-default absolute w-[calc(100%-4rem)] divide-y', className)} id={id}>
+        <div className={twJoin('divide-border-default w-[315px] divide-y px-5', className)} id={id}>
             {menuItems.map((navigationItem) => (
                 <DropdownMenuListItem
                     key={navigationItem.link + navigationItem.name + id}

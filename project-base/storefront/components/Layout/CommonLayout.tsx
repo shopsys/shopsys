@@ -58,14 +58,9 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <div className="flex h-full min-h-screen flex-col">
                 <NotificationBars />
 
-                <header>
-                    <Webline
-                        className="relative"
-                        wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-background-brand-less"
-                    >
-                        <Header />
-                        <DeferredNavigation />
-                    </Webline>
+                <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
+                    <Header />
+                    <DeferredNavigation />
                 </header>
 
                 <main className="mt-4 mb-10 flex flex-col">

@@ -29,7 +29,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                         className,
                     )}
                 >
-                    <div className="mb-10 flex flex-row justify-between pr-1">
+                    <div className="flex flex-row justify-between">
                         <span className="w-full text-center text-base">{title}</span>
                         <RemoveIcon
                             className="text-border-default w-4 cursor-pointer"

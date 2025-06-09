@@ -13,7 +13,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 final class GetSettingsTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
      * @inject
      */
     private readonly SeoSettingFacade $seoSettingFacade;

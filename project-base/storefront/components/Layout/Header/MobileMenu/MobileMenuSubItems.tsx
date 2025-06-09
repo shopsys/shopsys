@@ -25,7 +25,7 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
     const { wishlist } = useWishlist();
 
     return (
-        <div className="absolute bottom-8 flex flex-col">
+        <div className="bg-backgroundMore mt-auto flex flex-col px-5 py-2">
             <SubMenuItem href={storesUrl} type="stores" onClick={onNavigate}>
                 {t('Stores')}
             </SubMenuItem>
@@ -64,7 +64,7 @@ type SubMenuItemProps = {
     onClick: () => void;
 };
 
-const subMenuItemTwClass = 'py-3 text-sm text-text-default no-underline';
+const subMenuItemTwClass = 'py-3 text-sm text-text-default no-underline font-semibold';
 
 const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) => {
     if (href) {

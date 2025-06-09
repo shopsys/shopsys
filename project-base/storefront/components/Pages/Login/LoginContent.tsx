@@ -6,7 +6,7 @@ export const LoginContent: FC = () => {
     const { t } = useTranslation();
 
     return (
-        <Webline className="flex flex-col items-center">
+        <Webline width="lg">
             <LoginForm formHeading={t('Log in')} />
         </Webline>
     );
