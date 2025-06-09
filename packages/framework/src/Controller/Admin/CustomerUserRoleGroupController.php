@@ -42,7 +42,7 @@ class CustomerUserRoleGroupController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function listAction(): Response
     {
-        $grid = $this->gridFactory->create();
+        $grid = $this->gridFactory->create(Roles::ROLE_SUPER_ADMIN);
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/list.html.twig', [
             'gridView' => $grid->createView(),

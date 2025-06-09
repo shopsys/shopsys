@@ -29,9 +29,10 @@ class CountryGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->countryRepository
             ->createSortedJoinedQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities(), $this->domain->getId())
@@ -39,7 +40,7 @@ class CountryGridFactory implements GridFactoryInterface
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
 
-        $grid = $this->gridFactory->create('CountryList', $dataSource);
+        $grid = $this->gridFactory->create('CountryList', $dataSource, $editRole);
 
         $grid->addColumn('name', 'ct.name', t('Name'), true);
         $grid->addColumn('code', 'c.code', t('Country code'), true);

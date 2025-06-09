@@ -58,7 +58,7 @@ class MailController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_MAIL_TEMPLATE_VIEW])]
     public function templateAction(): Response
     {
-        $grid = $this->mailTemplateGridFactory->create();
+        $grid = $this->mailTemplateGridFactory->create(Roles::ROLE_MAIL_TEMPLATE_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/list.html.twig', [
             'gridView' => $grid->createView(),

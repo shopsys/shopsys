@@ -74,7 +74,7 @@ class AdministratorController extends AdminBaseController
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
-        $grid = $this->gridFactory->create('administratorList', $dataSource);
+        $grid = $this->gridFactory->create('administratorList', $dataSource, Roles::ROLE_ADMINISTRATOR_FULL);
         $grid->setDefaultOrder('realName');
 
         $grid->addColumn('realName', 'a.realName', t('Full name'), true);
@@ -83,7 +83,7 @@ class AdministratorController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id'])
-            ->setConfirmMessage(t('Do you really want to remove this administrator?'));
+            ?->setConfirmMessage(t('Do you really want to remove this administrator?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Administrator/listGrid.html.twig');
 

@@ -29,9 +29,10 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -41,14 +42,14 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cs.id');
 
-        $grid = $this->gridFactory->create('complaintStatusList', $dataSource);
+        $grid = $this->gridFactory->create('complaintStatusList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'cst.name', t('Name'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_complaintstatus_deleteconfirm', ['id' => 'cs.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/ComplaintStatus/listGrid.html.twig', [
             'STATUS_TYPE_NEW' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW,

@@ -48,7 +48,7 @@ class SalesRepresentativeController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_VIEW])]
     public function listAction(): Response
     {
-        $grid = $this->salesRepresentativeGridFactory->create();
+        $grid = $this->salesRepresentativeGridFactory->create(Roles::ROLE_SALES_REPRESENTATIVE_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/list.html.twig', [
             'gridView' => $grid->createView(),

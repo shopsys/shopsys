@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -26,9 +27,10 @@ class FlagGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -38,7 +40,7 @@ class FlagGridFactory implements GridFactoryInterface
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'f.id');
 
-        $grid = $this->gridFactory->create('flagList', $dataSource);
+        $grid = $this->gridFactory->create('flagList', $dataSource, $editRole);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'ft.name', t('Name'), true);
@@ -48,7 +50,7 @@ class FlagGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_flag_edit', ['id' => 'f.id']);
         $grid->addDeleteActionColumn('admin_flag_deleteconfirm', ['id' => 'f.id'])
-            ->setAjaxConfirm();
+            ?->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Flag/listGrid.html.twig');
 

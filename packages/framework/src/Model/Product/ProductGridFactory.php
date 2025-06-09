@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class ProductGridFactory
 {
@@ -35,7 +36,7 @@ class ProductGridFactory
     public function getProductControllerGrid(QueryBuilder $queryBuilder): Grid
     {
         $dataSource = $this->getGridDataSource($queryBuilder);
-        $grid = $this->gridFactory->create('productList', $dataSource);
+        $grid = $this->gridFactory->create('productList', $dataSource, Roles::ROLE_PRODUCT_FULL);
         $grid->enablePaging();
         $grid->enableSelecting();
         $grid->setDefaultOrder('name');
@@ -49,7 +50,7 @@ class ProductGridFactory
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_product_edit', ['id' => 'p.id']);
         $grid->addDeleteActionColumn('admin_product_delete', ['id' => 'p.id'])
-            ->setConfirmMessage(t('Do you really want to remove this product?'));
+            ?->setConfirmMessage(t('Do you really want to remove this product?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Product/listGrid.html.twig', [
             'VARIANT_TYPE_MAIN' => Product::VARIANT_TYPE_MAIN,

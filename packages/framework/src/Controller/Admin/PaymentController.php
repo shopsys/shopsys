@@ -152,7 +152,7 @@ class PaymentController extends AdminBaseController
      */
     public function listAction(): Response
     {
-        $grid = $this->paymentGridFactory->create();
+        $grid = $this->paymentGridFactory->create(Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/Payment/list.html.twig', [
             'gridView' => $grid->createView(),

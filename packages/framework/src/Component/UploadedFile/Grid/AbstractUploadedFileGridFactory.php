@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AbstractUploadedFileGridFactory
 {
@@ -24,7 +25,7 @@ class AbstractUploadedFileGridFactory
      */
     protected function createInstance(string $gridName, DataSourceInterface $dataSource): Grid
     {
-        $grid = $this->gridFactory->create($gridName, $dataSource);
+        $grid = $this->gridFactory->create($gridName, $dataSource, Roles::ROLE_FILES_FULL);
 
         $grid->enablePaging();
 

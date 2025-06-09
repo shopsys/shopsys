@@ -54,7 +54,7 @@ class PromoCodeController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $grid = $this->promoCodeGridFactory->create(search: $quickSearchForm->getData()->text);
+        $grid = $this->promoCodeGridFactory->create(Roles::ROLE_PROMO_CODE_FULL, search: $quickSearchForm->getData()->text);
         $grid->enablePaging();
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);

@@ -229,7 +229,7 @@ class OrderController extends AdminBaseController
             null,
         );
 
-        $grid = $this->gridFactory->create('orderList', $dataSource);
+        $grid = $this->gridFactory->create('orderList', $dataSource, Roles::ROLE_ORDER_FULL);
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 
@@ -248,7 +248,7 @@ class OrderController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_order_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_order_delete', ['id' => 'id'])
-            ->setConfirmMessage(t('Do you really want to remove the order?'));
+            ?->setConfirmMessage(t('Do you really want to remove the order?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Order/listGrid.html.twig');
 

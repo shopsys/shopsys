@@ -30,7 +30,7 @@ class GridController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/_grid/get-form/')]
-    #[AccessControlRule([Roles::ROLE_ALL])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function getFormAction(Request $request): JsonResponse
     {
         $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
@@ -48,7 +48,7 @@ class GridController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/_grid/save-form/')]
-    #[AccessControlRule([Roles::ROLE_ALL])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function saveFormAction(Request $request): JsonResponse
     {
         $responseData = [];
@@ -76,7 +76,7 @@ class GridController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/_grid/save-ordering/')]
-    #[AccessControlRule([Roles::ROLE_ALL])]
+    #[AccessControlRule([Roles::ROLE_ADMIN])]
     public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->gridOrderingFacade->saveOrdering(

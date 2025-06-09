@@ -152,9 +152,10 @@ class TransportController extends AdminBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW])]
     public function listAction(): Response
     {
-        $grid = $this->transportGridFactory->create();
+        $grid = $this->transportGridFactory->create(Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/list.html.twig', [
             'gridView' => $grid->createView(),

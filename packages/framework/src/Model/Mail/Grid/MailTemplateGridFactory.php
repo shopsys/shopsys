@@ -30,11 +30,12 @@ class MailTemplateGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create(?string $editRole): Grid
     {
-        $grid = $this->gridFactory->create('MailTemplateList', $this->createDataSource());
+        $grid = $this->gridFactory->create('MailTemplateList', $this->createDataSource(), $editRole);
 
         $grid->addColumn('name', 'mt.name', t('Name'), true);
         $grid->addColumn('subject', 'mt.subject', t('Subject'), true);

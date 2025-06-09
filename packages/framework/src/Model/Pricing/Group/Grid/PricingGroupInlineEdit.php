@@ -10,12 +10,16 @@ use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class PricingGroupInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupGridFactory $pricingGroupGridFactory
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
@@ -23,20 +27,21 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         PricingGroupGridFactory $pricingGroupGridFactory,
+        Security $security,
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly PricingGroupDataFactory $pricingGroupDataFactory,
     ) {
-        parent::__construct($pricingGroupGridFactory);
+        parent::__construct($pricingGroupGridFactory, $security);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @return int
+     * @return int|string
      */
     #[Override]
-    protected function createEntityAndGetId($pricingGroupData)
+    protected function createEntityAndGetId(mixed $pricingGroupData): int|string
     {
         $pricingGroup = $this->pricingGroupFacade->create(
             $pricingGroupData,
@@ -47,30 +52,39 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int $pricingGroupId
+     * @param int|string $pricingGroupId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      */
     #[Override]
-    protected function editEntity($pricingGroupId, $pricingGroupData)
+    protected function editEntity(int|string $pricingGroupId, mixed $pricingGroupData): void
     {
         $this->pricingGroupFacade->edit($pricingGroupId, $pricingGroupData);
     }
 
     /**
-     * @param int|null $pricingGroupId
+     * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
     #[Override]
-    public function getForm($pricingGroupId)
+    public function getForm(int|string|null $rowId): FormInterface
     {
-        if ($pricingGroupId !== null) {
-            $pricingGroupId = (int)$pricingGroupId;
-            $pricingGroup = $this->pricingGroupFacade->getById($pricingGroupId);
+        if ($rowId !== null) {
+            $rowId = (int)$rowId;
+            $pricingGroup = $this->pricingGroupFacade->getById($rowId);
             $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($pricingGroup);
         } else {
             $pricingGroupData = $this->pricingGroupDataFactory->create();
         }
 
         return $this->formFactory->create(PricingGroupFormType::class, $pricingGroupData);
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    protected function getEditRole(): string
+    {
+        return Roles::ROLE_PRICING_GROUP_FULL;
     }
 }

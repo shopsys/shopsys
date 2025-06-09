@@ -7,10 +7,14 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 use LogicException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl\FriendlyUrlFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @property \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
@@ -21,6 +25,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
@@ -28,12 +33,13 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         FriendlyUrlGridFactory $gridFactory,
+        Security $security,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly FriendlyUrlDataFactory $friendlyUrlDataFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        parent::__construct($gridFactory);
+        parent::__construct($gridFactory, $security);
 
         $this->gridQuickSearchFormData = new QuickSearchFormData();
     }
@@ -43,7 +49,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      * @return \Symfony\Component\Form\FormInterface
      */
     #[Override]
-    public function getForm($rowId)
+    public function getForm(int|string|null $rowId): FormInterface
     {
         $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($this->adminDomainTabsFacade->getSelectedDomainId(), $rowId);
         $friendlyUrlData = $this->friendlyUrlDataFactory->createFromFriendlyUrl($friendlyUrl);
@@ -55,10 +61,11 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function getGrid()
+    public function getGrid(): Grid
     {
         $this->gridFactory->setQuickSearchFormData($this->getGridQuickSearchFormData());
-        $grid = $this->gridFactory->create();
+        $grid = $this->gridFactory->create($this->getEditRole());
+
         $grid->setInlineEditService($this);
 
         return $grid;
@@ -74,11 +81,11 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param string $rowId
+     * @param int|string $rowId
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $formData
      */
     #[Override]
-    protected function editEntity($rowId, $formData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
         $this->friendlyUrlFacade->setRedirect(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
@@ -91,7 +98,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      * @param mixed $formData
      */
     #[Override]
-    protected function createEntityAndGetId($formData): never
+    protected function createEntityAndGetId(mixed $formData): never
     {
         throw new LogicException('Creating a new unused friendly URL is not supported.');
     }
@@ -110,5 +117,14 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     public function setGridQuickSearchFormData(QuickSearchFormData $gridQuickSearchFormData): void
     {
         $this->gridQuickSearchFormData = $gridQuickSearchFormData;
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    protected function getEditRole(): string
+    {
+        return Roles::ROLE_FRIENDLY_URL_FULL;
     }
 }

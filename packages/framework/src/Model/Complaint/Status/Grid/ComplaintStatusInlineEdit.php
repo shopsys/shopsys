@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataE
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\Status\ComplaintStatusFormType;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -18,6 +20,7 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\Grid\ComplaintStatusGridFactory $complaintStatusGridFactory
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory $complaintStatusDataFactory
@@ -25,12 +28,13 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         ComplaintStatusGridFactory $complaintStatusGridFactory,
+        Security $security,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly ComplaintStatusDataFactory $complaintStatusDataFactory,
         protected readonly Domain $domain,
     ) {
-        parent::__construct($complaintStatusGridFactory);
+        parent::__construct($complaintStatusGridFactory, $security);
     }
 
     /**
@@ -38,7 +42,7 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      * @return int
      */
     #[Override]
-    protected function createEntityAndGetId($complaintStatusData): int
+    protected function createEntityAndGetId(mixed $complaintStatusData): int
     {
         if (!$this->domain->hasAdminAllDomainsEnabled()) {
             throw new InvalidFormDataException([
@@ -52,29 +56,38 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int $complaintStatusId
+     * @param int|string $complaintStatusId
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
      */
     #[Override]
-    protected function editEntity($complaintStatusId, $complaintStatusData): void
+    protected function editEntity(int|string $complaintStatusId, mixed $complaintStatusData): void
     {
         $this->complaintStatusFacade->edit($complaintStatusId, $complaintStatusData);
     }
 
     /**
-     * @param int|null $complaintStatusId
+     * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
     #[Override]
-    public function getForm($complaintStatusId): FormInterface
+    public function getForm(int|string|null $rowId): FormInterface
     {
-        if ($complaintStatusId !== null) {
-            $complaintStatus = $this->complaintStatusFacade->getById((int)$complaintStatusId);
+        if ($rowId !== null) {
+            $complaintStatus = $this->complaintStatusFacade->getById((int)$rowId);
             $complaintStatusData = $this->complaintStatusDataFactory->createFromComplaintStatus($complaintStatus);
         } else {
             $complaintStatusData = $this->complaintStatusDataFactory->create();
         }
 
         return $this->formFactory->create(ComplaintStatusFormType::class, $complaintStatusData);
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    protected function getEditRole(): string
+    {
+        return Roles::ROLE_COMPLAINT_FULL;
     }
 }

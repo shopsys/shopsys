@@ -98,7 +98,7 @@ class BrandController extends AdminBaseController
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'b.id');
 
-        $grid = $this->gridFactory->create('brandList', $dataSource);
+        $grid = $this->gridFactory->create('brandList', $dataSource, Roles::ROLE_BRAND_FULL);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 
@@ -107,7 +107,7 @@ class BrandController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_brand_edit', ['id' => 'b.id']);
         $grid->addDeleteActionColumn('admin_brand_delete', ['id' => 'b.id'])
-            ->setConfirmMessage(
+            ?->setConfirmMessage(
                 t('Do you really want to remove this brand? If it is used anywhere it will be unset.'),
             );
 

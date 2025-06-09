@@ -282,7 +282,7 @@ class StockController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('stockList', $dataSource);
+        $grid = $this->gridFactory->create('stockList', $dataSource, Roles::ROLE_STOCK_FULL);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');
@@ -290,7 +290,7 @@ class StockController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
-            ->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
+            ?->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 

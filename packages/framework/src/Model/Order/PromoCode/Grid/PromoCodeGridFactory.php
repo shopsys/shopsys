@@ -31,11 +31,14 @@ class PromoCodeGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string|null $editRole
      * @param bool $withEditButton
      * @param string|null $search
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(bool $withEditButton = true, ?string $search = null): Grid
+    public function create(?string $editRole, bool $withEditButton = true, ?string $search = null): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -58,7 +61,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource($queryBuilder, 'pc.id', $manipulator);
 
-        $grid = $this->gridFactory->create('promoCodeList', $dataSource);
+        $grid = $this->gridFactory->create('promoCodeList', $dataSource, $editRole);
         $grid->setDefaultOrder('code');
         $grid->addColumn('code', 'pc.code', t('Code'), true);
         $grid->addColumn('percent', 'pc.percent', t('Discount'));
@@ -70,7 +73,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
         }
 
         $grid->addDeleteActionColumn('admin_promocode_delete', ['id' => 'pc.id'])
-            ->setConfirmMessage(t('Do you really want to remove this promo code?'));
+            ?->setConfirmMessage(t('Do you really want to remove this promo code?'));
 
         $grid->addActionColumn('duplicate', t('Duplicate'), 'admin_promocode_new', ['fillFromPromoCodeId' => 'pc.id']);
 

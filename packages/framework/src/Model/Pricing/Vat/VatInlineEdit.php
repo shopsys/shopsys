@@ -8,12 +8,16 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatFormType;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class VatInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatGridFactory $vatGridFactory
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
@@ -21,20 +25,21 @@ class VatInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         VatGridFactory $vatGridFactory,
+        Security $security,
         protected readonly VatFacade $vatFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly VatDataFactory $vatDataFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        parent::__construct($vatGridFactory);
+        parent::__construct($vatGridFactory, $security);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     * @return int
+     * @return int|string
      */
     #[Override]
-    protected function createEntityAndGetId($vatData)
+    protected function createEntityAndGetId(mixed $vatData): int|string
     {
         $vat = $this->vatFacade->create($vatData, $this->adminDomainTabsFacade->getSelectedDomainId());
 
@@ -42,31 +47,40 @@ class VatInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int $vatId
+     * @param int|string $vatId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      */
     #[Override]
-    protected function editEntity($vatId, $vatData)
+    protected function editEntity(int|string $vatId, mixed $vatData): void
     {
         $this->vatFacade->edit($vatId, $vatData);
     }
 
     /**
-     * @param int|null $vatId
+     * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
     #[Override]
-    public function getForm($vatId)
+    public function getForm(int|string|null $rowId): FormInterface
     {
-        if ($vatId !== null) {
-            $vat = $this->vatFacade->getById((int)$vatId);
+        if ($rowId !== null) {
+            $vat = $this->vatFacade->getById((int)$rowId);
             $vatData = $this->vatDataFactory->createFromVat($vat);
         } else {
             $vatData = $this->vatDataFactory->create();
         }
 
         return $this->formFactory->create(VatFormType::class, $vatData, [
-            'scenario' => ($vatId === null ? VatFormType::SCENARIO_CREATE : VatFormType::SCENARIO_EDIT),
+            'scenario' => ($rowId === null ? VatFormType::SCENARIO_CREATE : VatFormType::SCENARIO_EDIT),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    #[Override]
+    protected function getEditRole(): string
+    {
+        return Roles::ROLE_VAT_FULL;
     }
 }

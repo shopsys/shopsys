@@ -63,7 +63,7 @@ class TransferIssueController extends AdminBaseController
         }
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ti.id');
 
-        $grid = $this->gridFactory->create('transferIssueList', $dataSource);
+        $grid = $this->gridFactory->create('transferIssueList', $dataSource, Roles::ROLE_TRANSFER_FULL);
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt DESC, id');
 
@@ -71,7 +71,7 @@ class TransferIssueController extends AdminBaseController
         $grid->addColumn('message', 'ti.message', t('Message text'));
         $grid->addColumn('createdAt', 'ti.createdAt', t('Date and time'));
         $grid->addDeleteActionColumn('admin_transferissue_delete', ['id' => 'ti.id'])
-            ->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
+            ?->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 

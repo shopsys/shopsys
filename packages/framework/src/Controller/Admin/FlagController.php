@@ -46,7 +46,7 @@ class FlagController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_FLAG_VIEW])]
     public function listAction(): Response
     {
-        $grid = $this->flagGridFactory->create();
+        $grid = $this->flagGridFactory->create(Roles::ROLE_FLAG_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/Flag/list.html.twig', [
             'gridView' => $grid->createView(),

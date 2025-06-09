@@ -46,7 +46,7 @@ class AdministratorRoleGroupController extends AdminBaseController
         $queryBuilder = $this->administratorRoleGroupFacade->getAllQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'arg.id');
 
-        $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource);
+        $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, Roles::ROLE_ADMINISTRATOR_FULL);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'arg.name', t('Role name'), true);

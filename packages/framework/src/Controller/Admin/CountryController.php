@@ -41,7 +41,7 @@ class CountryController extends AdminBaseController
     #[AccessControlRule([Roles::ROLE_COUNTRY_VIEW])]
     public function listAction(): Response
     {
-        $grid = $this->countryGridFactory->create();
+        $grid = $this->countryGridFactory->create(Roles::ROLE_COUNTRY_FULL);
 
         return $this->render('@ShopsysFramework/Admin/Content/Country/list.html.twig', [
             'gridView' => $grid->createView(),
