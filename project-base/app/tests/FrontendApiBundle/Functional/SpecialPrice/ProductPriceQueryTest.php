@@ -16,7 +16,6 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 final class ProductPriceQueryTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Price\ProductPriceQuery
      * @inject
      */
     private readonly ProductPriceQuery $productPriceQuery;
