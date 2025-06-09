@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Error;
 use Exception;
 use Overblog\GraphQLBundle\Event\ErrorFormattingEvent;
 use Overblog\GraphQLBundle\Event\Events;
+use Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ErrorCodeSubscriber implements EventSubscriberInterface
@@ -21,6 +22,11 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
         $userCode = null;
 
         $previousError = $error->getPrevious();
+
+        if ($previousError instanceof ArgumentsValidationException) {
+            $userCode = 'validation';
+            $code = 400;
+        }
 
         if ($previousError instanceof Exception && $previousError instanceof UserErrorWithCodeInterface) {
             $userCode = $previousError->getUserErrorCode();
