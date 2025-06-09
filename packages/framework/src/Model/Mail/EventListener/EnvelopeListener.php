@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Mail\Email;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Event\MessageEvent;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Header\MailboxListHeader;
 use Symfony\Component\Mime\Message;
 
@@ -48,8 +47,9 @@ class EnvelopeListener implements EventSubscriberInterface
         }
 
         if ($allowedRecipients === []) {
-            // set a non-existing address because recipient list cannot be empty
-            $allowedRecipients = [new Address('no-reply@domain.tld')];
+            $event->reject();
+
+            return;
         }
 
         $event->getEnvelope()->setRecipients($allowedRecipients);

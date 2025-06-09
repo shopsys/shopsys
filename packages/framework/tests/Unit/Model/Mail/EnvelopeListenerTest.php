@@ -26,6 +26,7 @@ class EnvelopeListenerTest extends TestCase
      * @param \Symfony\Component\Mime\Address|null $mailCc
      * @param \Symfony\Component\Mime\Address|null $mailBcc
      * @param array $expectedRecipients
+     * @param bool $expectedIsRejected
      */
     #[DataProvider('onMessageDataProvider')]
     public function testOnMessage(
@@ -36,6 +37,7 @@ class EnvelopeListenerTest extends TestCase
         ?Address $mailCc,
         ?Address $mailBcc,
         array $expectedRecipients,
+        bool $expectedIsRejected,
     ): void {
         $mailSettingFacadeMock = $this->getMockBuilder(MailSettingFacade::class)
             ->disableOriginalConstructor()
@@ -54,6 +56,7 @@ class EnvelopeListenerTest extends TestCase
 
         $envelopeListener->onMessage($messageEvent);
         $this->assertEquals($expectedRecipients, $messageEvent->getEnvelope()->getRecipients());
+        $this->assertEquals($expectedIsRejected, $messageEvent->isRejected());
     }
 
     /**
@@ -94,7 +97,6 @@ class EnvelopeListenerTest extends TestCase
         $shopsysNoReplyMail1 = new Address('no-reply@shopsys.com');
         $shopsysNoReplyMail2 = new Address('no-reply2@shopsys.com');
         $shopsysNoReplyMail3 = new Address('no-reply3@shopsys.com');
-        $nonExistingMail = new Address('no-reply@domain.tld');
 
         // when whitelist is set but not enabled, all mails are delivered to the required addresses without restrictions
         yield [
@@ -107,9 +109,10 @@ class EnvelopeListenerTest extends TestCase
             'expectedRecipients' => [
                 $netdeveloNoReplyMail,
             ],
+            'expectedIsRejected' => false,
         ];
 
-        // when whitelist is enabled but empty, all mails are sent to the non-existing address
+        // when whitelist is enabled but empty, the message is rejected
         yield [
             'deliveryWhitelist' => null,
             'isWhitelistEnabled' => true,
@@ -118,8 +121,11 @@ class EnvelopeListenerTest extends TestCase
             'mailCc' => $shopsysNoReplyMail2,
             'mailBcc' => $shopsysNoReplyMail3,
             'expectedRecipients' => [
-                $nonExistingMail,
+                $shopsysNoReplyMail1,
+                $shopsysNoReplyMail2,
+                $shopsysNoReplyMail3,
             ],
+            'expectedIsRejected' => true,
         ];
 
         // when whitelist is set and enabled, all mails are delivered to the recipients that match the whitelisted patterns only
@@ -134,6 +140,7 @@ class EnvelopeListenerTest extends TestCase
                 $shopsysNoReplyMail1,
                 $shopsysNoReplyMail2,
             ],
+            'expectedIsRejected' => false,
         ];
 
         // when whitelist is set disabled but forced, all mails are still delivered to the recipients that match the whitelisted patterns only
@@ -148,6 +155,7 @@ class EnvelopeListenerTest extends TestCase
                 $shopsysNoReplyMail1,
                 $shopsysNoReplyMail2,
             ],
+            'expectedIsRejected' => false,
         ];
 
         // when there are multiple patterns in the whitelist, mails are delivered to the addresses that match at least one of the patterns
@@ -163,6 +171,7 @@ class EnvelopeListenerTest extends TestCase
                 $shopsysNoReplyMail2,
                 $netdeveloNoReplyMail,
             ],
+            'expectedIsRejected' => false,
         ];
     }
 }
