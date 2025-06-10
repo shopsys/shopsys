@@ -4,13 +4,14 @@
     - {{ 'Shippings and payments'|trans }}
 {% endblock %}
 
-{% block h1 %}
-    {{ 'Shippings and payments'|trans }}
-{% endblock %}
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Shippings and payments'|trans }}{% endblock %}
 
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\TransportController::listAction')) }}
+
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\PaymentController::listAction')) }}
 
     {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}

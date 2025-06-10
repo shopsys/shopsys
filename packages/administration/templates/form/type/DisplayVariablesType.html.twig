@@ -1,0 +1,17 @@
+{% block display_variables_widget %}
+    <table class="table">
+        <tbody>
+            {% for key, variable in form.vars.variables %}
+                <tr>
+                    <td class="w-25">
+                        <code><strong>{{ key }}</strong></code>
+                        {% if variable.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ variable.text }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock display_variables_widget %}

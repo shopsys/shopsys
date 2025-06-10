@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Slider;
 
 use Override;
+use Shopsys\AdministrationBundle\Form\SwitchType;
 use Shopsys\FormTypesBundle\ActionBarType;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -95,10 +95,6 @@ class SliderItemFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter description box background color']),
-                    new Constraints\Regex([
-                        'pattern' => '/^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/',
-                        'message' => 'Description background color must be a valid hexadecimal color code e.g. #fff or #ffffff',
-                    ]),
                 ],
                 'label' => t('Description background color'),
             ])
@@ -115,7 +111,7 @@ class SliderItemFormType extends AbstractType
                 ],
                 'label' => t('Description opacity'),
             ])
-            ->add('hidden', YesNoType::class, [
+            ->add('hidden', SwitchType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\NotNull([

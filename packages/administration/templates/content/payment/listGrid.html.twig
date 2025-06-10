@@ -4,6 +4,14 @@
     <a href="{{ url('admin_payment_edit', { id: row.p.id }) }}">{{ value|nameWithFallbackOnEmpty }}</a>
 {% endblock %}
 
+{% block grid_value_cell_id_price %}
+    <div class="badges-list">
+        <span class="badge">
+            {{ value|priceWithCurrencyByDomainId(row.domainId) }}
+        </span>
+    </div>
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No payments created so far.'|trans }}
 {% endblock %}

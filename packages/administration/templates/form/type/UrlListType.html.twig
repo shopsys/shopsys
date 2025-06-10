@@ -9,7 +9,7 @@
 {%- endblock %}
 
 {% block url_list_widget %}
-    <div class="js-entity-url-list">
+    <div class="js-entity-url-list mb-3">
         {{ form_errors(form.newUrls) }}
 
         {% for domainId, friendlyUrlForms in form.toDelete %}

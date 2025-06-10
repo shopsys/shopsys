@@ -16,6 +16,7 @@
         "chart.js": "^2.9.3",
         "countup.js": "^2.8.0",
         "imask": "^7.6.1",
+        "nouislider": "^15.8.1",
         "tom-select": "^2.4.3"
     }
 }

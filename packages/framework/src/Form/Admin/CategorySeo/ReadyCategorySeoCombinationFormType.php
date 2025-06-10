@@ -6,8 +6,8 @@ namespace Shopsys\FrameworkBundle\Form\Admin\CategorySeo;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
+use Shopsys\AdministrationBundle\Form\SwitchType;
 use Shopsys\FormTypesBundle\ActionBarType;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData;
@@ -47,7 +47,7 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('showInCategory', YesNoType::class, [
+            ->add('showInCategory', SwitchType::class, [
                 'label' => t('Show in the category'),
             ])
             ->add('shortDescription', TextareaType::class, [

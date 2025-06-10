@@ -1,5 +1,9 @@
 {% block number_slider_widget %}
-    <div class="form-line__side">
+
+    <div class="js-number-slider"></div>
+    <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+
+{#    <div class="form-line__side">
          <div class="form-line__item">
              <div class="js-number-slider">
                  <div class="js-number-slider__slider">
@@ -8,6 +12,6 @@
                  <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
              </div>
          </div>
-    </div>
+    </div>#}
 
 {% endblock number_slider_widget %}

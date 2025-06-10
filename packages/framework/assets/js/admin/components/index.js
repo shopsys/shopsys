@@ -10,7 +10,6 @@ import './CategoryTreeSorting';
 import './CharactersCounter';
 import './CKEditorPreview';
 import './choiceControl';
-import './ColorPicker';
 import './Complaint';
 import './ConfirmDelete';
 import './DynamicPlaceholder';

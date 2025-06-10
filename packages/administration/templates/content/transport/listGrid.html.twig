@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block grid_value_cell_id_prices %}
-    {% for price in value %}
-        {{ price.priceWithVat|priceWithCurrencyByDomainId(row.domainId) }}
-        {% if not loop.last %} | {% endif %}
-    {% endfor %}
+    <div class="badges-list">
+        {% for price in value %}
+            <span class="badge">
+                {{ price.priceWithVat|priceWithCurrencyByDomainId(row.domainId) }}
+            </span>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block grid_no_data %}

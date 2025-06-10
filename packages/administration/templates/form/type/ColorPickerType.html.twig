@@ -1,0 +1,4 @@
+{% block color_picker_widget %}
+    {% set attr = attr|merge({'data-coloris': ''}) %}
+    {{ block('form_widget_simple') }}
+{% endblock %}

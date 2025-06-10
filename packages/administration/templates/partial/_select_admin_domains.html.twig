@@ -1,0 +1,29 @@
+<div class="dropdown-menu overflow-y-auto overflow-x-hidden js-toggle-menu-submenu js-domains-select" style="max-height: 300px; min-width: calc(100% + 5rem);">
+    {{ form_start(form, {'action': path('admin_domains_filter'), 'method': 'POST'}) }}
+    {% for child in form.domains %}
+        <label class="dropdown-item" onclick="event.stopPropagation()">
+            <input class="form-check-input m-0 me-2"
+                   type="checkbox"
+                   id="{{ child.vars.id }}"
+                   name="{{ child.vars.full_name }}"
+                   value="{{ child.vars.value }}"
+                   {% if child.vars.checked %}checked{% endif %}
+            >
+            {{ child.vars.label }}
+        </label>
+
+        {% do child.setRendered %}
+    {% endfor %}
+
+    <div class="dropdown-divider"></div>
+
+    <label class="dropdown-item" onclick="event.stopPropagation()">
+        <input type="checkbox" class="form-check-input m-0 me-2 js-domains-select-all-checkbox">
+        {{ 'All'|trans }}
+    </label>
+
+    <div class="p-2">
+        {{ form_widget(form.apply, {attr: {class: 'btn btn-primary w-100'}}) }}
+    </div>
+    {{ form_end(form) }}
+</div>

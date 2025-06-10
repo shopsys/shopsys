@@ -80,8 +80,11 @@
 
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon">{{ ux_icon('filter') }}</span>
-                                    {{ 'Domain filter'|trans }}
+                                    <span class="nav-link-icon d-none d-lg-inline-block">{{ ux_icon('filter') }}</span>
+                                    <span class="nav-link-title">{{ 'Domain filter'|trans }}</span>
+                                    {% if app.user.displayOnlyDomainIds|length > 0 %}
+                                        <span class="badge badge-sm bg-red text-red-fg">{{ app.user.displayOnlyDomainIds|length }}</span>
+                                    {% endif %}
                                 </a>
                                 {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\SelectAdminDomainsController::renderFormAction')) }}
                             </div>

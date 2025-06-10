@@ -1,5 +1,5 @@
-<a title="{{ 'Edit'|trans }}"
-   class="px-1{{ existsReadyCategorySeoMix ? '' : ' text-reset' }}"
+<a
+   class="btn {{ existsReadyCategorySeoMix ? 'btn-info' }}"
    href="{{ url('admin_categoryseo_readycombination',
        {
            'categoryId': categoryId,
@@ -9,4 +9,9 @@
    ) }}"
 >
     {{ ux_icon('pencil') }}
+    {% if existsReadyCategorySeoMix %}
+        {{ 'Edit'|trans }}
+    {% else %}
+        {{ 'Create'|trans }}
+    {% endif %}
 </a>

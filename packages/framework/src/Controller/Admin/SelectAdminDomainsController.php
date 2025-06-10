@@ -35,7 +35,7 @@ class SelectAdminDomainsController extends AdminBaseController
     {
         $form = $this->createForm(AdminDomainsFormType::class, $this->domain->getAdminEnabledDomainIds());
 
-        return $this->render('@ShopsysFramework/Admin/Form/adminDomainsForm.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/_select_admin_domains.html.twig', [
             'form' => $form,
         ]);
     }
