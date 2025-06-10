@@ -48,7 +48,7 @@ export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children,
         tabIndex={tabIndex}
         className={twJoin(
             'bg-background-more hover:bg-background-most font-secondary outline-border-success [&.isActive]:bg-background-default cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
-            'focus-visible:outline-2 focus-visible:outline-offset-2',
+            'focus-visible:text-text-default focus-visible:bg-orange-500 focus-visible:outline-none',
             className,
         )}
         {...props}

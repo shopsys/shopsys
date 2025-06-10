@@ -29,6 +29,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 <ExtendedNextLink
                     className="flex w-20 items-center justify-center"
                     href={productSlug}
+                    tabIndex={-1}
                     tid={TIDs.header_cart_list_item_image}
                     type="product"
                 >

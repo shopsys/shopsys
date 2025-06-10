@@ -47,12 +47,26 @@ export const CartInHeader: FC = ({ className }) => {
     return (
         <>
             <div
-                className={twMergeCustom('vl:flex group relative', isActive && 'z-aboveOverlay', className)}
+                aria-controls="cart-drawer"
+                aria-expanded={isActive}
+                aria-label={t('Cart')}
                 data-tid={TIDs.header_cart}
+                role="button"
+                tabIndex={0}
                 title={t('Cart')}
+                className={twMergeCustom(
+                    'vl:flex group relative outline-none',
+                    isActive && 'z-aboveOverlay',
+                    className,
+                )}
                 onClick={() => !isDesktop && setIsActive(!isActive)}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={() => isDesktop && setIsActive(false)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        setIsActive(!isActive);
+                    }
+                }}
                 onTouchEnd={(e) => {
                     if (!isActive) {
                         e.preventDefault();
@@ -72,9 +86,11 @@ export const CartInHeader: FC = ({ className }) => {
                 <ExtendedNextLink
                     href={cartUrl}
                     skeletonType="cart"
+                    tabIndex={-1}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-2 rounded-lg border px-3 no-underline transition-all group-hover:shadow-lg hover:no-underline',
+                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all group-hover:shadow-lg hover:no-underline',
+                        'group-focus-visible:text-text-default group-focus-visible:bg-orange-500',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
@@ -98,6 +114,11 @@ export const CartInHeader: FC = ({ className }) => {
                 </ExtendedNextLink>
 
                 <div
+                    aria-controls="cart-popup"
+                    aria-expanded={isActive}
+                    aria-label={t('Cart')}
+                    role="button"
+                    tabIndex={0}
                     className={twJoin(
                         'vl:hidden flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
                         'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
@@ -106,6 +127,11 @@ export const CartInHeader: FC = ({ className }) => {
                         'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
                     )}
                     onClick={() => setIsActive(!isActive)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            setIsActive(!isActive);
+                        }
+                    }}
                 >
                     <CartIcon className="size-6" />
                     <CartCount>{cart?.items.length ?? 0}</CartCount>

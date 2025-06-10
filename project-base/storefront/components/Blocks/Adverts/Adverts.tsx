@@ -48,7 +48,6 @@ const AdvertsComp: FC<AdvertsProps> = ({ positionName, withWebline, currentCateg
                 return (
                     <div
                         key={advert.uuid}
-                        aria-label={advert.name}
                         className="promo-wrapper"
                         dangerouslySetInnerHTML={{ __html: advert.code }}
                     />

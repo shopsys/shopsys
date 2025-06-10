@@ -95,7 +95,7 @@
     }
 
     a {
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline outline-hidden hover:underline focus-visible:ring-2 lg:text-base;
+        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline outline-hidden hover:underline lg:text-base;
     }
 
     b,
@@ -165,7 +165,7 @@
     }
 
     .Toastify__close-button {
-        @apply !text-text-default !self-center rounded-sm !opacity-100 focus-visible:ring-2;
+        @apply !text-text-default !self-center rounded-sm !opacity-100;
     }
 
     /* fix gallery video start width and hide dummy image */
@@ -187,19 +187,39 @@
 
     /* accessibility */
 
-    input[type='checkbox']:focus + label > div:first-child {
-        @apply outline-input-border-active outline-2 outline-offset-2;
+    a:focus-visible,
+    button:focus-visible {
+        @apply text-text-default! bg-orange-500! outline-none!;
     }
 
-    input[type='radio']:focus + label > div:first-child {
-        @apply outline-input-border-active outline-2 outline-offset-2;
+    a:focus-visible svg,
+    a:focus-visible span,
+    button:focus-visible svg,
+    button:focus-visible span {
+        @apply text-text-default!;
     }
 
-    .order-confirmation-page-text-wrapper a {
-        @apply rounded-md focus-visible:ring-2;
+    input[type='checkbox']:focus-visible + label > span:first-child {
+        @apply bg-orange-500!;
+    }
+
+    input[type='checkbox']:focus-visible + label > span:first-child svg {
+        @apply text-text-default!;
+    }
+
+    input[type='radio']:focus-visible + label > span:first-child {
+        @apply bg-orange-500!;
+    }
+
+    input[role='switch']:focus-visible + label {
+        @apply bg-orange-500!;
+    }
+
+    input[role='switch']:focus-visible + label:after {
+        @apply bg-background-dark!;
     }
 
     .promo-wrapper a {
-        @apply inline-block rounded-md focus-visible:ring-2;
+        @apply flex;
     }
 }

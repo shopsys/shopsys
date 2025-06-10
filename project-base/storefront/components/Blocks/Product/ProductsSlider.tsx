@@ -178,7 +178,7 @@ type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabl
 
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
     <button
-        className="text-icon hover:text-icon-accent disabled:text-text-disabled focus-visible:ring-offset-background-default focus-visible:ring-icon-accent cursor-pointer rounded-sm border-none p-1 outline-hidden transition focus-visible:ring-2 disabled:cursor-auto"
+        className="text-icon hover:text-icon-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto"
         disabled={isDisabled}
         tabIndex={0}
         title={title}

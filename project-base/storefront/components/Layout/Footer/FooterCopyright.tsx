@@ -19,7 +19,7 @@ export const FooterCopyright: FC = () => {
                 {t('Customized E-shop by')}
 
                 <a
-                    className="ml-2 flex h-6 w-20 rounded-md focus-visible:ring-2 focus-visible:ring-offset-1"
+                    className="ml-2 flex h-6 w-20 rounded-md"
                     href="https://www.shopsys.com"
                     rel="noreferrer"
                     tabIndex={0}

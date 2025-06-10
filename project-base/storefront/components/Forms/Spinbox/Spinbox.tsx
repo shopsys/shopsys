@@ -244,8 +244,7 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, 
         data-tid={tid}
         tabIndex={disabled ? -1 : 0}
         className={twMergeCustom([
-            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-md border-none',
-            'focus-visible:outline-input-border-hovered focus-visible:outline-2',
+            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-sm border-none outline-none',
             size === 'xlarge' ? 'w-10' : 'w-7',
 
             disabled && 'text-input-border-disabled pointer-events-none',

@@ -121,7 +121,7 @@ export const Popup: FC<PopupProps> = ({
                     >
                         {!hideCloseButton && (
                             <button
-                                className="text-icon-less hover:text-icon-accent focus-visible:outline-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm focus-visible:outline-2"
+                                className="text-icon-less hover:text-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
                                 ref={closeButtonRef}
                                 tabIndex={0}
                                 title={t('Close dialog')}

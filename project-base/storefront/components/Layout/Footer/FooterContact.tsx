@@ -41,7 +41,7 @@ export const FooterContact: FC = () => {
 
 const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ children, title, href }) => (
     <a
-        className="focus-visible:bg-link-default flex h-full w-1/3 items-center justify-center first:border-none"
+        className="flex h-full w-1/3 items-center justify-center first:border-none"
         href={href}
         tabIndex={0}
         title={title}
@@ -52,7 +52,7 @@ const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ childre
 
 const FooterContactLangsItem: FC<{ href: string; text: string }> = ({ children, href, text }) => (
     <a
-        className="focus-visible:ring-link-default text-link-default hover:text-link-hovered flex items-center rounded-sm hover:no-underline focus-visible:ring-2"
+        className="text-link-default hover:text-link-hovered flex items-center rounded-sm hover:no-underline"
         href={href}
         tabIndex={0}
     >

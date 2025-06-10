@@ -44,7 +44,7 @@ export const SalesRepresentative: FC = () => {
                 <div className="mt-2 flex items-center gap-2">
                     <PhoneIcon className="size-6" />
                     <a
-                        className="text-text-default rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
+                        className="text-text-default rounded-md text-sm font-semibold no-underline"
                         href={`tel:${telephone}`}
                         tabIndex={0}
                     >
@@ -61,7 +61,6 @@ export const SalesRepresentative: FC = () => {
                         tabIndex={0}
                         className={twJoin(
                             'text-text-default max-w-64 overflow-x-auto rounded-md text-sm font-semibold whitespace-nowrap no-underline',
-                            'focus-visible:ring-2',
                             '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                         )}
                     >

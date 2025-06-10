@@ -10,7 +10,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { twMergeCustom } from 'utils/twMerge';
 
 const placeholderItemTwClass =
-    'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+    'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-xs font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
 export const MenuIconicPlaceholder: FC = () => {
     const { t } = useTranslation();

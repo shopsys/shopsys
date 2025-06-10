@@ -18,7 +18,7 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
 
     return (
         <button
-            className="font-secondary text-text-default flex w-full cursor-pointer items-center justify-between font-semibold uppercase"
+            className="font-secondary text-text-default flex w-full cursor-pointer items-center justify-between rounded-sm font-semibold uppercase"
             tabIndex={0}
             title={t('Toggle filter group')}
             type="button"
@@ -56,7 +56,6 @@ export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }
             'w-fit cursor-pointer rounded-sm border-none bg-none p-0 text-sm underline outline-hidden hover:bg-none hover:no-underline',
             'text-link-default',
             'hover:text-link-hovered',
-            'focus-visible:ring-2 focus-visible:ring-offset-2',
         )}
         onClick={onClick}
     >

@@ -27,7 +27,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',
-                'rounded-sm outline-none focus-visible:ring-2',
+                'rounded-sm outline-none',
                 className,
             )}
             onClick={toggleProductInWishlist}

@@ -14,7 +14,7 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
         <div className="inline-flex flex-col gap-2">
             {email && (
                 <a
-                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
+                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline"
                     href={'mailto:' + email}
                     tabIndex={0}
                 >
@@ -24,7 +24,7 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
             )}
             {phone && (
                 <a
-                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
+                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline"
                     href={'tel:' + cleanPhone}
                     tabIndex={0}
                 >

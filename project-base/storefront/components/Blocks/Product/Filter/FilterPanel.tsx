@@ -45,11 +45,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
     return (
         <div className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1">
-            <AccessibleLink
-                className="top-0 -translate-x-[1500rem] rounded-sm transition-transform focus-visible:top-0 focus-visible:translate-x-0"
-                href="#product-list"
-                title="Skip filters"
-            />
+            <AccessibleLink className="rounded-md" href="#product-list" title="Skip filters" />
 
             <div className="vl:hidden flex items-center justify-between p-5">
                 <span className="h5">{t('Product filter')}</span>

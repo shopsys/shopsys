@@ -71,7 +71,7 @@ export const Pagination: FC<PaginationProps> = ({
     return (
         <div className="vl:flex-row mt-5 flex flex-col items-center justify-between gap-5">
             {isWithLoadMore && hasNextPage && loadMoreCount > 0 && (
-                <Button className="px-3" variant="inverted" onClick={loadMore}>
+                <Button variant="inverted" onClick={loadMore}>
                     {t('Load {{ count }} more {{ items }}', { count: loadMoreCount, items: itemsLabel })}
                 </Button>
             )}
@@ -133,7 +133,6 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 href={href}
                 className={twJoin(
                     'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
-                    'focus-visible:ring-button-inverted-border-default focus-visible:ring-2 focus-visible:ring-offset-1',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',
                     isActive
                         ? 'border-button-inverted-border-active bg-button-inverted-bg-active text-button-inverted-text-active'

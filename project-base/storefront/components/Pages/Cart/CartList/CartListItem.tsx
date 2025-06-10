@@ -55,6 +55,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                     <ExtendedNextLink
                         className="relative isolate"
                         href={productSlug}
+                        tabIndex={-1}
                         tid={TIDs.cart_list_item_image}
                         type="product"
                     >
@@ -118,7 +119,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             <CartItemPrice productPrice={product.price} quantity={quantity} />
 
             <RemoveCartItemButton
-                className="vl:static text-icon-less hover:text-icon-default focus-visible:outline-icon-accent absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md"
+                className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"
                 onRemoveFromCart={onRemoveFromCart}
             />
         </div>

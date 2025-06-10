@@ -99,7 +99,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 placeholder={placeholder}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
-                                    'h-full w-full bg-transparent px-3 !text-base focus-visible:outline-hidden',
+                                    'h-full w-full bg-transparent px-3 !text-base outline-hidden',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
@@ -115,7 +115,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         </>
                     ) : (
                         <button
-                            className="w-full cursor-pointer px-3 pt-5 text-left focus-visible:outline-hidden"
+                            className="w-full cursor-pointer px-3 pt-5 text-left outline-hidden"
                             data-tid={tid}
                             disabled={isDisabled}
                             id={tid}
@@ -157,7 +157,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     <button
-                        className="focus-visible:ring-input-border-active rounded-md pr-3 focus-visible:ring-2 focus-visible:outline-hidden"
+                        className="rounded-sm px-3"
                         disabled={isDisabled}
                         tabIndex={0}
                         title={t('Open select')}

@@ -52,12 +52,14 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     const SelectListItems = options.map((option, index) => (
         <li
             key={option.label}
+            aria-selected={option.value === activeOption?.value}
             data-tid={`${tid}${index}`}
+            role="option"
             tabIndex={option.isDisabled ? -1 : 0}
             className={twMergeCustom(
-                'hover:bg-input-bg-hovered list-none font-semibold focus-visible:outline-hidden',
+                'hover:bg-input-bg-hovered list-none font-semibold outline-hidden',
                 option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
-                'focus-visible:bg-fill-accent-less',
+                'focus-visible:text-text-default focus-visible:bg-orange-500',
             )}
             onClick={!option.isDisabled ? () => onSelectOption(option) : undefined}
             onFocus={() => setFocusedIndex(index)}

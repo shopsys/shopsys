@@ -24,7 +24,7 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
     >
         <span
             className={twJoin(
-                'h1 vl:mb-5 mb-2.5 line-clamp-5 wrap-anywhere',
+                'h1 vl:mb-5 group-focus-visible:text-text-inverted mb-2.5 line-clamp-5 rounded-sm wrap-anywhere group-focus-visible:bg-orange-500',
                 getYIQContrastTextColor(banner.rgbBackgroundColor),
             )}
         >

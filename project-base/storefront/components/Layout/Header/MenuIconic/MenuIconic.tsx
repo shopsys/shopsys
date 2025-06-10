@@ -23,12 +23,12 @@ export const MenuIconic: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const menuCountTwClass =
-        'absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-secondary text-[10px] font-bold leading-normal text-text-inverted lg:-right-2 lg:-top-[6.5px]';
+        'absolute -right-3 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-secondary text-xs font-bold leading-normal text-text-inverted lg:-top-[6.5px]';
 
     return (
         <ul className="flex lg:gap-7">
             <MenuIconicItem className="flex max-lg:hidden">
-                <MenuIconicItemLink href={storesUrl} type="stores">
+                <MenuIconicItemLink href={storesUrl} title={t('Stores page')} type="stores">
                     <MarkerIcon className="size-6" />
                     {t('Stores')}
                 </MenuIconicItemLink>

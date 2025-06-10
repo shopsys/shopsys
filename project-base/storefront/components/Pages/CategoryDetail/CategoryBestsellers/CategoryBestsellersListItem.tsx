@@ -28,7 +28,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     return (
         <ExtendedNextLink
-            className="hover:bg-background-default flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:no-underline"
+            className="hover:bg-background-default flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:no-underline"
             draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}

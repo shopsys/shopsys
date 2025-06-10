@@ -18,15 +18,12 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
             <input
                 aria-checked={value}
                 checked={value}
+                className="peer h-5 w-10 outline-none"
                 id={id}
                 name={name}
                 ref={toggleSwitchForwardedRef}
                 role="switch"
                 type="checkbox"
-                className={twJoin(
-                    'peer h-5 w-10 outline-none',
-                    'focus-visible:ring-input-border-active focus-visible:ring-2 focus-visible:ring-offset-4',
-                )}
                 onBlur={onBlur}
                 onChange={onChange}
             />

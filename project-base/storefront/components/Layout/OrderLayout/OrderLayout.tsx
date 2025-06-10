@@ -32,7 +32,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     <Header simpleHeader />
                 </header>
 
-                <main className="mt-4 mb-10 flex flex-col">
+                <main className="mt-4 mb-10 flex flex-col" id="main-content">
                     <SkeletonManager
                         isFetchingData={!canContentBeDisplayed || isFetchingData}
                         isPageLoading={isPageLoading}

@@ -16,24 +16,27 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { usePathname } from 'next/navigation';
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
+import { useFocusTrap } from 'utils/useFocusTrap';
 import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
 type UserMenuProps = {
     className?: string;
+    hideFocusTrap?: boolean;
 };
 
-const UserMenuComp: FC<UserMenuProps> = ({ className }) => {
+const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
     const { t } = useTranslation();
     const pathname = usePathname();
     const logout = useLogout();
     const user = useCurrentCustomerData();
     const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
         useAuthorization();
@@ -58,8 +61,10 @@ const UserMenuComp: FC<UserMenuProps> = ({ className }) => {
     );
     const userProfileSectionLabel = useUserProfileSectionLabel();
 
+    useFocusTrap(hideFocusTrap ? undefined : contentRef);
+
     return (
-        <div className={twMergeCustom('flex flex-col gap-3', className)}>
+        <div className={twMergeCustom('flex flex-col gap-3', className)} ref={contentRef}>
             <div className="bg-background-accent-less flex flex-col gap-1 rounded-xl px-3 py-4">
                 <span className="h5">
                     {user?.firstName} {user?.lastName}

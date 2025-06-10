@@ -92,7 +92,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                 orderItem.type === TypeOrderItemTypeEnum.Product && (
                                     <button
                                         aria-haspopup="dialog"
-                                        className="text-link-default hover:text-link-hovered focus-visible:ring-link-active cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none focus-visible:ring-2"
+                                        className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
                                         data-tid={TIDs.order_detail_create_complaint_button}
                                         tabIndex={0}
                                         onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}

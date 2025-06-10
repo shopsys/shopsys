@@ -21,6 +21,7 @@ type MenuIconicItemLinkProps = {
     onClick?: () => void;
     onTouchEnd?: (e: ReactTouchEvent<HTMLButtonElement>) => void;
     isActive?: boolean;
+    tabIndex?: number;
 };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
@@ -32,7 +33,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     isActive = false,
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
-        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md focus-visible:ring-2',
+        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md',
         isActive && 'text-text-accent',
     );
 
@@ -65,9 +66,9 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, className, tid, href, title, type, onClick, onTouchEnd }, _) => {
+    ({ children, className, tid, href, title, type, tabIndex, onClick, onTouchEnd }, _) => {
         const menuIconicItemLinkTwClass =
-            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-[13px] rounded-md leading-4 font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-sm font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
         if (href) {
             return (
@@ -86,15 +87,11 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
 
         return (
             <button
+                className={twMergeCustom(menuIconicItemLinkTwClass, className)}
                 data-tid={tid}
-                tabIndex={0}
+                tabIndex={tabIndex}
                 title={title}
                 type="button"
-                className={twMergeCustom(
-                    menuIconicItemLinkTwClass,
-                    'focus-visible:outline-background-default focus-visible:outline-2',
-                    className,
-                )}
                 onClick={onClick}
                 onTouchEnd={onTouchEnd}
             >
@@ -115,7 +112,7 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 > = ({ children, isActive = false }) => (
     <li
         className={twMergeCustom(
-            'border-background-default bg-background-more h-14 rounded-xl border',
+            'border-background-default bg-background-more h-14 rounded-sm border',
             'hover:border-border-less hover:bg-background-default',
             isActive && 'border-border-less bg-background-default',
         )}

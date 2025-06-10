@@ -25,10 +25,10 @@ export const AccessibilityNavigation: FC<AccessibilityNavigationProps> = ({ simp
                 }
             }
 
-            previousRouteRef.current = url;
+            previousRouteRef.current = newPathname;
         };
 
-        previousRouteRef.current = router.asPath;
+        previousRouteRef.current = router.asPath.split('?')[0];
 
         router.events.on('routeChangeComplete', handleRouteChangeComplete);
 

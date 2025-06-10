@@ -44,8 +44,9 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         </div>
 
                         <div className="flex flex-1 flex-col gap-y-3">
-                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
                                 <ArticleDate
+                                    className="mr-3.5"
                                     date={new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
                                     tid={TIDs.blog_article_publication_date}
                                 />
@@ -54,11 +55,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                     {blogArticle.blogCategories.map((blogArticleCategory) => (
                                         <>
                                             {blogArticleCategory.parent && (
-                                                <Flag
-                                                    key={blogArticleCategory.uuid}
-                                                    href={blogArticleCategory.link}
-                                                    type="blog"
-                                                >
+                                                <Flag key={blogArticleCategory.uuid} type="blog">
                                                     {blogArticleCategory.name}
                                                 </Flag>
                                             )}

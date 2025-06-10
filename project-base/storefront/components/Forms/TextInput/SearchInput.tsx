@@ -61,7 +61,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
-                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center"
+                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center rounded-sm"
                 tabIndex={0}
                 title={t('Search')}
                 type="submit"

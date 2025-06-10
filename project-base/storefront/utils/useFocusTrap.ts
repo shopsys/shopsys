@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 // prevents Tab/Shift+Tab from escaping modal, keeps focus within modal, essential for accessibility
-export const useFocusTrap = (containerRef: React.RefObject<HTMLElement>) => {
+export const useFocusTrap = (containerRef: React.RefObject<HTMLElement> | undefined) => {
     useEffect(() => {
-        const container = containerRef.current;
+        const container = containerRef?.current;
 
         const focusableElements = container?.querySelectorAll(
             'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',

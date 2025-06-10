@@ -31,7 +31,6 @@ export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, 
         'px-4 py-1 rounded-tag no-underline transition-all flex justify-center items-center font-semibold font-secondary cursor-pointer',
         'bg-tag-bg-default text-tag-text-default border-tag-border-default text-sm',
         'hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:border-tag-border-hovered hover:no-underline hover:cursor-pointer',
-        'focus-visible:outline-tag-border-hovered focus-visible:outline-2',
         isDisabled && 'bg-tag-bg-disabled text-tag-text-disabled border-tag-border-disabled',
         isActive && 'bg-tag-bg-active text-tag-text-active border-tag-border-active',
         className,
@@ -45,8 +44,14 @@ export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, 
         );
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter') {
+            onClick?.();
+        }
+    };
+
     const content = (
-        <div className={TagTwClassName} onClick={onClick}>
+        <div className={TagTwClassName} role="button" tabIndex={0} onClick={onClick} onKeyDown={handleKeyDown}>
             {children}
         </div>
     );

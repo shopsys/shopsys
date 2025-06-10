@@ -10,7 +10,7 @@ export const Logo: FC = () => (
         <LogoMetadata />
 
         <ExtendedNextLink
-            className="vl:flex-none focus-visible:ring-background-default order-2 flex-1 rounded-md px-2 focus-visible:ring-2 sm:px-3 lg:order-1 lg:px-0"
+            className="vl:flex-none group order-2 flex-1 rounded-md px-2 sm:px-3 lg:order-1 lg:px-0"
             href="/"
             tid={TIDs.header_homepage_link}
             type="homepage"
@@ -18,7 +18,7 @@ export const Logo: FC = () => (
             <Image
                 priority
                 alt="Shopsys logo"
-                className={twMergeCustom('flex w-32 max-w-full lg:w-40')}
+                className={twMergeCustom('flex w-32 max-w-full group-focus-visible:brightness-0 lg:w-40')}
                 height={38}
                 sizes="(max-width: 1023px) 128px, 160px"
                 src={imageLogoInverted}

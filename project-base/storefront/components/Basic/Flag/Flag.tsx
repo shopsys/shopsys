@@ -16,9 +16,9 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
     const flagTwClass = twMergeCustom(
         'inline-flex rounded-flag px-1.5 py-1 text-xs transition-all font-secondary font-semibold text-flag-text',
         textColor,
-        'focus-visible:ring-1',
         href && 'cursor-pointer',
-        type === 'blog' && 'bg-secondary-500 hover:bg-background-accent-more',
+        type === 'blog' && 'bg-secondary-500',
+        type === 'blog' && href && 'hover:bg-background-accent-more',
         type === 'discount' && 'bg-price-discounted',
         className,
     );
