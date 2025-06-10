@@ -23,6 +23,7 @@ import {
     checkUrl,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
+    loseFocus,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
@@ -48,6 +49,7 @@ describe('Cart Page Tests', () => {
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+                loseFocus();
                 cy.wait(1100);
             },
             1,
@@ -65,6 +67,7 @@ describe('Cart Page Tests', () => {
             () => {
                 decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
                 decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+                loseFocus();
                 cy.wait(1100);
             },
             1,
@@ -90,6 +93,7 @@ describe('Cart Page Tests', () => {
                 checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
                 checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
+                loseFocus();
             },
             4,
             'AddToCartMutation',
@@ -108,6 +112,7 @@ describe('Cart Page Tests', () => {
                 checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
                 decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
                 checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
+                loseFocus();
             },
             2,
             'AddToCartMutation',

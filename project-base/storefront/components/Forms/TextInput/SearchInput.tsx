@@ -35,16 +35,18 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <div className="border-border-default relative w-full rounded-md border">
+        <div className="relative w-full">
             <input
+                aria-label={label}
                 autoComplete="off"
                 placeholder={label}
+                role="searchbox"
                 tid={TIDs.layout_header_search_autocomplete_input}
                 type="search"
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'border-input-bg-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer mb-0 h-12 w-full rounded-md border-2 pr-20 pl-11',
+                    'border-input-border-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer mb-0 h-12 w-full rounded-md border pr-20 pl-11',
                     '[&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
                     '[&:-webkit-autofill]:hover:!bg-input-bg-hovered [&:-webkit-autofill]:hover:!shadow-inner',
                     '[&:-webkit-autofill]:focus:!bg-input-fill [&:-webkit-autofill]:focus:!shadow-inner',
@@ -58,24 +60,31 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
-                className="gjs-template-header-search-button absolute top-1/2 left-3 flex -translate-y-1/2 items-center"
+                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center"
+                tabIndex={0}
                 title={t('Search')}
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="text-icon-less hover:text-icon-accent w-4" />
+                <SearchIcon className="text-icon-less hover:text-icon-accent size-4" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (
-                <div
+                <button
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
+                    tabIndex={0}
+                    title={t('Clear search')}
+                    type="button"
                     onClick={onClear}
                 >
-                    <CloseIcon className="text-icon-less hover:text-icon-accent w-4" />
-                </div>
+                    <CloseIcon className="text-icon-less hover:text-icon-accent size-4" />
+                </button>
             )}
             {shouldShowSpinnerInInput && (
-                <SpinnerIcon className="text-icon-less absolute top-1/2 right-3 w-5 -translate-y-1/2" />
+                <SpinnerIcon
+                    aria-label={t('Loading search results')}
+                    className="text-icon-less absolute top-1/2 right-3 size-5 -translate-y-1/2"
+                />
             )}
         </div>
     );

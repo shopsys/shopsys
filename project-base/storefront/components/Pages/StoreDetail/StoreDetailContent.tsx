@@ -93,22 +93,24 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                 <Webline>
                     <div className="max-vl:grid-flow-col vl:gap-8 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap">
                         {store.storeImages.map((image, index) => (
-                            <div
+                            <button
                                 key={image.url}
-                                className="lightboxItem m-0.5 flex h-[190px] w-[280px] snap-start justify-center overflow-hidden rounded-xl"
+                                className="m-0.5 flex h-[190px] w-[280px] cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
                                 data-src={image.url}
-                                title={store.storeName}
+                                tabIndex={0}
+                                title={t('View store image')}
+                                type="button"
                                 onClick={() => setSelectedGalleryItemIndex(index)}
                             >
                                 <Image
-                                    alt={image.name || `${store.storeName}-${index}`}
-                                    className="cursor-pointer object-cover"
+                                    alt={image.name || `${t('Store image of')} ${store.storeName} - ${index + 1}`}
+                                    className="object-cover"
                                     height={190}
                                     loading="lazy"
                                     src={image.url}
                                     width={280}
                                 />
-                            </div>
+                            </button>
                         ))}
                     </div>
                 </Webline>

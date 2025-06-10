@@ -39,8 +39,10 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'ArrowDown') {
+            e.preventDefault();
             setFocusedIndex((prevIndex) => (prevIndex === null ? 0 : Math.min(prevIndex + 1, options.length - 1)));
         } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
             setFocusedIndex((prevIndex) => (prevIndex === null ? options.length - 1 : Math.max(prevIndex - 1, 0)));
         } else if (e.key === 'Enter' && focusedIndex !== null && !options[focusedIndex].isDisabled) {
             onSelectOption(options[focusedIndex]);
@@ -55,13 +57,13 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             className={twMergeCustom(
                 'hover:bg-input-bg-hovered list-none font-semibold focus-visible:outline-hidden',
                 option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
-                'focus:bg-input-bg-hovered',
+                'focus-visible:bg-fill-accent-less',
             )}
             onClick={!option.isDisabled ? () => onSelectOption(option) : undefined}
+            onFocus={() => setFocusedIndex(index)}
             onKeyDown={(e) => handleKeyDown(e)}
         >
-            <button
-                type="button"
+            <div
                 className={twJoin(
                     'font-secondary hover:text-input-text-hovered hover:bg-fill-accent-less flex w-full cursor-pointer items-center justify-between gap-2 p-3',
                     option.value === activeOption?.value && 'text-input-text-active',
@@ -77,7 +79,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                         ({option.count})
                     </span>
                 )}
-            </button>
+            </div>
 
             {itemAfterText && itemAfterText}
         </li>

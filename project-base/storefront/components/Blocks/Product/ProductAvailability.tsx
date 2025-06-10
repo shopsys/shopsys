@@ -7,6 +7,7 @@ type ProductAvailabilityProps = {
     availableStoresCount: number | null;
     isInquiryType: boolean;
     onClick?: () => void;
+    tabIndex?: number;
 };
 
 export const ProductAvailability: FC<ProductAvailabilityProps> = ({
@@ -15,14 +16,18 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
     className,
     isInquiryType,
     onClick,
+    tabIndex,
 }) => {
     const { t } = useTranslation();
 
     return (
-        <div
+        <button
+            aria-haspopup="dialog"
+            tabIndex={tabIndex}
+            title={t('Show stores availability')}
             className={twJoin(
                 className,
-                'text-sm',
+                'flex text-left text-sm',
                 availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availability-in-stock',
                 availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
             )}
@@ -34,6 +39,6 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                         ? `, ${t('ready to ship immediately')} ${availableStoresCount !== 0 ? t('or at {{ count }} stores', { count: availableStoresCount }) : ''}`
                         : ''
                 }`}
-        </div>
+        </button>
     );
 };

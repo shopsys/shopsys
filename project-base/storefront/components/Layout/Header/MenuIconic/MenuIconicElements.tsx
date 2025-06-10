@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import { TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
@@ -18,7 +19,7 @@ type MenuIconicItemLinkProps = {
     title?: string;
     type?: PageType;
     onClick?: () => void;
-    onTouchEnd?: (e: ReactTouchEvent<HTMLDivElement>) => void;
+    onTouchEnd?: (e: ReactTouchEvent<HTMLButtonElement>) => void;
     isActive?: boolean;
 };
 
@@ -30,8 +31,8 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     tid,
     isActive = false,
 }) => {
-    const menuIconicSubItemLinkTwClass = twMergeCustom(
-        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default',
+    const menuIconicSubItemLinkTwClass = twJoin(
+        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md focus-visible:ring-2',
         isActive && 'text-text-accent',
     );
 
@@ -40,6 +41,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
             <ExtendedNextLink
                 className={menuIconicSubItemLinkTwClass}
                 href={href}
+                tabIndex={0}
                 tid={tid}
                 type={type}
                 onClick={onClick}
@@ -50,9 +52,14 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     }
 
     return (
-        <a className={menuIconicSubItemLinkTwClass} tid={tid} onClick={onClick}>
+        <button
+            className={twJoin(menuIconicSubItemLinkTwClass, 'outline-none')}
+            tabIndex={0}
+            tid={tid}
+            onClick={onClick}
+        >
             {children}
-        </a>
+        </button>
     );
 };
 
@@ -60,7 +67,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, className, tid, href, title, type, onClick, onTouchEnd }, _) => {
         const menuIconicItemLinkTwClass =
-            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-[13px] rounded-md leading-4 font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
 
         if (href) {
             return (
@@ -78,15 +85,21 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         }
 
         return (
-            <div
-                className={twMergeCustom(menuIconicItemLinkTwClass, className)}
+            <button
+                tabIndex={0}
                 tid={tid}
                 title={title}
+                type="button"
+                className={twMergeCustom(
+                    menuIconicItemLinkTwClass,
+                    'focus-visible:outline-background-default focus-visible:outline-2',
+                    className,
+                )}
                 onClick={onClick}
                 onTouchEnd={onTouchEnd}
             >
                 {children}
-            </div>
+            </button>
         );
     },
 );

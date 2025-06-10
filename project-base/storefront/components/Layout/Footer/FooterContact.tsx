@@ -29,10 +29,10 @@ export const FooterContact: FC = () => {
 
             <div className="mt-4 flex flex-wrap justify-center gap-5">
                 <FooterContactLangsItem href="#" text={t('Czechia')}>
-                    <IconImage alt={t('Czechia')} height={16} icon="cz" width={24} />
+                    <IconImage alt={t('Czechia flag')} height={16} icon="cz" width={24} />
                 </FooterContactLangsItem>
                 <FooterContactLangsItem href="#" text={t('Slovakia')}>
-                    <IconImage alt={t('Slovakia')} height={16} icon="sk" width={24} />
+                    <IconImage alt={t('Slovakia flag')} height={16} icon="sk" width={24} />
                 </FooterContactLangsItem>
             </div>
         </>
@@ -40,13 +40,22 @@ export const FooterContact: FC = () => {
 };
 
 const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ children, title, href }) => (
-    <a className="flex h-full w-1/3 items-center justify-center first:border-none" href={href} title={title}>
+    <a
+        className="focus-visible:bg-link-default flex h-full w-1/3 items-center justify-center first:border-none"
+        href={href}
+        tabIndex={0}
+        title={title}
+    >
         {children}
     </a>
 );
 
 const FooterContactLangsItem: FC<{ href: string; text: string }> = ({ children, href, text }) => (
-    <a className="text-link-default hover:text-link-hovered flex items-center hover:no-underline" href={href}>
+    <a
+        className="focus-visible:ring-link-default text-link-default hover:text-link-hovered flex items-center rounded-sm hover:no-underline focus-visible:ring-2"
+        href={href}
+        tabIndex={0}
+    >
         {children}
         <span className="ml-2 text-sm">{text}</span>
     </a>

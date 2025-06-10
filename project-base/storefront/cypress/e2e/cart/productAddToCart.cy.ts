@@ -12,6 +12,7 @@ import {
     getSnapshotIndexingFunction,
     goToPageThroughSimpleNavigation,
     initializePersistStoreInLocalStorageToDefaultValues,
+    loseFocus,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
@@ -31,6 +32,7 @@ describe('Product Add To Cart Tests', () => {
         goToPageThroughSimpleNavigation(22);
         addProductToCartFromProductList(products.helloKitty.catnum);
         checkPopupIsVisible();
+        loseFocus();
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
@@ -47,6 +49,7 @@ describe('Product Add To Cart Tests', () => {
 
         addToCartOnProductDetailPage();
         checkPopupIsVisible();
+        loseFocus();
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
@@ -63,6 +66,7 @@ describe('Product Add To Cart Tests', () => {
 
         addProductToCartFromProductList(products.helloKitty.catnum);
         checkPopupIsVisible();
+        loseFocus();
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
@@ -79,6 +83,7 @@ describe('Product Add To Cart Tests', () => {
 
         addVariantToCartFromMainVariantDetail(products.philips54CRT.catnum);
         checkPopupIsVisible();
+        loseFocus();
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
@@ -92,6 +97,7 @@ describe('Product Add To Cart Tests', () => {
 
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
         checkPopupIsVisible();
+        loseFocus();
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
@@ -113,6 +119,7 @@ describe('Product Add To Cart Tests', () => {
 
         addProductToCartFromProductList(products.helloKitty.catnum);
         checkPopupIsVisible();
+        loseFocus();
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',

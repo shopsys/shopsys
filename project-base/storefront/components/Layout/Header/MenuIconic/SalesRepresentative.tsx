@@ -39,21 +39,29 @@ export const SalesRepresentative: FC = () => {
                     <h6 className="text-text-less">{t('Your sales representative')}</h6>
                 </div>
             </div>
+
             {telephone && (
                 <div className="mt-2 flex items-center gap-2">
                     <PhoneIcon className="size-6" />
-                    <a className="text-text-default text-sm font-semibold no-underline" href={`tel:${telephone}`}>
+                    <a
+                        className="text-text-default rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
+                        href={`tel:${telephone}`}
+                        tabIndex={0}
+                    >
                         {formatPhoneNumber(telephone)}
                     </a>
                 </div>
             )}
+
             {email && (
                 <div className="flex items-center gap-2">
                     <MailIcon className="size-6" />
                     <a
                         href={`mailto:${email}`}
+                        tabIndex={0}
                         className={twJoin(
-                            'text-text-default max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap no-underline',
+                            'text-text-default max-w-64 overflow-x-auto rounded-md text-sm font-semibold whitespace-nowrap no-underline',
+                            'focus-visible:ring-2',
                             '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                         )}
                     >

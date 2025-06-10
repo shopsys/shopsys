@@ -3,7 +3,9 @@
   "baseElement": <body>
     <div>
       <a
+        class="focus-visible:ring-2"
         href="/test-href"
+        tabindex="0"
       >
         <div>
           <span>
@@ -14,7 +16,9 @@
     </div>
     <div>
       <a
+        class="focus-visible:ring-2"
         href="/nice-test-href"
+        tabindex="0"
       >
         <div>
           <span>
@@ -25,7 +29,9 @@
     </div>
     <div>
       <a
+        class="focus-visible:ring-2"
         href="/test-category"
+        tabindex="0"
       >
         <div>
           <span>
@@ -36,7 +42,9 @@
     </div>
     <div>
       <a
+        class="focus-visible:ring-2"
         href="/test-category"
+        tabindex="0"
       >
         <div>
           <span>
@@ -48,7 +56,9 @@
   </body>,
   "container": <div>
     <a
+      class="focus-visible:ring-2"
       href="/test-category"
+      tabindex="0"
     >
       <div>
         <span>

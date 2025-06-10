@@ -18,10 +18,13 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     const { t } = useTranslation();
 
     return (
-        <div
+        <button
+            aria-haspopup="dialog"
+            tabIndex={0}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             className={twMergeCustom(
-                'text-text-less hover:text-text-accent flex cursor-pointer items-center gap-2',
+                'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',
+                'rounded-sm outline-none focus-visible:ring-2',
                 className,
             )}
             onClick={toggleProductInComparison}
@@ -34,7 +37,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             {isWithText && (
                 <span className="text-sm">{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>
             )}
-        </div>
+        </button>
     );
 };
 

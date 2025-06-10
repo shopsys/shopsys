@@ -21,6 +21,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                 id={id}
                 name={name}
                 ref={toggleSwitchForwardedRef}
+                role="switch"
                 type="checkbox"
                 className={twJoin(
                     'peer h-5 w-10 outline-none',

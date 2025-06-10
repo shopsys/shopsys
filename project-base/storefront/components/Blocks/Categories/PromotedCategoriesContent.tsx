@@ -16,7 +16,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
     return (
         <ul
             className={twMergeCustom(
-                'overflow-x-auto overflow-y-hidden overscroll-x-contain',
+                'vl:overflow-visible overflow-x-auto overflow-y-hidden overscroll-x-contain',
                 'vl:grid-flow-row vl:grid-cols-4 vl:gap-5 grid auto-cols-[150px] grid-flow-col gap-3 lg:auto-cols-[200px]',
                 categoriesLength > 4 ? 'vl:grid-rows-2' : 'vl:grid-rows-1',
                 '[-ms-overflow-style:"none"] [scrollbar-width:"none"] [&::-webkit-scrollbar]:hidden',

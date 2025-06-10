@@ -12,6 +12,7 @@ import {
 } from 'types/friendlyUrl';
 import { UrlObject } from 'url';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { twMergeCustom } from 'utils/twMerge';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
 export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
@@ -29,6 +30,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     onClick,
     type,
     skeletonType,
+    className,
     ...props
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -62,7 +64,9 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     return (
         <NextLink
             as={isDynamic ? href : as}
+            className={twMergeCustom('focus-visible:ring-2', className)}
             prefetch={false}
+            tabIndex={0}
             href={
                 isDynamic
                     ? {

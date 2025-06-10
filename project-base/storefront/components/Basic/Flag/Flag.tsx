@@ -16,21 +16,43 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
     const flagTwClass = twMergeCustom(
         'inline-flex rounded-flag px-1.5 py-1 text-xs transition-all font-secondary font-semibold text-flag-text',
         textColor,
+        'focus-visible:ring-1',
         href && 'cursor-pointer',
         type === 'blog' && 'bg-secondary-500 hover:bg-background-accent-more',
         type === 'discount' && 'bg-price-discounted',
         className,
     );
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (href) {
             e.preventDefault();
             router.push(href);
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (href && e.key === 'Enter') {
+            e.preventDefault();
+            router.push(href);
+        }
+    };
+
+    if (href) {
+        return (
+            <button
+                className={flagTwClass}
+                style={{ backgroundColor: rgbBgColor }}
+                tabIndex={0}
+                onClick={handleClick}
+                onKeyDown={handleKeyDown}
+            >
+                {children}
+            </button>
+        );
+    }
+
     return (
-        <div className={flagTwClass} style={{ backgroundColor: rgbBgColor }} onClick={handleClick}>
+        <div className={flagTwClass} style={{ backgroundColor: rgbBgColor }}>
             {children}
         </div>
     );

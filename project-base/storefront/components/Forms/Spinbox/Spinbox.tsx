@@ -70,6 +70,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const onBlurHandler: FormEventHandler<HTMLInputElement> = (event) => {
             if (spinboxRef.current !== null) {
                 validateNaNSpinboxValue(event.currentTarget.valueAsNumber);
+                window.getSelection()?.removeAllRanges();
             }
         };
 
@@ -174,8 +175,10 @@ type SpinboxButtonProps = {
 
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, ...props }) => (
     <button
+        tabIndex={disabled ? -1 : 0}
         className={twMergeCustom([
-            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center border-none outline-none',
+            'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-md border-none',
+            'focus-visible:outline-input-border-hovered focus-visible:outline-2',
             size === 'xlarge' ? 'w-10' : 'w-7',
 
             disabled && 'text-input-border-disabled pointer-events-none',

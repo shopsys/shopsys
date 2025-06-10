@@ -26,7 +26,7 @@ export const CreateComplaintPopupButton: FC<CreateComplaintButtonProps> = ({
     };
 
     return (
-        <Button onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)} {...props}>
+        <Button aria-haspopup="dialog" onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)} {...props}>
             {label}
         </Button>
     );

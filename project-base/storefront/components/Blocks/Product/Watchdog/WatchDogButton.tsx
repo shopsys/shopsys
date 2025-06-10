@@ -49,6 +49,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({
 
     return (
         <Button
+            aria-haspopup="dialog"
             className={twJoin('whitespace-nowrap', className)}
             size="large"
             variant="primary"

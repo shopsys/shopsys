@@ -112,7 +112,9 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
                     {showChangeButton && pickupPlaceDetail && (
                         <button
+                            aria-haspopup="dialog"
                             className="text-link-default hover:text-link-hovered cursor-pointer text-left text-xs underline hover:no-underline"
+                            tabIndex={0}
                             onClick={openPickupPlacePopup}
                         >
                             {t('Change pickup place')}

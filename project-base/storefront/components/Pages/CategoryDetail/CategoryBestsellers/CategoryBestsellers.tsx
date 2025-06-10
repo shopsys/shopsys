@@ -49,6 +49,7 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
                 <div className="text-center">
                     <button
                         className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
+                        tabIndex={0}
                         onClick={() => setIsCollapsed((prev) => !prev)}
                     >
                         {isCollapsed

@@ -142,6 +142,7 @@ describe('Contact Information Page Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
+        loseFocus();
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form before logout', {

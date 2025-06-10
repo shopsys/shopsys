@@ -81,6 +81,7 @@ export const AutocompleteSearch: FC = () => {
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
+                    aria-haspopup="listbox"
                     className="w-full"
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}

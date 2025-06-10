@@ -90,49 +90,57 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
 
                             return (
                                 <Fragment key={index}>
-                                    <li
-                                        className={twJoin(
-                                            'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
-                                            (isWithAdditionalImages || isVideo) && 'relative',
-                                        )}
-                                        onClick={() => setSelectedGalleryItemIndex(index + 1)}
-                                    >
-                                        {isImage && (
-                                            <Image
-                                                alt={galleryItem.name || `${productName}-${index}`}
-                                                className="aspect-square object-contain object-center p-1 mix-blend-multiply"
-                                                height={64}
-                                                sizes="(max-width: 1023px) 60px, 56px"
-                                                src={galleryItemThumbnail?.url}
-                                                tid={TIDs.product_gallery_image}
-                                                width={64}
-                                            />
-                                        )}
-
-                                        {isVideo && (
-                                            <>
+                                    <li>
+                                        <button
+                                            tabIndex={0}
+                                            title={t('View product image')}
+                                            className={twJoin(
+                                                'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
+                                                (isWithAdditionalImages || isVideo) && 'relative',
+                                            )}
+                                            onClick={() => setSelectedGalleryItemIndex(index + 1)}
+                                        >
+                                            {isImage && (
                                                 <Image
-                                                    alt={galleryItem.description ?? t('Product Video')}
+                                                    alt={galleryItem.name || `${productName}-${index}`}
                                                     className="aspect-square object-contain object-center p-1 mix-blend-multiply"
                                                     height={64}
-                                                    src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                                    sizes="(max-width: 1023px) 60px, 56px"
+                                                    src={galleryItemThumbnail?.url}
+                                                    tid={TIDs.product_gallery_image}
                                                     width={64}
                                                 />
-                                                <div className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
-                                                    <PlayIcon className="text-text-inverted h-8 w-8 rounded-full" />
-                                                </div>
-                                            </>
-                                        )}
+                                            )}
+
+                                            {isVideo && (
+                                                <>
+                                                    <Image
+                                                        alt={galleryItem.description ?? t('Product Video')}
+                                                        className="aspect-square object-contain object-center p-1 mix-blend-multiply"
+                                                        height={64}
+                                                        src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                                        width={64}
+                                                    />
+                                                    <div className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
+                                                        <PlayIcon className="text-text-inverted h-8 w-8 rounded-full" />
+                                                    </div>
+                                                </>
+                                            )}
+                                        </button>
                                     </li>
 
                                     {isWithAdditionalImages && (
-                                        <li
-                                            className="outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
-                                            onClick={() => setSelectedGalleryItemIndex(index + 2)}
-                                        >
-                                            <span className="text-text-accent font-secondary text-sm font-semibold">
-                                                +{galleryAdditionalItemsCount}
-                                            </span>
+                                        <li>
+                                            <button
+                                                className="outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
+                                                tabIndex={0}
+                                                title={t('View product image')}
+                                                onClick={() => setSelectedGalleryItemIndex(index + 2)}
+                                            >
+                                                <span className="text-text-accent font-secondary text-sm font-semibold">
+                                                    +{galleryAdditionalItemsCount}
+                                                </span>
+                                            </button>
                                         </li>
                                     )}
                                 </Fragment>

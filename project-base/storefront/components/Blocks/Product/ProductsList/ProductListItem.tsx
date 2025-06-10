@@ -74,9 +74,9 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'border-background-more bg-background-more group rounded-product-card relative flex flex-col gap-2.5 border py-5 text-left transition select-text',
+                    'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border pb-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
-                    'hover:border-border-less hover:bg-background',
+                    'hover:border-border-less hover:bg-background-default',
                     className,
                 )}
             >
@@ -90,7 +90,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <div className="flex w-full flex-col gap-2.5 px-2.5 sm:px-5">
+                    <div className="flex w-full flex-col gap-2.5 px-2.5 pt-5 sm:px-5">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
                         <div
@@ -124,6 +124,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                                 availableStoresCount={product.availableStoresCount}
                                 className="xs:min-h-[60px] min-h-10 sm:min-h-10"
                                 isInquiryType={product.isInquiryType}
+                                tabIndex={-1}
                             />
                         )}
                     </div>

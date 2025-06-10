@@ -53,6 +53,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
                             minValue={minimalPrice || minPriceOption}
                             setMaxValueCallback={setMaximalPrice}
                             setMinValueCallback={setMinimalPrice}
+                            title={title}
                         />
                     </FilterGroupContent>
                 )}

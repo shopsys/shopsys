@@ -22,12 +22,22 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
             <div
                 className={twMergeCustom('group lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
+                title={t('My account')}
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        setIsUserMenuOpen(!isUserMenuOpen);
+                    }
+
+                    if (e.key === 'Escape') {
+                        setIsUserMenuOpen(false);
+                    }
+                }}
             >
                 <MenuIconicItemLink
-                    className="cursor-pointer rounded-t text-nowrap transition-all"
-                    type="account"
+                    className="cursor-pointer text-nowrap transition-all"
+                    title={t('My account')}
                     onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

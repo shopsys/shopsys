@@ -57,12 +57,9 @@ export const ProductsList: FC<ProductsListProps> = ({
                     products={products}
                 >
                     {category && (
-                        <Adverts
-                            isSingle
-                            className="col-span-full row-start-2 mx-auto justify-center"
-                            currentCategory={category}
-                            positionName="productListSecondRow"
-                        />
+                        <li className="col-span-full row-start-2 mx-auto justify-center">
+                            <Adverts isSingle currentCategory={category} positionName="productListSecondRow" />
+                        </li>
                     )}
                 </ProductsListContent>
 

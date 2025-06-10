@@ -6,6 +6,7 @@ import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateE
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
+import { JSX } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
@@ -57,7 +58,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     i18nKey="userConsentPolicyLink"
                     components={{
                         link: userConsentPolicyArticleUrl ? (
-                            <a href={userConsentPolicyArticleUrl} rel="noreferrer" target="_blank" />
+                            <a href={userConsentPolicyArticleUrl} rel="noreferrer" tabIndex={0} target="_blank" />
                         ) : (
                             <span />
                         ),

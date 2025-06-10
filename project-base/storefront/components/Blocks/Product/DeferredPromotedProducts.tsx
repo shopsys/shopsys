@@ -37,6 +37,7 @@ export const DeferredPromotedProducts: FC = () => {
     return (
         <Webline>
             <h3 className="mb-3">{t('News on offer')}</h3>
+
             {shouldRender ? (
                 <ProductsSlider
                     gtmProductListName={GtmProductListNameType.homepage_promo_products}

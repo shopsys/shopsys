@@ -22,10 +22,12 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     const { t } = useTranslation();
 
     return (
-        <div
+        <button
+            tabIndex={0}
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             className={twMergeCustom(
-                'text-text-less hover:text-text-accent flex cursor-pointer items-center gap-2',
+                'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',
+                'rounded-sm outline-none focus-visible:ring-2',
                 className,
             )}
             onClick={toggleProductInWishlist}
@@ -40,7 +42,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
                     {isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}
                 </span>
             )}
-        </div>
+        </button>
     );
 };
 

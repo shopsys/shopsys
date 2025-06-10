@@ -50,7 +50,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
         $this->createFlag($flagData, self::FLAG_PRODUCT_SALE);
 
 
-        $flagData = $this->createFlagData('#ee1c25');
+        $flagData = $this->createFlagData('#e8111c');
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

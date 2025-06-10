@@ -216,12 +216,14 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                             );
                         })}
 
-                        <div
+                        <button
                             className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
+                            tabIndex={0}
+                            type="button"
                             onClick={resetAllFilterQueries}
                         >
                             {t('Clear all')}
-                        </div>
+                        </button>
                     </div>
                 </AnimateCollapseDiv>
             )}

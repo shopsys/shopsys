@@ -52,6 +52,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
             </div>
 
             <button
+                tabIndex={0}
                 className={twJoin(
                     'hover:text-text-accent cursor-pointer underline',
                     showFullDescription && 'mt-2',

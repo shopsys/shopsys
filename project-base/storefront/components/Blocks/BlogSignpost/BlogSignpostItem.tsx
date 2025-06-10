@@ -3,6 +3,7 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { AnimatePresence } from 'framer-motion';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 import { twMergeCustom } from 'utils/twMerge';
@@ -26,6 +27,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
     handleToggle,
     openUuids,
 }) => {
+    const { t } = useTranslation();
     const isFirstLevel = itemLevel === 0;
     const isSecondLevel = itemLevel === 1;
     const isThirdLevel = itemLevel === 2;
@@ -66,18 +68,24 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                 )}
             >
                 {isSecondLevel && hasChildren && (
-                    <ArrowIcon
-                        className={twMergeCustom(
-                            'text-text-less size-4 -rotate-90 cursor-pointer transition-all',
-                            isActive && 'text-link-default',
-                            isOpen && 'rotate-0',
-                        )}
+                    <button
+                        tabIndex={0}
+                        title={t('Toggle blog category')}
+                        type="button"
                         onClick={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
                             handleToggle([blogCategory.uuid]);
                         }}
-                    />
+                    >
+                        <ArrowIcon
+                            className={twMergeCustom(
+                                'text-text-less size-4 -rotate-90 cursor-pointer transition-all',
+                                isActive && 'text-link',
+                                isOpen && 'rotate-0',
+                            )}
+                        />
+                    </button>
                 )}
                 <ExtendedNextLink
                     href={blogCategory.link}

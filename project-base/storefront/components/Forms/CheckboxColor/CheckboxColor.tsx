@@ -35,6 +35,7 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
             id={id}
             name={name}
             required={required}
+            tabIndex={0}
             type="checkbox"
             value={value}
             onChange={onChange}

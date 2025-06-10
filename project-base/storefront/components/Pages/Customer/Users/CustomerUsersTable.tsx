@@ -125,6 +125,7 @@ export const CustomerUsersTable: FC = () => {
                             <EditIcon className="size-4" /> <span className="sm:block">{t('Edit')}</span>
                         </Button>
                         <Button
+                            aria-haspopup="dialog"
                             className="flex-1"
                             size="small"
                             variant="inverted"

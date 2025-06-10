@@ -1,8 +1,7 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LoginForm } from 'components/Blocks/Login/LoginForm';
-import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
@@ -14,7 +13,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
 
     return (
-        <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8">
+        <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8 text-left">
             <div className="bg-background-brand-less text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
                 <h4>{t('Benefits of registration')}</h4>
                 <div className="my-4">
@@ -32,16 +31,15 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     </p>
                 </div>
 
-                <ExtendedNextLink
+                <LinkButton
                     href={registrationUrl}
                     skeletonType="registration"
                     tid={TIDs.login_popup_register_button}
+                    variant="transparent"
                 >
-                    <Button variant="transparent">
-                        {t('Register')}
-                        <ArrowSecondaryIcon className="size-5 -rotate-90 p-1 md:size-6" />
-                    </Button>
-                </ExtendedNextLink>
+                    {t('Register')}
+                    <ArrowSecondaryIcon className="size-5 -rotate-90 p-1 md:size-6" />
+                </LinkButton>
             </div>
             <div className="vl:order-2 vl:w-[364px] order-1 w-full">
                 <LoginForm formHeading={t('Log in')} />

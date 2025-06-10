@@ -10,6 +10,7 @@ export const SocialNetworkLoginLink: FC<{ href: UrlObject; socialNetwork: TypeLo
 }) => {
     return (
         <ExtendedNextLink
+            aria-label={socialNetwork}
             href={href}
             className={twJoin(
                 'flex size-14 items-center justify-center rounded-lg',

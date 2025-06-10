@@ -15,7 +15,7 @@ export const HeaderContact: FC = () => {
                     <PhoneIcon className="text-text-inverted w-5" />
 
                     <a
-                        className="text-text-inverted hover:text-text-inverted font-bold no-underline"
+                        className="text-text-inverted hover:text-text-inverted rounded-md font-bold no-underline focus-visible:ring-1"
                         href={'tel:' + dummyData.phone}
                         tid={TIDs.simple_header_contact}
                     >

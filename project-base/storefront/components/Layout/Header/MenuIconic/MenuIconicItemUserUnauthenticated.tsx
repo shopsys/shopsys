@@ -21,14 +21,30 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
     return (
         <>
             <div
-                className={twMergeCustom('group lg:relative lg:flex', isActive && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
+                title={t('Login')}
+                className={twMergeCustom(
+                    'group lg:relative lg:flex',
+                    'min-size-12',
+                    'focus-visible:outline-background rounded-md focus-visible:outline-1',
+                    isActive && 'z-aboveOverlay',
+                )}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={(e) => isDesktop && !isBrowserPasswordManagerHovered(e) && setIsActive(false)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        setIsActive(true);
+                    }
+
+                    if (e.key === 'Escape') {
+                        setIsActive(false);
+                    }
+                }}
             >
                 <MenuIconicItemLink
                     className="cursor-pointer lg:w-[72px]"
                     tid={TIDs.layout_header_menuiconic_login_link_popup}
+                    title={t('Login')}
                     onClick={() => !isDesktop && setIsActive(!isActive)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

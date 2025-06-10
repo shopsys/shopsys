@@ -1,6 +1,6 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -63,9 +63,9 @@ export const ProductAction: FC<ProductActionProps> = ({
 
     if (product.isMainVariant) {
         return (
-            <ExtendedNextLink className="no-underline" href={product.slug} type="productMainVariant">
-                <Button>{t('Choose')}</Button>
-            </ExtendedNextLink>
+            <LinkButton href={product.slug} type="productMainVariant">
+                {t('Choose')}
+            </LinkButton>
         );
     }
 

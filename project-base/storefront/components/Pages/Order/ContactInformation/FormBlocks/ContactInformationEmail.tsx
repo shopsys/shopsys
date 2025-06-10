@@ -70,6 +70,7 @@ export const ContactInformationEmail: FC = () => {
                 <div className="mt-4 flex flex-col gap-2">
                     <span>{t('User with this email is already registered')}</span>
                     <Button
+                        aria-haspopup="dialog"
                         className="w-fit"
                         size="small"
                         tid={TIDs.login_in_order_button}

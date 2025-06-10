@@ -68,7 +68,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         };
 
         return (
-            <Button className="w-fit" size="large" onClick={openInquiryPopup}>
+            <Button aria-haspopup="dialog" className="w-fit" size="large" onClick={openInquiryPopup}>
                 {t('Inquire')}
             </Button>
         );
@@ -92,6 +92,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 )}
 
                 <Button
+                    aria-haspopup="dialog"
                     className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
                     size="xlarge"

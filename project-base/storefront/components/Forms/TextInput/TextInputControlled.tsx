@@ -45,6 +45,8 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
         if (textInputProps.onBlur) {
             textInputProps.onBlur(event);
         }
+
+        window.getSelection()?.removeAllRanges();
     };
 
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {

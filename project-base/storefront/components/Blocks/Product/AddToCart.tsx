@@ -86,10 +86,12 @@ export const AddToCart: FC<AddToCartProps> = ({
                 )}
 
                 <Button
+                    aria-haspopup="dialog"
                     isDisabled={isAddingToCart}
                     name="add-to-cart"
                     size={buttonSize}
                     tid={TIDs.blocks_product_addtocart}
+                    title={t('Add to cart')}
                     variant={buttonVariant}
                     onClick={onAddToCartHandler}
                 >

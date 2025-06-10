@@ -1,5 +1,4 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
@@ -24,10 +23,10 @@ export const NotAddedProductsPopup: FC<NotAddedProductsPopupProps> = ({ notAdded
                     </li>
                 ))}
             </ul>
-            <div className="mt-4 flex justify-end">
-                <ExtendedNextLink className="mt-2 w-full md:w-auto" href={cartUrl} skeletonType="cart">
-                    <Button>{t('Go to cart')}</Button>
-                </ExtendedNextLink>
+            <div className="flex justify-end">
+                <LinkButton href={cartUrl} skeletonType="cart">
+                    {t('Go to cart')}
+                </LinkButton>
             </div>
         </Popup>
     );

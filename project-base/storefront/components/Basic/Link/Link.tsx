@@ -26,7 +26,7 @@ type LinkProps = NativePropsAnchor & {
     );
 
 const linkPlaceholderTwClassSegments = [
-    'inline-flex cursor-pointer items-center text-link-default outline-hidden hover:text-link-hovered',
+    'inline-flex cursor-pointer items-center text-link-default hover:text-link-hovered rounded-sm',
     'underline hover:underline',
 ];
 
@@ -46,6 +46,7 @@ export const Link: FC<LinkProps> = ({
     const classNameTwClass = twMergeCustom(
         linkPlaceholderTwClassSegments[0],
         isButton ? 'no-underline hover:no-underline' : linkPlaceholderTwClassSegments[1],
+        'focus-visible:ring-2',
         className,
     );
 
@@ -66,7 +67,11 @@ export const Link: FC<LinkProps> = ({
     );
 
     if (isExternal) {
-        return <a {...props}>{content}</a>;
+        return (
+            <a {...props} tabIndex={0}>
+                {content}
+            </a>
+        );
     }
 
     return (

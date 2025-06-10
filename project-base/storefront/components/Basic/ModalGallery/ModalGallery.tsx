@@ -22,6 +22,7 @@ type ModalGalleryProps = {
 
 export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galleryName, onCloseModal }) => {
     const { t } = useTranslation();
+    const modalRef = createRef<HTMLButtonElement>();
 
     const [selectedIndex, setSelectedIndex] = useState(initialIndex);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
@@ -74,14 +75,28 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
         trackMouse: true,
     });
 
+    useEffect(() => {
+        modalRef.current?.focus();
+    }, []);
+
     return (
-        <div
-            className="z-maximum bg-background-default fixed inset-0 flex flex-col p-2 select-none"
+        <button
+            aria-label={t('Gallery')}
+            aria-modal="true"
+            className="z-maximum bg-background-default focus-visible:outline-background-accent fixed inset-0 flex flex-col p-2 select-none focus-visible:outline-4 focus-visible:outline-offset-[-2px]"
+            ref={modalRef}
+            role="dialog"
+            tabIndex={0}
             onClick={onCloseModal}
         >
             <div className="flex w-full flex-1 flex-col justify-center">
-                <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
-                    <SpinnerIcon className="-z-above text-text-inverted absolute w-16 opacity-50" />
+                <div
+                    className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center"
+                    {...handlers}
+                    aria-label={t('Gallery content')}
+                    role="region"
+                >
+                    <SpinnerIcon aria-hidden="true" className="-z-above text-text-inverted absolute w-16 opacity-50" />
                     <AnimatePresence initial={false}>
                         {isImage && (
                             <AnimateSlideDiv
@@ -112,6 +127,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                                 <iframe
                                     allowFullScreen
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    aria-label={selectedGalleryItem.description ?? t('Product Video')}
                                     className="aspect-video max-h-full w-full max-w-xl md:max-w-[1500px]"
                                     src={`https://www.youtube.com/embed/${selectedGalleryItem.token}?autoplay=1&mute=1`}
                                     title={selectedGalleryItem.description ?? t('Product Video')}
@@ -143,15 +159,25 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 </div>
 
                 {isImage && selectedGalleryItem.name && (
-                    <div className="text-text-inverted mt-2 text-center">{selectedGalleryItem.name}</div>
+                    <div className="text-text-inverted mt-2 text-center" role="caption">
+                        {selectedGalleryItem.name}
+                    </div>
                 )}
 
-                <div className="mt-4 flex items-center justify-center gap-8">
+                <div
+                    aria-label={t('Gallery navigation')}
+                    className="mt-4 flex items-center justify-center gap-8"
+                    role="toolbar"
+                >
                     <ButtonArrow position="left" title={t('Previous')} onClick={selectPreviousItem} />
                     <ButtonArrow position="right" title={t('Next')} onClick={selectNextItem} />
                 </div>
 
-                <div className="mt-4 flex items-center justify-center gap-2">
+                <div
+                    aria-label={t('Gallery thumbnails')}
+                    className="mt-4 flex items-center justify-center gap-2"
+                    role="tablist"
+                >
                     {isCarouselDisplayed && (
                         <ModalGalleryCarousel
                             galleryName={galleryName}
@@ -165,17 +191,24 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
                 <ButtonClose title={t('Close')} onClick={onCloseModal} />
             </div>
-        </div>
+        </button>
     );
 };
 
-type FloatingButtonProps = { onClick: () => void; title: string };
+type FloatingButtonProps = {
+    onClick: () => void;
+    title?: string;
+    className?: string;
+    children?: React.ReactNode;
+};
 
 const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick, ...buttonProps }) => (
     <button
+        tabIndex={0}
         type="button"
         className={twMergeCustom(
             'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
+            'focus-visible:ring-offset-background focus-visible:ring-background-accent focus-visible:ring-2 focus-visible:outline-none',
             className,
         )}
         onClick={(e) => {
@@ -190,13 +223,15 @@ const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick,
 
 const ButtonArrow: FC<FloatingButtonProps & { position: 'left' | 'right' }> = ({
     position,
+    title,
     ...floatingButtonProps
 }) => {
     const isLeft = position === 'left';
 
     return (
-        <FloatingButton className={twJoin('', isLeft ? 'left-2' : 'right-2')} {...floatingButtonProps}>
+        <FloatingButton className={twJoin('', isLeft ? 'left-2' : 'right-2')} {...floatingButtonProps} title={title}>
             <svg
+                aria-hidden="true"
                 className={twJoin('h-8 w-8', isLeft && 'rotate-180')}
                 fill="none"
                 stroke="currentColor"
@@ -211,9 +246,10 @@ const ButtonArrow: FC<FloatingButtonProps & { position: 'left' | 'right' }> = ({
     );
 };
 
-const ButtonClose: FC<FloatingButtonProps> = (floatingButtonProps) => (
-    <FloatingButton className="absolute top-2 right-2" {...floatingButtonProps}>
+const ButtonClose: FC<FloatingButtonProps> = ({ title, ...floatingButtonProps }) => (
+    <FloatingButton className="absolute top-2 right-2" {...floatingButtonProps} title={title}>
         <svg
+            aria-hidden="true"
             className="h-6 w-6"
             fill="none"
             stroke="currentColor"

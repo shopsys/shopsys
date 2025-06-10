@@ -106,15 +106,29 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
             {deliveryAddresses.map((address) => (
                 <div
                     key={address.uuid}
+                    role="button"
+                    tabIndex={0}
                     className={twJoin(
-                        'border-border-less bg-background-default relative flex w-full justify-between rounded-md border-2 p-4',
+                        'relative flex w-full justify-between rounded-md border-2 p-4 text-left',
                         defaultDeliveryAddress?.uuid === address.uuid
                             ? 'border-border-default bg-background-accent-less'
-                            : canManagePersonalData
-                              ? 'cursor-pointer'
-                              : '',
+                            : 'border-border-less bg-background-default',
+                        defaultDeliveryAddress?.uuid !== address.uuid && canManagePersonalData ? 'cursor-pointer' : '',
                     )}
+                    title={
+                        defaultDeliveryAddress?.uuid === address.uuid
+                            ? t('Default delivery address')
+                            : canManagePersonalData
+                              ? t('Set as default delivery address')
+                              : undefined
+                    }
                     onClick={() => setDefaultItemHandler(address.uuid)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            setDefaultItemHandler(address.uuid);
+                        }
+                    }}
                 >
                     <div className="flex w-full flex-col">
                         <strong className="mr-1">
@@ -134,6 +148,8 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         {canManagePersonalData && (
                             <div className="space-between mt-auto flex gap-2 pt-2">
                                 <Button
+                                    aria-haspopup="dialog"
+                                    aria-label={t('Delete')}
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"
@@ -142,6 +158,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                                     <RemoveIcon className="size-4" /> {t('Delete')}
                                 </Button>
                                 <Button
+                                    aria-haspopup="dialog"
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"

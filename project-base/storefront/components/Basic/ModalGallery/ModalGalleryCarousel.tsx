@@ -32,54 +32,57 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                 const isFile = galleryItem.__typename === 'File';
 
                 return (
-                    <li
-                        key={index}
-                        ref={itemsRefs[index]}
-                        className={twJoin(
-                            'flex h-20 w-20 snap-center items-center justify-center px-1 transition-opacity hover:opacity-100',
-                            index !== selectedIndex && 'cursor-pointer opacity-40',
-                        )}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectItem(index);
-                        }}
-                    >
-                        {isImage && (
-                            <Image
-                                alt={galleryItem.name || `${galleryName}-${index}`}
-                                className="max-h-full w-auto object-contain"
-                                draggable={false}
-                                height={80}
-                                src={galleryItem.url}
-                                width={80}
-                            />
-                        )}
-
-                        {isVideo && (
-                            <div className="relative">
+                    <li key={index} ref={itemsRefs[index]}>
+                        <button
+                            tabIndex={0}
+                            title={t('Select image')}
+                            className={twJoin(
+                                'flex h-20 w-20 snap-center items-center justify-center px-1 transition-opacity hover:opacity-100',
+                                index !== selectedIndex && 'cursor-pointer opacity-40',
+                            )}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onSelectItem(index);
+                            }}
+                        >
+                            {isImage && (
                                 <Image
-                                    alt={galleryItem.description ?? t('Product Video')}
-                                    className="max-h-20 w-auto"
+                                    alt={galleryItem.name || `${galleryName}-${index}`}
+                                    className="max-h-full w-auto object-contain"
                                     draggable={false}
                                     height={80}
-                                    src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                    src={galleryItem.url}
                                     width={80}
                                 />
+                            )}
 
-                                <PlayIcon className="bg-overlay-default text-text-inverted absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full" />
-                            </div>
-                        )}
-                        {isFile && (
-                            <Image
-                                alt={galleryItem.anchorText || `${galleryName}-${index}`}
-                                className="max-h-full w-auto object-contain"
-                                draggable={false}
-                                hash={galleryItem.url.split('?')[1]}
-                                height={80}
-                                src={galleryItem.url.split('?')[0]}
-                                width={80}
-                            />
-                        )}
+                            {isVideo && (
+                                <div className="relative">
+                                    <Image
+                                        alt={galleryItem.description ?? t('Product Video')}
+                                        className="max-h-20 w-auto"
+                                        draggable={false}
+                                        height={80}
+                                        src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                        width={80}
+                                    />
+
+                                    <PlayIcon className="bg-overlay-default text-text-inverted absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full" />
+                                </div>
+                            )}
+
+                            {isFile && (
+                                <Image
+                                    alt={galleryItem.anchorText || `${galleryName}-${index}`}
+                                    className="max-h-full w-auto object-contain"
+                                    draggable={false}
+                                    hash={galleryItem.url.split('?')[1]}
+                                    height={80}
+                                    src={galleryItem.url.split('?')[0]}
+                                    width={80}
+                                />
+                            )}
+                        </button>
                     </li>
                 );
             })}

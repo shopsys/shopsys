@@ -3,6 +3,7 @@ import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
@@ -90,11 +91,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     {t('Back to shop')}
                 </Button>
 
-                <ExtendedNextLink className="mt-2 w-full md:w-auto" href={cartUrl} skeletonType="cart">
-                    <Button className="mt-2 w-full md:w-auto" tid={TIDs.popup_go_to_cart_button}>
-                        {t('To cart')}
-                    </Button>
-                </ExtendedNextLink>
+                <LinkButton href={cartUrl} skeletonType="cart" tid={TIDs.popup_go_to_cart_button}>
+                    {t('To cart')}
+                </LinkButton>
             </div>
         </Popup>
     );

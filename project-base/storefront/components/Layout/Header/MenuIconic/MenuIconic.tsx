@@ -35,7 +35,7 @@ export const MenuIconic: FC = () => {
             </MenuIconicItem>
 
             <MenuIconicItem>
-                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
+                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison page')} type="comparison">
                     <div className="relative">
                         <CompareIcon className="size-6" />
                         {!!comparison?.products.length && (
@@ -47,14 +47,14 @@ export const MenuIconic: FC = () => {
             </MenuIconicItem>
 
             <MenuIconicItem>
-                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
+                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist page')} type="wishlist">
                     <div className="relative">
                         <HeartIcon className="size-6" />
                         {!!wishlist?.products.length && (
                             <span className={menuCountTwClass}>{wishlist.products.length}</span>
                         )}
                     </div>
-                    <span className="max-lg:hidden">{t('Favorites')}</span>
+                    <span className="max-lg:hidden">{t('Wishlist')}</span>
                 </MenuIconicItemLink>
             </MenuIconicItem>
 

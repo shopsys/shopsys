@@ -149,6 +149,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
                                 min={parameter.minimalValue}
                                 minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
+                                title={title}
                                 setMaxValueCallback={(value) =>
                                     updateFilterParametersQuery(
                                         parameter.uuid,

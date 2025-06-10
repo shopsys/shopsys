@@ -40,6 +40,7 @@ export const HomePageContent: FC = () => {
                             render={(recommendedProductsContent) => (
                                 <section>
                                     <h3 className="mb-3">{t('Recommended for you')}</h3>
+
                                     {recommendedProductsContent}
                                 </section>
                             )}

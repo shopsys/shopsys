@@ -1,6 +1,5 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
@@ -16,13 +15,12 @@ export const ProductComparePopup: FC = () => {
             <div className="text-base lg:text-lg">{t('Comparison')}</div>
 
             <div className="flex flex-col">
-                <p className="text-bigger mt-[15px] mb-5 font-semibold">{t('Product added to comparison.')}</p>
-                <ExtendedNextLink href={productComparisonUrl} type="comparison">
-                    <Button>
-                        <span>{t('Show products comparison')}</span>
-                        <ArrowSecondaryIcon className="-rotate-90" />
-                    </Button>
-                </ExtendedNextLink>
+                <p className="font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
+
+                <LinkButton href={productComparisonUrl} type="comparison">
+                    <span>{t('Show products comparison')}</span>
+                    <ArrowSecondaryIcon className="-rotate-90" />
+                </LinkButton>
             </div>
         </Popup>
     );
