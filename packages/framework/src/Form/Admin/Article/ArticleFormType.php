@@ -29,7 +29,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ArticleFormType extends AbstractType
+final class ArticleFormType extends AbstractType
 {
     private const string VALIDATION_GROUP_TYPE_SITE = 'typeSite';
     private const string VALIDATION_GROUP_TYPE_LINK = 'typeLink';

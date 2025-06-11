@@ -8,13 +8,13 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class MailWhitelistCollectionType extends AbstractType
+final class MailWhitelistCollectionType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return CollectionType::class;
     }

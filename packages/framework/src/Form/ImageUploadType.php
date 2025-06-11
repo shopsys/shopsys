@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ImageUploadType extends AbstractType
+final class ImageUploadType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
@@ -187,7 +187,7 @@ class ImageUploadType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return AbstractFileUploadType::class;
     }

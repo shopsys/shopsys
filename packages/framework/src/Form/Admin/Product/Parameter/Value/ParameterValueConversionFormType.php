@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ParameterValueConversionFormType extends AbstractType
+final class ParameterValueConversionFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormView $view

@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class BillingAddressFormTypeExtension extends AbstractTypeExtension
+final class BillingAddressFormTypeExtension extends AbstractTypeExtension
 {
     private const DISABLED_FIELDS = [];
 

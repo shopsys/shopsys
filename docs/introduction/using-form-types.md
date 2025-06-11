@@ -400,7 +400,7 @@ The `ActionBarType` form type provides a standardized action bar, rendered at th
 ##### Most common usage
 
 ```php
-class MyEntityFormType extends AbstractType
+final class MyEntityFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

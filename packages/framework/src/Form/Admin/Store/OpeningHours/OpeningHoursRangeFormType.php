@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class OpeningHoursRangeFormType extends AbstractType
+final class OpeningHoursRangeFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer $openingHourTimeToStringTransformer

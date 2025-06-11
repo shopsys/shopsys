@@ -22,7 +22,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class FileUploadType extends AbstractType
+final class FileUploadType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -173,7 +173,7 @@ class FileUploadType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return AbstractFileUploadType::class;
     }

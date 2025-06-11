@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Form\ProductsType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductFormTypeExtension extends AbstractTypeExtension
+final class ProductFormTypeExtension extends AbstractTypeExtension
 {
     public const DISABLED_FIELDS = [];
 

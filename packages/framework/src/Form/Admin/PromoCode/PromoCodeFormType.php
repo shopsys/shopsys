@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class PromoCodeFormType extends AbstractType
+final class PromoCodeFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_TYPE_PERCENT = 'type_percent';
     public const string VALIDATION_GROUP_TYPE_NOMINAL = 'type_nominal';

@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DatePickerType extends AbstractType
+final class DatePickerType extends AbstractType
 {
     protected const string FORMAT_PHP = 'dd.MM.yyyy';
 
@@ -41,7 +41,7 @@ class DatePickerType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return DateType::class;
     }

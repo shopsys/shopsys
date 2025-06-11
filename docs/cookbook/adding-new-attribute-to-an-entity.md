@@ -186,7 +186,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
-class ProductFormTypeExtension extends AbstractTypeExtension
+final class ProductFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}

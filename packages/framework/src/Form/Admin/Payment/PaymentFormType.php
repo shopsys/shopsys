@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class PaymentFormType extends AbstractType
+final class PaymentFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade

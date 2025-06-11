@@ -25,7 +25,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class SliderItemFormType extends AbstractType
+final class SliderItemFormType extends AbstractType
 {
     public const string SCENARIO_CREATE = 'create';
     public const string SCENARIO_EDIT = 'edit';

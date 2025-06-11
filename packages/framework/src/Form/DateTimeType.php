@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType as SymfonyDateTimeTy
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateTimeType extends AbstractType
+final class DateTimeType extends AbstractType
 {
     protected const FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss';
 
@@ -49,7 +49,7 @@ class DateTimeType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return SymfonyDateTimeType::class;
     }

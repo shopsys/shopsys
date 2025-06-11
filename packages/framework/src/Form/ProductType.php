@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductType extends AbstractType
+final class ProductType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer $productIdToProductTransformer
@@ -60,7 +60,7 @@ class ProductType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return HiddenType::class;
     }

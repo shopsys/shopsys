@@ -20,7 +20,7 @@ First, you must add your form type you want to show in administration. (e.g., `p
 
 //...
 
-class HeurekaProductFormType extends AbstractType
+final class HeurekaProductFormType extends AbstractType
 {
 
     //...

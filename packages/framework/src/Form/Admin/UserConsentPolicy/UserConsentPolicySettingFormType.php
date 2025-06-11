@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserConsentPolicySettingFormType extends AbstractType
+final class UserConsentPolicySettingFormType extends AbstractType
 {
     public const string USER_CONSENT_POLICY_ARTICLE_FIELD_NAME = 'userConsentPolicyArticle';
 

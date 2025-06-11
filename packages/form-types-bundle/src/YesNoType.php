@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class YesNoType extends AbstractType
+final class YesNoType extends AbstractType
 {
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
@@ -41,10 +41,10 @@ class YesNoType extends AbstractType
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

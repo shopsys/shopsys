@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class HreflangSettingFormType extends AbstractType
+final class HreflangSettingFormType extends AbstractType
 {
     public const FIELD_HREFLANG_COLLECTION = 'hreflang_collection';
 

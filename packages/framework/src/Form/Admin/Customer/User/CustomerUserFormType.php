@@ -34,7 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CustomerUserFormType extends AbstractType
+final class CustomerUserFormType extends AbstractType
 {
     private ?CustomerUser $customerUser = null;
 

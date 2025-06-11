@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PricingGroupPriceType extends AbstractType
+final class PricingGroupPriceType extends AbstractType
 {
     /**
      * {@inheritdoc}

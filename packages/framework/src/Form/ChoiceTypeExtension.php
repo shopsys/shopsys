@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ChoiceTypeExtension extends AbstractTypeExtension
+final class ChoiceTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

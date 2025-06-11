@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Twig\Environment;
 
-class StockSettingsFormType extends AbstractType
+final class StockSettingsFormType extends AbstractType
 {
     /**
      * @param \Twig\Environment $environment

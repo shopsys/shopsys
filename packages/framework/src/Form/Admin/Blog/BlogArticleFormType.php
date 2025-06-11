@@ -29,7 +29,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class BlogArticleFormType extends AbstractType
+final class BlogArticleFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

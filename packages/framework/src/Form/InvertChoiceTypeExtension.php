@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InvertChoiceTypeExtension extends AbstractTypeExtension
+final class InvertChoiceTypeExtension extends AbstractTypeExtension
 {
     protected const string INVERT_OPTION = 'invert';
 

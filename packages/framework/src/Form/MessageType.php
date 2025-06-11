@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MessageType extends AbstractType
+final class MessageType extends AbstractType
 {
     public const string MESSAGE_LEVEL_WARNING = 'warning';
     public const string MESSAGE_LEVEL_INFO = 'info';

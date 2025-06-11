@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoriesType extends AbstractType
+final class CategoriesType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer $categoriesTypeTransformer
@@ -93,7 +93,7 @@ class CategoriesType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return CollectionType::class;
     }

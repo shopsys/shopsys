@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BlogCategoriesType extends AbstractType
+final class BlogCategoriesType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\BlogCategoriesTypeTransformer $blogCategoriesTypeTransformer

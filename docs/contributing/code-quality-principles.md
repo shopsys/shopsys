@@ -122,7 +122,7 @@ Also, it would be difficult to change the shared code just for one use-case.
 Modules don't depend on details of each other, modules depend on interfaces.
 
 ```diff
-class DatePickerType extends AbstractType
+final class DatePickerType extends AbstractType
 {
 -   public function __construct(protected readonly DisplayTimeZoneProvider $displayTimeZoneProvider)
 +   public function __construct(protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider)

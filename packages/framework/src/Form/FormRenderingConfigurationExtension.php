@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FormRenderingConfigurationExtension extends AbstractTypeExtension
+final class FormRenderingConfigurationExtension extends AbstractTypeExtension
 {
     public const string DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING = 'multidomain_form_rows_no_padding';
 

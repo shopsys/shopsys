@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class PromoCodeLimitType extends AbstractType
+final class PromoCodeLimitType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Admin\PromoCode\Transformer\PromoCodeLimitTransformer $promoCodeLimitTransformer

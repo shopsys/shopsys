@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GrapesJsType extends AbstractType
+final class GrapesJsType extends AbstractType
 {
     public const GRAPESJS_TEMPLATE_PATH = '/grapesjs-template';
 
@@ -51,10 +51,10 @@ class GrapesJsType extends AbstractType
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return TextareaType::class;
     }

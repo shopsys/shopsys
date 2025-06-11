@@ -24,7 +24,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class MailTemplateFormType extends AbstractType
+final class MailTemplateFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_SEND_MAIL = 'sendMail';
 

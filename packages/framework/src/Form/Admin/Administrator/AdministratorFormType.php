@@ -26,7 +26,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class AdministratorFormType extends AbstractType
+final class AdministratorFormType extends AbstractType
 {
     public const string SCENARIO_CREATE = 'create';
     public const string SCENARIO_EDIT = 'edit';

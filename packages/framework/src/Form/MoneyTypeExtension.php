@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MoneyTypeExtension extends AbstractTypeExtension
+final class MoneyTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
