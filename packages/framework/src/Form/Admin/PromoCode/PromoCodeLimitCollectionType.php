@@ -8,7 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class PromoCodeLimitCollectionType extends AbstractType
+final class PromoCodeLimitCollectionType extends AbstractType
 {
     /**
      * @return string|null

@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ProductParameterValueFormType extends AbstractType
+final class ProductParameterValueFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_TYPE_SLIDER = 'typeSlider';
 

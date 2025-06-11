@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SliderParameterValuesUpdateFormType extends AbstractType
+final class SliderParameterValuesUpdateFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -8,7 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class PromoCodeFlagCollectionType extends AbstractType
+final class PromoCodeFlagCollectionType extends AbstractType
 {
     /**
      * @return string|null

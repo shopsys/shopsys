@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BestsellingProductFormType extends AbstractType
+final class BestsellingProductFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

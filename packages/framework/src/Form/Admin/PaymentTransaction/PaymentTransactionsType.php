@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PaymentTransactionsType extends AbstractType
+final class PaymentTransactionsType extends AbstractType
 {
     /**
      * {@inheritdoc}

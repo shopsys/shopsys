@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class HoneyPotType extends AbstractType
+final class HoneyPotType extends AbstractType
 {
     /**
      * {@inheritdoc}

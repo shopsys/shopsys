@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class PromoCodeFlagType extends AbstractType
+final class PromoCodeFlagType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade

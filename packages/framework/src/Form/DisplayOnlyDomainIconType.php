@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DisplayOnlyDomainIconType extends AbstractType
+final class DisplayOnlyDomainIconType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormView $view

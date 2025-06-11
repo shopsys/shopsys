@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class AdministratorResetPasswordFormType extends AbstractType
+final class AdministratorResetPasswordFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

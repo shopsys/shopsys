@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class MultiLocaleBasicFileUploadType extends AbstractType
+final class MultiLocaleBasicFileUploadType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade

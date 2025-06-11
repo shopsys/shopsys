@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
-class LuigisBoxSettingFormType extends AbstractType
+final class LuigisBoxSettingFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Make CollectionType use custom ResizeFormListener
  */
-class CollectionTypeExtension extends AbstractTypeExtension
+final class CollectionTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

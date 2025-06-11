@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimedFormTypeExtension extends AbstractTypeExtension
+final class TimedFormTypeExtension extends AbstractTypeExtension
 {
     public const int MINIMUM_FORM_FILLING_SECONDS = 5;
     public const string OPTION_ENABLED = 'timed_spam_enabled';

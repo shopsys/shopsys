@@ -8,7 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class ParameterValueConversionListType extends AbstractType
+final class ParameterValueConversionListType extends AbstractType
 {
     /**
      * {@inheritdoc}

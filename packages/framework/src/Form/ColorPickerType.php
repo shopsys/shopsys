@@ -8,7 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class ColorPickerType extends AbstractType
+final class ColorPickerType extends AbstractType
 {
     /**
      * {@inheritdoc}

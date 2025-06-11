@@ -30,7 +30,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class BlogCategoryFormType extends AbstractType
+final class BlogCategoryFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade

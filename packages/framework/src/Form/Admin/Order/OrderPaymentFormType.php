@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class OrderPaymentFormType extends AbstractType
+final class OrderPaymentFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

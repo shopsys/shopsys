@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RolesType extends AbstractType
+final class RolesType extends AbstractType
 {
     /**
      * @var array<array<string, string>>

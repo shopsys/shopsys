@@ -27,7 +27,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class AdvertFormType extends AbstractType
+final class AdvertFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_TYPE_IMAGE = 'typeImage';
     public const string VALIDATION_GROUP_TYPE_CODE = 'typeCode';

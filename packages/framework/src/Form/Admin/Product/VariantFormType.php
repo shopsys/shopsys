@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class VariantFormType extends AbstractType
+final class VariantFormType extends AbstractType
 {
     public const string MAIN_VARIANT = 'mainVariant';
     public const string VARIANTS = 'variants';

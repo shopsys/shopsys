@@ -8,7 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GroupType extends AbstractType
+final class GroupType extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

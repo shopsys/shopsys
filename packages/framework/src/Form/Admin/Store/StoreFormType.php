@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class StoreFormType extends AbstractType
+final class StoreFormType extends AbstractType
 {
     private ?Store $store = null;
 

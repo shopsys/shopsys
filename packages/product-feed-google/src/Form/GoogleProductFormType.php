@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class GoogleProductFormType extends AbstractType
+final class GoogleProductFormType extends AbstractType
 {
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator

@@ -22,7 +22,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class SeoPageFormType extends AbstractType
+final class SeoPageFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

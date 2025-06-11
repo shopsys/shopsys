@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryCheckboxType extends AbstractType
+final class CategoryCheckboxType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

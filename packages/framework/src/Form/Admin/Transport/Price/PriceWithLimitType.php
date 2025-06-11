@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class PriceWithLimitType extends AbstractType
+final class PriceWithLimitType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Twig\InputPriceLabelExtension $inputPriceLabelExtension

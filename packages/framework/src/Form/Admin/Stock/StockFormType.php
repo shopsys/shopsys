@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class StockFormType extends AbstractType
+final class StockFormType extends AbstractType
 {
     private ?Stock $stock;
 

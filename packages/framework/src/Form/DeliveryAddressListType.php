@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DeliveryAddressListType extends AbstractType
+final class DeliveryAddressListType extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

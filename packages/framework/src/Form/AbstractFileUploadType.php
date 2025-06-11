@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class AbstractFileUploadType extends AbstractType implements DataTransformerInterface
+final class AbstractFileUploadType extends AbstractType implements DataTransformerInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
+final class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \Symfony\Component\Form\FormView $view

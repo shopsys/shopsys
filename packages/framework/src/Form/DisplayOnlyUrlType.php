@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DisplayOnlyUrlType extends AbstractType
+final class DisplayOnlyUrlType extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-class FilesType extends AbstractType
+final class FilesType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router

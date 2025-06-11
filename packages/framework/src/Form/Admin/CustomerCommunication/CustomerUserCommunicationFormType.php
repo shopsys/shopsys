@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CustomerUserCommunicationFormType extends AbstractType
+final class CustomerUserCommunicationFormType extends AbstractType
 {
     public const string ORDER_SENT_CONTENT_FIELD_NAME = 'order-sent-content';
     public const string PAYMENT_FAILED_CONTENT_FIELD_NAME = 'payment-failed-content';

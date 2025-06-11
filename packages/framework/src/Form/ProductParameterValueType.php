@@ -8,7 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class ProductParameterValueType extends AbstractType
+final class ProductParameterValueType extends AbstractType
 {
     /**
      * {@inheritdoc}
