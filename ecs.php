@@ -8,6 +8,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunction
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff as PhpCsValidVariableNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
 use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
+use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
@@ -54,6 +55,7 @@ return ECSConfig::configure()
     ->withRules([
         PhpdocToPropertyTypeFixer::class,
         ForceLateStaticBindingForProtectedConstantsSniff::class,
+        FinalFormTypeFixer::class,
     ])
     ->withConfiguredRule(ForbiddenPrivateVisibilityFixer::class,
         [
@@ -185,6 +187,10 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php',
                 __DIR__ . '/packages/framework/src/Model/Order/Preview/OrderPreviewCalculation.php',
                 __DIR__ . '/packages/*/tests/*',
+            ],
+            FinalFormTypeFixer::class => [
+                __DIR__ . '/project-base',
+                __DIR__ . '/packages/framework/src/Form/Locale/LocalizedType.php',
             ],
         ],
     ));
