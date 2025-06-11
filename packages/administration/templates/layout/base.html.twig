@@ -9,6 +9,9 @@
         {{ encore_entry_link_tags('admin-style') }}
 
         {{ encore_entry_script_tags('admin') }}
+        {{ encore_entry_script_tags('administration', attributes={
+            defer: true
+        }) }}
 
         {{ ckeditor_init() }}
         <script type="text/javascript">

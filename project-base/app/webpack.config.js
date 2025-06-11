@@ -16,6 +16,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
     .addEntry('admin', './assets/js/admin/admin.js')
+    .addEntry('administration', sources.getPackageNodeModulesDir('administration') + '/src/index.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
@@ -39,7 +40,7 @@ Encore
                 force: true
             },
             {
-                from: sources.getFrameworkNodeModulesDir() + '/public/admin',
+                from: sources.getPackageNodeModulesDir('framework') + '/public/admin',
                 to: '../../web/public/admin',
                 force: true
             },
