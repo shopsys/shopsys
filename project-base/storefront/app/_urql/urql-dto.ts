@@ -1,32 +1,10 @@
 import { getErrorExchange } from './errorExchange';
 import { createClient } from 'app/_urql/createClient';
+import { headers } from 'next/headers';
 import 'server-only';
 import { AnyVariables, Client, DocumentInput, OperationContext, OperationResult, OperationResultSource } from 'urql';
 
-let client: (() => Client) | undefined;
-
-function createMutex() {
-    let activeLock = Promise.resolve();
-
-    return () => {
-        // Function to release the current lock
-        let releaseLock: () => void;
-        const newLock = new Promise<void>((resolve) => {
-            releaseLock = () => resolve();
-        });
-
-        // Wait for the active lock to resolve before allowing this lock to proceed
-        const waitForLock = activeLock.then(() => releaseLock);
-
-        // Update the active lock to the newly created lock
-        activeLock = newLock;
-
-        // Return a promise that resolves when the caller can proceed
-        return waitForLock;
-    };
-}
-
-const mutexLock = createMutex();
+const clients = new Map<string, () => Client>();
 
 export async function createQuery<Data = any, Variables extends AnyVariables = AnyVariables>(
     query: DocumentInput<Data, Variables>,
@@ -74,16 +52,12 @@ export async function createMutation<Data = any, Variables extends AnyVariables 
 }
 
 export async function getClient() {
-    const unlock = await mutexLock();
+    const host = (await headers()).get('host')!;
 
-    if (!client) {
+    if (host && !clients.has(host)) {
         const newClient = await createClient();
-        // race condition is prevented by mutex
-        // eslint-disable-next-line require-atomic-updates
-        client = newClient;
+        clients.set(host, newClient);
     }
 
-    unlock();
-
-    return client();
+    return clients.get(host)!();
 }
