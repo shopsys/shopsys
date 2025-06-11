@@ -26,6 +26,9 @@ fragment OrderDetailItemFragment on OrderItem {
         isVisible
         isSellingDenied
         isInquiryType
+        categories {
+            name
+        }
         mainImage {
             ...ImageFragment
         }

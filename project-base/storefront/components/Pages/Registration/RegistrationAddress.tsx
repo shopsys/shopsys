@@ -30,70 +30,78 @@ export const RegistrationAddress: FC = () => {
 
     return (
         <FormBlockWrapper>
-            <FormHeading>{t('Billing address')}</FormHeading>
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.street.name}
-                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                textInputProps={{
-                    label: formMeta.fields.street.label,
-                    required: true,
-                    type: 'text',
-                    autoComplete: 'street-address',
-                }}
-            />
-            <FormColumn>
+            <fieldset>
+                <FormHeading>
+                    <legend>{t('Billing address')}</legend>
+                </FormHeading>
+
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    name={formMeta.fields.city.name}
+                    name={formMeta.fields.street.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
-                        label: formMeta.fields.city.label,
+                        label: formMeta.fields.street.label,
                         required: true,
                         type: 'text',
-                        autoComplete: 'address-level2',
+                        autoComplete: 'street-address',
                     }}
                 />
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.postcode.name}
-                    render={(textInput) => (
-                        <FormLine bottomGap isSmallInput>
-                            {textInput}
-                        </FormLine>
-                    )}
-                    textInputProps={{
-                        label: formMeta.fields.postcode.label,
-                        required: true,
-                        type: 'text',
-                        autoComplete: 'postal-code',
-                        inputMode: 'numeric',
-                    }}
-                />
-            </FormColumn>
-            <FormLine>
-                <Controller
-                    name={formMeta.fields.country.name}
-                    render={({ fieldState: { error }, field }) => (
-                        <>
-                            <Select
-                                isRequired
-                                label={formMeta.fields.country.label}
-                                options={countriesAsSelectOptions}
-                                tid={formMeta.formName + '-' + formMeta.fields.country.name}
-                                activeOption={countriesAsSelectOptions.find(
-                                    (option) => option.value === field.value.value,
-                                )}
-                                onSelectOption={field.onChange}
-                            />
-                            <FormLineError error={error} inputType="select" />
-                        </>
-                    )}
-                />
-            </FormLine>
+
+                <FormColumn>
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.city.name}
+                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                        textInputProps={{
+                            label: formMeta.fields.city.label,
+                            required: true,
+                            type: 'text',
+                            autoComplete: 'address-level2',
+                        }}
+                    />
+
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.postcode.name}
+                        render={(textInput) => (
+                            <FormLine bottomGap isSmallInput>
+                                {textInput}
+                            </FormLine>
+                        )}
+                        textInputProps={{
+                            label: formMeta.fields.postcode.label,
+                            required: true,
+                            type: 'text',
+                            autoComplete: 'postal-code',
+                            inputMode: 'numeric',
+                        }}
+                    />
+                </FormColumn>
+
+                <FormLine>
+                    <Controller
+                        name={formMeta.fields.country.name}
+                        render={({ fieldState: { error }, field }) => (
+                            <>
+                                <Select
+                                    isRequired
+                                    label={formMeta.fields.country.label}
+                                    options={countriesAsSelectOptions}
+                                    tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                    activeOption={countriesAsSelectOptions.find(
+                                        (option) => option.value === field.value.value,
+                                    )}
+                                    onSelectOption={field.onChange}
+                                />
+                                <FormLineError error={error} inputType="select" />
+                            </>
+                        )}
+                    />
+                </FormLine>
+            </fieldset>
         </FormBlockWrapper>
     );
 };

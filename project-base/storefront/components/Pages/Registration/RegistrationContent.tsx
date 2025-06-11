@@ -75,25 +75,31 @@ export const RegistrationContent: FC = () => {
                             <RegistrationAddress />
 
                             <FormBlockWrapper>
-                                <CheckboxControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.gdprAgreement.name}
-                                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                    checkboxProps={{
-                                        label: formMeta.fields.gdprAgreement.label,
-                                        required: true,
-                                    }}
-                                />
-                                <CheckboxControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.newsletterSubscription.name}
-                                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                    checkboxProps={{
-                                        label: formMeta.fields.newsletterSubscription.label,
-                                    }}
-                                />
+                                <fieldset>
+                                    <legend className="sr-only">{t('Privacy policy')}</legend>
+
+                                    <CheckboxControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.gdprAgreement.name}
+                                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                        checkboxProps={{
+                                            label: formMeta.fields.gdprAgreement.label,
+                                            required: true,
+                                        }}
+                                    />
+
+                                    <CheckboxControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.newsletterSubscription.name}
+                                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                        checkboxProps={{
+                                            label: formMeta.fields.newsletterSubscription.label,
+                                        }}
+                                    />
+                                </fieldset>
+
                                 <FormButtonWrapper>
                                     <SubmitButton tid={TIDs.registration_submit_button}>{t('Sign up')}</SubmitButton>
                                 </FormButtonWrapper>

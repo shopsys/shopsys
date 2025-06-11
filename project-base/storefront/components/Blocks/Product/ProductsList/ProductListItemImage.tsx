@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 import { twJoin } from 'tailwind-merge';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 const ProductFlags = dynamic(() => import('../ProductFlags').then((component) => component.ProductFlags));
 
@@ -34,7 +35,7 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
     return (
         <div className="flex items-center justify-center" data-tid={tid || TIDs.product_list_item_image}>
             <Image
-                alt={product.mainImage?.name || product.fullName}
+                alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                 className={twJoin('object-contain mix-blend-multiply', imageSizeClassName)}
                 draggable={false}
                 height={imageSize}

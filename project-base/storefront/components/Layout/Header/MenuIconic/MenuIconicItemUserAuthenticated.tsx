@@ -42,7 +42,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 <MenuIconicItemLink
                     className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500"
                     tabIndex={-1}
-                    title={t('My account')}
+                    title={t('My account page')}
                     onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

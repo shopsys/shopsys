@@ -6,11 +6,13 @@ import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/Pr
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 type OrderItemProductCardProps = {
     availability: TypeAvailability;
     mainImage?: TypeImageFragment | null;
     fullName: string;
+    categoryName: string;
     quantity: number;
     unit: string | null;
     price: TypeProductPriceFragment;
@@ -19,6 +21,7 @@ type OrderItemProductCardProps = {
 const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
     mainImage,
     fullName,
+    categoryName,
     quantity,
     unit,
     price,
@@ -28,7 +31,8 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
         <li className="bg-background-more font-secondary flex flex-col gap-1 rounded-xl p-4">
             <div className="isolate flex items-center gap-2.5">
                 <Image
-                    alt={mainImage?.name || fullName}
+                    // alt={generateProductImageAlt(fullName, mainImage?.name ?? fullName)}
+                    alt={generateProductImageAlt(fullName, categoryName)}
                     className="size-auto max-h-20 max-w-20 mix-blend-multiply"
                     height={80}
                     src={mainImage?.url}

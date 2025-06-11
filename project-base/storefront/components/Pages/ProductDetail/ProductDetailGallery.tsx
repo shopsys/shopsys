@@ -9,6 +9,7 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 const ModalGallery = dynamic(() =>
     import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
@@ -20,6 +21,7 @@ type ProductDetailGalleryProps = {
     flags: TypeSimpleFlagFragment[];
     videoIds?: TypeVideoTokenFragment[];
     percentageDiscount: number | null;
+    categoryName?: string;
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
@@ -30,6 +32,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     productName,
     videoIds = [],
     percentageDiscount,
+    categoryName,
 }) => {
     const { t } = useTranslation();
     const [firstImage, ...additionalImages] = images;
@@ -54,7 +57,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                 >
                     <Image
                         priority
-                        alt={mainImage?.name || productName}
+                        alt={generateProductImageAlt(productName, categoryName)}
                         height={500}
                         sizes="(max-width: 1023px) 100vw, 500px"
                         src={mainImage?.url}
@@ -102,7 +105,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                         >
                                             {isImage && (
                                                 <Image
-                                                    alt={galleryItem.name || `${productName}-${index}`}
+                                                    alt={`${productName}-${index}`}
                                                     className="aspect-square object-contain object-center p-1 mix-blend-multiply"
                                                     height={64}
                                                     sizes="(max-width: 1023px) 60px, 56px"

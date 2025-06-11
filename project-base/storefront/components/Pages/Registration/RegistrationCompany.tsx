@@ -13,41 +13,48 @@ export const RegistrationCompany: FC = () => {
 
     return (
         <FormBlockWrapper>
-            <FormHeading>{t('Company data')}</FormHeading>
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.companyName.name}
-                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                textInputProps={{
-                    label: formMeta.fields.companyName.label,
-                    required: true,
-                    type: 'text',
-                    autoComplete: 'organization',
-                }}
-            />
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.companyNumber.name}
-                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                textInputProps={{
-                    label: formMeta.fields.companyNumber.label,
-                    required: true,
-                    type: 'text',
-                }}
-            />
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.companyTaxNumber.name}
-                render={(textInput) => <FormLine>{textInput}</FormLine>}
-                textInputProps={{
-                    label: formMeta.fields.companyTaxNumber.label,
-                    required: false,
-                    type: 'text',
-                }}
-            />
+            <fieldset>
+                <FormHeading>
+                    <legend>{t('Company data')}</legend>
+                </FormHeading>
+
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.companyName.name}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    textInputProps={{
+                        label: formMeta.fields.companyName.label,
+                        required: true,
+                        type: 'text',
+                        autoComplete: 'organization',
+                    }}
+                />
+
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.companyNumber.name}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    textInputProps={{
+                        label: formMeta.fields.companyNumber.label,
+                        required: true,
+                        type: 'text',
+                    }}
+                />
+
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.companyTaxNumber.name}
+                    render={(textInput) => <FormLine>{textInput}</FormLine>}
+                    textInputProps={{
+                        label: formMeta.fields.companyTaxNumber.label,
+                        required: false,
+                        type: 'text',
+                    }}
+                />
+            </fieldset>
         </FormBlockWrapper>
     );
 };

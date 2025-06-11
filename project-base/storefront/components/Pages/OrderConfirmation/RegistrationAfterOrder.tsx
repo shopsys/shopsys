@@ -102,42 +102,50 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     className="flex flex-col gap-4"
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
-                    <span className="h4">{t('Choose a password')}</span>
+                    <fieldset>
+                        <legend>
+                            <span className="h4">{t('Choose a password')}</span>
+                        </legend>
 
-                    <FormColumn className="gap-3">
-                        <PasswordInputControlled
+                        <FormColumn className="gap-3">
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.password.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.password.label,
+                                    autoComplete: 'new-password',
+                                }}
+                            />
+
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.passwordConfirm.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.passwordConfirm.label,
+                                    autoComplete: 'new-password-confirm',
+                                }}
+                            />
+                        </FormColumn>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend className="sr-only">{t('Privacy policy')}</legend>
+
+                        <CheckboxControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
-                            name={formMeta.fields.password.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.password.label,
-                                autoComplete: 'new-password',
+                            name={formMeta.fields.privacyPolicy.name}
+                            render={(checkbox) => <FormLine>{checkbox}</FormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.privacyPolicy.label,
+                                required: true,
                             }}
                         />
-
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.passwordConfirm.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.passwordConfirm.label,
-                                autoComplete: 'new-password-confirm',
-                            }}
-                        />
-                    </FormColumn>
-
-                    <CheckboxControlled
-                        control={formProviderMethods.control}
-                        formName={formMeta.formName}
-                        name={formMeta.fields.privacyPolicy.name}
-                        render={(checkbox) => <FormLine>{checkbox}</FormLine>}
-                        checkboxProps={{
-                            label: formMeta.fields.privacyPolicy.label,
-                            required: true,
-                        }}
-                    />
+                    </fieldset>
 
                     <SubmitButton
                         className="self-start"

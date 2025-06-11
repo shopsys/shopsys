@@ -11,6 +11,7 @@ import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { useDebounce } from 'utils/useDebounce';
 
 type CartListItemProps = {
@@ -60,7 +61,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                         type="product"
                     >
                         <Image
-                            alt={product.mainImage?.name || product.fullName}
+                            alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                             className="size-20 object-contain mix-blend-multiply"
                             height={80}
                             src={product.mainImage?.url}

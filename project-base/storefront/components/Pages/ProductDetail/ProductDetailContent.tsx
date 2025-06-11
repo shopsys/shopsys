@@ -46,6 +46,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
             <VerticalStack gap="md">
                 <Webline className="vl:flex-row flex flex-col gap-6">
                     <ProductDetailGallery
+                        categoryName={product.categories[0]?.name}
                         flags={product.flags}
                         images={product.images}
                         percentageDiscount={product.price.percentageDiscount}

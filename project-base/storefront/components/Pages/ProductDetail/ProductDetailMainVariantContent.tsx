@@ -51,6 +51,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <VerticalStack gap="md">
                 <Webline>
                     <ProductDetailGallery
+                        categoryName={product.categories[0]?.name}
                         flags={product.flags}
                         images={mainVariantImagesWithVariantImages}
                         percentageDiscount={product.price.percentageDiscount}

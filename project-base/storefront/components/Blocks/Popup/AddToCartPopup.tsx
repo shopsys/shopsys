@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
@@ -45,7 +46,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                         data-tid={TIDs.add_to_cart_popup_image}
                     >
                         <Image
-                            alt={product.mainImage.name || product.fullName}
+                            alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                             className="max-h-12 w-auto"
                             height={48}
                             src={product.mainImage.url}

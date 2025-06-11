@@ -2,6 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { useScrollTop } from 'utils/ui/useScrollTop';
 
 type ProductComparisonHeadStickyProps = {
@@ -53,7 +54,7 @@ const ProductComparisonHeadStickyContent = ({ comparedProducts, tableMarginLeft 
                 <a className="relative size-16" href={product.slug} tabIndex={0}>
                     <Image
                         fill
-                        alt={product.mainImage?.name || product.fullName}
+                        alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                         className="object-contain"
                         src={product.mainImage?.url}
                     />

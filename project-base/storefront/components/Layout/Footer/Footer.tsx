@@ -26,6 +26,8 @@ export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
 
     return (
         <div className="relative mt-auto">
+            <h2 className="sr-only">{t('Footer navigation')}</h2>
+
             <div className="flex flex-col pt-5 pb-11 lg:py-11">
                 {!simpleFooter && (
                     <>

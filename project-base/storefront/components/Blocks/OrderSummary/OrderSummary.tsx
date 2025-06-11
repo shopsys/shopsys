@@ -29,6 +29,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                 <OrderItemProductCard
                     key={item.uuid}
                     availability={item.product.availability}
+                    categoryName={item.product.categories[0]?.name}
                     fullName={item.product.fullName}
                     mainImage={item.product.mainImage}
                     price={item.product.price}

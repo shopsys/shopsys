@@ -1,4 +1,5 @@
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
@@ -21,6 +22,7 @@ export const BannersDot: FC<BannersDotProps> = ({
     slideInterval,
     totalItems,
 }) => {
+    const { t } = useTranslation();
     const dotRef = useRef<HTMLButtonElement>(null);
     const [start, setStart] = useState(false);
     const isDesktop = useMediaMin('vl');
@@ -42,7 +44,7 @@ export const BannersDot: FC<BannersDotProps> = ({
             key={sliderItem.uuid}
             ref={dotRef}
             tabIndex={0}
-            title={sliderItem.name}
+            title={`${t('Go to slide')} - ${sliderItem.name}`}
             className={twMergeCustom(
                 'bg-icon-less group relative block size-4 cursor-pointer rounded-full transition',
                 'vl:rounded-none vl:first-of-type:rounded-bl-md vl:last-of-type:rounded-br-md',

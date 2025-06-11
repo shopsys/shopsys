@@ -91,7 +91,7 @@ export const AddToCart: FC<AddToCartProps> = ({
                     name="add-to-cart"
                     size={buttonSize}
                     tid={TIDs.blocks_product_addtocart}
-                    title={t('Add to cart')}
+                    title={t('Add product to cart')}
                     variant={buttonVariant}
                     onClick={onAddToCartHandler}
                 >

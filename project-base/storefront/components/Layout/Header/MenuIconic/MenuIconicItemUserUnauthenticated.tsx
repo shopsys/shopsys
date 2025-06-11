@@ -47,7 +47,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                     className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 lg:w-[72px]"
                     tabIndex={-1}
                     tid={TIDs.layout_header_menuiconic_login_link_popup}
-                    title={t('Login')}
+                    title={t('Login form')}
                     onClick={() => !isDesktop && setIsActive(!isActive)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

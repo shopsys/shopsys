@@ -7,6 +7,7 @@ import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
 import { isPriceVisible } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;
@@ -34,7 +35,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     type="product"
                 >
                     <Image
-                        alt={product.mainImage?.name || product.fullName}
+                        alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                         className="size-20 object-contain"
                         height={80}
                         src={product.mainImage?.url}
