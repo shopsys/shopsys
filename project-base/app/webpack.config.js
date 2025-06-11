@@ -15,7 +15,6 @@ Encore
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
-    .addEntry('countup', './assets/js/admin/countup.js')
     .addEntry('admin', './assets/js/admin/admin.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()

@@ -4,6 +4,8 @@ import '../loadTranslations';
 
 import './grapesjs/initGrapesJs';
 
+import './countup';
+
 import '@tabler/core/dist/js/tabler';
 
 registerAdmin();
