@@ -804,6 +804,30 @@ jobs:
                     docker compose exec -T php-fpm php bin/console shopsys:cdn-domain-url:replace
                     docker compose exec -T php-fpm php bin/console shopsys:list:export-scopes
                     docker compose exec -T php-fpm php bin/console shopsys:dispatch:recalculations 1
+    license-check:
+        name: Check licenses
+        needs: build-php-fpm-image
+        if: |
+            always() && !failure() && !cancelled() &&
+            (
+                github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
+                github.ref_protected == true
+            ) &&
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Download docker-compose.yml from artifacts
+                uses: actions/download-artifact@v4
+                with:
+                    name: docker-compose
+            -   name: Build application
+                run: docker compose up -d php-fpm
+            -   name: Run license checker
+                run: docker compose exec -T php-fpm ./utils/license-checker.sh --quiet
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' &&
@@ -1057,7 +1081,7 @@ jobs:
         if: |
             always()
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront,]
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, license-check, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront,]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
@@ -1069,6 +1093,7 @@ jobs:
             TRANSLATIONS_DUMP_RESULT: ${{ needs.translations-dump-check.result }}
             REVIEW_RESULT: ${{ needs.review.result }}
             CHECK_CONSOLE_COMMANDS_RESULT: ${{ needs.check-console-commands.result }}
+            LICENSE_CHECK_RESULT: ${{ needs.license-check.result }}
             TESTS_STOREFRONT_SMOKE_RESULT: ${{ needs.tests-storefront-smoke.result }}
             TESTS_STOREFRONT_ACCEPTANCE_RESULT: ${{ needs.tests-storefront-acceptance.result }}
             UNIT_TESTS_STOREFRONT_RESULT: ${{ needs.unit-test-storefront.result }}
@@ -1081,5 +1106,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${LICENSE_CHECK_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
