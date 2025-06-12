@@ -1,3 +1,3 @@
 import './tabler-modules';
-import '@tabler/core/dist/js/tabler';
+import '@tabler/core';
 import './ajaxPopover';
