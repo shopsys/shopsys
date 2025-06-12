@@ -3,13 +3,14 @@ import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
-import { FormEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
+import { FormEventHandler, KeyboardEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 import { useDebounce } from 'utils/useDebounce';
 
 const { maxCartItemQuantity: MAX_CART_ITEM_QUANTITY } = VALIDATION_CONSTANTS;
+
 type SpinboxProps = {
     min: number;
     step: number;
@@ -19,72 +20,115 @@ type SpinboxProps = {
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
-const validateQuantityLimit = (newValue: number) => {
-    if (isNaN(newValue)) {
-        return true;
-    }
-
-    if (newValue > MAX_CART_ITEM_QUANTITY) {
-        return false;
-    }
-    return true;
-};
+const isValidNumber = (value: number): boolean => !isNaN(value);
+const isWithinMaxLimit = (value: number): boolean => value <= MAX_CART_ITEM_QUANTITY;
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
     ({ min, onChangeValueCallback, step, defaultValue, size = 'large', id }, spinboxForwardedRef) => {
         const { t } = useTranslation();
+
+        const [value, setValue] = useState<number>();
+        const [lastValidValue, setLastValidValue] = useState<number>(defaultValue);
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
-        const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
         const spinboxRef = useForwardedRef<HTMLInputElement>(spinboxForwardedRef);
-        const [value, setValue] = useState<number>();
+        const intervalRef = useRef<NodeJS.Timeout | null>(null);
         const debouncedValue = useDebounce(value, 500);
 
-        const validateNaNSpinboxValue = (newValue: number) => {
+        const restoreValueOnEmpty = (inputValue: number) => {
             if (!spinboxRef.current) {
                 return;
             }
 
-            if (isNaN(newValue)) {
-                spinboxRef.current.valueAsNumber = debouncedValue ?? min;
-            }
+            if (!isValidNumber(inputValue)) {
+                spinboxRef.current.valueAsNumber = lastValidValue;
+                setValue(lastValidValue);
 
-            if (onChangeValueCallback !== undefined && isNaN(newValue)) {
-                onChangeValueCallback(spinboxRef.current.valueAsNumber);
+                if (onChangeValueCallback) {
+                    onChangeValueCallback(lastValidValue);
+                }
             }
         };
 
-        const setNewSpinboxValue = (newValue: number) => {
+        const updateInputValue = (newValue: number) => {
             if (!spinboxRef.current) {
                 return;
             }
 
-            if (newValue > MAX_CART_ITEM_QUANTITY) {
-                spinboxRef.current.valueAsNumber = MAX_CART_ITEM_QUANTITY;
-                setValue(MAX_CART_ITEM_QUANTITY);
+            if (!isValidNumber(newValue)) {
+                setValue(undefined);
                 return;
             }
 
-            if (newValue < min) {
+            const integerValue = Math.round(newValue);
+
+            if (integerValue > MAX_CART_ITEM_QUANTITY) {
+                const clampedValue = MAX_CART_ITEM_QUANTITY;
+                spinboxRef.current.valueAsNumber = clampedValue;
+                setValue(clampedValue);
+                setLastValidValue(clampedValue);
+                return;
+            }
+
+            if (integerValue < min) {
                 spinboxRef.current.valueAsNumber = min;
+                setValue(min);
+                setLastValidValue(min);
             } else {
-                spinboxRef.current.valueAsNumber = newValue;
+                spinboxRef.current.valueAsNumber = integerValue;
+                setValue(integerValue);
+                setLastValidValue(integerValue);
             }
-
-            setValue(isNaN(newValue) ? debouncedValue : spinboxRef.current.valueAsNumber);
         };
 
-        const onChangeValueHandler = (amountChange: number) => {
-            if (spinboxRef.current !== null) {
-                const currentValue = spinboxRef.current.valueAsNumber;
-                if (isNaN(currentValue)) {
-                    return;
-                }
+        const handleValueChange = (amountChange: number) => {
+            if (!spinboxRef.current) {
+                return;
+            }
 
-                const newValue = currentValue + amountChange;
-                if (newValue <= MAX_CART_ITEM_QUANTITY) {
-                    setNewSpinboxValue(newValue);
+            const currentValue = spinboxRef.current.valueAsNumber;
+            if (!isValidNumber(currentValue)) {
+                return;
+            }
+
+            const newValue = currentValue + amountChange;
+            if (isWithinMaxLimit(newValue)) {
+                updateInputValue(newValue);
+            }
+        };
+
+        const handleBlur: FormEventHandler<HTMLInputElement> = (event) => {
+            if (!spinboxRef.current) {
+                return;
+            }
+
+            const inputValue = event.currentTarget.valueAsNumber;
+
+            if (isValidNumber(inputValue)) {
+                if (!isWithinMaxLimit(inputValue)) {
+                    updateInputValue(MAX_CART_ITEM_QUANTITY);
                 }
+            } else {
+                restoreValueOnEmpty(inputValue);
+            }
+
+            window.getSelection()?.removeAllRanges();
+        };
+
+        const handleInput: FormEventHandler<HTMLInputElement> = (event) => {
+            if (!spinboxRef.current) {
+                return;
+            }
+
+            const inputValue = event.currentTarget.valueAsNumber;
+            updateInputValue(inputValue);
+        };
+
+        const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+            // Prevent decimal point input for integer-only spinbox
+            if (event.key === '.' || event.key === ',') {
+                event.preventDefault();
             }
         };
 
@@ -94,38 +138,12 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             }
         };
 
-        const onBlurHandler: FormEventHandler<HTMLInputElement> = (event) => {
-            if (spinboxRef.current !== null) {
-                const inputValue = event.currentTarget.valueAsNumber;
-
-                if (!isNaN(inputValue)) {
-                    if (!validateQuantityLimit(inputValue)) {
-                        event.currentTarget.valueAsNumber = MAX_CART_ITEM_QUANTITY;
-                        setValue(MAX_CART_ITEM_QUANTITY);
-                    }
-                } else {
-                    validateNaNSpinboxValue(inputValue);
-                }
-
-                window.getSelection()?.removeAllRanges();
-            }
-        };
-
-        const onInputHandler: FormEventHandler<HTMLInputElement> = (event) => {
-            if (spinboxRef.current !== null) {
-                const inputValue = event.currentTarget.valueAsNumber;
-
-                if (isNaN(inputValue) || inputValue <= MAX_CART_ITEM_QUANTITY) {
-                    setNewSpinboxValue(inputValue);
-                } else {
-                    event.currentTarget.valueAsNumber = MAX_CART_ITEM_QUANTITY;
-                    setNewSpinboxValue(MAX_CART_ITEM_QUANTITY);
-                }
-            }
-        };
-
         useEffect(() => {
-            setValue(spinboxRef.current?.valueAsNumber);
+            const currentValue = spinboxRef.current?.valueAsNumber;
+            if (currentValue !== undefined && isValidNumber(currentValue)) {
+                setValue(currentValue);
+                setLastValidValue(currentValue);
+            }
         }, [spinboxRef]);
 
         useEffect(() => {
@@ -137,11 +155,11 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         useEffect(() => {
             if (isHoldingIncrease) {
                 intervalRef.current = setInterval(() => {
-                    onChangeValueHandler(step);
+                    handleValueChange(step);
                 }, 200);
             } else if (isHoldingDecrease) {
                 intervalRef.current = setInterval(() => {
-                    onChangeValueHandler(-step);
+                    handleValueChange(-step);
                 }, 200);
             } else {
                 clearSpinboxInterval(intervalRef.current);
@@ -165,7 +183,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
                     title={t('Decrease')}
-                    onClick={() => onChangeValueHandler(-step)}
+                    onClick={() => handleValueChange(-step)}
                     onMouseDown={() => setIsHoldingDecrease(true)}
                     onMouseLeave={() => setIsHoldingDecrease(false)}
                     onMouseUp={() => setIsHoldingDecrease(false)}
@@ -179,14 +197,16 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     max={MAX_CART_ITEM_QUANTITY}
                     min={min}
                     ref={spinboxRef}
+                    step={step}
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
                         'font-secondary text-input-text-default text-center text-lg font-bold outline-hidden',
                         size === 'xlarge' ? 'w-10' : 'w-8',
                     )}
-                    onBlur={onBlurHandler}
-                    onInput={onInputHandler}
+                    onBlur={handleBlur}
+                    onInput={handleInput}
+                    onKeyDown={handleKeyDown}
                 />
 
                 <SpinboxButton
@@ -194,7 +214,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}
-                    onClick={() => onChangeValueHandler(step)}
+                    onClick={() => handleValueChange(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}
                     onMouseLeave={() => setIsHoldingIncrease(false)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
