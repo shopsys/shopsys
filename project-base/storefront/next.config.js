@@ -5,6 +5,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
 
+// Sentry feature flags
+const isSentryReplaysEnabled = process.env.SENTRY_REPLAYS_ENABLE === '1';
+const isSentryFeedbackEnabled = process.env.SENTRY_FEEDBACK_ENABLE === '1';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
@@ -35,6 +39,8 @@ const nextConfig = {
         cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn: process.env.SENTRY_DSN ?? '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
+        sentryFeedbackEnable: isSentryFeedbackEnabled,
+        sentryReplaysEnable: isSentryReplaysEnabled,
         errorDebuggingLevel: process.env.ERROR_DEBUGGING_LEVEL,
         showSymfonyToolbar: process.env.SHOW_SYMFONY_TOOLBAR,
         shouldUseDefer: process.env.SHOULD_USE_DEFER === '1',
@@ -127,10 +133,11 @@ const sentryConfig = {
     disableLogger: true,
     bundleSizeOptimizations: {
         excludeDebugStatements: true,
-        // all bellow - remove (set false) if you want to use replays
-        excludeReplayShadowDom: true,
-        excludeReplayIframe: true,
-        excludeReplayWorker: true,
+        excludeTracing: process.env.APP_ENV === 'development',
+        // Exclude replay code from bundle when replays are disabled
+        excludeReplayShadowDom: !isSentryReplaysEnabled,
+        excludeReplayIframe: !isSentryReplaysEnabled,
+        excludeReplayWorker: !isSentryReplaysEnabled,
     },
 };
 
