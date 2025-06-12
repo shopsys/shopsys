@@ -146,13 +146,23 @@ describe('Cart Page Tests', () => {
 
     it('[Quantity Spinbox Decrease] min spinbox button should not be clickable if it cannot be used due to min quantity', function () {
         checkCartItemSpinboxDecreaseButtonIsDisabled(products.philips32PFL4308.catnum);
-        changeCartItemQuantityWithSpinboxInput(998, products.philips32PFL4308.catnum);
+        cy.getByTID([[TIDs.pages_cart_list_item_, products.philips32PFL4308.catnum], TIDs.spinbox_input])
+            .clear()
+            .type('50')
+            .trigger('input')
+            .blur();
+        cy.wait(200);
         checkCartItemSpinboxDecreaseButtonIsEnabled(products.philips32PFL4308.catnum);
     });
 
     it('[Quantity Spinbox Increase] max spinbox button should be always clickable', function () {
         checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
-        changeCartItemQuantityWithSpinboxInput(998, products.philips32PFL4308.catnum);
+        cy.getByTID([[TIDs.pages_cart_list_item_, products.philips32PFL4308.catnum], TIDs.spinbox_input])
+            .clear()
+            .type('50')
+            .trigger('input')
+            .blur();
+        cy.wait(200);
         checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
     });
 

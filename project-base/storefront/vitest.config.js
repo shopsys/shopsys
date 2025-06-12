@@ -7,10 +7,11 @@ export default defineConfig({
     test: {
         environment: 'jsdom',
         rootDir: './',
-        testMatch: ['vitest/**/*.test.js'],
+        testMatch: ['vitest/**/*.test.{js,ts,tsx}'],
         clearMocks: true,
         restoreMocks: true,
-        setupFiles: 'dotenv/config',
+        setupFiles: ['dotenv/config', 'vitest/setup.ts'],
+        globals: true,
     },
     resolve: {
         moduleDirectories: [
