@@ -32,6 +32,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PROMO_CODE_FOR_NEW_PRODUCT = 'promo_code_for_new_product';
     public const string PROMO_CODE_FOR_FREE_TRANSPORT_PAYMENT = 'promo_code_for_free_transport_and_payemnt';
     public const string VALID_PROMO_CODE_NOMINAL = 'valid_promo_code_nominal';
+    public const string DISABLED_PROMO_CODE_NOMINAL = 'disabled_promo_code_nominal';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
@@ -141,6 +142,15 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultNominalLimit($promoCode);
         $this->addReferenceForDomain(self::VALID_PROMO_CODE_NOMINAL, $promoCode, $domainId);
+
+        $promoCodeData = $this->promoCodeDataFactory->create();
+        $promoCodeData->code = 'test-disabled';
+        $promoCodeData->discountType = PromoCodeTypeEnum::DISCOUNT_TYPE_NOMINAL;
+        $promoCodeData->domainId = $domainId;
+        $promoCodeData->enabled = false;
+        $promoCode = $this->promoCodeFacade->create($promoCodeData);
+        $this->setDefaultNominalLimit($promoCode);
+        $this->addReferenceForDomain(self::DISABLED_PROMO_CODE_NOMINAL, $promoCode, $domainId);
 
         $this->createFreeTransportAndPaymentPromoCode($domainId);
 

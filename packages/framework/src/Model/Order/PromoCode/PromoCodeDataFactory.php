@@ -82,5 +82,6 @@ class PromoCodeDataFactory
         $promoCodeData->limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId());
         $promoCodeData->massGenerate = $promoCode->isMassGenerate();
         $promoCodeData->prefix = $promoCode->getPrefix();
+        $promoCodeData->enabled = $promoCode->isEnabled();
     }
 }

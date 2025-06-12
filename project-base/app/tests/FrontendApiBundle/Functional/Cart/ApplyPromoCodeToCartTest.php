@@ -259,6 +259,21 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertEquals($expectedError, $violations['input.promoCode'][0]['code']);
     }
 
+    public function testApplyDisabledPromoCode(): void
+    {
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::DISABLED_PROMO_CODE_NOMINAL, 1, PromoCode::class);
+        $promoCodeCode = $promoCode->getCode();
+
+        $response = $this->applyPromoCodeToCart($promoCodeCode);
+
+        self::assertArrayHasKey('errors', $response);
+
+        $violations = $this->getErrorsExtensionValidationFromResponse($response);
+
+        self::assertArrayHasKey('input.promoCode', $violations);
+        self::assertEquals(PromoCodeConstraint::INVALID_ERROR, $violations['input.promoCode'][0]['code']);
+    }
+
     /**
      * @return iterable
      */

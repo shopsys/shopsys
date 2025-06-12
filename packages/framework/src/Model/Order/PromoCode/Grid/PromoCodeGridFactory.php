@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -48,6 +49,14 @@ class PromoCodeGridFactory implements GridFactoryInterface
             ->setParameter('domainId', $this->adminDomainTabsFacade->getSelectedDomainId());
 
         $manipulator = function ($row) {
+            $now = new DateTime('now');
+
+            $row['pc']['isActive'] = $row['pc']['enabled'] &&
+                ($row['pc']['datetimeValidFrom'] === null || $row['pc']['datetimeValidFrom'] <= $now) &&
+                ($row['pc']['datetimeValidTo'] === null || $row['pc']['datetimeValidTo'] >= $now) &&
+                ($row['pc']['remainingUses'] === null || $row['pc']['remainingUses'] > 0);
+
+
             $row['pc']['percent'] = $this->getLimitsByPromoCodeId($row['pc']['id']);
 
             return $row;
@@ -66,6 +75,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
         $grid->addColumn('code', 'pc.code', t('Code'), true);
         $grid->addColumn('percent', 'pc.percent', t('Discount'));
         $grid->addColumn('prefix', 'pc.prefix', t('Prefix'));
+        $grid->addColumn('active', 'pc.enabled', t('Active'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         if ($withEditButton === true) {

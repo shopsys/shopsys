@@ -203,6 +203,16 @@ class CurrentPromoCodeFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    protected function validateEnabled(PromoCode $promoCode): void
+    {
+        if (!$promoCode->isEnabled()) {
+            throw new InvalidPromoCodeException($promoCode->getCode());
+        }
+    }
+
+    /**
      * @param string $enteredCode
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
@@ -235,6 +245,7 @@ class CurrentPromoCodeFacade
             throw new AvailableForRegisteredCustomerUserOnly($promoCode->getCode());
         }
 
+        $this->validateEnabled($promoCode);
         $this->validatePricingGroup($promoCode);
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainingUses($promoCode);

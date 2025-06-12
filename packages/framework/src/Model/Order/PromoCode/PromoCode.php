@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -87,6 +88,12 @@ class PromoCode
     protected $massGenerateBatchId;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -117,6 +124,7 @@ class PromoCode
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
         $this->massGenerateBatchId = $promoCodeData->massGenerateBatchId;
+        $this->enabled = $promoCodeData->enabled;
     }
 
     /**
@@ -212,5 +220,13 @@ class PromoCode
     public function isFreeTransportAndPaymentType(): bool
     {
         return $this->discountType === PromoCodeTypeEnum::DISCOUNT_TYPE_FREE_TRANSPORT_PAYMENT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 }

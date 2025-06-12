@@ -72,7 +72,7 @@ class PromoCodeData
     public $limitedPricingGroups = [];
 
     /**
-     * @var bool|null
+     * @var bool
      */
     public $massGenerate = false;
 
@@ -90,6 +90,11 @@ class PromoCodeData
      * @var int|null
      */
     public $quantity;
+
+    /**
+     * @var bool
+     */
+    public $enabled = true;
 
     public function __clone()
     {

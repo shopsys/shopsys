@@ -146,6 +146,10 @@ final class PromoCodeFormType extends AbstractType
             ->add('remainingUses', IntegerType::class, [
                 'label' => t('Remaining number of uses'),
                 'required' => false,
+            ])
+            ->add('enabled', YesNoType::class, [
+                'label' => t('Enabled'),
+                'required' => true,
             ]);
     }
 
