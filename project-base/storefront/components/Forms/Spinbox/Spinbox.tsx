@@ -1,5 +1,6 @@
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
+import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
@@ -8,6 +9,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 import { useDebounce } from 'utils/useDebounce';
 
+const { maxCartItemQuantity: MAX_CART_ITEM_QUANTITY } = VALIDATION_CONSTANTS;
 type SpinboxProps = {
     min: number;
     step: number;
@@ -15,6 +17,17 @@ type SpinboxProps = {
     id: string;
     onChangeValueCallback?: (currentValue: number) => void;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
+};
+
+const validateQuantityLimit = (newValue: number) => {
+    if (isNaN(newValue)) {
+        return true;
+    }
+
+    if (newValue > MAX_CART_ITEM_QUANTITY) {
+        return false;
+    }
+    return true;
 };
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
@@ -46,6 +59,12 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 return;
             }
 
+            if (newValue > MAX_CART_ITEM_QUANTITY) {
+                spinboxRef.current.valueAsNumber = MAX_CART_ITEM_QUANTITY;
+                setValue(MAX_CART_ITEM_QUANTITY);
+                return;
+            }
+
             if (newValue < min) {
                 spinboxRef.current.valueAsNumber = min;
             } else {
@@ -57,7 +76,15 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         const onChangeValueHandler = (amountChange: number) => {
             if (spinboxRef.current !== null) {
-                setNewSpinboxValue(spinboxRef.current.valueAsNumber + amountChange);
+                const currentValue = spinboxRef.current.valueAsNumber;
+                if (isNaN(currentValue)) {
+                    return;
+                }
+
+                const newValue = currentValue + amountChange;
+                if (newValue <= MAX_CART_ITEM_QUANTITY) {
+                    setNewSpinboxValue(newValue);
+                }
             }
         };
 
@@ -69,14 +96,31 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         const onBlurHandler: FormEventHandler<HTMLInputElement> = (event) => {
             if (spinboxRef.current !== null) {
-                validateNaNSpinboxValue(event.currentTarget.valueAsNumber);
+                const inputValue = event.currentTarget.valueAsNumber;
+
+                if (!isNaN(inputValue)) {
+                    if (!validateQuantityLimit(inputValue)) {
+                        event.currentTarget.valueAsNumber = MAX_CART_ITEM_QUANTITY;
+                        setValue(MAX_CART_ITEM_QUANTITY);
+                    }
+                } else {
+                    validateNaNSpinboxValue(inputValue);
+                }
+
                 window.getSelection()?.removeAllRanges();
             }
         };
 
         const onInputHandler: FormEventHandler<HTMLInputElement> = (event) => {
             if (spinboxRef.current !== null) {
-                setNewSpinboxValue(event.currentTarget.valueAsNumber);
+                const inputValue = event.currentTarget.valueAsNumber;
+
+                if (isNaN(inputValue) || inputValue <= MAX_CART_ITEM_QUANTITY) {
+                    setNewSpinboxValue(inputValue);
+                } else {
+                    event.currentTarget.valueAsNumber = MAX_CART_ITEM_QUANTITY;
+                    setNewSpinboxValue(MAX_CART_ITEM_QUANTITY);
+                }
             }
         };
 
@@ -132,6 +176,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
                     defaultValue={defaultValue}
+                    max={MAX_CART_ITEM_QUANTITY}
                     min={min}
                     ref={spinboxRef}
                     tid={TIDs.spinbox_input}
@@ -145,7 +190,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 />
 
                 <SpinboxButton
-                    disabled={false}
+                    disabled={value === MAX_CART_ITEM_QUANTITY}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}
