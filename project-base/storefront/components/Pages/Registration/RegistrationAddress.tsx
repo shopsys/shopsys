@@ -88,6 +88,7 @@ export const RegistrationAddress: FC = () => {
                             <>
                                 <Select
                                     isRequired
+                                    ariaLabel={t('Select country')}
                                     label={formMeta.fields.country.label}
                                     options={countriesAsSelectOptions}
                                     tid={formMeta.formName + '-' + formMeta.fields.country.name}

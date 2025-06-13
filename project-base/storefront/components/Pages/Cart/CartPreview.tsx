@@ -79,6 +79,7 @@ export const CartPreview: FC = () => {
                 )}
 
             <Button
+                aria-label={t('Continue with order to {{ step }}', { step: t('Transport and payment') })}
                 className="mt-4"
                 size="xlarge"
                 tid={TIDs.blocks_orderaction_next}

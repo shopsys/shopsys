@@ -4,6 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductCompareButtonProps = {
+    productName: string;
     isWithText?: boolean;
     isProductInComparison: boolean;
     toggleProductInComparison: () => void;
@@ -11,6 +12,7 @@ type ProductCompareButtonProps = {
 
 export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     className,
+    productName,
     isWithText,
     isProductInComparison,
     toggleProductInComparison,
@@ -22,6 +24,15 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             aria-haspopup="dialog"
             tabIndex={0}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
+            aria-label={
+                isProductInComparison
+                    ? t('Remove product {{ productName }} from comparison', {
+                          productName: productName,
+                      })
+                    : t('Add product {{ productName }} to comparison', {
+                          productName: productName,
+                      })
+            }
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',
                 'rounded-sm outline-none',

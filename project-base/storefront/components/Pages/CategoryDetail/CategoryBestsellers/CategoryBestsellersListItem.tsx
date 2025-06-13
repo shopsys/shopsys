@@ -9,6 +9,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
+import useTranslation from 'next-translate/useTranslation';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;
@@ -21,6 +22,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     gtmProductListName,
     listIndex,
 }) => {
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { canSeePrices } = useAuthorization();
 
@@ -28,6 +30,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     return (
         <ExtendedNextLink
+            aria-label={t('Go to bestseller product page of {{ productName }}', { productName: product.fullName })}
             className="hover:bg-background-default flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:no-underline"
             draggable={false}
             href={productUrl}

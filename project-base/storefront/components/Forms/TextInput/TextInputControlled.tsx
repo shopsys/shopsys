@@ -19,6 +19,8 @@ type TextInputControlledProps = {
         | 'autoComplete'
         | 'className'
         | 'inputMode'
+        | 'aria-label'
+        | 'aria-labelledby'
     >;
     control: Control<any>;
     formName: string;

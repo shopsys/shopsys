@@ -74,6 +74,7 @@ export const useWatchdogFormMeta = (formProviderMethods: UseFormReturn<WatchdogF
                                 lnk1: privacyPolicyArticleUrl ? (
                                     <Link
                                         isExternal
+                                        aria-label={t('Go to privacy policy article')}
                                         className="inline text-sm"
                                         href={privacyPolicyArticleUrl}
                                         target="_blank"

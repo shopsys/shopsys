@@ -32,6 +32,7 @@ export const StyleguideSelects: FC = () => {
         <StyleguideSection className="flex max-w-96 flex-col gap-3" title="Selects">
             <Select
                 activeOption={selectedBasicOption}
+                ariaLabel={t('Select basic')}
                 label="Basic select"
                 options={colourOptions}
                 tid="styleguide-selects-basic-select"
@@ -41,6 +42,7 @@ export const StyleguideSelects: FC = () => {
             <Select
                 isLoading
                 activeOption={selectedBasicOption}
+                ariaLabel={t('Select loading')}
                 label="Loading select"
                 options={colourOptions}
                 tid="styleguide-selects-basic-select"
@@ -50,6 +52,7 @@ export const StyleguideSelects: FC = () => {
             <Select
                 isDisabled
                 activeOption={null}
+                ariaLabel={t('Select disabled')}
                 label="Disabled select"
                 options={[]}
                 tid="styleguide-selects-disabled-select"
@@ -58,6 +61,7 @@ export const StyleguideSelects: FC = () => {
 
             <Select
                 activeOption={selectedComboBoxOption}
+                ariaLabel={t('Select combobox')}
                 label="ComboBox select"
                 options={colourOptions}
                 placeholder={selectedComboBoxOption?.label || t('Search')}
@@ -77,6 +81,7 @@ export const StyleguideSelects: FC = () => {
 
             <Select
                 activeOption={selectedInfiniteOption}
+                ariaLabel={t('Select infinite')}
                 label="Infinite scroll select"
                 options={infiniteOptions}
                 tid="styleguide-selects-infinite-select"

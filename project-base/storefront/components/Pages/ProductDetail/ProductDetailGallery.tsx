@@ -95,6 +95,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                 <Fragment key={index}>
                                     <li>
                                         <button
+                                            aria-label={t('Open image gallery of {{ productName }}', { productName })}
                                             tabIndex={0}
                                             title={t('View product image')}
                                             className={twJoin(
@@ -138,6 +139,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                 className="outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
                                                 tabIndex={0}
                                                 title={t('View product image')}
+                                                aria-label={t('Open image gallery of {{ productName }}', {
+                                                    productName,
+                                                })}
                                                 onClick={() => setSelectedGalleryItemIndex(index + 2)}
                                             >
                                                 <span className="text-text-accent font-secondary text-sm font-semibold">

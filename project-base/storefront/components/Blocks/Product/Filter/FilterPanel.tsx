@@ -45,7 +45,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
     return (
         <div className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1">
-            <AccessibleLink className="rounded-md" href="#product-list" title="Skip filters" />
+            <AccessibleLink className="rounded-md" href="#product-list" title={t('Skip filters')} />
 
             <div className="vl:hidden flex items-center justify-between p-5">
                 <span className="h5">{t('Product filter')}</span>
@@ -66,6 +66,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <div className="divide-border-less divide-y">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
+                            ariaLabel={t('Filter by price')}
                             initialMaxPrice={filterOptions.maximalPrice}
                             initialMinPrice={filterOptions.minimalPrice}
                             isActive={activePriceFilter}
@@ -75,6 +76,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                     {!!filterOptions.flags?.length && (
                         <FilterGroupGeneric
+                            ariaLabel={t('Filter by flags')}
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_FLAGS}
                             filterField="flags"
                             isActive={activeFlagFilter}
@@ -85,6 +87,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                     {!!filterOptions.brands?.length && (
                         <FilterGroupGeneric
+                            ariaLabel={t('Filter by brands')}
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_BRANDS}
                             filterField="brands"
                             isActive={activeBrandFilter}

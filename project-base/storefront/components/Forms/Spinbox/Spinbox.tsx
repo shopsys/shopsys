@@ -24,7 +24,7 @@ const isValidNumber = (value: number): boolean => !isNaN(value);
 const isWithinMaxLimit = (value: number): boolean => value <= MAX_CART_ITEM_QUANTITY;
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
-    ({ min, onChangeValueCallback, step, defaultValue, size = 'large', id }, spinboxForwardedRef) => {
+    ({ min, onChangeValueCallback, step, defaultValue, size = 'large' }, spinboxForwardedRef) => {
         const { t } = useTranslation();
 
         const [value, setValue] = useState<number>();
@@ -179,6 +179,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 )}
             >
                 <SpinboxButton
+                    ariaLabel={t('Decrease quantity')}
                     disabled={value === min}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
@@ -192,7 +193,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 </SpinboxButton>
 
                 <input
-                    aria-label={`${t('Quantity')} ${id}`}
+                    aria-label={t('Quantity')}
                     data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
                     max={MAX_CART_ITEM_QUANTITY}
@@ -211,6 +212,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 />
 
                 <SpinboxButton
+                    ariaLabel={t('Increase quantity')}
                     disabled={value === MAX_CART_ITEM_QUANTITY}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
@@ -237,12 +239,15 @@ type SpinboxButtonProps = {
     title: string;
     disabled: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
+    ariaLabel: string;
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, ...props }) => (
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, tid, title, ariaLabel, ...props }) => (
     <button
+        aria-label={ariaLabel}
         data-tid={tid}
         tabIndex={disabled ? -1 : 0}
+        title={title}
         className={twMergeCustom([
             'text-icon-less hover:text-icon-default flex cursor-pointer justify-center rounded-sm border-none outline-none',
             size === 'xlarge' ? 'w-10' : 'w-7',

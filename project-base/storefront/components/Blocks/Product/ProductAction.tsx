@@ -63,7 +63,13 @@ export const ProductAction: FC<ProductActionProps> = ({
 
     if (product.isMainVariant) {
         return (
-            <LinkButton href={product.slug} type="productMainVariant">
+            <LinkButton
+                href={product.slug}
+                type="productMainVariant"
+                aria-label={t('Go to page with product variants of {{ productName }}', {
+                    productName: product.fullName,
+                })}
+            >
                 {t('Choose')}
             </LinkButton>
         );
@@ -71,6 +77,7 @@ export const ProductAction: FC<ProductActionProps> = ({
 
     return (
         <AddToCart
+            ariaLabel={t('Add to cart product {{ productName }}', { productName: product.fullName })}
             buttonSize={buttonSize}
             buttonVariant={buttonVariant}
             gtmMessageOrigin={gtmMessageOrigin}

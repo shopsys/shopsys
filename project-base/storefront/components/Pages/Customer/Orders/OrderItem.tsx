@@ -43,6 +43,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         <ExtendedNextLink
                             className="font-bold"
                             type="orderDetail"
+                            aria-label={t('Go to order detail number {{ orderNumber }}', {
+                                orderNumber: order.number,
+                            })}
                             href={{
                                 pathname: customerOrderDetailUrl,
                                 query: { orderNumber: order.number },
@@ -85,6 +88,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <Button
                         tid={TIDs.order_list_repeat_order_button}
                         variant="inverted"
+                        aria-label={t('Repeat order number {{ orderNumber }}', {
+                            orderNumber: order.number,
+                        })}
                         onClick={() => addOrderItemsToEmptyCart(order.uuid)}
                     >
                         {t('Repeat order')}
@@ -95,6 +101,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <LinkButton
                         type="orderDetail"
                         variant="primary"
+                        aria-label={t('Repeat payment for order number {{ orderNumber }}', {
+                            orderNumber: order.number,
+                        })}
                         href={{
                             pathname: customerOrderDetailUrl,
                             query: { orderNumber: order.number },
@@ -108,6 +117,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     tid={TIDs.my_orders_link_ + listIndex}
                     type="orderDetail"
                     variant="secondary"
+                    aria-label={t('Go to order detail number {{ orderNumber }}', {
+                        orderNumber: order.number,
+                    })}
                     href={{
                         pathname: customerOrderDetailUrl,
                         query: { orderNumber: order.number },

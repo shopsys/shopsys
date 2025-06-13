@@ -22,6 +22,7 @@ type MenuIconicItemLinkProps = {
     onTouchEnd?: (e: ReactTouchEvent<HTMLButtonElement>) => void;
     isActive?: boolean;
     tabIndex?: number;
+    ariaLabel?: string;
 };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
@@ -31,6 +32,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     type,
     tid,
     isActive = false,
+    ariaLabel,
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
         'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md',
@@ -40,6 +42,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     if (href) {
         return (
             <ExtendedNextLink
+                aria-label={ariaLabel}
                 className={menuIconicSubItemLinkTwClass}
                 href={href}
                 tabIndex={0}
@@ -54,6 +57,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
 
     return (
         <button
+            aria-label={ariaLabel}
             className={twJoin(menuIconicSubItemLinkTwClass, 'outline-none')}
             data-tid={tid}
             tabIndex={0}

@@ -216,6 +216,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                         <>
                                             <Select
                                                 isRequired
+                                                ariaLabel={t('Select country')}
                                                 label={formMeta.fields.country.label}
                                                 options={countriesAsSelectOptions}
                                                 tid={formMeta.formName + '-' + formMeta.fields.country.name}
@@ -230,7 +231,9 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 />
                             </FormLine>
                             <FormButtonWrapper>
-                                <SubmitButton>{t('Save')}</SubmitButton>
+                                <SubmitButton aria-label={t('Submit form to save delivery address')}>
+                                    {t('Save')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

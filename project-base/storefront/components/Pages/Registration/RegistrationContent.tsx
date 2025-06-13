@@ -54,6 +54,10 @@ export const RegistrationContent: FC = () => {
             <VerticalStack gap="sm">
                 <h1>{t('New customer registration')}</h1>
 
+                <p className="sr-only" id="registration-form-description">
+                    {t('Registration form for registering a new customer. Please fill all required fields.')}
+                </p>
+
                 <FormProvider {...formProviderMethods}>
                     <Form
                         className="flex w-full max-w-3xl justify-center"
@@ -101,7 +105,12 @@ export const RegistrationContent: FC = () => {
                                 </fieldset>
 
                                 <FormButtonWrapper>
-                                    <SubmitButton tid={TIDs.registration_submit_button}>{t('Sign up')}</SubmitButton>
+                                    <SubmitButton
+                                        aria-label={t('Submit form to sign up for new account')}
+                                        tid={TIDs.registration_submit_button}
+                                    >
+                                        {t('Sign up')}
+                                    </SubmitButton>
                                 </FormButtonWrapper>
                             </FormBlockWrapper>
                         </FormContentWrapper>

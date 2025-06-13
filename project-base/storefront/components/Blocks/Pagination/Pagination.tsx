@@ -76,30 +76,32 @@ export const Pagination: FC<PaginationProps> = ({
                 </Button>
             )}
 
-            <div className="ml-auto flex gap-1">
-                {paginationButtons.map((pageNumber, index, array) => {
-                    const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
-                    const pageParams = urlPageNumber
-                        ? new URLSearchParams({ ...queryParams, page: urlPageNumber }).toString()
-                        : undefined;
-                    const pageHref = `${asPathWithoutQueryParams}${pageParams ? `?${pageParams}` : ''}`;
+            <nav aria-label={t('Pagination navigation')} className="ml-auto">
+                <div className="flex gap-1">
+                    {paginationButtons.map((pageNumber, index, array) => {
+                        const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
+                        const pageParams = urlPageNumber
+                            ? new URLSearchParams({ ...queryParams, page: urlPageNumber }).toString()
+                            : undefined;
+                        const pageHref = `${asPathWithoutQueryParams}${pageParams ? `?${pageParams}` : ''}`;
 
-                    return (
-                        <Fragment key={pageNumber}>
-                            {isDotKey(array[index - 1] ?? null, pageNumber) && (
-                                <PaginationButton isDotButton>&#8230;</PaginationButton>
-                            )}
-                            {currentPageWithLoadMore === pageNumber ? (
-                                <PaginationButton isActive>{pageNumber}</PaginationButton>
-                            ) : (
-                                <PaginationButton href={pageHref} onClick={onChangePage(pageNumber)}>
-                                    {pageNumber}
-                                </PaginationButton>
-                            )}
-                        </Fragment>
-                    );
-                })}
-            </div>
+                        return (
+                            <Fragment key={pageNumber}>
+                                {isDotKey(array[index - 1] ?? null, pageNumber) && (
+                                    <PaginationButton isDotButton>&#8230;</PaginationButton>
+                                )}
+                                {currentPageWithLoadMore === pageNumber ? (
+                                    <PaginationButton isActive>{pageNumber}</PaginationButton>
+                                ) : (
+                                    <PaginationButton href={pageHref} onClick={onChangePage(pageNumber)}>
+                                        {pageNumber}
+                                    </PaginationButton>
+                                )}
+                            </Fragment>
+                        );
+                    })}
+                </div>
+            </nav>
         </div>
     );
 };
@@ -118,6 +120,8 @@ type PaginationButtonProps = {
 const PaginationButton: FC<PaginationButtonProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, isActive, isDotButton, href, onClick }, _) => {
+        const { t } = useTranslation();
+
         const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
             e.preventDefault();
 
@@ -130,7 +134,10 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
 
         return (
             <Tag
+                aria-current={isActive ? 'page' : undefined}
+                aria-label={!isActive ? t('Go to page {{ page }}', { page: children }) : undefined}
                 href={href}
+                tabIndex={0}
                 className={twJoin(
                     'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',

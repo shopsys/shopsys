@@ -4,6 +4,7 @@ import {
     FilterGroupTitle,
     FilterGroupWrapper,
     ShowAllButton,
+    createFilterGroupId,
 } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
@@ -60,6 +61,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel={t('Filter by parameter') + ' ' + title}
                 isActive={isActive}
                 isOpen={!isGroupCollapsed}
                 title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}
@@ -68,7 +70,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
             <AnimatePresence initial={false}>
                 {!isGroupCollapsed && (
-                    <FilterGroupContent>
+                    <FilterGroupContent id={createFilterGroupId(title)}>
                         {isCheckboxType && (
                             <>
                                 {defaultOptions.map((parameterValueOption, index) => {

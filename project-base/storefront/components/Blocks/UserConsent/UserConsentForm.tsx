@@ -52,6 +52,10 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
     return (
         <FormProvider {...formProviderMethods}>
+            <p className="sr-only" id="user-consent-policy-link">
+                {t('This page is about the consent and tracking policy. You can read more about it here.')}
+            </p>
+
             <p>
                 <Trans
                     defaultTrans="To learn more, you can read our <link>consent and tracking policy</link>"
@@ -59,6 +63,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     components={{
                         link: userConsentPolicyArticleUrl ? (
                             <a
+                                aria-labelledby="user-consent-policy-link"
                                 href={userConsentPolicyArticleUrl}
                                 rel="noreferrer"
                                 tabIndex={0}
@@ -74,6 +79,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
             <div className="bg-background-more vl:p-8 flex flex-col gap-4 rounded-xl p-4">
                 <ToggleSwitchControlled
+                    ariaLabel={t('Toggle marketing consent')}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.marketing.name}
@@ -81,6 +87,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 />
 
                 <ToggleSwitchControlled
+                    ariaLabel={t('Toggle statistics consent')}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.statistics.name}
@@ -88,6 +95,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 />
 
                 <ToggleSwitchControlled
+                    ariaLabel={t('Toggle preferences consent')}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.preferences.name}
@@ -96,15 +104,24 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             </div>
 
             <div className="flex flex-wrap justify-end gap-3">
-                <Button size="small" onClick={saveUserConsentChoices}>
+                <Button
+                    aria-label={t('Submit form to save your choices')}
+                    size="small"
+                    onClick={saveUserConsentChoices}
+                >
                     {t('Save choices')}
                 </Button>
 
-                <Button size="small" onClick={giveFullUserConsent}>
+                <Button aria-label={t('Submit form to accept all choices')} size="small" onClick={giveFullUserConsent}>
                     {t('Accept all')}
                 </Button>
 
-                <Button size="small" variant="inverted" onClick={rejectUserConsent}>
+                <Button
+                    aria-label={t('Submit form to reject all choices')}
+                    size="small"
+                    variant="inverted"
+                    onClick={rejectUserConsent}
+                >
                     {t('Reject all')}
                 </Button>
             </div>

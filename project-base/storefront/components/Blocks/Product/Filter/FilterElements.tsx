@@ -3,24 +3,31 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+
+export const createFilterGroupId = (title: string): string => {
+    return `filter-group-${title
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '')}`;
+};
 
 export const FilterGroupWrapper: FC = ({ children }) => <div className="vl:py-5 py-4">{children}</div>;
 
-export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () => void; isActive: boolean }> = ({
-    isOpen,
-    title,
-    onClick,
-    isActive,
-}) => {
-    const { t } = useTranslation();
-
+export const FilterGroupTitle: FC<{
+    isOpen: boolean;
+    title: string;
+    onClick: () => void;
+    isActive: boolean;
+    ariaLabel: string;
+}> = ({ isOpen, title, onClick, isActive, ariaLabel }) => {
     return (
         <button
+            aria-controls={createFilterGroupId(title)}
+            aria-expanded={isOpen}
+            aria-label={ariaLabel}
             className="font-secondary text-text-default flex w-full cursor-pointer items-center justify-between rounded-sm font-semibold uppercase"
             tabIndex={0}
-            title={t('Toggle filter group')}
             type="button"
             onClick={onClick}
         >
@@ -33,9 +40,11 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
     );
 };
 
-export const FilterGroupContent: FC<{ keyName?: string }> = ({ children, keyName }) => (
+export const FilterGroupContent: FC<{ keyName?: string; id?: string }> = ({ children, keyName, id }) => (
     <AnimateCollapseDiv className="!block" keyName={keyName}>
-        <div className="vl:pb-0 vl:pt-2.5 !flex flex-col flex-wrap gap-2.5 pt-4 pb-1">{children}</div>
+        <div className="vl:pb-0 vl:pt-2.5 !flex flex-col flex-wrap gap-2.5 pt-4 pb-1" id={id}>
+            {children}
+        </div>
     </AnimateCollapseDiv>
 );
 
@@ -73,8 +82,16 @@ export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, key
     </AnimateSlideDiv>
 );
 
-export const SelectedParametersListItem: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <Tag className="bg-background-accent-less text-text-default group last-of-type:mr-6" onClick={onClick}>
+export const SelectedParametersListItem: FC<{ onClick: () => void; ariaLabel: string }> = ({
+    children,
+    onClick,
+    ariaLabel,
+}) => (
+    <Tag
+        ariaLabel={ariaLabel}
+        className="bg-background-accent-less text-text-default group last-of-type:mr-6"
+        onClick={onClick}
+    >
         {children}
     </Tag>
 );

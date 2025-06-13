@@ -3,7 +3,6 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
@@ -12,6 +11,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import useClickClosePopup from 'utils/ui/useClickClosePopup';
 
 export type SelectProps<T = string> = {
+    ariaLabel: string;
     label?: string | ReactNode;
     placeholder?: string;
     selectClassName?: string;
@@ -36,6 +36,7 @@ export type SelectProps<T = string> = {
 } & SelectListProps<T>;
 
 export const Select = <T extends string | number | undefined | Record<any, any> | null | boolean = string>({
+    ariaLabel,
     label,
     options,
     onSelectOption,
@@ -56,7 +57,6 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     externalSetIsSelectOpen,
     listClassName,
 }: SelectProps<T> & FunctionComponentProps) => {
-    const { t } = useTranslation();
     const wrapperRef = useRef(null);
     const additionalItemRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -160,7 +160,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         className="rounded-sm px-3"
                         disabled={isDisabled}
                         tabIndex={0}
-                        title={t('Open select')}
+                        title={ariaLabel}
                         type="button"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}
                     >

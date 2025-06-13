@@ -43,9 +43,11 @@ export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
 
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
                     <ExtendedNextLink
+                        aria-label={t('Go to user consent update page')}
                         className="self-center transition"
                         href={userConsentUrl}
                         skeletonType="user-consent"
+                        title={t('User consent page')}
                     >
                         {t('User consent update')}
                     </ExtendedNextLink>

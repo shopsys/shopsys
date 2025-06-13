@@ -64,60 +64,79 @@ export const LoginForm: FC<LoginFormProps> = ({
     };
 
     return (
-        <FormProvider {...formProviderMethods}>
-            <Form className="flex w-full justify-center" onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
-                <FormContentWrapper className={formContentWrapperClassName}>
-                    <FormBlockWrapper>
-                        <FormHeading>{formHeading}</FormHeading>
+        <div>
+            <p className="sr-only" id="login-form-description">
+                {t('Login form for logging in to your account. Please fill in your email address and password.')}
+            </p>
 
-                        <TextInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.email.name}
-                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                            textInputProps={{
-                                label: formMeta.fields.email.label,
-                                required: true,
-                                type: 'email',
-                                autoComplete: 'email',
-                            }}
-                        />
+            <FormProvider {...formProviderMethods}>
+                <Form
+                    className="flex w-full justify-center"
+                    onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
+                >
+                    <FormContentWrapper className={formContentWrapperClassName}>
+                        <FormBlockWrapper>
+                            <FormHeading>{formHeading}</FormHeading>
 
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.password.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.password.label,
-                                autoComplete: 'current-password',
-                            }}
-                        />
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                    'aria-labelledby': 'login-form-description',
+                                }}
+                            />
 
-                        <FormButtonWrapper className="mt-2.5 flex flex-col gap-4">
-                            <FormButtonWrapper className="mt-0 justify-start">
-                                <SubmitButton size="large" tid={TIDs.login_form_submit_button} variant="inverted">
-                                    {t('Login')}
-                                </SubmitButton>
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.password.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.password.label,
+                                    autoComplete: 'current-password',
+                                }}
+                            />
+
+                            <FormButtonWrapper className="mt-2.5 flex flex-col gap-4">
+                                <FormButtonWrapper className="mt-0 justify-start">
+                                    <SubmitButton
+                                        aria-label={t('Submit form to login to your account')}
+                                        size="large"
+                                        tid={TIDs.login_form_submit_button}
+                                        variant="inverted"
+                                    >
+                                        {t('Login')}
+                                    </SubmitButton>
+                                </FormButtonWrapper>
+
+                                <div className="mb-4 whitespace-nowrap">
+                                    <ExtendedNextLink
+                                        aria-label={t('Go to forgot password page')}
+                                        href={resetPasswordUrl}
+                                        skeletonType="forgot-password"
+                                    >
+                                        {t('Lost your password?')}
+                                    </ExtendedNextLink>
+                                </div>
+
+                                {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
+                                    settingsData.settings.socialNetworkLoginConfig.length > 0 && (
+                                        <SocialNetworkLogin
+                                            shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
+                                            socialNetworks={settingsData.settings.socialNetworkLoginConfig}
+                                        />
+                                    )}
                             </FormButtonWrapper>
-
-                            <div className="mb-4 whitespace-nowrap">
-                                <ExtendedNextLink href={resetPasswordUrl} skeletonType="forgot-password">
-                                    {t('Lost your password?')}
-                                </ExtendedNextLink>
-                            </div>
-
-                            {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
-                                settingsData.settings.socialNetworkLoginConfig.length > 0 && (
-                                    <SocialNetworkLogin
-                                        shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
-                                        socialNetworks={settingsData.settings.socialNetworkLoginConfig}
-                                    />
-                                )}
-                        </FormButtonWrapper>
-                    </FormBlockWrapper>
-                </FormContentWrapper>
-            </Form>
-        </FormProvider>
+                        </FormBlockWrapper>
+                    </FormContentWrapper>
+                </Form>
+            </FormProvider>
+        </div>
     );
 };

@@ -44,7 +44,7 @@ export const BannersDot: FC<BannersDotProps> = ({
             key={sliderItem.uuid}
             ref={dotRef}
             tabIndex={0}
-            title={`${t('Go to slide')} - ${sliderItem.name}`}
+            title={t('Go to slide {{ slideName }}', { slideName: sliderItem.name })}
             className={twMergeCustom(
                 'bg-icon-less group relative block size-4 cursor-pointer rounded-full transition',
                 'vl:rounded-none vl:first-of-type:rounded-bl-md vl:last-of-type:rounded-br-md',

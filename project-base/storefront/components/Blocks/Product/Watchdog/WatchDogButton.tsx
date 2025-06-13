@@ -50,8 +50,10 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({
     return (
         <Button
             aria-haspopup="dialog"
+            aria-label={t('Open watchdog popup')}
             className={twJoin('whitespace-nowrap', className)}
             size="large"
+            title={t('Watchdog popup')}
             variant="primary"
             onClick={openWatchDogPopup}
         >

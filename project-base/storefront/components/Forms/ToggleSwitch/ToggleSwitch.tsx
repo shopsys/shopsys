@@ -10,13 +10,14 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type ToggleSwitchProps = NativeProps & {
     value: any;
+    ariaLabel: string;
 };
 
 export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
-    ({ id, name, onChange, value, onBlur }, toggleSwitchForwardedRef) => (
+    ({ id, name, onChange, value, onBlur, ariaLabel }, toggleSwitchForwardedRef) => (
         <div className="relative flex h-6 w-11 items-center justify-center">
             <input
-                aria-checked={value}
+                aria-label={ariaLabel}
                 checked={value}
                 className="peer h-5 w-10 outline-none"
                 id={id}

@@ -84,7 +84,7 @@ export const getButtonClassName = (
                 'outline-button-inverted-border-disabled bg-button-inverted-bg-disabled text-button-inverted-text-disabled',
         ],
         variant === 'transparent' && [
-            'outline-1 outline-offset-[-1px] outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
+            'outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
             !isDisabled &&
                 'hover:outline-button-transparent-border-disabled hover:bg-button-transparent-bg-hovered hover:text-button-transparent-text-hovered',
             !isDisabled &&

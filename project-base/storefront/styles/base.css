@@ -95,7 +95,7 @@
     }
 
     a {
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline outline-hidden hover:underline lg:text-base;
+        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline hover:underline lg:text-base;
     }
 
     b,

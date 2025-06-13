@@ -107,8 +107,10 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
 
     return (
         <Button
+            aria-label={isRight ? t('Show next product in comparison') : t('Show previous product in comparison')}
             className={twMergeCustom('p-3', isShowed ? 'flex' : 'hidden')}
             isDisabled={!isActive}
+            tabIndex={isActive ? 0 : -1}
             title={isRight ? t('Next product') : t('Previous product')}
             variant="inverted"
             onClick={onClick}

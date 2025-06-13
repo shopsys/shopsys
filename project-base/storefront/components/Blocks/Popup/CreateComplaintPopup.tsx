@@ -257,6 +257,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     <>
                                         <Select
                                             isRequired
+                                            ariaLabel={t('Select resolution')}
                                             className="mb-2.5"
                                             isDisabled={isSubmitting}
                                             label={formMeta.fields.resolution.label}
@@ -449,6 +450,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                                 <>
                                                     <Select
                                                         isRequired
+                                                        ariaLabel={t('Select country')}
                                                         isDisabled={isSubmitting}
                                                         label={formMeta.fields.country.label}
                                                         options={countriesAsSelectOptions}
@@ -467,7 +469,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             )}
 
                             <FormButtonWrapper>
-                                <SubmitButton>
+                                <SubmitButton aria-label={t('Submit your complaint')}>
                                     {isSubmitting ? (
                                         <>
                                             <Loader className="h-4 w-4" /> {t('Sending...')}

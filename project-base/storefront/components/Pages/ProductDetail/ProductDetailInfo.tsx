@@ -41,7 +41,14 @@ export const ProductDetailInfo: FC<ProductDetailContentProps> = ({
                 {brand && (
                     <div>
                         <span>{t('Brand')}: </span>
-                        <ExtendedNextLink className="text-sm" href={brand.slug} type="brand">
+
+                        <ExtendedNextLink
+                            aria-label={t('Go to brand page of {{ brandName }}', { brandName: brand.name })}
+                            className="text-sm"
+                            href={brand.slug}
+                            title={t('Go to brand page')}
+                            type="brand"
+                        >
                             {brand.name}
                         </ExtendedNextLink>
                     </div>

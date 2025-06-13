@@ -5,12 +5,14 @@ import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInf
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
 export const ContactInformationSendOrderButton: FC = () => {
+    const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { canManagePersonalData } = useAuthorization();
@@ -34,12 +36,22 @@ export const ContactInformationSendOrderButton: FC = () => {
                     i18nKey="ContactInformationInfo"
                     components={{
                         lnk1: termsAndConditionsArticleUrl ? (
-                            <Link isExternal href={termsAndConditionsArticleUrl} target="_blank" />
+                            <Link
+                                isExternal
+                                aria-label={t('Go to terms and conditions article')}
+                                href={termsAndConditionsArticleUrl}
+                                target="_blank"
+                            />
                         ) : (
                             <span className={linkPlaceholderTwClass} />
                         ),
                         lnk2: privacyPolicyArticleUrl ? (
-                            <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+                            <Link
+                                isExternal
+                                aria-label={t('Go to privacy policy article')}
+                                href={privacyPolicyArticleUrl}
+                                target="_blank"
+                            />
                         ) : (
                             <span className={linkPlaceholderTwClass} />
                         ),

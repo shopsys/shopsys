@@ -26,6 +26,7 @@ type AddToCartProps = {
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonVariant?: 'primary' | 'inverted';
     showResponsiveCartIcon?: boolean;
+    ariaLabel: string;
 };
 
 export const AddToCart: FC<AddToCartProps> = ({
@@ -39,6 +40,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     buttonSize = 'medium',
     buttonVariant = 'primary',
     showResponsiveCartIcon = false,
+    ariaLabel,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
@@ -87,11 +89,11 @@ export const AddToCart: FC<AddToCartProps> = ({
 
                 <Button
                     aria-haspopup="dialog"
+                    aria-label={ariaLabel}
                     isDisabled={isAddingToCart}
                     name="add-to-cart"
                     size={buttonSize}
                     tid={TIDs.blocks_product_addtocart}
-                    title={t('Add product to cart')}
                     variant={buttonVariant}
                     onClick={onAddToCartHandler}
                 >

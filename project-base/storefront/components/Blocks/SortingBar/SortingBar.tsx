@@ -99,6 +99,11 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                             key={sortOption}
                             href={sortHref}
                             isActive={isSelectedSortOption}
+                            ariaLabel={
+                                isSelectedSortOption
+                                    ? t('Sorted by {{ sortOption }}', { sortOption: sortOptionsLabels[sortOption] })
+                                    : t('Sort by {{ sortOption }}', { sortOption: sortOptionsLabels[sortOption] })
+                            }
                             onClick={() => handleChangeSort(sortOption)}
                         >
                             {sortOptionsLabels[sortOption]}

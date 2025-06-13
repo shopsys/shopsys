@@ -6,6 +6,7 @@ import { twMergeCustom } from 'utils/twMerge';
 type TagProps = {
     isDisabled?: boolean;
     isActive?: boolean;
+    ariaLabel?: string;
     onClick?: () => void;
 } & (
     | {
@@ -26,7 +27,17 @@ type TagProps = {
       ))
 );
 
-export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, className, render, onClick }) => {
+export const Tag: FC<TagProps> = ({
+    href,
+    type,
+    children,
+    isDisabled,
+    isActive,
+    className,
+    render,
+    onClick,
+    ariaLabel,
+}) => {
     const TagTwClassName = twMergeCustom(
         'px-4 py-1 rounded-tag no-underline transition-all flex justify-center items-center font-semibold font-secondary cursor-pointer',
         'bg-tag-bg-default text-tag-text-default border-tag-border-default text-sm',
@@ -51,7 +62,14 @@ export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, 
     };
 
     const content = (
-        <div className={TagTwClassName} role="button" tabIndex={0} onClick={onClick} onKeyDown={handleKeyDown}>
+        <div
+            aria-label={ariaLabel}
+            className={TagTwClassName}
+            role="button"
+            tabIndex={0}
+            onClick={onClick}
+            onKeyDown={handleKeyDown}
+        >
             {children}
         </div>
     );

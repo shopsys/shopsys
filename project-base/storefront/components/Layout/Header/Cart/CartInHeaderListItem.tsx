@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
@@ -18,6 +19,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     cartItem: { product, uuid, quantity },
     onRemoveFromCart,
 }) => {
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
@@ -28,10 +30,12 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
         >
             <div className="flex min-h-20 w-full flex-row items-center gap-x-6">
                 <ExtendedNextLink
+                    aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                     className="flex w-20 items-center justify-center"
                     href={productSlug}
                     tabIndex={-1}
                     tid={TIDs.header_cart_list_item_image}
+                    title={t('Go to product page')}
                     type="product"
                 >
                     <Image
@@ -44,8 +48,10 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </ExtendedNextLink>
 
                 <ExtendedNextLink
+                    aria-label={t('Go to product page ' + product.fullName)}
                     className="font-secondary text-text-default hover:text-link-default flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
                     href={productSlug}
+                    title={t('Go to product page')}
                     type="product"
                 >
                     {product.fullName}
@@ -63,7 +69,9 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 )}
             </div>
             <RemoveCartItemButton
+                ariaLabel={t('Remove from cart ' + product.fullName)}
                 className="absolute top-2 right-0 cursor-pointer lg:relative lg:top-0 lg:right-0"
+                title={t('Remove from cart')}
                 onRemoveFromCart={onRemoveFromCart}
             />
         </li>

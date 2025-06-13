@@ -44,6 +44,7 @@ export const SalesRepresentative: FC = () => {
                 <div className="mt-2 flex items-center gap-2">
                     <PhoneIcon className="size-6" />
                     <a
+                        aria-label={t('Call sales representative')}
                         className="text-text-default rounded-md text-sm font-semibold no-underline"
                         href={`tel:${telephone}`}
                         tabIndex={0}
@@ -57,6 +58,7 @@ export const SalesRepresentative: FC = () => {
                 <div className="flex items-center gap-2">
                     <MailIcon className="size-6" />
                     <a
+                        aria-label={t('Send email to sales representative')}
                         href={`mailto:${email}`}
                         tabIndex={0}
                         className={twJoin(

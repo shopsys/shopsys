@@ -4,6 +4,7 @@ import {
     FilterGroupTitle,
     FilterGroupWrapper,
     ShowAllButton,
+    createFilterGroupId,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
 import { Flag } from 'components/Basic/Flag/Flag';
@@ -25,6 +26,7 @@ type FilterGroupGenericProps = {
     options: MappedFilterOption[];
     defaultNumberOfShownItems: number;
     isActive: boolean;
+    ariaLabel: string;
 };
 
 export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
@@ -33,6 +35,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     defaultNumberOfShownItems,
     filterField,
     isActive,
+    ariaLabel,
 }) => {
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
@@ -62,6 +65,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel={ariaLabel}
                 isActive={isActive}
                 isOpen={isGroupOpen}
                 title={title}
@@ -69,7 +73,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             />
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
-                    <FilterGroupContent>
+                    <FilterGroupContent id={createFilterGroupId(title)}>
                         {defaultOptions && (
                             <AnimatePresence initial={false}>
                                 {defaultOptions.map((option, index) => {

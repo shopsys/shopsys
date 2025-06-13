@@ -93,7 +93,11 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 <span className="flex w-full justify-between">
                     <span className="w-full">
                         {label}
-                        {required && <span className="text-text-error ml-1">*</span>}
+                        {required && (
+                            <span aria-hidden="true" className="text-text-error ml-1">
+                                *
+                            </span>
+                        )}
                     </span>
 
                     {!!count && !checked && (

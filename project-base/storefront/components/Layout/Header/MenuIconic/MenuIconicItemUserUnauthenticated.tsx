@@ -23,7 +23,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
             <div
                 aria-expanded={isActive}
                 aria-haspopup="menu"
-                aria-label={t('Login')}
+                aria-label={t('Show registration and login popup')}
                 data-tid={TIDs.my_account_link}
                 role="button"
                 tabIndex={0}

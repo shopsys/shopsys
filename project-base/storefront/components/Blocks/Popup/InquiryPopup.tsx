@@ -172,7 +172,9 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                             />
 
                             <FormButtonWrapper>
-                                <SubmitButton>{t('Send')}</SubmitButton>
+                                <SubmitButton aria-label={t('Submit form to send your inquiry')}>
+                                    {t('Send')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

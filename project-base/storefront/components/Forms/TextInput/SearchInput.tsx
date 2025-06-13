@@ -61,6 +61,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
+                aria-label={t('Go to search page')}
                 className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center rounded-sm"
                 tabIndex={0}
                 title={t('Search')}
@@ -72,6 +73,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {!!value && !shouldShowSpinnerInInput && (
                 <button
+                    aria-label={t('Clear search input')}
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
                     tabIndex={0}
                     title={t('Clear search')}

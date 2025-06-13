@@ -59,6 +59,7 @@ const ComplaintsPage: FC = () => {
                 {canCreateComplaint && (
                     <div className="flex gap-y-2">
                         <LinkButton
+                            aria-label={t('Go to new complaint page')}
                             size="small"
                             type="complaintNew"
                             href={{

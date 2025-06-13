@@ -68,7 +68,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         };
 
         return (
-            <Button aria-haspopup="dialog" className="w-fit" size="large" onClick={openInquiryPopup}>
+            <Button
+                aria-haspopup="dialog"
+                aria-label={t('Open inquiry popup')}
+                className="w-fit"
+                size="large"
+                title={t('Inquire popup')}
+                onClick={openInquiryPopup}
+            >
                 {t('Inquire')}
             </Button>
         );
@@ -93,10 +100,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
                 <Button
                     aria-haspopup="dialog"
+                    aria-label={t('Add to cart {{ productName }}', { productName: product.name })}
                     className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
                     size="xlarge"
                     tid={TIDs.pages_productdetail_addtocart_button}
+                    title={t('Add to cart')}
                     variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
                     onClick={onAddToCartHandler}
                 >

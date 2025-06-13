@@ -168,6 +168,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                     <>
                                         <Select
                                             isRequired
+                                            ariaLabel={t('Select role group')}
                                             label={formMeta.fields.roleGroup.label}
                                             options={customerUserRoleGroupsAsSelectOptions}
                                             tid={formMeta.formName + '-' + formMeta.fields.roleGroup.name}
@@ -185,7 +186,15 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 )}
                             />
                             <FormButtonWrapper>
-                                <SubmitButton>{mode === 'edit' ? t('Save user') : t('Add user')}</SubmitButton>
+                                <SubmitButton
+                                    aria-label={
+                                        mode === 'edit'
+                                            ? t('Submit form to save user changes')
+                                            : t('Submit form to add new user')
+                                    }
+                                >
+                                    {mode === 'edit' ? t('Save user') : t('Add user')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

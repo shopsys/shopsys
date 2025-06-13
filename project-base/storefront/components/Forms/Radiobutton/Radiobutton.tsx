@@ -5,7 +5,7 @@ import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefau
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     'id',
-    'disabled' | 'name' | 'onBlur' | 'checked' | 'onChange'
+    'disabled' | 'name' | 'onBlur' | 'checked' | 'onChange' | 'aria-label'
 >;
 
 export type RadiobuttonProps = NativeProps & {
@@ -18,7 +18,19 @@ export type RadiobuttonProps = NativeProps & {
 
 export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
     (
-        { label, onChange, id, name, checked, value, disabled, onBlur, onClick, labelWrapperClassName },
+        {
+            label,
+            onChange,
+            id,
+            name,
+            checked,
+            value,
+            disabled,
+            onBlur,
+            onClick,
+            labelWrapperClassName,
+            'aria-label': ariaLabel,
+        },
         radiobuttonForwardedRef,
     ) => {
         const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
@@ -44,6 +56,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
             >
                 <input
                     aria-checked={checked}
+                    aria-label={ariaLabel}
                     checked={checked}
                     className="peer sr-only"
                     disabled={disabled}

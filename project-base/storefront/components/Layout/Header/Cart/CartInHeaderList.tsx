@@ -49,7 +49,13 @@ export const CartInHeaderList: FC = () => {
                     <FreeTransportRange />
                 </div>
 
-                <LinkButton className="ml-auto whitespace-nowrap" href={cartUrl} size="small" skeletonType="cart">
+                <LinkButton
+                    aria-label={t('Go to cart page')}
+                    className="ml-auto whitespace-nowrap"
+                    href={cartUrl}
+                    size="small"
+                    skeletonType="cart"
+                >
                     {t('Go to cart')}
                 </LinkButton>
             </div>

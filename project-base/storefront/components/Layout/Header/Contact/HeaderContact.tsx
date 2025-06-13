@@ -1,5 +1,6 @@
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { TIDs } from 'cypress/tids';
+import useTranslation from 'next-translate/useTranslation';
 import { removeSpaces } from 'utils/removeSpaces';
 
 // TODO PRG
@@ -9,6 +10,7 @@ const dummyData = {
 };
 
 export const HeaderContact: FC = () => {
+    const { t } = useTranslation();
     const cleanPhone = removeSpaces(dummyData.phone);
 
     return (
@@ -18,6 +20,7 @@ export const HeaderContact: FC = () => {
                     <PhoneIcon className="text-text-inverted w-5" />
 
                     <a
+                        aria-label={t('Call us')}
                         className="text-text-inverted hover:text-text-inverted rounded-sm font-bold no-underline"
                         data-tid={TIDs.simple_header_contact}
                         href={'tel:' + cleanPhone}

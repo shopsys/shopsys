@@ -19,7 +19,10 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
 
     return (
         <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8 text-left" ref={contentRef}>
-            <div className="bg-background-brand-less text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
+            <div
+                className="bg-background-brand-less text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5"
+                id="registration-form-description"
+            >
                 <span className="h4">{t('Benefits of registration')}</span>
                 <div className="my-4">
                     <p className="text-text-inverted">
@@ -37,6 +40,8 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                 </div>
 
                 <LinkButton
+                    aria-label={t('Go to registration page')}
+                    aria-labelledby="registration-form-description"
                     href={registrationUrl}
                     skeletonType="registration"
                     tid={TIDs.login_popup_register_button}

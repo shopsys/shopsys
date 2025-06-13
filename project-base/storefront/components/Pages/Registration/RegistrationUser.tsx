@@ -31,6 +31,7 @@ export const RegistrationUser: FC = () => {
                         required: true,
                         type: 'email',
                         autoComplete: 'email',
+                        'aria-labelledby': 'registration-form-description',
                     }}
                 />
                 <FormColumn>

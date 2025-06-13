@@ -22,7 +22,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
             <div
                 aria-expanded={isUserMenuOpen}
                 aria-haspopup="menu"
-                aria-label={t('My account')}
+                aria-label={t('Show logged in user poup')}
                 className={twMergeCustom('group outline-none lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
                 data-tid={TIDs.my_account_link}
                 role="button"
@@ -42,7 +42,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 <MenuIconicItemLink
                     className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500"
                     tabIndex={-1}
-                    title={t('My account page')}
+                    title={t('Go to my account page')}
                     onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

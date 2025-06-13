@@ -28,14 +28,24 @@ export const MenuIconic: FC = () => {
     return (
         <ul className="flex lg:gap-7">
             <MenuIconicItem className="flex max-lg:hidden">
-                <MenuIconicItemLink href={storesUrl} title={t('Stores page')} type="stores">
+                <MenuIconicItemLink
+                    aria-label={t('Go to stores page')}
+                    href={storesUrl}
+                    title={t('Stores page')}
+                    type="stores"
+                >
                     <MarkerIcon className="size-6" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
             <MenuIconicItem>
-                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison page')} type="comparison">
+                <MenuIconicItemLink
+                    aria-label={t('Go to comparison page')}
+                    href={productComparisonUrl}
+                    title={t('Comparison page')}
+                    type="comparison"
+                >
                     <div className="relative">
                         <CompareIcon className="size-6" />
                         {!!comparison?.products.length && (
@@ -47,7 +57,12 @@ export const MenuIconic: FC = () => {
             </MenuIconicItem>
 
             <MenuIconicItem>
-                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist page')} type="wishlist">
+                <MenuIconicItemLink
+                    aria-label={t('Go to wishlist page')}
+                    href={wishlistUrl}
+                    title={t('Wishlist page')}
+                    type="wishlist"
+                >
                     <div className="relative">
                         <HeartIcon className="size-6" />
                         {!!wishlist?.products.length && (

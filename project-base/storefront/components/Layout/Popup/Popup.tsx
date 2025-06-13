@@ -17,19 +17,9 @@ type PopupProps = {
     hideCloseButton?: boolean;
     contentClassName?: string;
     key?: string;
-    ariaLabelledBy?: string;
-    ariaDescribedBy?: string;
 };
 
-export const Popup: FC<PopupProps> = ({
-    children,
-    hideCloseButton,
-    className,
-    contentClassName,
-    key,
-    ariaLabelledBy,
-    ariaDescribedBy,
-}) => {
+export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, contentClassName, key }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const windowDimensions = useWindowDimensions();
@@ -91,8 +81,6 @@ export const Popup: FC<PopupProps> = ({
                     <m.div
                         key="popup"
                         animate={{ opacity: 1, scale: 1 }}
-                        aria-describedby={ariaDescribedBy}
-                        aria-labelledby={ariaLabelledBy}
                         aria-modal="true"
                         data-tid={TIDs.layout_popup}
                         exit={{ opacity: 0, scale: 0.8 }}

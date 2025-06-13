@@ -144,8 +144,18 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         <div className="relative" data-tid={tid}>
             {isWithControls && (
                 <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
-                    <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
-                    <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
+                    <SliderButton
+                        ariaLabel={t('Show previous products in slider')}
+                        title={t('Previous products')}
+                        type="prev"
+                        onClick={handlePrevious}
+                    />
+                    <SliderButton
+                        ariaLabel={t('Show next products in slider')}
+                        title={t('Next products')}
+                        type="next"
+                        onClick={handleNext}
+                    />
                 </div>
             )}
 
@@ -174,10 +184,17 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     );
 };
 
-type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabled?: boolean; title: string };
+type SliderButtonProps = {
+    type?: 'prev' | 'next';
+    onClick: () => void;
+    isDisabled?: boolean;
+    title: string;
+    ariaLabel: string;
+};
 
-const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
+const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title, ariaLabel }) => (
     <button
+        aria-label={ariaLabel}
         className="text-icon hover:text-icon-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto"
         disabled={isDisabled}
         tabIndex={0}

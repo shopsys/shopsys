@@ -17,6 +17,8 @@ type NativeProps = ExtractNativePropsFromDefault<
     | 'autoComplete'
     | 'onChange'
     | 'inputMode'
+    | 'aria-label'
+    | 'aria-labelledby'
 >;
 
 export type TextInputProps = NativeProps & {
@@ -45,11 +47,15 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             children,
             autoComplete,
             inputMode,
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
         },
         textInputForwarderRef,
     ) => (
         <LabelWrapper className={className} htmlFor={id} inputType="text-input" label={label} required={required}>
             <input
+                aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledby}
                 autoComplete={autoComplete}
                 disabled={disabled}
                 id={id}

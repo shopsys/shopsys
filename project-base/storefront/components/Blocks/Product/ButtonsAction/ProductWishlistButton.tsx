@@ -8,6 +8,7 @@ import { twMergeCustom } from 'utils/twMerge';
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
 
 type ProductCompareButtonProps = {
+    productName: string;
     isWithText?: boolean;
     isProductInWishlist: boolean;
     toggleProductInWishlist: () => void;
@@ -15,6 +16,7 @@ type ProductCompareButtonProps = {
 
 export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> = ({
     className,
+    productName,
     isWithText,
     isProductInWishlist,
     toggleProductInWishlist,
@@ -25,6 +27,15 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
         <button
             tabIndex={0}
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
+            aria-label={
+                isProductInWishlist
+                    ? t('Remove product {{ productName }} from wishlist', {
+                          productName: productName,
+                      })
+                    : t('Add product {{ productName }} to wishlist', {
+                          productName: productName,
+                      })
+            }
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',
                 'rounded-sm outline-none',

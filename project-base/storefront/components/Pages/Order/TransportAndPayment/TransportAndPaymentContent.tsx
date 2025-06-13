@@ -63,6 +63,7 @@ export const TransportAndPaymentContent: FC = () => {
                 )}
 
                 <OrderAction
+                    ariaLabelNextStep={t('Continue with order to {{ step }}', { step: t('Contact information') })}
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}

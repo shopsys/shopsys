@@ -88,6 +88,10 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
         <div className="bg-background-more flex flex-col rounded-xl p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
+            <p className="sr-only" id="registration-after-order-password-label">
+                {t('Finish registration to loyalty program by entering your password')}
+            </p>
+
             <ul className="flex flex-col gap-2 py-5">
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
@@ -116,6 +120,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                                 passwordInputProps={{
                                     label: formMeta.fields.password.label,
                                     autoComplete: 'new-password',
+                                    'aria-labelledby': 'registration-after-order-password-label',
                                 }}
                             />
 
@@ -148,6 +153,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     </fieldset>
 
                     <SubmitButton
+                        aria-label={t('Submit form to create your new account')}
                         className="self-start"
                         isDisabled={isInvalidRegistrationRef.current}
                         isWithDisabledLook={!formProviderMethods.formState.isValid}

@@ -97,7 +97,9 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                             />
 
                             <FormButtonWrapper>
-                                <SubmitButton>{t('Send')}</SubmitButton>
+                                <SubmitButton aria-label={t('Submit form to send your watchdog')}>
+                                    {t('Send')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

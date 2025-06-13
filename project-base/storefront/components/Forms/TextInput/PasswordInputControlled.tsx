@@ -12,6 +12,8 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type PasswordInputProps = NativeProps & {
     label: ReactNode;
     inputSize?: 'small' | 'default';
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
 };
 
 type PasswordInputControlledProps = {
@@ -45,6 +47,8 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         <>
             <TextInput
                 required
+                aria-label={passwordInputProps['aria-label']}
+                aria-labelledby={passwordInputProps['aria-labelledby']}
                 autoComplete={passwordInputProps.autoComplete}
                 hasError={invalid}
                 id={passwordInputId}

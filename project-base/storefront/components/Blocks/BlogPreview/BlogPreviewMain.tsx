@@ -5,6 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type MainProps = {
@@ -13,13 +14,14 @@ type MainProps = {
 };
 
 export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false }) => {
+    const { t } = useTranslation();
     const { formatDate } = useFormatDate();
 
     return (
         <>
             {articles.map((article) => (
-                <article key={article.uuid} className="flex max-w-80 snap-start flex-col gap-5">
-                    <ArticleLink href={article.link} tabIndex={-1}>
+                <div key={article.uuid} className="flex max-w-80 snap-start flex-col gap-5">
+                    <ArticleLink href={article.link} tabIndex={-1} title={t('Article page')}>
                         <Image
                             alt={article.mainImage?.name || article.name}
                             className="vl:aspect-16/11 aspect-video size-full rounded-xl object-cover"
@@ -61,13 +63,18 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <ArticleLink className="h4 text-text-inverted" href={article.link}>
+                        <ArticleLink
+                            ariaLabel={t('Go to article page of {{ articleName }}', { articleName: article.name })}
+                            className="h4 text-text-inverted"
+                            href={article.link}
+                            title={t('Blog article')}
+                        >
                             {article.name}
                         </ArticleLink>
 
                         <p className="text-text-inverted font-normal">{article.perex}</p>
                     </div>
-                </article>
+                </div>
             ))}
         </>
     );

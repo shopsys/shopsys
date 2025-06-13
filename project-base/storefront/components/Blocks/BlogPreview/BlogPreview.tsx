@@ -33,11 +33,12 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
 
                 {!!blogUrl && (
                     <ExtendedNextLink
+                        aria-label={t('Go to all articles page')}
                         className="font-secondary text-text-inverted hover:text-text-inverted text-sm font-semibold tracking-wide no-underline hover:underline"
                         href={blogUrl}
                         type="blogCategory"
                     >
-                        <>{t('All articles')}</>
+                        {t('All articles')}
                     </ExtendedNextLink>
                 )}
             </div>

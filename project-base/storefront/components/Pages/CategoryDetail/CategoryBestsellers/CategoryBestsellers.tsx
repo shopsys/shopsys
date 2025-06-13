@@ -50,8 +50,15 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
                 <div className="text-center">
                     <button
+                        aria-controls="bestsellers-list"
+                        aria-expanded={!isCollapsed}
                         className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
                         tabIndex={0}
+                        title={t('Toggle bestseller list')}
+                        aria-label={t('Show {{ count }} more bestseller {{ items }}', {
+                            count: showMoreCount,
+                            items: itemsLabel,
+                        })}
                         onClick={() => setIsCollapsed((prev) => !prev)}
                     >
                         {isCollapsed

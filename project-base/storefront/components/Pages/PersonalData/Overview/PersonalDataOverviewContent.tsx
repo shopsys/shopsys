@@ -55,7 +55,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                 <h1>{t('Personal data overview')}</h1>
 
                 {contentSiteText && (
-                    <div className="[&_section]:text-justify">
+                    <div className="[&_section]:text-justify" id="personal-data-overview-content">
                         <UserText htmlContent={contentSiteText} />
                     </div>
                 )}
@@ -77,10 +77,15 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                                         required: true,
                                         type: 'email',
                                         autoComplete: 'email',
+                                        'aria-labelledby': 'personal-data-overview-content',
                                     }}
                                 />
                                 <FormButtonWrapper>
-                                    <SubmitButton>{t('Send')}</SubmitButton>
+                                    <SubmitButton
+                                        aria-label={t('Submit form to send your personal data overview request')}
+                                    >
+                                        {t('Send')}
+                                    </SubmitButton>
                                 </FormButtonWrapper>
                             </FormBlockWrapper>
                         </FormContentWrapper>

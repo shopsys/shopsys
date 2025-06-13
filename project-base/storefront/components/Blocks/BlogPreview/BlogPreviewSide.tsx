@@ -5,6 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
@@ -14,16 +15,14 @@ type SideProps = {
 };
 
 export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false }) => {
+    const { t } = useTranslation();
     const { formatDate } = useFormatDate();
 
     return (
         <div className="flex flex-col gap-6">
             {articles.map((article) => (
-                <article
-                    key={article.uuid}
-                    className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5"
-                >
-                    <ArticleLink href={article.link} tabIndex={-1}>
+                <div key={article.uuid} className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5">
+                    <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
                         <Image
                             alt={article.mainImage?.name || article.name}
                             className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
@@ -65,7 +64,12 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <ArticleLink className="h5 text-text-inverted" href={article.link}>
+                        <ArticleLink
+                            ariaLabel={t('Go to article page of {{ articleName }}', { articleName: article.name })}
+                            className="h5 text-text-inverted"
+                            href={article.link}
+                            title={t('Blog article')}
+                        >
                             {article.name}
                         </ArticleLink>
 
@@ -73,7 +77,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             {article.perex}
                         </p>
                     </div>
-                </article>
+                </div>
             ))}
         </div>
     );

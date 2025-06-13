@@ -120,7 +120,9 @@ export const CartListItem: FC<CartListItemProps> = ({
             <CartItemPrice productPrice={product.price} quantity={quantity} />
 
             <RemoveCartItemButton
+                ariaLabel={t('Remove product {{ productName }} from cart', { productName: product.fullName })}
                 className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"
+                title={t('Remove product from cart')}
                 onRemoveFromCart={onRemoveFromCart}
             />
         </div>

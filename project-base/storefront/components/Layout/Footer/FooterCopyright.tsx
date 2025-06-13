@@ -19,11 +19,13 @@ export const FooterCopyright: FC = () => {
                 {t('Customized E-shop by')}
 
                 <a
+                    aria-label={t('Visit Shopsys.com')}
                     className="ml-2 flex h-6 w-20 rounded-md"
                     href="https://www.shopsys.com"
                     rel="noreferrer"
                     tabIndex={0}
                     target="_blank"
+                    title="Shopsys.com"
                 >
                     <Image alt="footer logo" src={imageLogo} />
                 </a>

@@ -14,11 +14,12 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
 
     return (
         <Button
+            aria-label={t('Remove all products from comparison')}
             className={twJoin(displayMobile && 'mb-5 inline-flex sm:hidden')}
             variant="inverted"
             onClick={handleRemoveComparison}
         >
-            {t('Delete all')}
+            {t('Remove all')}
             <RemoveIcon className="size-3" />
         </Button>
     );

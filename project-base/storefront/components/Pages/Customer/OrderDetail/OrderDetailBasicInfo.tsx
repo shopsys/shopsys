@@ -77,6 +77,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         <Button
                             tid={TIDs.order_detail_repeat_order_button}
                             variant="inverted"
+                            aria-label={t('Repeat order number {{ orderNumber }}', {
+                                orderNumber: order.number,
+                            })}
                             onClick={() => addOrderItemsToEmptyCart(order.uuid)}
                         >
                             {t('Repeat order')}
@@ -114,7 +117,13 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 <div>
                                     {t('Tracking package')}
                                     {' - '}
-                                    <ExtendedNextLink href={order.trackingUrl} target="_blank">
+                                    <ExtendedNextLink
+                                        href={order.trackingUrl}
+                                        target="_blank"
+                                        aria-label={t('Go to tracking package {{ trackingNumber }}', {
+                                            trackingNumber: order.trackingNumber,
+                                        })}
+                                    >
                                         {order.trackingNumber}
                                     </ExtendedNextLink>
                                 </div>

@@ -81,9 +81,11 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 <ExtendedNextLink
+                    aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                     className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
+                    title={t('Go to product page')}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onMouseUp={() => {
                         onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
@@ -145,10 +147,12 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         <>
                             <ProductCompareButton
                                 isProductInComparison={isProductInComparison}
+                                productName={product.fullName}
                                 toggleProductInComparison={toggleProductInComparison}
                             />
                             <ProductWishlistButton
                                 isProductInWishlist={isProductInWishlist}
+                                productName={product.fullName}
                                 toggleProductInWishlist={toggleProductInWishlist}
                             />
                         </>

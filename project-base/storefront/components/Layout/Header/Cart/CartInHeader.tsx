@@ -47,9 +47,9 @@ export const CartInHeader: FC = ({ className }) => {
     return (
         <>
             <div
-                aria-controls="cart-drawer"
                 aria-expanded={isActive}
-                aria-label={t('Cart')}
+                aria-haspopup="menu"
+                aria-label={t('Show cart popup')}
                 data-tid={TIDs.header_cart}
                 role="button"
                 tabIndex={0}
@@ -116,9 +116,11 @@ export const CartInHeader: FC = ({ className }) => {
                 <div
                     aria-controls="cart-popup"
                     aria-expanded={isActive}
-                    aria-label={t('Cart')}
+                    aria-haspopup="menu"
+                    aria-label={t('Show cart popup')}
                     role="button"
                     tabIndex={0}
+                    title={t('Cart')}
                     className={twJoin(
                         'vl:hidden flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
                         'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',

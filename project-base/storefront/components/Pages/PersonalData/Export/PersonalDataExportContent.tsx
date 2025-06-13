@@ -55,7 +55,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                 <h1>{t('Personal data export')}</h1>
 
                 {!!contentSiteText && (
-                    <div className="text-justify">
+                    <div className="text-justify" id="personal-data-export-content">
                         <UserText htmlContent={contentSiteText} />
                     </div>
                 )}
@@ -77,10 +77,15 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                         required: true,
                                         type: 'email',
                                         autoComplete: 'email',
+                                        'aria-labelledby': 'personal-data-export-content',
                                     }}
                                 />
                                 <FormButtonWrapper>
-                                    <SubmitButton>{t('Send')}</SubmitButton>
+                                    <SubmitButton
+                                        aria-label={t('Submit form to send your personal data export request')}
+                                    >
+                                        {t('Send')}
+                                    </SubmitButton>
                                 </FormButtonWrapper>
                             </FormBlockWrapper>
                         </FormContentWrapper>
