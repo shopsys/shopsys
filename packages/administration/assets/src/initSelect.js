@@ -1,4 +1,4 @@
-import Register from '../../common/utils/Register';
+import Register from 'framework/common/utils/Register';
 import TomSelect from 'tom-select';
 import Translator from 'bazinga-translator';
 

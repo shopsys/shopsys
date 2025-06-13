@@ -52,7 +52,6 @@ import './PromoCodeFlags';
 import './PromoCodeGroup';
 import './PromoCodeLimits';
 import './RoleGroups';
-import './initSelect';
 import './SelectAdminDomains';
 import './SelectToggle';
 import './SideMenu';
