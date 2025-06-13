@@ -6,6 +6,7 @@
 /.phpcs-cache
 /.docker-sync
 .DS_Store
+/.claude/settings.local.json
 /composer.lock
 /docker-compose.yml
 /docker-sync.yml
