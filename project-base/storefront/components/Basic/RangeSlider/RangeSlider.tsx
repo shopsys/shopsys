@@ -62,20 +62,31 @@ export const RangeSlider: FC<RangeSliderProps> = ({
 
     const range = useRef<HTMLDivElement>(null);
 
-    const normalizeMinValue = (value: number) => Math.max(min, Math.min(value, maxValue));
-    const normalizeMaxValue = (value: number) => Math.min(max, Math.max(value, minValue));
+    useEffect(() => {
+        if (minValue < min) {
+            setMinValueThumb(min);
+            setMinValueInput(min);
+        } else if (minValue > maxValue) {
+            setMinValueThumb(maxValue);
+            setMinValueInput(maxValue);
+        } else {
+            setMinValueThumb(minValue);
+            setMinValueInput(minValue);
+        }
+    }, [maxValue, minValue, min]);
 
     useEffect(() => {
-        const value = normalizeMinValue(minValue);
-        setMinValueThumb(value);
-        setMinValueInput(value);
-    }, [minValue, normalizeMinValue]);
-
-    useEffect(() => {
-        const value = normalizeMaxValue(maxValue);
-        setMaxValueThumb(value);
-        setMaxValueInput(value);
-    }, [maxValue, normalizeMaxValue]);
+        if (maxValue > max) {
+            setMaxValueThumb(max);
+            setMaxValueInput(max);
+        } else if (maxValue < minValue) {
+            setMaxValueThumb(minValue);
+            setMaxValueInput(minValue);
+        } else {
+            setMaxValueThumb(maxValue);
+            setMaxValueInput(maxValue);
+        }
+    }, [maxValue, minValue, max]);
 
     const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
 
@@ -97,6 +108,8 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         } else {
             setMinValueCallback(value);
         }
+
+        // clear any text selection to ensure proper navigation
         window.getSelection()?.removeAllRanges();
     };
 
@@ -110,6 +123,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             setMaxValueCallback(value);
         }
 
+        // clear any text selection to ensure proper navigation
         window.getSelection()?.removeAllRanges();
     };
 
@@ -176,6 +190,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             <div className="flex gap-x-2">
                 <div className="w-1/2">
                     <TextInput
+                        aria-label={t('Filter by minimum value')}
                         disabled={isDisabled}
                         id={`${title} - from`}
                         label={t('from')}
@@ -188,6 +203,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 </div>
                 <div className="w-1/2">
                     <TextInput
+                        aria-label={t('Filter by maximum value')}
                         disabled={isDisabled}
                         id={`${title} - to`}
                         label={t('to')}

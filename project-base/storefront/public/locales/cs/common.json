@@ -173,6 +173,8 @@
     "Faster checkout for purchases": "Rychlejší dokončení nákupu",
     "Files": "Soubory",
     "Filter": "Filtrovat",
+    "Filter by maximum value": "Filtrovat podle maximální hodnoty",
+    "Filter by minimum value": "Filtrovat podle minimální hodnoty",
     "Finish registration to loyalty program.": "Dokončete registraci do věrnostního programu.",
     "First name": "Jméno",
     "First name must be at most {{ max }} characters": "Jméno nesmí být delší než {{ max }} znaků",
