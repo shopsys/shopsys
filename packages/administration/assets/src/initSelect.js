@@ -6,6 +6,7 @@ export function initSelect ($container) {
     $container.filterAllNodes('select').each((key, el) => {
         const settings = {
             allowEmptyOption: true,
+            maxOptions: null,
             plugins: {
                 dropdown_input: {},
                 no_backspace_delete: {},
