@@ -164,7 +164,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('4', true) => 2,
+                $this->getParameterValueIdForFirstDomain('1', true) => 2,
+                $this->getParameterValueIdForFirstDomain('2', true) => 4,
+                $this->getParameterValueIdForFirstDomain('3', true) => 1,
+                $this->getParameterValueIdForFirstDomain('4', true) => 3,
             ],
         ];
 
@@ -228,6 +231,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('No') => 1,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
+                $this->getParameterValueIdForFirstDomain('3', true) => 1,
                 $this->getParameterValueIdForFirstDomain('4', true) => 2,
             ],
         ];
@@ -305,7 +309,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('4', true) => 2,
+                $this->getParameterValueIdForFirstDomain('1', true) => 1,
+                $this->getParameterValueIdForFirstDomain('2', true) => 3,
+                $this->getParameterValueIdForFirstDomain('3', true) => 1,
+                $this->getParameterValueIdForFirstDomain('4', true) => 3,
             ],
         ];
 
@@ -341,7 +348,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('3500', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
+            [[$firstDomainLocale => '3500']],
         );
 
         $countData = new ProductFilterCountData();
@@ -381,6 +388,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 2,
             ],
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
+                $this->getParameterValueIdForFirstDomain('1', true) => 1,
+                $this->getParameterValueIdForFirstDomain('3', true) => 1,
+            ],
         ];
 
         return [
@@ -413,7 +424,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('3500', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
+            [[$firstDomainLocale => '3500']],
         );
 
         $countData = new ProductFilterCountData();
@@ -459,6 +470,11 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             ],
             $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 7,
+            ],
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
+                $this->getParameterValueIdForFirstDomain('1', true) => 2,
+                $this->getParameterValueIdForFirstDomain('2', true) => 4,
+                $this->getParameterValueIdForFirstDomain('3', true) => 1,
             ],
         ];
 

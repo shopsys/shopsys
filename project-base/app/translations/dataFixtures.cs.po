@@ -16,47 +16,14 @@ msgstr ""
 msgid "100 Czech crowns ticket"
 msgstr "100 Korun českých - poukázka"
 
-msgid "1024 MB"
-msgstr "1024 MB"
-
-msgid "12 Mpix"
-msgstr "12 Mpix"
-
 msgid "123.8x58.6 mm"
 msgstr "123.8x58.6x7.6mm"
-
-msgid "12800"
-msgstr "12800"
-
-msgid "13 Mpx"
-msgstr "13 Mpx"
 
 msgid "1366×768 (HD Ready)"
 msgstr "1366×768 (HD Ready)"
 
-msgid "14 Mpix"
-msgstr "14 Mpix"
-
-msgid "15 bar"
-msgstr "15 bar"
-
-msgid "16mil."
-msgstr "16mil."
-
-msgid "18 Mpix"
-msgstr "18 Mpix"
-
-msgid "1800"
-msgstr "1800"
-
 msgid "1920×1080 (Full HD)"
 msgstr "1920×1080 (Full HD)"
-
-msgid "2"
-msgstr "2"
-
-msgid "2 l"
-msgstr "2 l"
 
 msgid "2 litre coffeemakers in sale"
 msgstr "2 litrové kávovary v akci"
@@ -64,23 +31,14 @@ msgstr "2 litrové kávovary v akci"
 msgid "2000 DPI"
 msgstr "2000 DPI"
 
-msgid "21\""
-msgstr "21\""
-
 msgid "21,5\" Hyundai 22MT44"
 msgstr "21,5\" Hyundai 22MT44"
-
-msgid "210 MB"
-msgstr "210 MB"
 
 msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 msgstr "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 
 msgid "220 x 250 x 9 mm"
 msgstr "220 x 250 x 9 mm"
-
-msgid "24\""
-msgstr ""
 
 msgid "24\" Philips CRT [V]"
 msgstr "24\" Philips CRT [V]"
@@ -94,17 +52,8 @@ msgstr "240 x 205 x 15 mm, klazeta s aktivnim uhlikem"
 msgid "2400x600"
 msgstr "2400x600"
 
-msgid "250"
-msgstr "250"
-
-msgid "250 kWh/year"
-msgstr "250 kWh/rok"
-
 msgid "255 x 255 x 15"
 msgstr "255 x 255 x 15"
-
-msgid "27\""
-msgstr "27\""
 
 msgid "27\" Hyundai PLASMA [V]"
 msgstr "27\" Hyundai PLASMA [V]"
@@ -118,9 +67,6 @@ msgstr "27\" Hyundai T27D590EZ"
 msgid "27\" Hyundai [V]"
 msgstr "27\" Hyundai [V]"
 
-msgid "275 kWh/year"
-msgstr "275 kWh/rok"
-
 msgid "295 x 240 x 15 mm <br /> cartridge with active carbon"
 msgstr "295 x 240 x 15 mm, kazeta s aktivnim uhlikem"
 
@@ -129,9 +75,6 @@ msgstr "295 x 245 x 15 mm<br />kazeta s aktivnim uhlikem"
 
 msgid "2W"
 msgstr "2 W"
-
-msgid "30\""
-msgstr "30\""
 
 msgid "30\" Hyundai 22MT44D"
 msgstr "30\" Hyundai 22MT44D"
@@ -148,12 +91,6 @@ msgstr "32\" Philips 32PFL4308"
 msgid "320 x 300 x 10 mm"
 msgstr "320 x 300 x 10 mm"
 
-msgid "36 cm"
-msgstr ""
-
-msgid "36\""
-msgstr "36\""
-
 msgid "36\" Hyundai PLASMA [V]"
 msgstr "36\" Hyundai PLASMA [V]"
 
@@ -166,17 +103,8 @@ msgstr "36\" Philips CRT [V]"
 msgid "36\" Philips [V]"
 msgstr "36\" Philips [V]"
 
-msgid "3“"
-msgstr "3“"
-
 msgid "4 W"
 msgstr "4 W"
-
-msgid "4.5\""
-msgstr "4.5\""
-
-msgid "400 g"
-msgstr "400 g"
 
 msgid "426x306x145 mm"
 msgstr "426x306x145 mm"
@@ -190,14 +118,8 @@ msgstr "449x304x152 mm"
 msgid "47 \"LG 47LA790V Luxury TV from the South Korean company LG bears 47LA790S. At first glance its beautiful design that pleases the eye of every lover of pure and precise shapes."
 msgstr "Cinema 3D Smart TV LG 47LA790V se Cinema 3D Screen Designem je 3D televizor s technologií LG Cinema 3D a úhlopříčkou 47&quot;, který určitě splní vaše očekávání. Oplývá veškerou moderní obrazovou technologií LG, která je zárukou výjimečné kvality obrazu s vysokou věrností barev a hlubším kontrastem včetně konverze z 2D na 3D, která vám umožní sledovat běžné televizní vysílání ve 3D prostorovém obrazu."
 
-msgid "47\""
-msgstr "47\""
-
 msgid "47\" LG 47LA790V (FHD)"
 msgstr "47\" LG 47LA790V (FHD)"
-
-msgid "48"
-msgstr "48"
 
 msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
 msgstr "480 x 310 x 10 mm<br /><br />Filtr je potreba si nůžkami upravit pro zakrytí celeho povrchu tukového filtru."
@@ -211,29 +133,8 @@ msgstr "4800x1200"
 msgid "495 x 200 x 8 mm"
 msgstr "495 x 200 x 8 mm"
 
-msgid "4“"
-msgstr "4“"
-
-msgid "5"
-msgstr "5"
-
-msgid "5 Mpx"
-msgstr "5 Mpx"
-
-msgid "5.5\""
-msgstr "5.5\""
-
-msgid "50"
-msgstr "50"
-
-msgid "51,5\""
-msgstr ""
-
 msgid "51,5\" Sencor [V]"
 msgstr "51,5\" Sencor [V]"
-
-msgid "54\""
-msgstr "54\""
 
 msgid "54\" Philips CRT [V]"
 msgstr "54\" Philips CRT [V]"
@@ -241,38 +142,14 @@ msgstr "54\" Philips CRT [V]"
 msgid "54\" Philips [V]"
 msgstr "54\" Philips [V]"
 
-msgid "55"
-msgstr "55"
-
-msgid "5“"
-msgstr "5“"
-
-msgid "60\""
-msgstr "60\""
-
 msgid "60\" Sencor [V]"
 msgstr "60\" Sencor [V]"
-
-msgid "600 ml"
-msgstr "600 ml"
-
-msgid "6400"
-msgstr "6400"
-
-msgid "75\""
-msgstr "75\""
 
 msgid "800 × 480 px"
 msgstr "800 × 480 px"
 
 msgid "80x70x70 mm"
 msgstr "80x70x70 mm"
-
-msgid "9 Mpix"
-msgstr "9 Mpix"
-
-msgid "9000"
-msgstr ""
 
 msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
 msgstr "<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>"
@@ -934,6 +811,9 @@ msgstr "Funkce"
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
 msgstr "klávesnice s myší, bezdrátová, ultratenká, nano přijímač s konektorem USB, s bezdrátovou optickou myší s turborolováním, dosah až 10m, klávesnice obsahuje české znaky"
 
+msgid "GHz"
+msgstr ""
+
 msgid "GIGABYTE KM7580 CZ"
 msgstr "GIGABYTE KM7580 CZ"
 
@@ -1048,6 +928,9 @@ msgstr "Hadice VP-9241"
 msgid "Hose VP-9310"
 msgstr "Hadice VP-9310"
 
+msgid "ISO"
+msgstr ""
+
 msgid "Iconic Design"
 msgstr "Ikonický design"
 
@@ -1128,6 +1011,9 @@ msgstr "Logitech S120 black"
 
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr "JURA Impressa J9 TFT Carbon Automatický kávovar/espresso,barevný LCD"
+
+msgid "MB"
+msgstr ""
 
 msgid "MIO Cyclo 100, bicycle computer, 1,8\""
 msgstr "MIO Cyclo 100, cyklopočítač na jízdní kolo, 1,8\""
@@ -1230,6 +1116,9 @@ msgstr "Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasel
 
 msgid "Mouse game, 8200dpi laser sensor, 7 programmable buttons + 2D wheel 12000fps, 1ms response, EasyShift, USB, LED backlight, Turbo Core V2, Black"
 msgstr "Optická myš od Roccat je to pravé pro opravdové hráče. Skvěle padne díky ergonomickému tvaru a o 9 % menším rozměrům oproti klasické. Roccat Kone"
+
+msgid "Mpx"
+msgstr ""
 
 msgid "Multimedia"
 msgstr "Multimédia"
@@ -1471,8 +1360,8 @@ msgstr "Zásady ochrany osobních údajů"
 msgid "Probably best value for your money"
 msgstr "Pravděpodobně ta nejlepší volba"
 
-msgid "Processor frequency (GHz)"
-msgstr "Frekvence procesoru (GHz)"
+msgid "Processor frequency"
+msgstr "Frekvence procesoru"
 
 msgid "Promoted products"
 msgstr "Promované produkty"
@@ -1530,6 +1419,9 @@ msgstr "Rozlišení"
 
 msgid "Resolution of rear camera"
 msgstr "Rozlišení standardní zadní kamery"
+
+msgid "Resolution of sensor"
+msgstr "Rozlišení snímače"
 
 msgid "Responsive and Reliable"
 msgstr "Vysoká odezva a spolehlivost"
@@ -1603,8 +1495,8 @@ msgstr "Sencor SDB 4002M4 (HDMI)"
 msgid "Sennheiser HD 700"
 msgstr "Sennheiser HD 700"
 
-msgid "Sensitivity (ISO)"
-msgstr "Citlivost (ISO)"
+msgid "Sensitivity"
+msgstr "Citlivost"
 
 msgid "Shopsys Platform - Title page"
 msgstr "Shopsys Platform - Titulní strana"
@@ -1930,8 +1822,8 @@ msgstr "Typ hledáčku"
 msgid "W"
 msgstr ""
 
-msgid "Warranty (in years)"
-msgstr "Záruka (v letech)"
+msgid "Warranty"
+msgstr "Záruka"
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
 msgstr "Sledujte vysílání v úžasném rozlišení Full HD a zároveň na stejném stylovém zařízení pracujte."
@@ -2020,6 +1912,9 @@ msgstr "Nulová sazba"
 msgid "Zoom"
 msgstr "Zoom"
 
+msgid "bar"
+msgstr ""
+
 msgid "battery"
 msgstr "akumulátor"
 
@@ -2087,7 +1982,7 @@ msgid "hardcover"
 msgstr "pevný"
 
 msgid "in"
-msgstr ""
+msgstr "palce"
 
 msgid "inkjet"
 msgstr "inkoustové"
@@ -2095,7 +1990,13 @@ msgstr "inkoustové"
 msgid "kW"
 msgstr ""
 
+msgid "kWh"
+msgstr ""
+
 msgid "kg"
+msgstr ""
+
+msgid "l"
 msgstr ""
 
 msgid "m"
@@ -2136,6 +2037,9 @@ msgstr "meta popis 'Televize a audio ve slevě' seo kategorie"
 
 msgid "metal"
 msgstr "kov"
+
+msgid "ml"
+msgstr ""
 
 msgid "m³"
 msgstr "m³"
@@ -2250,6 +2154,9 @@ msgstr "bílá"
 
 msgid "wood"
 msgstr "dřevo"
+
+msgid "years"
+msgstr "roky"
 
 msgid "| Demo eshop"
 msgstr "| Demo e-shop"

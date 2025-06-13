@@ -72,7 +72,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
             if ($category === $categoryElectronics) {
                 $parametersCollapsed = [
                     $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class),
-                    $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS, Parameter::class),
                 ];
             }
             $this->categoryParameterFacade->saveRelation($category, $parametersId, $parametersCollapsed);

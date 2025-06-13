@@ -97,17 +97,17 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $screenSizes = [
             [
-                'text' => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'text' => '27',
                 'count' => 1,
                 'isAbsolute' => true,
             ],
             [
-                'text' => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'text' => '30',
                 'count' => 1,
                 'isAbsolute' => true,
             ],
             [
-                'text' => t('47"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'text' => '47',
                 'count' => 1,
                 'isAbsolute' => true,
             ],
@@ -220,17 +220,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'values' => $materials,
             ],
             [
-                'isCollapsed' => false,
+                'isCollapsed' => true,
                 'name' => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
+                '__typename' => 'ParameterSliderFilterOption',
                 'unit' => null,
-                'values' => [
-                    [
-                        'text' => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 1,
-                        'isAbsolute' => true,
-                    ],
-                ],
+                'minimalValue' => 5,
+                'maximalValue' => 5,
             ],
             [
                 'isCollapsed' => false,
@@ -246,13 +241,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'isCollapsed' => true,
+                'isCollapsed' => false,
                 'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
+                '__typename' => 'ParameterSliderFilterOption',
                 'unit' => [
-                    'name' => 'in',
+                    'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'values' => $screenSizes,
+                'minimalValue' => 27,
+                'maximalValue' => 47,
             ],
             [
                 'isCollapsed' => false,
@@ -295,11 +291,16 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'isCollapsed' => false,
-                'name' => t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'name' => t('Warranty', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterSliderFilterOption',
-                'unit' => null,
+                'unit' => [
+                    'name' => t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'minimalValue' => 1,
+                'maximalValue' => 5,
             ],
         ];
+
 
         $response = $this->getResponseContentForQuery($query);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
@@ -434,17 +435,17 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $screenSizes = [
             [
-                'text' => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'text' => '27',
                 'count' => 0,
                 'isAbsolute' => true,
             ],
             [
-                'text' => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'text' => '30',
                 'count' => 1,
                 'isAbsolute' => true,
             ],
             [
-                'text' => t('47"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'text' => '47',
                 'count' => 1,
                 'isAbsolute' => true,
             ],
@@ -501,17 +502,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'isCollapsed' => false,
+                'isCollapsed' => true,
                 'name' => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
+                '__typename' => 'ParameterSliderFilterOption',
                 'unit' => null,
-                'values' => [
-                    [
-                        'text' => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 0,
-                        'isAbsolute' => true,
-                    ],
-                ],
+                'minimalValue' => 5,
+                'maximalValue' => 5,
             ],
             [
                 'isCollapsed' => false,
@@ -527,13 +523,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'isCollapsed' => true,
+                'isCollapsed' => false,
                 'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
+                '__typename' => 'ParameterSliderFilterOption',
                 'unit' => [
-                    'name' => 'in',
+                    'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'values' => $screenSizes,
+                'minimalValue' => 27,
+                'maximalValue' => 47,
             ],
             [
                 'isCollapsed' => true,
@@ -601,9 +598,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'isCollapsed' => false,
-                'name' => t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'name' => t('Warranty', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterSliderFilterOption',
-                'unit' => null,
+                'unit' => [
+                    'name' => t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'minimalValue' => 1,
+                'maximalValue' => 5,
             ],
         ];
 
@@ -668,6 +669,10 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                         isAbsolute
                                         rgbHex
                                     }
+                                }
+                                ... on ParameterSliderFilterOption {
+                                    minimalValue
+                                    maximalValue
                                 }
                             }
                         }

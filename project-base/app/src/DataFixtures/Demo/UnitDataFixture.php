@@ -28,6 +28,15 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const string UNIT_WATT = 'unit_watt';
     public const string UNIT_VOLT = 'unit_volt';
     public const string UNIT_METER = 'unit_meter';
+    public const string UNIT_ISO = 'unit_iso';
+    public const string UNIT_MEGABYTE = 'unit_megabyte';
+    public const string UNIT_GIGAHERTZ = 'unit_gigahertz';
+    public const string UNIT_BAR = 'unit_bar';
+    public const string UNIT_MILLILITER = 'unit_milliliter';
+    public const string UNIT_LITER = 'unit_liter';
+    public const string UNIT_MEGAPIXEL = 'unit_megapixel';
+    public const string UNIT_KILOWATT_HOURS = 'unit_kilowatt_hours';
+    public const string UNIT_YEARS = 'unit_years';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -105,6 +114,51 @@ class UnitDataFixture extends AbstractReferenceFixture
             $unitData->name[$locale] = t('m', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_METER);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('ISO', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_ISO);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_MEGABYTE);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('GHz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_GIGAHERTZ);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('bar', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_BAR);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_MILLILITER);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_LITER);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('Mpx', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_MEGAPIXEL);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('kWh', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_KILOWATT_HOURS);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $this->createUnit($unitData, self::UNIT_YEARS);
 
         $this->setPiecesAsDefaultUnit();
     }
