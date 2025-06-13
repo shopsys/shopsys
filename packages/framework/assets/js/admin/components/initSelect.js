@@ -2,8 +2,8 @@ import Register from '../../common/utils/Register';
 import TomSelect from 'tom-select';
 import Translator from 'bazinga-translator';
 
-export function initSelect () {
-    document.querySelectorAll('select').forEach((el) => {
+export function initSelect ($container) {
+    $container.filterAllNodes('select').each((key, el) => {
         const settings = {
             allowEmptyOption: true,
             plugins: {
