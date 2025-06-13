@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderListType extends AbstractType
+final class OrderListType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade

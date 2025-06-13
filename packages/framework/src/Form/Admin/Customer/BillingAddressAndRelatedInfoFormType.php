@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BillingAddressAndRelatedInfoFormType extends AbstractType
+final class BillingAddressAndRelatedInfoFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -69,10 +69,10 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return BillingAddressFormType::class;
     }

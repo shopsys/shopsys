@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CategoryFormType extends AbstractType
+final class CategoryFormType extends AbstractType
 {
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator

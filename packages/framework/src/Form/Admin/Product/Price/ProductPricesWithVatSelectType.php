@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ProductPricesWithVatSelectType extends AbstractType
+final class ProductPricesWithVatSelectType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

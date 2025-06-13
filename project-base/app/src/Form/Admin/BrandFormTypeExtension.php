@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Brand\BrandFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class BrandFormTypeExtension extends AbstractTypeExtension
+final class BrandFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}

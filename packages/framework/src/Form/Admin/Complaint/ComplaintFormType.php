@@ -31,7 +31,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class ComplaintFormType extends AbstractType
+final class ComplaintFormType extends AbstractType
 {
     protected const string VALIDATION_GROUP_TYPE_MONEY_RETURN = 'typeMoneyReturn';
 

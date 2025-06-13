@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-class AbstractMultiplePickerType extends AbstractType
+final class AbstractMultiplePickerType extends AbstractType
 {
     /**
      * @param \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor
@@ -84,7 +84,7 @@ class AbstractMultiplePickerType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return CollectionType::class;
     }

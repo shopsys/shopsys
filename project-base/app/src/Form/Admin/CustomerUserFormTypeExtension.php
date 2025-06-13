@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CustomerUserFormTypeExtension extends AbstractTypeExtension
+final class CustomerUserFormTypeExtension extends AbstractTypeExtension
 {
     private const array DISABLED_FIELDS = [];
 

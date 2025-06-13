@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ClosedDayFormType extends AbstractType
+final class ClosedDayFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade

@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class NotificationBarFormType extends AbstractType
+final class NotificationBarFormType extends AbstractType
 {
     public const string SCENARIO_CREATE = 'create';
     public const string SCENARIO_EDIT = 'edit';

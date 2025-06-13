@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
-class SliderItemFormTypeExtension extends AbstractTypeExtension
+final class SliderItemFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}

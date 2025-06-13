@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AdminDomainsFormType extends AbstractType
+final class AdminDomainsFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

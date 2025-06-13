@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
+final class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
 {
     public const string DOMAINS_SUBFORM_NAME = 'priceLimits';
     public const string FIELD_ENABLED = 'enabled';

@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SeoSettingFormType extends AbstractType
+final class SeoSettingFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

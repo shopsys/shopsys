@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class PriceAndVatTableByDomainsType extends AbstractType
+final class PriceAndVatTableByDomainsType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

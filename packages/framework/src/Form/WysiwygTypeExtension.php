@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WysiwygTypeExtension extends AbstractTypeExtension
+final class WysiwygTypeExtension extends AbstractTypeExtension
 {
     protected const ALLOWED_FORMAT_TAGS = 'p;h2;h3;h4;h5;h6;pre;div;address';
 

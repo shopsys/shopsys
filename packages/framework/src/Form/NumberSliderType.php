@@ -8,13 +8,13 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
-class NumberSliderType extends AbstractType
+final class NumberSliderType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return NumberType::class;
     }

@@ -10,7 +10,7 @@ use Override;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CKEditorTypeExtension extends AbstractTypeExtension
+final class CKEditorTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \FOS\CKEditorBundle\Config\CKEditorConfigurationInterface $configuration

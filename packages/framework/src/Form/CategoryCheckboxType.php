@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryCheckboxType extends AbstractType
+final class CategoryCheckboxType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
@@ -61,7 +61,7 @@ class CategoryCheckboxType extends AbstractType
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return CheckboxType::class;
     }

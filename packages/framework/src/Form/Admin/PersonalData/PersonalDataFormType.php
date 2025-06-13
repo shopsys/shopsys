@@ -10,7 +10,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PersonalDataFormType extends AbstractType
+final class PersonalDataFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

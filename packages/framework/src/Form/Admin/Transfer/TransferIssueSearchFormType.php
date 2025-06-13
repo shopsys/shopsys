@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TransferIssueSearchFormType extends AbstractType
+final class TransferIssueSearchFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferFacade $transferFacade

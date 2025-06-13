@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class DomainFormType extends AbstractType
+final class DomainFormType extends AbstractType
 {
     public const string FIELD_ICON = 'icon';
 

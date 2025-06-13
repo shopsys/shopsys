@@ -10,13 +10,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class HoneyPotType extends AbstractType
+final class HoneyPotType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return TextType::class;
     }

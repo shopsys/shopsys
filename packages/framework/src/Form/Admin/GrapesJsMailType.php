@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GrapesJsMailType extends AbstractType
+final class GrapesJsMailType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer $wysiwygCdnDataTransformer
@@ -50,10 +50,10 @@ class GrapesJsMailType extends AbstractType
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     #[Override]
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return TextareaType::class;
     }

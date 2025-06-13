@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OpeningHoursRangeCollectionFormType extends AbstractType
+final class OpeningHoursRangeCollectionFormType extends AbstractType
 {
     /**
      * {@inheritdoc}

@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Order\OrderItemFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderItemFormTypeExtension extends AbstractTypeExtension
+final class OrderItemFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}

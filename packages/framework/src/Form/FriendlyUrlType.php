@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class FriendlyUrlType extends AbstractType
+final class FriendlyUrlType extends AbstractType
 {
     protected const string SLUG_REGEX = '/^[\w_\-\/]+$/';
 

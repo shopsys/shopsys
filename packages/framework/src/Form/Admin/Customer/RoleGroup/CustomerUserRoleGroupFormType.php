@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class CustomerUserRoleGroupFormType extends AbstractType
+final class CustomerUserRoleGroupFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole $customerUserRole

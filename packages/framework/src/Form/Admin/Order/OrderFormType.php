@@ -37,7 +37,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Length;
 
-class OrderFormType extends AbstractType
+final class OrderFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS = 'deliveryAddressSameAsBillingAddress';
 

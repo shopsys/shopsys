@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ZboziProductFormType extends AbstractType
+final class ZboziProductFormType extends AbstractType
 {
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
