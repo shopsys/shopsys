@@ -21,21 +21,17 @@
         {% set visibilityIcon = 'invisible' %}
     {% endif %}
 
-    <div class="dropdown js-product-visibility"
-         data-visibility-url="{{ url('admin_product_visibility', {productId: product.id}) }}"
+    <div class="dropdown"
+         data-bs-toggle="popover"
+         data-bs-trigger="click"
+         data-bs-html="true"
+         data-bs-content="{{ 'Loading'|trans }}..."
+         data-bs-container="body"
+         data-bs-placement="left"
+         data-content-url="{{ url('admin_product_visibility', {productId: product.id}) }}"
     >
         <button type="button" class="btn btn-link dropdown-toggle {{ visibilityClass }}" data-bs-toggle="dropdown">
             {{ ux_icon(visibilityIcon) }} {{ 'Preview'|trans }}
         </button>
-        <div class="dropdown-menu dropdown-menu-card" style="min-width: 20em">
-            <div class="card">
-                <div class="card-header">
-                    {{ 'Visibility for unlogged customers'|trans }}
-                </div>
-                <div class="js-product-visibility-content card-body">
-                    <div class="spinner-border mx-auto"></div>
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}

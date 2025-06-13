@@ -40,7 +40,6 @@ import './OrderTransportAndPaymentPrefiller';
 import './Parameters';
 import './Payment';
 import './Product';
-import './ProductVisibility';
 import './PriceListProductPicker';
 import './ProductPicker';
 import './PriceListProductPickerWindow';

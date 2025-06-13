@@ -39,7 +39,15 @@
 
 {% block grid_value_cell_id_visibility %}
     {% if isMultidomain() %}
-        <span class="js-product-visibility position-relative" data-visibility-url="{{ url('admin_product_visibility', {productId: row.id}) }}">
+        <span
+            data-bs-toggle="popover"
+            data-bs-trigger="click"
+            data-bs-html="true"
+            data-bs-content="{{ 'Loading'|trans }}..."
+            data-bs-container="body"
+            data-content-url="{{ url('admin_product_visibility', {productId: row.id}) }}"
+            class="position-relative cursor-pointer"
+        >
             {% if row.isVisible %}
                 {% set visibilityClass = 'in-icon--visible' %}
                 {% set visibilityIcon = 'visible' %}
