@@ -120,9 +120,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                     {parameter.values.map((value, index) =>
                                                         formatParameterValue(
                                                             value.text +
-                                                                (parameter.unit?.name
-                                                                    ? ` (${parameter.unit.name})`
-                                                                    : ''),
+                                                                (parameter.unit?.name ? ` ${parameter.unit.name}` : ''),
                                                             index,
                                                         ),
                                                     )}
@@ -157,7 +155,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                             formatParameterValue(
                                                                 value.text +
                                                                     (parameter.unit?.name
-                                                                        ? ` (${parameter.unit.name})`
+                                                                        ? ` ${parameter.unit.name}`
                                                                         : ''),
                                                                 index,
                                                             ),
