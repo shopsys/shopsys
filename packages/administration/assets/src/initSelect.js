@@ -15,7 +15,6 @@ export function initSelect ($container) {
         };
 
         if (el.hasAttribute('multiple')) {
-            // @todo not translated
             settings.plugins.remove_button = { title: Translator.trans('Remove') };
         }
 

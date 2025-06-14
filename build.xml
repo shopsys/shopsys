@@ -7,6 +7,7 @@
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
+    <property name="path.administration" value="${path.packages}/administration"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="path.upgrade-notes" value="${project.basedir}/upgrade-notes"/>
     <property name="translations.dump.flags" value=""/>
@@ -108,6 +109,14 @@
             <arg value="--"/>
             <arg value="source-dir=${path.framework}/assets/**/*.js"/>
             <arg value="export-dir=${path.var}/translations/framework/"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans:dump"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.administration}/assets/**/*.js"/>
+            <arg value="export-dir=${path.var}/translations/administration/"/>
         </exec>
     </target>
 
@@ -454,6 +463,7 @@
             <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysAdministrationBundle"/>
             <arg value="--dir=${path.packages}/administration/src"/>
+            <arg value="--dir=${path.var}/translations/administration"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/administration/translations"/>
             <arg line="${domains-info.locales}"/>
