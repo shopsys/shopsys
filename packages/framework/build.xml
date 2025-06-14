@@ -16,6 +16,7 @@
     <property name="path.env.acc" value="${path.root}/ACCEPTANCE"/>
     <property name="path.framework" value="${project.basedir}"/>
     <property name="path.framework.assets" value="${path.framework}/assets"/>
+    <property name="npm-export-translations.extra-args" value=""/>
     <property name="path.git.executable" value="git"/>
     <property name="path.npm.executable" value="npm"/>
     <property name="path.pg_dump.executable" value="pg_dump"/>
@@ -889,6 +890,7 @@
             <arg value="source-dir=${path.framework.assets}/js/**/*.js"/>
             <arg value="translations-dir=${path.root}/translations/*.po"/>
             <arg value="translations-dir=${path.framework}/src/Resources/translations/*.po"/>
+            <arg line="${npm-export-translations.extra-args}"/>
         </exec>
     </target>
 
