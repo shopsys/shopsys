@@ -147,12 +147,11 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
-        <Popup className="w-11/12 lg:w-4/5" contentClassName="overflow-y-auto">
+        <Popup className="w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={t('Create complaint')}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormHeading>{t('Create complaint')}</FormHeading>
                             {isCreationWithoutOrder && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}
@@ -167,7 +166,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     }}
                                 />
                             )}
-                            <span className="h5 mb-2">{orderItem?.name ?? t('Complaint item')}</span>
+                            <p className="h5 mb-2">{orderItem?.name ?? t('Complaint item')}</p>
                             {isCreationWithoutOrder && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}

@@ -5,9 +5,7 @@ export const useFocusTrap = (containerRef: React.RefObject<HTMLElement> | undefi
     useEffect(() => {
         const container = containerRef?.current;
 
-        const focusableElements = container?.querySelectorAll(
-            'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
+        const focusableElements = container?.querySelectorAll('button, a[href], input, select, textarea');
 
         const firstElement = focusableElements?.[0] as HTMLElement;
         const lastElement = focusableElements?.[focusableElements.length - 1] as HTMLElement;

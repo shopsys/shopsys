@@ -17,10 +17,7 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
     const orderForPrefillingUuidRef = useRef(orderForPrefillingUuid);
 
     return (
-        <Popup>
-            <p className="mb-6 text-lg lg:text-2xl">
-                {t('Do you want to merge the current cart and items from the previous order?')}
-            </p>
+        <Popup title={t('Do you want to merge the current cart and items from the previous order?')}>
             <div className="flex justify-between">
                 <Button
                     tid={TIDs.repeat_order_dont_merge_carts_button}

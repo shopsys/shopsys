@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { Button } from 'components/Forms/Button/Button';
@@ -33,12 +32,13 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
     return (
-        <Popup key={key} hideCloseButton className="w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
-            <div className="mb-4 flex w-full items-center md:mb-6">
-                <CheckmarkIcon className="text-text-success mr-4 w-7" />
-                <div className="h2 text-text-accent">{t('Great choice! We have added your item to the cart')}</div>
-            </div>
-
+        <Popup
+            key={key}
+            hideCloseButton
+            className="w-11/12 max-w-5xl"
+            contentClassName="overflow-y-auto"
+            title={t('Great choice! We have added your item to the cart')}
+        >
             <div className="border-border-default mb-4 flex flex-col items-center rounded-sm border p-3 md:flex-row md:p-4">
                 {!!product.mainImage && (
                     <div
@@ -57,6 +57,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
                     <div className="block break-words" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
                         <ExtendedNextLink
+                            aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                             href={productUrl}
                             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
                         >
@@ -88,11 +89,21 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
             )}
 
             <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
-                <Button className="mt-2 w-full md:w-auto" variant="inverted" onClick={() => updatePortalContent(null)}>
+                <Button
+                    aria-label={t('Go back to shop')}
+                    className="mt-2 w-full md:w-auto"
+                    variant="inverted"
+                    onClick={() => updatePortalContent(null)}
+                >
                     {t('Back to shop')}
                 </Button>
 
-                <LinkButton href={cartUrl} skeletonType="cart" tid={TIDs.popup_go_to_cart_button}>
+                <LinkButton
+                    aria-label={t('Go to cart')}
+                    href={cartUrl}
+                    skeletonType="cart"
+                    tid={TIDs.popup_go_to_cart_button}
+                >
                     {t('To cart')}
                 </LinkButton>
             </div>

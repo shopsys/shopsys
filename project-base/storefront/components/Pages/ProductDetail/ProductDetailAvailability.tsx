@@ -3,6 +3,7 @@ import { ProductAvailability } from 'components/Blocks/Product/ProductAvailabili
 import { Popup } from 'components/Layout/Popup/Popup';
 import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
+import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 
@@ -21,6 +22,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
     isInquiryType,
     storeAvailabilities,
 }) => {
+    const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     if (isSellingDenied) {
@@ -39,7 +41,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
             onClick={() =>
                 availability.status === TypeAvailabilityStatusEnum.InStock &&
                 updatePortalContent(
-                    <Popup contentClassName="overflow-scroll">
+                    <Popup contentClassName="overflow-scroll" title={t('Availability in stores')}>
                         <ProductDetailAvailabilityList storeAvailabilities={storeAvailabilities} />
                     </Popup>,
                 )

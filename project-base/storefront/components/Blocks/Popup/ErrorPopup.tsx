@@ -31,30 +31,35 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = Gtm
     }, [fields, gtmMessageOrigin]);
 
     const mappedErrors = useMemo(() => {
-        const newMappedErrors = [];
-        for (const field in fields) {
-            if (fields[field].errorMessage === undefined) {
-                continue;
-            }
-
-            newMappedErrors.push(
+        return Object.entries(fields)
+            .filter(([, field]) => field.errorMessage !== undefined)
+            .map(([, field]) => (
                 <li
-                    key={fields[field].name}
+                    key={field.name}
                     className="border-border-default mb-2 border-b pb-2 last:mb-0 last:border-none last:pb-0"
                 >
-                    {fields[field].label}
+                    {field.label}
                     <br />
-                    <span className="text-text-error">{fields[field].errorMessage}</span>
-                </li>,
-            );
-        }
+                    <span className="text-text-error">{field.errorMessage}</span>
+                </li>
+            ));
+    }, [fields]);
 
-        return newMappedErrors;
+    const mappedAriaLabel = useMemo(() => {
+        return Object.entries(fields)
+            .filter(([, field]) => field.errorMessage !== undefined)
+            .map(([, field]) => field.errorMessage)
+            .join(', ');
     }, [fields]);
 
     return (
-        <Popup className="w-11/12 max-w-lg" contentClassName="overflow-y-auto">
-            <div className="h2 mb-3">{t('Please check inserted details')}</div>
+        <Popup
+            ariaDescription={`${t('This form contains validation errors that must be corrected before you can continue.')} ${mappedAriaLabel}`}
+            className="w-11/12 max-w-lg"
+            contentClassName="overflow-y-auto"
+            role="alertdialog"
+            title={t('Please check inserted details')}
+        >
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>
     );

@@ -1,7 +1,7 @@
 import { useInquiryForm } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { useInquiryFormMeta } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -64,14 +64,18 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
-        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5">
+        <Popup
+            className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5"
+            title={t('Inquiry')}
+            ariaDescription={t(
+                'This product is available on inquiry. Please fill in your information below to submit your inquiry request.',
+            )}
+        >
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(inquiryHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormHeading>{t('Inquiry')}</FormHeading>
-
-                            <FormColumn className="mt-4">
+                            <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}

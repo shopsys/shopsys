@@ -13,8 +13,6 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
 
     return (
         <div className="vl:max-w-xl">
-            <div className="text-xl font-bold">{t('Availability in stores')}</div>
-
             <ul>
                 {storeAvailabilities.map(
                     (storeAvailability, index) =>
