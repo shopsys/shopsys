@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Grid;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
@@ -304,7 +305,11 @@ class GridTest extends TestCase
         $grid->createView();
     }
 
-    public function testEnableDragAndDrop()
+    /**
+     * @param bool $isEditRoleGranted
+     */
+    #[DataProvider('enableDragAndDropDataProvider')]
+    public function testEnableDragAndDrop(bool $isEditRoleGranted): void
     {
         $entityClass = 'Path\To\Entity\Class';
 
@@ -317,6 +322,9 @@ class GridTest extends TestCase
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
         $securityMock = $this->createMock(Security::class);
+        $securityMock->expects($this->any())
+            ->method('isGranted')
+            ->willReturn($isEditRoleGranted);
 
         $grid = new Grid(
             'gridId',
@@ -331,7 +339,17 @@ class GridTest extends TestCase
 
         $this->assertFalse($grid->isDragAndDrop());
         $grid->enableDragAndDrop($entityClass);
-        $this->assertTrue($grid->isDragAndDrop());
+        $this->assertSame($isEditRoleGranted, $grid->isDragAndDrop());
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function enableDragAndDropDataProvider(): iterable
+    {
+        yield 'edit role granted' => ['isEditRoleGranted' => true];
+
+        yield 'edit role not granted' => ['isEditRoleGranted' => false];
     }
 
     public function testReorderColumns(): void

@@ -722,12 +722,16 @@ class Grid
      */
     public function enableDragAndDrop(string $entityClass): void
     {
-        $this->orderingEntityClass = $entityClass;
+        if ($this->canEdit()) {
+            $this->orderingEntityClass = $entityClass;
+        }
     }
 
     public function enableMultipleDragAndDrop(): void
     {
-        $this->multipleDragAndDrop = true;
+        if ($this->canEdit()) {
+            $this->multipleDragAndDrop = true;
+        }
     }
 
     /**
