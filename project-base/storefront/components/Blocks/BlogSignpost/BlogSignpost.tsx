@@ -32,7 +32,8 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         className={twJoin(
                             'relative w-full justify-between !text-base',
                             'xl:text-text-default xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:outline-hidden',
-                            'max-xl:z-aboveOverlay max-xl:font-default max-xl:py-2.5',
+                            'max-xl:font-default max-xl:py-2.5',
+                            isBlogSignpostOpen && 'max-xl:z-aboveOverlay',
                         )}
                         onClick={() => setIsBlogSignpostOpen(!isBlogSignpostOpen)}
                     >
