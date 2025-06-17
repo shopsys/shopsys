@@ -7,7 +7,6 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type SideProps = {
     articles: TypeListedBlogArticleFragment[];
@@ -16,7 +15,6 @@ type SideProps = {
 
 export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false }) => {
     const { t } = useTranslation();
-    const { formatDate } = useFormatDate();
 
     return (
         <div className="flex flex-col gap-6">
@@ -46,7 +44,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                                     <ArticleDate
                                         className="mr-3.5"
                                         data-tid={TIDs.blog_article_publication_date}
-                                        date={formatDate(article.publishDate, 'l')}
+                                        date={article.publishDate}
                                     />
 
                                     {article.blogCategories.map((blogPreviewCategory) => {

@@ -53,7 +53,7 @@ const Index: FC = () => {
                     </Webline>
 
                     <Webline>
-                        <ArticleDate date={new Date().toLocaleDateString()} />
+                        <ArticleDate date={new Date().toISOString()} />
                     </Webline>
 
                     <Webline>

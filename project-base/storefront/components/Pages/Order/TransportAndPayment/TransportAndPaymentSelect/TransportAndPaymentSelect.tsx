@@ -47,7 +47,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <PacketeryContainer />
 
             <div data-tid={TIDs.pages_order_transport}>
-                <h3 className="h4 mb-3">{t('Choose transport')}</h3>
+                <h2 className="h4 mb-3">{t('Choose transport')}</h2>
 
                 <ul>
                     <fieldset>
@@ -107,7 +107,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />
                         )}
 
-                        <h3 className="h4 mb-3">{t('Choose payment')}</h3>
+                        <h2 className="h4 mb-3">{t('Choose payment')}</h2>
 
                         <fieldset>
                             <legend className="sr-only">{t('Choose payment type')}</legend>

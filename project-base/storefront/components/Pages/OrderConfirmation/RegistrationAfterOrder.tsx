@@ -107,9 +107,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
                     <fieldset>
-                        <legend>
-                            <span className="h4">{t('Choose a password')}</span>
-                        </legend>
+                        <legend className="h4 mb-4">{t('Choose a password')}</legend>
 
                         <FormColumn className="gap-3">
                             <PasswordInputControlled

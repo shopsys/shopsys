@@ -62,7 +62,6 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                     availableStoresCount={product.availableStoresCount}
                     className="md:basis-3/12"
                     isInquiryType={product.isInquiryType}
-                    tabIndex={-1}
                 />
 
                 <ProductPrice className="md:basis-3/12 md:flex-col md:items-end" productPrice={product.price} />

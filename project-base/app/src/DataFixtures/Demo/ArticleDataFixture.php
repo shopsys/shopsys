@@ -86,7 +86,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $locale,
-                ) . '|||[gjc-comp-ProductList&#61;9177759,91765223,9176522,91765782,8981537,8981538,9176578]|||',
+                ),
                 self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_FOOTER_1,
             ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'Goods care',

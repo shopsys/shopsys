@@ -4,7 +4,6 @@ import {
     FilterGroupTitle,
     FilterGroupWrapper,
     ShowAllButton,
-    createFilterGroupId,
 } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
@@ -15,6 +14,7 @@ import { useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -70,7 +70,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
             <AnimatePresence initial={false}>
                 {!isGroupCollapsed && (
-                    <FilterGroupContent id={createFilterGroupId(title)}>
+                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
                         {isCheckboxType && (
                             <>
                                 {defaultOptions.map((parameterValueOption, index) => {

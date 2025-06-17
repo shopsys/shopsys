@@ -4,21 +4,18 @@ import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/Products
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeArticleDetailFragment } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type ArticleDetailContentProps = {
     article: TypeArticleDetailFragment;
 };
 
 export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article }) => {
-    const { formatDate } = useFormatDate();
-
     return (
         <Webline width="md">
             <VerticalStack gap="sm">
                 <h1>{article.seoH1 || article.articleName}</h1>
 
-                <ArticleDate date={formatDate(article.createdAt)} />
+                <ArticleDate date={article.createdAt} />
 
                 {article.text !== null && (
                     <GrapesJsParser text={article.text} visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE} />

@@ -1,4 +1,4 @@
-import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
+import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -31,9 +31,7 @@ export const RegistrationAddress: FC = () => {
     return (
         <FormBlockWrapper>
             <fieldset>
-                <FormHeading>
-                    <legend>{t('Billing address')}</legend>
-                </FormHeading>
+                <legend className="h4 mb-4">{t('Billing address')}</legend>
 
                 <TextInputControlled
                     control={formProviderMethods.control}

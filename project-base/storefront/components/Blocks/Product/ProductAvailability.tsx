@@ -20,10 +20,17 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
 }) => {
     const { t } = useTranslation();
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            onClick?.();
+        }
+    };
+
     return (
-        <button
+        <div
             aria-haspopup="dialog"
             aria-label={t('Open stores availability popup')}
+            role="button"
             tabIndex={tabIndex}
             title={t('Show stores availability')}
             className={twJoin(
@@ -33,6 +40,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                 availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
             )}
             onClick={onClick}
+            onKeyDown={handleKeyDown}
         >
             {!isInquiryType &&
                 `${availability.name}${
@@ -40,6 +48,6 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                         ? `, ${t('ready to ship immediately')} ${availableStoresCount !== 0 ? t('or at {{ count }} stores', { count: availableStoresCount }) : ''}`
                         : ''
                 }`}
-        </button>
+        </div>
     );
 };

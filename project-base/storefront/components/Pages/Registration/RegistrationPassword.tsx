@@ -1,4 +1,4 @@
-import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
+import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -15,9 +15,7 @@ export const RegistrationPassword: FC = () => {
     return (
         <FormBlockWrapper>
             <fieldset>
-                <FormHeading>
-                    <legend>{t('Password')}</legend>
-                </FormHeading>
+                <legend className="h4 mb-4">{t('Password')}</legend>
 
                 <FormColumn className="gap-3">
                     <PasswordInputControlled

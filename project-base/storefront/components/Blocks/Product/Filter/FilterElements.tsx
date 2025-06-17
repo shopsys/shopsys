@@ -4,13 +4,7 @@ import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { twJoin } from 'tailwind-merge';
-
-export const createFilterGroupId = (title: string): string => {
-    return `filter-group-${title
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '')}`;
-};
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 
 export const FilterGroupWrapper: FC = ({ children }) => <div className="vl:py-5 py-4">{children}</div>;
 
@@ -23,7 +17,7 @@ export const FilterGroupTitle: FC<{
 }> = ({ isOpen, title, onClick, isActive, ariaLabel }) => {
     return (
         <button
-            aria-controls={createFilterGroupId(title)}
+            aria-controls={createAriaParameter('filter-group', title)}
             aria-expanded={isOpen}
             aria-label={ariaLabel}
             className="font-secondary text-text-default flex w-full cursor-pointer items-center justify-between rounded-sm font-semibold uppercase"

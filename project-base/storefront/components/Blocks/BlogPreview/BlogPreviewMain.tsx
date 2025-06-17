@@ -6,7 +6,6 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type MainProps = {
     articles: TypeListedBlogArticleFragment[];
@@ -15,7 +14,6 @@ type MainProps = {
 
 export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false }) => {
     const { t } = useTranslation();
-    const { formatDate } = useFormatDate();
 
     return (
         <>
@@ -44,7 +42,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                                 <>
                                     <ArticleDate
                                         className="mr-3.5"
-                                        date={formatDate(article.publishDate, 'l')}
+                                        date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
                                     />
 

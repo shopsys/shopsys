@@ -8,15 +8,12 @@ import { BlogLayout } from 'components/Layout/BlogLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type BlogArticleDetailContentProps = {
     blogArticle: TypeBlogArticleDetailFragment;
 };
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {
-    const { formatDate } = useFormatDate();
-
     return (
         <VerticalStack gap="md">
             <BlogLayout activeCategoryUuid={blogArticle.mainBlogCategoryUuid}>
@@ -37,7 +34,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
                     <ArticleDate
                         className="mr-3.5"
-                        date={formatDate(blogArticle.publishDate)}
+                        date={blogArticle.publishDate}
                         tid={TIDs.blog_article_publication_date}
                     />
 

@@ -4,7 +4,6 @@ import {
     FilterGroupTitle,
     FilterGroupWrapper,
     ShowAllButton,
-    createFilterGroupId,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
 import { Flag } from 'components/Basic/Flag/Flag';
@@ -13,6 +12,7 @@ import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -73,7 +73,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             />
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
-                    <FilterGroupContent id={createFilterGroupId(title)}>
+                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
                         {defaultOptions && (
                             <AnimatePresence initial={false}>
                                 {defaultOptions.map((option, index) => {

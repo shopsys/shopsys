@@ -1,4 +1,4 @@
-import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
+import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
@@ -14,9 +14,7 @@ export const RegistrationCompany: FC = () => {
     return (
         <FormBlockWrapper>
             <fieldset>
-                <FormHeading>
-                    <legend>{t('Company data')}</legend>
-                </FormHeading>
+                <legend className="h4 mb-4">{t('Company data')}</legend>
 
                 <TextInputControlled
                     control={formProviderMethods.control}

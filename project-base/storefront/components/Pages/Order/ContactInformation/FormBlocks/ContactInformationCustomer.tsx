@@ -23,6 +23,7 @@ export const ContactInformationCustomer: FC = () => {
 
             <fieldset>
                 <legend className="sr-only">{t('Customer type')}</legend>
+
                 <FormColumn className="vl:gap-0 gap-2">
                     <RadiobuttonGroup
                         control={formProviderMethods.control}

@@ -21,7 +21,8 @@ type StoreListItemProps = {
 export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
-    const itemRef = useRef<HTMLButtonElement>(null);
+    const itemRef = useRef<HTMLDivElement>(null);
+    const storeInfoId = `store-info-${store.slug.replace(/\//g, '-')}`;
 
     useEffect(() => {
         setIsExpanded(isSelected);
@@ -42,18 +43,25 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         return undefined;
     }, [isExpanded]);
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            setIsExpanded((isExpanded) => !isExpanded);
+        }
+    };
+
     return (
-        <button
-            aria-controls="store-info"
+        <div
+            aria-controls={storeInfoId}
             aria-expanded={isExpanded}
             ref={itemRef}
+            role="button"
             tabIndex={0}
             title={isExpanded ? t('Collapse store info') : t('Expand store info')}
-            type="button"
             className={twMergeCustom(
                 'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5 text-left',
                 isExpanded && 'border-border-less',
             )}
+            onKeyDown={handleKeyDown}
             onClick={() => {
                 setIsExpanded((isExpanded) => !isExpanded);
             }}
@@ -84,38 +92,41 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                     <ArrowIcon className={`size-5 motion-safe:transform ${isExpanded ? 'rotate-180' : ''}`} />
                 </div>
             </div>
-            <AnimatePresence initial={false}>
-                {isExpanded && (
-                    <AnimateCollapseDiv className="mt-2.5 !block" keyName="store-info">
-                        {!!store.specialMessage && (
-                            <InfoItem>
-                                <Infobox message={store.specialMessage} />
-                            </InfoItem>
-                        )}
-                        {store.description && (
-                            <InfoItem>
-                                <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />
-                            </InfoItem>
-                        )}
 
-                        {store.phone || store.email ? (
+            <div id={storeInfoId}>
+                <AnimatePresence initial={false}>
+                    {isExpanded && (
+                        <AnimateCollapseDiv className="mt-2.5 !block" keyName={storeInfoId}>
+                            {!!store.specialMessage && (
+                                <InfoItem>
+                                    <Infobox message={store.specialMessage} />
+                                </InfoItem>
+                            )}
+                            {store.description && (
+                                <InfoItem>
+                                    <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />
+                                </InfoItem>
+                            )}
+
+                            {store.phone || store.email ? (
+                                <InfoItem>
+                                    <StoreContact email={store.email} phone={store.phone} />
+                                </InfoItem>
+                            ) : null}
+
                             <InfoItem>
-                                <StoreContact email={store.email} phone={store.phone} />
+                                <p className="h5 mb-2">{t('Opening hours')}</p>
+                                <OpeningHours openingHours={store.openingHours} />
                             </InfoItem>
-                        ) : null}
 
-                        <InfoItem>
-                            <p className="h5 mb-2">{t('Opening hours')}</p>
-                            <OpeningHours openingHours={store.openingHours} />
-                        </InfoItem>
-
-                        <LinkButton href={store.slug} size="small" type="store" variant="secondary">
-                            {t('Store detail')}
-                        </LinkButton>
-                    </AnimateCollapseDiv>
-                )}
-            </AnimatePresence>
-        </button>
+                            <LinkButton href={store.slug} size="small" type="store" variant="secondary">
+                                {t('Store detail')}
+                            </LinkButton>
+                        </AnimateCollapseDiv>
+                    )}
+                </AnimatePresence>
+            </div>
+        </div>
     );
 };
 

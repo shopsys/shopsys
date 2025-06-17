@@ -1,7 +1,8 @@
-import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper, createFilterGroupId } from './FilterElements';
+import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { getPriceRounded } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
@@ -53,7 +54,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
             />
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
-                    <FilterGroupContent id={createFilterGroupId(title)}>
+                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
                         <RangeSlider
                             max={maxPriceOption}
                             maxValue={maximalPrice || maxPriceOption}

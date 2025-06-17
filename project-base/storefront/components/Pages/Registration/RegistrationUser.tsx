@@ -1,4 +1,4 @@
-import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
+import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
@@ -17,9 +17,7 @@ export const RegistrationUser: FC = () => {
     return (
         <FormBlockWrapper>
             <fieldset>
-                <FormHeading>
-                    <legend>{t('Personal data')}</legend>
-                </FormHeading>
+                <legend className="h4 mb-4">{t('Personal data')}</legend>
 
                 <TextInputControlled
                     control={formProviderMethods.control}

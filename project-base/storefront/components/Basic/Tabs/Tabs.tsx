@@ -14,6 +14,7 @@ import {
     Tabs as TabsReact,
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
 /**
@@ -68,6 +69,12 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
     const mobileTab = () => setIsActiveOnMobile(!isActiveOnMobile);
     const isLg = useMediaMin('lg');
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            mobileTab();
+        }
+    };
+
     return (
         <TabPanel
             forceRender
@@ -75,31 +82,34 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             selectedClassName="isActive"
             {...props}
         >
-            <button
-                aria-controls={`tabs-content-${headingTextMobile}`}
+            <div
+                aria-controls={createAriaParameter('tabs-content', headingTextMobile)}
                 aria-expanded={isActiveOnMobile}
                 className="bg-background-more font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
+                role="button"
                 tabIndex={0}
-                type="button"
                 onClick={mobileTab}
+                onKeyDown={handleKeyDown}
             >
                 {headingTextMobile}
                 <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
                     <ArrowIcon className={twJoin('text-text-default size-4 rotate-0 transition')} />
                 </AnimateRotateDiv>
-            </button>
+            </div>
 
-            <AnimatePresence initial={false}>
-                {(isActiveOnMobile || (isActive && isLg)) && (
-                    <AnimateCollapseDiv
-                        className="relative mt-3 !block w-full lg:mt-0"
-                        initial={skipInitialAnimation ? 'open' : 'closed'}
-                        keyName={`tabs-content-${headingTextMobile}`}
-                    >
-                        {children}
-                    </AnimateCollapseDiv>
-                )}
-            </AnimatePresence>
+            <div className="relative mt-3 w-full lg:mt-0" id={createAriaParameter('tabs-content', headingTextMobile)}>
+                <AnimatePresence initial={false}>
+                    {(isActiveOnMobile || (isActive && isLg)) && (
+                        <AnimateCollapseDiv
+                            className="!block"
+                            initial={skipInitialAnimation ? 'open' : 'closed'}
+                            keyName={`tabs-content-${headingTextMobile}`}
+                        >
+                            {children}
+                        </AnimateCollapseDiv>
+                    )}
+                </AnimatePresence>
+            </div>
         </TabPanel>
     );
 };
