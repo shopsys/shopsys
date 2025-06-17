@@ -10,7 +10,8 @@
         "no-redeclare": "off",
         "eqeqeq": "off",
         "no-eval": "off",
-        "eol-last": ["error", "always"]
+        "eol-last": ["error", "always"],
+        "no-prototype-builtins": "off"
     },
     "globals": {
         "Shopsys": true,
