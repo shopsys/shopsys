@@ -123,7 +123,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             type="button"
                             onClick={() => onSelectToggleOpenHandler(!isOpen)}
                         >
-                            <div
+                            <span
                                 className={twJoin(
                                     'font-secondary text-input-placeholder-default group-hover:text-input-placeholder-hovered absolute transition-all',
                                     isOpen || activeOption
@@ -134,12 +134,12 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 {label}
 
                                 {isRequired && <span className="text-text-error ml-1">*</span>}
-                            </div>
+                            </span>
 
                             {activeOption?.label && (
-                                <div className="font-secondary text-input-text-default font-semibold">
+                                <span className="font-secondary text-input-text-default font-semibold">
                                     {activeOption.label}
-                                </div>
+                                </span>
                             )}
                         </button>
                     )}

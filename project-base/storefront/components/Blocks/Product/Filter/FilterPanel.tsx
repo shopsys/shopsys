@@ -50,13 +50,13 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             <div className="vl:hidden flex items-center justify-between p-5">
                 <span className="h5">{t('Product filter')}</span>
                 <button
-                    className="inline-flex size-4 cursor-pointer"
+                    className="text-icon-less hover:text-icon-accent flex cursor-pointer items-center justify-center"
                     tabIndex={0}
                     title={t('Close filter panel')}
                     type="button"
                     onClick={() => setIsFilterPanelOpen(false)}
                 >
-                    <RemoveIcon className="text-input-placeholder-default hover:text-input-placeholder-hovered w-6" />
+                    <RemoveIcon className="size-6" />
                 </button>
             </div>
 

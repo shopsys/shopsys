@@ -38,7 +38,7 @@ export const CartStep: FC<CartStepProps> = ({
                 )}
                 onClick={() => onClickHandler(step, url, pageType)(activeStep)}
             >
-                <div
+                <span
                     className={twJoin(
                         'flex size-11 items-center justify-center rounded-full',
                         step === activeStep
@@ -47,9 +47,9 @@ export const CartStep: FC<CartStepProps> = ({
                     )}
                 >
                     <span className="h4">{step}</span>
-                </div>
+                </span>
 
-                <h2
+                <span
                     className={twJoin(
                         'font-secondary text-xs font-semibold lg:text-lg',
                         !isDisabled && 'group-hover:text-link-hovered',
@@ -57,7 +57,7 @@ export const CartStep: FC<CartStepProps> = ({
                     )}
                 >
                     {label}
-                </h2>
+                </span>
             </button>
         </li>
     );

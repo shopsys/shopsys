@@ -25,10 +25,10 @@ export const FilterGroupTitle: FC<{
             type="button"
             onClick={onClick}
         >
-            <h3 className="h6 flex items-center gap-2.5 text-left">
+            <span className="h6 flex items-center gap-2.5 text-left">
                 {title}
-                {isActive && <div className="bg-background-success vl:hidden size-2 rounded-full" />}
-            </h3>
+                {isActive && <span className="bg-background-success vl:hidden size-2 rounded-full" />}
+            </span>
             <ArrowIcon className={twJoin('size-5 rotate-0 text-xs transition select-none', isOpen && 'rotate-180')} />
         </button>
     );

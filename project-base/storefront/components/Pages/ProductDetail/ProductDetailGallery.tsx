@@ -125,9 +125,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                         src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
                                                         width={64}
                                                     />
-                                                    <div className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
+                                                    <span className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
                                                         <PlayIcon className="text-text-inverted h-8 w-8 rounded-full" />
-                                                    </div>
+                                                    </span>
                                                 </>
                                             )}
                                         </button>

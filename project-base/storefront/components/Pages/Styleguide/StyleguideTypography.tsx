@@ -23,7 +23,7 @@ export const StyleguideTypography: FC = () => {
             </p>
 
             <a href="/styleguide">Simple anchor link</a>
-            <ExtendedNextLink href="#">ExtendedNextLink</ExtendedNextLink>
+            <ExtendedNextLink href="/styleguide">ExtendedNextLink</ExtendedNextLink>
         </StyleguideSection>
     );
 };

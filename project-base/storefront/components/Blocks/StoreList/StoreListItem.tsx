@@ -53,6 +53,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         <div
             aria-controls={storeInfoId}
             aria-expanded={isExpanded}
+            aria-label={isExpanded ? t('Collapse store info') : t('Expand store info')}
             ref={itemRef}
             role="button"
             tabIndex={0}

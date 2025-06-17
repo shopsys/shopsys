@@ -70,7 +70,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
             </div>
             <RemoveCartItemButton
                 ariaLabel={t('Remove from cart ' + product.fullName)}
-                className="absolute top-2 right-0 cursor-pointer lg:relative lg:top-0 lg:right-0"
+                className="text-icon-less hover:text-icon-default absolute top-2 right-0 cursor-pointer lg:relative lg:top-0 lg:right-0"
                 title={t('Remove from cart')}
                 onRemoveFromCart={onRemoveFromCart}
             />
