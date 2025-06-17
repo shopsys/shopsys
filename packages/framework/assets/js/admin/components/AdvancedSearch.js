@@ -42,8 +42,8 @@ export default class AdvancedSearch {
             url: $rulesContainer.data('rule-form-url'),
             type: 'post',
             data: {
-                filterName: filterName,
-                newIndex: newIndex
+                filterName,
+                newIndex
             },
             success: function (data) {
                 const $newRule = $($.parseHTML(data));

@@ -57,7 +57,7 @@ export default class MultiplePicker {
         delete this.items[this.findItemIndex(Id)];
         const Item = this.findItemIndex(Id);
         const newItems = [];
-        for (let key in this.items) {
+        for (const key in this.items) {
             if (this.items[key] !== Item) {
                 newItems.push(this.items[key]);
             }
@@ -71,7 +71,7 @@ export default class MultiplePicker {
     }
 
     findItemIndex (Id) {
-        for (let key in this.items) {
+        for (const key in this.items) {
             if (this.items[key].find('.js-picker-item-input:first').val() === Id.toString()) {
                 return key;
             }

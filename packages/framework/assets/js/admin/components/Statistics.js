@@ -37,23 +37,23 @@ export default class Statistics {
     }
 
     static lineChartForCron ($chartCanvas) {
-        let originalLineDraw = Chart.controllers.line.prototype.draw;
+        const originalLineDraw = Chart.controllers.line.prototype.draw;
         Chart.helpers.extend(Chart.controllers.line.prototype, {
             draw: function () {
                 originalLineDraw.apply(this, arguments);
 
-                let chart = this.chart;
-                let ctx = chart.chart.ctx;
+                const chart = this.chart;
+                const ctx = chart.chart.ctx;
 
-                let xaxis = chart.scales['x-axis-0'];
-                let yaxis = chart.scales['y-axis-0'];
+                const xaxis = chart.scales['x-axis-0'];
+                const yaxis = chart.scales['y-axis-0'];
 
-                let limits = [];
+                const limits = [];
 
-                let max = [];
-                max['value'] = $chartCanvas.data('chart-timeout-secs');
-                max['label'] = Translator.trans('Expected maximum duration');
-                max['color'] = 'rgb(220, 61, 61)';
+                const max = [];
+                max.value = $chartCanvas.data('chart-timeout-secs');
+                max.label = Translator.trans('Expected maximum duration');
+                max.color = 'rgb(220, 61, 61)';
                 limits.push(max);
 
                 for (let i = 0; i < limits.length; i++) {

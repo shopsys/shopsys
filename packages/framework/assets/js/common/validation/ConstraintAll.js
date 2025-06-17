@@ -21,8 +21,8 @@
                 );
 
                 FpJsFormValidator.customize(errorPath.domNode, 'showErrors', {
-                    errors: errors,
-                    sourceId: sourceId
+                    errors,
+                    sourceId
                 });
             }
 

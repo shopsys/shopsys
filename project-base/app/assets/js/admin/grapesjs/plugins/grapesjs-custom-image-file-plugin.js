@@ -1,4 +1,3 @@
-
 import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
 

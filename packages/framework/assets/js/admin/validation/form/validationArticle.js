@@ -14,7 +14,7 @@ export default function validationArticle () {
     };
 
     const initArticleForm = function () {
-        let groups = {
+        const groups = {
             site: [$('#article_form_articleData_text').closest('.form-line'), $('#article_form_seo').closest('.wrap-divider')],
             link: [$('#article_form_articleData_url').closest('.form-line')]
         };
@@ -32,7 +32,7 @@ export default function validationArticle () {
     initArticleForm();
 
     $articleForm.jsFormValidator({
-        'groups': function () {
+        groups: function () {
             const groups = [VALIDATION_GROUP_DEFAULT];
 
             const checkedType = getCheckedType();

@@ -46,7 +46,7 @@ export default class Ajax {
 
         // eslint-disable-next-line no-new
         new Window({
-            content: content
+            content
         });
     }
 
@@ -85,7 +85,7 @@ export default class Ajax {
 
         Ajax.ajaxPendingCalls[pendingCallName] = {
             isPending: true,
-            options: options
+            options
         };
 
         if (callImmediately) {

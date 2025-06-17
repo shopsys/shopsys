@@ -135,7 +135,7 @@ export default grapesjs.plugins.add('products', editor => {
 
         createInput ({ trait }) {
             const el = document.createElement('div');
-            el.innerHTML = `<input class="tag-input__input"/>`;
+            el.innerHTML = '<input class="tag-input__input"/>';
 
             const tagInput = el.querySelector('.tag-input__input');
 

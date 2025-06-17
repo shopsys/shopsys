@@ -96,7 +96,7 @@ export default class InitGrapesJs {
             avoidInlineStyle: false,
             forceClass: false,
             nativeDnD: true,
-            plugins: plugins,
+            plugins,
             i18n: {
                 locale: Translator.locale,
                 detectLocale: false,
@@ -139,7 +139,7 @@ export default class InitGrapesJs {
                     useCustomTheme: false
                 },
                 customButtons: {
-                    textareaId: textareaId
+                    textareaId
                 }
             },
             styleManager: {
@@ -247,23 +247,23 @@ export default class InitGrapesJs {
                         removePlugins: 'exportpdf',
                         strinsert_button_label: Translator.trans('Insert variable'),
                         strinsert_strings: [
-                            { 'name': Translator.trans('Mandatory variables') },
+                            { name: Translator.trans('Mandatory variables') },
                             ...variables
                                 .filter((variable) => variable.isRequired === true)
                                 .map((variable) => {
-                                    return { 'name': variable.label, 'value': variable.placeholder };
+                                    return { name: variable.label, value: variable.placeholder };
                                 }),
-                            { 'name': Translator.trans('Optional variables') },
+                            { name: Translator.trans('Optional variables') },
                             ...variables
                                 .filter((variable) => variable.isRequired === false)
                                 .map((variable) => {
-                                    return { 'name': variable.label, 'value': variable.placeholder };
+                                    return { name: variable.label, value: variable.placeholder };
                                 })
                         ]
                     }
                 },
                 customButtons: {
-                    textareaId: textareaId,
+                    textareaId,
                     isMail: true
                 }
             },

@@ -51,7 +51,7 @@ export default class PriceListProductPickerWindow {
                 productsPicker.addProduct(
                     $currentTarget.data('product-picker-product-id'),
                     $currentTarget.data('product-picker-product-name'),
-                    data['basicPrice'],
+                    data.basicPrice,
                     $currentTarget.data('product-picker-product-ean'),
                     $currentTarget.data('product-picker-product-catnum')
                 );

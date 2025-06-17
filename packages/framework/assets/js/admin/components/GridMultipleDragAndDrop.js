@@ -35,7 +35,7 @@ export default class GridMultipleDragAndDrop {
             loaderElement: $content.find('.js-multiple-grids-save-all-button'),
             url: $saveButton.data('drag-and-drop-url-save-ordering'),
             type: 'POST',
-            data: data,
+            data,
             dataType: 'json',
             success: function () {
                 // eslint-disable-next-line no-new

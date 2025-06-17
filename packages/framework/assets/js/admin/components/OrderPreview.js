@@ -79,8 +79,8 @@ export default class OrderPreview {
         this.$previewBoxWindow.show(function () {
             const tableHeight = $('body').find('.js-table-grid').height();
             if (tableHeight > windowPreviewThreshold) {
-                let tablePosition = $('body').find('.js-table-grid').offset().top;
-                let popupWindowPosition = $(this).offset().top;
+                const tablePosition = $('body').find('.js-table-grid').offset().top;
+                const popupWindowPosition = $(this).offset().top;
 
                 if (((tablePosition + tableHeight) - popupWindowPosition) < windowPreviewThreshold) {
                     $(this).addClass('bottom');

@@ -87,7 +87,7 @@ export default class PriceListProductPicker {
 
         delete this.productItems[productItemIndex];
         const newProductItems = [];
-        for (let key in this.productItems) {
+        for (const key in this.productItems) {
             if (this.productItems[key] !== productItemIndex) {
                 newProductItems.push(this.productItems[key]);
             }
@@ -101,7 +101,7 @@ export default class PriceListProductPicker {
     }
 
     findProductItemIndex (productId) {
-        for (let key in this.productItems) {
+        for (const key in this.productItems) {
             if (this.productItems[key].find('.js-price-list-product-picker-item-input:first').val() === productId.toString()) {
                 return key;
             }

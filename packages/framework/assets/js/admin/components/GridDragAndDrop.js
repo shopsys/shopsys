@@ -93,7 +93,7 @@ export default class GridDragAndDrop {
             loaderElement: $grid.find('.js-drag-and-drop-grid-submit, js-drag-and-drop-grid-submit-all'),
             url: $grid.data('drag-and-drop-url-save-ordering'),
             type: 'POST',
-            data: data,
+            data,
             dataType: 'json',
             success: function () {
                 $grid.data('positionsChanged', false);

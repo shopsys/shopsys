@@ -46,7 +46,7 @@ export default class OrderItems {
             url: $collection.data('order-product-add-url'),
             method: 'POST',
             data: {
-                productId: productId
+                productId
             },
             success: function (data) {
                 const $data = $($.parseHTML(data));
@@ -86,7 +86,7 @@ export default class OrderItems {
 
             // eslint-disable-next-line no-new
             new Window({
-                content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', { 'itemName': itemName }),
+                content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', { itemName }),
                 buttonCancel: true,
                 buttonContinue: true,
                 eventContinue: () => {

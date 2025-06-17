@@ -19,7 +19,7 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
 
         this.each(function (i, elem) {
 
-            var $elem = $(elem);
+            const $elem = $(elem);
 
             // Maybe some fields don't need to be standardized.
             if (typeof $elem.attr('data-bfi-disabled') != 'undefined') {
@@ -27,13 +27,13 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
             }
 
             // Set the word to be displayed on the button
-            var buttonWord = Translator.trans('Browse files');
+            let buttonWord = Translator.trans('Browse files');
 
             if (typeof $elem.attr('title') != 'undefined') {
                 buttonWord = $elem.attr('title');
             }
 
-            var className = '';
+            let className = '';
 
             if ($elem.attr('class')) {
                 className = ' ' + $elem.attr('class');
@@ -52,7 +52,7 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
                 // This gives us the pointer cursor that FF denies us
                 $('.js-fileInputWrapper').mousemove(function (cursor) {
 
-                    var input, wrapper,
+                    let input, wrapper,
                         wrapperX, wrapperY,
                         inputWidth, inputHeight,
                         cursorX, cursorY;
@@ -88,7 +88,7 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
 
                 $('body').on('change', '.js-fileInputWrapper input[type=file]', function () {
 
-                    var fileName;
+                    let fileName;
                     fileName = $(this).val();
 
                     // Remove any previous file names
@@ -104,7 +104,7 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
                         return;
                     }
 
-                    var selectedFileNamePlacement = $(this).data('filename-placement');
+                    const selectedFileNamePlacement = $(this).data('filename-placement');
                     if (selectedFileNamePlacement === 'inside') {
                     // Print the fileName inside
                         $(this).siblings('span').html(fileName);
@@ -121,7 +121,7 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
 
     // Add the styles before the first stylesheet
     // This ensures they can be easily overridden with developer styles
-    var cssHtml = '<style>'
+    const cssHtml = '<style>'
         + '.js-fileInputWrapper { overflow: hidden; position: relative; cursor: pointer; z-index: 1; }'
         + '.js-fileInputWrapper input[type=file], .js-fileInputWrapper input[type=file]:focus, .js-fileInputWrapper input[type=file]:hover { position: absolute; top: 0; left: 0; cursor: pointer; opacity: 0; filter: alpha(opacity=0); z-index: 99; outline: 0; }'
         + '</style>';

@@ -41,7 +41,7 @@ export default class Register {
         this.callbackQueue.push({
             callbackName,
             callPriority,
-            callback: callback
+            callback
         });
     }
 
@@ -67,7 +67,7 @@ export default class Register {
             return a.callPriority - b.callPriority;
         });
 
-        for (let i in this.callbackQueue) {
+        for (const i in this.callbackQueue) {
             this.callbackQueue[i].callback($container);
         }
     }

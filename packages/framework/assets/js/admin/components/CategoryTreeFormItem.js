@@ -129,7 +129,7 @@ export default class CategoryTreeFormItem {
     }
 
     createItem (itemData) {
-        let $form = this.$item.closest('.js-category-tree-form');
+        const $form = this.$item.closest('.js-category-tree-form');
         let newItemHtml = $form.data('prototype');
 
         newItemHtml = newItemHtml.replace(/__name__/g, itemData.id);

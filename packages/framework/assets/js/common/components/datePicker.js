@@ -3,7 +3,7 @@ import Register from '../utils/Register';
 
 /* Czech initialisation for the jQuery UI date picker plugin. */
 /* Written by Tomas Muller (tomas@tomas-muller.net). */
-$.datepicker.regional['cs'] = {
+$.datepicker.regional.cs = {
     closeText: 'Zavřít',
     prevText: '&#x3c;Dříve',
     nextText: 'Později&#x3e;',
@@ -20,8 +20,9 @@ $.datepicker.regional['cs'] = {
     firstDay: 1,
     isRTL: false,
     showMonthAfterYear: false,
-    yearSuffix: '' };
-$.datepicker.setDefaults($.datepicker.regional['cs']);
+    yearSuffix: ''
+};
+$.datepicker.setDefaults($.datepicker.regional.cs);
 
 export default function datePicker ($container) {
     $container.filterAllNodes('.js-date-picker').each(function () {
