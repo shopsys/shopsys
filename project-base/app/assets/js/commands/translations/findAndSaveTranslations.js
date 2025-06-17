@@ -12,7 +12,7 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
 
         const promises = filePaths.map(filePath => {
             if (filePath.match(/(\w*)\.po$/) === null) {
-                return;
+                return undefined;
             }
 
             const lang = parseLangFromFileName(filePath);

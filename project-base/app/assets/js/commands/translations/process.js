@@ -10,7 +10,7 @@ function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTrans
 
         const translations = [];
 
-        filePaths.map(filePath => {
+        filePaths.forEach(filePath => {
             parseFile(filePath).forEach(translation => {
                 if (!translations.includes(translation)) {
                     translations.push(translation.id);
