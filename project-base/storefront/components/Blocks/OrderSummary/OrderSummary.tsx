@@ -38,7 +38,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
             ))}
 
             <div className="relative">
-                {isTransportOrPaymentLoading && (transport || payment) && <LoaderWithOverlay className="w-8" />}
+                {isTransportOrPaymentLoading && (transport || payment) && <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />}
 
                 <OrderConfirmationSummary
                     promoCode={promoCodes[0]?.code}
