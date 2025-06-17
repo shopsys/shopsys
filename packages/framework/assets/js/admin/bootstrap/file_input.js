@@ -51,27 +51,21 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
                 // As the cursor moves over our new Bootstrap button we need to adjust the position of the invisible file input Browse button to be under the cursor.
                 // This gives us the pointer cursor that FF denies us
                 $('.js-fileInputWrapper').mousemove(function (cursor) {
-
-                    let input, wrapper,
-                        wrapperX, wrapperY,
-                        inputWidth, inputHeight,
-                        cursorX, cursorY;
-
                     // This wrapper element (the button surround this file input)
-                    wrapper = $(this);
+                    const wrapper = $(this);
                     // The invisible file input element
-                    input = wrapper.find('input');
+                    const input = wrapper.find('input');
                     // The left-most position of the wrapper
-                    wrapperX = wrapper.offset().left;
+                    const wrapperX = wrapper.offset().left;
                     // The top-most position of the wrapper
-                    wrapperY = wrapper.offset().top;
+                    const wrapperY = wrapper.offset().top;
                     // The with of the browsers input field
-                    inputWidth = input.width();
+                    const inputWidth = input.width();
                     // The height of the browsers input field
-                    inputHeight = input.height();
+                    const inputHeight = input.height();
                     // The position of the cursor in the wrapper
-                    cursorX = cursor.pageX;
-                    cursorY = cursor.pageY;
+                    const cursorX = cursor.pageX;
+                    const cursorY = cursor.pageY;
 
                     // The positions we are to move the invisible file input
                     // The 20 at the end is an arbitrary number of pixels that we can shift the input such that cursor is not pointing at the end of the Browse button but somewhere nearer the middle
