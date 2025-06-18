@@ -67,7 +67,12 @@ Encore
             files: 'assets/styles/**/*.scss',
         })
     )
-    .enableSassLoader()
+    .enableSassLoader(options => {
+        options.sassOptions = {
+            quietDeps: true, // Silence deprecation warnings from dependencies
+            silenceDeprecations: ['import'],
+        };
+    })
     .enablePostCssLoader()
 ;
 
