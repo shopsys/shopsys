@@ -6,7 +6,9 @@ namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddle
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
@@ -171,10 +173,14 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
     private function createAddRoundingMiddleware(
         string $currencyCode = Currency::CODE_EUR,
     ): AddRoundingMiddleware {
+        $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
+        $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, new Rounding());
+
         return new AddRoundingMiddleware(
             $this->createCurrencyFacade($currencyCode),
             new Rounding(),
             $this->createOrderItemDataFactory(),
+            $priceCalculation,
         );
     }
 }
