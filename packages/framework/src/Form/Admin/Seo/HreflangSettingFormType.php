@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class HreflangSettingFormType extends AbstractType
 {
-    public const FIELD_HREFLANG_COLLECTION = 'hreflang_collection';
+    public const string FIELD_HREFLANG_COLLECTION = 'hreflang_collection';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -4537,11 +4537,11 @@ msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvoře
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
 
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was set as default."
+msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl nastaven jako výchozí."
+
 msgid "Warehouse <strong>{{ name }}</strong> deleted"
 msgstr "Sklad <strong>{{ name }}</strong> byl smazán"
-
-msgid "Warehouse <strong>{{ name }}</strong> was set as default."
-msgstr "Sklad <strong>{{ name }}</strong> byl nastaven jako výchozí."
 
 msgid "Warehouse detail"
 msgstr "Detail skladu"

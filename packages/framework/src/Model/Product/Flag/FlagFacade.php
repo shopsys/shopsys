@@ -30,7 +30,7 @@ class FlagFacade
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    public function getById($flagId)
+    public function getById(int $flagId): Flag
     {
         return $this->flagRepository->getById($flagId);
     }

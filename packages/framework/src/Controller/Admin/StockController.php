@@ -236,9 +236,10 @@ class StockController extends AdminBaseController
             $this->stockFacade->changeDefaultStock($stock);
 
             $this->addSuccessFlashTwig(
-                t('Warehouse <strong>{{ name }}</strong> was set as default.'),
+                t('Warehouse <strong><a href="{{ url }}">{{ name }}</a></strong> was set as default.'),
                 [
                     'name' => $stock->getName(),
+                    'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
                 ],
             );
         } catch (StockNotFoundException) {

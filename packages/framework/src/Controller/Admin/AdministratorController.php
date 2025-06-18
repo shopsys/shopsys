@@ -564,8 +564,8 @@ class AdministratorController extends AdminBaseController
     #[CanView]
     public function setNewPasswordAction(Request $request): Response
     {
-        $email = $request->query->get('email');
-        $hash = $request->query->get('hash');
+        $email = $request->query->get('email', '');
+        $hash = $request->query->get('hash', '');
 
         $administrator = $this->administratorFacade->getByEmail($email);
 

@@ -4537,10 +4537,10 @@ msgstr ""
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
-msgid "Warehouse <strong>{{ name }}</strong> deleted"
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was set as default."
 msgstr ""
 
-msgid "Warehouse <strong>{{ name }}</strong> was set as default."
+msgid "Warehouse <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Warehouse detail"
