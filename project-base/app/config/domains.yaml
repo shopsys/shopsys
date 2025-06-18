@@ -12,3 +12,10 @@ domains:
         name: 2.shopsys
         timezone: Europe/Prague
         type: b2b
+
+    -   id: 3
+        load_demo_data: true
+        locale: sk
+        name: shopsys/sk
+        timezone: Europe/Prague
+        type: b2b

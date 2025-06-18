@@ -28,6 +28,9 @@ const nextConfig = {
             {
                 hostname: process.env.DOMAIN_HOSTNAME_2,
             },
+            {
+                hostname: process.env.DOMAIN_HOSTNAME_3,
+            },
         ],
     },
     serverRuntimeConfig: {
@@ -70,6 +73,22 @@ const nextConfig = {
                 currencyCode: 'CZK',
                 fallbackTimezone: 'Europe/Prague',
                 domainId: 2,
+                mapSetting: {
+                    latitude: 48.669,
+                    longitude: 19.699,
+                    zoom: 7,
+                },
+                gtmId: process.env.GTM_ID,
+                isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
+                type: 'B2B',
+            },
+            {
+                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2, // TODO
+                url: process.env.DOMAIN_HOSTNAME_3,
+                defaultLocale: 'sk',
+                currencyCode: 'EUR',
+                fallbackTimezone: 'Europe/Prague',
+                domainId: 3,
                 mapSetting: {
                     latitude: 48.669,
                     longitude: 19.699,
