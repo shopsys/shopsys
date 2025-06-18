@@ -617,6 +617,7 @@
             <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysAdministrationBundle"/>
             <arg value="--dir=${path.packages}/administration/src"/>
+            <arg value="--dir=${path.packages}/administration/templates"/>
             <arg value="--dir=${path.var}/translations/administration"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/administration/translations"/>
