@@ -10,9 +10,11 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Finder\Finder;
 
-class ShopsysAdministrationExtension extends Extension
+class ShopsysAdministrationExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -45,5 +47,50 @@ class ShopsysAdministrationExtension extends Extension
     public function getAlias(): string
     {
         return Configuration::EXTENSION_ALIAS;
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    #[Override]
+    public function prepend(ContainerBuilder $container): void
+    {
+        $container->prependExtensionConfig('doctrine_migrations', [
+            'migrations_paths' => [
+                'Shopsys\AdministrationBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
+
+        $thirdPartyBundlesViewFileLocator = (new FileLocator(__DIR__ . '/../../templates/bundles'));
+
+        $container->loadFromExtension('twig', [
+            'paths' => [
+                $thirdPartyBundlesViewFileLocator->locate('TwigBundle') => 'Twig',
+            ],
+        ]);
+
+        $this->autoRegisterFormThemes($container);
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function autoRegisterFormThemes(ContainerBuilder $container): void
+    {
+        $finder = new Finder();
+        $themeDir = __DIR__ . '/../../templates/form';
+        $themes = [];
+
+        if (is_dir($themeDir)) {
+            foreach ($finder->files()->in($themeDir)->name('*.html.twig') as $file) {
+                $themes[] = sprintf('@ShopsysAdministration/form/%s', $file->getRelativePathname());
+            }
+        }
+
+        if ($themes !== []) {
+            $container->prependExtensionConfig('twig', [
+                'form_themes' => $themes,
+            ]);
+        }
     }
 }
