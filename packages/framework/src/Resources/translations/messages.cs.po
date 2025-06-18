@@ -3845,10 +3845,10 @@ msgid "SEO - view"
 msgstr "SEO - zobrazení"
 
 msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "SEO stránka <strong><a href=\\\"{{ url }}\\\">{{ name }}</a></strong> byla vytvořena"
+msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
 
 msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "SEO stránka <strong><a href=\\\"{{ url }}\\\">{{ name }}</a></strong> byla upravena"
+msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
 
 msgid "SEO Page <strong>{{ name }}</strong> removed"
 msgstr "SEO stránka <strong>{{ name }}</strong> byla smazána"
