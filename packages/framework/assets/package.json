@@ -21,6 +21,7 @@
         "jquery-ui": "1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
         "magnific-popup": "^1.1.0",
+        "sortablejs": "^1.15.6",
         "select2": "^4.0.12"
     },
     "devDependencies": {

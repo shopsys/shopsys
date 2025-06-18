@@ -1,8 +1,6 @@
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import Register from '../../common/utils/Register';
 import { escapeHtml } from '../../common/utils/escapeHtml';
+import Sortable from 'sortablejs';
 
 export default class SortableValues {
 
@@ -10,9 +8,12 @@ export default class SortableValues {
         $container.filterAllNodes('.js-sortable-values-item-add').click((event) => this.addItemButtonClick(event));
         $container.filterAllNodes('.js-sortable-values-item-remove').click((event) => this.removeItemButtonClick(event));
 
-        $container.filterAllNodes('.js-sortable-values-items').sortable({
-            items: '.js-sortable-values-item',
-            handle: '.js-sortable-values-item-handle'
+        $container.filterAllNodes('.js-sortable-values-items').each((index, element) => {
+            Sortable.create(element, {
+                handle: '.js-sortable-values-item-handle',
+                draggable: '.js-sortable-values-item',
+                animation: 150
+            });
         });
     }
 

@@ -1,5 +1,3 @@
-import 'jquery-ui-touch-punch';
-import 'jquery-ui/ui/widgets/mouse';
 import 'magnific-popup';
 import FormChangeInfo from './FormChangeInfo';
 import Register from '../../common/utils/Register';

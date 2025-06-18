@@ -74,6 +74,7 @@
         "juice": "^11.0.0",
         "magnific-popup": "^1.1.0",
         "nestedSortable": "^1.3.4",
+        "sortablejs": "^1.15.6",
         "select2": "^4.0.12"
     },
     "jest": {
