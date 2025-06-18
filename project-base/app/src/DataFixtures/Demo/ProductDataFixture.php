@@ -87,13 +87,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MATERIAL => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Hello Kitty approved', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -130,13 +131,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Meet the latest generation of LED TVs Philips, which include the thin Smart TV running Android.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '30',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MATERIAL => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -164,13 +166,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('47 "LG 47LA790V Luxury TV from the South Korean company LG bears 47LA790S. At first glance its beautiful design that pleases the eye of every lover of pure and precise shapes.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('47"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '47',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MATERIAL => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -243,13 +246,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WEIGHT => '120',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('123.8x58.6 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MEMORY_CARD_SUPPORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RAM => t('1024 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_NUMBER_OF_COLORS => t('16mil.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RAM => '1024',
+                ParameterDataFixture::PARAM_NUMBER_OF_COLORS => '16000000',
                 ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '1.7',
-                ParameterDataFixture::PARAM_NUMBER_OF_PROCESSOR_CORES => t('2', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_NUMBER_OF_PROCESSOR_CORES => '2',
                 ParameterDataFixture::PARAM_BLUETOOTH => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NFC => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_GPS_MODULE => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Iconic Design', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -286,6 +290,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_DISPLAY => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_PARALLEL_PORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -314,6 +319,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -342,13 +348,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('9 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '9',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('1800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '1800',
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -428,6 +435,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -457,7 +465,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_MEDIA_TYPE => t('Mini CD-R 8 cm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_CAPACITY => t('210 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_CAPACITY => '210',
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
@@ -511,6 +519,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_DIMENSIONS => t('80x70x70 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('4 W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -538,12 +547,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_PRESSURE => t('15 bar', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY => t('2 l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY => t('600 ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => t('400 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('9000', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_HEIGHT => t('36 cm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PRESSURE => '15',
+                ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY => '2',
+                ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY => '600',
+                ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => '400',
+                ParameterDataFixture::PARAM_WEIGHT => '9000',
+                ParameterDataFixture::PARAM_HEIGHT => '36',
                 ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
                 ParameterDataFixture::PARAM_MATERIAL => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
@@ -626,6 +635,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_SYSTEM_TYPE => '2.0',
                 ParameterDataFixture::PARAM_ACTIVE_PASSIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('2W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -688,6 +698,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_SYSTEM_TYPE => '2.0',
                 ParameterDataFixture::PARAM_ACTIVE_PASSIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('2W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -718,6 +729,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_LOCALIZATION => t('Czech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ELEMENT_ARRANGEMENT => t('classic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ENTER => t('one-slotted', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -754,6 +766,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -781,9 +794,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Photographer\'s dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('5.5"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '5.5',
                 ParameterDataFixture::PARAM_DISPLAY_TYPE => t('Super LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION_OF_REAR_CAMERA => t('13 Mpx', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_REAR_CAMERA => '13',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -810,10 +824,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_PRESSURE => t('15 bar', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY => t('2 l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY => t('600 ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => t('400 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PRESSURE => '15',
+                ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY => '2',
+                ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY => '600',
+                ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => '400',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -862,9 +877,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning "on the fly", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_PAGES_COUNT => t('55', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PAGES_COUNT => '55',
                 ParameterDataFixture::PARAM_WEIGHT => '50',
                 ParameterDataFixture::PARAM_COVER => t('hardcover', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -890,9 +906,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('New driving rules and tips just for you!', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_PAGES_COUNT => t('50', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PAGES_COUNT => '50',
                 ParameterDataFixture::PARAM_WEIGHT => '150',
                 ParameterDataFixture::PARAM_COVER => t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -920,9 +937,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Discover the secret of people with us.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_PAGES_COUNT => t('250', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PAGES_COUNT => '250',
                 ParameterDataFixture::PARAM_WEIGHT => '250',
                 ParameterDataFixture::PARAM_COVER => t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -948,9 +966,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Collection of classical Czech fairy tales.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_PAGES_COUNT => t('48', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PAGES_COUNT => '48',
                 ParameterDataFixture::PARAM_WEIGHT => '50',
                 ParameterDataFixture::PARAM_COVER => t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Czech Heritage Certified', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -1005,13 +1024,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WEIGHT => '150',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('123.8x58.6 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MEMORY_CARD_SUPPORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RAM => t('1024 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_NUMBER_OF_COLORS => t('16mil.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RAM => '1024',
+                ParameterDataFixture::PARAM_NUMBER_OF_COLORS => '16000000',
                 ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '1.8',
-                ParameterDataFixture::PARAM_NUMBER_OF_PROCESSOR_CORES => t('2', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_NUMBER_OF_PROCESSOR_CORES => '2',
                 ParameterDataFixture::PARAM_BLUETOOTH => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NFC => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_GPS_MODULE => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1044,6 +1064,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_SYSTEM_TYPE => '2.0',
                 ParameterDataFixture::PARAM_ACTIVE_PASSIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('2W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -1074,7 +1095,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_GAMING_MOUSE => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ERGONOMICS => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SUPPORTED_OS => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => '5',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -1195,13 +1217,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('18 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '18',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('5“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '12800',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '5',
                 ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1228,13 +1251,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('12 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '12',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('4“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '12800',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '4',
                 ParameterDataFixture::PARAM_WEIGHT => '250',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1300,7 +1324,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_GAMING_MOUSE => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ERGONOMICS => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SUPPORTED_OS => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => '5',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -1328,11 +1353,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.5 "800x480, processor, Quad-Core 1.2GHz, RAM 768 megabytes internal memory of 4GB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('4.5"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '4.5',
                 ParameterDataFixture::PARAM_RESOLUTION => t('800 × 480 px', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('250 kWh/year', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => '250',
                 ParameterDataFixture::PARAM_DISPLAY_TYPE => t('TFT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION_OF_REAR_CAMERA => t('5 Mpx', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_REAR_CAMERA => '5',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1359,11 +1385,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.5 "800x480, processor, Quad-Core 1.2GHz, RAM 768 megabytes internal memory of 4GB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('4.5"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '4.5',
                 ParameterDataFixture::PARAM_RESOLUTION => t('800 × 480 px', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_TYPE => t('TFT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('275 kWh/year', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION_OF_REAR_CAMERA => t('5 Mpx', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => '275',
+                ParameterDataFixture::PARAM_RESOLUTION_OF_REAR_CAMERA => '5',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -1392,8 +1419,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_ENERGY_EFFICIENCY_CLASS => t('A', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('275 kWh/year', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('75"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => '275',
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '75',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1425,7 +1453,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_TUNER => t('DVB-T', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RECORDING_ON => t('flash disk', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MULTIMEDIA => t('Video', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('250 kWh/year', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => '250',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -1455,6 +1484,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_CONSTRUCTION => t('Open', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_FOLD_UP => t('Other', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DETERMINATION => t('Home Listening', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -1522,6 +1552,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_WEIGHT => '540',
                 ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '2.4',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -1615,12 +1646,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('36"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '36',
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1648,12 +1680,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('54"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '54',
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('CRT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1680,11 +1713,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('60"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '60',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1732,11 +1766,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('21"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '21',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1763,11 +1798,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '30',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1794,11 +1830,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Watch broadcast in stunning Full HD, while at the same stylish devices work.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -1825,11 +1862,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -1915,12 +1953,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('60"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '60',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('275 kWh/year', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => '275',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -1947,12 +1986,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('60"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '60',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('250 kWh/year', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_ANNUAL_ENERGY_CONSUMPTION => '250',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -2055,6 +2095,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_WEIGHT => '1000',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -2129,6 +2170,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_WEIGHT => '50',
                 ParameterDataFixture::PARAM_CONNECTORS => t('A and micro B', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -2156,11 +2198,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('36"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '36',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
         }
 
@@ -2189,11 +2232,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -2221,11 +2265,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('21"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '21',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -2253,11 +2298,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '30',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -2285,7 +2331,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('51,5"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '51.5',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -2312,7 +2359,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('60"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '60',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -2340,11 +2388,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -2372,11 +2421,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -2466,13 +2516,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('14 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '14',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('6400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '6400',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => '380',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -2500,13 +2551,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('12 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '12',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('6400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '6400',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => '560',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -2534,13 +2586,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('12 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '12',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '12800',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => '250',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -2568,6 +2621,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -2595,13 +2649,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('9 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '9',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('1800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '1800',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -2630,13 +2685,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('18 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '18',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('5“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '12800',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '5',
                 ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -2664,13 +2720,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_CAMERA_TYPE => t('SLR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_RESOLUTION => t('12 Mpix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION_OF_SENSOR => '12',
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('6400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SENSITIVITY_ISO => '6400',
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -3557,6 +3614,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
             ]);
         }
 
@@ -3592,6 +3650,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -3630,6 +3689,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -3667,6 +3727,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -3702,6 +3763,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -3736,6 +3798,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('426x306x145 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => '3500',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -3763,12 +3826,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('24"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '24',
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -3796,12 +3860,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('36"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '36',
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('CRT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -3829,12 +3894,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('54"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '54',
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -3862,12 +3928,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('24"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '24',
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('CRT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -3895,11 +3962,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('36"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '36',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -3927,12 +3995,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '27',
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 

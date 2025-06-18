@@ -166,17 +166,32 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $parameterPagesCount = $this->getReference(ParameterDataFixture::PARAM_PAGES_COUNT, Parameter::class);
         $parameterDimensions = $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class);
 
-        $parameters = [$parameterCover->getId() => [$this->getParameterValueIdForFirstDomain(
-            'hardcover',
-        ), $this->getParameterValueIdForFirstDomain(
-            'paper',
-        )], $parameterPagesCount->getId() => [$this->getParameterValueIdForFirstDomain(
-            '55',
-        ), $this->getParameterValueIdForFirstDomain(
-            '48',
-        )], $parameterDimensions->getId() => [$this->getParameterValueIdForFirstDomain(
-            '50',
-        )]];
+        $parameters = [
+            $parameterCover->getId() => [
+                $this->getParameterValueIdForFirstDomain(
+                    'hardcover',
+                ),
+                $this->getParameterValueIdForFirstDomain(
+                    'paper',
+                ),
+            ],
+            $parameterPagesCount->getId() => [
+                $this->getParameterValueIdForFirstDomain(
+                    '55',
+                    true,
+                ),
+                $this->getParameterValueIdForFirstDomain(
+                    '48',
+                    true,
+                ),
+            ],
+            $parameterDimensions->getId() => [
+                $this->getParameterValueIdForFirstDomain(
+                    '50',
+                    true,
+                ),
+            ],
+        ];
 
         $filter = $this->createFilter()
             ->filterByParameters($parameters);

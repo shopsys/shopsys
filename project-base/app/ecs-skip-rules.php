@@ -52,12 +52,14 @@ return [
         __DIR__ . '/src/DataFixtures/Demo/OrderDataFixture.php',
         __DIR__ . '/src/DataFixtures/Demo/ProductDataFixture.php',
         __DIR__ . '/tests/FrontendApiBundle/Functional/*',
+        __DIR__ . '/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
     ],
     CyclomaticComplexitySniff::class => [
         __DIR__ . '/src/DataFixtures/Demo/ProductDataFixture.php',
         __DIR__ . '/src/DataFixtures/Demo/Helper/ComplaintHelper.php',
         __DIR__ . '/src/Model/Product/Elasticsearch/ProductExportRepository.php',
         __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
+        __DIR__ . '/src/DataFixtures/Demo/UnitDataFixture.php',
     ],
     CamelCapsFunctionNameSniff::class => [
         __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',

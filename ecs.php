@@ -112,6 +112,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
+                __DIR__ . '/project-base/app/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
             ],
             CyclomaticComplexitySniff::class => [
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',
@@ -121,6 +122,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/ProductExportRepository.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php',
                 __DIR__ . '/packages/maker/src/EntityConfig/EntityFieldsConfigurator.php',
+                __DIR__ . '/project-base/app/src/DataFixtures/Demo/UnitDataFixture.php',
             ],
             DisallowMultipleAssignmentsSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',

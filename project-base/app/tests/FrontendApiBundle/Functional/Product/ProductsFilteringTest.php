@@ -167,10 +167,10 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
-        $parameter = $parameterFacade->getById($this->getReference(ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS, Parameter::class)->getId());
+        $parameter = $parameterFacade->getById($this->getReference(ParameterDataFixture::PARAM_GAMING_MOUSE, Parameter::class)->getId());
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextNumericValueAndLocale(
-            t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+            t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
             null,
             $this->firstDomainLocale,
         );
@@ -243,11 +243,16 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         ';
 
         $productsExpected = [
+            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Book 55 best programs for burning CDs and DVDs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Canon EH-22M', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Canon EOS 700E', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
             ['name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
             ['name' => t('DeLonghi ECAM 44.660 B Eletta Plus', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
             ['name' => t('Genius NetScroll 310 silver', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
             ['name' => t('Genius SlimStar i820', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
-            ['name' => t('OKI MC861cdxn+ (01318206)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Nikon DMC FT5EP', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('OKI MC861cdxm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'category', $productsExpected);

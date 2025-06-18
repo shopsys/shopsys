@@ -77,6 +77,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PARAM_RECORDING_ON = 'recording_on';
     public const string PARAM_RESOLUTION = 'resolution';
     public const string PARAM_RESOLUTION_OF_REAR_CAMERA = 'resolution_of_rear_camera';
+    public const string PARAM_RESOLUTION_OF_SENSOR = 'resolution_of_sensor';
     public const string PARAM_SCREEN_SIZE = 'screen_size';
     public const string PARAM_SENSITIVITY_ISO = 'sensitivity_iso';
     public const string PARAM_SUPPORTED_OS = 'supported_os';
@@ -140,13 +141,13 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $connectionMethodParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_CONNECTION_METHOD, ParameterGroup::class);
         $mouseParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION_MOUSE, ParameterGroup::class);
         $propertiesGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_PROPERTIES, ParameterGroup::class);
-        $functionsGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_FUNCTIONS, ParameterGroup::class);
         $sizeWeightGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_FUNCTIONS, ParameterGroup::class);
         $unitInch = $this->getReference(UnitDataFixture::UNIT_INCH, Unit::class);
 
         $data = [
             self::PARAM_SCREEN_SIZE => new ParameterDataFixtureData(
                 t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterType: Parameter::PARAMETER_TYPE_SLIDER,
                 parameterGroup: $mainInformationParameterGroup,
                 unit: $unitInch,
             ),
@@ -173,16 +174,30 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             ),
             self::PARAM_ERGONOMICS => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_SUPPORTED_OS => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_NUMBER_OF_BUTTONS => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DIMENSIONS => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MEMORY_CARD_SUPPORT => t('Memory card support', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_RAM => t('RAM', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_NUMBER_OF_COLORS => t('Number of colors', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PROCESSOR_FREQUENCY_GHZ => new ParameterDataFixtureData(
-                t('Processor frequency (GHz)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_NUMBER_OF_BUTTONS => new ParameterDataFixtureData(
+                t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_SLIDER,
             ),
-            self::PARAM_NUMBER_OF_PROCESSOR_CORES => t('Number of processor cores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_DIMENSIONS => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MEMORY_CARD_SUPPORT => t('Memory card support', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_RAM => new ParameterDataFixtureData(
+                t('RAM', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_MEGABYTE, Unit::class),
+            ),
+            self::PARAM_NUMBER_OF_COLORS => new ParameterDataFixtureData(
+                t('Number of colors', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+            ),
+            self::PARAM_PROCESSOR_FREQUENCY_GHZ => new ParameterDataFixtureData(
+                t('Processor frequency', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_GIGAHERTZ, Unit::class),
+            ),
+            self::PARAM_NUMBER_OF_PROCESSOR_CORES => new ParameterDataFixtureData(
+                t('Number of processor cores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+            ),
             self::PARAM_BLUETOOTH => new ParameterDataFixtureData(
                 t('Bluetooth', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 parameterGroup: $connectionMethodParameterGroup,
@@ -195,10 +210,16 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_CAMERA_TYPE => t('Camera type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_POWER_SUPPLY => t('Power supply', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_VIEWFINDER_TYPE => t('Viewfinder type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_SENSITIVITY_ISO => t('Sensitivity (ISO)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_SENSITIVITY_ISO => new ParameterDataFixtureData(
+                t('Sensitivity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_ISO, Unit::class),
+            ),
             self::PARAM_HEIGHT => new ParameterDataFixtureData(
                 t('Height', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
                 parameterGroup: $sizeWeightGroup,
+                unit: $this->getReference(UnitDataFixture::UNIT_CENTIMETER, Unit::class),
             ),
             self::PARAM_WEIGHT => new ParameterDataFixtureData(
                 t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -216,23 +237,35 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 parameterGroup: $connectionMethodParameterGroup,
             ),
             self::PARAM_MEDIA_TYPE => t('Media type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_CAPACITY => t('Capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_CAPACITY => new ParameterDataFixtureData(
+                t('Capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_MEGABYTE, Unit::class),
+            ),
             self::PARAM_OVERALL_PERFORMANCE => t('Overall performance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_PRESSURE => new ParameterDataFixtureData(
                 t('Pressure', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
                 parameterGroup: $propertiesGroup,
+                unit: $this->getReference(UnitDataFixture::UNIT_BAR, Unit::class),
             ),
             self::PARAM_WATER_RESERVOIR_CAPACITY => new ParameterDataFixtureData(
                 t('Water reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
                 parameterGroup: $propertiesGroup,
+                unit: $this->getReference(UnitDataFixture::UNIT_MILLILITER, Unit::class),
             ),
             self::PARAM_MILK_RESERVOIR_CAPACITY => new ParameterDataFixtureData(
                 t('Milk reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
                 parameterGroup: $propertiesGroup,
+                unit: $this->getReference(UnitDataFixture::UNIT_LITER, Unit::class),
             ),
             self::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => new ParameterDataFixtureData(
                 t('Magazine capacity for beans', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
                 parameterGroup: $propertiesGroup,
+                unit: $this->getReference(UnitDataFixture::UNIT_GRAM, Unit::class),
             ),
             self::PARAM_INTERFACE => t('Interface', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_SYSTEM_TYPE => t('System type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -240,12 +273,27 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_LOCALIZATION => t('Localization', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_ELEMENT_ARRANGEMENT => t('Element arrangement', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_ENTER => t('Enter', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DISPLAY_SIZE => t('Display size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_DISPLAY_SIZE => new ParameterDataFixtureData(
+                t('Display size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_INCH, Unit::class),
+            ),
             self::PARAM_DISPLAY_TYPE => t('Display type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_RESOLUTION_OF_REAR_CAMERA => t('Resolution of rear camera', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PAGES_COUNT => t('Pages count', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_RESOLUTION_OF_REAR_CAMERA => new ParameterDataFixtureData(
+                t('Resolution of rear camera', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_MEGAPIXEL, Unit::class),
+            ),
+            self::PARAM_PAGES_COUNT => new ParameterDataFixtureData(
+                t('Pages count', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+            ),
             self::PARAM_COVER => t('Cover', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('Annual energy consumption', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ANNUAL_ENERGY_CONSUMPTION => new ParameterDataFixtureData(
+                t('Annual energy consumption', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_KILOWATT_HOURS, Unit::class),
+            ),
             self::PARAM_ENERGY_EFFICIENCY_CLASS => t('Energy efficiency class', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_TUNER => t('Tuner', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_RECORDING_ON => t('Recording on', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -271,11 +319,18 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 ],
             ),
             self::PARAM_WARRANTY_IN_YEARS => new ParameterDataFixtureData(
-                t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                t('Warranty', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_SLIDER,
                 [
                     $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class),
                 ],
+                unit: $this->getReference(UnitDataFixture::UNIT_YEARS, Unit::class),
+            ),
+            self::PARAM_RESOLUTION_OF_SENSOR => new ParameterDataFixtureData(
+                t('Resolution of sensor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                parameterGroup: $mainInformationParameterGroup,
+                unit: $this->getReference(UnitDataFixture::UNIT_MEGAPIXEL, Unit::class),
             ),
         ];
 

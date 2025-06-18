@@ -16,46 +16,13 @@ msgstr ""
 msgid "100 Czech crowns ticket"
 msgstr ""
 
-msgid "1024 MB"
-msgstr ""
-
-msgid "12 Mpix"
-msgstr ""
-
 msgid "123.8x58.6 mm"
-msgstr ""
-
-msgid "12800"
-msgstr ""
-
-msgid "13 Mpx"
 msgstr ""
 
 msgid "1366×768 (HD Ready)"
 msgstr ""
 
-msgid "14 Mpix"
-msgstr ""
-
-msgid "15 bar"
-msgstr ""
-
-msgid "16mil."
-msgstr ""
-
-msgid "18 Mpix"
-msgstr ""
-
-msgid "1800"
-msgstr ""
-
 msgid "1920×1080 (Full HD)"
-msgstr ""
-
-msgid "2"
-msgstr ""
-
-msgid "2 l"
 msgstr ""
 
 msgid "2 litre coffeemakers in sale"
@@ -64,22 +31,13 @@ msgstr ""
 msgid "2000 DPI"
 msgstr ""
 
-msgid "21\""
-msgstr ""
-
 msgid "21,5\" Hyundai 22MT44"
-msgstr ""
-
-msgid "210 MB"
 msgstr ""
 
 msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 msgstr ""
 
 msgid "220 x 250 x 9 mm"
-msgstr ""
-
-msgid "24\""
 msgstr ""
 
 msgid "24\" Philips CRT [V]"
@@ -94,16 +52,7 @@ msgstr ""
 msgid "2400x600"
 msgstr ""
 
-msgid "250"
-msgstr ""
-
-msgid "250 kWh/year"
-msgstr ""
-
 msgid "255 x 255 x 15"
-msgstr ""
-
-msgid "27\""
 msgstr ""
 
 msgid "27\" Hyundai PLASMA [V]"
@@ -118,9 +67,6 @@ msgstr ""
 msgid "27\" Hyundai [V]"
 msgstr ""
 
-msgid "275 kWh/year"
-msgstr ""
-
 msgid "295 x 240 x 15 mm <br /> cartridge with active carbon"
 msgstr ""
 
@@ -128,9 +74,6 @@ msgid "295 x 245 x 15 mm <br /> cartridge with active carbon"
 msgstr ""
 
 msgid "2W"
-msgstr ""
-
-msgid "30\""
 msgstr ""
 
 msgid "30\" Hyundai 22MT44D"
@@ -148,12 +91,6 @@ msgstr ""
 msgid "320 x 300 x 10 mm"
 msgstr ""
 
-msgid "36 cm"
-msgstr ""
-
-msgid "36\""
-msgstr ""
-
 msgid "36\" Hyundai PLASMA [V]"
 msgstr ""
 
@@ -166,16 +103,7 @@ msgstr ""
 msgid "36\" Philips [V]"
 msgstr ""
 
-msgid "3“"
-msgstr ""
-
 msgid "4 W"
-msgstr ""
-
-msgid "4.5\""
-msgstr ""
-
-msgid "400 g"
 msgstr ""
 
 msgid "426x306x145 mm"
@@ -190,13 +118,7 @@ msgstr ""
 msgid "47 \"LG 47LA790V Luxury TV from the South Korean company LG bears 47LA790S. At first glance its beautiful design that pleases the eye of every lover of pure and precise shapes."
 msgstr ""
 
-msgid "47\""
-msgstr ""
-
 msgid "47\" LG 47LA790V (FHD)"
-msgstr ""
-
-msgid "48"
 msgstr ""
 
 msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
@@ -211,28 +133,7 @@ msgstr ""
 msgid "495 x 200 x 8 mm"
 msgstr ""
 
-msgid "4“"
-msgstr ""
-
-msgid "5"
-msgstr ""
-
-msgid "5 Mpx"
-msgstr ""
-
-msgid "5.5\""
-msgstr ""
-
-msgid "50"
-msgstr ""
-
-msgid "51,5\""
-msgstr ""
-
 msgid "51,5\" Sencor [V]"
-msgstr ""
-
-msgid "54\""
 msgstr ""
 
 msgid "54\" Philips CRT [V]"
@@ -241,37 +142,13 @@ msgstr ""
 msgid "54\" Philips [V]"
 msgstr ""
 
-msgid "55"
-msgstr ""
-
-msgid "5“"
-msgstr ""
-
-msgid "60\""
-msgstr ""
-
 msgid "60\" Sencor [V]"
-msgstr ""
-
-msgid "600 ml"
-msgstr ""
-
-msgid "6400"
-msgstr ""
-
-msgid "75\""
 msgstr ""
 
 msgid "800 × 480 px"
 msgstr ""
 
 msgid "80x70x70 mm"
-msgstr ""
-
-msgid "9 Mpix"
-msgstr ""
-
-msgid "9000"
 msgstr ""
 
 msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
@@ -934,6 +811,9 @@ msgstr ""
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
 msgstr ""
 
+msgid "GHz"
+msgstr ""
+
 msgid "GIGABYTE KM7580 CZ"
 msgstr ""
 
@@ -1048,6 +928,9 @@ msgstr ""
 msgid "Hose VP-9310"
 msgstr ""
 
+msgid "ISO"
+msgstr ""
+
 msgid "Iconic Design"
 msgstr ""
 
@@ -1127,6 +1010,9 @@ msgid "Logitech S120 black"
 msgstr ""
 
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
+msgstr ""
+
+msgid "MB"
 msgstr ""
 
 msgid "MIO Cyclo 100, bicycle computer, 1,8\""
@@ -1229,6 +1115,9 @@ msgid "Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasell
 msgstr ""
 
 msgid "Mouse game, 8200dpi laser sensor, 7 programmable buttons + 2D wheel 12000fps, 1ms response, EasyShift, USB, LED backlight, Turbo Core V2, Black"
+msgstr ""
+
+msgid "Mpx"
 msgstr ""
 
 msgid "Multimedia"
@@ -1471,7 +1360,7 @@ msgstr ""
 msgid "Probably best value for your money"
 msgstr ""
 
-msgid "Processor frequency (GHz)"
+msgid "Processor frequency"
 msgstr ""
 
 msgid "Promoted products"
@@ -1529,6 +1418,9 @@ msgid "Resolution"
 msgstr ""
 
 msgid "Resolution of rear camera"
+msgstr ""
+
+msgid "Resolution of sensor"
 msgstr ""
 
 msgid "Responsive and Reliable"
@@ -1603,7 +1495,7 @@ msgstr ""
 msgid "Sennheiser HD 700"
 msgstr ""
 
-msgid "Sensitivity (ISO)"
+msgid "Sensitivity"
 msgstr ""
 
 msgid "Shopsys Platform - Title page"
@@ -1930,7 +1822,7 @@ msgstr ""
 msgid "W"
 msgstr ""
 
-msgid "Warranty (in years)"
+msgid "Warranty"
 msgstr ""
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
@@ -2020,6 +1912,9 @@ msgstr ""
 msgid "Zoom"
 msgstr ""
 
+msgid "bar"
+msgstr ""
+
 msgid "battery"
 msgstr ""
 
@@ -2095,7 +1990,13 @@ msgstr ""
 msgid "kW"
 msgstr ""
 
+msgid "kWh"
+msgstr ""
+
 msgid "kg"
+msgstr ""
+
+msgid "l"
 msgstr ""
 
 msgid "m"
@@ -2135,6 +2036,9 @@ msgid "meta description of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "metal"
+msgstr ""
+
+msgid "ml"
 msgstr ""
 
 msgid "m³"
@@ -2249,6 +2153,9 @@ msgid "white"
 msgstr ""
 
 msgid "wood"
+msgstr ""
+
+msgid "years"
 msgstr ""
 
 msgid "| Demo eshop"

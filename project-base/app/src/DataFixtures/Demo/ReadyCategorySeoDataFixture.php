@@ -59,10 +59,10 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             'flagId' => 3,
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRIORITY,
             'parameterValueIdsByParameterIds' => [
-                $this->getReference(ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('2 l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
-                $this->getReference(ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('400 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
-                $this->getReference(ParameterDataFixture::PARAM_PRESSURE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('15 bar', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
-                $this->getReference(ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('600 ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale('2', '2', $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale('400', '400', $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_PRESSURE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale('15', '15', $firstDomainLocale)->getId(),
+                $this->getReference(ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale('600', '600', $firstDomainLocale)->getId(),
             ],
         ];
 
@@ -100,7 +100,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
+            $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale('30', '30', $firstDomainLocale)->getId(),
             $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextNumericValueAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), null, $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(

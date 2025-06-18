@@ -302,7 +302,7 @@ class ProductTest extends GraphQlTestCase
                             ],
                             'values' => [
                                 [
-                                    'text' => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                    'text' => '27',
                                 ],
                             ],
                         ],
@@ -343,6 +343,18 @@ class ProductTest extends GraphQlTestCase
                             'values' => [
                                 [
                                     'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Warranty', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => null,
+                            'unit' => [
+                                'name' => t('years', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            ],
+                            'values' => [
+                                [
+                                    'text' => '3',
                                 ],
                             ],
                         ],
