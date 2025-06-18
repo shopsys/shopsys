@@ -28,7 +28,7 @@ class MainBlogCategoryDataSettingsTest extends GraphQlTestCase
                 'mainBlogCategoryUrl' => $expectedBlogUrl,
                 'mainBlogCategoryMainImage' => [
                     'name' => t('Main blog page - %locale%', ['%locale%' => $this->getFirstDomainLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                    'url' => $this->getFullUrlPath('/content-test/images/blogCategory/500.jpg'),
+                    'url' => $this->getBaseUrlPath('/content-test/images/blogCategory/500.jpg'),
                 ],
             ],
         ];

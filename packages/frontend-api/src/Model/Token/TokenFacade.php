@@ -105,9 +105,10 @@ class TokenFacade
         $currentTime = new DateTimeImmutable();
         $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
-        return $this->jwtConfigurationProvider->getConfiguration()->builder(ChainedFormatter::withUnixTimestampDates())
-            ->issuedBy($this->domain->getUrl())
-            ->permittedFor($this->domain->getUrl())
+        return $this->jwtConfigurationProvider->getConfiguration()
+            ->builder(ChainedFormatter::withUnixTimestampDates())
+            ->issuedBy($this->domain->getBaseUrl())
+            ->permittedFor($this->domain->getBaseUrl())
             ->issuedAt($currentTime)
             ->canOnlyBeUsedAfter($currentTime)
             ->expiresAt($expirationTime);
@@ -153,8 +154,8 @@ class TokenFacade
 
         if (!$validator->validate(
             $token,
-            new IssuedBy($this->domain->getUrl()),
-            new PermittedFor($this->domain->getUrl()),
+            new IssuedBy($this->domain->getBaseUrl()),
+            new PermittedFor($this->domain->getBaseUrl()),
         )
         ) {
             throw new InvalidTokenUserMessageException();

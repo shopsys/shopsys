@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
-use Symfony\Component\Routing\RouterInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Twig\Environment;
 

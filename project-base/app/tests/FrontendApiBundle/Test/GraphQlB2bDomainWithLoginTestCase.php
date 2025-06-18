@@ -8,6 +8,8 @@ use App\DataFixtures\Demo\CompanyDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
 use LogicException;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginTestCase
 {
@@ -71,5 +73,22 @@ abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginT
         }
 
         return $currentCustomerUser;
+    }
+
+    /**
+     * @param string $routeName
+     * @param array<string, mixed> $parameters
+     * @param int $pathType
+     * @return string
+     */
+    protected function getLocalizedPathOnFirstDomainByRouteName(
+        string $routeName,
+        array $parameters = [],
+        int $pathType = UrlGeneratorInterface::ABSOLUTE_URL,
+    ): string {
+        $domainRouterFactory = self::getContainer()->get(DomainRouterFactory::class);
+
+        return $domainRouterFactory->getRouter($this->domain->getId())
+            ->generate($routeName, $parameters, $pathType);
     }
 }

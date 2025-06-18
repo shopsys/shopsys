@@ -1,4 +1,3 @@
-
 redirect_to_admin:
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
@@ -7,7 +6,3 @@ redirect_to_admin:
     path: /{prefix}/%admin_url%
     requirements:
         prefix: .+
-shopsys_shop_admin:
-    prefix: /%admin_url%
-    resource: "../../src/Controller/Admin/"
-    type: attribute

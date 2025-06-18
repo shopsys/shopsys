@@ -8,13 +8,13 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class DomainSubscriberTest extends TestCase
 {
@@ -29,17 +29,17 @@ class DomainSubscriberTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             [],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
-        $domainSubscriber = new DomainSubscriber($domain);
+        $administrationRouter = $this->createMock(AdministrationRouter::class);
+
+        $domainSubscriber = new DomainSubscriber($domain, $administrationRouter);
         $domainSubscriber->onKernelRequest($event);
     }
 
@@ -57,7 +57,9 @@ class DomainSubscriberTest extends TestCase
             ->getMock();
         $domainMock->expects($this->once())->method('getId');
 
-        $domainSubscriber = new DomainSubscriber($domainMock);
+        $administrationRouter = $this->createMock(AdministrationRouter::class);
+
+        $domainSubscriber = new DomainSubscriber($domainMock, $administrationRouter);
         $domainSubscriber->onKernelRequest($event);
     }
 
@@ -77,7 +79,9 @@ class DomainSubscriberTest extends TestCase
         $domainMock->expects($this->once())->method('getId')->willThrowException($exception);
         $domainMock->expects($this->once())->method('switchDomainByRequest')->with($this->equalTo(new Request()));
 
-        $domainSubscriber = new DomainSubscriber($domainMock);
+        $administrationRouter = $this->createMock(AdministrationRouter::class);
+
+        $domainSubscriber = new DomainSubscriber($domainMock, $administrationRouter);
         $domainSubscriber->onKernelRequest($event);
     }
 }

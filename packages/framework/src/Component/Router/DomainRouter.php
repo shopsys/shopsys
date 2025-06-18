@@ -33,7 +33,7 @@ class DomainRouter extends ChainRouter
      * @param \Psr\Log\LoggerInterface|null $logger
      * @throws \Shopsys\FrameworkBundle\Component\Router\Exception\NotSupportedException
      */
-    public function  __construct(
+    public function __construct(
         RequestContext $context,
         RouterInterface $basicRouter,
         RouterInterface $localizedRouter,
@@ -181,16 +181,24 @@ class DomainRouter extends ChainRouter
         return str_replace($domainUrl, $baseUrl, $url);
     }
 
-    public function generate(string $name, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    /**
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
+     * @return string
+     */
+    #[Override]
+    public function generate(
+        string $name,
+        array $parameters = [],
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH,
+    ): string {
         $url = parent::generate($name, $parameters, $referenceType === static::SLUG ? UrlGeneratorInterface::ABSOLUTE_PATH : $referenceType);
 
-        if ($referenceType === static::SLUG) {
+        if ($referenceType === static::SLUG && $this->domainConfig->getPostfix() !== null) {
             $url = $this->transformStringHelper->removeStringFromStart($url, $this->domainConfig->getPostfix());
         }
 
         return $url;
     }
-
-
 }

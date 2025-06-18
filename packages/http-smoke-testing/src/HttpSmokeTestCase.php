@@ -7,6 +7,8 @@ namespace Shopsys\HttpSmokeTesting;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,7 +117,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      */
     protected static function getRouterAdapter()
     {
-        $router = static::$kernel->getContainer()->get('router');
+        $router = static::$kernel->getContainer()->get('test.service_container')->get(AdministrationRouter::class);
 
         return new SymfonyRouterAdapter($router);
     }
@@ -133,6 +135,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      */
     protected static function createRequest(RequestDataSet $requestDataSet)
     {
+        d($requestDataSet);
         $uri = static::getRouterAdapter()->generateUri($requestDataSet);
 
         $request = Request::create($uri);

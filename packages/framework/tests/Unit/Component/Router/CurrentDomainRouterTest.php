@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RouterInterface;
 
 class CurrentDomainRouterTest extends TestCase
 {
@@ -35,14 +34,12 @@ class CurrentDomainRouterTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             [$domainConfigs],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);

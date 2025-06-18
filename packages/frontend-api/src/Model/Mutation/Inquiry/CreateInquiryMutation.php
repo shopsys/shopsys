@@ -46,9 +46,11 @@ class CreateInquiryMutation extends AbstractMutation
     public function createInquiryMutation(Argument $argument): bool
     {
         try {
+            d('creating');
             $inquiryData = $this->createInquiryDataFromArgument($argument);
             $inquiry = $this->inquiryFacade->create($inquiryData);
 
+            d('before send');
             $this->inquiryMailFacade->sendMail($inquiry);
 
             return true;

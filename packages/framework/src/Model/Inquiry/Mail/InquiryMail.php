@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry\Mail;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Mailer\MailerHelper;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Inquiry\Inquiry;
@@ -41,6 +42,7 @@ class InquiryMail
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Image\ProductImageFacade $productImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Mailer\MailerHelper $mailerHelper
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -48,6 +50,7 @@ class InquiryMail
         protected readonly Domain $domain,
         protected readonly ProductImageFacade $productImageFacade,
         protected readonly MailerHelper $mailerHelper,
+        protected readonly AdministrationRouter $administrationRouter,
     ) {
     }
 
@@ -58,7 +61,11 @@ class InquiryMail
      */
     public function createMessageForAdmin(MailTemplate $template, Inquiry $inquiry): MessageData
     {
-        return new MessageData(
+        d('creating message for admin');
+        d($this->getBodyVariablesReplacementsForAdmin($inquiry));
+        d('----');
+        d($this->getSubjectVariablesReplacements($inquiry));
+        $messageData = new MessageData(
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $inquiry->getDomainId()),
             $template->getBccEmail(),
             $template->getBody(),
@@ -68,6 +75,10 @@ class InquiryMail
             $this->getBodyVariablesReplacementsForAdmin($inquiry),
             $this->getSubjectVariablesReplacements($inquiry),
         );
+
+        d('message data');
+        d($messageData);
+        return $messageData;
     }
 
     /**
@@ -77,6 +88,7 @@ class InquiryMail
      */
     public function createMessageForCustomer(MailTemplate $template, Inquiry $inquiry): MessageData
     {
+        d('create message for customer');
         return new MessageData(
             $inquiry->getEmail(),
             $template->getBccEmail(),
@@ -95,6 +107,17 @@ class InquiryMail
      */
     protected function getSubjectVariablesReplacements(Inquiry $inquiry): array
     {
+        d('get subject variables replacements');
+        d([
+        self::VARIABLE_FULL_NAME => htmlspecialchars($inquiry->getFullName(), ENT_QUOTES),
+        self::VARIABLE_EMAIL => htmlspecialchars($inquiry->getEmail(), ENT_QUOTES),
+        self::VARIABLE_TELEPHONE => htmlspecialchars($inquiry->getTelephone(), ENT_QUOTES),
+        self::VARIABLE_COMPANY_NAME => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyName()),
+        self::VARIABLE_COMPANY_NUMBER => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyNumber()),
+        self::VARIABLE_COMPANY_TAX_NUMBER => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyTaxNumber()),
+        self::VARIABLE_PRODUCT_NAME => $this->mailerHelper->escapeOptionalString($inquiry->getProduct()?->getName()),
+        self::VARIABLE_PRODUCT_CATALOG_NUMBER => htmlspecialchars($inquiry->getProductCatnum(), ENT_QUOTES),
+    ]);
         return [
             self::VARIABLE_FULL_NAME => htmlspecialchars($inquiry->getFullName(), ENT_QUOTES),
             self::VARIABLE_EMAIL => htmlspecialchars($inquiry->getEmail(), ENT_QUOTES),
@@ -113,6 +136,12 @@ class InquiryMail
      */
     protected function getBodyVariablesReplacements(Inquiry $inquiry): array
     {
+        d('get body variables replacements');
+        d([
+            ...$this->getSubjectVariablesReplacements($inquiry),
+            self::VARIABLE_NOTE => $this->mailerHelper->escapeOptionalString($inquiry->getNote()),
+            self::VARIABLE_PRODUCT_URL => $this->getProductUrl($inquiry),
+            self::VARIABLE_PRODUCT_IMAGE => $this->productImageFacade->getProductImageUrl($inquiry->getProduct(), $inquiry->getDomainId())]);
         return [
             ...$this->getSubjectVariablesReplacements($inquiry),
             self::VARIABLE_NOTE => $this->mailerHelper->escapeOptionalString($inquiry->getNote()),
@@ -127,9 +156,23 @@ class InquiryMail
      */
     protected function getBodyVariablesReplacementsForAdmin(Inquiry $inquiry): array
     {
+        d('get body variables replacements for admin');
+        d('trying');
+
+        d($this->administrationRouter->getRouteCollection());
+
+     d($this->administrationRouter->generate(
+        'admin_inquiry_detail',
+        ['id' => $inquiry->getId()],
+        UrlGeneratorInterface::ABSOLUTE_URL,
+    ));
+
+        d('trying went well');
+
+
         return [
             ...$this->getBodyVariablesReplacements($inquiry),
-            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID)->generate(
+            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->administrationRouter->generate(
                 'admin_inquiry_detail',
                 ['id' => $inquiry->getId()],
                 UrlGeneratorInterface::ABSOLUTE_URL,

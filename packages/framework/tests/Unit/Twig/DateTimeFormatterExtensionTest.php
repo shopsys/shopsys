@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
-use Symfony\Component\Routing\RouterInterface;
 
 class DateTimeFormatterExtensionTest extends TestCase
 {
@@ -101,14 +100,12 @@ class DateTimeFormatterExtensionTest extends TestCase
         );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         return new Domain(
             [$domainConfig],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
     }
 }

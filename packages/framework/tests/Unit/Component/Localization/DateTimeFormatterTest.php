@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
-use Symfony\Component\Routing\RouterInterface;
 
 class DateTimeFormatterTest extends TestCase
 {
@@ -91,14 +90,12 @@ class DateTimeFormatterTest extends TestCase
 
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         return new Domain(
             [$domainConfig],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
     }
 }

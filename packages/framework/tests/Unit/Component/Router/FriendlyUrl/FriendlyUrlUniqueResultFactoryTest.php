@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
-use Symfony\Component\Routing\RouterInterface;
 
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
 {
@@ -45,14 +44,12 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             $this->getDomainConfigs(),
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
@@ -80,14 +77,12 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             $this->getDomainConfigs(),
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
@@ -118,14 +113,12 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             $this->getDomainConfigs(),
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);

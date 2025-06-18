@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Symfony\Component\Routing\RouterInterface;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class DomainDataCreatorTest extends TestCase
@@ -52,14 +51,12 @@ class DomainDataCreatorTest extends TestCase
             ->willReturn(true);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
@@ -131,14 +128,12 @@ class DomainDataCreatorTest extends TestCase
             });
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             $domainConfigs,
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);

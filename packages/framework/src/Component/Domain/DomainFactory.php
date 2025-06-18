@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
-use Symfony\Component\Routing\RouterInterface;
 
 class DomainFactory
 {
@@ -17,14 +16,12 @@ class DomainFactory
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
-     * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
         protected readonly DomainsConfigLoader $domainsConfigLoader,
         protected readonly Setting $setting,
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly AdministrationFacade $administrationFacade,
-        protected readonly RouterInterface $router,
     ) {
     }
 
@@ -44,7 +41,6 @@ class DomainFactory
             $this->setting,
             $this->administratorFacade,
             $this->administrationFacade,
-            $this->router,
         );
 
         $domainId = getenv('DOMAIN');

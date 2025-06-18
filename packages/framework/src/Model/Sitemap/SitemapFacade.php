@@ -36,7 +36,7 @@ class SitemapFacade
             $domainSitemapDumper = $this->domainSitemapDumperFactory->createForDomain($domainConfig->getId());
             $domainSitemapDumper->dump(
                 $this->sitemapsDir,
-                $domainConfig->getUrl() . $this->sitemapsUrlPrefix . '/',
+                $domainConfig->getBaseUrl() . $this->sitemapsUrlPrefix . '/',
                 $section,
             );
         }

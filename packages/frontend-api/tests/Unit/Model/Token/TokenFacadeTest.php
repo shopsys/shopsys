@@ -27,7 +27,6 @@ use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use Symfony\Component\Routing\RouterInterface;
 
 class TokenFacadeTest extends TestCase
 {
@@ -173,14 +172,12 @@ class TokenFacadeTest extends TestCase
         $setting = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             [$domainConfig],
             $setting,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $domain->switchDomainById(1);

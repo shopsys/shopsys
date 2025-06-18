@@ -46,11 +46,14 @@ class InquiryMailFacade
      */
     public function sendMailTemplate(MailTemplate $mailTemplate, Inquiry $inquiry, ?string $forceSendTo = null): void
     {
+        d('sendMailTemplate');
         $messageData = match ($mailTemplate->getName()) {
             InquiryMail::ADMIN_MAIL_TEMPLATE_NAME => $this->inquiryMail->createMessageForAdmin($mailTemplate, $inquiry),
             InquiryMail::CUSTOMER_MAIL_TEMPLATE_NAME => $this->inquiryMail->createMessageForCustomer($mailTemplate, $inquiry),
             default => throw new MailTemplateNotFoundException($mailTemplate->getName()),
         };
+
+        d('after data');
 
         if ($forceSendTo !== null) {
             $messageData->toEmail = $forceSendTo;

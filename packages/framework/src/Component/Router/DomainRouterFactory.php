@@ -7,14 +7,12 @@ namespace Shopsys\FrameworkBundle\Component\Router;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
-use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\Exception\RouterNotResolvedException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 
 class DomainRouterFactory extends AbstractRouterFactory
@@ -25,14 +23,14 @@ class DomainRouterFactory extends AbstractRouterFactory
     protected array $routersByDomainId = [];
 
     /**
-     * @param mixed $routerConfiguration
+     * @param string $routerConfiguration
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param string $cacheDir
-     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly string $routerConfiguration,

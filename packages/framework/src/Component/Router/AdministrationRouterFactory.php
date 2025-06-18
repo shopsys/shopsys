@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RequestContext;
 
 class AdministrationRouterFactory extends AbstractRouterFactory
 {
     /**
      * @param string $routerConfiguration
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param string $routerConfigurationDir
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param string $cacheDir
@@ -23,6 +22,7 @@ class AdministrationRouterFactory extends AbstractRouterFactory
     public function __construct(
         protected readonly string $routerConfiguration,
         protected readonly Domain $domain,
+        protected readonly string $routerConfigurationDir,
         RequestStack $requestStack,
         ContainerInterface $container,
         string $cacheDir,
@@ -48,4 +48,18 @@ class AdministrationRouterFactory extends AbstractRouterFactory
             $requestContext,
         );
     }
+
+    //    /**
+    //     * @return array
+    //     */
+    //    protected function getRouterOptions(): array
+    //    {
+    //        $options = ['resource_type' => 'glob'];
+    //
+    //        if ($this->container->getParameter('kernel.environment') !== EnvironmentType::DEVELOPMENT) {
+    //            $options['cache_dir'] = $this->cacheDir;
+    //        }
+    //
+    //        return $options;
+    //    }
 }

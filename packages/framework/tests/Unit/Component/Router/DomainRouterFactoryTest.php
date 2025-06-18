@@ -39,14 +39,12 @@ class DomainRouterFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             [$domainConfig],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();

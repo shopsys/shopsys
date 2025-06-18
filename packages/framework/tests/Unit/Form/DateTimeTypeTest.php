@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Routing\RouterInterface;
 
 class DateTimeTypeTest extends TypeTestCase
 {
@@ -88,14 +87,12 @@ class DateTimeTypeTest extends TypeTestCase
         );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         return new Domain(
             [$domainConfig],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
     }
 }

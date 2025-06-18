@@ -205,6 +205,15 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     }
 
     /**
+     * @param string $uri
+     * @return string
+     */
+    protected function getBaseUrlPath(string $uri): string
+    {
+        return $this->domain->getCurrentDomainConfig()->getBaseUrl() . $uri;
+    }
+
+    /**
      * @param array $response
      * @return array
      */

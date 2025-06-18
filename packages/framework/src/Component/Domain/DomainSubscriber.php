@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -13,9 +14,12 @@ class DomainSubscriber implements EventSubscriberInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      */
-    public function __construct(protected readonly Domain $domain)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly AdministrationRouter $administrationRouter,
+    ) {
     }
 
     /**
@@ -27,7 +31,7 @@ class DomainSubscriber implements EventSubscriberInterface
             try {
                 $this->domain->getId();
             } catch (NoDomainSelectedException $exception) {
-                $this->domain->switchDomainByRequest($event->getRequest());
+                $this->domain->switchDomainByRequest($event->getRequest(), $this->administrationRouter);
             }
         }
     }

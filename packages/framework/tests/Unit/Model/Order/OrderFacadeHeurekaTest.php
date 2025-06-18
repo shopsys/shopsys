@@ -43,7 +43,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
-use Symfony\Component\Routing\RouterInterface;
 
 class OrderFacadeHeurekaTest extends TestCase
 {
@@ -162,14 +161,12 @@ class OrderFacadeHeurekaTest extends TestCase
         );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         return new Domain(
             [$domainConfig],
             $this->createMock(Setting::class),
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
     }
 

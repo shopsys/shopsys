@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\Routing\RouterInterface;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class FeedCronModuleTest extends TestCase
@@ -54,14 +53,12 @@ class FeedCronModuleTest extends TestCase
         );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $administrationFacadeMock = $this->createMock(AdministrationFacade::class);
-        $router = $this->createMock(RouterInterface::class);
 
         $domain = new Domain(
             [$domainConfig],
             $settingMock,
             $administratorFacadeMock,
             $administrationFacadeMock,
-            $router,
         );
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)

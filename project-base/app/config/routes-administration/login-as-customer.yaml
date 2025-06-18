@@ -1,0 +1,4 @@
+admin_customeruser_loginascustomeruser:
+    defaults:
+        _controller: Shopsys\FrontendApiBundle\Controller\CustomerUserController::loginAsCustomerUserAction
+    path: /%admin_url%/customer/login-as-user/{customerUserId}/

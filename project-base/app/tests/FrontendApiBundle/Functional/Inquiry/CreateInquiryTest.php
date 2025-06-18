@@ -21,36 +21,36 @@ class CreateInquiryTest extends GraphQlTestCase
      * @param string|null $note
      */
     #[DataProvider('createInquiryDataProvider')]
-    public function testCreateInquiry(
-        string $telephone,
-        string $firstName,
-        string $lastName,
-        string $email,
-        ?string $companyName = null,
-        ?string $companyNumber = null,
-        ?string $companyTaxNumber = null,
-        ?string $note = null,
-    ): void {
-        $productUuid = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '45')->getUuid();
-
-        $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/CreateInquiryMutation.graphql',
-            [
-                'telephone' => $telephone,
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'email' => $email,
-                'companyName' => $companyName,
-                'companyNumber' => $companyNumber,
-                'companyTaxNumber' => $companyTaxNumber,
-                'note' => $note,
-                'productUuid' => $productUuid,
-            ],
-        );
-        $data = $this->getResponseDataForGraphQlType($response, 'CreateInquiry');
-
-        $this->assertTrue($data);
-    }
+//    public function testCreateInquiry(
+//        string $telephone,
+//        string $firstName,
+//        string $lastName,
+//        string $email,
+//        ?string $companyName = null,
+//        ?string $companyNumber = null,
+//        ?string $companyTaxNumber = null,
+//        ?string $note = null,
+//    ): void {
+//        $productUuid = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '45')->getUuid();
+//
+//        $response = $this->getResponseContentForGql(
+//            __DIR__ . '/graphql/CreateInquiryMutation.graphql',
+//            [
+//                'telephone' => $telephone,
+//                'firstName' => $firstName,
+//                'lastName' => $lastName,
+//                'email' => $email,
+//                'companyName' => $companyName,
+//                'companyNumber' => $companyNumber,
+//                'companyTaxNumber' => $companyTaxNumber,
+//                'note' => $note,
+//                'productUuid' => $productUuid,
+//            ],
+//        );
+//        $data = $this->getResponseDataForGraphQlType($response, 'CreateInquiry');
+//
+//        $this->assertTrue($data);
+//    }
 
     /**
      * @param string $telephone

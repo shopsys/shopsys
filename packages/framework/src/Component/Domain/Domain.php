@@ -10,12 +10,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class Domain implements DomainIdsProviderInterface
 {
@@ -26,21 +27,19 @@ class Domain implements DomainIdsProviderInterface
 
     protected ?DomainConfig $currentDomainConfig = null;
 
-    protected bool $domainResolvedByFallback;
+    protected bool $domainResolvedByFallback = false;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
-     * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
         protected readonly array $domainConfigs,
         protected readonly Setting $setting,
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly AdministrationFacade $administrationFacade,
-        protected readonly RouterInterface $router,
     ) {
     }
 
@@ -170,8 +169,9 @@ class Domain implements DomainIdsProviderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      */
-    public function switchDomainByRequest(Request $request): void
+    public function switchDomainByRequest(Request $request, AdministrationRouter $administrationRouter): void
     {
         $this->currentDomainConfig = null;
 
@@ -187,10 +187,11 @@ class Domain implements DomainIdsProviderInterface
         }
 
         if ($this->currentDomainConfig === null) {
+            d('empty');
             $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
             $firstDomainConfig = $this->getDomainConfigById(self::FIRST_DOMAIN_ID);
 
-            if ($this->isDomainWithPostfix($firstDomainConfig)) {
+            if ($this->shouldFallbackToFirstDomain($firstDomainConfig, $request, $administrationRouter)) {
                 $this->currentDomainConfig = $firstDomainConfig;
 
                 $this->domainResolvedByFallback = true;
@@ -200,6 +201,52 @@ class Domain implements DomainIdsProviderInterface
 
             throw new UnableToResolveDomainException($url);
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
+     * @return bool
+     */
+    protected function shouldFallbackToFirstDomain(
+        DomainConfig $domainConfig,
+        Request $request,
+        AdministrationRouter $administrationRouter,
+    ): bool {
+        d('shouldFallbackToFirstDomain');
+        if (!$this->isDomainWithPostfix($domainConfig)) {
+            return false;
+        }
+
+        d($administrationRouter->getRouteCollection());
+
+        try {
+            $route = $administrationRouter->match($this->getUriWithTrailingSlash($request))['_route'];
+        } catch (ResourceNotFoundException) {
+            try {
+                $route = $administrationRouter->match($request->getPathInfo())['_route'];
+            } catch (ResourceNotFoundException) {
+                return false;
+            }
+        }
+
+        return $route !== false;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return string
+     */
+    protected function getUriWithTrailingSlash(Request $request): string
+    {
+        $uri = $request->getPathInfo();
+
+        if (str_ends_with($uri, '/')) {
+            return $uri;
+        }
+
+        return $uri . '/';
     }
 
     /**
@@ -311,11 +358,17 @@ class Domain implements DomainIdsProviderInterface
         return $this->domainResolvedByFallback;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPostfix(): ?string
     {
         return $this->getCurrentDomainConfig()->getPostfix();
     }
 
+    /**
+     * @return string
+     */
     public function getBaseUrl(): string
     {
         return $this->getCurrentDomainConfig()->getBaseUrl();

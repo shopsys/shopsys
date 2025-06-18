@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -268,9 +269,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      */
     protected function createRequest(): Request
     {
-        $uri = $this->getLocalizedPathOnFirstDomainByRouteName('admin_login');
-
-        $request = Request::create($uri);
+        $request = Request::create('/');
         /** @var \Symfony\Component\HttpFoundation\Session\SessionFactory $sessionFactory */
         $sessionFactory = static::$kernel->getContainer()->get('test.service_container')->get('session.factory');
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */

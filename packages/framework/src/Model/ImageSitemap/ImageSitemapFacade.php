@@ -50,7 +50,7 @@ class ImageSitemapFacade
             $domainSitemapDumper = $this->imageSitemapDumperFactory->createForImagesForDomain($domainConfig->getId());
             $domainSitemapDumper->dump(
                 $this->sitemapsDir,
-                $domainConfig->getUrl() . $this->sitemapsUrlPrefix . '/',
+                $domainConfig->getBaseUrl() . $this->sitemapsUrlPrefix . '/',
                 $section,
             );
         }
