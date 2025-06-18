@@ -16,6 +16,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
     .addEntry('admin', './assets/js/admin/admin.js')
+    .addEntry('administration', sources.getPackageNodeModulesDir('administration') + '/src/js/index.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
@@ -39,7 +40,7 @@ Encore
                 force: true
             },
             {
-                from: sources.getFrameworkNodeModulesDir() + '/public/admin',
+                from: sources.getPackageNodeModulesDir('framework') + '/public/admin',
                 to: '../../web/public/admin',
                 force: true
             },
@@ -59,20 +60,16 @@ Encore
 ;
 
 Encore
-    .addEntry('admin-style', './assets/styles/admin/main.less')
-    .addEntry('admin-wysiwyg', './assets/styles/admin/wysiwyg.less')
+    .addEntry('admin-style', './assets/styles/admin/main.scss')
     .addPlugin(
         new StylelintPlugin({
             configFile: '.stylelintrc',
-            files: 'assets/styles/**/*.less'
+            files: 'assets/styles/**/*.scss',
         })
     )
-    .enableLessLoader(function (options) {
-        options.lessOptions = {
-            math: 'always'
-        };
-    })
-    .enablePostCssLoader();
+    .enableSassLoader()
+    .enablePostCssLoader()
+;
 
 Encore.addAliases({
     'jquery-ui': 'jquery-ui/ui/widgets',
