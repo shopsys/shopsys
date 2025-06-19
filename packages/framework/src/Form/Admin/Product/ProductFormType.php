@@ -98,13 +98,12 @@ final class ProductFormType extends AbstractType
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
         $product = $options['product'];
-        $disabledItemInMainVariantAttr = [];
+
+        $disabledItemInMainVariantHelp = [];
 
         if ($this->isProductMainVariant($product)) {
-            $disabledItemInMainVariantAttr = [
-                'disabledField' => true,
-                'disabledFieldTitle' => t('This item can be set in product detail of a specific variant'),
-                'disabledFieldClass' => 'form-line__disabled',
+            $disabledItemInMainVariantHelp = [
+                'help' => t('This item can be set in product detail of a specific variant'),
             ];
         }
 
@@ -143,7 +142,7 @@ final class ProductFormType extends AbstractType
             $builder->add($this->createVariantGroup($builder, $product));
         }
 
-        $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantAttr));
+        $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantHelp));
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
         $builder->add($this->createStocksGroup($builder, $product));
@@ -183,13 +182,13 @@ final class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
+     * @param array $disabledItemInMainVariantHelp
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createBasicInformationGroup(
         FormBuilderInterface $builder,
         ?Product $product,
-        array $disabledItemInMainVariantAttr = [],
+        array $disabledItemInMainVariantHelp = [],
     ): FormBuilderInterface {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
@@ -211,14 +210,12 @@ final class ProductFormType extends AbstractType
                 new UniqueProductCatnum(['product' => $product]),
             ],
             'disabled' => $this->isProductMainVariant($product),
-            'attr' => array_merge(
-                $disabledItemInMainVariantAttr,
-                [
-                    'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
-                    'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
-                ],
-            ),
+            'attr' => [
+                'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
+                'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
+            ],
             'label' => t('Catalog number'),
+            ...$disabledItemInMainVariantHelp,
         ])
             ->add('partno', TextType::class, [
                 'required' => false,
@@ -228,8 +225,8 @@ final class ProductFormType extends AbstractType
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
                 'label' => t('PartNo (serial number)'),
+                ...$disabledItemInMainVariantHelp,
             ])
             ->add('ean', TextType::class, [
                 'required' => false,
@@ -239,8 +236,8 @@ final class ProductFormType extends AbstractType
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
                 'label' => t('EAN'),
+                ...$disabledItemInMainVariantHelp,
             ]);
 
         if ($product !== null) {
@@ -254,9 +251,6 @@ final class ProductFormType extends AbstractType
             ->add('flagsByDomainId', MultidomainType::class, [
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
-                    'attr' => [
-                        'class' => 'input--full-width',
-                    ],
                     'choices' => $this->flagFacade->getAll(),
                     'choice_label' => 'name',
                     'choice_value' => 'id',
@@ -306,22 +300,13 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductVariant($product)) {
             $builderShortDescriptionGroup->add('shortDescriptions', DisplayOnlyType::class, [
-                'mapped' => false,
-                'required' => false,
                 'data' => t('Short description can be set in the main variant.'),
-                'attr' => [
-                    'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
-                ],
+                'label' => false,
             ]);
         } else {
             $builderShortDescriptionGroup
                 ->add('shortDescriptions', MultidomainType::class, [
                     'entry_type' => TextareaType::class,
-                    'entry_options' => [
-                        'attr' => [
-                            'class' => 'input--full-width',
-                        ],
-                    ],
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
                     'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
@@ -344,12 +329,8 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductVariant($product)) {
             $builderDescriptionGroup->add('descriptions', DisplayOnlyType::class, [
-                'mapped' => false,
-                'required' => false,
                 'data' => t('Description can be set on product detail of the main product.'),
-                'attr' => [
-                    'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
-                ],
+                'label' => false,
             ]);
         } else {
             $builderDescriptionGroup
@@ -536,12 +517,8 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductMainVariant($product)) {
             $builderPricesGroup->add('disabledPricesOnMainVariant', DisplayOnlyType::class, [
-                'mapped' => false,
-                'required' => true,
                 'data' => t('You can set the prices on product detail of specific variant.'),
-                'attr' => [
-                    'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
-                ],
+                'label' => false,
             ]);
 
             return $builderPricesGroup;
@@ -686,9 +663,6 @@ final class ProductFormType extends AbstractType
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
-            'attr' => [
-                'class' => 'wrap-border',
-            ],
             'label' => false,
         ]);
 

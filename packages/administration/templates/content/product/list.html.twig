@@ -1,0 +1,99 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Products overview'|trans }}{% endblock %}
+
+{% block h1 %}{{ 'Products'|trans }}{% endblock %}
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+
+{% block btn %}
+    {% if productCanBeCreated %}
+        <a href="{{ url('admin_product_createvariant') }}" class="btn btn-secondary">
+            {{ ux_icon('plus') }}{{ 'Create variant'|trans }}
+        </a>
+        <a href="{{ url('admin_product_new') }}" class="btn btn-primary">
+            {{ ux_icon('plus') }}{{ 'Create new product'|trans }}
+        </a>
+    {% else %}
+
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                <li class="nav-item">
+                    <a href="#quick"
+                       class="nav-link{{ not isAdvancedSearchFormSubmitted ? ' active' }}"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Quick search'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#advanced"
+                       class="nav-link{{ isAdvancedSearchFormSubmitted ? ' active' }}"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Advanced search'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#bulk-edit"
+                       class="nav-link"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Bulk edit'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="tab-pane{{ not isAdvancedSearchFormSubmitted ? ' active show' }}" id="quick">
+                    {{ form_start(quickSearchForm) }}
+                    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+                        form_input: quickSearchForm.text,
+                        form_submit: quickSearchForm.submit,
+                        hide_title: true,
+                        placeholder: 'Search by name, catalog number, or product part number...'|trans,
+                        info_message: 'Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?.'|trans,
+                    } %}
+                    {{ form_end(quickSearchForm) }}
+                </div>
+                <div class="tab-pane{{ isAdvancedSearchFormSubmitted ? ' active show' }}" id="advanced">
+                    {% include '@ShopsysAdministration/content/product/advancedSearch/advancedSearch.html.twig'
+                        with {advancedSearchForm: advancedSearchForm} %}
+                </div>
+                <div class="tab-pane" id="bulk-edit">
+                    {{ form_start(massActionForm) }}
+
+                    <div class="mb-2">
+                        <strong>{{ 'Change for'|trans }}:</strong>
+                        {{ form_widget(massActionForm.selectType, { attr: { class: 'js-mass-action-select-type' } , isSimple: true }) }}
+                    </div>
+
+                    <div class="mb-2">
+                        <strong>{{ 'Make modification'|trans }}:</strong>
+                        <div class="row">
+                            <div class="col">
+                                {{ form_widget(massActionForm.action , { isSimple: true }) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(massActionForm.subject, { isSimple: true }) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(massActionForm.value, { attr: { class: 'js-mass-action-value' }, isSimple: true }) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_widget(massActionForm.submit, { label: 'Make modification'|trans, attr: { class: 'btn js-mass-action-submit' } }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ gridView.render() }}
+    {{ gridView.renderHiddenInputs('page') }}
+    {{ form_end(massActionForm) }}
+{% endblock %}

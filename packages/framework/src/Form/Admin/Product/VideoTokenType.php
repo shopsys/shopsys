@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints;
 
 final class VideoTokenType extends AbstractType
 {
@@ -25,7 +25,7 @@ final class VideoTokenType extends AbstractType
         $builder->add('videoToken', TextType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank([
+                new Constraints\NotBlank([
                     'message' => 'Please enter video ID',
                 ]),
             ],
@@ -36,6 +36,11 @@ final class VideoTokenType extends AbstractType
             'required' => true,
             'entry_options' => [
                 'required' => true,
+                'constraints' => [
+                    new Constraints\Length(
+                        ['max' => 245, 'maxMessage' => 'Description cannot be longer than {{ limit }} characters'],
+                    ),
+                ],
             ],
             'label' => t('Description'),
         ]);

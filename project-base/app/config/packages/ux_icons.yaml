@@ -11,6 +11,7 @@ ux_icons:
         arrow-up: 'tabler:arrow-big-up-filled'
         calendar-3: 'tabler:calendar-week'
         cart: 'tabler:basket-filled'
+        cart-off: 'tabler:basket-off'
         chart-piece: 'tabler:clipboard-data-filled'
         checked: 'tabler:check'
         checked-circle: 'tabler:circle-check'

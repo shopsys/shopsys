@@ -48,7 +48,7 @@ class ProductAdvancedSearchPage extends AbstractPage
      */
     public function assertFoundProductCount($expectedCount)
     {
-        $foundProductCount = $this->tester->countVisibleByCss('tbody .table-grid__row');
+        $foundProductCount = $this->tester->countVisibleByCss('tbody .test-grid-row');
 
         $message = 'Product advanced search expected to found ' . $expectedCount . ' products but found ' . $foundProductCount . '.';
         Assert::assertSame($expectedCount, $foundProductCount, $message);
