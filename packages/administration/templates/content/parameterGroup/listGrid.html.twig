@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
     <a href="{{ url('admin_parametergroup_edit', { id: row.pg.id }) }}">{{ value }}</a>
@@ -11,8 +11,4 @@
 
 {% block grid_no_data %}
     {{ 'There is no parameter group yet.'|trans }}
-{% endblock %}
-
-{% block grid_action_cell_type_delete %}
-    {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
 {% endblock %}

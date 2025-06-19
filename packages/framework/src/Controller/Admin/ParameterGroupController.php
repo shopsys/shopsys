@@ -54,7 +54,7 @@ class ParameterGroupController extends AdminBaseController
     {
         $grid = $this->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/ParameterGroup/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/parameterGroup/list.html.twig', [
             'grid' => $grid->createView(),
         ]);
     }
@@ -92,7 +92,7 @@ class ParameterGroupController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/ParameterGroup/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/parameterGroup/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -133,7 +133,7 @@ class ParameterGroupController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/ParameterGroup/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/parameterGroup/edit.html.twig', [
             'form' => $form->createView(),
             'parameterGroup' => $parameterGroup,
         ]);
@@ -179,7 +179,6 @@ class ParameterGroupController extends AdminBaseController
         $grid->addColumn('name', 'pgt.name', t('Name'));
         $grid->setDefaultOrder('pg.position');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_parametergroup_edit', ['id' => 'pg.id']);
         $grid->addDeleteActionColumn('admin_parametergroup_delete', ['id' => 'pg.id'])
             ->setConfirmMessage(t('Do you really want to remove this parameter groups? By deleting this parameter group you will '
@@ -187,7 +186,7 @@ class ParameterGroupController extends AdminBaseController
 
         $grid->enableDragAndDrop(ParameterGroup::class);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/ParameterGroup/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/parameterGroup/listGrid.html.twig');
 
         return $grid;
     }

@@ -73,7 +73,6 @@ class ParameterGridFactory implements GridFactoryInterface
 
         $grid->addEditActionColumn('admin_parameter_edit', ['id' => 'p.id']);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
             ->setConfirmMessage(t(
@@ -82,7 +81,7 @@ class ParameterGridFactory implements GridFactoryInterface
                 . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',
             ));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Parameter/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/parameter/listGrid.html.twig');
 
         return $grid;
     }

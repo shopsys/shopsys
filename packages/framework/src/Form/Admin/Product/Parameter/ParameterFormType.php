@@ -70,6 +70,9 @@ final class ParameterFormType extends AbstractType
             ])
             ->add('orderingPriority', NumberType::class, [
                 'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter parameter ordering priority']),
+                ],
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(

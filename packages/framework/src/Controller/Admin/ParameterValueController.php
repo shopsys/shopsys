@@ -66,10 +66,10 @@ class ParameterValueController extends AdminBaseController
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
-        $grid->setTheme('@ShopsysFramework/Admin/Content/ParameterValue/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/parameterValue/listGrid.html.twig');
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/ParameterValue/list.html.twig',
+            '@ShopsysAdministration/content/parameterValue/list.html.twig',
             [
                 'gridView' => $grid->createView(),
             ],
@@ -112,7 +112,7 @@ class ParameterValueController extends AdminBaseController
         $this->breadcrumbOverrider->overrideLastItem(t('Editing parameter value of type color - %name%', ['%name%' => $parameterValue->getText()]));
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/ParameterValue/edit.html.twig',
+            '@ShopsysAdministration/content/parameterValue/edit.html.twig',
             [
                 'parameterValue' => $parameterValue,
                 'form' => $form->createView(),
@@ -159,11 +159,10 @@ class ParameterValueController extends AdminBaseController
         $this->breadcrumbOverrider->overrideLastItem(t('Convert values associated with parameter - %name%', ['%name%' => $parameter->getName()]));
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/ParameterValue/values.html.twig',
+            '@ShopsysAdministration/content/parameterValue/values.html.twig',
             [
                 'form' => $form->createView(),
                 'parameter' => $parameter,
-                'type' => t('numbers'),
             ],
         );
     }
