@@ -126,7 +126,7 @@ final class AdvertFormType extends AbstractType
                     'class' => 'height-150',
                 ],
                 'js_container' => [
-                    'container_class' => 'js-advert-type-content form-line__js',
+                    'container_class' => 'js-advert-type-content',
                     'data_type' => 'code',
                 ],
             ]);
@@ -134,7 +134,7 @@ final class AdvertFormType extends AbstractType
         $builderImageGroup = $builder->create('image_group', GroupType::class, [
             'label' => t('Images'),
             'js_container' => [
-                'container_class' => 'js-advert-type-content wrap-divider--top',
+                'container_class' => 'js-advert-type-content',
                 'data_type' => 'image',
             ],
         ]);

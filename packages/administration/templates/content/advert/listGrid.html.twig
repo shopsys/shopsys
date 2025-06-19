@@ -16,16 +16,16 @@
 {% block grid_value_cell_id_visible %}
     {% set value = not value %}
     {% if value %}
-        {% set visibilityClass = 'in-icon--visible' %}
+        {% set visibilityClass = 'text-green' %}
         {% set visibilityIcon = 'visible' %}
         {% set visibilityTitle = 'Yes'|trans %}
     {% else %}
-        {% set visibilityClass = 'in-icon--invisible' %}
+        {% set visibilityClass = 'text-secondary' %}
         {% set visibilityIcon = 'invisible' %}
         {% set visibilityTitle = 'No'|trans %}
     {% endif %}
 
-    <span class="in-icon in-icon--no-click {{ visibilityClass }}" title="{{ visibilityTitle }}">
+    <span class="{{ visibilityClass }}" title="{{ visibilityTitle }}">
         {{ ux_icon(visibilityIcon) }}
     </span>
 {% endblock %}
