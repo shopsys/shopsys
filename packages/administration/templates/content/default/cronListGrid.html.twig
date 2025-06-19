@@ -1,27 +1,38 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_no_data %}
     {{ 'No crons found.'|trans }}
 {% endblock %}
 
 {% block grid_value_cell_id_lastStartedAt %}
-    {{ value|formatDateTime }}
+    {{ value|date_time_ago }}
 {% endblock %}
 
 {% block grid_value_cell_id_lastFinishedAt %}
-    {{ value|formatDateTime}}
+    {{ value|date_time_ago }}
 {% endblock %}
 
 {% block grid_value_cell_id_status %}
-    <strong style="line-break: inherit;">
+    <strong class="text-nowrap align-items-center">
         {% if row.enabled == false %}
-            <span style="color: grey;">{{ ux_icon('circle-remove') }} {{ 'Disabled'|trans }}</span>
+            <span class="text-secondary">
+                {{ ux_icon('circle-remove', {class: 'icon icon-sm'}) }}
+                {{ 'Disabled'|trans }}
+            </span>
         {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
-            <span style="color: lightskyblue;">{{ ux_icon('gear') }} {{ 'Running'|trans }}</span>
+            <span class="text-info">
+                {{ ux_icon('gear', {class: 'icon icon-sm'}) }}
+                {{ 'Running'|trans }}
+            </span>
         {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
-            <span style="color: red;">{{ ux_icon('warning') }} {{ 'Error'|trans }}</span>
+            <span class="text-danger">
+                {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
+                {{ 'Error'|trans }}</span>
         {% else %}
-            <span style="color: green;">{{ ux_icon('checked') }} {{ 'Ok'|trans }}</span>
+            <span class="text-success">
+                {{ ux_icon('checked', {class: 'icon icon-sm'}) }}
+                {{ 'Ok'|trans }}
+            </span>
         {% endif %}
     </strong>
 {% endblock %}
@@ -32,7 +43,7 @@
             'admin_default_schedulecron', {
                 serviceId: row.id,
             }
-        ) }}" class="in-icon in-icon--edit" title="{{ 'Schedule'|trans }}">{{ ux_icon('schedule') }}</a>
+        ) }}" class="text-reset me-2" title="{{ 'Schedule'|trans }}">{{ ux_icon('schedule') }}</a>
     {% endif %}
 
     {% if row.enabled == false %}
@@ -40,13 +51,13 @@
             'admin_default_cronenable', {
                 serviceId: row.id
             }
-        ) }}" class="in-icon in-icon--edit" style="color: red;" title="{{ 'Enable'|trans }}">{{ ux_icon('power') }}</a>
+        ) }}" class="text-danger" title="{{ 'Enable'|trans }}">{{ ux_icon('power') }}</a>
     {% else %}
         <a href="{{ url(
             'admin_default_crondisable', {
                 serviceId: row.id
             }
-        ) }}" class="in-icon in-icon--edit" style="color: green;" title="{{ 'Disable'|trans }}">{{ ux_icon('power') }}</a>
+        ) }}" class="text-success" title="{{ 'Disable'|trans }}">{{ ux_icon('power') }}</a>
     {% endif %}
 {% endblock %}
 
@@ -58,30 +69,10 @@
     ) }}">{{ value }}</a>
 {% endblock %}
 
-{% block grid_title_cell_id_minimalDuration %}
-    {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
-    <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Minimal duration from all runs in last seven days'|trans }}">
-        {{ ux_icon('question') }}
-    </span>
-{% endblock %}
-
-{% block grid_title_cell_id_maximalDuration %}
-    {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
-    <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Maximal duration from all runs in last seven days'|trans }}">
-        {{ ux_icon('question') }}
-    </span>
-{% endblock %}
-
-{% block grid_title_cell_id_averageDuration %}
-    {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
-    <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Average duration from all runs in last seven days'|trans }}">
-        {{ ux_icon('question') }}
-    </span>
-{% endblock %}
-
 {% block grid_value_cell_id_lastDuration %}
     {% if value > row.cronTimeoutSecs %}
-        <span style="color: red;">
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
     {% endif %}
 
     {{ value|formatDurationInSeconds }}
@@ -89,12 +80,12 @@
     {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
-
 {% endblock %}
 
 {% block grid_value_cell_id_minimalDuration %}
     {% if value > row.cronTimeoutSecs %}
-        <span style="color: red;">
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
     {% endif %}
 
     {{ value|formatDurationInSeconds }}
@@ -102,12 +93,12 @@
     {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
-
 {% endblock %}
 
 {% block grid_value_cell_id_maximalDuration %}
     {% if value > row.cronTimeoutSecs %}
-        <span style="color: red;">
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
     {% endif %}
 
     {{ value|formatDurationInSeconds }}
@@ -115,12 +106,12 @@
     {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
-
 {% endblock %}
 
 {% block grid_value_cell_id_averageDuration %}
     {% if value > row.cronTimeoutSecs %}
-        <span style="color: red;">
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
     {% endif %}
 
     {{ value|formatDurationInSeconds }}
@@ -128,5 +119,4 @@
     {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
-
 {% endblock %}

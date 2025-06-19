@@ -1,0 +1,44 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No cron runs found.'|trans }}
+{% endblock %}
+
+{%- block additional_row_classes -%}
+    {% if row.duration > cronTimeoutSecs %}table-danger{% endif %}
+{%- endblock -%}
+
+
+{% block grid_value_cell_id_startedAt %}
+    <span{{ row.duration > cronTimeoutSecs ? ' class="text-danger"' }}>
+        {{ value|formatDateTime }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_id_finishedAt %}
+    <span{{ row.duration > cronTimeoutSecs ? ' class="text-danger"' }}>
+        {{ value|formatDateTime }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_id_duration %}
+    <span{{ row.duration > cronTimeoutSecs ? ' class="text-danger"' }}>
+        {{ value|formatDurationInSeconds }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_id_status %}
+    <strong class="text-nowrap">
+        {% if row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
+            <span class="text-danger">
+                {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
+                {{ 'Error'|trans }}
+            </span>
+        {% else %}
+            <span class="text-success">
+                {{ ux_icon('checked', {class: 'icon icon-sm'}) }}
+                {{ 'Ok'|trans }}
+            </span>
+        {% endif %}
+    </strong>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Dashboard'|trans }}{% endblock %}
+{% block h1 %}{{ 'Dashboard'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_transferissue_list') }}" class="btn">
+        {{ 'Transfer issues overview'|trans }}
+        {% set badgeColor = transferIssuesCount > 0 ? 'red' : 'green' %}
+        <span class="badge bg-{{ badgeColor }} text-{{ badgeColor }}-fg ms-2 badge-pill">{{ transferIssuesCount }}</span>
+    </a>
+{% endblock %}
+
+{% macro statisticNumberWithPercent(title, number, percent) %}
+    <div class="col-sm-12 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="subheader">{{ title }}</div>
+                    <div class="ms-auto lh-1 text-secondary">
+                        {{ 'Last 7 days'|trans }}
+                    </div>
+                </div>
+                <div class="d-flex align-items-baseline">
+                    <div class="h1 mb-3 me-2" data-countup>{{ number }}</div>
+                    <div class="me-auto">
+                        <span class="text-{% if percent > 0 %}green{% elseif percent < 0 %}red{% else %}yellow{% endif %} d-inline-flex align-items-center lh-1">
+                            <span data-countup>{{ percent|abs }}</span>%
+
+                            {% if percent > 0 %}
+                                {{ ux_icon('trending-up') }}
+                            {% elseif percent < 0 %}
+                                {{ ux_icon('trending-down') }}
+                            {% else %}
+                                {{ ux_icon('minus') }}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block main_content %}
+    {{ form_start(quickProductSearchForm) }}
+    <a class="btn btn-link" href="{{ url('admin_product_list', { as: true }) }}">
+        {{ 'Go to product advanced search'|trans }}
+    </a>
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        title: 'Quick product search'|trans,
+        form_input: quickProductSearchForm.text,
+        form_submit: quickProductSearchForm.submit,
+        info_message: 'Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?.'|trans,
+        placeholder: 'Search by name, catalog number, or product part number...'|trans
+    } %}
+    {{ form_end(quickProductSearchForm) }}
+
+    <div class="row row-deck row-cards">
+        {{ _self.statisticNumberWithPercent('Orders sold'|trans, newOrders, newOrdersTrend) }}
+        {{ _self.statisticNumberWithPercent('New customers'|trans, newCustomers, newCustomersTrend) }}
+        {{ _self.statisticNumberWithPercent('Turnover in'|trans ~ ' ' ~ currencySymbolDefault(), ordersValue, ordersValueTrend) }}
+    </div>
+
+    <div class="row row-deck row-cards">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{ 'New orders'|trans }}</h3>
+                    <canvas
+                            class="js-line-chart"
+                            data-chart-labels="{{ newOrdersInLastTwoWeeksLabels|json_encode }}"
+                            data-chart-values="{{ newOrdersInLastTwoWeeksValues|json_encode }}"
+                    ></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{ 'New registered customers'|trans }}</h3>
+                    <canvas
+                            class="js-line-chart"
+                            data-chart-labels="{{ registeredInLastTwoWeeksLabels|json_encode }}"
+                            data-chart-values="{{ registeredInLastTwoWeeksValues|json_encode }}"
+                    ></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if cronGridViews is not null %}
+        {% for instanceName, cronGridView in cronGridViews %}
+            <div class="mb-3">
+                {{ cronGridView.render() }}
+                <div class="text-secondary small ms-3">
+                    {{ 'Some data may not be localized or serve the technical administrators of the e-shop.'|trans }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
