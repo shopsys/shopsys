@@ -53,7 +53,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             <div className="vl:basis-auto vl:items-center vl:pr-0 vl:pt-0 flex basis-full gap-2.5 pt-6 pr-8">
                 <div className="flex size-20 shrink-0">
                     <ExtendedNextLink
-                        className="relative"
+                        className="relative isolate"
                         href={productSlug}
                         tid={TIDs.cart_list_item_image}
                         type="product"

@@ -96,7 +96,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         keyName="payments-list"
                         tid={TIDs.pages_order_payment}
                     >
-                        {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />}
+                        {isTransportSelectionLoading && (
+                            <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />
+                        )}
 
                         <div className="h4 mb-3">{t('Choose payment')}</div>
 
