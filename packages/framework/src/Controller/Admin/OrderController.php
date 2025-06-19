@@ -129,7 +129,7 @@ class OrderController extends AdminBaseController
             $order->getId(),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Order/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/order/edit.html.twig', [
             'form' => $form->createView(),
             'order' => $order,
             'entityLogGridView' => $entityLogGrid->createView(),
@@ -158,7 +158,7 @@ class OrderController extends AdminBaseController
             $order->getItems(),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Order/addProduct.html.twig', [
+        return $this->render('@ShopsysAdministration/content/order/addProduct.html.twig', [
             'form' => $form->createView(),
             'order' => $order,
             'orderItem' => $orderItem,
@@ -209,7 +209,7 @@ class OrderController extends AdminBaseController
 
         $grid = $this->getOrdersGrid($queryBuilder);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Order/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/order/list.html.twig', [
             'gridView' => $grid->createView(),
             'domainFilterNamespace' => $domainFilterNamespace,
             'quickSearchForm' => $quickSearchForm->createView(),
@@ -240,7 +240,7 @@ class OrderController extends AdminBaseController
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 
-        $grid->addColumn('preview', 'o.id', t('Preview'), false);
+        $grid->addColumn('preview', 'o.id', t('Preview'))->setClassAttribute('w-1 d-none d-md-table-cell');
         $grid->addColumn('number', 'o.number', t('Order Nr.'), true);
         $grid->addColumn('created_at', 'o.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
@@ -252,12 +252,12 @@ class OrderController extends AdminBaseController
         $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'), false)
             ->setClassAttribute('text-right text-no-wrap');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
+
         $grid->addEditActionColumn('admin_order_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_order_delete', ['id' => 'id'])
             ->setConfirmMessage(t('Do you really want to remove the order?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Order/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/order/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
@@ -323,7 +323,7 @@ class OrderController extends AdminBaseController
             $request->get('newIndex'),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Order/AdvancedSearch/ruleForm.html.twig', [
+        return $this->render('@ShopsysAdministration/content/order/advancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),
         ]);
     }
@@ -338,7 +338,7 @@ class OrderController extends AdminBaseController
     {
         $order = $this->orderFacade->getById($id);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Order/preview.html.twig', [
+        return $this->render('@ShopsysAdministration/content/order/preview.html.twig', [
             'order' => $order,
         ]);
     }

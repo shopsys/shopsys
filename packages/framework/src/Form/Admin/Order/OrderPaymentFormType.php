@@ -33,21 +33,18 @@ final class OrderPaymentFormType extends AbstractType
                 'choices' => $options['payments'],
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'error_bubbling' => true,
             ])
             ->add('unitPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter unit price with VAT']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('vatPercent', NumberType::class, [
                 'input' => 'string',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter unit price without VAT']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('unitPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
@@ -57,11 +54,12 @@ final class OrderPaymentFormType extends AbstractType
                         'groups' => [OrderItemFormType::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
                     ]),
                 ],
-                'error_bubbling' => true,
             ])
             ->add(
                 $builder->create('setPricesManually', CheckboxType::class, [
                     'property_path' => 'usePriceCalculation',
+                    'required' => false,
+                    'label' => false,
                 ])->addModelTransformer(new InverseTransformer()),
             )
             ->addModelTransformer(new CopyTotalPricesOfOrderItemTransformer());

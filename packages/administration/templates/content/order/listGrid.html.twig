@@ -1,11 +1,15 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_preview %}
-    <div class="js-order-preview position-relative" data-preview-url="{{ url('admin_order_preview', {id: value}) }}">
-        {{ ux_icon('cart', { class: 'js-order-preview-icon in-icon cursor-help' }) }}
-        <div class="js-order-preview-box">
-            <div class="window-preview js-order-preview-box-window display-none"></div>
-        </div>
+    <div class="d-inline-block cursor-help"
+         data-bs-toggle="popover"
+         data-bs-trigger="hover"
+         data-bs-html="true"
+         data-bs-content="Loading..."
+         data-bs-container="body"
+         data-content-url="{{ url('admin_order_preview', {id: value}) }}"
+    >
+        {{ ux_icon('cart') }}
     </div>
 {% endblock %}
 
@@ -18,7 +22,7 @@
 {% endblock %}
 
 {% block grid_value_cell_id_domain_id %}
-    {{ domainIcon(value, 'small') }}
+    {{ domain_icon(value) }}
 {% endblock %}
 
 {% block grid_value_cell_id_created_at %}

@@ -35,7 +35,6 @@ import './MailWhitelist';
 import './MassActionConfirm';
 import './NumberSlider';
 import './OpeningHoursCollection';
-import './OrderPreview';
 import './OrderItems';
 import './OrderTransportAndPaymentPrefiller';
 import './Parameters';

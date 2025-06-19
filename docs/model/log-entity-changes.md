@@ -142,7 +142,7 @@ $entityLogGrid = $this->entityLogGridFactory->createByEntityNameAndEntityId(
     $order->getId()
 );
 
-return $this->render('@ShopsysFramework/Admin/Content/Order/edit.html.twig', [
+return $this->render('@ShopsysAdministration/content/order/edit.html.twig', [
     ...
     'entityLogGridView' => $entityLogGrid->createView(),
 ]);

@@ -436,7 +436,7 @@ final class OrderFormType extends AbstractType
                         'inherit_data' => true,
                         'label' => false,
                         'attr' => [
-                            'class' => 'form-line__js js-delivery-address-fields',
+                            'class' => 'js-delivery-address-fields',
                         ],
                     ])
                     ->add('deliveryFirstName', TextType::class, [

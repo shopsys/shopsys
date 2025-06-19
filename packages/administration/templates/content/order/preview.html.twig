@@ -1,0 +1,37 @@
+<div class="col-12">
+    <h3>{{ 'Order Nr. %orderNumber%'|trans({'%orderNumber%' : order.number}) }}</h3>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-transparent">
+        <thead>
+            <tr>
+                <th>{{ 'Item name'|trans }}</th>
+                <th class="text-end w-1">{{ 'Amount'|trans }}</th>
+                <th class="text-end w-1">{{ 'Price including VAT'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items %}
+                <tr>
+                    <td>
+                        {% if item.typeTransport %}
+                            {{ 'Shipping'|trans }} -
+                        {% elseif item.typePayment %}
+                            {{ 'Payment'|trans }} -
+                        {% endif %}
+                        {{ item.name }}
+                    </td>
+                    <td class="text-end">{{ item.quantity }} {{ item.unitName }}</td>
+                    <td class="text-end">{{ item.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="text-end"><strong>{{ 'Total including VAT'|trans }}</strong></td>
+                <td class="text-end"><strong>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
