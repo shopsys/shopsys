@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_no_data %}
     {{ 'No SEO pages found.'|trans }}
@@ -15,11 +15,7 @@
 
 {% block grid_action_cell_type_delete %}
     {% if row.sp.defaultPage is same as(true) %}
-        <span title="{{ 'This SEO page cannot be deleted.'|trans }}"
-              class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left"
-        >
-            {{ ux_icon('info') }}
-        </span>
+        {{ info_icon('This SEO page cannot be deleted.'|trans) }}
     {% else %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% endif %}

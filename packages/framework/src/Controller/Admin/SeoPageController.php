@@ -52,7 +52,7 @@ class SeoPageController extends AdminBaseController
     {
         $grid = $this->seoPageGridFactory->create(Domain::FIRST_DOMAIN_ID);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/seo/page/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -97,7 +97,7 @@ class SeoPageController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/seo/page/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -139,7 +139,7 @@ class SeoPageController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/seo/page/edit.html.twig', [
             'form' => $form->createView(),
             'seoPage' => $seoPage,
         ]);

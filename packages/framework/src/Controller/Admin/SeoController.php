@@ -64,7 +64,7 @@ class SeoController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Seo/seoSetting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/seo/seoSetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -96,7 +96,7 @@ class SeoController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Seo/robotsSetting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/seo/robotsSetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -132,7 +132,7 @@ class SeoController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Seo/hreflangSetting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/seo/hreflangSetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Alternate language settings'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Alternate language'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}
