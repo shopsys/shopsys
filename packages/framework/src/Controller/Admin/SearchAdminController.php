@@ -38,7 +38,7 @@ class SearchAdminController extends AdminBaseController
         $this->buildResultsList($results, $menu, $searchString);
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/Default/searchResult.html.twig',
+            '@ShopsysAdministration/partial/search_result.html.twig',
             [
                 'results' => $results,
             ],

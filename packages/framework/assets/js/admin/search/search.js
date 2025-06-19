@@ -9,7 +9,6 @@ export default class Search {
         let timeout;
         const $searchInput = $container.filterAllNodes('.js-search-input');
         const $searchResults = $container.filterAllNodes('.js-search-results');
-        const $searchResultsCloseButton = $container.filterAllNodes('.js-search-results__close');
         const $searchIcon = $container.filterAllNodes('.js-search-icon');
         const $searchElement = $container.filterAllNodes('.js-header-search');
 
@@ -20,11 +19,11 @@ export default class Search {
             ) {
                 event.preventDefault();
                 const focusableElements = $searchResults.filterAllNodes(
-                    'div.web__header__search--results--container a',
+                    '.js-search-item a',
                 );
                 $searchResults
-                    .filterAllNodes('div.web__header__search--results--container div.result--item')
-                    .removeClass('focused');
+                    .filterAllNodes('.js-search-item')
+                    .removeClass('active');
                 const focusable = Array.from(focusableElements);
                 const currentIndex = focusable.indexOf(document.activeElement);
 
@@ -40,7 +39,7 @@ export default class Search {
 
                 if (nextIndex > -1) {
                     focusable[nextIndex].focus();
-                    $(focusable[nextIndex]).closest('div.result--item').addClass('focused');
+                    $(focusable[nextIndex]).closest('.js-search-item').addClass('active');
                 }
 
                 return;
@@ -48,7 +47,24 @@ export default class Search {
 
             if (event.key === 'Escape' && $searchResults.is(':visible')) {
                 event.preventDefault();
-                $searchResults.hide();
+                Search.closeResults($searchResults, $searchInput);
+            }
+
+            if (event.key === '/') {
+                const activeElement = document.activeElement;
+                const tagName = activeElement.tagName;
+                const isInput = tagName === 'INPUT' && !['checkbox', 'radio', 'range', 'button', 'file', 'reset', 'submit', 'color'].includes(activeElement.type);
+                const isGrapesJsOverlayOpen = $('.gjs-frame').length > 0;
+
+                if (isGrapesJsOverlayOpen ||
+                    activeElement.isContentEditable ||
+                    ((isInput || tagName === 'TEXTAREA' || tagName === 'SELECT') && !document.activeElement.readOnly)
+                ) {
+                    return;
+                }
+
+                event.preventDefault();
+                $searchInput.focus();
             }
         });
 
@@ -61,27 +77,15 @@ export default class Search {
             }
         });
 
-        $searchResultsCloseButton.on('click', event => {
-            event.preventDefault();
-            Search.closeResults($searchResults, $searchInput);
-            $searchResultsCloseButton.hide();
-        });
-
-        $(document).on('click', event => {
+        $(document).on('click', function (event) {
             if (!$(event.target).closest('.js-search-results').length) {
                 Search.closeResults($searchResults, $searchInput);
-                $searchResultsCloseButton.hide();
             }
         });
 
         $searchInput.on('input', function () {
             const $input = $(this);
             clearTimeout(timeout);
-            if ($input.val().length > 0) {
-                $searchResultsCloseButton.show();
-            } else {
-                $searchResultsCloseButton.hide();
-            }
             timeout = setTimeout(() => {
                 if ($input.val().length >= 3) {
                     Search.findResultsByInput($input, $searchResults);
