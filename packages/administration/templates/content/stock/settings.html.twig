@@ -1,7 +1,9 @@
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}- {{ 'Warehouse settings'|trans }}{% endblock %}
-{% block h1 %}{{ 'Warehouse settings'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Warehouse'|trans }}{% endblock %}
 
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
