@@ -159,9 +159,9 @@ class FeedController extends AdminBaseController
             $grid->addColumn('schedule', 'schedule', t('Schedule'));
         }
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Feed/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/feed/listGrid.html.twig');
 
-        return $this->render('@ShopsysFramework/Admin/Content/Feed/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/feed/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }

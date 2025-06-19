@@ -1,17 +1,10 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 {% import _self as self %}
 
 {% macro getLabel(row) %}
     {{ row.feedLabel }} - {{ row.domainConfig.name }}
     {% if row.additionalInformation is not null %}
-        <span
-            title="{{ row.additionalInformation }}"
-            class="js-tooltip cursor-help"
-            data-toggle="tooltip"
-            data-placement="top"
-        >
-            {{ ux_icon('question') }}
-        </span>
+        {{ info_icon(row.additionalInformation) }}
     {% endif %}
 {% endmacro %}
 
@@ -43,7 +36,7 @@
             }
         ) }}" class="btn">{{ 'Schedule'|trans }}</a>
     {% else %}
-        <span style="color: green;">{{ ux_icon('checked') }} {{ 'Scheduled'|trans }}</span>
+        <span class="text-success">{{ ux_icon('checked') }} {{ 'Scheduled'|trans }}</span>
     {% endif %}
 
 {% endblock %}
