@@ -1,0 +1,20 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Watchdogs overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Watchdogs'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        info_message: 'Searching searches in product name and product catalog number. It is possible to use wildcards * and ?.'|trans,
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
+    {{ gridView.render() }}
+{% endblock %}

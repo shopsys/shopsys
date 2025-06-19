@@ -78,7 +78,7 @@ class WatchdogController extends AdminBaseController
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Watchdog/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/watchdog/list.html.twig', [
             'gridView' => $this->watchdogGridFactory->createView($queryBuilder, $this->getCurrentAdministrator()),
             'domainFilterNamespace' => static::WATCHDOG_DOMAIN_FILTER_NAMESPACE,
             'quickSearchForm' => $quickSearchForm->createView(),
@@ -120,7 +120,7 @@ class WatchdogController extends AdminBaseController
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Watchdog/detail.html.twig', [
+        return $this->render('@ShopsysAdministration/content/watchdog/detail.html.twig', [
             'gridView' => $this->watchdogGridFactory->createDetailView($queryBuilder, $this->getCurrentAdministrator()),
             'product' => $product,
             'domainFilterNamespace' => static::WATCHDOG_DOMAIN_FILTER_NAMESPACE,

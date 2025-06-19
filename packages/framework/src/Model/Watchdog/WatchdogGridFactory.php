@@ -48,7 +48,7 @@ class WatchdogGridFactory
         $grid->addColumn('watchdogCount', 'watchdogCount', t('Number of watchdogs'), true);
         $grid->addActionColumn('file-all', t('Show detail'), 'admin_watchdog_detail', ['id' => 'productId']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Watchdog/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/watchdog/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
@@ -77,7 +77,7 @@ class WatchdogGridFactory
         $grid->addColumn('validUntil', 'w.validUntil', t('Valid until'), true);
         $grid->addDeleteActionColumn('admin_watchdog_delete', ['id' => 'w.id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Watchdog/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/watchdog/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
