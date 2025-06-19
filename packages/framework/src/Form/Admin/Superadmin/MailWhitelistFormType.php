@@ -46,7 +46,7 @@ final class MailWhitelistFormType extends AbstractType
         $builder
             ->add('mailWhitelistEnabled', YesNoType::class, [
                 'label' => t('Enable whitelist'),
-                'required' => true,
+                'required' => false,
             ])
             ->add('messageMailWhitelist', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,

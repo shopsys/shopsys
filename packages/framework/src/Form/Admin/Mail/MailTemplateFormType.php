@@ -43,6 +43,9 @@ final class MailTemplateFormType extends AbstractType
                 'label' => t('Subject'),
                 'required' => true,
                 'constraints' => $this->getSubjectConstraints($options),
+                'label_attr' => [
+                    'class' => 'js-conditional-field',
+                ],
             ])
             ->add('bccEmail', EmailType::class, [
                 'label' => t('Hidden copy'),
@@ -63,6 +66,9 @@ final class MailTemplateFormType extends AbstractType
                         'constraints' => $this->getBodyConstraints($options),
                         'custom_plugins' => [
                             $mailTemplate->getName() === WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME ? 'mail-custom-image-with-variable' : null,
+                        ],
+                        'label_attr' => [
+                            'class' => 'js-conditional-field',
                         ],
                     ])
                     ->addModelTransformer(new EmptyWysiwygTransformer()),

@@ -46,13 +46,12 @@ class MailTemplateGridFactory implements GridFactoryInterface
         $grid->addColumn('orderStatus', 'orderStatusName', t('Order status'), true);
         $grid->addColumn('complaintStatus', 'complaintStatusName', t('Complaint status'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_mail_edit', ['id' => 'mt.id']);
 
         $grid->setDefaultOrder('name');
 
         $grid->setTheme(
-            '@ShopsysFramework/Admin/Content/Mail/listGrid.html.twig',
+            '@ShopsysAdministration/content/mail/listGrid.html.twig',
             [
                 'readableNames' => $this->mailTemplateConfiguration->getReadableNamesIndexedBySlug(),
             ],

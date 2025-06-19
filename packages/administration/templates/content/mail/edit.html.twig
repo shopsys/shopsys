@@ -1,0 +1,15 @@
+{% extends '@ShopsysAdministration/content/mail/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing email template'|trans }} - {{ mailTemplateName }}{% endblock %}
+
+{% block pre_title %}{{ 'Editing email template'|trans }}{% endblock %}
+{% block h1 %}{{ mailTemplateName }}{% endblock %}
+
+{% block btn %}
+    {% if mailSenderExists %}
+        <a href="#" class="js-mail-template-open-send-window btn" data-url="{{ url('admin_mail_send', { mailTemplateId: entity.id }) }}">
+            {{ ux_icon('letter') }}
+            {{ 'Send test mail'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
