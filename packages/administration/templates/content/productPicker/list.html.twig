@@ -1,0 +1,52 @@
+{% extends '@ShopsysAdministration/layout/layout_window.html.twig' %}
+
+{% block content %}
+    {{ form_start(quickSearchForm) }}
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                <li class="nav-item">
+                    <a href="#quick"
+                       class="nav-link{{ not isAdvancedSearchFormSubmitted ? ' active' }}"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Quick search'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#advanced"
+                       class="nav-link{{ isAdvancedSearchFormSubmitted ? ' active' }}"
+                       data-bs-toggle="tab"
+                    >
+                        {{ 'Advanced search'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="tab-pane{{ not isAdvancedSearchFormSubmitted ? ' active show' }}" id="quick">
+                    {{ form_start(quickSearchForm) }}
+                    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+                        form_input: quickSearchForm.text,
+                        form_submit: quickSearchForm.submit,
+                        hide_title: true,
+                        placeholder: 'Search by name, catalog number, or product part number...'|trans,
+                        info_message: 'Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?.'|trans,
+                    } %}
+                    {{ form_end(quickSearchForm) }}
+                </div>
+                <div class="tab-pane{{ isAdvancedSearchFormSubmitted ? ' active show' }}" id="advanced">
+                    {% include '@ShopsysAdministration/content/product/advancedSearch/advancedSearch.html.twig'
+                        with {advancedSearchForm: advancedSearchForm} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ gridView.render() }}
+    {{ gridView.renderHiddenInputs('page') }}
+
+    {{ form_end(quickSearchForm) }}
+{% endblock %}
