@@ -125,15 +125,6 @@ class SuperadminController extends AdminBaseController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    #[Route(path: '/superadmin/css-documentation/')]
-    public function cssDocumentationAction(): Response
-    {
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */

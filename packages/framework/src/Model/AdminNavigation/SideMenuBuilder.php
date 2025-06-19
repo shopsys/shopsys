@@ -176,7 +176,6 @@ class SideMenuBuilder
     public const string SECTION_SUPERADMIN = 'superadmin';
     public const string LIST_MODULE = 'modules';
     public const string PRICING = 'pricing';
-    public const string CSS_DOCS = 'css_docs';
     public const string LIST_URL = 'urls';
     public const string MAIL_WHITELIST = 'mail_whitelist';
     public const string CLEAR_STOREFRONT_CACHE = 'clear_storefront_cache';
@@ -860,10 +859,6 @@ class SideMenuBuilder
         $superadminMenu->addChild(
             static::PRICING,
             ['route' => 'admin_superadmin_pricing', 'label' => t('Sales including/excluding VAT settings')],
-        );
-        $superadminMenu->addChild(
-            static::CSS_DOCS,
-            ['route' => 'admin_superadmin_cssdocumentation', 'label' => t('CSS documentation')],
         );
         $superadminMenu->addChild(static::LIST_URL, ['route' => 'admin_superadmin_urls', 'label' => t('URL addresses')]);
         $superadminMenu->addChild(
