@@ -232,13 +232,13 @@ final class BlogArticleFormType extends AbstractType
 
         $builderDescriptionGroup
             ->add('descriptions', LocalizedType::class, [
+                'layout' => LocalizedType::LAYOUT_BLOCK,
                 'entry_type' => GrapesJsType::class,
                 'entry_options' => [
                     'allow_products' => true,
                 ],
                 'label' => t('Description'),
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ]);
 
         return $builderDescriptionGroup;
