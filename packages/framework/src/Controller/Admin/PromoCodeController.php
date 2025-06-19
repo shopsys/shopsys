@@ -65,7 +65,7 @@ class PromoCodeController extends AdminBaseController
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/promoCode/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
@@ -139,7 +139,7 @@ class PromoCodeController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/promoCode/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -184,7 +184,7 @@ class PromoCodeController extends AdminBaseController
             t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/promoCode/edit.html.twig', [
             'form' => $form->createView(),
             'promoCode' => $promoCode,
         ]);
@@ -232,7 +232,7 @@ class PromoCodeController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/newMassGenerate.html.twig', [
+        return $this->render('@ShopsysAdministration/content/promoCode/newMassGenerate.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -250,7 +250,7 @@ class PromoCodeController extends AdminBaseController
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/listMassGeneratedBatch.html.twig', [
+        return $this->render('@ShopsysAdministration/content/promoCode/listMassGeneratedBatch.html.twig', [
             'gridView' => $grid->createView(),
             'downloadBatchId' => $request->query->get('downloadBatchId'),
         ]);

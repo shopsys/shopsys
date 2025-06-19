@@ -1,0 +1,52 @@
+{% macro limitRow(limit, index) %}
+    <div class="js-limits-item js-form-group row align-items-center mb-3 pb-3 border-bottom" data-index="{{ index }}">
+        <div class="col-11 col-md-5 mb-2 mb-md-0">
+            <label class="d-md-none col-form-label" for="{{ limit.fromPrice.vars.id }}">{{ 'From'|trans }} {{ priceVatLabel() }}</label>
+            {{ form_widget(limit.fromPrice) }}
+            {{ form_errors(limit.fromPrice) }}
+        </div>
+        <div class="d-none d-md-block col-md-1 text-center">
+            {{ ux_icon('arrow-simple') }}
+        </div>
+        <div class="col-11 col-md-5">
+            <label class="d-md-none col-form-label" for="{{ limit.discount.vars.id }}">{{ 'Discount'|trans }} {{ priceVatLabel() }}</label>
+            {{ form_widget(limit.discount) }}
+            {{ form_errors(limit.discount) }}
+        </div>
+        <div class="col-1 text-center">
+            <a href="#" class="js-limits-item-remove">{{ ux_icon('delete') }}</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block promo_code_limit_collection_widget %}
+    {% import _self as self %}
+    <div class="js-form-group">
+        <div id="promo_code_limits">
+            <div class="row mb-3 text-uppercase fs-5 bg-surface-tertiary text-secondary p-2 border-bottom d-none d-md-flex">
+                <div class="col-6">
+                    <strong>{{ 'From'|trans }} {{ priceVatLabel() }}</strong>
+                </div>
+                <div class="col-6">
+                    <strong>{{ 'Discount'|trans }} {{ priceVatLabel() }}</strong>
+                </div>
+            </div>
+            <div class="js-limits" data-prototype="{{ self.limitRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+                {% for key, limit in form %}
+                    {{ self.limitRow(limit, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+
+                <div class="js-limits-empty-item row" style="display: none">
+                    <div class="col-12 text-muted">{{ 'Add limit'|trans }}</div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn js-limits-item-add">
+            {{ ux_icon('plus') }}
+            {{ 'Add another limit'|trans }}
+        </button>
+    </div>
+{% endblock promo_code_limit_collection_widget %}

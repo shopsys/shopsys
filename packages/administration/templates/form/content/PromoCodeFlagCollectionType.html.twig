@@ -1,0 +1,50 @@
+{% macro flagRow(flag, index) %}
+    <div class="js-flags-item js-form-group row align-items-center mb-3 pb-3 border-bottom" data-index="{{ index }}">
+        <div class="col-11 col-md-5 mb-2 mb-md-0">
+            {{ form_widget(flag.flag) }}
+            {{ form_errors(flag.flag) }}
+        </div>
+        <div class="d-none d-md-block col-md-1 text-center">
+            {{ ux_icon('arrow-simple') }}
+        </div>
+        <div class="col-11 col-md-5">
+            {{ form_widget(flag.type) }}
+            {{ form_errors(flag.type) }}
+        </div>
+        <div class="col-1 text-center">
+            <a href="#" class="js-flags-item-remove">{{ ux_icon('delete') }}</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block promo_code_flag_collection_widget %}
+    {% import _self as self %}
+    <div class="js-form-group form-group">
+        <div id="promo_code_flags">
+            <div class="row mb-3 text-uppercase fs-5 bg-surface-tertiary text-secondary p-2 border-bottom">
+                <div class="col-6">
+                    <strong>{{ 'Flag'|trans }}</strong>
+                </div>
+                <div class="col-6">
+                    <strong>{{ 'Type'|trans }}</strong>
+                </div>
+            </div>
+            <div class="js-flags" data-prototype="{{ self.flagRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+                {% for key, flag in form %}
+                    {{ self.flagRow(flag, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+
+                <div class="js-flags-empty-item row" style="display: none">
+                    <div class="col-12 text-muted">{{ 'Add some flag'|trans }}</div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn js-flags-item-add">
+            {{ ux_icon('plus') }}
+            {{ 'Add another flag'|trans }}
+        </button>
+    </div>
+{% endblock %}

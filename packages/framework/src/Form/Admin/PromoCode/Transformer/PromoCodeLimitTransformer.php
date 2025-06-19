@@ -42,10 +42,17 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
     #[Override]
     public function reverseTransform($value): PromoCodeLimit
     {
-        if (is_array($value) === false || $value['fromPrice'] === null || $value['discount'] === null) {
-            $this->promoCodeLimitFactory->create('0', '0');
+        if (!is_array($value)) {
+            return $this->promoCodeLimitFactory->create('0', '0');
         }
 
-        return $this->promoCodeLimitFactory->create((string)$value['fromPrice'], (string)$value['discount']);
+        $fromPrice = $value['fromPrice'] ?? null;
+        $discount = $value['discount'] ?? null;
+
+        if ($fromPrice === null || $discount === null) {
+            return $this->promoCodeLimitFactory->create('0', '0');
+        }
+
+        return $this->promoCodeLimitFactory->create((string)$fromPrice, (string)$discount);
     }
 }
