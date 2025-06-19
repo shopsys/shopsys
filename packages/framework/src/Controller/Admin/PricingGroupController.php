@@ -51,7 +51,7 @@ class PricingGroupController extends AdminBaseController
     {
         $grid = $this->pricingGroupInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Pricing/Groups/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/pricing/groups/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -180,7 +180,7 @@ class PricingGroupController extends AdminBaseController
             return $this->redirectToRoute('admin_pricinggroup_list');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Pricing/Groups/pricingGroupSettings.html.twig', [
+        return $this->render('@ShopsysAdministration/content/pricing/groups/pricingGroupSettings.html.twig', [
             'form' => $form->createView(),
         ]);
     }

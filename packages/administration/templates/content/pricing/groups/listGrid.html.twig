@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No pricing groups found. You have to create some first.'|trans }}
+{% endblock %}
+
+{% block grid_inline_edit_add_button %}
+    {% set addEntity = 'Create pricing group'|trans %}
+    {{ parent() }}
+
+    {{ info_icon('While creating a new pricing group, please be patient.
+            The application needs to recalculate price for every product on e-shop.
+            Products without recalculated price will not be displayed on e-shop.
+            For instance, it takes about an hour to recalculate 2000 products.'|trans,
+        'ms-3'
+    ) }}
+{% endblock %}
