@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_number %}
     <a href="{{ url('admin_complaint_edit', { id: row.cmp.id }) }}">{{ value }}</a>
@@ -9,12 +9,12 @@
         <a href="{{ url('admin_order_edit', { id: row.orderId }) }}">{{ value }}</a>
     {% else %}
         {{ row.cmp.manualDocumentNumber }}
-        {{ info_icon('Complaint was created manually without link to a particular order'|trans, tooltipPlacement: 'right') }}
+        {{ info_icon('Complaint was created manually without link to a particular order'|trans) }}
     {% endif %}
 {% endblock %}
 
 {% block grid_value_cell_id_domain_id %}
-    {{ domainIcon(value, 'small') }}
+    {{ domain_icon(value) }}
 {% endblock %}
 
 {% block grid_value_cell_id_customer_name %}

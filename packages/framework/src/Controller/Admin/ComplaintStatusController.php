@@ -42,7 +42,7 @@ class ComplaintStatusController extends AdminBaseController
     {
         $grid = $this->complaintStatusInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/ComplaintStatus/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/complaintStatus/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }

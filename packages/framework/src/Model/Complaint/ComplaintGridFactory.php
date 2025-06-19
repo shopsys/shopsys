@@ -56,10 +56,9 @@ class ComplaintGridFactory
         }
         $grid->addColumn('status_name', 'statusName', t('Status'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_complaint_edit', ['id' => 'cmp.id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Complaint/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/complaint/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
