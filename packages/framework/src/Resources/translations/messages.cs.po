@@ -1897,6 +1897,9 @@ msgstr "Povolit dvoufaktorové ověřování"
 msgid "Enable whitelist"
 msgstr "Whitelist aktivní"
 
+msgid "Enabled"
+msgstr "Povoleno"
+
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
 

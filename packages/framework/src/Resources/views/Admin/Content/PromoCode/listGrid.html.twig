@@ -4,6 +4,14 @@
     {{ 'No promo codes found. You have to create some first.'|trans }}
 {% endblock %}
 
+{% block grid_value_cell_id_active %}
+    {% if row['pc']['isActive'] is same as(true) %}
+        <span style="color: green">{{ 'Yes'|trans }}</span>
+    {% else %}
+        <span style="color: red">{{ 'No'|trans }}</span>
+    {% endif %}
+{% endblock %}
+
 {% block grid_value_cell_id_percent %}
     {% if value|length > 1 %}
         {{ 'Scaled promo code'|trans }}
