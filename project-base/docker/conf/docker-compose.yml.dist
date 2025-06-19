@@ -59,6 +59,8 @@ services:
             - ./storefront:/home/node/app
         ports:
             - "3000:3000"
+            - "9229:9229"
+            - "9230:9230"
 
     storefront-cypress:
         restart: always
