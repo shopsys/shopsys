@@ -77,7 +77,7 @@ class SuperadminController extends AdminBaseController
             return $this->redirectToRoute('admin_superadmin_pricing');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/pricing.html.twig', [
+        return $this->render('@ShopsysAdministration/content/superadmin/pricing.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -88,7 +88,7 @@ class SuperadminController extends AdminBaseController
     #[Route(path: '/superadmin/urls/')]
     public function urlsAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
+        return $this->render('@ShopsysAdministration/content/superadmin/urlsListGrid.html.twig');
     }
 
     /**
@@ -101,7 +101,7 @@ class SuperadminController extends AdminBaseController
         $formData = [];
 
         foreach ($this->moduleList->getNames() as $moduleName) {
-            $formData['modules'][$moduleName] = $this->moduleFacade->isEnabled($moduleName);
+            $formData[$moduleName] = $this->moduleFacade->isEnabled($moduleName);
         }
 
         $form = $this->createForm(ModulesFormType::class, $formData, ['module_list' => $this->moduleList]);
@@ -110,7 +110,7 @@ class SuperadminController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            foreach ($formData['modules'] as $moduleName => $isEnabled) {
+            foreach ($formData as $moduleName => $isEnabled) {
                 $this->moduleFacade->setEnabled($moduleName, $isEnabled);
             }
 
@@ -119,7 +119,7 @@ class SuperadminController extends AdminBaseController
             return $this->redirectToRoute('admin_superadmin_modules');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/modules.html.twig', [
+        return $this->render('@ShopsysAdministration/content/superadmin/modules.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -155,7 +155,7 @@ class SuperadminController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/mailWhitelist.html.twig', [
+        return $this->render('@ShopsysAdministration/content/superadmin/mailWhitelist.html.twig', [
             'form' => $form->createView(),
         ]);
     }
