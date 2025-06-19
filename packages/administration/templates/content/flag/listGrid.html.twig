@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_no_data %}
     {{ 'No flags found. You have to create some first.'|trans }}
@@ -15,7 +15,7 @@
 
 {% block grid_value_cell_id_rgbColor %}
     {% if value is not empty %}
-        <span class="in-pill" style="background-color: {{ value }};">{{ value }}</span>
+        <span class="status" style="background-color: {{ value }}; color: {{ row.textColor}}">{{ value }}</span>
     {% endif %}
 {% endblock %}
 

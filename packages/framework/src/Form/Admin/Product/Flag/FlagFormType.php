@@ -9,7 +9,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\GroupType;
-use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
@@ -28,7 +28,7 @@ final class FlagFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', LocalizedFullWidthType::class, [
+            ->add('name', LocalizedType::class, [
                 'label' => t('Name'),
                 'required' => true,
                 'entry_options' => [
