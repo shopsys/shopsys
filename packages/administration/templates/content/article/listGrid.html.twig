@@ -1,10 +1,16 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
     {% if row.a.type == constant('Shopsys\\FrameworkBundle\\Model\\Article\\Article::TYPE_SITE') %}
-        <span class="in-letter cursor-help js-tooltip" title="{{ 'Site'|trans }}">{{ 'Site [abbreviation]'|trans }}</span>
+        <span class="badge bg-teal text-teal-fg me-2 cursor-help"
+              title="{{ 'Site'|trans }}"
+              data-bs-toggle="tooltip"
+        >{{ 'Site [abbreviation]'|trans }}</span>
     {% else %}
-        <span class="in-letter cursor-help js-tooltip" title="{{ 'Link'|trans }}">{{ 'Link [abbreviation]'|trans }}</span>
+        <span class="badge bg-purple text-purple-fg me-2 cursor-help"
+              title="{{ 'Link'|trans }}"
+              data-bs-toggle="tooltip"
+        >{{ 'Link [abbreviation]'|trans }}</span>
     {% endif %}
     <a href="{{ url('admin_article_edit', { id: row.a.id }) }}">{{ value }}</a>
 {% endblock %}
