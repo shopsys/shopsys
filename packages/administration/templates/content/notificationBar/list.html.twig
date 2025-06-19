@@ -1,0 +1,19 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Notification bar'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Notification bars'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_notificationbar_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create notification bar'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

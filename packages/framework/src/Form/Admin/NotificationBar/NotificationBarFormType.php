@@ -60,7 +60,7 @@ final class NotificationBarFormType extends AbstractType
             ->add('rgbColor', ColorPickerType::class, [
                 'label' => t('Background color'),
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter flag color']),
+                    new NotBlank(['message' => 'Please enter notification bar background color']),
                 ],
             ])
             ->add('validityFrom', DateTimeType::class, [
