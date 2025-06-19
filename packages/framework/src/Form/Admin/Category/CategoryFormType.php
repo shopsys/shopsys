@@ -308,7 +308,7 @@ final class CategoryFormType extends AbstractType
         if ($category === null) {
             return;
         }
-        $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
+        $parametersFilterBuilder = $builder->create('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
 
         $parameterNamesById = [];
 
@@ -334,5 +334,7 @@ final class CategoryFormType extends AbstractType
             'choice_value' => 'id',
             'multiple' => true,
         ]);
+
+        $builder->add($parametersFilterBuilder);
     }
 }
