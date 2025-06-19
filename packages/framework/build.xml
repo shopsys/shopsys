@@ -1041,12 +1041,12 @@
         </if>
     </target>
 
-    <target name="set-functional-test-name">
-        <input propertyName="test.functional.name" message="Enter functional test name to run:"/>
+    <target name="set-test-name">
+        <input propertyName="test.name" message="Enter test name to run:"/>
         <if>
-            <equals arg1="${test.functional.name}" arg2=""/>
+            <equals arg1="${test.name}" arg2=""/>
             <then>
-                <fail message="Functional name is not set. Enter functional test name to be run"/>
+                <fail message="Test name is not set. Enter test name to be run"/>
             </then>
         </if>
     </target>
@@ -1470,9 +1470,9 @@
         </if>
     </target>
 
-    <target name="tests-functional-single" depends="set-functional-test-name,production-protection,clean,test-clean-redis,domains-info-load" description="Runs custom functional test.">
+    <target name="tests-functional-single" depends="set-test-name,production-protection,clean,test-clean-redis,domains-info-load" description="Runs custom functional test.">
         <if>
-            <not><equals arg1="${test.functional.name}" arg2="all"/></not>
+            <not><equals arg1="${test.name}" arg2="all"/></not>
             <then>
                 <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
                     <arg value="--colors=always"/>
@@ -1483,7 +1483,7 @@
                     <arg value="--configuration"/>
                     <arg value="${path.root}/phpunit.xml"/>
                     <arg value="--filter"/>
-                    <arg value="${test.functional.name}"/>
+                    <arg value="${test.name}"/>
                 </exec>
             </then>
         </if>
