@@ -69,7 +69,7 @@ class ClosedDayGridFactory
         $grid->addEditActionColumn('admin_closedday_edit', ['id' => 'cd.id']);
         $grid->addDeleteActionColumn('admin_closedday_delete', ['id' => 'cd.id'])
             ->setConfirmMessage(t('Do you really want to remove this holiday / internal day?'));
-        $grid->setTheme('@ShopsysFramework/Admin/Content/ClosedDay/listGrid.html.twig', [
+        $grid->setTheme('@ShopsysAdministration/content/closedDay/listGrid.html.twig', [
             'domainId' => $domainId,
         ]);
 

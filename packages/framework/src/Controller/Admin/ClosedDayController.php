@@ -48,7 +48,7 @@ class ClosedDayController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/ClosedDay/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/closedDay/list.html.twig', [
             'gridView' => $this->closedDayGridFactory->create($this->adminDomainTabsFacade->getSelectedDomainId())->createView(),
         ]);
     }
@@ -85,7 +85,7 @@ class ClosedDayController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/ClosedDay/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/closedDay/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -133,7 +133,7 @@ class ClosedDayController extends AdminBaseController
             ),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/ClosedDay/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/closedDay/edit.html.twig', [
             'form' => $form->createView(),
             'closedDay' => $closedDay,
         ]);

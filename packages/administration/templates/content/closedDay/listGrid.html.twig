@@ -1,0 +1,15 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_value_cell_id_excludedStores %}
+    <div class="badges-list">
+        {% for item in value %}
+            <span class="badge">
+                <a href="{{ url('admin_store_edit', { id: item.id }) }}">{{ item.name }}</a>
+            </span>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block grid_value_cell_id_date %}
+    {{ value|formatDate }}
+{% endblock %}
