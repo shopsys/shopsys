@@ -52,7 +52,7 @@ class InquiryGridFactory
 
         $grid->addActionColumn('file-all', t('Show detail'), 'admin_inquiry_detail', ['id' => 'i.id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Inquiry/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/inquiry/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 

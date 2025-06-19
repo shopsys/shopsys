@@ -1,11 +1,11 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_productName %}
     {% if value %}
         {{ value }}
     {% else %}
         {{ row.i.productCatnum }}
-        {{ info_icon('The product is no longer in the catalog. This was the catalog number at the time of the inquiry.'|trans, tooltipPlacement: 'right') }}
+        {{ info_icon('The product is no longer in the catalog. This was the catalog number at the time of the inquiry.'|trans) }}
     {% endif %}
     {% if row.productId %}
         <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ ux_icon('forward-page') }}</a>
