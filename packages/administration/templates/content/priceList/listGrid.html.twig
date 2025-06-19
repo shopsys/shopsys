@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_no_data %}
     {{ 'No product list found.'|trans }}
@@ -10,17 +10,17 @@
 {% endblock %}
 
 {% block grid_value_cell_id_domain_id %}
-    {{ domainIcon(value, 'small') }}
+    {{ domain_icon(value) }}
 {% endblock %}
 
 {% block grid_value_cell_id_validityStatus %}
     {% set statusMap = {
-        '0': { 'class': 'success', 'label': 'Active'|trans },
-        '1': { 'class': 'warning', 'label': 'Future'|trans },
-        '-1': { 'class': 'error', 'label': 'Expired'|trans }
+        '0': { 'class': 'green', 'label': 'Active'|trans },
+        '1': { 'class': 'purple', 'label': 'Future'|trans },
+        '-1': { 'class': 'red', 'label': 'Expired'|trans }
     } %}
 
-    <span class="in-message--{{ statusMap[value].class }} in-message--small">
+    <span class="status status-{{ statusMap[value].class }}">
         {{ statusMap[value].label }}
     </span>
 {% endblock %}
