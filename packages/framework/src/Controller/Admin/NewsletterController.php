@@ -65,10 +65,10 @@ class NewsletterController extends AdminBaseController
         $grid->addDeleteActionColumn('admin_newsletter_delete', ['id' => 'id'])
             ->setConfirmMessage(t('Do you really want to remove this subscriber?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Newsletter/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/newsletter/listGrid.html.twig');
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/Newsletter/list.html.twig',
+            '@ShopsysAdministration/content/newsletter/list.html.twig',
             [
                 'quickSearchForm' => $quickSearchForm->createView(),
                 'gridView' => $grid->createView(),
