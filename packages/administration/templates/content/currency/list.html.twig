@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Currencies and rounding'|trans }}{% endblock %}
+{% block h1 %}{{ 'Currencies and rounding'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CurrencyController::settingsAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}
