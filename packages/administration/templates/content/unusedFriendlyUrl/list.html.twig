@@ -1,0 +1,23 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Unused friendly URL list'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Unused friendly URLs'|trans }}{% endblock %}
+
+{% block main_content %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        info_message: 'Searching searches in slugs. It is possible to use wildcards * and ?.'|trans,
+        placeholder: 'Search by slug...'|trans
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ gridView.render() }}
+
+{% endblock %}
