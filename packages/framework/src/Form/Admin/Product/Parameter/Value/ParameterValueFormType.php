@@ -6,11 +6,11 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\FileUploadType;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -24,15 +24,9 @@ final class ParameterValueFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('rgbHex', TextType::class, [
+        $builder->add('rgbHex', ColorPickerType::class, [
             'required' => false,
             'label' => t('RGB Hex'),
-            'constraints' => [
-                new Constraints\Regex([
-                    'pattern' => '/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-                    'message' => 'Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC.',
-                ]),
-            ],
         ])->add('colourIcon', FileUploadType::class, [
             'label' => t('Upload attachment'),
             'required' => false,

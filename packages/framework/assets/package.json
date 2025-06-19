@@ -12,7 +12,7 @@
         "tests:unit": "jest js"
     },
     "dependencies": {
-        "@claviska/jquery-minicolors": "^2.3.4",
+        "@melloware/coloris": "^0.25.0",
         "@tabler/core": "^1.2.0",
         "bazinga-translator": "^2.6.6",
         "chart.js": "^2.9.3",

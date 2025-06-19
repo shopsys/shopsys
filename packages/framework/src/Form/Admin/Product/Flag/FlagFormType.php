@@ -51,10 +51,6 @@ final class FlagFormType extends AbstractType
                 'label' => t('Color'),
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter flag color']),
-                    new Constraints\Length([
-                        'max' => 7,
-                        'maxMessage' => 'Flag color must be in valid hexadecimal code e.g. #3333ff',
-                    ]),
                 ],
             ])
             ->add('visible', YesNoType::class, [
