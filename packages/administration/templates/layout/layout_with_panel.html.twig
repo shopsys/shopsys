@@ -1,7 +1,30 @@
 {% extends '@ShopsysAdministration/layout/layout.html.twig' %}
 
 {% block aside %}
-    
+    <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#sidebar-menu"
+                    aria-controls="sidebar-menu"
+                    aria-expanded="false"
+                    aria-label="{{ 'Toggle navigation'|trans }}"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <h1 class="navbar-brand navbar-brand-autodark">
+                <a href="{{ url('admin_default_dashboard') }}">
+                    <img class="navbar-brand-image" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Platform">
+                </a>
+            </h1>
+            <div class="collapse navbar-collapse" id="sidebar-menu">
+                {% block menu_panel %}
+                    {{ knp_menu_render('admin_side_menu', {template: '@ShopsysAdministration/partial/side_menu.html.twig'}) }}
+                {% endblock %}
+            </div>
+        </div>
+    </aside>
 {% endblock %}
 
 {% block content %}
@@ -9,6 +32,50 @@
         <div class="page-header d-print-none">
             <div class="container-xl">
 
+                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\FlashMessageController::indexAction')) }}
+
+                {{ render_required_settings() }}
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="small text-secondary">
+                            {% block breadcrumb %}
+                                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\BreadcrumbController::indexAction')) }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <div class="page-pretitle">
+                            {% block pre_title %}{% endblock %}
+                        </div>
+                        <h2 class="page-title">
+                            {% block h1 %}{{ 'Administration'|trans }}{% endblock %}
+                        </h2>
+                    </div>
+                    <div class="col-auto text-end">
+                        {% block btn_wrapper %}
+                            {% set btnContent %}{% block btn %}{% endblock %}{% endset %}
+
+                            {% if btnContent|trim %}
+                                <div class="dropdown d-md-none">
+                                    <button class="btn dropdown-toggle" data-bs-toggle="dropdown">{{ ux_icon('dots') }}</button>
+                                    <div class="dropdown-menu">
+                                        <div class="btn-list m-3 justify-content-end">
+                                            {{ btnContent|raw }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-list d-none d-md-flex">
+                                    {{ btnContent|raw }}
+                                </div>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="page-body">

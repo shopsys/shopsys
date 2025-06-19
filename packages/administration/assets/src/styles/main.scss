@@ -1,2 +1,20 @@
 @import "@tabler/core/scss/tabler";
 @import "tabler-overrides";
+
+// wrap long menu items in sidebar
+.sidebar .dropdown-menu .dropdown-header, .sidebar .dropdown-menu .dropdown-item {
+    white-space: normal;
+}
+
+.page-body {
+    padding-bottom: var(--page-padding-bottom);
+}
+
+.sidebar.navbar-nav {
+    gap: 0.2rem;
+    padding-bottom: var(--page-padding-bottom);
+}
+
+.navbar-brand-image {
+    height: 3rem;
+}
