@@ -1,20 +1,17 @@
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}- {{ 'Navigation'|trans }}{% endblock %}
 {% block h1 %}{{ 'Navigation'|trans }}{% endblock %}
 
 {% block btn %}
-    <div class="wrap-bar__buttons">
-        <a href="{{ url('admin_navigation_new') }}" class="btn btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>{{ 'Create new item'|trans }}
-        </a>
-    </div>
+    <a href="{{ url('admin_navigation_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new item'|trans }}
+    </a>
 {% endblock %}
 
 {% block main_content %}
-
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {{ gridView.render() }}
-
 {% endblock %}
