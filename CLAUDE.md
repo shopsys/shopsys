@@ -23,53 +23,20 @@ Shopsys Platform is a **monorepo-based e-commerce platform** with a three-tier a
 
 ### Docker Development Environment (Recommended)
 
-**Choose the appropriate command based on your setup:**
-
-#### Option 1: Standard Docker (Linux/Windows or macOS without Mutagen)
-
-```bash
-# Start containers
-docker compose up -d
-
-# Check container status
-docker compose ps
-
-# Stop containers
-docker compose down
-```
-
-#### Option 2: Mutagen (macOS only, for better file sync performance)
-
-```bash
-# Start containers with mutagen
-mutagen-compose up -d
-
-# Check container status
-mutagen-compose ps
-
-# Stop containers
-mutagen-compose down
-```
-
-**How to determine which to use:**
-
-- Check if `x-mutagen` section exists in the root `docker-compose.yml` file
-- If `x-mutagen` is present → use `mutagen-compose` commands (macOS only)
-- If `x-mutagen` is not present → use `docker compose` commands
-
-```bash
-# Access services (same for both options)
-# - Main app: http://127.0.0.1:8000
-# - Admin: http://127.0.0.1:8000/admin
-# - Adminer: http://127.0.0.1:1100
-```
-
 **Important Rules for Claude Code**:
 
-- Always check if Docker containers are running first with `docker compose ps` or `mutagen-compose ps`
-- If containers are not running and you need to execute commands, ask the user to start them manually instead of starting them yourself
-- Determine the correct command (docker compose vs mutagen-compose) by checking for `x-mutagen` section in root docker-compose.yml
-- **For ALL container commands:** Use `docker exec` with standard Docker, or `mutagen-compose exec` with Mutagen setups
+- Whenever Docker containers are not running, ALWAYS ask the user to start them manually
+- NEVER start Docker containers yourself
+- NEVER stop Docker containers yourself
+- **For ALL container commands:** Use `docker exec`
+
+```bash
+# Access services
+# - Main app: http://127.0.0.1:8000
+# - Admin: http://127.0.0.1:8000/admin
+# - Storefront: http://127.0.0.1:3000
+# - Adminer: http://127.0.0.1:1100
+```
 
 ### Backend Development (Phing)
 
@@ -144,8 +111,6 @@ make generate-schema          # Generate and sync GraphQL schema between backend
 
 ### Database Access Commands
 
-**Standard Docker:**
-
 ```bash
 # Direct PostgreSQL access (when containers are running)
 docker exec shopsys-framework-postgres psql -U root -d shopsys -c "SELECT * FROM table_name;"
@@ -154,18 +119,6 @@ docker exec shopsys-framework-postgres psql -U root -d shopsys -c "SELECT * FROM
 docker exec shopsys-framework-postgres psql -U root -d shopsys -c "\dt"  # List all tables
 docker exec shopsys-framework-postgres psql -U root -d shopsys -c "\d table_name"  # Describe table structure
 docker exec shopsys-framework-postgres psql -U root -d shopsys -c "\l"  # List databases
-```
-
-**Mutagen (use these commands if your setup has x-mutagen):**
-
-```bash
-# Direct PostgreSQL access (when containers are running)
-mutagen-compose exec postgres psql -U root -d shopsys -c "SELECT * FROM table_name;"
-
-# Common database queries
-mutagen-compose exec postgres psql -U root -d shopsys -c "\dt"  # List all tables
-mutagen-compose exec postgres psql -U root -d shopsys -c "\d table_name"  # Describe table structure
-mutagen-compose exec postgres psql -U root -d shopsys -c "\l"  # List databases
 ```
 
 Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
@@ -197,7 +150,7 @@ Login credentials for PostgreSQL are set in the `project-base/app/.env` file.
 
 ## Development Workflow
 
-1. **Environment Setup**: Use Docker with `docker compose up -d`
+1. **Environment Setup**: Work with Docker containers (ask user to start if not running)
 2. **Backend Changes**: Edit code → `php phing standards-fix` → `php phing tests`
 3. **Frontend Changes**: Edit code → `pnpm run check--fix` → `pnpm run test`
 4. **GraphQL Changes**: After backend schema changes → `make generate-schema`
