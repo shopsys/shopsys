@@ -146,6 +146,10 @@ final class TransportFormType extends AbstractType
             'label' => false,
             'entry_type' => TransportInputPricesType::class,
             'options_by_domain_id' => $optionsByDomainId,
+            'entry_options' => [
+                'required' => true,
+            ],
+            'required' => true,
         ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [

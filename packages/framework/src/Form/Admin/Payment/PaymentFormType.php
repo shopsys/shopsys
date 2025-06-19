@@ -140,7 +140,7 @@ final class PaymentFormType extends AbstractType
                     'name' => 'seoFormRowMacros.multidomainRow',
                     'recommended_length' => null,
                 ],
-                'attr' => [
+                'row_attr' => [
                     'class' => 'js-payment-gopay-payment-method',
                 ],
             ]);

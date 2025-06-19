@@ -34,7 +34,7 @@ class TransportAndPaymentController extends AdminBaseController
     #[CanView(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
     public function listAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/list.html.twig');
+        return $this->render('@ShopsysAdministration/content/transportAndPayment/list.html.twig');
     }
 
     /**
@@ -89,7 +89,7 @@ class TransportAndPaymentController extends AdminBaseController
         }
 
         return $this->render(
-            '@ShopsysFramework/Admin/Content/TransportAndPayment/freeTransportAndPaymentLimitSetting.html.twig',
+            '@ShopsysAdministration/content/transportAndPayment/freeTransportAndPaymentLimitSetting.html.twig',
             [
                 'form' => $form->createView(),
                 'domain' => $this->domain,

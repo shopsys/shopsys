@@ -1,0 +1,65 @@
+{% block price_and_vat_table_by_domains_row %}
+    {% for domainId in enabledDomainIds %}
+        {% if isMultidomain() %}
+            <div class="card mb-3">
+                <div class="card-header card-header-light py-2">
+                    <span>
+                        {{ domain_icon(domainId) }}
+                        {{ 'Domain'|trans }}
+                        <strong>{{ getDomainName(domainId) }}</strong>
+                    </span>
+                </div>
+                <div class="card-body">
+                    {{ _self.render_price_and_vat_row(domainId, form, pricesIndexedByDomainId) }}
+                </div>
+            </div>
+        {% else %}
+            {{ _self.render_price_and_vat_row(domainId, form, pricesIndexedByDomainId) }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% macro render_price_and_vat_row(domainId, form, pricesIndexedByDomainId) %}
+    <div class="row">
+        {{ form_label(form.vatsIndexedByDomainId[domainId]) }}
+        <div class="col-auto">
+            {{ form_widget(form.vatsIndexedByDomainId[domainId]) }}
+        </div>
+    </div>
+    <hr>
+
+    <div class="row mb-3 d-none d-md-block">
+        <div class="col">
+            <h4>{{ inputPriceLabel() }}</h4>
+        </div>
+        <div class="col text-end">
+            <h4>{{ 'Selling prices'|trans }}</h4>
+        </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+        {{ form_label(form.pricesIndexedByDomainId[domainId]) }}
+
+        <div class="col-12 col-md-6">
+            {{ form_widget(form.pricesIndexedByDomainId[domainId], { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+            {{ form_errors(form.pricesIndexedByDomainId[domainId] ) }}
+        </div>
+
+        {% set price = pricesIndexedByDomainId[domainId] %}
+
+        {% if price %}
+            <div class="col-6 col-md-2 text-end">
+                {{ price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
+                <br>
+                <span class="small">{{ 'Excl. VAT'|trans }}</span>
+            </div>
+            <div class="col-6 col-md-2 text-end">
+                <strong>
+                    {{ price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}
+                </strong>
+                <br>
+                <span class="small">{{ 'Incl. VAT'|trans }}</span>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

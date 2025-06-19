@@ -75,7 +75,7 @@ class TransportController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Transport/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/transport/new.html.twig', [
             'form' => $form->createView(),
             'currencies' => $this->currencyFacade->getAllIndexedById(),
         ]);
@@ -121,7 +121,7 @@ class TransportController extends AdminBaseController
             t('Editing shipping - %name%', ['%name%' => $transport->getName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Transport/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/transport/edit.html.twig', [
             'form' => $form->createView(),
             'transport' => $transport,
             'currencies' => $this->currencyFacade->getAllIndexedById(),
@@ -163,7 +163,7 @@ class TransportController extends AdminBaseController
     {
         $grid = $this->transportGridFactory->create(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Transport/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/transport/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }

@@ -1,0 +1,80 @@
+{% macro priceWithLimitRow(priceWithLimit, index) %}
+    {% set domainId = priceWithLimit.vars.domain_id %}
+    {% set transportPrice = priceWithLimit.vars.transport_calculated_price %}
+    <div class="js-transport-prices-item js-form-group row align-items-center mb-3 pb-3 border-bottom" data-index="{{ index }}">
+        {{ form_widget(priceWithLimit.transportPriceId) }}
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <label class="d-md-none col-form-label">{{ inputPriceLabel() }}</label>
+            <div class="d-none">
+                {{ form_label(priceWithLimit.price) }}
+            </div>
+            {{ form_widget(priceWithLimit.price, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+            {{ form_errors(priceWithLimit.price) }}
+        </div>
+        <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <label class="d-md-none col-form-label">
+                {{ 'Maximum weight of products'|trans }}
+                {{ info_icon('Keep empty if you do not want to limit the price by products\' weight'|trans) }}
+            </label>
+            {{ form_widget(priceWithLimit.maxWeight, { symbolAfterInput: 'g'|trans } ) }}
+            {{ form_errors(priceWithLimit.maxWeight) }}
+        </div>
+        <div class="col-11 col-md-5 text-md-end">
+            <label class="d-md-none col-form-label">{{ 'Calculated prices'|trans }}</label>
+            {% if transportPrice is not null %}
+                <div class="row">
+                    <div class="col">
+                        {{ transportPrice.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
+                        <br>
+                        <span class="small">{{ 'Excl. VAT'|trans }}</span>
+                    </div>
+                    <div class="col">
+                        <strong>
+                            {{ transportPrice.priceWithVat|priceWithCurrencyByDomainId(domainId) }}
+                        </strong>
+                        <br>
+                        <span class="small">{{ 'Incl. VAT'|trans }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-1 text-center">
+            <a href="#" class="js-transport-prices-item-remove">{{ ux_icon('delete') }}</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block transport_prices_with_limits_collection_widget %}
+    {% import _self as self %}
+    <div class="js-form-group js-transport-prices-form-group">
+        <div id="transport-prices">
+            <div class="row mb-3 text-uppercase fs-5 bg-surface-tertiary text-secondary p-2 border-bottom d-none d-md-flex">
+                <div class="col-3">
+                    <strong>{{ inputPriceLabel() }}</strong>
+                </div>
+                <div class="col-3">
+                    <strong>
+                        {{ 'Maximum weight of products'|trans }}
+                        {{ info_icon('Keep empty if you do not want to limit the price by products\' weight'|trans) }}
+                    </strong>
+                </div>
+                <div class="col-5 text-end">
+                    <strong>{{ 'Calculated prices'|trans }}</strong>
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="js-transport-prices" data-prototype="{{ self.priceWithLimitRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+                {% for key, priceWithLimit in form %}
+                    {{ self.priceWithLimitRow(priceWithLimit, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="button" class="js-transport-prices-item-add btn">
+            {{ ux_icon('plus') }}
+            {{ 'Add another price with weight limit'|trans }}
+        </button>
+    </div>
+{% endblock %}

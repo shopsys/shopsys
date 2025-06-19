@@ -1,0 +1,12 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{{ 'Payments'|trans }}</h3>
+        <div class="card-actions">
+            <a href="{{ url('admin_payment_new') }}" class="btn btn-primary">
+                {{ ux_icon('plus') }}
+                {{ 'Create payment'|trans }}
+            </a>
+        </div>
+    </div>
+    {{ gridView.render() }}
+</div>

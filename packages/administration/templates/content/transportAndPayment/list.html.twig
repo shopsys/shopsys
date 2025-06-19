@@ -1,15 +1,16 @@
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}
     - {{ 'Shippings and payments'|trans }}
 {% endblock %}
 
-{% block h1 %}
-    {{ 'Shippings and payments'|trans }}
-{% endblock %}
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Shippings and payments'|trans }}{% endblock %}
 
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\TransportController::listAction')) }}
+
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\PaymentController::listAction')) }}
 {% endblock %}
