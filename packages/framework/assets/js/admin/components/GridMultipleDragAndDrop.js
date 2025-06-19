@@ -49,7 +49,7 @@ export default class GridMultipleDragAndDrop {
             },
         });
 
-        $saveButton.addClass('btn--disabled');
+        $saveButton.prop('disabled', true);
     }
 
     getPositionsIndexedByGridId($grids) {
@@ -79,7 +79,7 @@ export default class GridMultipleDragAndDrop {
     }
 
     onUpdate($content) {
-        $content.find('.js-multiple-grids-save-all-button').removeClass('btn--disabled');
+        $content.find('.js-multiple-grids-save-all-button').prop('disabled', false);
         this.toggleRowHolders($content);
     }
 

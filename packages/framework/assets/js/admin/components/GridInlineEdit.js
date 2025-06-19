@@ -19,7 +19,6 @@ export default class GridInlineEdit {
 
         $grid.off('click', '.js-inline-edit-add').on('click', '.js-inline-edit-add', () => {
             $grid.find('.js-inline-edit-no-data').remove();
-            $grid.find('.js-inline-edit-data-container').removeClass('hidden');
             _this.addNewRow($grid);
             return false;
         });

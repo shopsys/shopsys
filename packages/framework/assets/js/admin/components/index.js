@@ -32,7 +32,6 @@ import './GridMultipleDragAndDrop';
 import './HreflangSetting';
 import './MailTemplate';
 import './MailWhitelist';
-import './MassAction';
 import './MassActionConfirm';
 import './NumberSlider';
 import './OpeningHoursCollection';

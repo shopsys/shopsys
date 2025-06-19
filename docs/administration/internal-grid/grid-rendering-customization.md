@@ -60,7 +60,7 @@ and we want to display all their names in bold, and also, we want to be more spe
     <!-- language: lang-twig -->
 
         {# templates/Admin/Content/Salesman/listGrid.html.twig #}
-        {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+        {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
         {% block grid_no_data %}
             {{ 'There are no salesmen in your database.' }}

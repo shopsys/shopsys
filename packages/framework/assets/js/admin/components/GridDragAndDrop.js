@@ -49,9 +49,9 @@ export default class GridDragAndDrop {
 
     highlightChanges($grid, highlight) {
         if (highlight) {
-            $grid.find('.js-drag-and-drop-grid-submit').removeClass('btn--disabled');
+            $grid.find('.js-drag-and-drop-grid-submit').prop('disabled', false);
         } else {
-            $grid.find('.js-drag-and-drop-grid-submit').addClass('btn--disabled');
+            $grid.find('.js-drag-and-drop-grid-submit').prop('disabled', true);
         }
     }
 
@@ -65,12 +65,12 @@ export default class GridDragAndDrop {
 
             $gridsOnPage.on('update', () => {
                 formChangeInfo.showInfo();
-                $saveAllButton.removeClass('btn--disabled');
+                $saveAllButton.prop('disabled', false);
             });
 
             $gridsOnPage.on('save', () => {
                 formChangeInfo.removeInfo();
-                $saveAllButton.addClass('btn--disabled');
+                $saveAllButton.prop('disabled', true);
             });
 
             $saveAllButton.click(() => {
