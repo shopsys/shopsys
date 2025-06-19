@@ -1,0 +1,27 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Files'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Files'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_uploadedfile_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Upload files'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ form_start(quickSearchForm) }}
+        {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+            form_input: quickSearchForm.text,
+            form_submit: quickSearchForm.submit,
+            info_message: 'Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?.'|trans,
+            placeholder: 'Search by filename, extension or translated name...'|trans
+        } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ gridView.render() }}
+    {{ gridView.renderHiddenInputs('page') }}
+{% endblock %}

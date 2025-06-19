@@ -73,8 +73,7 @@ final class UploadedFileFormType extends AbstractType
         $builder->add('products', ProductsType::class, [
             'required' => false,
             'label_button_add' => t('Add to products'),
-            'top_info_title' => t('Products'),
-            'label' => false,
+            'label' => t('Products'),
         ]);
     }
 
