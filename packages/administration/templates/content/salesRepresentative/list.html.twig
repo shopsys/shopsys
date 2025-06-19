@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Sales representatives'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Sales representatives'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_salesrepresentative_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new sales representative'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}
