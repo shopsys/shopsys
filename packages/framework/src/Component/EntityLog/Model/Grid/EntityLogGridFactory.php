@@ -58,7 +58,8 @@ class EntityLogGridFactory
         $grid->addColumn('changeSet', 'el.changeSet', t('Changes'));
         $grid->addColumn('createAt', 'el.createdAt', t('Date'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/EntityLog/listGrid.html.twig');
+        $grid->setTitle(t('Entity log'));
+        $grid->setTheme('@ShopsysAdministration/content/entityLog/listGrid.html.twig');
 
         return $grid;
     }

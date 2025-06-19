@@ -1,9 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
-
-{% block grid %}
-    <h3>{{ 'Entity log'|trans }}</h3>
-    {{ parent() }}
-{% endblock %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_changeSet %}
     {{ value|raw }}
