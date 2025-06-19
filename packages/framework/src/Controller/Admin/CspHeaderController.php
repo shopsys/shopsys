@@ -39,7 +39,7 @@ class CspHeaderController extends AdminBaseController
             $this->addSuccessFlashTwig(t('Content-Security-Policy header has been set.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/CspHeader/setting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/cspHeader/setting.html.twig', [
             'form' => $form->createView(),
         ]);
     }

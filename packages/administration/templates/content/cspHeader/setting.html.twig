@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Content-Security-Policy header setting'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Content-Security-Policy header'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}
