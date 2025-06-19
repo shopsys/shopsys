@@ -205,7 +205,7 @@ class SalesmanController extends AdminBaseController
 Finally, it is time to create a new twig template, `templates/Admin/Content/Salesman/list.html.twig` with the following content:
 
 ```twig
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}- {{ 'Salesmen'|trans }}{% endblock %}
 {% block h1 %}{{ 'Salesmen'|trans }}{% endblock %}

@@ -1,0 +1,20 @@
+{% extends '@ShopsysAdministration/layout/layout.html.twig' %}
+
+{% block aside %}
+    
+{% endblock %}
+
+{% block content %}
+    <div class="page-wrapper">
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+
+            </div>
+        </div>
+        <div class="page-body">
+            <div class="container-xl space-y">
+                {% block main_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends '@ShopsysAdministration/layout/base.html.twig' %}
+
+{% block body_class %}{% endblock %}
+
+{% block html_body %}
+    <div class="page page_center">
+        <div class="container container-tight py-4">
+            {% block before_content %}{% endblock %}
+
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">
+                        {% block heading %}
+                            {{ 'Administration'|trans }}
+                        {% endblock %}
+                    </h2>
+
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+
+            {% block after_content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
