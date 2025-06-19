@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}- {{ 'Promoted products'|trans }}{% endblock %}
 {% block h1 %}{{ 'Promoted products'|trans }}{% endblock %}
@@ -6,7 +6,8 @@
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
-    <div class="in-message in-message--info">
+    <div class="alert alert-info">
+        {{ ux_icon('warning') }}
         {{ 'Number of selected products is not limited, however only %limit% will be displayed on frontend.'|trans({'%limit%': productsFrontendLimit}) }}
     </div>
 
