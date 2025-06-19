@@ -71,7 +71,7 @@ class PersonalDataController extends AdminBaseController
             $this->addSuccessFlash(t('Personal data site content updated successfully'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/PersonalData/index.html.twig', [
+        return $this->render('@ShopsysAdministration/content/personalData/index.html.twig', [
             'form' => $form->createView(),
             'domainId' => $domainId,
         ]);
