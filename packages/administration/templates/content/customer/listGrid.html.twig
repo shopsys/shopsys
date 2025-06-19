@@ -1,4 +1,4 @@
-    {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+    {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
     {% if not row.isB2bCompany %}
@@ -35,7 +35,7 @@
     {% if not row.isB2bCompany %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% else %}
-        <a class="in-icon in-icon--edit table-action" href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
+        <a class="px-1 link-secondary" href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
     {% endif %}
 {% endblock %}
 
@@ -50,12 +50,13 @@
             id: customerId,
             (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
         }) %}
-        <a class="in-icon in-icon--delete table-action"
+        <a class="px-1 link-secondary"
            href="{{ deleteUrl }}"
            title={{ 'Delete'|trans }}
-           data-confirm-window=""
+           data-confirm-window
+           data-confirm-status="danger"
            data-confirm-message="{{ 'This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?'|trans }}"
-           data-confirm-contiue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
+           data-confirm-continue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
     {% endif %}
 {% endblock %}
 

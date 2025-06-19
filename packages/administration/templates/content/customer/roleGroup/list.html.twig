@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Customer user role groups'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Customer user role groups'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_superadmin_customer_user_role_group_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new customer user role group'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}

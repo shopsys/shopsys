@@ -41,16 +41,10 @@ final class CustomerUserUpdateFormType extends AbstractType
             ->add('customerUserData', CustomerUserFormType::class, [
                 'customerUser' => $options['customerUser'],
                 'domain_id' => $options['domain_id'],
-                'attr' => [
-                    'class' => 'wrap-divider',
-                ],
                 'label' => false,
             ])
             ->add('billingAddressData', BillingAddressFormType::class, [
                 'domain_id' => $options['domain_id'],
-                'attr' => [
-                    'class' => 'wrap-divider',
-                ],
                 'label' => false,
             ])
             ->add('actionBar', ActionBarType::class, [
