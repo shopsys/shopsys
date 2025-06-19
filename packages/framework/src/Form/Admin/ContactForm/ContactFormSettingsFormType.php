@@ -23,13 +23,13 @@ final class ContactFormSettingsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => t('Main text'),
         ]);
 
         $builderSettingsGroup
             ->add('mainText', CKEditorType::class, [
                 'required' => false,
-                'label' => t('Main text'),
+                'label' => false,
             ]);
 
         $builder
