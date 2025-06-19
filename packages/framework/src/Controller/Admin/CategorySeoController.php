@@ -77,7 +77,7 @@ class CategorySeoController extends AdminBaseController
             $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/categorySeo/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -96,7 +96,7 @@ class CategorySeoController extends AdminBaseController
             $locale,
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/newCategory.html.twig', [
+        return $this->render('@ShopsysAdministration/content/categorySeo/newCategory.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'locale' => $locale,
         ]);
@@ -130,7 +130,7 @@ class CategorySeoController extends AdminBaseController
             );
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/newFilters.html.twig', [
+        return $this->render('@ShopsysAdministration/content/categorySeo/newFilters.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
             'locale' => $locale,
@@ -181,7 +181,7 @@ class CategorySeoController extends AdminBaseController
             $selectedCategorySeoMixCombinations[$key] = $this->selectedCategorySeoMixCombinationFactory->createFromArray($selectedCategorySeoMixCombinationArray);
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/newCombinations.html.twig', [
+        return $this->render('@ShopsysAdministration/content/categorySeo/newCombinations.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
             'categorySeoMixes' => $categorySeoMixes,
@@ -290,7 +290,7 @@ class CategorySeoController extends AdminBaseController
             }
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/readyCombination.html.twig', [
+        return $this->render('@ShopsysAdministration/content/categorySeo/readyCombination.html.twig', [
             'form' => $readyCategorySeoCombinationFormType->createView(),
             'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
             'selectedCategorySeoMixCombination' => $selectedCategorySeoMixCombination,
@@ -315,7 +315,7 @@ class CategorySeoController extends AdminBaseController
         array $categorySeoFilterFormTypeAllQueries,
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): Response {
-        return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/readyCombinationEditButton.html.twig', [
+        return $this->render('@ShopsysAdministration/content/categorySeo/readyCombinationEditButton.html.twig', [
             'existsReadyCategorySeoMix' => $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) !== null,
             'categoryId' => $categoryId,
             'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,

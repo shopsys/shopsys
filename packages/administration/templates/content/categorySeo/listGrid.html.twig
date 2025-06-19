@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_no_data %}
     {{ 'No combinations of SEO categories found.'|trans }}
@@ -10,11 +10,9 @@
 {% endblock %}
 
 {% block grid_value_cell_id_parameters %}
-
     {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.selectedCategorySeoMixCombinationJson) %}
         {{ parameterNameParameterValuePair }}<br>
     {% endfor %}
-
 {% endblock %}
 
 
