@@ -1,0 +1,14 @@
+{% extends '@ShopsysAdministration/content/store/detail.html.twig' %}
+
+{% block title %}- {{ 'Edit store'|trans }} - {{ store.name }}{% endblock %}
+
+{% block pre_title %}{{ 'Editing store'|trans }}{% endblock %}
+{% block h1 %}{{ store.name }}{% endblock %}
+
+{% block btn %}
+    {% if not store.isDefault %}
+        <a href="{{ protectedUrl('admin_store_setdefault', { id: store.id }) }}" class="btn btn-secondary">
+            {{ 'Set as default'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
