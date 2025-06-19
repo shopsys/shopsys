@@ -5,6 +5,11 @@
     --tblr-primary: #009bd9;
 }
 
+// fix disabled button in input group border color
+.input-group {
+    --tblr-btn-disabled-border-color: #{$border-color};
+}
+
 // make popover and tooltip wider
 .popover {
     --tblr-popover-max-width: 30rem;

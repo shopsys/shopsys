@@ -66,6 +66,7 @@ ux_icons:
         print: 'tabler:printer'
         puzzle: 'tabler:puzzle-filled'
         question: 'tabler:question-mark'
+        radius-bottom-left: 'tabler:radius-bottom-left'
         revert: 'tabler:arrow-back-up'
         schedule: 'tabler:clock-filled'
         search: 'tabler:search'
