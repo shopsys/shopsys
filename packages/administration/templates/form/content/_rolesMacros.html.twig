@@ -1,0 +1,26 @@
+{% macro render_actions(selectTitle, deselectTitle, target = null, titleAsTooltip = false) %}
+    <a href="#"
+        class="js-roles-action"
+        data-type="deselect"
+        data-target="{{ target ? target : '' }}"
+        {% if titleAsTooltip %}
+            title="{{ deselectTitle }}"
+            data-bs-toggle="tooltip"
+        {% endif %}
+    >
+        {{ ux_icon('unselect-all') }}
+        {% if not titleAsTooltip %}<span>{{ deselectTitle }}</span>{% endif %}
+    </a>
+    <a href="#"
+        class="js-roles-action"
+        data-type="select"
+        data-target="{{ target ? target : '' }}"
+        {% if titleAsTooltip %}
+            title="{{ selectTitle }}"
+            data-bs-toggle="tooltip"
+        {% endif %}
+    >
+        {{ ux_icon('select-all') }}
+        {% if not titleAsTooltip %}<span>{{ selectTitle }}</span>{% endif %}
+    </a>
+{% endmacro %}

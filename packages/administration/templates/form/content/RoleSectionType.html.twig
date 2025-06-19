@@ -1,0 +1,42 @@
+{% block role_section_widget %}
+    {% import '@ShopsysAdministration/form/content/_rolesMacros.html.twig' as rolesMacros %}
+
+    {% set section = form.vars.section %}
+
+    <div class="card mb-3" data-scope="{{ section.identifier }}">
+        {% if form.vars.show_header %}
+            <div class="card-header">
+                {% if section.icon %}
+                    {{ ux_icon(section.icon, {'class': 'me-1 icon'}) }}
+                {% endif %}
+                {{ section.name }}
+
+                <span class="ms-auto">
+                    {% if not form.vars.disabled %}
+                        {{ rolesMacros.render_actions('Select all permissions in section'|trans, 'Deselect all permissions in section'|trans, section.identifier, true) }}
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+        <div class="card-table table-responsive">
+            <table class="table table-sm table-bordered table-striped table-hover table-vcenter table-center">
+                <thead>
+                    <tr>
+                        <th class="text-start">{{ 'Role'|trans }}</th>
+                        {% for permission in form.vars.available_permissions %}
+                            <th style="width:15%">{{ permission.getName() }}</th>
+                        {% else %}
+                            <th style="width:15%">{{ 'Granted'|trans }}</th>
+                        {% endfor %}
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for roleForm in form %}
+                        {{ form_widget(roleForm) }}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock role_section_widget %}

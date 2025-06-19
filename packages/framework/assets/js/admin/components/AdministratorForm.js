@@ -3,21 +3,21 @@ import Register from '../../common/utils/Register';
 export default class AdministratorForm {
     constructor($container) {
         const $roleGroupInput = $container.find('.js-role-group-select');
-        const $rolesCustomInputLine = $container.find('.js-role-group-custom').closest('.form-line');
+        const $rolesCustomInputRow = $container.find('[data-js-role-group-custom]');
 
         if ($roleGroupInput.length === 0) {
             return;
         }
 
         if ($roleGroupInput.val() !== '') {
-            $rolesCustomInputLine.addClass('display-none');
+            $rolesCustomInputRow.hide();
         }
 
         $roleGroupInput.on('change', function () {
             if ($(this).val() === '') {
-                $rolesCustomInputLine.removeClass('display-none');
+                $rolesCustomInputRow.show();
             } else {
-                $rolesCustomInputLine.addClass('display-none');
+                $rolesCustomInputRow.hide();
             }
         });
     }

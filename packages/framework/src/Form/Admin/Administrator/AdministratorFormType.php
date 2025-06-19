@@ -147,11 +147,9 @@ final class AdministratorFormType extends AbstractType
             $builderSettingsGroup->add('roles', RolesType::class, [
                 'label' => t('Role'),
                 'context' => AdminContext::class,
-                'attr' => [
-                    'class' => 'js-role-group-custom',
-                ],
                 'row_attr' => [
-                    'class' => $adminToEdit !== null && $adminToEdit->getRoleGroup() !== null ? ' display-none' : '',
+                    'data-js-role-group-custom' => null,
+                    'style' => $adminToEdit !== null && $adminToEdit->getRoleGroup() !== null ? 'display: none' : '',
                 ],
             ]);
         }

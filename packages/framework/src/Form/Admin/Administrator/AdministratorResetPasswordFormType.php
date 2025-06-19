@@ -22,7 +22,7 @@ final class AdministratorResetPasswordFormType extends AbstractType
      * @param array $options
      */
     #[Override]
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('password', RepeatedType::class, [
@@ -54,18 +54,14 @@ final class AdministratorResetPasswordFormType extends AbstractType
                 'invalid_message' => 'Passwords do not match',
                 'label' => t('Password'),
             ])
-            ->add('save', SubmitType::class, [
-                'row_attr' => [
-                    'class' => 'form-line__side button',
-                ],
-            ]);
+            ->add('save', SubmitType::class);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     #[Override]
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['administrator'])

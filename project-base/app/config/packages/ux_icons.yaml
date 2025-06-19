@@ -70,6 +70,7 @@ ux_icons:
         schedule: 'tabler:clock-filled'
         search: 'tabler:search'
         select-all: 'tabler:select-all'
+        square-off: 'tabler:square-off'
         support: 'tabler:headset'
         tag: 'tabler:tag-filled'
         trash: 'tabler:trash-x-filled'

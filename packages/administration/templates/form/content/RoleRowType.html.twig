@@ -1,0 +1,74 @@
+{% block role_row_widget %}
+    {% import '@ShopsysAdministration/form/content/_rolesMacros.html.twig' as rolesMacros %}
+    {% import _self as rowMacros %}
+
+    {% set role = form.vars.role %}
+    {% set roleConstant = role.getConstant() %}
+    {% set isSingleGrid = form.vars.available_permissions|length == 0 %}
+
+    <tr class="js-roles-row" data-scope="{{ roleConstant }}">
+        <td class="text-start">
+            <div class="d-flex">
+                <strong>{{ role.getName()|trans }}</strong>
+                {% if not form.vars.disabled and not isSingleGrid %}
+                <div class="roles-grid-row-actions ms-auto me-3">
+                    {{ rolesMacros.render_actions( 'Select all permissions for this role'|trans, 'Deselect all permissions for this role'|trans, roleConstant, true) }}
+                </div>
+            </div>
+            {% endif %}
+        </td>
+
+        {% if role.isSingleRole() %}
+            <td>
+                {{ rowMacros.render_permission_cell(form[roleConstant], roleConstant) }}
+            </td>
+        {% else %}
+            {% for permission in form.vars.available_permissions %}
+                {% set permissionValue = permission.value %}
+                <td>
+                    {% if form[permissionValue] is defined %}
+                        {{ rowMacros.render_permission_cell(form[permissionValue], roleConstant, permissionValue) }}
+                    {% else %}
+                        {{ ux_icon('square-off', { 'class': 'icon text-muted opacity-25' }) }}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        {% endif %}
+    </tr>
+{% endblock role_row_widget %}
+
+{% macro render_permission_cell(formField, roleConstant, permissionValue = null) %}
+    {% if formField.vars.disabled %}
+        {% if formField.vars.checked %}
+            {{ ux_icon('checked-circle', {
+                'title': 'Granted'|trans,
+                'class': 'icon text-success'
+            }) }}
+        {% else %}
+            {{ ux_icon('minus', {
+                'title': 'Not granted'|trans,
+                'class': 'icon text-danger'
+            }) }}
+        {% endif %}
+    {% else %}
+        {% set widgetAttrs = {
+            'class': 'js-roles-permission-checkbox form-check-input',
+            'data-role': roleConstant
+        } %}
+
+        {% if permissionValue %}
+            {% set widgetAttrs = widgetAttrs|merge({'data-permission': permissionValue}) %}
+        {% endif %}
+
+            <input type="checkbox"
+                   id="{{ formField.vars.id }}"
+                   name="{{ formField.vars.full_name }}"
+                   value="{{ formField.vars.value }}"
+                   {% if formField.vars.checked %}checked="checked"{% endif %}
+                   {% for attrName, attrValue in widgetAttrs %}
+                       {{ attrName }}="{{ attrValue }}"
+                   {% endfor %}
+
+            />
+    {% endif %}
+{% endmacro %}
