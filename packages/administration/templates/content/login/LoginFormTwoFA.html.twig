@@ -1,0 +1,51 @@
+{% extends '@ShopsysAdministration/layout/layout_box_center.html.twig' %}
+
+{% block title %}
+    - {{ 'Login'|trans }}
+{% endblock %}
+
+{% block before_content %}
+    {# Authentication errors #}
+    {% if authenticationError %}
+        {% if authenticationError == 'code_invalid' %}
+            {% set authenticationErrorMessage = 'Invalid two-factor authentication code.'|trans %}
+        {% else %}
+            {% set authenticationErrorMessage = 'An authentication exception occurred.'|trans %}
+        {% endif %}
+
+        <div class="alert alert-important alert-danger" role="alert">
+            {{ authenticationErrorMessage }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
+        <p class="text-secondary mb-4">{{ 'Enter one-time passcode.'|trans }}</p>
+
+        {# Display current two-factor provider #}
+        <div class="mb-3">
+            <input
+                    class="form-control"
+                    placeholder="{{ 'Authentication code'|trans }} {{ twoFactorProvider }}"
+                    type="text"
+                    name="{{ authCodeParameterName }}"
+                    autocomplete="one-time-code"
+                    autofocus
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+            />
+        </div>
+
+        <div class="form-footer">
+            <div class="btn-list flex-nowrap">
+                {# The logout link gives the user a way out if they can't complete two-factor authentication #}
+                <a href="{{ logoutPath }}" class="btn w-100"> Cancel </a>
+                <button type="submit" class="btn btn-primary w-100">
+                    {{ ux_icon('lock', {class: 'me-1'}) }}
+                    {{ 'Log in'|trans }}
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

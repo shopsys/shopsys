@@ -62,7 +62,7 @@ class LoginController extends AdminBaseController
         $lastUserName = $this->authenticationUtils->getLastUsername();
         $request->getSession()->remove(SecurityRequestAttributes::LAST_USERNAME);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Login/loginForm.html.twig', [
+        return $this->render('@ShopsysAdministration/content/login/loginForm.html.twig', [
             'form' => $form->createView(),
             'lastUsername' => $lastUserName,
             'error' => $error,

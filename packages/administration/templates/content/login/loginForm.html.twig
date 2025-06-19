@@ -1,0 +1,51 @@
+{% extends '@ShopsysAdministration/layout/layout_box_center.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}
+    - {{ 'Login'|trans }}
+{% endblock %}
+
+{% block before_content %}
+    {% if error %}
+        <div class="alert alert-important alert-danger" role="alert">{{ error }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="mb-3">
+        {{ form_label((form.username)) }}
+
+        {% set
+            usernameAttributes = {
+            value: lastUsername
+        } %}
+        {% if not lastUsername %}
+            {% set usernameAttributes = usernameAttributes|merge({'autofocus': 'autofocus'}) %}
+        {% endif %}
+
+        {{ form_widget(form.username, {attr: usernameAttributes}) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label((form.password)) }}
+
+        {% set passwordAttributes = {} %}
+        {% if lastUsername %}
+            {% set passwordAttributes = passwordAttributes|merge({'autofocus': 'autofocus'}) %}
+        {% endif %}
+        {{ form_widget(form.password, {attr: passwordAttributes}) }}
+    </div>
+
+    <div class="form-footer">
+        {{ form_widget(form.login, {
+            attr: {class: 'btn btn-primary w-100'},
+            label_html: true,
+            label: (ux_icon('lock', {class: 'me-1'}) ~ 'Log in'|trans)
+        }) }}
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
