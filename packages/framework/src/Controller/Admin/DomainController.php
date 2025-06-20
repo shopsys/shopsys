@@ -163,7 +163,7 @@ class DomainController extends AdminBaseController
             }
         }
 
-        return $this->render('@ShopsysFramework/Admin/Inline/Domain/locales.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/switch_locale.html.twig', [
             'domainConfigs' => $domainConfigs,
             'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
