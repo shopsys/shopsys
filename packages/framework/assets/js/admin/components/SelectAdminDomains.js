@@ -7,6 +7,7 @@ export default class SelectAdminDomains {
             .find('input[type=checkbox]:not(.js-domains-select-all-checkbox)')
             .on('change', () => this.updateIndeterminate());
         this.$selectDomainsDropdown.find('.js-domains-select-all-checkbox').on('click', () => this.checkboxChange());
+        this.$selectDomainsDropdown.find('.js-domains-select-label').on('click', event => event.stopPropagation());
         this.updateIndeterminate();
     }
 
