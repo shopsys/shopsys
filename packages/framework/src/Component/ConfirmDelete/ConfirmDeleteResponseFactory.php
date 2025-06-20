@@ -30,7 +30,7 @@ class ConfirmDeleteResponseFactory
     public function createDeleteResponse(string $message, string $route, int|string $entityId): Response
     {
         $renderedTemplate = $this->twigEnvironment->render(
-            '@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig',
+            '@ShopsysAdministration/partial/confirm_delete/direct_delete.html.twig',
             [
                 'message' => $message,
                 'route' => $route,
@@ -68,7 +68,7 @@ class ConfirmDeleteResponseFactory
         }
 
         $renderedResponse = $this->twigEnvironment->render(
-            '@ShopsysFramework/Components/ConfirmDelete/setNewAndDelete.html.twig',
+            '@ShopsysAdministration/partial/confirm_delete/set_new_and_delete.html.twig',
             [
                 'message' => $message,
                 'route' => $route,
