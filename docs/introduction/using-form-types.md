@@ -38,12 +38,6 @@ To achieve this you need to fill this option with constant `FormRenderingConfigu
 Defaults to `null`.  
 This option is used as array with two options (`container_class`, `data_type`) and can be used to wrap your form_row in `<div class="{{ js_container.container_class }}" data-type="{{ js_container.data_type }}">`
 
-### render_form_row
-
-Defaults to `true`.  
-If you want to add your FormType and don't render its `form_label` and `form_errors` you can set this option to false.
-This can be set to create FormTypes that can be used in other FormTypes like the ones that are listed below.
-
 ## Form types
 
 We created some form types which can help you with creating your own form types.

@@ -29,7 +29,6 @@ final class FormRenderingConfigurationExtension extends AbstractTypeExtension
         $view->vars['icon_title'] = $options['icon_title'];
         $view->vars['display_format'] = $options['display_format'];
         $view->vars['js_container'] = $options['js_container'];
-        $view->vars['render_form_row'] = $options['render_form_row'];
     }
 
     /**
@@ -44,7 +43,6 @@ final class FormRenderingConfigurationExtension extends AbstractTypeExtension
                 'icon_title' => null,
                 'display_format' => null,
                 'js_container' => null,
-                'render_form_row' => true,
             ]);
     }
 

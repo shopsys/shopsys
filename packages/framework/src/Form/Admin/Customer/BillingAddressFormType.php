@@ -60,7 +60,7 @@ final class BillingAddressFormType extends AbstractType
                         'attr' => [
                             'class' => 'js-company-fields form-line__js',
                         ],
-                        'render_form_row' => false,
+                        'label' => false,
                     ])
                     ->add('companyName', TextType::class, [
                         'required' => true,

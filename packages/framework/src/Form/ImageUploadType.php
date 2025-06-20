@@ -136,8 +136,9 @@ final class ImageUploadType extends AbstractType
                 $builder->create('namesIndexedByImageIdAndLocale', CollectionType::class, [
                     'required' => false,
                     'entry_type' => LocalizedType::class,
+                    'label' => false,
                     'entry_options' => [
-                        'label' => '',
+                        'label' => false,
                         'entry_options' => [
                             'constraints' => [
                                 new Assert\Length([

@@ -26,7 +26,7 @@ final class SliderParameterValuesUpdateFormType extends AbstractType
                 'allow_delete' => false,
                 'entry_type' => ParameterValueConversionFormType::class,
                 'error_bubbling' => false,
-                'render_form_row' => false,
+                'label' => false,
                 'entry_options' => [
                     'type' => 'numeric',
                 ],

@@ -163,7 +163,7 @@ final class PaymentFormType extends AbstractType
             ->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
                 'pricesIndexedByDomainId' => $this->paymentFacade->getPricesIndexedByDomainId($payment),
                 'inherit_data' => true,
-                'render_form_row' => false,
+                'label' => false,
             ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [
