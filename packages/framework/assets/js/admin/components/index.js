@@ -21,7 +21,6 @@ import './FilesPicker';
 import './FileUpload';
 import './fileUploadPreview';
 import './FixedBar';
-import './FlashMessage';
 import './FormChangeInfo';
 import './FreeTransportAndPayment';
 import './Grid';
