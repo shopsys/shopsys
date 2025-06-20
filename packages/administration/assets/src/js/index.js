@@ -3,4 +3,4 @@ import '@tabler/core';
 import './initComponents';
 import './colorPicker';
 import './ajaxPopover';
-import './copyToClipboard';
+import './utils/copyToClipboard';
