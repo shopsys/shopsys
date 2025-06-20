@@ -1,0 +1,29 @@
+// allows to use tabler icon styles with icons rendered by Javascript
+// usage example: <span class="icon-wrapper"><svg>...</svg></span>
+
+.icon-wrapper > svg {
+    @extend .icon;
+}
+
+.icon-wrapper-lg > svg {
+    @extend .icon;
+    @extend .icon-lg;
+}
+
+.file-icon {
+    &-pdf {
+        color: var(--tblr-red);
+    }
+
+    &-word {
+        color: var(--tblr-azure);
+    }
+
+    &-xml {
+        color: var(--tblr-yellow);
+    }
+
+    &-excel {
+        color: var(--tblr-cyan);
+    }
+}

@@ -24,43 +24,31 @@
 {% endblock %}
 
 {% block main_content_inner %}
-    <div class="flex-reverse-column">
-        <div class="margin-top-20">
-            {{ form_row(form.products) }}
-        </div>
-        <div class="flex-row form-bg-color">
-            <div class="width-50-percent">
-                <div class="form-line">
-                    <span class="form-line__label padding-left-20">{{ 'File'|trans }}:</span>
-                    <div class="list-files__wrap">
-                        <ul class="list-files">
-                            <li class="list-files__item full-width">
-                                <div class="list-files__item__in">
-                                    <div class="list-files__item__file">
-                                        {% if uploadedFileExists(entity) %}
-                                            <a href="{{ uploadedFileUrl(entity) }}" target="_blank" rel="noopener">
-                                                {{ uploadedFilePreview(entity) }}
-                                            </a>
-                                        {% else %}
-                                            {{ uploadedFilePreview(entity) }}
-                                        {% endif %}
-                                    </div>
-                                    <div class="list-files__item__info">
-                                        <span>{{ entity.nameWithExtension }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+    {{ form_row(form.products) }}
+
+    <div class="row mb-3">
+        <div class="col-3">
+            <label class="form-label">File</label>
+
+            <div class="card card-sm" style="max-width: 17.5rem;">
+                <div class="position-relative ratio ratio-16x9 overflow-hidden">
+                    {{ uploadedFilePreviewWithLink(entity) }}
+                </div>
+
+                <div class="card-footer">
+                    {{ entity.nameWithExtension }}
                 </div>
             </div>
-            <div class="width-50-percent">
-                {{ form_row(form.files) }}
-            </div>
         </div>
-
-        <div>
-            {{ form_rest(form) }}
+        <div class="col">
+            <label class="form-label">Replace file</label>
+            {{ form_widget(form.files) }}
+            {{ form_errors(form.files) }}
         </div>
     </div>
+
+    <div>
+        {{ form_rest(form) }}
+    </div>
+
 {% endblock %}

@@ -77,7 +77,7 @@ export default class FileItem {
             const icon = iconMap[iconType] || IconText;
 
             const $icon = $(
-                `<span class="list-files__item__file__type list-files__item__file__type--${iconType} text-no-decoration cursor-pointer">${icon}</span>`,
+                `<span class="d-flex align-items-center justify-content-center h-100 w-100 icon-wrapper-lg file-icon-${iconType}">${icon}</span>`,
             );
 
             this.$itemContainer.prepend($icon);
