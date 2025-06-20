@@ -72,7 +72,7 @@ class RequiredSettingExtension extends AbstractExtension
         }
 
         return $this->twig->render(
-            '@ShopsysFramework/Components/RequiredSettings/requiredSettings.html.twig',
+            '@ShopsysAdministration/partial/required_settings.html.twig',
             [
                 'requiredSettingsMessages' => $this->requiredSettingsMessages,
             ],
