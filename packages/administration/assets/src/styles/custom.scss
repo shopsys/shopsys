@@ -1,0 +1,6 @@
+// adjust action bar appearance
+@include media-breakpoint-up(lg) {
+    .action-bar-bottom {
+        margin-left: 15rem;
+    }
+}

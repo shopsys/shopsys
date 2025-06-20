@@ -1,0 +1,45 @@
+{% block product_row %}
+    {{ block('form_row') }}
+{% endblock %}
+
+{% block product_widget %}
+    <div class="mb-3">
+        <div class="row g-2 js-product-picker-container" data-placeholder="{{ placeholder }}">
+            <div class="col-auto">
+                    {{ form_label(form, null, {'label_attr': {'class': 'btn disabled'}}) }}
+                </span>
+            </div>
+            <div class="col-auto">
+                <input type="text"
+                       class="form-control js-product-picker-label"
+                       value="{{ productName|default(placeholder) }}"
+                       disabled="disabled"
+                       readonly="readonly"
+                />
+            </div>
+            <div class="col-auto">
+                <button type="button"
+                        data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
+                        class="js-product-picker-create-picker-button btn"
+                        title="{{ 'Click to go to product section'|trans }}"
+                >
+                    ...
+                </button>
+            </div>
+
+            {% if enableRemove %}
+                <div class="col-auto">
+                    <button type="button"
+                            data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
+                            class="js-product-picker-remove-button btn"
+                            style="display: none;"
+                            title="{{ 'Remove'|trans }}"
+                    >
+                        {{ ux_icon('trash') }}
+                    </button>
+                </div>
+            {% endif %}
+            {{- form_widget(form, {attr: {class: 'js-product-picker-input'}}) -}}
+        </div>
+    </div>
+{% endblock %}

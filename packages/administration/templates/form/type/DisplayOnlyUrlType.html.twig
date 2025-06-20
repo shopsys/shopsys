@@ -1,0 +1,18 @@
+{% block display_only_url_widget %}
+    <div class="form-control-plaintext">
+        {% if domain_id is not null %}
+            {% set url = findUrlByDomainId(route, route_params, domain_id) %}
+        {% else %}
+            {% set url = url(route, route_params) %}
+        {% endif %}
+
+        <a href="{{ url }}" target="{{ link_target }}">
+            {{ ux_icon('forward-page') }}
+            {% if route_label is not empty %}
+                {{ route_label }}
+            {% else %}
+                {{ url }}
+            {% endif %}
+        </a>
+    </div>
+{% endblock display_only_url_widget %}

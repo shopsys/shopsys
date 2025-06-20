@@ -3,7 +3,11 @@
 @import "@tabler/core/scss/vendor/tom-select";
 @import "@melloware/coloris/dist/coloris.css";
 @import "@tabler/core/scss/vendor/coloris";
+@import "nouislider/dist/nouislider.css";
 @import "~flatpickr/dist/flatpickr.css";
+
+@import "ckeditor";
+@import "custom";
 @import "tabler-overrides";
 
 // wrap long menu items in sidebar

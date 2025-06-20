@@ -1,0 +1,13 @@
+{% block display_only_order_widget %}
+    <div class="form-control-plaintext">
+        {% if order is not null %}
+            <a href="{{ path('admin_order_edit', { id: order.id }) }}" target="_blank">
+                {{ order.number }}
+                {{ ux_icon('forward-page') }}
+            </a>
+        {% else %}
+            {{ manualDocumentNumber }}
+            {{ info_icon('Complaint was created manually without link to a particular order'|trans) }}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% block yes_no_label %}
+    {% set label_attr = label_attr|merge({'class': 'pt-0'}) %}
+    {{ block('form_label') }}
+{% endblock %}
+
+{% block yes_no_widget %}
+    {%- for child in form -%}
+        {{- form_widget(child, {parent_label_class: 'radio-inline ' ~ label_attr.class|default('')}) -}}
+    {%- endfor -%}
+{% endblock %}

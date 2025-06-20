@@ -3,8 +3,8 @@ import Register from '../../common/utils/Register';
 
 export default class NumberSlider {
     constructor($sliderContainer) {
-        const sliderElement = $sliderContainer.children('.js-number-slider__slider')[0];
-        const inputElement = $sliderContainer.find('.js-number-slider__input')[0];
+        const sliderElement = $sliderContainer.children('.js-number-slider-slider')[0];
+        const inputElement = $sliderContainer.find('.js-number-slider-input')[0];
 
         const initialValue = parseFloat(inputElement.value.replace(',', '.')) || 0;
 

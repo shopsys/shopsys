@@ -58,40 +58,30 @@
     box-sizing: border-box;
     padding: 0;
     position: relative;
-}
 
-.gjs-field .gjs-sel-arrow {
-    border-left: 2px solid #dce2ea;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 20px;
-    z-index: 0;
-}
+    .gjs-sel-arrow {
+        border-left: 2px solid #dce2ea;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20px;
+        z-index: 0;
+    }
 
-.gjs-radio-item:hover {
-    background: #fcbd46;
-    color: #fff;
-}
+    .gjs-d-s-arrow {
+        border-left: 3px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #888;
+        cursor: pointer;
+        height: 0;
+        right: 5px;
+        width: 0;
+    }
 
-.gjs-pn-btn:hover {
-    color: #009bd9;
-}
-
-.gjs-radio-item input:checked + .gjs-radio-item-label {
-    background: #fcbd46;
-    color: #fff;
-}
-
-.gjs-field .gjs-d-s-arrow {
-    border-left: 3px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 4px solid #888;
-    cursor: pointer;
-    height: 0;
-    right: 5px;
-    width: 0;
+    input[type="checkbox"]:checked + .gjs-chk-icon {
+        border-color: #009bd9;
+    }
 }
 
 .gjs-field-arrow-d,
@@ -117,7 +107,19 @@
     color: #fff;
 }
 
-.gjs-clm-tags .gjs-sm-stack #gjs-sm-add,
+.gjs-clm-tags {
+    .gjs-sm-stack {
+        #gjs-sm-add {
+            fill: #252525;
+            color: #252525;
+        }
+    }
+
+    #gjs-clm-new {
+        color: #000;
+    }
+}
+
 .gjs-color-main,
 .gjs-off-prv,
 .gjs-sm-sector .gjs-sm-stack #gjs-sm-add {
@@ -136,20 +138,22 @@
     width: 45%;
 }
 
-.gjs-am-file-uploader > form {
-    background-color: #f3f3f3;
-    border: 2px dashed #aeb4ba;
-    border-radius: 3px;
-    margin-bottom: 15px;
-    position: relative;
-    text-align: center;
-}
+.gjs-am-file-uploader {
+    > form {
+        background-color: #f3f3f3;
+        border: 2px dashed #aeb4ba;
+        border-radius: 3px;
+        margin-bottom: 15px;
+        position: relative;
+        text-align: center;
+    }
 
-.gjs-am-file-uploader #gjs-am-title {
-    padding: 150px 10px;
-    position: absolute;
-    width: 100%;
-    color: #364353;
+    #gjs-am-title {
+        padding: 150px 10px;
+        position: absolute;
+        width: 100%;
+        color: #364353;
+    }
 }
 
 .gjs-btn-prim,
@@ -158,12 +162,24 @@
     color: #fff;
 }
 
+.gjs-radio-item {
+    &:hover {
+        background: #fcbd46;
+        color: #fff;
+    }
+
+    input:checked + .gjs-radio-item-label {
+        background: #fcbd46;
+        color: #fff;
+    }
+}
+
 .gjs-field input[type='checkbox']:checked + .gjs-chk-icon {
     border-color: #009bd9;
 }
 
-.gjs-clm-tags #gjs-clm-new {
-    color: #000;
+.gjs-pn-btn:hover {
+    color: #009bd9;
 }
 
 .gjs-clm-tag-close svg {
@@ -196,12 +212,11 @@
     }
 }
 
-.gjs-sm-field input {
-    color: #000;
-}
-
-.gjs-sm-field select {
-    color: #000;
+.gjs-sm-field {
+    input,
+    select {
+        color: #000;
+    }
 }
 
 // /* grapesjs editor control settings */
