@@ -85,6 +85,10 @@ class DomainExtension extends AbstractExtension
         if ($this->domainFacade->existsDomainIcon($domainId)) {
             $src = $this->assetPackages->getUrl(sprintf('%s/%u.png', $this->domainImagesUrlPrefix, $domainId));
 
+            return '<img class="me-2" src="' . htmlspecialchars($src, ENT_QUOTES)
+                        . '" alt="' . htmlspecialchars((string)$domainId, ENT_QUOTES) . '"'
+                        . ' title="' . htmlspecialchars($domainName, ENT_QUOTES) . '"/>';
+
             return '
                 <span class="in-image in-image--' . $size . '">
                     <span
@@ -97,7 +101,8 @@ class DomainExtension extends AbstractExtension
                 </span>';
         }
 
-        return '
+        return '<span class="badge bg-blue-lt me-2" title="' . htmlspecialchars($domainName, ENT_QUOTES) . '">' . $domainId . '</span>';
+        '
                 <span class="in-image in-image--' . $size . '">
                     <span
                         class="in-image__in in-image__in--' . $domainId . '"
