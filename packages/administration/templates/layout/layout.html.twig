@@ -3,9 +3,10 @@
 {% block html_body %}
     <div class="page">
         {% if isMailerSettingUnusual() %}
-            {# @todo fix on mobile #}
             <div class="alert alert-important alert-danger py-0 mb-0 ms-8 text-center rounded-0 d-none" role="alert" style="margin-left: 15rem">
+                {{ ux_icon('warning') }}
                 {{ getMailerSettingInfo() }}
+                <a href="{{ url("admin_mailallowedrecipient_list") }}">{{ 'View allowed recipients.'|trans }}</a>
             </div>
         {% endif %}
 

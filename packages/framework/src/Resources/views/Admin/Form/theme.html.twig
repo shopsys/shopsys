@@ -340,111 +340,7 @@
     {% endif %}
 {%- endblock textarea_row %}
 
-{% block url_list_row -%}
-    <div class="form-line">
-        {{ form_label(form, label, { label_attr: {class: 'form-line__label'} }) }}
-        {{- form_errors(form) -}}
-        <div class="form-line__full">
-            {{- form_widget(form) -}}
-        </div>
-    </div>
-{%- endblock url_list_row %}
 
-{% block url_list_widget -%}
-    <div class="js-entity-url-list form-line__line">
-        {{ form_errors(form.newUrls) }}
-
-        {% for domainId, friendlyUrlForms in form.toDelete %}
-            <div class="form-line__box js-entity-url-list-domain-{{ domainId }}">
-                {% if isMultidomain() %}
-                    <div class="form-line__box__title">
-                        <span class="form-line__box__title__image">
-                            {{ domainIcon(domainId, 'large') }}
-                        </span>
-                        <strong class="form-line__box__title__name">
-                            {{ 'Domain %domainName%'|trans({'%domainName%' : getDomainName(domainId)}) }}
-                        </strong>
-                        {{ form_errors(form.mainFriendlyUrlsByDomainId[domainId]) }}
-                    </div>
-                {% endif %}
-                <div{% if isMultidomain() %} class="form-line__box__content"{% endif %}>
-                    <div class="form-choice-list js-entity-url-list-container">
-                        {% set mainUrl = findUrlByDomainId(form.vars.routeName, { id: entityId }, domainId) %}
-                        {% for slug, friendlyUrlForm in friendlyUrlForms %}
-                            <label class="form-choice-list__item js-entity-url-list-friendly-url">
-                                {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][slug] %}
-                                {{ form_widget(mainUrlRadioButton, { attr: { class: 'js-entity-url-list-select-main form-choice-list__input' } }) }}
-
-                                <span class="js-entity-url-list-row-label text-break-all">
-                                    {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
-                                    {% if mainUrl == absoluteUrl %}
-                                        <strong class="text-break-all">{{ absoluteUrl }}</strong>
-                                    {% else %}
-                                        {{ absoluteUrl }}
-                                    {% endif %}
-                                    {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox display-none'}}) }}
-                                </span>
-
-                                <a href="{{ absoluteUrl }}" title="{{ 'Open in a new tab'|trans }}" class="js-tooltip text-no-decoration in-icon in-icon--link form-choice-list__item__action form-choice-list__item__action--link" target="_blank" data-toggle="tooltip" data-placement="top">
-                                    {{ ux_icon('forward-page') }}
-                                </a>
-
-                                <span class="js-entity-url-list-row-delete-revert-wrapper">
-                                    <span class="js-entity-url-list-row-delete-block">
-                                        <button class="btn-no-style form-choice-list__item__action js-entity-url-list-row-delete-block-button" type="button">
-                                            <span class="in-icon in-icon--delete">{{ ux_icon('delete') }}</span>
-                                        </button>
-                                    </span>
-                                    <span class="js-entity-url-list-row-revert-block display-none">
-                                        <button class="btn js-entity-url-list-row-revert-block-button" type="button">
-                                            {{ 'Return back'|trans }}
-                                        </button>
-                                        {{ info_icon('URL will be deleted after saving.'|trans) }}
-                                    </span>
-                                </span>
-                                <span title="{{ 'Main URL can\'t be deleted'|trans }}"
-                                    class="js-entity-url-list-info-main-delete js-tooltip cursor-help display-none form-choice-list__item__action" data-toggle="tooltip" data-placement="top">
-                                    <span class="in-icon in-icon--info">{{ ux_icon('info') }}</span>
-                                </span>
-                        </label>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-        <div id="{{ form.newUrls.vars.id }}" class="js-entity-url-list-new-urls" data-new-url-prototype="{{ form_widget(form.newUrls.vars.prototype)|e }}">
-            {% for newUrlForm in form.newUrls %}
-                {{ form_widget(newUrlForm) }}
-            {% endfor %}
-        </div>
-        <div class="margin-top-5">
-            <button type="button" class="js-entity-url-list-button-add-url btn btn--plus">
-                <i class="btn__icon">+</i>
-                {{ 'Add URL'|trans }}
-            </button>
-        </div>
-    </div>
-{%- endblock url_list_widget -%}
-
-{% block friendly_url_widget %}
-    <div class="js-entity-url-list-new-row form-line__friendly-url" data-index="{{ form.vars.name }}">
-        <div class="form-line__friendly-url__domain form-line__label--input">
-            {{ form_widget(form.domain) }}
-            <div class="form-line__friendly-url__divider">/</div>
-        </div>
-        <div class="form-line__friendly-url__input">
-            {{ form_widget(form.slug) }}
-            <button class="js-entity-url-list-new-row-delete-button btn-no-style" type="button">
-                {{ ux_icon('delete', { class: 'in-icon in-icon--delete' }) }}
-            </button>
-        </div>
-        {{ form_errors(form.slug) }}
-    </div>
-{% endblock friendly_url_widget %}
-
-{% block ckeditor_row -%}
-    {{ block('textarea_row') }}
-{%- endblock ckeditor_row %}
 
 {% block form_label %}
     {% apply spaceless %}
@@ -717,34 +613,7 @@
     {{- block('appendix_block') -}}
 {% endblock form_widget_simple %}
 
-{% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' %}
-{% block base_ckeditor_widget %}
-    <div class="in-ckeditor__text js-cke-preview" id="{{ id }}-preview">
-        {{ value|raw }}
-        <div class="in-ckeditor__button btn btn--primary js-cke-preview-edit">{{ 'Edit'|trans }}</div>
-    </div>
 
-    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
-
-    {% if enable and not async %}
-        {{ block('_ckeditor_javascript') }}
-    {% endif %}
-{% endblock %}
-
-{% block ckeditor_widget %}
-    {% if localized is defined %}
-        <div class="in-ckeditor in-ckeditor--with-gap">
-            {{ block('base_ckeditor_widget') }}
-        </div>
-        <span class="input__flag">
-            {{ localeFlag(locale) }}
-        </span>
-    {% else %}
-        <div class="in-ckeditor">
-            {{ block('base_ckeditor_widget') }}
-        </div>
-    {% endif %}
-{% endblock ckeditor_widget %}
 
 {% block textarea_widget %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' input input--textarea')|trim}) %}
@@ -946,40 +815,6 @@
     </div>
 {% endblock yes_no_widget %}
 
-{% block domain_row %}
-    {% if isMultidomain() %}
-        {{ block('form_row') }}
-    {% else %}
-        <div class="display-none">
-            {{ block('form_row') }}
-        </div>
-    {% endif %}
-{% endblock domain_row %}
-
-{% block domain_widget %}
-    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' input')|trim}) %}
-    <div class="form-line__side">
-        <div class="form-line__item">
-            {% if isMultidomain() %}
-                    <select {{ block('widget_attributes') }}>
-                        {% for domainConfig in domainConfigs %}
-                            <option value="{{ domainConfig.id }}"{{ domainConfig.id == form.vars.value ? ' selected=""' : '' }}>
-                                {% if displayUrl %}
-                                    {{ domainConfig.url }}
-                                {% else %}
-                                    {{ domainConfig.name }}
-                                {% endif %}
-                            </option>
-                        {% endfor %}
-                    </select>
-            {% else %}
-                <strong class="form-line__label">{{ getFirstDomain().url }}</strong>
-                <input type="hidden" {{ block('widget_attributes') }} value="{{ getFirstDomain().id }}" />
-            {% endif %}
-        </div>
-    </div>
-{% endblock domain_widget %}
-
 {% block domains_widget %}
     {% apply spaceless %}
         {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-choice-list')|trim}) %}
@@ -1047,15 +882,6 @@
     {%- endfor -%}
 {%- endblock button_attributes %}
 
-{% block money_widget %}
-    {% set value = value|cropZeros %}
-    {{ parent('money_widget') }}
-{% endblock money_widget %}
-
-{% block number_widget %}
-    {% set value = value|cropZeros %}
-    {{ parent('number_widget') }}
-{% endblock number_widget %}
 
 {% block appendix_block %}
     {% import _self as self %}
@@ -1099,7 +925,7 @@
 {% endblock %}
 
 {% block action_bar_row %}
-    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
         {% block fixed_bar_content %}
             {% for child in form %}
                 {{- form_widget(child) -}}
