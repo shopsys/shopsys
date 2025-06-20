@@ -443,16 +443,6 @@ final class ProductFormType extends AbstractType
                 'label' => t('Unit'),
             ]);
 
-        $builderStockGroup = $builder->create('stockGroup', FormType::class, [
-            'render_form_row' => false,
-            'inherit_data' => true,
-            'attr' => [
-                'class' => 'form-line__js',
-            ],
-        ]);
-
-        $builderDisplayAvailabilityGroup->add($builderStockGroup);
-
         $builderDisplayAvailabilityGroup
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
