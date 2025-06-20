@@ -369,13 +369,11 @@ final class ProductFormType extends AbstractType
 
         $builderDisplayAvailabilityGroup
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide product'),
             ]);
 
         $builderDisplayAvailabilityGroup->add('domainHidden', MultidomainType::class, [
             'label' => t('Hide on domain'),
-            'required' => false,
             'entry_type' => YesNoType::class,
         ]);
 
@@ -391,7 +389,6 @@ final class ProductFormType extends AbstractType
                 'label' => t('Selling end date'),
             ])
             ->add('sellingDenied', YesNoType::class, [
-                'required' => false,
                 'label' => t('Exclude from sale on whole eshop'),
                 'attr' => [
                     'icon' => true,
@@ -402,7 +399,6 @@ final class ProductFormType extends AbstractType
             ])
             ->add('saleExclusion', MultidomainType::class, [
                 'label' => t('Exclude from sale on domains'),
-                'required' => false,
                 'entry_type' => YesNoType::class,
             ]);
 

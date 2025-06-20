@@ -201,11 +201,9 @@ final class BlogArticleFormType extends AbstractType
                 'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide'),
             ])
             ->add('visibleOnHomepage', YesNoType::class, [
-                'required' => true,
                 'label' => t('Visible on homepage'),
             ])
             ->add('publishDate', DatePickerType::class, [

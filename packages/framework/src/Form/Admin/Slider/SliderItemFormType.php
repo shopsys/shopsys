@@ -112,12 +112,6 @@ final class SliderItemFormType extends AbstractType
                 'label' => t('Description opacity'),
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\NotNull([
-                        'message' => 'Please choose visibility',
-                    ]),
-                ],
                 'label' => t('Hide'),
             ]);
 

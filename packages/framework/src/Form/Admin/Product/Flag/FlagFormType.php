@@ -53,7 +53,6 @@ final class FlagFormType extends AbstractType
                 ],
             ])
             ->add('visible', YesNoType::class, [
-                'required' => false,
                 'label' => t('Display'),
             ]);
 

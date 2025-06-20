@@ -110,7 +110,6 @@ final class AdvertFormType extends AbstractType
                 'display_as_row' => true,
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide advertisement'),
             ])
             ->add('code', TextareaType::class, [

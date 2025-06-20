@@ -98,11 +98,9 @@ final class ArticleFormType extends AbstractType
                 'label' => t('Name'),
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide'),
             ])
             ->add('external', YesNoType::class, [
-                'required' => true,
                 'label' => t('Open in new window'),
             ])
             ->add('type', ChoiceType::class, [

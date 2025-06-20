@@ -90,7 +90,6 @@ final class TransportFormType extends AbstractType
                 'label' => t('Display on'),
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hidden'),
             ])
             ->add('payments', ChoiceType::class, [

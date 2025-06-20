@@ -78,7 +78,6 @@ final class NotificationBarFormType extends AbstractType
                 ],
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide'),
             ])
             ->add('image', ImageUploadType::class, [

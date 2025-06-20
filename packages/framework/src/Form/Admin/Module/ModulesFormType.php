@@ -36,7 +36,6 @@ final class ModulesFormType extends AbstractType
         foreach ($moduleList->getNamesIndexedByLabel() as $moduleLabel => $moduleName) {
             $builder->get('modules')
                 ->add($moduleName, YesNoType::class, [
-                    'required' => false,
                     'label' => $moduleLabel,
                 ]);
         }

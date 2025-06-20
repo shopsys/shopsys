@@ -153,7 +153,6 @@ final class PromoCodeFormType extends AbstractType
             ])
             ->add('enabled', YesNoType::class, [
                 'label' => t('Enabled'),
-                'required' => true,
             ]);
 
         $builder->add($baseGroup);
@@ -265,7 +264,6 @@ final class PromoCodeFormType extends AbstractType
         ]);
         $builder->add($customersGroup);
         $customersGroup->add('registeredCustomerUserOnly', YesNoType::class, [
-            'required' => false,
             'label' => t('For registered customers only'),
         ])
             ->add('limitedPricingGroups', ChoiceType::class, [

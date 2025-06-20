@@ -98,7 +98,6 @@ final class PaymentFormType extends AbstractType
         }
 
         $builderBasicInformationGroup->add('hidden', YesNoType::class, [
-            'required' => false,
             'label' => t('Hidden'),
         ])
             ->add('transports', ChoiceType::class, [
@@ -151,7 +150,6 @@ final class PaymentFormType extends AbstractType
 
         $builderPriceGroup
             ->add('czkRounding', YesNoType::class, [
-                'required' => false,
                 'label' => t('Order in CZK round to whole crowns'),
                 'attr' => [
                     'icon' => true,

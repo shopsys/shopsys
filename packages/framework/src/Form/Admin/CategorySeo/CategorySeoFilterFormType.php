@@ -39,7 +39,6 @@ final class CategorySeoFilterFormType extends AbstractType
 
         $builder
             ->add('useFlags', YesNoType::class, [
-                'required' => false,
                 'label' => t('By flag'),
                 'data' => false,
             ])
