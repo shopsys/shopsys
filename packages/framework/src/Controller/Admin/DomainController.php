@@ -51,7 +51,7 @@ class DomainController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function domainTabsAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/switch_domain.html.twig', [
             'domainConfigs' => $this->domain->getAdminEnabledDomains(),
             'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
