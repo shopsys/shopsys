@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
+msgid ""
+msgstr ""
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platné do\" musí byť väčšie ako \"Platné od\""
 
@@ -43,6 +46,9 @@ msgstr "Vyberte obrázok"
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Názov mesta nemôže byť dlþhší ako {{ limit }} znakov"
 
+msgid "Color must be a valid hexadecimal code (e.g., #3333ff)"
+msgstr "Farba musí byť platný hexadecimálny kód (napr. #3333ff)"
+
 msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr "Názov spoločnosti nemôže byť dlþhší ako {{ limit }} znakov"
 
@@ -58,8 +64,8 @@ msgstr "Názov krajiny nemôže byť dlhší ako {{ limit }} znakov"
 msgid "Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}."
 msgstr "Krajina s kódom {{ country_code }} neexistuje. Dostupné kódy krajín sú {{ available_country_codes }}."
 
-msgid "Description background color must be a valid hexadecimal color code e.g. #fff or #ffffff"
-msgstr "Farba pozadia popisu musí byť platný hexadecimálny kód farby napr. #fff alebo #ffffff"
+msgid "Description cannot be longer than {{ limit }} characters"
+msgstr "Popis nemôže byť dlhší ako {{ limit }} znakov"
 
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr "EAN nemôže byť dlhší ako {{ limit }} znakov"
@@ -75,9 +81,6 @@ msgstr "E-mail {{ email }} je už zaregistrovaný"
 
 msgid "Enter date in DD.MM.YYYY format"
 msgstr "Zadajte dátum vo formáte DD.MM.YYYY"
-
-msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
-msgstr "Zadaný RGB Hex má neplatný formát. Platné formáty sú #336699 alebo #ABC."
 
 msgid "External ID cannot be longer than {{ limit }} characters"
 msgstr "Externé ID nemôže byť dlhšie ako {{ limit }} znakov"
@@ -108,9 +111,6 @@ msgstr "Meno kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
 
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr "Príznak \"{{ flagName }}\" je vybraný viackrát."
-
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
-msgstr "Farba príznaku musí byť v platnom hexadecimálnom kóde napr. #3333ff"
 
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr "Názov príznaku nemôže byť dlhší ako {{ limit }} znakov"
@@ -196,9 +196,6 @@ msgstr "Heslo nemôže byť rovnaké ako e-mail"
 msgid "Password cannot be same as part of email before at sign"
 msgstr "Heslo nemôže byť rovnaké ako časť e-mailu pred znakom @"
 
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr "Heslo musí obsahovať veľké písmená, malé písmená, číslice a musí byť dlhšie ako 10 znakov."
-
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
 
@@ -231,9 +228,6 @@ msgstr "Prosím, vyberte typ obmedzenia"
 
 msgid "Please choose unit"
 msgstr "Prosím, vyberte jednotku"
-
-msgid "Please choose visibility"
-msgstr "Prosím, vyberte viditeľnosť"
 
 msgid "Please enter HTML code for advertisement area"
 msgstr "Prosím, zadajte HTML kód pre reklamný priestor"
@@ -382,6 +376,9 @@ msgstr "Prosím, zadajte názov reklamného priestoru"
 msgid "Please enter navigation item name"
 msgstr "Prosím, zadajte názov položky navigácie"
 
+msgid "Please enter notification bar background color"
+msgstr "Zadajte farbu pozadia notifikačnej lišty"
+
 msgid "Please enter notification bar content"
 msgstr "Prosím, zadajte obsah notifikačnej lišty"
 
@@ -405,6 +402,9 @@ msgstr "Prosím, zadajte názov skupiny parametrov"
 
 msgid "Please enter parameter name"
 msgstr "Prosím, zadajte názov parametra"
+
+msgid "Please enter parameter ordering priority"
+msgstr "Zadajte prioritu poradia parametrov"
 
 msgid "Please enter parameter value"
 msgstr "Prosím, zadajte hodnotu parametra"

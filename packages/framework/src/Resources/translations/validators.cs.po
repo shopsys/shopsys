@@ -61,6 +61,9 @@ msgstr "Název státu nesmí být delší než {{ limit }} znaků"
 msgid "Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}."
 msgstr "Kód státu {{ country_code }} neexistuje. Povolené kódy státu jsou {{ available_country_codes }}."
 
+msgid "Description cannot be longer than {{ limit }} characters"
+msgstr "Popis nesmí být delší než {{ limit }} znaků"
+
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr "EAN nesmí být delší než {{ limit }} znaků"
 
@@ -226,9 +229,6 @@ msgstr "Prosím vyberte typ omezení"
 msgid "Please choose unit"
 msgstr "Prosím vyberte jednotku"
 
-msgid "Please choose visibility"
-msgstr "Prosím vyberte viditelnost."
-
 msgid "Please enter HTML code for advertisement area"
 msgstr "Vyplňte prosím HTML kód pro reklamní plochu"
 
@@ -376,6 +376,9 @@ msgstr "Zadejte prosím název reklamní plochy"
 msgid "Please enter navigation item name"
 msgstr "Zadejte prosím název položky navigace"
 
+msgid "Please enter notification bar background color"
+msgstr "Vyplňte prosím barvu pozadí notifikační lišty"
+
 msgid "Please enter notification bar content"
 msgstr "Vyplňte prosím obsah notifikační lišty"
 
@@ -399,6 +402,9 @@ msgstr "Prosím vyplňte název skupiny parametrů"
 
 msgid "Please enter parameter name"
 msgstr "Vyplňte prosím název parametru"
+
+msgid "Please enter parameter ordering priority"
+msgstr "Prosím vyplňte prioritu parametru"
 
 msgid "Please enter parameter value"
 msgstr "Prosím vyplňte hodnotu parametru"

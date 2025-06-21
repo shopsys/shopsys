@@ -61,6 +61,9 @@ msgstr ""
 msgid "Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}."
 msgstr ""
 
+msgid "Description cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -226,9 +229,6 @@ msgstr ""
 msgid "Please choose unit"
 msgstr ""
 
-msgid "Please choose visibility"
-msgstr ""
-
 msgid "Please enter HTML code for advertisement area"
 msgstr ""
 
@@ -376,6 +376,9 @@ msgstr ""
 msgid "Please enter navigation item name"
 msgstr ""
 
+msgid "Please enter notification bar background color"
+msgstr ""
+
 msgid "Please enter notification bar content"
 msgstr ""
 
@@ -398,6 +401,9 @@ msgid "Please enter parameter group name"
 msgstr ""
 
 msgid "Please enter parameter name"
+msgstr ""
+
+msgid "Please enter parameter ordering priority"
 msgstr ""
 
 msgid "Please enter parameter value"
