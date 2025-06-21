@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 
 class CurrentDomainRouterTest extends TestCase
@@ -69,11 +70,13 @@ class CurrentDomainRouterTest extends TestCase
         $transformStringHelper = $this->createMock(TransformStringHelper::class);
 
         $currentDomainRouter = new CurrentDomainRouter(
+            'admin',
             $domain,
             $domainRouterFactoryMock,
             $administrationRouter,
             $transformStringHelper,
         );
+        $currentDomainRouter->setContext(new RequestContext());
 
         $this->assertSame($generateResult, $currentDomainRouter->generate(''));
         $this->assertSame($matchResult, $currentDomainRouter->match($pathInfo));

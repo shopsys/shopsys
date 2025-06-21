@@ -6,3 +6,4 @@ redirect_to_admin:
     path: /{prefix}/%admin_url%
     requirements:
         prefix: .+
+# TODO check this

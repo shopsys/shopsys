@@ -65,7 +65,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         if ($referenceType === self::ABSOLUTE_PATH) {
-            $url = $this->getDomainRouter()->generate($name, $parameters, $referenceType);
+            $url = $this->getDomainRouter($name)->generate($name, $parameters, $referenceType);
 
             $domainPostfix = $this->domain->getPostfix();
 
@@ -74,7 +74,7 @@ class CurrentDomainRouter implements ChainRouterInterface
             }
         }
 
-        return $this->getDomainRouter()->generate($name, $parameters, $referenceType);
+        return $this->getDomainRouter($name)->generate($name, $parameters, $referenceType);
     }
 
     /**
@@ -89,12 +89,20 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter|\Shopsys\FrameworkBundle\Component\Router\AdministrationRouter
      */
-    protected function getDomainRouter(): RouterInterface
+    protected function getDomainRouter(?string $routeName = null): RouterInterface
     {
-        if ($this->domain->isDomainResolvedByFallback()) {
+        if ($routeName !== null) {
+            $adminRouteCollection = $this->administrationRouter->getRouteCollection();
+            if ($adminRouteCollection->get($routeName) !== null) {
+                return $this->administrationRouter;
+            }
+        }
+d($this->context->getPathInfo());
+        if ($this->administrationRouter->match($this->context->getPathInfo())) {
+            d('here?');
             return $this->administrationRouter;
         }
-
+d('here2?');
         return $this->domainRouterFactory->getRouter($this->domain->getId());
     }
 

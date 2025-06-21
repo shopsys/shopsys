@@ -164,7 +164,6 @@ class Domain implements DomainIdsProviderInterface
     public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
-        $this->domainResolvedByFallback = false;
     }
 
     /**
@@ -173,17 +172,18 @@ class Domain implements DomainIdsProviderInterface
      */
     public function switchDomainByRequest(Request $request, AdministrationRouter $administrationRouter): void
     {
+        // TODO ideálně ať tady nejsou žádné změny, ať je to jak v 17.0
+        // TODO v podstatě díky admin 1st domain redirectu dosáhnu toho, že administrace bude mít vždy 1.doménu v currentDomainConfig
+        // TODO aneboo ještě lépe, bude tam null, v administraci na to totiž nechci spoléhat
+        d('switchDomainByRequest');
         $this->currentDomainConfig = null;
 
         foreach ($this->domainConfigs as $domainConfig) {
-            $this->isDomainWithPostfix($domainConfig);
-
             if (!str_starts_with($request->getUri(), $domainConfig->getUrl())) {
                 continue;
             }
 
             $this->currentDomainConfig = $domainConfig;
-            $this->domainResolvedByFallback = false;
         }
 
         if ($this->currentDomainConfig === null) {
@@ -193,8 +193,6 @@ class Domain implements DomainIdsProviderInterface
 
             if ($this->shouldFallbackToFirstDomain($firstDomainConfig, $request, $administrationRouter)) {
                 $this->currentDomainConfig = $firstDomainConfig;
-
-                $this->domainResolvedByFallback = true;
 
                 return;
             }
@@ -348,14 +346,6 @@ class Domain implements DomainIdsProviderInterface
     public function hasAdminAllDomainsEnabled(): bool
     {
         return count($this->getAdminEnabledDomainIds()) === count($this->getAllIds());
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDomainResolvedByFallback(): bool
-    {
-        return $this->domainResolvedByFallback;
     }
 
     /**
