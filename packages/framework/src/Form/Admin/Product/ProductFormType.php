@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
@@ -110,7 +109,7 @@ final class ProductFormType extends AbstractType
         }
 
         $builder
-            ->add('namePrefix', LocalizedFullWidthType::class, [
+            ->add('namePrefix', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
@@ -120,7 +119,7 @@ final class ProductFormType extends AbstractType
                 'label' => t('Name prefix'),
                 'render_form_row' => false,
             ])
-            ->add('name', LocalizedFullWidthType::class, [
+            ->add('name', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
@@ -132,7 +131,7 @@ final class ProductFormType extends AbstractType
                 'label' => t('Name'),
                 'render_form_row' => false,
             ])
-            ->add('nameSuffix', LocalizedFullWidthType::class, [
+            ->add('nameSuffix', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [

@@ -74,10 +74,6 @@ there is `DisplayOnlyType` which does not map property onto `entity` and let you
 
 Displays custom URL based on routing system.
 
-### [LocalizedFullWidthType]({{github.link}}/packages/framework/src/Form/LocalizedFullWidthType.php)
-
-Displays localized field in vertical order of full-width label and inputs.
-
 ### [OrderItemsType]({{github.link}}/packages/framework/src/Form/OrderItemsType.php)
 
 Displays editable table of `OrderItems` from provided `Order`.
