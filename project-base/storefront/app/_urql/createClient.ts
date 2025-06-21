@@ -60,14 +60,14 @@ export async function createClient() {
 
     const redisClient = await getRedis();
 
-    await redisClient.connect();
+    // await redisClient.connect();
 
     const newClient = await getClient({
         publicGraphqlEndpoint,
         redisClient,
     });
 
-    redisClient.disconnect();
+    // redisClient.disconnect();
 
     return newClient;
 }
