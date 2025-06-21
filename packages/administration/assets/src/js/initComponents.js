@@ -1,10 +1,10 @@
+import { Dropdown, Modal, Popover, Tab, Toast, Tooltip } from '@tabler/core';
+import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
 import TomSelect from 'tom-select';
-import Translator from 'bazinga-translator';
-import { Tooltip, Popover, Dropdown, Modal, Tab, Toast } from '@tabler/core';
 
 function initSelect($container) {
-    $container.filterAllNodes('select').each((key, el) => {
+    $container.filterAllNodes('select').each((_key, el) => {
         const settings = {
             allowEmptyOption: true,
             maxOptions: null,
@@ -47,7 +47,7 @@ function initDropdown($container) {
 
 function initAutosize($container) {
     $container.filterAllNodes('[data-bs-toggle="autosize"]').each(function () {
-        window.autosize && window.autosize(this);
+        window.autosize?.(this);
     });
 }
 
@@ -58,9 +58,11 @@ function initModal($container) {
 }
 
 function initTab($container) {
-    $container.filterAllNodes('[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]').each(function () {
-        new Tab(this);
-    });
+    $container
+        .filterAllNodes('[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]')
+        .each(function () {
+            new Tab(this);
+        });
 }
 
 function initToast($container) {
@@ -69,7 +71,7 @@ function initToast($container) {
     });
 }
 
-export function initComponents ($container) {
+export function initComponents($container) {
     initSelect($container);
     initTooltip($container);
     initPopover($container);

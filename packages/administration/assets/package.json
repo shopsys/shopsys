@@ -6,7 +6,9 @@
     "author": "Shopsys",
     "repository": "https://github.com/shopsys/shopsys",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "standards-check": "biome check .",
+        "standards-fix": "biome check --fix --unsafe ."
     },
     "dependencies": {
         "@tabler/core": "^1.2.0",
@@ -19,5 +21,8 @@
         "nouislider": "^15.8.1",
         "@melloware/coloris": "^0.25.0",
         "tom-select": "^2.4.3"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.0.4"
     }
 }

@@ -1,7 +1,7 @@
-import Register from 'framework/common/utils/Register';
 import { Popover } from '@tabler/core';
+import Register from 'framework/common/utils/Register';
 
-$('body').on('click', function (e) {
+$('body').on('click', e => {
     if ($(e.target).closest('.popover').length > 0) {
         return;
     }
@@ -15,10 +15,10 @@ $('body').on('click', function (e) {
 });
 
 function initAjaxPopovers($container) {
-    let popoverTriggerList = [].slice.call($container.filterAllNodes('[data-bs-toggle="popover"][data-content-url]'));
-    let contentCache = {};
+    const popoverTriggerList = [].slice.call($container.filterAllNodes('[data-bs-toggle="popover"][data-content-url]'));
+    const contentCache = {};
 
-    popoverTriggerList.map(function (popoverTriggerEl) {
+    popoverTriggerList.forEach(popoverTriggerEl => {
         popoverTriggerEl.addEventListener('shown.bs.popover', function () {
             const contentUrl = this.getAttribute('data-content-url');
 
@@ -26,8 +26,8 @@ function initAjaxPopovers($container) {
                 updatePopoverContent(contentCache[contentUrl], popoverTriggerEl);
             } else {
                 fetch(contentUrl)
-                    .then((response) => response.text())
-                    .then((data) => {
+                    .then(response => response.text())
+                    .then(data => {
                         contentCache[contentUrl] = data;
                         updatePopoverContent(data, popoverTriggerEl);
                     });
@@ -35,13 +35,13 @@ function initAjaxPopovers($container) {
         });
     });
 
-    const updatePopoverContent = function (content, popoverTriggerEl) {
+    const updatePopoverContent = (content, popoverTriggerEl) => {
         const popover = Popover.getInstance(popoverTriggerEl);
         if (popover) {
             popover.tip.querySelector('.popover-body').innerHTML = content;
             popover.update();
         }
-    }
+    };
 }
 
 new Register().registerCallback(initAjaxPopovers, 'initAjaxPopovers');
