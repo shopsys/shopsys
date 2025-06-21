@@ -1,9 +1,9 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import { formatPrice } from '../../common/utils/priceFormatter';
 import Register from '../../common/utils/Register';
 import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
-import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 
 window.PriceListProductPickerInstances = {};
 
@@ -52,7 +52,7 @@ export default class PriceListProductPicker {
         });
     }
 
-    openProductsPickerWindow () {
+    openProductsPickerWindow() {
         const url = this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId);
 
         const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
@@ -61,7 +61,7 @@ export default class PriceListProductPicker {
         new ModalWindow({
             content: iframeContent,
             title: Translator.trans('Assign products'),
-            size: 'xl'
+            size: 'xl',
         });
     }
 

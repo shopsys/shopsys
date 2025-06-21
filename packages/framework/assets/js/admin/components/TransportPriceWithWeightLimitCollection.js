@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class TransportPriceWithWeightLimitCollection {
     static init() {
@@ -14,9 +11,8 @@ export default class TransportPriceWithWeightLimitCollection {
 
         $transportPricesCollection.on('click', '.js-transport-prices-item-remove', function (event) {
             const $item = $(this).closest('.js-transport-prices-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-transport-prices', index);
             $item.remove();
+            FormChangeInfo.showInfo();
 
             event.preventDefault();
         });
@@ -34,8 +30,7 @@ export default class TransportPriceWithWeightLimitCollection {
 
             $collection.append($item);
             new Register().registerNewContent($item);
-
-            addNewItemToCollection('.js-transport-prices', index);
+            FormChangeInfo.showInfo();
 
             event.preventDefault();
             return false;

@@ -32,7 +32,6 @@ return [
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-    Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
     Shopsys\FrameworkBundle\ShopsysFrameworkBundle::class => ['all' => true],
     Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],

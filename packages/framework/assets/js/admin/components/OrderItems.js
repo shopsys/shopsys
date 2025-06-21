@@ -1,14 +1,11 @@
 import Ajax from '../../common/utils/Ajax';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
 import ProductPicker from './ProductPicker';
 import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 import Window from '../utils/Window';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class OrderItems {
     constructor($container) {
@@ -34,7 +31,8 @@ export default class OrderItems {
                     placement: 'bottom',
                 });
         } else {
-            $items.find('.js-order-item-remove').removeClass('text-disabled').tooltip('destroy');
+            $items.find('.js-order-item-remove').removeClass('text-disabled');
+            // .tooltip('destroy');
         }
     }
 
@@ -50,11 +48,10 @@ export default class OrderItems {
                 const $data = $($.parseHTML(data));
 
                 const $orderItem = $data.filter('.js-order-item');
-                const index = $orderItem.data('index');
 
                 $collection.append($orderItem);
                 new Register().registerNewContent($orderItem);
-                addNewItemToCollection('#js-order-items', index);
+                FormChangeInfo.showInfo();
 
                 this.refreshCount($collection);
 
@@ -99,9 +96,7 @@ export default class OrderItems {
 
     removeItem($item) {
         const $collection = $item.closest('#js-order-items');
-        const index = $item.data('index');
 
-        removeItemFromCollection('#js-order-items', index);
         $item.remove();
 
         this.refreshCount($collection);
@@ -124,7 +119,7 @@ export default class OrderItems {
 
         $collection.append($item);
         new Register().registerNewContent($item);
-        addNewItemToCollection('#js-order-items', index);
+        FormChangeInfo.showInfo();
 
         this.refreshCount($collection);
     }

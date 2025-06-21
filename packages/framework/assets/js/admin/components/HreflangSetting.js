@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class HreflangSetting {
     static init($container) {
@@ -13,8 +10,7 @@ export default class HreflangSetting {
             const $collection = $(this).closest('.js-hreflang-setting');
 
             const $item = $(this).closest('.js-hreflang-setting-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-hreflang-setting', index);
+            FormChangeInfo.showInfo();
             $item.remove();
 
             HreflangSetting.refreshCount($collection);
@@ -35,7 +31,7 @@ export default class HreflangSetting {
             $collection.append($item);
             new Register().registerNewContent($item);
 
-            addNewItemToCollection('.js-hreflang-setting', index);
+            FormChangeInfo.showInfo();
             HreflangSetting.refreshCount($collection);
 
             return false;

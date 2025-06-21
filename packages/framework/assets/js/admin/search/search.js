@@ -18,12 +18,8 @@ export default class Search {
                 $searchResults.is(':visible')
             ) {
                 event.preventDefault();
-                const focusableElements = $searchResults.filterAllNodes(
-                    '.js-search-item a',
-                );
-                $searchResults
-                    .filterAllNodes('.js-search-item')
-                    .removeClass('active');
+                const focusableElements = $searchResults.filterAllNodes('.js-search-item a');
+                $searchResults.filterAllNodes('.js-search-item').removeClass('active');
                 const focusable = Array.from(focusableElements);
                 const currentIndex = focusable.indexOf(document.activeElement);
 
@@ -53,10 +49,15 @@ export default class Search {
             if (event.key === '/') {
                 const activeElement = document.activeElement;
                 const tagName = activeElement.tagName;
-                const isInput = tagName === 'INPUT' && !['checkbox', 'radio', 'range', 'button', 'file', 'reset', 'submit', 'color'].includes(activeElement.type);
+                const isInput =
+                    tagName === 'INPUT' &&
+                    !['checkbox', 'radio', 'range', 'button', 'file', 'reset', 'submit', 'color'].includes(
+                        activeElement.type,
+                    );
                 const isGrapesJsOverlayOpen = $('.gjs-frame').length > 0;
 
-                if (isGrapesJsOverlayOpen ||
+                if (
+                    isGrapesJsOverlayOpen ||
                     activeElement.isContentEditable ||
                     ((isInput || tagName === 'TEXTAREA' || tagName === 'SELECT') && !document.activeElement.readOnly)
                 ) {
@@ -77,7 +78,7 @@ export default class Search {
             }
         });
 
-        $(document).on('click', function (event) {
+        $(document).on('click', event => {
             if (!$(event.target).closest('.js-search-results').length) {
                 Search.closeResults($searchResults, $searchInput);
             }

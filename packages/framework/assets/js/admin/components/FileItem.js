@@ -3,7 +3,6 @@ import IconDoc from 'icons/tabler/file-type-doc.svg';
 import IconPdf from 'icons/tabler/file-type-pdf.svg';
 import IconXls from 'icons/tabler/file-type-xls.svg';
 import IconXml from 'icons/tabler/file-type-xml.svg';
-import { forceValidateElement } from '../../common/validation/validationHelpers';
 
 export default class FileItem {
     constructor(uploader, $file, loaded) {
@@ -30,7 +29,6 @@ export default class FileItem {
         FileItem.removeError(this.$deleteButton);
         this.uploader.deleteTemporaryFile(this.$input.val());
         this.$file.remove();
-        forceValidateElement(this.uploader.$uploader);
     }
 
     setLabel(filename, fileSize) {

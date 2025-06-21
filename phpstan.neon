@@ -10,9 +10,6 @@ parameters:
     ignoreErrors:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
-            message: '#^Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/Form/JsFormValidatorFactory.php
-        -
             message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
         -

@@ -2,7 +2,6 @@ import './jquery.dmuploader';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import { forceValidateElement } from '../../common/validation/validationHelpers';
 import Window from '../utils/Window';
 import FileItem from './FileItem';
 import formChangeInfo from './FormChangeInfo';
@@ -87,7 +86,6 @@ export default class FileUpload {
 
     onUploadComplete() {
         this.ready = true;
-        forceValidateElement(this.$uploader);
     }
 
     onUploadProgress(id, percent) {

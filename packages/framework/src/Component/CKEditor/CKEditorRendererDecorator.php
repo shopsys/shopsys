@@ -49,25 +49,9 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
         return sprintf(
             '$("#%s-preview").click(function() {
                 %s
-                %s
             });',
             $id,
             $this->baseCkEditorRenderer->renderWidget($id, $config, $options),
-            $this->renderJsValidation($id),
-        );
-    }
-
-    /**
-     * @param string $id
-     * @return string
-     */
-    protected function renderJsValidation(string $id): string
-    {
-        return sprintf(
-            'CKEDITOR.instances["%1$s"].on("change", function () {
-                $("#%1$s").jsFormValidator("validate");
-            });',
-            $id,
         );
     }
 

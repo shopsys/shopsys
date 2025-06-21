@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class Parameters {
     static init($container) {
@@ -12,9 +9,8 @@ export default class Parameters {
             const $collection = $(this).closest('.js-parameters');
 
             const $item = $(this).closest('.js-parameters-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-parameters', index);
             $item.remove();
+            FormChangeInfo.showInfo();
 
             Parameters.refreshCount($collection);
             event.preventDefault();
@@ -34,7 +30,7 @@ export default class Parameters {
             $collection.append($item);
             new Register().registerNewContent($item);
 
-            addNewItemToCollection('.js-parameters', index);
+            FormChangeInfo.showInfo();
             Parameters.refreshCount($collection);
 
             return false;

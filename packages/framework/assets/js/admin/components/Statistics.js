@@ -33,8 +33,8 @@ export default class Statistics {
                 },
                 title: {
                     display: false,
-                }
-            }
+                },
+            },
         });
     }
 

@@ -5,10 +5,6 @@ const fs = require('node:fs');
 
 const assets = [
     {
-        source: 'web/bundles/fpjsformvalidator',
-        destination: 'assets/js/bundles/fpjsformvalidator',
-    },
-    {
         source: 'node_modules/@shopsys/framework/public/admin',
         destination: 'web/public/admin',
     },

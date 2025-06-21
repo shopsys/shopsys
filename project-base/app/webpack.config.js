@@ -35,11 +35,6 @@ Encore
     .addPlugin(new CopyPlugin({
         patterns: [
             {
-                from: 'web/bundles/fpjsformvalidator',
-                to: '../../assets/js/bundles/fpjsformvalidator',
-                force: true
-            },
-            {
                 from: sources.getPackageNodeModulesDir('framework') + '/public/admin',
                 to: '../../web/public/admin',
                 force: true

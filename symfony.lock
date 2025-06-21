@@ -555,9 +555,6 @@
             "project-base/app/config/packages/sentry.yaml"
         ]
     },
-    "shopsys/jsformvalidator-bundle": {
-        "version": "1.7.0"
-    },
     "slevomat/coding-standard": {
         "version": "4.8.7"
     },

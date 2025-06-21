@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class PromoCodeLimits {
     static init($container) {
@@ -12,8 +9,7 @@ export default class PromoCodeLimits {
             const $collection = $(this).closest('.js-limits');
 
             const $item = $(this).closest('.js-limits-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-limits', index);
+            FormChangeInfo.showInfo();
             $item.remove();
 
             PromoCodeLimits.refreshCount($collection);
@@ -34,7 +30,7 @@ export default class PromoCodeLimits {
             $collection.append($item);
             new Register().registerNewContent($item);
 
-            addNewItemToCollection('.js-limits', index);
+            FormChangeInfo.showInfo();
             PromoCodeLimits.refreshCount($collection);
 
             return false;
