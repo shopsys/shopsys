@@ -21,10 +21,12 @@
                     <div class="text-secondary mb-2">
                         {{ 'If you cannot scan the QR code, you can manually enter the following secret key:'| trans }}
                     </div>
-                    <div class="input-icon">
+
+                    <div class="input-group input-group-flat">
                         <input type="text" value="{{ googleAuthenticatorSecret }}" class="form-control" readonly="">
-                        {# @todo add copy to clipboard or remove icon #}
-                        <span class="input-icon-addon">{{ ux_icon('duplicate') }}</span>
+                        <span class="input-group-text">
+                            <a href="#" class="link-secondary" data-js-clipboard-copy="{{ googleAuthenticatorSecret }}">{{ ux_icon('duplicate') }}</a>
+                        </span>
                     </div>
                 </div>
             </div>
