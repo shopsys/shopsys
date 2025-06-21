@@ -10,7 +10,7 @@ export default function datePicker($container) {
         // add specific mappings (e.g. 'in: id' for legacy code for Indonesian)
     };
 
-    $container.filterAllNodes('.js-date-picker').each(function () {
+    $container.filterAllNodes('[data-js-datepicker]').each(function () {
         const $element = $(this);
         const defaultOptions = {
             dateFormat: 'd.m.Y', // backend accepted format

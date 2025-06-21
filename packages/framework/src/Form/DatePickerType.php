@@ -31,6 +31,9 @@ final class DatePickerType extends AbstractType
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'html5' => false,
+            'attr' => [
+                'data-js-datepicker' => 'true',
+            ],
             'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName(),
         ];
 
