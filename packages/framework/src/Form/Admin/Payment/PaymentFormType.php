@@ -135,10 +135,6 @@ final class PaymentFormType extends AbstractType
                 ],
                 'label' => t('GoPay payment method'),
                 'required' => true,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
                 'row_attr' => [
                     'class' => 'js-payment-gopay-payment-method',
                 ],

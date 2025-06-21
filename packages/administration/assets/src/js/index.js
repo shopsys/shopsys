@@ -4,3 +4,4 @@ import './initComponents';
 import './colorPicker';
 import './ajaxPopover';
 import './utils/copyToClipboard';
+import './utils/recommendedLength';

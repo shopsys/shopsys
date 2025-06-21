@@ -153,21 +153,14 @@ final class ArticleFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-dynamic-placeholder',
                     'data-placeholder-source-input-id' => 'article_form_name',
+                    'data-js-recommended-length' => 60,
                 ],
                 'label' => t('Page title'),
-                'macro' => [
-                    'name' => 'seoFormRowMacros',
-                    'recommended_length' => 60,
-                ],
             ])
             ->add('seoMetaDescription', TextareaType::class, [
                 'required' => false,
                 'attr' => $seoMetaDescriptionAttributes,
                 'label' => t('Meta description'),
-                'macro' => [
-                    'name' => 'seoFormRowMacros',
-                    'recommended_length' => 155,
-                ],
             ])
             ->add('seoH1', TextType::class, [
                 'required' => false,
@@ -244,6 +237,8 @@ final class ArticleFormType extends AbstractType
         foreach ($descriptionsMainPageByDomainIds as $domainId => $description) {
             $seoMetaDescriptionAttributes['data-placeholder-domain' . $domainId] = $description;
         }
+
+        $seoMetaDescriptionAttributes['data-js-recommended-length'] = 155;
 
         return $seoMetaDescriptionAttributes;
     }

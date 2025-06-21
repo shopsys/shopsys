@@ -61,18 +61,12 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => t('Page title'),
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros',
-                    'recommended_length' => 60,
-                ],
+                'attr' => ['data-js-recommended-length' => 60],
             ])
             ->add('metaDescription', TextareaType::class, [
                 'label' => t('Meta description'),
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros',
-                    'recommended_length' => 155,
-                ],
+                'attr' => ['data-js-recommended-length' => 155],
             ])
             ->add('categorySeoFilterFormTypeAllQueriesJson', HiddenType::class)
             ->add('selectedCategorySeoMixCombinationJson', HiddenType::class)

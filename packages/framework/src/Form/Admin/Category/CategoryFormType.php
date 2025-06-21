@@ -79,11 +79,13 @@ final class CategoryFormType extends AbstractType
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
                     'class' => 'js-dynamic-placeholder',
                     'data-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-recommended-length' => 60,
                 ],
             ];
             $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
+                    'data-js-recommended-length' => 155,
                 ],
             ];
             $seoH1OptionsByDomainId[$domainId] = [
@@ -179,20 +181,12 @@ final class CategoryFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
-                ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
-                ],
                 'label' => t('Meta description'),
             ])
             ->add('seoH1s', MultidomainType::class, [
@@ -205,10 +199,6 @@ final class CategoryFormType extends AbstractType
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
                 'label' => t('Heading (H1)'),
             ]);
 
@@ -216,7 +206,7 @@ final class CategoryFormType extends AbstractType
             $builderSeoGroup
                 ->add('urls', UrlListType::class, [
                     'route_name' => 'front_product_list',
-                    'entity_id' => $options['category'] !== null ? $options['category']->getId() : null,
+                    'entity_id' => $options['category']?->getId(),
                     'label' => t('URL addresses'),
                 ]);
         }

@@ -7,7 +7,6 @@ import './CategoryDeleteConfirm';
 import './CategoryWithSeoMixDeleteConfirm';
 import './CategoryTreeForm';
 import './CategoryTreeSorting';
-import './CharactersCounter';
 import './CKEditorPreview';
 import './choiceControl';
 import './Complaint';

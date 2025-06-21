@@ -11,16 +11,6 @@ We use two types of naming for form types:
 
 Every form type has some default options that can be used for various things.
 
-### macro
-
-Defaults to `null`.  
-This option is used as array with two options (`name`, `recommended_length`) and its currently used for working with SEO:
-
-- `name` - this option has two values that can be used
-    - `seoFormRowMacros` - this value shows single domain `TextType` field with information about current length and recommended length
-    - `seoFormRowMacros.multidomainRow` - this value shows multidomain `TextType` field with information about current length and recommended length
-- `recommended_length` - it's an integer value that is used to show recommended maximal length of a text
-
 ### icon_title
 
 Defaults to `null`.  
