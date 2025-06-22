@@ -63,12 +63,10 @@
                                                     id: deliveryAddress.id,
                                                     (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                                                 }) %}
-                                                <a href="#"
+                                                <a href="{{ deleteUrl }}"
                                                    class="link-secondary"
                                                    data-confirm-window
-                                           data-confirm-status="danger"
                                                    data-confirm-message="{{ deleteConfirmMessage }}"
-                                           data-confirm-contiue-url="{{ deleteUrl }}"
                                                 >{{ ux_icon('trash') }}</a>
                                             {% endif %}
                                         </td>

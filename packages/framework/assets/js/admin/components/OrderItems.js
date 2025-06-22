@@ -3,8 +3,9 @@ import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
 import ProductPicker from './ProductPicker';
 import '../../common/bootstrap/tooltip';
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 export default class OrderItems {
@@ -56,18 +57,14 @@ export default class OrderItems {
                 this.refreshCount($collection);
 
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Product saved in order'),
-                    buttonCancel: false,
-                    buttonContinue: false,
                 });
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Unable to add product'),
-                    buttonCancel: false,
-                    buttonContinue: false,
                 });
             },
         });
@@ -79,14 +76,11 @@ export default class OrderItems {
             const $itemNameElement = $item.find('.js-order-item-name');
             const itemName = escapeHtml($itemNameElement.val());
 
-            // eslint-disable-next-line no-new
-            new Window({
+            ConfirmWindow.show({
                 content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', {
                     itemName: itemName,
                 }),
-                buttonCancel: true,
-                buttonContinue: true,
-                eventContinue: () => {
+                continueEvent: () => {
                     this.removeItem($item);
                 },
             });

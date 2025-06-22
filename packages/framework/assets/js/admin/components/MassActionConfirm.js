@@ -1,6 +1,6 @@
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 
 export default class MassActionConfirm {
     static init($container) {
@@ -21,15 +21,13 @@ export default class MassActionConfirm {
                         break;
                 }
 
-                // eslint-disable-next-line no-new
-                new Window({
+                ConfirmWindow.show({
                     content: Translator.trans('Do you really want to %action% %count% product?', {
                         action: action,
                         count: count,
                     }),
-                    buttonCancel: true,
-                    buttonContinue: true,
-                    eventContinue: () => {
+                    style: 'warning',
+                    continueEvent: () => {
                         MassActionConfirm.isConfirmed = true;
                         $button.trigger('click');
                     },

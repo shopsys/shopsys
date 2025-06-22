@@ -5,3 +5,5 @@ import './colorPicker';
 import './ajaxPopover';
 import './utils/copyToClipboard';
 import './utils/recommendedLength';
+import './utils/modalWindow';
+import './utils/confirmWindow';

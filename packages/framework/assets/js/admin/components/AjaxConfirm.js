@@ -1,6 +1,6 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import ConfirmDelete from './ConfirmDelete';
 
 export default class AjaxConfirm {
@@ -14,9 +14,10 @@ export default class AjaxConfirm {
                     context: this,
                     success: function (data) {
                         // eslint-disable-next-line no-new
-                        new Window({
+                        new ModalWindow({
                             content: data,
                         });
+
                         const onOpen = $(_this).data('ajax-confirm-on-open');
                         if (onOpen) {
                             // eslint-disable-next-line no-new

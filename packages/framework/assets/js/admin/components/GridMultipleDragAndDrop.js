@@ -1,8 +1,8 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 
 export default class GridMultipleDragAndDrop {
     constructor($content) {
@@ -37,13 +37,13 @@ export default class GridMultipleDragAndDrop {
             dataType: 'json',
             success: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saved'),
                 });
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saving failed'),
                 });
             },

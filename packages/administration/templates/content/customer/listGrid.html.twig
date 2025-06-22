@@ -1,4 +1,4 @@
-    {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
     {% if not row.isB2bCompany %}
@@ -45,7 +45,7 @@
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% else %}
         {% set customerId = row.customerId %}
-        {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
+        {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
         {% set deleteUrl = url('admin_customer_delete_all', {
             id: customerId,
             (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
@@ -54,9 +54,8 @@
            href="{{ deleteUrl }}"
            title={{ 'Delete'|trans }}
            data-confirm-window
-           data-confirm-status="danger"
            data-confirm-message="{{ 'This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?'|trans }}"
-           data-confirm-continue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
+        >{{ ux_icon('trash') }}</a>
     {% endif %}
 {% endblock %}
 

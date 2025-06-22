@@ -1,5 +1,5 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
-import Window from '../../admin/utils/Window';
 import { createLoaderOverlay, removeLoaderOverlay, showLoaderOverlay } from './loaderOverlay';
 
 export default class Ajax {
@@ -44,7 +44,7 @@ export default class Ajax {
         }
 
         // eslint-disable-next-line no-new
-        new Window({
+        new ModalWindow({
             content: content,
         });
     }

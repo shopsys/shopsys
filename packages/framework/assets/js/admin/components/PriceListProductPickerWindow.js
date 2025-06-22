@@ -1,9 +1,9 @@
 import '../../common/bootstrap/tooltip';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Check from 'icons/tabler/check.svg';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 
 export default class PriceListProductPickerWindow {
     constructor($addButton) {
@@ -62,10 +62,8 @@ export default class PriceListProductPickerWindow {
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Unable to add product'),
-                    buttonCancel: false,
-                    buttonContinue: false,
                 });
             },
         });

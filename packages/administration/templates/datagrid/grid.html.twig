@@ -229,9 +229,8 @@
             title="{{ actionColumn.title }}"
             {% if actionColumn.confirmMessage is not empty %}
                 data-confirm-window
-                data-confirm-status="{{ actionColumn.type is same as('delete') ? 'danger' : 'info' }}"
+                data-confirm-style="{{ actionColumn.type is same as('delete') ? 'danger' : 'info' }}"
                 data-confirm-message="{{ actionColumn.confirmMessage }}"
-                data-confirm-continue-url="{{ actionColumn.targetUrl(row) }}"
             {% endif %}
     >{{ ux_icon(icon) }}</a>
 {% endblock %}

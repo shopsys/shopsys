@@ -1,8 +1,8 @@
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import { formatPrice } from '../../common/utils/priceFormatter';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 window.PriceListProductPickerInstances = {};
@@ -36,15 +36,12 @@ export default class PriceListProductPicker {
             url.searchParams.set('domainId', selectedDomainId);
 
             if (FormChangeInfo.isInfoShown) {
-                // eslint-disable-next-line no-new
-                new Window({
+                ConfirmWindow.show({
                     content: Translator.trans(
                         'Changing the domain will cause the loss of unsaved changes. Do you want to continue?',
                     ),
-                    buttonCancel: true,
-                    buttonContinue: true,
-                    textContinue: Translator.trans('Yes'),
-                    urlContinue: url.toString(),
+                    style: null,
+                    continueUrl: url.toString(),
                 });
             } else {
                 window.location.href = url.toString();

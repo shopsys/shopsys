@@ -11,12 +11,10 @@
         {{ 'Download'|trans }}
     </a>
 
-    <a href="#"
+    <a href="{{ deleteUrl }}"
        class="btn btn-outline-danger"
        data-confirm-window
-       data-confirm-status="danger"
        data-confirm-message="{{ 'Do you really want to delete this file? It will be permanently deleted and unassigned from related records.'|trans }}"
-       data-confirm-contiue-url="{{ deleteUrl }}"
     >
         {{ ux_icon('trash') }}
         {{ 'Delete file'|trans }}

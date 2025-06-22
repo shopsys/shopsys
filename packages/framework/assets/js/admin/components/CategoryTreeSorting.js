@@ -1,10 +1,10 @@
 import 'jquery-ui/ui/widgets/mouse';
 import 'jquery-ui-touch-punch';
 import 'jquery-ui-nested-sortable';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 export default class CategoryTreeSorting {
@@ -56,13 +56,13 @@ export default class CategoryTreeSorting {
                 this.$saveButton.addClass('btn--disabled');
                 FormChangeInfo.removeInfo();
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Categories order saved.'),
                 });
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans("There was an error while saving. The order isn't saved."),
                 });
             },

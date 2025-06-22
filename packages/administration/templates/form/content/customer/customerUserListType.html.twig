@@ -1,14 +1,17 @@
 {% block customer_user_list_row %}
-{% import '@ShopsysAdministration/content/customer/loginAsUserLinkMacro.html.twig' as loginAsUserLinkMacro %}
+    {% import '@ShopsysAdministration/content/customer/loginAsUserLinkMacro.html.twig' as loginAsUserLinkMacro %}
 
     <div class="card mb-3">
         <div class="card-header">
             <h3 class="card-title">{{ 'Customer users'|trans }}</h3>
             {% if allowAdd %}
                 <div class="card-actions">
-                    <a href="{{ url('admin_customer_new_customer_user', {customerId: customer.id}) }}" class="btn btn-primary">
+                    <a href="{{ url('admin_customer_new_customer_user', {customerId: customer.id}) }}" class="d-none d-md-flex btn btn-primary">
                         {{ ux_icon('plus') }}
                         {{ 'Add new customer user'|trans }}
+                    </a>
+                    <a href="{{ url('admin_customer_new_customer_user', {customerId: customer.id}) }}" class="d-md-none btn btn-icon btn-primary">
+                        {{ ux_icon('plus') }}
                     </a>
                 </div>
             {% endif %}
@@ -17,84 +20,83 @@
             {% if customerUsers|length == 0 %}
                 <p class="text-secondary">{{ 'Customer has no customer users.'|trans }}</p>
             {% else %}
-                <table class="table table-hover table-striped">
-                    <thead>
-                    <tr>
-                        <th>{{ 'First name'|trans }}</th>
-                        <th>{{ 'Last name'|trans }}</th>
-                        <th>{{ 'Email'|trans }}</th>
-                        <th>{{ 'Phone'|trans }}</th>
-                        <th>{{ 'Role'|trans }}</th>
-                        {% if showActionColumn %}
-                            <th class="text-end">{{ 'Action'|trans }}</th>
-                        {% endif %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% set customerUserCount = customerUsers|length %}
-                    {% for customerUser in customerUsers %}
-                        <tr>
-                            <td>{{ customerUser.firstName }}</td>
-                            <td>{{ customerUser.lastName }}</td>
-                            <td>{{ customerUser.email }}</td>
-                            <td>{{ customerUser.telephone }}</td>
-                            <td>{{ customerUser.roleGroup.name }}</td>
-                            {% if showActionColumn %}
-                                <td class="w-1 text-end text-nowrap">
-                                    {% if allowEdit %}
-                                        <a class="me-2 link-secondary" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
-                                    {% endif %}
-                                    {% if allowDelete %}
-                                        {% if customerUserCount > 1 %}
-                                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
-                                            {% set deleteUrl = url('admin_customer_delete', {
-                                                id: customerUser.id,
-                                                (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                            }) %}
-                                            <a
-                                                    class="me-2 link-secondary"
-                                                    data-confirm-window
-                                                    data-confirm-status="danger"
-                                                    data-confirm-message="{{ deleteConfirmMessage }}"
-                                                    data-confirm-contiue-url="{{ deleteUrl }}"
-                                            >{{ ux_icon('trash') }}</a>
-                                        {% else %}
-                                            {% set customerId = customerUser.customer.id %}
-                                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
-                                            {% set deleteUrl = url('admin_customer_delete_all', {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'First name'|trans }}</th>
+                                <th>{{ 'Last name'|trans }}</th>
+                                <th>{{ 'Email'|trans }}</th>
+                                <th>{{ 'Phone'|trans }}</th>
+                                <th>{{ 'Role'|trans }}</th>
+                                {% if showActionColumn %}
+                                    <th class="text-end">{{ 'Action'|trans }}</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set customerUserCount = customerUsers|length %}
+                            {% for customerUser in customerUsers %}
+                                <tr>
+                                    <td>{{ customerUser.firstName }}</td>
+                                    <td>{{ customerUser.lastName }}</td>
+                                    <td>{{ customerUser.email }}</td>
+                                    <td>{{ customerUser.telephone }}</td>
+                                    <td>{{ customerUser.roleGroup.name }}</td>
+                                    {% if showActionColumn %}
+                                        <td class="w-1 text-end text-nowrap">
+                                            {% if allowEdit %}
+                                                <a class="me-2 link-secondary" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
+                                            {% endif %}
+                                            {% if allowDelete %}
+                                                {% if customerUserCount > 1 %}
+                                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
+                                                    {% set deleteUrl = url('admin_customer_delete', {
+                                                        id: customerUser.id,
+                                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                                    }) %}
+                                                    <a href="{{ deleteUrl }}"
+                                                       class="me-2 link-secondary"
+                                                       data-confirm-window
+                                                       data-confirm-message="{{ deleteConfirmMessage }}"
+                                                    >{{ ux_icon('trash') }}</a>
+                                                {% else %}
+                                                    {% set customerId = customerUser.customer.id %}
+                                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
+                                                    {% set deleteUrl = url('admin_customer_delete_all', {
+                                                        id: customerId,
+                                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                                    }) %}
+                                                    <a class="me-2 link-secondary"
+                                                       href="{{ deleteUrl }}"
+                                                       title={{ 'Delete'|trans }}
+                                                       data-confirm-window
+                                                       data-confirm-message="{{ 'This is the last customer user. It will remove all its related data. Do you really want to delete it ?'|trans }}"
+                                                    >{{ ux_icon('trash') }}</a>
+                                                {% endif %}
+                                            {% endif %}
+                                            {{ loginAsUserLinkMacro.loginAsUserLink(customerUser,"me-2 link-secondary"
+                                                , true) }}
+
+                                            {% set customerId = customerUser.id %}
+                                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}
+                                            {% set sendResetPasswordUrl = url('admin_customer_send_reset_password', {
                                                 id: customerId,
                                                 (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                                             }) %}
-                                            <a class="me-2 link-secondary"
-                                               href="{{ deleteUrl }}"
-                                               title={{ 'Delete'|trans }}
+                                            <a class="link-secondary"
+                                               href="{{ sendResetPasswordUrl }}"
+                                               title="{{ 'Send reset password'|trans }}"
                                                data-confirm-window
-                                               data-confirm-status="danger"
-                                               data-confirm-message="{{ 'This is the last customer user. It will remove all its related data. Do you really want to delete it ?'|trans }}"
-                                               data-confirm-contiue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
-                                        {% endif %}
+                                               data-confirm-message="{{ 'This will send an email to customer user for resetting password. Do you really want to send it ?'|trans }}"
+                                            >{{ ux_icon('letter') }}</a>
+                                        </td>
                                     {% endif %}
-                                    {{ loginAsUserLinkMacro.loginAsUserLink(customerUser, "me-2 link-secondary", true) }}
-
-                                    {% set customerId = customerUser.id %}
-                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}
-                                    {% set sendResetPasswordUrl = url('admin_customer_send_reset_password', {
-                                        id: customerId,
-                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                    }) %}
-                                    <a class="link-secondary"
-                                       href="{{ sendResetPasswordUrl }}"
-                                       title="{{ 'Send reset password'|trans }}"
-                                       data-confirm-window
-                                       data-confirm-message="{{ 'This will send an email to customer user for resetting password. Do you really want to send it ?'|trans }}"
-                                       data-confirm-contiue-url="{{ sendResetPasswordUrl }}"
-                                    >{{ ux_icon('letter') }}</a>
-                                </td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% endif %}
         </div>
     </div>

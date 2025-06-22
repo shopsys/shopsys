@@ -1,8 +1,8 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import formChangeInfo from './FormChangeInfo';
 
 export default class GridDragAndDrop {
@@ -95,7 +95,7 @@ export default class GridDragAndDrop {
                 this.highlightChanges($grid, false);
 
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saved'),
                 });
             },

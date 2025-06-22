@@ -1,7 +1,7 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 export default class MailTemplate {
@@ -33,7 +33,7 @@ export default class MailTemplate {
 
         if (FormChangeInfo.isInfoShown) {
             // eslint-disable-next-line no-new
-            new Window({
+            new ModalWindow({
                 content: Translator.trans('You have unsaved changes, save them first, please.'),
             });
         } else {
@@ -49,9 +49,9 @@ export default class MailTemplate {
 
                     // Wait for any existing modal to fully close before opening new one
                     setTimeout(() => {
-                        const modalInstance = new Window({
+                        const modalInstance = new ModalWindow({
                             content: data,
-                            wide: true,
+                            size: 'lg',
                         });
 
                         // Bind form submission handler after modal is shown
