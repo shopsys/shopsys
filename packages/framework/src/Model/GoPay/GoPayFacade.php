@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\GoPay;
 use DateTime;
 use GoPay\Definition\Response\PaymentStatus;
 use Nette\Utils\Arrays;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPaySendPaymentException;
@@ -24,12 +25,14 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderMapper $goPayOrderMapper
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayRepository $goPayRepository
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         protected readonly GoPayClientFactory $goPayClientFactory,
         protected readonly GoPayOrderMapper $goPayOrderMapper,
         protected readonly Domain $domain,
         protected readonly GoPayRepository $goPayRepository,
+        protected readonly LoggerInterface $logger,
     ) {
     }
 
@@ -55,7 +58,12 @@ class GoPayFacade implements PaymentServiceInterface
             ];
         }
 
-        throw new GoPaySendPaymentException('Creating gopay payment failed. (Details: ' . implode(' - ', $response->json['errors'][0] ?? ['unknown error']) . ')');
+        $this->logger->error('Creating gopay payment failed.', [
+            'GoPay response' => $response,
+            'GoPay payment data' => $goPayPaymentData,
+        ]);
+
+        throw new GoPaySendPaymentException();
     }
 
     /**
