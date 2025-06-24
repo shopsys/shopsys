@@ -106,12 +106,11 @@ class OrderItemTest extends TestCase
         $orderItem->getProduct();
     }
 
-    public function testProductCannotHaveProduct(): void
+    public function testTransportDoesNotHaveProduct(): void
     {
         $orderItem = $this->createOrderTransport();
 
-        $this->expectException(WrongItemTypeException::class);
-        $orderItem->hasProduct();
+        $this->assertFalse($orderItem->isTypeProductAndHasProduct());
     }
 
     public function testEditProductTypeWithProduct()
