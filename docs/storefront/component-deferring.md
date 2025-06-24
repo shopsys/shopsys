@@ -105,7 +105,6 @@ In its simplest form, deferring a component is fairly easy and can be done quick
     ```
 
     You may notice that there are several things you have to handle:
-
     - get `shouldRender` from the `useDeferredRender` hook based on the predefined location
     - use `shouldRender` to conditionally show either skeleton/placeholder/null, or the actual component
     - import both the actual component and the substitute in a suitable way (this is discussed closely later in the cookbook)

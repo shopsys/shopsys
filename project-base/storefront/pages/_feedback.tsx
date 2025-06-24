@@ -48,7 +48,7 @@ const Feedback: FC<ServerSidePropsType> = () => {
                     </Button>
                 </Webline>
             </VerticalStack>
-            {isLoadingOverlayVisible && <LoaderWithOverlay className="w-8" />}
+            {isLoadingOverlayVisible && <LoaderWithOverlay isFullScreen className="w-8" />}
         </CommonLayout>
     );
 };

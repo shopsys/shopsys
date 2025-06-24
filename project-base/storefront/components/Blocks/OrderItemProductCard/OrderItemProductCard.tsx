@@ -26,7 +26,7 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
 }) => {
     return (
         <li className="bg-background-more font-secondary flex flex-col gap-1 rounded-xl p-4">
-            <div className="flex items-center gap-2.5">
+            <div className="isolate flex items-center gap-2.5">
                 <Image
                     alt={mainImage?.name || fullName}
                     className="size-auto max-h-20 max-w-20 mix-blend-multiply"

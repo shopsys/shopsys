@@ -43,7 +43,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 <div
                     tid={TIDs.transport_and_payment_list_item_image}
                     className={twJoin(
-                        'bg-background-more flex h-12 w-20 items-center justify-center rounded-xl',
+                        'bg-background-more isolate flex h-12 w-20 items-center justify-center rounded-xl',
                         !image && 'hidden',
                     )}
                 >
@@ -57,12 +57,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <div
-                        id={`${pickupPlaceDetail?.identifier}-${pickupPlaceDetail?.name}`}
-                        tid={TIDs.pages_order_selectitem_label_name}
-                    >
-                        {name}
-                    </div>
+                    <div tid={TIDs.pages_order_selectitem_label_name}>{name}</div>
 
                     {description && (
                         <div className={twJoin(pickupPlaceDetail ? 'text-text-default' : 'text-text-less', 'text-xs')}>

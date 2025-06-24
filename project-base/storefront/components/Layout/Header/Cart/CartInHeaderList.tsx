@@ -29,13 +29,13 @@ export const CartInHeaderList: FC = () => {
 
     return (
         <>
+            {isRemovingFromCart && <LoaderWithOverlay className="w-16" overlayClassName="rounded-lg" />}
             <ul
                 className={twJoin(
-                    'relative m-0 flex list-none flex-col overflow-y-auto p-0',
+                    'relative m-0 flex h-full list-none flex-col overflow-y-auto p-0',
                     'overflow-auto md:w-[510px] lg:max-h-[50dvh]',
                 )}
             >
-                {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
                 {cart.items.map((cartItem, listIndex) => (
                     <CartInHeaderListItem
                         key={cartItem.uuid}
