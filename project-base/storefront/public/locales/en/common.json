@@ -75,7 +75,7 @@
     "Choose payment type": "Choose payment type",
     "Choose the store where you are going to pick up your order": "Choose the store where you are going to pick up your order",
     "Choose transport": "Choose transport",
-    "Choose transport {{ transportName }}": "Choose transport {{ transportName }}",
+    "Choose transport {{ transportName }} for {{ price }}": "Choose transport {{ transportName }} for {{ price }}",
     "Choose transport type": "Choose transport type",
     "City": "City",
     "City must be at most {{ max }} characters": "City must be at most {{ max }} characters",

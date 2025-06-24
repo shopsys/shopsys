@@ -77,7 +77,7 @@
     "Choose payment type": "Vybrať typ platby",
     "Choose the store where you are going to pick up your order": "Vyberte predajňu, kde si vyzdvihnete zásielku",
     "Choose transport": "Vyberte dopravu",
-    "Choose transport {{ transportName }}": "Vybrať dopravu {{ transportName }}",
+    "Choose transport {{ transportName }} for {{ price }}": "Vybrať dopravu {{ transportName }} za {{ price }}",
     "Choose transport type": "Vybrať typ dopravy",
     "City": "Mesto",
     "City must be at most {{ max }} characters": "Mesto nesmí být delší než {{ max }} znaků",
