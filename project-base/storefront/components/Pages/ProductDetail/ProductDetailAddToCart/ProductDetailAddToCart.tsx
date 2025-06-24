@@ -89,6 +89,13 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
         product.isSellingDenied;
 
+    const ariaLabel = t('Add to cart {{ productName }} {{ quantity }} {{ unit }} for {{ price }}', {
+        productName: product.name,
+        quantity: spinboxRef.current?.valueAsNumber,
+        unit: product.unit.name,
+        price: product.price.priceWithVat,
+    });
+
     return (
         <div className="flex items-center gap-2">
             <Spinbox defaultValue={1} id={product.uuid} min={1} ref={spinboxRef} size="xlarge" step={1} />
@@ -100,7 +107,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
                 <Button
                     aria-haspopup="dialog"
-                    aria-label={t('Add to cart {{ productName }}', { productName: product.name })}
+                    aria-label={ariaLabel}
                     className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
                     size="xlarge"

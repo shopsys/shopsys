@@ -31,10 +31,22 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
+    const ariaDescription = t(
+        'You have added quantity {{quantity}} {{unit}} to your cart{{priceInfo}}. You can now proceed to checkout or continue shopping',
+        {
+            quantity,
+            unit: product.unit.name,
+            priceInfo: isPriceVisible(product.price.priceWithVat)
+                ? ` for ${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`
+                : '',
+        },
+    );
+
     return (
         <Popup
             key={key}
             hideCloseButton
+            ariaDescription={ariaDescription}
             className="w-11/12 max-w-5xl"
             contentClassName="overflow-y-auto"
             title={t('Great choice! We have added your item to the cart')}
@@ -57,7 +69,6 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
                     <div className="block break-words" data-tid={TIDs.blocks_product_addtocartpopup_product_name}>
                         <ExtendedNextLink
-                            aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                             href={productUrl}
                             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
                         >

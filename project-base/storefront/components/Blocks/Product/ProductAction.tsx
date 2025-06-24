@@ -8,6 +8,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 const InquiryPopup = dynamic(
     () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
@@ -42,6 +43,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canCreateOrder } = useAuthorization();
+    const formatPrice = useFormatPrice();
 
     if (product.isSellingDenied) {
         return <div className="max-w-[215px] text-center">{t('This item can no longer be purchased')}</div>;
@@ -78,9 +80,16 @@ export const ProductAction: FC<ProductActionProps> = ({
         );
     }
 
+    const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
+        productName: product.fullName,
+        quantity: 1,
+        unit: product.unit.name,
+        price: formatPrice(product.price.priceWithVat),
+    });
+
     return (
         <AddToCart
-            ariaLabel={t('Add to cart product {{ productName }}', { productName: product.fullName })}
+            ariaLabel={ariaLabel}
             buttonSize={buttonSize}
             buttonVariant={buttonVariant}
             gtmMessageOrigin={gtmMessageOrigin}
