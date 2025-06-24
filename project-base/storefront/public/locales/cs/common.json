@@ -511,6 +511,7 @@
     "Remove product from cart": "Odebrat produkt z košíku",
     "Remove product from comparison": "Smaž produkt z porovnání",
     "Remove product from wishlist": "Odebrat produkt z oblíbených produktů",
+    "Remove promo code {{ promoCode }}": "Odebrat slevový kupón {{ promoCode }}",
     "Repeat order": "Opakovat objednávku",
     "Repeat order number {{ orderNumber }}": "Opakovat objednávku číslo {{ orderNumber }}",
     "Repeat payment": "Opakovat platbu",

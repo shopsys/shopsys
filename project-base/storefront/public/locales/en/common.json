@@ -487,6 +487,7 @@
     "Remove product from cart": "Remove product from cart",
     "Remove product from comparison": "Remove product from comparison",
     "Remove product from wishlist": "Remove product from wishlist",
+    "Remove promo code {{ promoCode }}": "Remove promo code {{ promoCode }}",
     "Repeat order": "Repeat order",
     "Repeat order number {{ orderNumber }}": "Repeat order number {{ orderNumber }}",
     "Repeat payment": "Repeat payment",

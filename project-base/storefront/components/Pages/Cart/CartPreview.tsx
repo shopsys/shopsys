@@ -38,8 +38,9 @@ export const CartPreview: FC = () => {
                             <Flag type="discount">{promoCodes[0].code}</Flag>
 
                             <button
+                                aria-label={t('Remove promo code {{ promoCode }}', { promoCode: promoCodes[0].code })}
                                 className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
-                                data-id={TIDs.blocks_promocode_promocodeinfo_code}
+                                data-tid={TIDs.blocks_promocode_promocodeinfo_code}
                                 tabIndex={0}
                                 onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
