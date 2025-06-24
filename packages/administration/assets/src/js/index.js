@@ -3,6 +3,7 @@ import '@tabler/core';
 import './initComponents';
 import './colorPicker';
 import './ajaxPopover';
+import './dev/fixedBar';
 import './utils/copyToClipboard';
 import './utils/recommendedLength';
 import './utils/modalWindow';
