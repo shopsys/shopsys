@@ -1,5 +1,6 @@
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
+import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -31,6 +32,7 @@ export type ProductsSliderProps = {
     visibleSliderItems?: number;
     variant?: ProductsSliderVariant;
     isLuigisEnabled?: boolean;
+    ariaAnchorName: string;
 };
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
@@ -44,6 +46,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     visibleSliderItems = VISIBLE_SLIDER_ITEMS,
     variant = 'default',
     isLuigisEnabled,
+    ariaAnchorName,
 }) => {
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -141,46 +144,52 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
-        <div className="relative" data-tid={tid}>
-            {isWithControls && (
-                <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
-                    <SliderButton
-                        ariaLabel={t('Show previous products in slider')}
-                        title={t('Previous products')}
-                        type="prev"
-                        onClick={handlePrevious}
-                    />
-                    <SliderButton
-                        ariaLabel={t('Show next products in slider')}
-                        title={t('Next products')}
-                        type="next"
-                        onClick={handleNext}
+        <>
+            <div className="relative" data-tid={tid}>
+                <AccessibleLink className="w-auto" href={`#${ariaAnchorName}`} title={t('Skip product slider')} />
+
+                {isWithControls && (
+                    <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
+                        <SliderButton
+                            ariaLabel={t('Show previous products in slider')}
+                            title={t('Previous products')}
+                            type="prev"
+                            onClick={handlePrevious}
+                        />
+                        <SliderButton
+                            ariaLabel={t('Show next products in slider')}
+                            title={t('Next products')}
+                            type="next"
+                            onClick={handleNext}
+                        />
+                    </div>
+                )}
+
+                <div ref={sliderRef} tabIndex={-1}>
+                    <ProductsListContent
+                        gtmMessageOrigin={gtmMessageOrigin}
+                        gtmProductListName={gtmProductListName}
+                        productRefs={productElementRefs}
+                        products={products}
+                        swipeHandlers={handlers}
+                        className={twMergeCustom([
+                            "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+                            productSliderTwClass(variant),
+                            wrapperClassName,
+                        ])}
+                        productItemProps={{
+                            className: twMergeCustom(
+                                'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
+                                productItemProps?.className,
+                            ),
+                            ...productItemProps,
+                        }}
                     />
                 </div>
-            )}
-
-            <div ref={sliderRef} tabIndex={-1}>
-                <ProductsListContent
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    gtmProductListName={gtmProductListName}
-                    productRefs={productElementRefs}
-                    products={products}
-                    swipeHandlers={handlers}
-                    className={twMergeCustom([
-                        "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-                        productSliderTwClass(variant),
-                        wrapperClassName,
-                    ])}
-                    productItemProps={{
-                        className: twMergeCustom(
-                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
-                            productItemProps?.className,
-                        ),
-                        ...productItemProps,
-                    }}
-                />
             </div>
-        </div>
+
+            <div className="sr-only" id={ariaAnchorName} />
+        </>
     );
 };
 

@@ -50,6 +50,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
             </SearchResultSectionTitle>
 
             <ProductsSlider
+                ariaAnchorName="product-slider-autocomplete"
                 gtmProductListName={GtmProductListNameType.autocomplete_search_results}
                 isWithArrows={false}
                 products={mappedProductSearchResults.slice(0, AUTOCOMPLETE_PRODUCT_LIMIT)}

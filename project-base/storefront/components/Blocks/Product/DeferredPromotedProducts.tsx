@@ -40,6 +40,7 @@ export const DeferredPromotedProducts: FC = () => {
 
             {shouldRender ? (
                 <ProductsSlider
+                    ariaAnchorName="product-slider-promoted"
                     gtmProductListName={GtmProductListNameType.homepage_promo_products}
                     products={promotedProductsData.promotedProducts}
                     tid={TIDs.blocks_product_slider_promoted_products}
