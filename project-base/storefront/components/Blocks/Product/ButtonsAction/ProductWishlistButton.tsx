@@ -12,6 +12,7 @@ type ProductCompareButtonProps = {
     isWithText?: boolean;
     isProductInWishlist: boolean;
     toggleProductInWishlist: () => void;
+    tabIndex?: number;
 };
 
 export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> = ({
@@ -20,12 +21,13 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     isWithText,
     isProductInWishlist,
     toggleProductInWishlist,
+    tabIndex = 0,
 }) => {
     const { t } = useTranslation();
 
     return (
         <button
-            tabIndex={0}
+            tabIndex={tabIndex}
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             aria-label={
                 isProductInWishlist

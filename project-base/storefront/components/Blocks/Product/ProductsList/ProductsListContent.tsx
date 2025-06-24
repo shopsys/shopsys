@@ -19,6 +19,7 @@ type ProductsListProps = {
     className?: string;
     isWithSimpleCards?: boolean;
     productItemProps?: Partial<ProductItemProps>;
+    keyboardFocusableProductIndices?: number[];
 };
 
 export const ProductsListContent: FC<ProductsListProps> = ({
@@ -31,6 +32,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     swipeHandlers,
     productItemProps,
     className,
+    keyboardFocusableProductIndices,
 }) => {
     const currentPage = useCurrentPageQuery();
     const { toggleProductInComparison, isProductInComparison } = useComparison();
@@ -50,6 +52,9 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                     ref={productRefs?.[index]}
                     toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                     toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
+                    allowKeyboardFocus={
+                        !keyboardFocusableProductIndices || keyboardFocusableProductIndices.includes(index)
+                    }
                     {...productItemProps}
                 />
             ))}

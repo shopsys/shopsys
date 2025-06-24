@@ -8,6 +8,7 @@ type ProductCompareButtonProps = {
     isWithText?: boolean;
     isProductInComparison: boolean;
     toggleProductInComparison: () => void;
+    tabIndex?: number;
 };
 
 export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
@@ -16,13 +17,14 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     isWithText,
     isProductInComparison,
     toggleProductInComparison,
+    tabIndex = 0,
 }) => {
     const { t } = useTranslation();
 
     return (
         <button
             aria-haspopup="dialog"
-            tabIndex={0}
+            tabIndex={tabIndex}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             aria-label={
                 isProductInComparison

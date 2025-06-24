@@ -61,6 +61,11 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             : visibleSliderItems;
     const isWithControls = products.length > currentVisibleItems && isWithArrows;
 
+    const keyboardFocusableProductIndices = Array.from(
+        { length: Math.min(currentVisibleItems, products.length - activeIndex) },
+        (_, i) => activeIndex + i,
+    );
+
     useEffect(() => {
         setProductElementRefs(
             Array(products.length)
@@ -169,6 +174,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     <ProductsListContent
                         gtmMessageOrigin={gtmMessageOrigin}
                         gtmProductListName={gtmProductListName}
+                        keyboardFocusableProductIndices={keyboardFocusableProductIndices}
                         productRefs={productElementRefs}
                         products={products}
                         swipeHandlers={handlers}

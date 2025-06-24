@@ -43,6 +43,7 @@ export type ProductItemProps = {
     onClick?: (product: TypeListedProductFragment, index: number) => void;
     textSize?: 'xs' | 'sm';
     textSizePrice?: 'base' | 'lg';
+    allowKeyboardFocus?: boolean;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -62,6 +63,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             textSize = 'sm',
             textSizePrice = 'lg',
             onClick,
+            allowKeyboardFocus = true,
         },
         ref,
     ) => {
@@ -85,6 +87,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
+                    tabIndex={allowKeyboardFocus ? 0 : -1}
                     title={t('Go to product page')}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onMouseUp={() => {
@@ -139,6 +142,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}
                             product={product}
+                            skipKeyboardNavigation={!allowKeyboardFocus}
                         />
                     )}
 
@@ -147,11 +151,13 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             <ProductCompareButton
                                 isProductInComparison={isProductInComparison}
                                 productName={product.fullName}
+                                tabIndex={allowKeyboardFocus ? 0 : -1}
                                 toggleProductInComparison={toggleProductInComparison}
                             />
                             <ProductWishlistButton
                                 isProductInWishlist={isProductInWishlist}
                                 productName={product.fullName}
+                                tabIndex={allowKeyboardFocus ? 0 : -1}
                                 toggleProductInWishlist={toggleProductInWishlist}
                             />
                         </>

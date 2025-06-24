@@ -25,6 +25,7 @@ type ProductActionProps = {
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonVariant?: 'primary' | 'inverted';
     showResponsiveCartIcon?: boolean;
+    skipKeyboardNavigation?: boolean;
 };
 
 export const ProductAction: FC<ProductActionProps> = ({
@@ -36,6 +37,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     buttonSize,
     buttonVariant = 'primary',
     showResponsiveCartIcon = false,
+    skipKeyboardNavigation = false,
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -51,7 +53,7 @@ export const ProductAction: FC<ProductActionProps> = ({
             updatePortalContent(<InquiryPopup productUuid={product.uuid} />);
         };
         return (
-            <Button size={buttonSize} onClick={openInquiryPopup}>
+            <Button size={buttonSize} tabIndex={skipKeyboardNavigation ? -1 : 0} onClick={openInquiryPopup}>
                 {t('Inquire')}
             </Button>
         );
@@ -65,6 +67,7 @@ export const ProductAction: FC<ProductActionProps> = ({
         return (
             <LinkButton
                 href={product.slug}
+                tabIndex={skipKeyboardNavigation ? -1 : 0}
                 type="productMainVariant"
                 aria-label={t('Go to page with product variants of {{ productName }}', {
                     productName: product.fullName,
@@ -87,6 +90,7 @@ export const ProductAction: FC<ProductActionProps> = ({
             minQuantity={1}
             productUuid={product.uuid}
             showResponsiveCartIcon={showResponsiveCartIcon}
+            tabIndex={skipKeyboardNavigation ? -1 : 0}
         />
     );
 };
