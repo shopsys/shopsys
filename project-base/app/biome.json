@@ -1,0 +1,54 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+    "files": {
+        "ignoreUnknown": false,
+        "includes": [
+            "assets/js/**",
+            "!**/node_modules/**",
+            "!assets/js/commands/translations/mocks",
+            "!assets/js/bundles",
+            "!assets/extra/bundles/fosckeditor/plugins",
+            "!assets/js/translations.json"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "lineEnding": "lf"
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "style": {
+                "noParameterAssign": "off",
+                "useConst": "error",
+                "useTemplate": "error"
+            },
+            "complexity": {
+                "noForEach": "off",
+                "noStaticOnlyClass": "off",
+                "noThisInStatic": "off"
+            },
+            "suspicious": {
+                "noExplicitAny": "off"
+            },
+            "correctness": {
+                "noConstructorReturn": "off"
+            }
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "single",
+            "semicolons": "always",
+            "trailingCommas": "all",
+            "arrowParentheses": "asNeeded",
+            "bracketSpacing": true,
+            "bracketSameLine": false,
+            "quoteProperties": "asNeeded"
+        }
+    }
+}

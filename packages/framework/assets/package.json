@@ -6,8 +6,8 @@
     "author": "Shopsys",
     "license": "proprietary",
     "scripts": {
-        "eslint": "eslint --color . --config .eslintrc.json --ignore-path .eslintignore",
-        "eslint-fix": "eslint --fix --color . --config .eslintrc.json --ignore-path .eslintignore",
+        "standards-check": "biome check .",
+        "standards-fix": "biome check --fix --unsafe .",
         "tests": "npm run tests:unit",
         "tests:unit": "jest js"
     },
@@ -28,13 +28,9 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.14.4",
+        "@biomejs/biome": "^2.0.6",
         "babel-jest": "^27.0.1",
         "core-js": "^3.13.1",
-        "eslint": "^8.57.1",
-        "eslint-config-standard": "^17.1.0",
-        "eslint-plugin-import": "^2.31.0",
-        "eslint-plugin-n": "^16.6.2",
-        "eslint-plugin-promise": "^6.6.0",
         "jest": "^27.0.1"
     }
 }
