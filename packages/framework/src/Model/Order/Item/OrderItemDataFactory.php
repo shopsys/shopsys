@@ -87,6 +87,8 @@ class OrderItemDataFactory
             $orderItemData->transport = $orderItem->getTransport();
         } elseif ($orderItem->isTypePayment()) {
             $orderItemData->payment = $orderItem->getPayment();
+        } elseif ($orderItem->isTypeProduct()) {
+            $orderItemData->product = $orderItem->getProduct();
         }
     }
 
