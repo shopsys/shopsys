@@ -44,6 +44,16 @@ export const CartInHeader: FC = ({ className }) => {
 
     const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
 
+    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter') {
+            setIsActive(true);
+        }
+
+        if (e.key === 'Escape') {
+            setIsActive(false);
+        }
+    };
+
     return (
         <>
             <div
@@ -52,7 +62,7 @@ export const CartInHeader: FC = ({ className }) => {
                 aria-label={t('Show cart popup')}
                 data-tid={TIDs.header_cart}
                 role="button"
-                tabIndex={0}
+                tabIndex={!cart?.items.length ? -1 : 0}
                 title={t('Cart')}
                 className={twMergeCustom(
                     'vl:flex group relative outline-none',
@@ -60,13 +70,9 @@ export const CartInHeader: FC = ({ className }) => {
                     className,
                 )}
                 onClick={() => !isDesktop && setIsActive(!isActive)}
+                onKeyDown={(e) => handleOnKeyDown(e)}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={() => isDesktop && setIsActive(false)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        setIsActive(!isActive);
-                    }
-                }}
                 onTouchEnd={(e) => {
                     if (!isActive) {
                         e.preventDefault();
@@ -119,7 +125,7 @@ export const CartInHeader: FC = ({ className }) => {
                     aria-haspopup="menu"
                     aria-label={t('Show cart popup')}
                     role="button"
-                    tabIndex={0}
+                    tabIndex={-1}
                     title={t('Cart')}
                     className={twJoin(
                         'vl:hidden flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
@@ -127,6 +133,7 @@ export const CartInHeader: FC = ({ className }) => {
                         isActiveDelayed &&
                             'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
                         'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
+                        'group-focus-visible:text-text-default group-focus-visible:bg-orange-500',
                     )}
                     onClick={() => setIsActive(!isActive)}
                     onKeyDown={(e) => {

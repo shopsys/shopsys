@@ -51,6 +51,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     aria-label={t('Go to product page ' + product.fullName)}
                     className="font-secondary text-text-default hover:text-link-default flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
                     href={productSlug}
+                    tabIndex={0}
                     title={t('Go to product page')}
                     type="product"
                 >
