@@ -25,10 +25,12 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
 
     return (
         <>
-            <h2 className="sr-only">{t('Filter')}</h2>
+            <h2 className="sr-only">{t('Filter panel')}</h2>
+
             <div
                 className={twJoin(
-                    'max-vl:z-aboveOverlay vl:static vl:w-[227px] vl:translate-x-0 vl:rounded-none vl:transition-none fixed top-0 right-10 bottom-0 left-0 max-w-[400px] -translate-x-full transition',
+                    'fixed top-0 right-10 bottom-0 left-0 max-w-[400px] -translate-x-full transition',
+                    'max-vl:z-aboveOverlay vl:static vl:w-[227px] vl:translate-x-0 vl:transition-none',
                     isFilterPanelOpen && 'translate-x-0',
                 )}
             >
