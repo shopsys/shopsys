@@ -9,11 +9,10 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
@@ -23,11 +22,13 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      */
     public function __construct(
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly Rounding $rounding,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
     ) {
     }
 
@@ -43,23 +44,16 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
         $orderData = $orderProcessingData->orderData;
 
         $payment = $orderData->payment;
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($orderProcessingData->getDomainId());
 
-        if (!$payment?->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
+        if ($payment === null) {
             return $orderProcessingStack->processNext($orderProcessingData);
         }
 
-        $priceWithVat = $orderData->totalPrice->getPriceWithVat();
-        $roundedPriceWithVat = $priceWithVat->round(0);
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($orderProcessingData->getDomainId());
 
-        $roundingPriceAmount = $this->rounding->roundPriceWithVatByCurrency(
-            $roundedPriceWithVat->subtract($priceWithVat),
-            $currency,
-        );
+        $roundingPrice = $this->orderPriceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderData->totalPrice);
 
-        $roundingPrice = new Price($roundingPriceAmount, $roundingPriceAmount);
-
-        if (!$roundingPrice->isZero()) {
+        if ($roundingPrice !== null && !$roundingPrice->isZero()) {
             $orderData->addItem($this->createRoundingItemData($roundingPrice, $orderProcessingData->getDomainConfig()));
             $orderData->addTotalPrice($roundingPrice, OrderItemTypeEnum::TYPE_ROUNDING);
         }
