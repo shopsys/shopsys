@@ -16,15 +16,13 @@ class EnsureCorrectGrapesJsFormatHelper
         string $locale,
     ): string {
         if ($string === null || trim(strip_tags($string)) === '') {
-            $string = t('Please replace this text with your own content.', locale: $locale) . $string;
+            return '<div class="gjs-text-ckeditor">' . t('Please replace this text with your own content.', locale: $locale) . '</div>';
         }
 
-        $isGrapeJsDivMissing = !str_contains('<div class="gjs-text-ckeditor">', $string);
-
-        if ($isGrapeJsDivMissing) {
-            $string = '<div class="gjs-text-ckeditor">' . $string . '</div>';
+        if (str_starts_with(trim($string), '<div')) {
+            return $string;
         }
 
-        return $string;
+        return '<div class="gjs-text-ckeditor">' . $string . '</div>';
     }
 }

@@ -328,6 +328,10 @@ export default class InitGrapesJs {
         editor.BlockManager.remove('grid-items');
         editor.BlockManager.remove('list-items');
         editor.BlockManager.remove('text');
+
+        editor.BlockManager.get('link-block').set('category', Translator.trans('Basic objects')).set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('sect50').set('category', Translator.trans('Basic objects')).set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('sect100').set('category', Translator.trans('Basic objects')).set('attributes', { class: 'mail-icon' });
     }
 
     static setupBodyForGrapesJsEditor () {
