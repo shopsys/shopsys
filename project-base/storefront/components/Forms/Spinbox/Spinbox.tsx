@@ -193,6 +193,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 </SpinboxButton>
 
                 <input
+                    aria-describedby="quantity-input-description"
                     aria-label={t('Quantity')}
                     data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
@@ -210,6 +211,14 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onInput={handleInput}
                     onKeyDown={handleKeyDown}
                 />
+
+                <span className="sr-only" id="quantity-input-description">
+                    {t('Type in a number or use arrow up or arrow down to change the quantity')}
+                </span>
+
+                <span aria-live="polite" className="sr-only">
+                    {value}
+                </span>
 
                 <SpinboxButton
                     ariaLabel={t('Increase quantity')}
