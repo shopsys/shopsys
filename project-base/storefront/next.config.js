@@ -137,8 +137,16 @@ const nextConfig = {
                         maxSize: 120000, // Limit sentry chunk size
                     },
                     // Add more granular splitting
+                    toastify: {
+                        test: /[\\/]node_modules[\\/]react-toastify[\\/]/,
+                        name: 'toastify',
+                        chunks: 'all',
+                        priority: 11,
+                        enforce: true, // Force this chunk to be created
+                        maxSize: 50000, // Keep toastify small
+                    },
                     ui: {
-                        test: /[\\/]node_modules[\\/](framer-motion|react-toastify)[\\/]/,
+                        test: /[\\/]node_modules[\\/](framer-motion)[\\/]/,
                         name: 'ui-libs',
                         chunks: 'all',
                         priority: 9,
