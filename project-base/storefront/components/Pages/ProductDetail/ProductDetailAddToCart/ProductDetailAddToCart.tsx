@@ -12,6 +12,8 @@ import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 const AddToCartPopup = dynamic(
     () => import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
@@ -38,6 +40,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     );
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canCreateOrder } = useAuthorization();
+    const formatPrice = useFormatPrice();
 
     const onAddToCartHandler = async () => {
         if (!spinboxRef.current) {
@@ -89,11 +92,13 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
         product.isSellingDenied;
 
-    const ariaLabel = t('Add to cart {{ productName }} {{ quantity }} {{ unit }} for {{ price }}', {
+    const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
         productName: product.name,
         quantity: spinboxRef.current?.valueAsNumber,
         unit: product.unit.name,
-        price: product.price.priceWithVat,
+        price: formatPrice(
+            (spinboxRef.current?.valueAsNumber ?? 1) * mapPriceForCalculations(product.price.priceWithVat),
+        ),
     });
 
     return (
