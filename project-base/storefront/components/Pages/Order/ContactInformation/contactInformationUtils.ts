@@ -9,8 +9,8 @@ import {
     getFormValuesWithoutDeliveryInfo,
     getSelectedDeliveryAddressForLoggedInUser,
 } from './deliveryAddressUtils';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
@@ -53,7 +53,7 @@ export type OrderConfirmationUrlQuery = {
 };
 
 export const useContactInformationPageNavigation = () => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const router = useRouter();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -154,7 +154,7 @@ const useHandleCreateOrderResult = () => {
     const { t } = useTranslation();
     const user = useCurrentCustomerData();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const domainConfig = useDomainConfig();
+    const domainConfig = useAppConfig((appConfig) => appConfig.domainConfig);
     const { changePaymentInCart } = useChangePaymentInCart();
     const router = useRouter();
     const handleEventsAfterOrderCreation = useHandleEventsAfterOrderCreation();
@@ -220,7 +220,7 @@ const useHandleCreateOrderResult = () => {
 const useHandleEventsAfterOrderCreation = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const user = useCurrentCustomerData();
-    const domainConfig = useDomainConfig();
+    const domainConfig = useAppConfig((appConfig) => appConfig.domainConfig);
     const userContactInformation = useCurrentUserContactInformation();
     const { cart, payment, promoCodes } = useCurrentCart();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);

@@ -22,7 +22,7 @@ export type ListedItemPropType = (
     | {
           slug: string;
           name: string;
-          icon: JSX.Element;
+          icon: React.ReactNode;
       }
 ) & {
     __typename?: ListedItemPropTypeTypename;

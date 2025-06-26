@@ -25,10 +25,11 @@ const ImageComponent: FC<ImageProps> = ({ src, hash, tid, ...props }) => {
 
             return `${src}?width=${width || '0'}${hash ? `&${hash}` : ''}`;
         },
-        [hash],
+        [hash, shouldLoadFallbackImage],
     );
 
-    const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl;
+    // Ensure finalImageUrl is always a string, never null
+    const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl || fallbackImageSrc;
 
     // Extract src from StaticImageData object if needed
     const getSrcFromImageUrl = (imageUrl: typeof finalImageUrl): string => {

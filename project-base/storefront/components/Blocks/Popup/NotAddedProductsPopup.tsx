@@ -2,7 +2,7 @@
 
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -12,7 +12,7 @@ type NotAddedProductsPopupProps = {
 
 export const NotAddedProductsPopup: FC<NotAddedProductsPopupProps> = ({ notAddedProductNames }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     return (

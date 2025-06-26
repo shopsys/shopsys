@@ -34,7 +34,7 @@ type RegistrationAfterOrderFormMetaType = {
     fields: {
         [key in keyof RegistrationAfterOrderFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | React.ReactNode;
             errorMessage: string | undefined;
         };
     };

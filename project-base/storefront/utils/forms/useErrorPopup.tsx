@@ -1,6 +1,6 @@
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
-import { ReactElement, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 
@@ -13,7 +13,7 @@ export const useErrorPopup = <T extends FieldValues>(
     fields: {
         [fieldName: string]: {
             name: string;
-            label: string | ReactElement;
+            label: string | React.ReactNode;
             errorMessage?: string | undefined;
         };
     },

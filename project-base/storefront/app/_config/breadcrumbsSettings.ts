@@ -1,8 +1,10 @@
 import { getArticleDetailQuery } from 'app/_queries/getArticleDetailQuery';
 import { getBlogArticleDetailQuery } from 'app/_queries/getBlogArticleDetailQuery';
 import { getBlogCategoryDetailQuery } from 'app/_queries/getBlogCategoryDetailQuery';
+import { getCategoryDetailQuery } from 'app/_queries/getCategoryDetailQuery';
 import { getProductQuery } from 'app/_queries/getProductQuery';
 import { mapToBreadcrumbFragments } from 'app/_utils/breadcrumbs';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { DynamicBreadcrumbsSettings, StaticBreadcrumb, StaticBreadcrumbsSettings } from 'types/breadcrumbs';
 import { TranslationKeys } from 'types/translation';
 
@@ -59,8 +61,11 @@ export const dynamicBreadcrumbsSettings: DynamicBreadcrumbsSettings = {
     '/brands': async () => {
         return [];
     },
-    '/categories': async () => {
-        return [];
+    '/categories': async (pathname) => {
+        const categorySlug = pathname.split('/categories/')[1];
+        const category = await getCategoryDetailQuery(categorySlug, TypeProductOrderingModeEnum.Priority, undefined);
+
+        return category?.breadcrumb ?? [];
     },
     '/customer/complaint-detail': async (pathname, t) => {
         // TODO get correct dynamic name

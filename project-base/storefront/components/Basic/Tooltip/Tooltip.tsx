@@ -13,13 +13,13 @@ import {
     useInteractions,
     useRole,
 } from '@floating-ui/react';
-import { cloneElement, useMemo, useState } from 'react';
+import { cloneElement, ReactElement, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 type TooltipProps = {
     label?: string;
     placement?: Placement;
-    children: JSX.Element;
+    children: ReactElement<any, any>;
 };
 
 export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }) => {
@@ -43,7 +43,10 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
 
     return (
         <>
-            {cloneElement(children, getReferenceProps({ ref, ...children.props }))}
+            {cloneElement(
+                children as ReactElement,
+                getReferenceProps({ ref, ...((children as ReactElement).props ?? {}) }),
+            )}
             {isOpen && label && (
                 <div
                     ref={refs.setFloating}

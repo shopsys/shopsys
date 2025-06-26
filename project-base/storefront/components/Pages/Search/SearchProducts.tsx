@@ -7,7 +7,7 @@ import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFi
 import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRef } from 'react';
@@ -17,7 +17,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 export const SearchProducts: FC = () => {
     const { t } = useTranslation();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     const { searchProductsData, areSearchProductsFetching, isLoadingMoreSearchProducts } = useSearchProductsData();
@@ -32,7 +32,7 @@ export const SearchProducts: FC = () => {
                 <p className="h5 mb-2">{t('Found products')}</p>
             </Webline>
 
-            <FilteredProductsWrapper>
+            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
                     defaultOrderingMode={searchProductsData.defaultOrderingMode}
                     orderingMode={searchProductsData.orderingMode}
@@ -63,6 +63,7 @@ export const SearchProducts: FC = () => {
 
                     <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
                         <SearchProductsContent
+                            paginationScrollTargetRef={paginationScrollTargetRef}
                             areSearchProductsFetching={areSearchProductsFetching}
                             isLoadingMoreSearchProducts={isLoadingMoreSearchProducts}
                             searchProductsData={searchProductsData}

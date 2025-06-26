@@ -135,7 +135,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     );
 };
 
-const ToggleContent: FC<{ name: string; toggleSwitch: JSX.Element }> = ({ toggleSwitch, name }) => (
+const ToggleContent: FC<{ name: string; toggleSwitch: React.ReactNode }> = ({ toggleSwitch, name }) => (
     <div className="flex items-center justify-between">
         <span>{name}</span>
         {toggleSwitch}

@@ -1,5 +1,5 @@
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
@@ -15,8 +15,7 @@ export type RemoveFromCart = (
 
 export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) => {
     const [{ fetching: isRemovingFromCart }, removeItemFromCartMutation] = useRemoveFromCartMutation();
-    const domainConfig = useDomainConfig();
-    const { url, currencyCode } = domainConfig;
+    const { url, currencyCode, domainId } = useAppConfig((appConfig) => appConfig.domainConfig);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { fetchCart } = useCurrentCart();
     const { canSeePrices } = useAuthorization();
@@ -46,7 +45,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
                 );
             });
 
-            dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
+            dispatchBroadcastChannel('refetchCart', domainId);
         }
 
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;

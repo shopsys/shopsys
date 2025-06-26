@@ -2,6 +2,7 @@
 
 import { useAppConfig } from 'components/providers/AppConfigProvider';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const UserConsent = dynamic(
@@ -34,7 +35,9 @@ const useDeferredRender = (delay: number) => {
     return shouldRender;
 };
 
-export const DeferredUserConsent = ({ isConsentUpdatePage }: { isConsentUpdatePage: boolean }) => {
+export const DeferredUserConsent = () => {
+    const pathname = usePathname();
+    const isConsentUpdatePage = pathname === '/user-consent';
     const { userConsentPolicyArticleUrl } = useAppConfig((settings) => settings.settings);
     const shouldRender = useDeferredRender(CONSENT_DELAY);
 

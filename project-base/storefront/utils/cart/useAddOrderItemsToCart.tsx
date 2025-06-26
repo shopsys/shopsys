@@ -1,5 +1,5 @@
 import { useCurrentCart } from './useCurrentCart';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
 import { TypeAddOrderItemsToCartInput } from 'graphql/types';
 import dynamic from 'next/dynamic';
@@ -20,7 +20,7 @@ const MergeCartsPopup = dynamic(() =>
 export const useAddOrderItemsToCart = () => {
     const { cart } = useCurrentCart();
     const router = useRouter();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutation();
     const { t } = useTranslation();

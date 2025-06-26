@@ -1,7 +1,7 @@
 'use client';
 
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
@@ -229,7 +229,7 @@ export const useSearchQuery = (searchString: string | undefined) => {
     const [isSearchFetching, setIsSearchFetching] = useState(true);
 
     const router = useRouter();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     const fetchSearchData = async (

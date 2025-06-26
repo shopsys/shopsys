@@ -12,7 +12,7 @@ import {
     GtmPageInfoType,
 } from 'gtm/types/objects';
 import { getSpecialArticleGtmType } from 'gtm/utils/getSpecialArticleGtmTypes';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
+import { FriendlyUrlPageType } from 'types/friendlyUrlPageType';
 
 export const getGtmPageInfoTypeForFriendlyUrl = (
     friendlyUrlPageData: FriendlyUrlPageType | null | undefined,

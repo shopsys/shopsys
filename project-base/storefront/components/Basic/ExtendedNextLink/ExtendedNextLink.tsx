@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
@@ -38,7 +38,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     ...props
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
 
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
     const urlHref = isDynamic

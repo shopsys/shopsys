@@ -12,8 +12,8 @@ import {
     MenuIconicSubItemLink,
 } from 'components/Layout/Header/MenuIconic/MenuIconicElements';
 import { SalesRepresentative } from 'components/Layout/Header/MenuIconic/SalesRepresentative';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { usePathname } from 'next/navigation';
@@ -42,7 +42,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
 
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
         useAuthorization();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [
         customerOrdersUrl,
         customerComplaintsUrl,

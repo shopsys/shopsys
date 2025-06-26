@@ -15,7 +15,7 @@ type DropzoneControlledProps = {
     control: Control<any>;
     formName: string;
     name: string;
-    render: (dropzone: JSX.Element) => JSX.Element;
+    render: (dropzone: React.ReactElement) => React.ReactElement;
     label: string;
     required?: boolean;
     disabled?: boolean;

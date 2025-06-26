@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
 import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
 import {
@@ -18,7 +18,7 @@ export const useChangePaymentInOrder = () => {
     const { t } = useTranslation();
     const router = useRouter();
     const isUserLoggedIn = useIsUserLoggedIn();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [orderByHashUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
         [{ url: '/order-detail/:urlHash', param: '' }, '/customer/order-detail'],
         url,

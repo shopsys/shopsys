@@ -1,5 +1,5 @@
 import { useCurrentCart } from './useCurrentCart';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -9,7 +9,7 @@ export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-inf
     const router = useRouter();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
     const authLoading = usePersistStore((s) => s.authLoading);
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [canContentBeDisplayed, setCanContentBeDisplayed] = useState<boolean | undefined>(undefined);
     const [cartUrl, transportAndPaymentUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/transport-and-payment'],

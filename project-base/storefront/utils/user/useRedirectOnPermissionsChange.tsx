@@ -1,4 +1,4 @@
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -8,7 +8,7 @@ const REDIRECT_TIMEOUT = 2000;
 
 export const useRedirectOnPermissionsChange = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const { push } = useRouter();
     const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer/edit-profile'], url);
 

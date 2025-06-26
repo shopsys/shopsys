@@ -48,7 +48,7 @@ type ContactFormMetaType = {
     fields: {
         [key in keyof ContactFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | React.ReactNode;
             errorMessage: string | undefined;
         };
     };

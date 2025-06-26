@@ -6,7 +6,7 @@ import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthent
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
@@ -15,7 +15,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 export const MenuIconic: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
         ['/stores', '/product-comparison', '/wishlist'],
         url,

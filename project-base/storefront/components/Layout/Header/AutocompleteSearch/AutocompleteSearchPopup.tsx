@@ -9,7 +9,7 @@ import { AutocompleteSkeleton } from './AutocompleteSkeleton';
 import { IconImage } from 'components/Basic/IconImage/IconImage';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Button } from 'components/Forms/Button/Button';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { m } from 'framer-motion';
 import { TypeAutocompleteFavoritesQuery } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
@@ -41,7 +41,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 }) => {
     const router = useRouter();
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const { articlesSearch, brandSearch, categoriesSearch, productsSearch } = autocompleteSearchResults || {};
 

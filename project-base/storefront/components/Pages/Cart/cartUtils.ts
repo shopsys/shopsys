@@ -1,12 +1,12 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const useCartPageNavigation = () => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const router = useRouter();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);

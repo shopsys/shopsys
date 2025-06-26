@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
@@ -12,7 +12,7 @@ type ProductMetadataProps = {
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
-    const { currencyCode } = useDomainConfig();
+    const { currencyCode } = useAppConfig((appConfig) => appConfig.domainConfig);
     const router = useRouter();
 
     return (

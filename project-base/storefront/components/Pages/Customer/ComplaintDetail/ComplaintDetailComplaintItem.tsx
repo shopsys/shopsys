@@ -3,8 +3,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ type ComplaintDetailComplaintItemProps = {
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
 export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps> = ({ complaintItem, complaint }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;

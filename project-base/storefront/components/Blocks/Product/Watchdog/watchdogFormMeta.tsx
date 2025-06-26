@@ -35,7 +35,7 @@ type WatchdogFormMetaType = {
     fields: {
         [key in keyof WatchdogFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | React.ReactNode;
             errorMessage?: string;
         };
     };

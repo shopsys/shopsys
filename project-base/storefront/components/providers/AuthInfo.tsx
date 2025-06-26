@@ -4,7 +4,6 @@ import { getCookies } from 'cookies-next';
 import useTranslation from 'next-translate/useTranslation';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { usePersistStore } from 'store/usePersistStore';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';

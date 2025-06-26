@@ -6,7 +6,7 @@ import { getGtmPageInfoTypeForFriendlyUrl } from 'gtm/utils/getGtmPageInfoTypeFo
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { useMemo } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
+import { FriendlyUrlPageType } from 'types/friendlyUrlPageType';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
 export const useGtmFriendlyPageViewEvent = (

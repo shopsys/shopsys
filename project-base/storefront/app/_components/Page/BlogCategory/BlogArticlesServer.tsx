@@ -9,6 +9,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
 import { defaultLocale } from 'i18n';
 import { notFound } from 'next/navigation';
+import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
@@ -70,13 +71,13 @@ export const BlogArticlesServer = async ({ blogCategoryUuid, endCursor }: BlogAr
 
                                 <div className="flex flex-wrap gap-2">
                                     {blogArticle.blogCategories.map((blogArticleCategory) => (
-                                        <>
+                                        <Fragment key={blogArticleCategory.uuid}>
                                             {blogArticleCategory.parent && (
-                                                <Flag key={blogArticleCategory.uuid} type="blog">
+                                                <Flag href={blogArticleCategory.link} type="blog">
                                                     {blogArticleCategory.name}
                                                 </Flag>
                                             )}
-                                        </>
+                                        </Fragment>
                                     ))}
                                 </div>
                             </div>

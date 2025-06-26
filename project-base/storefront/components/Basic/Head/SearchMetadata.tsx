@@ -1,11 +1,11 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import Head from 'next/head';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const SearchMetadata: FC = () => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     return (

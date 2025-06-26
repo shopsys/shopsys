@@ -3,7 +3,7 @@
 import { ProductsSlider } from './ProductsSlider';
 import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useRecommendedProductsQuery } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -21,7 +21,7 @@ const ProductsSliderPlaceholder = dynamic(() =>
 export type DeferredRecommendedProductsProps = {
     recommendationType: TypeRecommendationType;
     itemUuids?: string[];
-    render: (input: JSX.Element) => ReactElement<any, any> | null;
+    render: (input: React.ReactNode) => ReactElement<any, any> | null;
 };
 
 export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> = ({
@@ -30,7 +30,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     itemUuids = [],
 }) => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
-    const { isLuigisBoxActive } = useDomainConfig();
+    const { isLuigisBoxActive } = useAppConfig((appConfig) => appConfig.domainConfig);
     const { pathname } = useRouter();
     const [isClientMounted, setIsClientMounted] = useState(false);
     const [{ data: recommendedProductsData, fetching: areRecommendedProductsFetching }] = useRecommendedProductsQuery({

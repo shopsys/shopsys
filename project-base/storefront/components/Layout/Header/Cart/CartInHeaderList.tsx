@@ -5,7 +5,7 @@ import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -18,7 +18,7 @@ import { useFocusTrap } from 'utils/useFocusTrap';
 export const CartInHeaderList: FC = () => {
     const { t } = useTranslation();
     const { cart } = useCurrentCart();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
     const contentRef = useRef<HTMLDivElement>(null);

@@ -3,7 +3,7 @@
 import { FooterProps } from './Footer';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TIDs } from 'cypress/tids';
 import imageLogo from 'public/images/logo.svg';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -11,7 +11,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [userConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/user-consent', '/contact-form'], url);
     const currentYear = new Date().getFullYear();
 

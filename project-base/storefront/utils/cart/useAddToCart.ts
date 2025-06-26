@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     TypeAddToCartMutation,
@@ -28,7 +28,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const { t } = useTranslation();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { cart } = useCurrentCart();
-    const domainConfig = useDomainConfig();
+    const domainConfig = useAppConfig((appConfig) => appConfig.domainConfig);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const currentCustomerData = useCurrentCustomerData();

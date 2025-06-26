@@ -1,7 +1,7 @@
 'use client';
 
+import { useAppConfig } from './AppConfigProvider';
 import { useCurrentCustomerData } from './AuthProvider';
-import { useDomainConfig } from './DomainConfigProvider';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { createContext, useContext } from 'react';
 import { CustomerUserAreaEnum } from 'types/customer';
@@ -17,7 +17,7 @@ export const AuthorizationProvider: FC<AuthorizationProviderProps> = ({ customer
 };
 
 export const useAuthorization = () => {
-    const { type } = useDomainConfig();
+    const { type } = useAppConfig((appConfig) => appConfig.domainConfig);
     const customerUserRoles = useContext(CustomerUserRolesContext);
 
     if (!customerUserRoles) {

@@ -5,14 +5,14 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmMessageType } from 'gtm/enums/GtmMessageType';
 import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
-import { ReactElement, useEffect, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ErrorPopupProps = {
     fields: {
         [fieldName: string]: {
             name: string;
-            label: string | ReactElement;
+            label: string | ReactNode;
             errorMessage?: string | undefined;
         };
     };

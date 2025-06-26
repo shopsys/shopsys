@@ -1,5 +1,5 @@
 import { getGtmMappedCart } from './getGtmMappedCart';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { GtmCartInfoType } from 'gtm/types/objects';
 import { useMemo } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -10,7 +10,7 @@ export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartL
     const { cart, promoCodes, isCartFetchingOrUnavailable } = useCurrentCart();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const isUserLoggedIn = useIsUserLoggedIn();
-    const domainConfig = useDomainConfig();
+    const domainConfig = useAppConfig((appConfig) => appConfig.domainConfig);
 
     return useMemo(() => {
         if (!cart) {

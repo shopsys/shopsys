@@ -6,7 +6,7 @@ import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
@@ -16,7 +16,7 @@ const placeholderItemTwClass =
 
 export const MenuIconicPlaceholder: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [storesUrl] = getInternationalizedStaticUrls(['/stores'], url);
 
     return (
