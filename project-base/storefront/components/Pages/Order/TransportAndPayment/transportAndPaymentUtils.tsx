@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import {
     LastOrderQueryDocument,
     TypeLastOrderQuery,
@@ -70,7 +70,7 @@ export const useTransportChangeInSelect = (
     changeTransportHandler: ChangeTransportInCart,
     changePaymentHandler: ChangePaymentInCart,
 ) => {
-    const { defaultLocale } = useDomainConfig();
+    const { defaultLocale } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState(lastOrderPickupPlace);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
@@ -328,7 +328,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
 };
 
 export const useTransportAndPaymentPageNavigation = (validationMessages: Partial<TransportAndPaymentErrorsType>) => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const router = useRouter();
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],

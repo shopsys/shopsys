@@ -51,7 +51,7 @@ export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = 
     stores: '/stores',
     store: '/stores/[storeSlug]',
     flag: '/flags/[flagSlug]',
-    seo_category: '/categories/[categorySlug]',
+    seo_category: '/categories',
     complaintNew: '/customer/new-complaints',
     complaintList: '/customer/complaints',
     orderList: '/customer/orders',

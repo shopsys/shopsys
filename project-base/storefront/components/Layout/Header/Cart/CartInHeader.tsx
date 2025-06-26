@@ -8,7 +8,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -37,7 +37,7 @@ export const CartInHeader: FC = ({ className }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     const [isActive, setIsActive] = useState(false);

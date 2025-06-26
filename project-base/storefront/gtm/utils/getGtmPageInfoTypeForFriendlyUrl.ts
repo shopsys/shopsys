@@ -5,13 +5,13 @@ import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/Brand
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import {
-    GtmPageInfoType,
-    GtmPageInfoInterface,
-    GtmCategoryDetailPageInfoType,
     GtmBlogArticleDetailPageInfoType,
     GtmBrandDetailPageInfoType,
+    GtmCategoryDetailPageInfoType,
+    GtmPageInfoInterface,
+    GtmPageInfoType,
 } from 'gtm/types/objects';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
+import { FriendlyUrlPageType } from 'types/friendlyUrlPageType';
 
 export const getGtmPageInfoTypeForFriendlyUrl = (
     friendlyUrlPageData: FriendlyUrlPageType | null | undefined,

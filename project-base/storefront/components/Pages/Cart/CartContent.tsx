@@ -6,7 +6,7 @@ import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
@@ -17,7 +17,7 @@ type CartContentProps = {
 
 export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { t } = useTranslation();
-    const { url, isLuigisBoxActive } = useDomainConfig();
+    const { url, isLuigisBoxActive } = useAppConfig((appConfig) => appConfig.domainConfig);
 
     return (
         <VerticalStack gap="md">

@@ -1,4 +1,4 @@
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
@@ -13,7 +13,7 @@ type UseSeoHookProps = {
 };
 
 export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps) => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const router = useRouter();
 
     const pageSlug = useMemo(() => {

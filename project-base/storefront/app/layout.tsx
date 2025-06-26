@@ -1,12 +1,11 @@
 import { DeferredUserConsent } from './_components/Blocks/UserConsent/DeferredUserConsent';
-import { getInternationalizedStaticUrls } from './_utils/getInternationalizedStaticUrls';
 import { Footer } from 'app/_components/Layout/Footer/Footer';
 import { Header } from 'app/_components/Layout/Header/Header';
 import { NotificationBars } from 'app/_components/Layout/NotificationBars/NotificationBars';
 import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
-import { headers } from 'next/headers';
 import 'nprogress/nprogress.css';
+import { Suspense } from 'react';
 import 'styles/theme.css';
 
 type MetadataProps = {
@@ -28,10 +27,6 @@ type RootLayoutProps = {
 };
 
 const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
-    const pathname = (await headers()).get('x-pathname') ?? '/';
-    const [consentUpdatePageUrl] = await getInternationalizedStaticUrls(['/user-consent']);
-    const isConsentUpdatePage = consentUpdatePageUrl === pathname;
-
     return (
         <Providers>
             <NotificationBars />
@@ -41,11 +36,15 @@ const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
 
                 {breadcrumbs}
 
-                <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">{children}</main>
+                <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">
+                    <Suspense fallback={<div>Layout loading...</div>}>{children}</Suspense>
+                </main>
 
                 <Footer />
 
-                <DeferredUserConsent isConsentUpdatePage={isConsentUpdatePage} />
+                <Suspense fallback={null}>
+                    <DeferredUserConsent />
+                </Suspense>
             </div>
         </Providers>
     );

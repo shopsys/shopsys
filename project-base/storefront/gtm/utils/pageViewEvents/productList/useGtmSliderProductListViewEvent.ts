@@ -1,5 +1,5 @@
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/GtmProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -13,7 +13,7 @@ export const useGtmSliderProductListViewEvent = (
     isLuigisEnabled?: boolean,
 ): void => {
     const wasViewedRef = useRef(false);
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();
 

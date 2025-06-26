@@ -1,5 +1,5 @@
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/GtmProvider';
@@ -18,7 +18,7 @@ export const useGtmPaginatedProductListViewEvent = (
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const previousLoadMoreRef = useRef(currentLoadMore);
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const stringifiedProducts = JSON.stringify(paginatedProducts);
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();

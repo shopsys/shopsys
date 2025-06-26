@@ -5,8 +5,8 @@ import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'types/simpleNavigation';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
@@ -24,7 +24,7 @@ type UserMenuItemType = {
 
 export const useUserMenuItems = (): UserMenuItemType[] => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =

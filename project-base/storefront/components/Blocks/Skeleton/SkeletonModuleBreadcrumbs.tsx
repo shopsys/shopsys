@@ -13,7 +13,7 @@ export const SkeletonModuleBreadcrumbs: FC<SkeletonModuleBreadcrumbsProps> = ({ 
     <Webline className="flex items-center gap-3">
         {createEmptyArray(count).map((_, index) => (
             <Fragment key={index}>
-                <Skeleton className={twJoin('h-4 w-20 rounded-sm', index >= 1 && 'hidden lg:block')} />
+                <Skeleton className={twJoin('h-5 w-20 rounded-sm', index >= 1 && 'hidden lg:block')} />
 
                 {index < count - 1 && <BreadcrumbsSpan>/</BreadcrumbsSpan>}
             </Fragment>

@@ -2,7 +2,7 @@
 
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { AnimatePresence } from 'framer-motion';
 import {
     TypeAutocompleteSearchQuery,
@@ -26,7 +26,7 @@ const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((c
 
 export const AutocompleteSearch: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const router = useRouter();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 

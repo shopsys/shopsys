@@ -6,7 +6,7 @@ import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHead
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -35,7 +35,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
 
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
 
     const [formProviderMethods] = useLoginForm(defaultEmail);

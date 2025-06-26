@@ -2,12 +2,12 @@
 
 import { TextInput, TextInputProps } from './TextInput';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextInputControlledProps = {
     name: string;
-    render: (input: JSX.Element) => ReactElement<any, any> | null;
+    render: (input: React.ReactNode) => React.ReactNode | null;
     textInputProps: Pick<
         TextInputProps,
         | 'disabled'

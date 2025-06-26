@@ -6,13 +6,13 @@ import { GtmMessageType } from 'gtm/enums/GtmMessageType';
 import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import useTranslation from 'next-translate/useTranslation';
-import { ReactElement, useEffect, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 
 type ErrorPopupProps = {
     fields: {
         [fieldName: string]: {
             name: string;
-            label: string | ReactElement;
+            label: string | ReactNode;
             errorMessage?: string | undefined;
         };
     };

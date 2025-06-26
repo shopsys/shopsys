@@ -1,7 +1,7 @@
 'use client';
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'types/simpleNavigation';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -16,7 +16,7 @@ type SubMenuProps = {
 
 export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const isUserLoggedIn = useIsUserLoggedIn();
     const [storesUrl, loginUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
         ['/stores', '/login', '/product-comparison', '/wishlist'],

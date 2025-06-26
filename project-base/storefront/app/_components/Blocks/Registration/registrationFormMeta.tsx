@@ -14,9 +14,9 @@ import {
     validateFirstName,
     validateLastName,
     validatePassword,
+    validatePasswordConfirm,
     validatePostcode,
     validatePrivacyPolicy,
-    validatePasswordConfirm,
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
@@ -101,7 +101,7 @@ export type RegistrationFormMetaType = {
     fields: {
         [key in keyof RegistrationFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | React.ReactNode;
             errorMessage: string | undefined;
         };
     };

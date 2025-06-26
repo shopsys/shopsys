@@ -6,16 +6,13 @@ import {
     TypeCategoryDetailQuery,
     TypeCategoryDetailQueryVariables,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.ssr';
-import { TypeProductOrderingModeEnum, TypeProductFilter } from 'graphql/types';
-import { wait } from 'utils/wait';
+import { TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
 
 export async function getCategoryDetailQuery(
     urlSlug: string,
     orderingMode: TypeProductOrderingModeEnum,
     filter: TypeProductFilter | undefined,
 ) {
-    await wait(5000);
-
     const result = await createQuery<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(
         CategoryDetailQueryDocument,
         {

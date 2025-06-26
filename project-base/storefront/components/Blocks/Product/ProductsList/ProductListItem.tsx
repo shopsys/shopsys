@@ -6,8 +6,8 @@ import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -67,7 +67,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
         },
         ref,
     ) => {
-        const { url } = useDomainConfig();
+        const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
         const { t } = useTranslation();
         const { canSeePrices } = useAuthorization();
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import Head from 'next/head';
 import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
@@ -10,7 +10,7 @@ type BreadcrumbsMetadataProps = {
 };
 
 export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs }) => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
 
     return (
         <Head>

@@ -3,7 +3,7 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -12,7 +12,7 @@ import { useFocusTrap } from 'utils/useFocusTrap';
 
 export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
     const contentRef = useRef<HTMLDivElement>(null);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TypeHreflangLink } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import Head from 'next/head';
@@ -48,7 +48,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
     });
 
     const currentUri = useRouter().asPath;
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const currentUrlWithDomain = url.substring(0, url.length - 1) + currentUri;
 
     const hreflangLinks = hreflangLinksSeoPage || defaultHreflangLinks;

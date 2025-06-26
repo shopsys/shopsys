@@ -13,6 +13,7 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         middlewarePrefetch: 'strict',
+        optimizePackageImports: ['@urql/core', 'framer-motion', 'react-toastify', 'lodash-es'],
     },
     reactStrictMode: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
@@ -83,9 +84,56 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-    // FE build error fix: "ModuleNotFoundError: Module not found: Error: Can't resolve 'net' in '/app/node_modules/@node-redis/client/dist/lib/client'"
-    // https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-761853289
-    webpack: (config, { isServer }) => {
+    webpack: (config, { isServer, dev }) => {
+        if (!dev && !isServer) {
+            config.optimization.splitChunks = {
+                chunks: 'all',
+                minSize: 20000,
+                maxSize: 200000, // 200KB max per chunk
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all',
+                        maxSize: 150000, // Smaller vendor chunks
+                    },
+                    urql: {
+                        test: /[\\/]node_modules[\\/](@urql|urql)[\\/]/,
+                        name: 'urql',
+                        chunks: 'all',
+                        priority: 10,
+                        maxSize: 100000,
+                    },
+                    react: {
+                        test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                        name: 'react',
+                        chunks: 'all',
+                        priority: 10,
+                    },
+                    sentry: {
+                        test: /[\\/]node_modules[\\/]@sentry[\\/]/,
+                        name: 'sentry',
+                        chunks: 'all',
+                        priority: 10,
+                        maxSize: 120000, // Limit sentry chunk size
+                    },
+                    // Add more granular splitting
+                    ui: {
+                        test: /[\\/]node_modules[\\/](framer-motion|react-toastify)[\\/]/,
+                        name: 'ui-libs',
+                        chunks: 'all',
+                        priority: 9,
+                    },
+                    utils: {
+                        test: /[\\/]node_modules[\\/](lodash|date-fns|uuid)[\\/]/,
+                        name: 'utils',
+                        chunks: 'all',
+                        priority: 8,
+                    },
+                },
+            };
+        }
+
         config.resolve.fallback = {
             child_process: false,
             fs: false,
@@ -149,10 +197,14 @@ const sentryConfig = {
     disableLogger: true,
     bundleSizeOptimizations: {
         excludeDebugStatements: true,
+        excludeTracing: process.env.NODE_ENV === 'production', // Exclude tracing in production
         // all bellow - remove (set false) if you want to use replays
         excludeReplayShadowDom: true,
         excludeReplayIframe: true,
         excludeReplayWorker: true,
+        excludeReplayCanvas: true,
+        excludeReplayMask: true,
+        excludeReplayCompressionWorker: true,
     },
 };
 

@@ -34,7 +34,7 @@ type NewsletterFormMetaType = {
     fields: {
         [key in keyof NewsletterFormType]: {
             name: key;
-            label: string | JSX.Element;
+            label: string | React.ReactNode;
             errorMessage: string | undefined;
         };
     };

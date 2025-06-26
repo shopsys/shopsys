@@ -1,10 +1,10 @@
 'use client';
 
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import Head from 'next/head';
 
 export const LogoMetadata: FC = () => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const logoUrl = 'images/logo.svg';
 
     return (

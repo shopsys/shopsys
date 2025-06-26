@@ -3,7 +3,7 @@
 import { Loader } from 'components/Basic/Loader/Loader';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import DropzoneControlled from 'components/Forms/Dropzone/DropzoneControlled';
-import { Form, FormContentWrapper, FormBlockWrapper, FormHeading, FormButtonWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -13,7 +13,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useComplaintForm, useComplaintFormMeta } from 'components/Pages/Customer/Complaints/complaintFormMeta';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateComplaint } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
@@ -41,7 +41,7 @@ type CreateComplaintPopupProps = {
 export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid = null, orderItem = null }) => {
     const router = useRouter();
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [customerComplaintsUrl] = getInternationalizedStaticUrls(['/customer/complaints'], url);
     const [, createComplaint] = useCreateComplaint();
     const user = useCurrentCustomerData();

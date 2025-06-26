@@ -1,9 +1,9 @@
 import { StateCreator } from 'zustand';
 
 export type PortalSlice = {
-    portalContent: JSX.Element | null;
+    portalContent: React.ReactNode | null;
 
-    updatePortalContent: (updatedPopupContent: JSX.Element | null) => void;
+    updatePortalContent: (updatedPopupContent: React.ReactNode | null) => void;
 };
 
 export const createPortalSlice: StateCreator<PortalSlice> = (set) => ({

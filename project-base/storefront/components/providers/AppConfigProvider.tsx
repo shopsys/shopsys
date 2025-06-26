@@ -12,7 +12,7 @@ export type AppConfig = {
 export const AppConfigContext = createContext<AppConfig | null>(null);
 
 type AppConfigProviderProps = {
-    settings: Exclude<TypeSettingsQuery['settings'], null>;
+    settings: TypeSettingsQuery['settings'] | undefined;
     domainConfig: DomainConfigType;
     staticRewritePaths: Record<string, string>;
 };
@@ -23,6 +23,10 @@ export const AppConfigProvider: FC<AppConfigProviderProps> = ({
     staticRewritePaths,
     children,
 }) => {
+    if (!settings) {
+        throw new Error('Failed to fetch settings');
+    }
+
     return (
         <AppConfigContext.Provider
             value={{

@@ -1,7 +1,7 @@
 'use client';
 
 import { GoogleMapMarker } from './GoogleMapMarker';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import GoogleMapReact from 'google-map-react';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -59,7 +59,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     shouldCenterToUserCoordinates = true,
 }) => {
     const googleMapApiKey = getPublicConfigProperty('googleMapApiKey', '');
-    const { mapSetting } = useDomainConfig();
+    const { mapSetting } = useAppConfig((appConfig) => appConfig.domainConfig);
     const defaultLatitude = latitude ? parseFloat(latitude) : mapSetting.latitude;
     const defaultLongitude = longitude ? parseFloat(longitude) : mapSetting.longitude;
     const [activeMarkerIdentifier, setActiveMarkerIdentifier] = useState<string>('');

@@ -1,6 +1,7 @@
 import { BlogCategoryHeader } from 'app/_components/Page/BlogCategory/BlogCategoryHeader';
 import { getBlogCategoriesQuery } from 'app/_queries/getBlogCategoriesQuery';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.ssr';
 
@@ -14,7 +15,7 @@ export const BlogLayout: FC<BlogLayoutProps> = async ({ children, blogCategory, 
     const blogCategoriesData = await getBlogCategoriesQuery();
 
     return (
-        <>
+        <VerticalStack gap="lg">
             {blogCategory && (
                 <BlogCategoryHeader
                     description={blogCategory.description}
@@ -34,6 +35,6 @@ export const BlogLayout: FC<BlogLayoutProps> = async ({ children, blogCategory, 
                     </div>
                 </div>
             </Webline>
-        </>
+        </VerticalStack>
     );
 };

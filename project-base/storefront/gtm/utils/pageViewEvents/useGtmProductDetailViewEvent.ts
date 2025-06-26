@@ -1,5 +1,5 @@
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useGtmContext } from 'gtm/context/GtmProvider';
@@ -13,7 +13,7 @@ export const useGtmProductDetailViewEvent = (
     isProductFetching: boolean,
 ): void => {
     const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
-    const { url, currencyCode } = useDomainConfig();
+    const { url, currencyCode } = useAppConfig((appConfig) => appConfig.domainConfig);
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
     const { canSeePrices } = useAuthorization();
 

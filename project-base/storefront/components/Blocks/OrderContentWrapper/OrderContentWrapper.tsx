@@ -2,7 +2,7 @@
 
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 
 type OrderContentWrapperProps = {
     activeStep: number;
@@ -14,7 +14,7 @@ export const OrderContentWrapper: FC<OrderContentWrapperProps> = ({
     isTransportOrPaymentLoading,
     children,
 }) => {
-    const { url } = useDomainConfig();
+    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
 
     return (
         <>
