@@ -27,7 +27,9 @@ export default class EntityUrlsRow {
         });
 
         _this.$radio.change(() => {
-            const $allRadioButtons = _this.$radio.closest('table').find('.js-entity-url-list-select-main');
+            const $allRadioButtons = _this.$radio
+                .closest('.js-entity-url-list-container')
+                .find('.js-entity-url-list-select-main');
             $allRadioButtons.each(function () {
                 _this.updateMain($(this));
             });
