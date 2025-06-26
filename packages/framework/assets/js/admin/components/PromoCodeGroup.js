@@ -6,15 +6,15 @@ import Register from '../../common/utils/Register';
     Shopsys.promoCode = Shopsys.promoCode || {};
 
     Shopsys.promoCode.PromoCodeGroup = function ($promoCodeGroup) {
-        var $rows = $promoCodeGroup.closest('.js-grid-row');
-        var $firstRow = $promoCodeGroup.first().closest('.js-grid-row');
-        var prefix = $firstRow.filterAllNodes('.js-promo-code-mass').attr('data-promo-code-prefix');
+        let $rows = $promoCodeGroup.closest('.js-grid-row');
+        const $firstRow = $promoCodeGroup.first().closest('.js-grid-row');
+        const prefix = $firstRow.filterAllNodes('.js-promo-code-mass').attr('data-promo-code-prefix');
 
         this.init = () => {
             $rows.addClass('display-none');
 
-            var unpackButtonHtml = `<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="${prefix}">${Translator.trans('Expand')}</span>`;
-            var $parentRow = $(
+            const unpackButtonHtml = `<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="${prefix}">${Translator.trans('Expand')}</span>`;
+            const $parentRow = $(
                 '<tr class="table-grid__row js-grid-row background-color-ddd">' +
                     '<td colspan="2" class="table-grid__cell">' +
                     Translator.trans('Bulk coupons with prefix') +
@@ -39,8 +39,8 @@ import Register from '../../common/utils/Register';
 
             $(`.js-promo-code-group-unpack[data-promo-code-prefix="${prefix}"]`).click(function () {
                 $(this).text((_i, text) => {
-                    var pack = Translator.trans('Collapse');
-                    var unpack = Translator.trans('Expand');
+                    const pack = Translator.trans('Collapse');
+                    const unpack = Translator.trans('Expand');
                     return text === unpack ? pack : unpack;
                 });
                 $rows.toggleClass('display-none');
@@ -53,10 +53,10 @@ import Register from '../../common/utils/Register';
             return $.grep(array, (el, index) => index === $.inArray(el, array));
         }
 
-        var prefixJsClasses = [];
+        let prefixJsClasses = [];
 
         $container.filterAllNodes('.js-promo-code-mass').each(function () {
-            var prefixJsClass = $(this).attr('data-promo-code-prefix-js-class');
+            const prefixJsClass = $(this).attr('data-promo-code-prefix-js-class');
             if ($(this).attr('data-promo-code-group-enabled') === '1') {
                 prefixJsClasses.push(prefixJsClass);
             }
@@ -64,9 +64,9 @@ import Register from '../../common/utils/Register';
 
         prefixJsClasses = arrayUnique(prefixJsClasses);
 
-        for (var i = 0; i < prefixJsClasses.length; i++) {
+        for (let i = 0; i < prefixJsClasses.length; i++) {
             const $promoCodeGroup = $(`.${prefixJsClasses[i]}`);
-            var promoCodeGroup = new Shopsys.promoCode.PromoCodeGroup($promoCodeGroup);
+            const promoCodeGroup = new Shopsys.promoCode.PromoCodeGroup($promoCodeGroup);
             promoCodeGroup.init();
         }
     });

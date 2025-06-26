@@ -4,7 +4,10 @@ import { createLoaderOverlay, removeLoaderOverlay, showLoaderOverlay } from './l
 
 export default class Ajax {
     static ajax(options) {
-        let loaderOverlayTimeout;
+        const loaderOverlayTimeout = setTimeout(() => {
+            showLoaderOverlay($loaderOverlay);
+        }, options.overlayDelay);
+
         const defaults = {
             loaderElement: undefined,
             loaderMessage: undefined,
@@ -12,6 +15,7 @@ export default class Ajax {
             error: Ajax.showDefaultError,
             complete: () => {},
         };
+
         options = $.extend(defaults, options);
         const userCompleteCallback = options.complete;
         const $loaderOverlay = createLoaderOverlay(options.loaderElement, options.loaderMessage);
@@ -29,10 +33,6 @@ export default class Ajax {
                 userErrorCallback.apply(this, [jqXHR]);
             }
         };
-
-        loaderOverlayTimeout = setTimeout(() => {
-            showLoaderOverlay($loaderOverlay);
-        }, options.overlayDelay);
         $.ajax(options);
     }
 

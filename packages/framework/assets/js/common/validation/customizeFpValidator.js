@@ -139,7 +139,7 @@ FpJsFormValidator.getInputValue = element => {
         return $(element.domNode).find('.js-file-upload-uploaded-file').toArray();
     }
     if (element.type === 'Shopsys\\FrameworkBundle\\Form\\ProductsType') {
-        var value = [];
+        const value = [];
         $(element.domNode)
             .find('.js-products-picker-item-input')
             .each(function () {

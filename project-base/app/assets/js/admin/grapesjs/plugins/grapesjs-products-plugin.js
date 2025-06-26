@@ -155,7 +155,7 @@ export default grapesjs.plugins.add('products', editor => {
             return el;
         },
 
-        onEvent({ component, trait }) {
+        onEvent({ component }) {
             const values = this.tagifyInstance.value;
 
             component.addAttributes({
@@ -163,7 +163,7 @@ export default grapesjs.plugins.add('products', editor => {
             });
         },
 
-        onUpdate({ component, trait }) {
+        onUpdate({ component }) {
             const values = component.getAttributes()[dataProducts];
 
             if (!values) {
