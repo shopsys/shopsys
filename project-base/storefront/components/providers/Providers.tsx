@@ -32,20 +32,20 @@ async function DeferredProviders({ children }: { children: React.ReactNode }) {
     // Use Promise.all for better performance when all are needed
     // and handle errors more gracefully
     try {
-        const [user, initialState, customerUserRoles] = await Promise.all([
-            getCurrentCustomerData().catch(() => undefined),
-            getInitialProductListState().catch(() => ({})),
-            getCurrentCustomerUserRoles().catch(() => []),
-        ]);
+        console.time('⏱️ Providers promises data loading');
+        const userPromise = getCurrentCustomerData();
+        const initialProductListStatePromise = getInitialProductListState();
+        const customerUserRolesPromise = getCurrentCustomerUserRoles();
+        console.timeEnd('⏱️ Providers promises data loading');
 
         return (
-            <AuthProvider user={user}>
-                <AuthorizationProvider customerUserRoles={customerUserRoles}>
+            <AuthProvider user={await userPromise}>
+                <AuthorizationProvider customerUserRoles={await customerUserRolesPromise}>
                     <MotionConfig reducedMotion="user">
                         <LazyMotion features={framerMotionPlugins}>
-                            <ProductListProvider initialState={initialState}>
+                            <ProductListProvider initialState={await initialProductListStatePromise}>
                                 <ToastifyProvider>
-                                    <AuthInfo isUserLoggedIn={!!user} />
+                                    <AuthInfo isUserLoggedIn={!!(await userPromise)} />
                                     <CookiesStoreSync />
                                     <BroadcastChannelProvider />
                                     {children}
@@ -82,7 +82,7 @@ async function DeferredProviders({ children }: { children: React.ReactNode }) {
 }
 
 export default async function Providers({ children }: ProvidersProps) {
-    const cookieStoreStateFromServer = await getCookieStoreStateFromServer();
+    const cookieStoreStateFromServerPromise = getCookieStoreStateFromServer();
     const domainConfig = getDomainConfig((await headers()).get('host')!);
     const { defaultLocale: lang } = domainConfig;
 
@@ -91,7 +91,7 @@ export default async function Providers({ children }: ProvidersProps) {
     const dictionaryPromise = getDictionary(lang);
 
     return (
-        <CookiesStoreProvider cookieStoreStateFromServer={cookieStoreStateFromServer}>
+        <CookiesStoreProvider cookieStoreStateFromServer={await cookieStoreStateFromServerPromise}>
             <AppConfigProvider
                 domainConfig={domainConfig}
                 settings={(await settingsPromise).data?.settings}
