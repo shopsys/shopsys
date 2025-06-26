@@ -39,8 +39,8 @@ export default class Statistics {
     static lineChartForCron ($chartCanvas) {
         const originalLineDraw = Chart.controllers.line.prototype.draw;
         Chart.helpers.extend(Chart.controllers.line.prototype, {
-            draw: function () {
-                originalLineDraw.apply(this, arguments);
+            draw: function (...args) {
+                originalLineDraw.apply(this, args);
 
                 const chart = this.chart;
                 const ctx = chart.chart.ctx;
