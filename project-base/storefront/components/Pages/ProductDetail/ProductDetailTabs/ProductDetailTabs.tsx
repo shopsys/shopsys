@@ -176,6 +176,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             {files.map((file) => (
                                 <li key={file.url} className="">
                                     <a
+                                        aria-label={t('Download {{file}}', { file: file.anchorText })}
                                         className="bg-background-more flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
                                         href={file.url}
                                     >
