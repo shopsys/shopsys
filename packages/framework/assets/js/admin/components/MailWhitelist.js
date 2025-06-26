@@ -1,8 +1,11 @@
 import Register from '../../common/utils/Register';
-import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
+import {
+    addNewItemToCollection,
+    removeItemFromCollection,
+} from '../validation/customization/customizeCollectionBundle';
 
 export default class MailWhitelist {
-    static init ($container) {
+    static init($container) {
         const $mailWhitelistItemAdd = $container.filterAllNodes('.js-mail-whitelist-item-add');
         const $mailWhitelist = $container.filterAllNodes('.js-mail-whitelist');
 
@@ -23,9 +26,7 @@ export default class MailWhitelist {
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
             const $item = $($.parseHTML(item));
             $item.data('index', index);
             $item.find('input').val('/@example\\.com$/');
@@ -33,7 +34,7 @@ export default class MailWhitelist {
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
 
             addNewItemToCollection('.js-mail-whitelist', index);
             MailWhitelist.refreshCount($collection);
@@ -44,7 +45,7 @@ export default class MailWhitelist {
         MailWhitelist.refreshCount($mailWhitelist);
     }
 
-    static refreshCount ($collection) {
+    static refreshCount($collection) {
         if ($collection.find('.js-mail-whitelist-item').length === 0) {
             $collection.find('.js-mail-whitelist-empty-item').show();
         } else {
@@ -53,4 +54,4 @@ export default class MailWhitelist {
     }
 }
 
-(new Register()).registerCallback(MailWhitelist.init, 'MailWhitelist.init');
+new Register().registerCallback(MailWhitelist.init, 'MailWhitelist.init');

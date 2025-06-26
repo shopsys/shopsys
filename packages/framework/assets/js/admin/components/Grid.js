@@ -2,28 +2,27 @@ import { KeyCodes } from '../../common/utils/KeyCodes';
 import Register from '../../common/utils/Register';
 
 export default class Grid {
-
-    static bindGoTo () {
+    static bindGoTo() {
         const $button = $(this).find('.js-grid-go-to-button');
         const $input = $(this).find('.js-grid-go-to-input');
 
-        $input.on('keydown.gridGoTo', (event) => {
-            if (event.keyCode == KeyCodes.ENTER) {
+        $input.on('keydown.gridGoTo', event => {
+            if (event.keyCode === KeyCodes.ENTER) {
                 $button.trigger('click.gridGoTo', event);
 
                 return false;
             }
         });
 
-        $button.on('click.gridGoTo', (event) => {
+        $button.on('click.gridGoTo', event => {
             document.location = $(event.currentTarget).data('url').replace('--page--', $input.val());
             return false;
         });
     }
 
-    static init () {
+    static init() {
         $('.js-grid-go-to').each(Grid.bindGoTo);
     }
 }
 
-(new Register()).registerCallback(Grid.init, 'Grid.init');
+new Register().registerCallback(Grid.init, 'Grid.init');

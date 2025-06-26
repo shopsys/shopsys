@@ -1,22 +1,18 @@
 import Register from '../../../common/utils/Register';
 
-export default function validationStore ($container) {
+export default function validationStore($container) {
     const storeForm = $container.filterAllNodes('form[name="store_form"]');
     const storeFormExternalId = $container.filterAllNodes('#store_form_externalId');
     storeForm.jsFormValidator({
         callbacks: {
-            validateOpeningHours: function () {
-
-            }
-        }
+            validateOpeningHours: () => {},
+        },
     });
     storeFormExternalId.jsFormValidator({
         callbacks: {
-            sameStoreExternalIdValidation: function () {
-
-            }
-        }
+            sameStoreExternalIdValidation: () => {},
+        },
     });
 }
 
-(new Register()).registerCallback(validationStore, 'validationStore');
+new Register().registerCallback(validationStore, 'validationStore');

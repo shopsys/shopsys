@@ -1,22 +1,20 @@
 import Register from '../../common/utils/Register';
 
 export default class DynamicPlaceholder {
-
-    constructor ($input) {
+    constructor($input) {
         this.$input = $input;
-        this.$sourceInput = $('#' + $input.data('placeholder-source-input-id'));
-        const _this = this;
+        this.$sourceInput = $(`#${$input.data('placeholder-source-input-id')}`);
 
-        this.$sourceInput.change(() => DynamicPlaceholder.updatePlaceholder(_this));
-        DynamicPlaceholder.updatePlaceholder(_this);
+        this.$sourceInput.change(() => DynamicPlaceholder.updatePlaceholder(this));
+        DynamicPlaceholder.updatePlaceholder(this);
     }
 
-    static updatePlaceholder (dynamicPlaceholder) {
+    static updatePlaceholder(dynamicPlaceholder) {
         dynamicPlaceholder.$input.attr('placeholder', dynamicPlaceholder.$sourceInput.val());
         dynamicPlaceholder.$input.trigger('placeholderChange');
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-dynamic-placeholder').each(function () {
             // eslint-disable-next-line no-new
             new DynamicPlaceholder($(this));
@@ -24,4 +22,4 @@ export default class DynamicPlaceholder {
     }
 }
 
-(new Register()).registerCallback(DynamicPlaceholder.init, 'DynamicPlaceholder.init');
+new Register().registerCallback(DynamicPlaceholder.init, 'DynamicPlaceholder.init');

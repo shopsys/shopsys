@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 
 const ncp = require('ncp').ncp;
-const fs = require('fs');
+const fs = require('node:fs');
 
 const assets = [
     {
         source: 'web/bundles/fpjsformvalidator',
-        destination: 'assets/js/bundles/fpjsformvalidator'
+        destination: 'assets/js/bundles/fpjsformvalidator',
     },
     {
         source: 'node_modules/@shopsys/framework/public/admin',
-        destination: 'web/public/admin'
+        destination: 'web/public/admin',
     },
     {
         source: 'assets/public',
-        destination: 'web/public'
-    }
+        destination: 'web/public',
+    },
 ];
 
 assets.forEach(item => {

@@ -1,30 +1,29 @@
 import Register from '../../common/utils/Register';
 
 export default class SymfonyToolbarSupport {
-
-    static registerOnToolbarShow (callback) {
+    static registerOnToolbarShow(callback) {
         SymfonyToolbarSupport.onToolbarShowCallbacks.push(callback);
     }
 
-    static registerOnToolbarHide (callback) {
+    static registerOnToolbarHide(callback) {
         SymfonyToolbarSupport.onToolbarHideCallbacks.push(callback);
     }
 
-    static notifyOnToolbarShow () {
+    static notifyOnToolbarShow() {
         for (const i in SymfonyToolbarSupport.onToolbarShowCallbacks) {
             const callback = SymfonyToolbarSupport.onToolbarShowCallbacks[i];
             callback.call();
         }
     }
 
-    static notifyOnToolbarHide () {
+    static notifyOnToolbarHide() {
         for (const i in SymfonyToolbarSupport.onToolbarHideCallbacks) {
             const callback = SymfonyToolbarSupport.onToolbarHideCallbacks[i];
             callback.call();
         }
     }
 
-    static init () {
+    static init() {
         $('.sf-toolbar').off('click', '[id^="sfMiniToolbar-"] > a');
         $('.sf-toolbar').off('click', '[id^="sfToolbarMainContent-"] > a.hide-button');
 
@@ -41,4 +40,4 @@ export default class SymfonyToolbarSupport {
 SymfonyToolbarSupport.onToolbarShowCallbacks = SymfonyToolbarSupport.onToolbarShowCallbacks || [];
 SymfonyToolbarSupport.onToolbarHideCallbacks = SymfonyToolbarSupport.onToolbarHideCallbacks || [];
 
-(new Register()).registerCallback(SymfonyToolbarSupport.init, 'SymfonyToolbarSupport.init');
+new Register().registerCallback(SymfonyToolbarSupport.init, 'SymfonyToolbarSupport.init');

@@ -3,27 +3,21 @@
 import Register from '../../../common/utils/Register';
 import { VALIDATION_GROUP_DEFAULT } from './validation';
 
-export default function validationAdvert () {
+export default function validationAdvert() {
     const $advertForm = $('form[name="advert_form"]');
 
-    const getCheckedType = function () {
-        return $advertForm.find('input[name="advert_form[settings][type]"]:checked').val();
-    };
+    const getCheckedType = () => $advertForm.find('input[name="advert_form[settings][type]"]:checked').val();
 
-    const initAdvertForm = function () {
-        $advertForm
-            .find('.js-advert-type-content').hide()
-            .filter('[data-type=' + getCheckedType() + ']').show();
+    const initAdvertForm = () => {
+        $advertForm.find('.js-advert-type-content').hide().filter(`[data-type=${getCheckedType()}]`).show();
     };
 
     $advertForm.find('input[name="advert_form[settings][type]"]').change(initAdvertForm);
     initAdvertForm();
 
-    const getPositionName = function () {
-        return $('select[name="advert_form[settings][positionName]"]').val();
-    };
+    const getPositionName = () => $('select[name="advert_form[settings][positionName]"]').val();
 
-    const initAdvertProductList = function () {
+    const initAdvertProductList = () => {
         if (getPositionName() === 'productListSecondRow') {
             $advertForm.find('.js-category-tree-form-children-container').closest('.form-line').show();
         } else {
@@ -35,7 +29,7 @@ export default function validationAdvert () {
     initAdvertProductList();
 
     $advertForm.jsFormValidator({
-        groups: function () {
+        groups: () => {
             const groups = [VALIDATION_GROUP_DEFAULT];
 
             const checkedType = getCheckedType();
@@ -46,8 +40,8 @@ export default function validationAdvert () {
             }
 
             return groups;
-        }
+        },
     });
 }
 
-(new Register()).registerCallback(validationAdvert, 'validationAdvert');
+new Register().registerCallback(validationAdvert, 'validationAdvert');

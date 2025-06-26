@@ -1,6 +1,6 @@
+import Translator from 'bazinga-translator';
 import { KeyCodes } from '../../common/utils/KeyCodes';
 import Register from '../../common/utils/Register';
-import Translator from 'bazinga-translator';
 
 const defaults = {
     content: '',
@@ -11,13 +11,12 @@ const defaults = {
     wide: false,
     cssClass: '',
     closeOnBgClick: true,
-    eventClose: function () {},
-    eventContinue: function () {},
-    eventCancel: function () {}
+    eventClose: () => {},
+    eventContinue: () => {},
+    eventCancel: () => {},
 };
 
 export default class Window {
-
     /**
      * content (string)
      * buttonClose (bool)
@@ -27,10 +26,15 @@ export default class Window {
      * eventContinue (function)
      * urlContinue (string)
      */
-    constructor (inputOptions) {
+    constructor(inputOptions) {
         this.$activeWindow = null;
 
-        this.options = { textContinue: Translator.trans('Yes'), textCancel: Translator.trans('No'), ...defaults, ...inputOptions };
+        this.options = {
+            textContinue: Translator.trans('Yes'),
+            textCancel: Translator.trans('No'),
+            ...defaults,
+            ...inputOptions,
+        };
 
         if (this.$activeWindow !== null) {
             this.$activeWindow.trigger('windowFastClose');
@@ -61,17 +65,17 @@ export default class Window {
 
         this.$window.append($windowContent);
         if (this.options.buttonClose) {
-            const $windowButtonClose = $('<a href="#" class="window-button-close window__close test-window-button-close" title="' + Translator.trans('Close (Esc)') + '">X</a>');
-            $windowButtonClose
-                .on('click.window', _this.options.eventClose)
-                .on('click.windowClose', function () {
-                    _this.$window.trigger('windowClose');
-                    return false;
-                });
+            const $windowButtonClose = $(
+                `<a href="#" class="window-button-close window__close test-window-button-close" title="${Translator.trans('Close (Esc)')}">X</a>`,
+            );
+            $windowButtonClose.on('click.window', _this.options.eventClose).on('click.windowClose', () => {
+                _this.$window.trigger('windowClose');
+                return false;
+            });
             this.$window.append($windowButtonClose);
         }
 
-        $('body').keyup(function (event) {
+        $('body').keyup(event => {
             if (event.keyCode === KeyCodes.ESCAPE) {
                 _this.$window.trigger('windowClose');
                 return false;
@@ -80,12 +84,14 @@ export default class Window {
 
         const $windowActions = $('<div class="window__actions"></div>');
         if (this.options.buttonCancel) {
-            const $windowButtonCancel = $('<a href="#" class="window__actions__btn window-button-cancel btn btn--default"></a>');
+            const $windowButtonCancel = $(
+                '<a href="#" class="window__actions__btn window-button-cancel btn btn--default"></a>',
+            );
             $windowButtonCancel
                 .text(_this.options.textCancel)
                 .on('click.windowEventCancel', this.options.eventCancel)
                 .on('click.windowEventClose', this.options.eventClose)
-                .on('click.windowClose', function () {
+                .on('click.windowClose', () => {
                     _this.$window.trigger('windowClose');
                     return false;
                 });
@@ -93,7 +99,9 @@ export default class Window {
         }
 
         if (this.options.buttonContinue) {
-            const $windowButtonContinue = $('<a href="" class="window__actions__btn window-button-continue btn test-window-button-continue"></a>');
+            const $windowButtonContinue = $(
+                '<a href="" class="window__actions__btn window-button-continue btn test-window-button-continue"></a>',
+            );
             $windowButtonContinue
                 .text(this.options.textContinue)
                 .attr('href', this.options.urlContinue)
@@ -111,17 +119,16 @@ export default class Window {
             _this.$window.append($windowActions);
         }
 
-        (new Register()).registerNewContent(this.$window);
+        new Register().registerNewContent(this.$window);
 
         this.show();
     }
 
-    show () {
+    show() {
         Window.showOverlay();
         if (this.options.closeOnBgClick) {
-            const _this = this;
-            Window.getOverlay().click(function () {
-                _this.$window.trigger('windowClose');
+            Window.getOverlay().click(() => {
+                this.$window.trigger('windowClose');
                 return false;
             });
         }
@@ -132,7 +139,7 @@ export default class Window {
         this.$window.fadeIn('fast');
     }
 
-    moveToCenter () {
+    moveToCenter() {
         let relativeY = window.innerHeight / 2 - this.$window.height() / 2;
         const minRelativeY = window.innerHeight * 0.1;
 
@@ -142,14 +149,14 @@ export default class Window {
 
         const top = Math.round($(window).scrollTop() + relativeY);
 
-        this.$window.css({ top: top + 'px' });
+        this.$window.css({ top: `${top}px` });
     }
 
-    getWindow () {
+    getWindow() {
         return this.$window;
     }
 
-    static getMainContainer () {
+    static getMainContainer() {
         let $mainContainer = $('#window-main-container');
         if ($mainContainer.length === 0) {
             $mainContainer = $('<div id="window-main-container"></div>');
@@ -158,7 +165,7 @@ export default class Window {
         return $mainContainer;
     }
 
-    static getOverlay () {
+    static getOverlay() {
         let $overlay = $('#js-overlay');
         if ($overlay.length === 0) {
             $overlay = $('<div id="js-overlay"></div>');
@@ -166,12 +173,12 @@ export default class Window {
         return $overlay;
     }
 
-    static showOverlay () {
+    static showOverlay() {
         const $overlay = Window.getOverlay();
         $('body').append($overlay);
     }
 
-    static hideOverlay () {
+    static hideOverlay() {
         if ($('#js-overlay').length !== 0) {
             $('#js-overlay').remove();
         }

@@ -1,5 +1,5 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('mail-template', editor => {
     editor.DomComponents.addType('wrapper', {
@@ -8,55 +8,55 @@ export default grapesjs.plugins.add('mail-template', editor => {
                 selectable: false,
                 highlightable: false,
                 droppable: false,
-                propagate: ['highlightable', 'selectable', 'droppable']
+                propagate: ['highlightable', 'selectable', 'droppable'],
             },
-            toHTML (opts) {
+            toHTML(_opts) {
                 const editable = this.findType('editable')[0];
                 return editable ? editable.getInnerHTML() : '';
-            }
+            },
         },
         view: {
-            onRender ({ el }) {
+            onRender({ el }) {
                 el.style.pointerEvents = 'none';
-            }
-        }
+            },
+        },
     });
 
     editor.DomComponents.addType('editable', {
-        isComponent: element => element.classList && element.classList.contains('gjs-editable'),
+        isComponent: element => element.classList?.contains('gjs-editable'),
         model: {
             defaults: {
                 removable: false,
                 draggable: false,
                 copyable: false,
-                propagate: []
-            }
+                propagate: [],
+            },
         },
         view: {
-            onRender ({ el }) {
+            onRender({ el }) {
                 el.style.pointerEvents = 'all';
-            }
-        }
+            },
+        },
     });
 
     editor.Components.addType('text-ckeditor', {
-        isComponent: element => element.classList && element.classList.contains('gjs-text-ckeditor'),
+        isComponent: element => element.classList?.contains('gjs-text-ckeditor'),
         extend: 'text',
         model: {
             defaults: {
                 attributes: {
                     class: ['gjs-text-ckeditor'],
-                    'data-gjs-type': 'text'
-                }
-            }
-        }
+                    'data-gjs-type': 'text',
+                },
+            },
+        },
     });
 
     editor.Blocks.add('text-ckeditor', {
         label: Translator.trans('Text'),
         category: Translator.trans('Basic objects'),
         attributes: { class: 'gjs-fonts gjs-f-text' },
-        content: { type: 'text-ckeditor', content: Translator.trans('Insert your text here'), activeOnRender: 1 }
+        content: { type: 'text-ckeditor', content: Translator.trans('Insert your text here'), activeOnRender: 1 },
     });
 
     const mailImageBlock = editor.BlockManager.get('image');

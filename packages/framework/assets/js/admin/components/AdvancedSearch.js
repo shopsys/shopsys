@@ -3,8 +3,7 @@ import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class AdvancedSearch {
-
-    constructor ($addRuleButton, $rulesContainer, $ruleTemplate) {
+    constructor($addRuleButton, $rulesContainer, $ruleTemplate) {
         $ruleTemplate.detach().removeClass('display-none').removeAttr('id').find('*[id]').removeAttr('id');
         $ruleTemplate.find('select.select2-hidden-accessible').select2('destroy');
 
@@ -12,8 +11,8 @@ export default class AdvancedSearch {
 
         this.updateAllValuesByOperator($rulesContainer);
 
-        $addRuleButton.click(function () {
-            AdvancedSearch.addRule($rulesContainer, $ruleTemplate, 'new_' + newRuleIndexCounter);
+        $addRuleButton.click(() => {
+            AdvancedSearch.addRule($rulesContainer, $ruleTemplate, `new_${newRuleIndexCounter}`);
             newRuleIndexCounter++;
             return false;
         });
@@ -25,7 +24,7 @@ export default class AdvancedSearch {
 
         $rulesContainer.on('change', '.js-advanced-search-rule-subject', function () {
             const $rule = $(this).closest('.js-advanced-search-rule');
-            AdvancedSearch.updateRule($rulesContainer, $rule, $(this).val(), 'new_' + newRuleIndexCounter);
+            AdvancedSearch.updateRule($rulesContainer, $rule, $(this).val(), `new_${newRuleIndexCounter}`);
             newRuleIndexCounter++;
         });
 
@@ -35,45 +34,50 @@ export default class AdvancedSearch {
         });
     }
 
-    static updateRule ($rulesContainer, $rule, filterName, newIndex) {
+    static updateRule($rulesContainer, $rule, filterName, newIndex) {
         $rule.addClass('in-disabled');
         Ajax.ajax({
             loaderElement: '#js-advanced-search-rules-box',
             url: $rulesContainer.data('rule-form-url'),
             type: 'post',
             data: {
-                filterName,
-                newIndex
+                filterName: filterName,
+                newIndex: newIndex,
             },
-            success: function (data) {
+            success: data => {
                 const $newRule = $($.parseHTML(data));
                 $rule.replaceWith($newRule);
 
-                (new Register()).registerNewContent($newRule);
-            }
+                new Register().registerNewContent($newRule);
+            },
         });
     }
 
-    static addRule ($rulesContainer, $ruleTemplate, newIndex) {
-        const ruleHtml = $ruleTemplate.clone().wrap('<div>').parent().html().replace(/__template__/g, newIndex);
+    static addRule($rulesContainer, $ruleTemplate, newIndex) {
+        const ruleHtml = $ruleTemplate
+            .clone()
+            .wrap('<div>')
+            .parent()
+            .html()
+            .replace(/__template__/g, newIndex);
         const $rule = $($.parseHTML(ruleHtml));
         $rule.appendTo($rulesContainer);
 
-        (new Register()).registerNewContent($rule);
+        new Register().registerNewContent($rule);
     }
 
-    updateAllValuesByOperator ($rulesContainer) {
+    updateAllValuesByOperator($rulesContainer) {
         $rulesContainer.find('.js-advanced-search-rule').each(function () {
             const operator = $(this).find('.js-advanced-search-rule-operator').val();
             AdvancedSearch.updateValueByOperator($rulesContainer, $(this), operator);
         });
     }
 
-    static updateValueByOperator ($rulesContainer, $rule, operator) {
+    static updateValueByOperator(_$rulesContainer, $rule, operator) {
         $rule.find('.js-advanced-search-rule-value').toggle(operator !== 'notSet' && operator !== 'notRegistered');
     }
 
-    static init ($container) {
+    static init($container) {
         const $addRuleButton = $container.filterAllNodes('#js-advanced-search-add-rule-button');
         const $rulesContainer = $container.filterAllNodes('#js-advanced-search-rules-container');
         const $ruleTemplate = $container.filterAllNodes('#js-advanced-search-rule-template');
@@ -83,7 +87,6 @@ export default class AdvancedSearch {
             new AdvancedSearch($addRuleButton, $rulesContainer, $ruleTemplate);
         }
     }
-
 }
 
-(new Register()).registerCallback(AdvancedSearch.init, 'AdvancedSearch.init');
+new Register().registerCallback(AdvancedSearch.init, 'AdvancedSearch.init');

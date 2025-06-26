@@ -1,9 +1,11 @@
 import Register from '../../common/utils/Register';
-import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
+import {
+    addNewItemToCollection,
+    removeItemFromCollection,
+} from '../validation/customization/customizeCollectionBundle';
 
 export default class PromoCodeLimits {
-
-    static init ($container) {
+    static init($container) {
         const $collection = $container.filterAllNodes('.js-limits');
 
         $collection.on('click', '.js-limits-item-remove', function (event) {
@@ -23,16 +25,14 @@ export default class PromoCodeLimits {
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
             const $item = $($.parseHTML(item));
             $item.data('index', index);
 
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
 
             addNewItemToCollection('.js-limits', index);
             PromoCodeLimits.refreshCount($collection);
@@ -43,7 +43,7 @@ export default class PromoCodeLimits {
         PromoCodeLimits.refreshCount($collection);
     }
 
-    static refreshCount ($collection) {
+    static refreshCount($collection) {
         if ($collection.find('.js-limits-item').length === 0) {
             $collection.find('.js-limits-empty-item').show();
         } else {
@@ -52,4 +52,4 @@ export default class PromoCodeLimits {
     }
 }
 
-(new Register()).registerCallback(PromoCodeLimits.init, 'PromoCodeLimits.init');
+new Register().registerCallback(PromoCodeLimits.init, 'PromoCodeLimits.init');

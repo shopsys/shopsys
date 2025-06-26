@@ -1,13 +1,14 @@
 import 'magnific-popup';
-import FormChangeInfo from './FormChangeInfo';
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import Register from '../../common/utils/Register';
-import Sortable from 'sortablejs';
+import FormChangeInfo from './FormChangeInfo';
 
 window.PickerInstances = {};
 
 export default class MultiplePicker {
-
-    constructor ($picker) {
+    constructor($picker) {
         this.instanceId = Object.keys(window.PickerInstances).length;
         window.PickerInstances[this.instanceId] = this;
 
@@ -22,39 +23,32 @@ export default class MultiplePicker {
         this.$itemsContainer.find('.js-picker-item').each(function () {
             _this.initItem($(this));
         });
-
-        this.$itemsContainer.each(function (index, element) {
-            Sortable.create(element, {
-                handle: '.js-picker-item-handle',
-                draggable: '.js-picker-item',
-                animation: 150,
-                onUpdate: _this.updateOrdering
-            });
+        this.$itemsContainer.sortable({
+            items: '.js-picker-item',
+            handle: '.js-picker-item-handle',
+            update: () => this.updateOrdering(),
         });
     }
 
-    openPickerWindow () {
-        const _this = this;
+    openPickerWindow() {
         $.magnificPopup.open({
-            items: { src: _this.$picker.data('picker-url').replace('__js_instance_id__', _this.instanceId) },
+            items: { src: this.$picker.data('picker-url').replace('__js_instance_id__', this.instanceId) },
             type: 'iframe',
-            closeOnBgClick: true
+            closeOnBgClick: true,
         });
 
         return false;
     }
 
-    initItem ($item) {
-        const _this = this;
-
-        _this.items.push($item);
-        (new Register()).registerNewContent($item);
+    initItem($item) {
+        this.items.push($item);
+        new Register().registerNewContent($item);
         $item.find('.js-picker-item-button-delete').click(() => {
-            _this.removeItem($item);
+            this.removeItem($item);
         });
     }
 
-    removeItem ($item) {
+    removeItem($item) {
         const Id = $item.find('.js-picker-item-input:first').val();
         delete this.items[this.findItemIndex(Id)];
         const Item = this.findItemIndex(Id);
@@ -72,7 +66,7 @@ export default class MultiplePicker {
         FormChangeInfo.showInfo();
     }
 
-    findItemIndex (Id) {
+    findItemIndex(Id) {
         for (const key in this.items) {
             if (this.items[key].find('.js-picker-item-input:first').val() === Id.toString()) {
                 return key;
@@ -82,37 +76,37 @@ export default class MultiplePicker {
         return null;
     }
 
-    reIndex () {
+    reIndex() {
         this.$itemsContainer.find('.js-picker-item-input').each((index, element) => {
             const name = $(element).attr('name');
-            const newName = name.substr(0, name.lastIndexOf('[') + 1) + index + ']';
+            const newName = `${name.substr(0, name.lastIndexOf('[') + 1) + index}]`;
             $(element).attr('name', newName);
         });
     }
 
-    updateHeader () {
+    updateHeader() {
         this.$header.toggle(this.items.length !== 0);
     }
 
-    updateOrdering () {
+    updateOrdering() {
         this.reIndex();
         FormChangeInfo.showInfo();
     }
 
-    removeItemById (Id) {
+    removeItemById(Id) {
         const $item = this.findItemById(Id);
         this.removeItem($item);
     }
 
-    findItemById (Id) {
+    findItemById(Id) {
         return this.items[this.findItemIndex(Id)];
     }
 
-    hasItem (Id) {
+    hasItem(Id) {
         return this.findItemIndex(Id) !== null;
     }
 
-    addItem ($selectedElement) {
+    addItem($selectedElement) {
         const nextIndex = this.$itemsContainer.find('.js-picker-item').length;
         const itemHtml = this.$picker.data('picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
@@ -126,7 +120,7 @@ export default class MultiplePicker {
         FormChangeInfo.showInfo();
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-picker').each(function () {
             // eslint-disable-next-line no-new
             new MultiplePicker($(this));
@@ -138,4 +132,4 @@ export default class MultiplePicker {
     }
 }
 
-(new Register().registerCallback(MultiplePicker.init, 'MultiplePicker.init'));
+new Register().registerCallback(MultiplePicker.init, 'MultiplePicker.init');

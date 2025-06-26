@@ -1,10 +1,9 @@
 import Ajax from '../../common/utils/Ajax';
-import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
+import Window from '../utils/Window';
 
 export default class OrderPreview {
-
-    constructor ($orderPreview) {
+    constructor($orderPreview) {
         const overflowHiddenClass = 'overflow-hidden';
         const overflowVisibleClass = 'overflow-visible';
 
@@ -18,60 +17,60 @@ export default class OrderPreview {
         this.showInWindowAfterLoad = false;
 
         let keepVisible = false;
-
-        const _this = this;
         this.$previewIcon
-            .mouseleave(function () {
+            .mouseleave(() => {
                 keepVisible = false;
-                setTimeout(function () {
+                setTimeout(() => {
                     if (!keepVisible) {
-                        _this.$previewBox.hide();
+                        this.$previewBox.hide();
                     }
                 }, 20); // Mouse needs some time to leave the icon and enter the $visibilityBox
             })
-            .click(function () {
+            .click(() => {
                 if (isLoaded) {
-                    _this.showInWindow();
+                    this.showInWindow();
                 } else {
-                    _this.showInWindowAfterLoad = true;
+                    this.showInWindowAfterLoad = true;
                 }
             })
             .hoverIntent({
                 interval: 200,
-                over: function () {
-                    _this.$previewBox.show();
+                over: () => {
+                    this.$previewBox.show();
                     $('body').find('.js-table-grid').removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
                     $('body').find('.js-table-touch').removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
 
-                    if (!_this.isLoaded && !_this.isLoading) {
-                        _this.isLoading = true;
+                    if (!this.isLoaded && !this.isLoading) {
+                        this.isLoading = true;
                         Ajax.ajax({
                             loaderElement: 'none',
-                            url: _this.url,
-                            success: (data) => _this.onLoadPreview(data)
+                            url: this.url,
+                            success: data => this.onLoadPreview(data),
                         });
                     }
                 },
-                out: function () {
+                out: () => {
                     $('body').find('.js-table-grid').removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
                     $('body').find('.js-table-touch').removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
-                }
+                },
             });
 
-        _this.$previewBox
-            .mouseenter(() => { keepVisible = true; })
-            .mouseleave(() => _this.$previewBox.hide());
+        this.$previewBox
+            .mouseenter(() => {
+                keepVisible = true;
+            })
+            .mouseleave(() => this.$previewBox.hide());
     }
 
-    showInWindow () {
+    showInWindow() {
         // eslint-disable-next-line no-new
         new Window({
             content: this.$previewBoxWindow.html(),
-            wide: true
+            wide: true,
         });
     }
 
-    onLoadPreview (responseHtml) {
+    onLoadPreview(responseHtml) {
         const windowPreviewThreshold = 500;
         this.isLoading = false;
         this.isLoaded = true;
@@ -82,7 +81,7 @@ export default class OrderPreview {
                 const tablePosition = $('body').find('.js-table-grid').offset().top;
                 const popupWindowPosition = $(this).offset().top;
 
-                if (((tablePosition + tableHeight) - popupWindowPosition) < windowPreviewThreshold) {
+                if (tablePosition + tableHeight - popupWindowPosition < windowPreviewThreshold) {
                     $(this).addClass('bottom');
                 }
             }
@@ -93,7 +92,7 @@ export default class OrderPreview {
         }
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-order-preview').each(function () {
             // eslint-disable-next-line no-new
             new OrderPreview($(this));
@@ -101,4 +100,4 @@ export default class OrderPreview {
     }
 }
 
-(new Register()).registerCallback(OrderPreview.init, 'OrderPreview.init');
+new Register().registerCallback(OrderPreview.init, 'OrderPreview.init');

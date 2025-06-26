@@ -1,16 +1,13 @@
 import Register from '../utils/Register';
 
 export default class CheckboxToggle {
-
-    constructor ($container) {
+    constructor($container) {
         const $checkboxToggles = $container.filterAllNodes('.js-checkbox-toggle');
 
-        $checkboxToggles.on('change', (event) => _this.onChange(event));
-
-        const _this = this;
-        $checkboxToggles.each(function (idx, elements) {
+        $checkboxToggles.on('change', event => this.onChange(event));
+        $checkboxToggles.each((_idx, elements) => {
             const $checkboxToggle = $(elements);
-            const $checkboxContainer = _this.findContainer($checkboxToggle);
+            const $checkboxContainer = this.findContainer($checkboxToggle);
 
             let show = $checkboxToggle.is(':checked');
             if ($checkboxToggle.hasClass('js-checkbox-toggle--inverted')) {
@@ -25,7 +22,7 @@ export default class CheckboxToggle {
         });
     }
 
-    onChange (event) {
+    onChange(event) {
         const $checkboxToggle = $(event.currentTarget);
         const $container = this.findContainer($checkboxToggle);
 
@@ -41,18 +38,18 @@ export default class CheckboxToggle {
         }
     }
 
-    findContainer ($checkboxToggle) {
+    findContainer($checkboxToggle) {
         if ($checkboxToggle.data('checkbox-toggle-container-id')) {
-            return $('#' + $checkboxToggle.data('checkbox-toggle-container-id'));
+            return $(`#${$checkboxToggle.data('checkbox-toggle-container-id')}`);
         }
 
-        return $('.' + $checkboxToggle.data('checkbox-toggle-container-class'));
+        return $(`.${$checkboxToggle.data('checkbox-toggle-container-class')}`);
     }
 
-    static init ($container) {
+    static init($container) {
         // eslint-disable-next-line no-new
         new CheckboxToggle($container);
     }
 }
 
-(new Register()).registerCallback(CheckboxToggle.init, 'CheckboxToggle.init');
+new Register().registerCallback(CheckboxToggle.init, 'CheckboxToggle.init');

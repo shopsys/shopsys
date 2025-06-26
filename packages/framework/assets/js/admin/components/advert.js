@@ -1,14 +1,10 @@
 import Register from '../../common/utils/Register';
 
-(new Register()).registerCallback($container => {
-    const getCheckedPositionName = function () {
-        return $('#advert_form_settings_positionName').val();
-    };
+new Register().registerCallback(_$container => {
+    const getCheckedPositionName = () => $('#advert_form_settings_positionName').val();
 
-    const initAdvertForm = function () {
-        const positionNamesWithCategoryTree = [
-            'productListSecondRow'
-        ];
+    const initAdvertForm = () => {
+        const positionNamesWithCategoryTree = ['productListSecondRow'];
 
         if (positionNamesWithCategoryTree.includes(getCheckedPositionName())) {
             $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').show();

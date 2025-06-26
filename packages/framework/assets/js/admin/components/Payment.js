@@ -1,12 +1,11 @@
-(function ($) {
-
+($ => {
     const Shopsys = window.Shopsys || {};
     Shopsys.payment = Shopsys.payment || {};
 
-    Shopsys.payment.init = function () {
+    Shopsys.payment.init = () => {
         const $paymentType = $('.js-payment-type');
 
-        const onPaymentChange = function () {
+        const onPaymentChange = () => {
             const selectedType = $paymentType.val();
             const $goPayPaymentMethodDiv = $('.js-payment-gopay-payment-method');
 
@@ -21,8 +20,7 @@
         $paymentType.change();
     };
 
-    $(document).ready(function () {
+    $(document).ready(() => {
         Shopsys.payment.init();
     });
-
 })(jQuery);

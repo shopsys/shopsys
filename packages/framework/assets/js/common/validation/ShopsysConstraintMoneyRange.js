@@ -1,23 +1,21 @@
 import { parseNumber } from '../utils/number';
 
-(function (window) {
-
+(window => {
     const ShopsysFrameworkBundleFormConstraintsMoneyRange = function () {
-        const self = this;
         this.minMessage = '';
         this.maxMessage = '';
         this.min = null;
         this.max = null;
 
-        this.validate = function (value) {
+        this.validate = value => {
             if (!FpJsFormValidator.isValueEmty(value)) {
                 const compareValue = parseNumber(value);
 
-                if (self.max !== null && compareValue > parseNumber(self.max.amount)) {
-                    return [self.maxMessage.replace('{{ limit }}', self.max.amount)];
+                if (this.max !== null && compareValue > parseNumber(this.max.amount)) {
+                    return [this.maxMessage.replace('{{ limit }}', this.max.amount)];
                 }
-                if (self.min !== null && compareValue < parseNumber(self.min.amount)) {
-                    return [self.minMessage.replace('{{ limit }}', self.min.amount)];
+                if (this.min !== null && compareValue < parseNumber(this.min.amount)) {
+                    return [this.minMessage.replace('{{ limit }}', this.min.amount)];
                 }
             }
 
@@ -26,5 +24,4 @@ import { parseNumber } from '../utils/number';
     };
 
     window.ShopsysFrameworkBundleFormConstraintsMoneyRange = ShopsysFrameworkBundleFormConstraintsMoneyRange;
-
 })(window);

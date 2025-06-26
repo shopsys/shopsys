@@ -3,7 +3,7 @@ export const cs = {
         addButton: 'Přidat obrázek',
         inputPlh: 'https://path/to/the/image.jpg',
         modalTitle: 'Vyberte obrázek',
-        uploadTitle: 'Zde přetáhněte obrázky nebo kliknětě na upload'
+        uploadTitle: 'Zde přetáhněte obrázky nebo kliknětě na upload',
     },
     // Here just as a reference, GrapesJS core doesn't contain any block,
     // so this should be omitted from other local files
@@ -14,11 +14,11 @@ export const cs = {
             text: 'Text',
             sect100: '1 sloupec',
             sect50: '2 sloupce (stejně široké)',
-            'link-block': 'Blok odkazu'
+            'link-block': 'Blok odkazu',
         },
         categories: {
             // 'category-id': 'Category Label',
-        }
+        },
     },
     domComponents: {
         names: {
@@ -36,8 +36,8 @@ export const cs = {
             thead: 'Hlavička tabulky',
             table: 'Tabulka',
             row: 'Řádek tabulky',
-            cell: 'Buňka tabulky'
-        }
+            cell: 'Buňka tabulky',
+        },
     },
     deviceManager: {
         device: 'Zařízení',
@@ -45,8 +45,8 @@ export const cs = {
             desktop: 'Desktop',
             tablet: 'Tablet',
             mobileLandscape: 'Mobil naležato',
-            mobilePortrait: 'Mobil nastojato'
-        }
+            mobilePortrait: 'Mobil nastojato',
+        },
     },
     panels: {
         buttons: {
@@ -66,16 +66,16 @@ export const cs = {
                 cmdClear: 'Zahodit změny',
                 cmdTglImages: 'Vypnout/Zaponout obrázky',
                 cmdOpenImport: 'Importovat obsah',
-                activateOutline: 'Komponenty'
-            }
+                activateOutline: 'Komponenty',
+            },
         },
         options: {
             devices: {
                 cmdDeviceDesktop: 'Desktop',
                 cmdDeviceTablet: 'Tablet',
-                cmdDeviceMobile: 'Mobil'
-            }
-        }
+                cmdDeviceMobile: 'Mobil',
+            },
+        },
     },
     selectorManager: {
         label: 'Třídy',
@@ -84,8 +84,8 @@ export const cs = {
         states: {
             hover: 'Přejetí myší',
             active: 'Kliknutí',
-            'nth-of-type(2n)': 'Sudý/Lichý'
-        }
+            'nth-of-type(2n)': 'Sudý/Lichý',
+        },
     },
     styleManager: {
         empty: 'Před použitím Editoru stylů vyberte element',
@@ -98,7 +98,7 @@ export const cs = {
             decorations: 'Dekorace',
             extra: 'Extra',
             flex: 'Flex',
-            dimension: 'Rozměry'
+            dimension: 'Rozměry',
         },
         // Default names for sub properties in Composite and Stack types.
         // Other labels are generated directly from their property names (eg. 'font-size' will be 'Font size').
@@ -141,8 +141,8 @@ export const cs = {
             'background-repeat-sub': 'Opakování',
             'background-position-sub': 'Pozice',
             'background-attachment-sub': 'Přichycení',
-            'background-size-sub': 'Velikost'
-        }
+            'background-size-sub': 'Velikost',
+        },
         // Translate options in style properties
         // options: {
         //   float: { // Id of the property
@@ -169,7 +169,7 @@ export const cs = {
                 loop: 'Opakovat',
                 controls: 'Ovládání',
                 startfrom: 'Začátek',
-                endText: 'Text po ukončení'
+                endText: 'Text po ukončení',
             },
             // In a simple trait, like text input, these are used on input attributes
             /*
@@ -184,12 +184,12 @@ export const cs = {
             options: {
                 target: {
                     false: 'Toto okno',
-                    _blank: 'Nové okno'
-                }
-            }
-        }
+                    _blank: 'Nové okno',
+                },
+            },
+        },
     },
     storageManager: {
-        recover: 'Chcete obnovit neuložené změny?'
-    }
+        recover: 'Chcete obnovit neuložené změny?',
+    },
 };

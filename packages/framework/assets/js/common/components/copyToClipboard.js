@@ -3,17 +3,14 @@ import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 
 export default class CopyToClipboard {
-
-    constructor ($container) {
+    constructor($container) {
         const $copyNodes = $container.filterAllNodes('.js-copy-to-clipboard[data-content]');
 
         $copyNodes.tooltip();
-        $copyNodes.click((event) => _this.onClick(event));
-
-        const _this = this;
+        $copyNodes.click(event => this.onClick(event));
     }
 
-    onClick (event) {
+    onClick(event) {
         const content = $(event.currentTarget).data('content');
         navigator.clipboard.writeText(content).then(() => {
             $(event.currentTarget).attr('title', Translator.trans('Copied to clipboard!'));
@@ -26,10 +23,10 @@ export default class CopyToClipboard {
         });
     }
 
-    static init ($container) {
+    static init($container) {
         // eslint-disable-next-line no-new
         new CopyToClipboard($container);
     }
 }
 
-(new Register()).registerCallback(CopyToClipboard.init, 'CopyToClipboard.init');
+new Register().registerCallback(CopyToClipboard.init, 'CopyToClipboard.init');

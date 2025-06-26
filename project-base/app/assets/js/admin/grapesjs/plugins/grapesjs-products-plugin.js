@@ -1,6 +1,6 @@
-import grapesjs from 'grapesjs';
-import Translator from 'bazinga-translator';
 import Tagify from '@yaireo/tagify';
+import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('products', editor => {
     const dataProduct = 'data-product';
@@ -23,7 +23,7 @@ export default grapesjs.plugins.add('products', editor => {
             const response = $.post({
                 url: `${window.location.origin}/admin/product/names-by-catnums`,
                 data: { catnums: splitProductCatnums },
-                async: false
+                async: false,
             });
 
             const productNames = response.status === 200 ? response.responseJSON : undefined;
@@ -31,7 +31,7 @@ export default grapesjs.plugins.add('products', editor => {
             for (const productCatnum of splitProductCatnums) {
                 components.add('<div class="gjs-product"></div>').addAttributes({
                     [dataProduct]: productCatnum,
-                    [dataProductName]: productNames[productCatnum] ? productNames[productCatnum] : unkonwnProductName
+                    [dataProductName]: productNames[productCatnum] ? productNames[productCatnum] : unkonwnProductName,
                 });
             }
         }
@@ -39,16 +39,19 @@ export default grapesjs.plugins.add('products', editor => {
 
     const renderProductsView = (element, model) => {
         if (!model.getAttributes()[dataProducts]) {
-            element.appendChild(createDiv(Translator.trans(
-                'No products are set. Please add some in the component settings.'
-            )));
+            element.appendChild(
+                createDiv(Translator.trans('No products are set. Please add some in the component settings.')),
+            );
         }
     };
 
     const updateProduct = parent => {
         if (parent.is('products')) {
             parent.addAttributes({
-                [dataProducts]: parent.components().map(component => component.getAttributes()[dataProduct]).join(',')
+                [dataProducts]: parent
+                    .components()
+                    .map(component => component.getAttributes()[dataProduct])
+                    .join(','),
             });
         }
     };
@@ -62,7 +65,10 @@ export default grapesjs.plugins.add('products', editor => {
 
             if (products) {
                 parent.addAttributes({
-                    [dataProducts]: products.split(',').filter(innerProduct => innerProduct !== productCatnum).join(',')
+                    [dataProducts]: products
+                        .split(',')
+                        .filter(innerProduct => innerProduct !== productCatnum)
+                        .join(','),
                 });
             }
         }
@@ -74,9 +80,11 @@ export default grapesjs.plugins.add('products', editor => {
         const productName = attributes[dataProductName];
 
         if (productCatnum && productName) {
-            const templateName = productName === unkonwnProductName ? 'grapejs-unknown-product-card' : 'grapejs-product-card';
+            const templateName =
+                productName === unkonwnProductName ? 'grapejs-unknown-product-card' : 'grapejs-product-card';
 
-            element.appendChild(createDiv(`
+            element.appendChild(
+                createDiv(`
                 <div style="position: relative; max-width: 100%;">
                     <div class="gjs-products-product-card-name">
                         ${productName.substring(0, 55)}
@@ -85,7 +93,8 @@ export default grapesjs.plugins.add('products', editor => {
                     </div>
                     <img src="${window.location.origin}/public/admin/images/${templateName}.png" alt="${dataProductName}" style="max-width: 100%;"/>
                 </div>
-            `));
+            `),
+            );
         }
     };
 
@@ -103,12 +112,12 @@ export default grapesjs.plugins.add('products', editor => {
         category: Translator.trans('Basic objects'),
         media: '<svg style="width:48px;height:48px" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z" /></svg>',
         content: {
-            type: 'products'
-        }
+            type: 'products',
+        },
     });
 
     editor.DomComponents.addType('product', {
-        isComponent: element => element.classList && element.classList.contains('gjs-product'),
+        isComponent: element => element.classList?.contains('gjs-product'),
         model: {
             defaults: {
                 copyable: false,
@@ -117,23 +126,23 @@ export default grapesjs.plugins.add('products', editor => {
                 attributes: {
                     class: 'gjs-product',
                     [dataProduct]: undefined,
-                    [dataProductName]: undefined
-                }
+                    [dataProductName]: undefined,
+                },
             },
-            removed () {
+            removed() {
                 removeProduct(this);
-            }
+            },
         },
         view: {
-            onRender: ({ el, model }) => renderProductView(el, model)
-        }
+            onRender: ({ el, model }) => renderProductView(el, model),
+        },
     });
 
     editor.TraitManager.addType('tag-input', {
         templateInput: '',
         tagifyInstance: undefined,
 
-        createInput ({ trait }) {
+        createInput({ trait }) {
             const el = document.createElement('div');
             el.innerHTML = '<input class="tag-input__input"/>';
 
@@ -146,15 +155,15 @@ export default grapesjs.plugins.add('products', editor => {
             return el;
         },
 
-        onEvent ({ component, trait }) {
+        onEvent({ component, trait }) {
             const values = this.tagifyInstance.value;
 
             component.addAttributes({
-                [dataProducts]: values.map(item => item.value).join(',')
+                [dataProducts]: values.map(item => item.value).join(','),
             });
         },
 
-        onUpdate ({ component, trait }) {
+        onUpdate({ component, trait }) {
             const values = component.getAttributes()[dataProducts];
 
             if (!values) {
@@ -163,13 +172,13 @@ export default grapesjs.plugins.add('products', editor => {
 
             this.tagifyInstance.removeAllTags();
             this.tagifyInstance.addTags(values.split(','));
-        }
+        },
     });
 
     editor.DomComponents.addType('products', {
-        isComponent: element => element.classList && element.classList.contains('gjs-products'),
+        isComponent: element => element.classList?.contains('gjs-products'),
         model: {
-            init () {
+            init() {
                 updateProductsModel(this, this.getAttributes()[dataProducts]);
 
                 this.on(dataProductsEvent, (element, products) => {
@@ -179,7 +188,7 @@ export default grapesjs.plugins.add('products', editor => {
             defaults: {
                 droppable: (component, destination) => component.parent() === destination,
                 attributes: {
-                    class: 'gjs-products'
+                    class: 'gjs-products',
                 },
                 styles: `
                     .gjs-products { text-align: center; }
@@ -190,16 +199,16 @@ export default grapesjs.plugins.add('products', editor => {
                     {
                         type: 'tag-input',
                         name: dataProducts,
-                        label: Translator.trans('Catalog numbers')
-                    }
-                ]
-            }
+                        label: Translator.trans('Catalog numbers'),
+                    },
+                ],
+            },
         },
         view: {
-            init ({ model }) {
+            init({ model }) {
                 createProductsView(this, model);
             },
-            onRender: ({ el, model }) => renderProductsView(el, model)
-        }
+            onRender: ({ el, model }) => renderProductsView(el, model),
+        },
     });
 });

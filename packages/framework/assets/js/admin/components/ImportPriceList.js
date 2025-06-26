@@ -2,10 +2,9 @@ import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class ImportPriceList {
-
-    constructor ($container) {
+    constructor($container) {
         const $selectListField = $container.filterAllNodes('.js-import-price-list-select-list');
-        $selectListField.on('change', (event) => this.onSelectPriceList(event));
+        $selectListField.on('change', event => this.onSelectPriceList(event));
 
         if ($selectListField.val() !== '') {
             const $domainIdField = $('.js-import-price-list-domain-id').parents('.form-line');
@@ -13,7 +12,7 @@ export default class ImportPriceList {
         }
     }
 
-    onSelectPriceList (event) {
+    onSelectPriceList(event) {
         const priceListId = event.target.value;
         const $domainIdField = $('.js-import-price-list-domain-id').parents('.form-line');
 
@@ -34,18 +33,18 @@ export default class ImportPriceList {
         Ajax.ajax({
             url: loadMetadataUrl,
             method: 'POST',
-            success: function (data) {
+            success: data => {
                 $('.js-import-price-list-name').val(data.name);
                 $('.js-import-price-list-valid-from').val(data.validFrom);
                 $('.js-import-price-list-valid-to').val(data.validTo);
-            }
+            },
         });
     }
 
-    static init ($container) {
+    static init($container) {
         // eslint-disable-next-line no-new
         new ImportPriceList($container);
     }
 }
 
-(new Register()).registerCallback(ImportPriceList.init, 'ImportPriceList.init');
+new Register().registerCallback(ImportPriceList.init, 'ImportPriceList.init');

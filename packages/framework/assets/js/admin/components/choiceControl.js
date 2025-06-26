@@ -1,4 +1,4 @@
-export function select (choiceListSelector, value) {
+export function select(choiceListSelector, value) {
     const $choiceList = $($(choiceListSelector));
 
     const choice = findChoice($choiceList, value);
@@ -10,7 +10,7 @@ export function select (choiceListSelector, value) {
     }
 }
 
-export function deselect (choiceListSelector, value) {
+export function deselect(choiceListSelector, value) {
     const $choiceList = $($(choiceListSelector));
 
     const choice = findChoice($choiceList, value);
@@ -22,10 +22,10 @@ export function deselect (choiceListSelector, value) {
     }
 }
 
-export function deselectAll (choiceListSelector) {
+export function deselectAll(choiceListSelector) {
     const $choiceList = $($(choiceListSelector));
 
-    findAllChoices($choiceList).each(function (key, element) {
+    findAllChoices($choiceList).each((_key, element) => {
         const $choice = $(element);
         if ($choice.is('input')) {
             $choice.prop('checked', false);
@@ -35,18 +35,18 @@ export function deselectAll (choiceListSelector) {
     });
 }
 
-export function getSelectedValue (choiceListSelector) {
+export function getSelectedValue(choiceListSelector) {
     const values = getSelectedValues(choiceListSelector);
 
-    return (values[0] !== undefined) ? values[0] : null;
+    return values[0] !== undefined ? values[0] : null;
 }
 
-export function getSelectedValues (choiceListSelector) {
+export function getSelectedValues(choiceListSelector) {
     const $choiceList = $(choiceListSelector);
 
     const values = [];
 
-    findAllChoices($choiceList).each((key, element) => {
+    findAllChoices($choiceList).each((_key, element) => {
         const $element = $(element);
         if ($element.is('input')) {
             if ($element.is(':checked')) {
@@ -62,20 +62,20 @@ export function getSelectedValues (choiceListSelector) {
     return values;
 }
 
-export function findChoice ($choiceList, value) {
-    return findAllChoices($choiceList).filter((key, element) => {
+export function findChoice($choiceList, value) {
+    return findAllChoices($choiceList).filter((_key, element) => {
         const $element = $(element);
         return parseInt($element.val()) === value;
     });
 }
 
-export function findAllChoices ($choiceList) {
+export function findAllChoices($choiceList) {
     return $choiceList.find('input, option');
 }
 
-export function getNewIndex ($choiceList) {
+export function getNewIndex($choiceList) {
     let maxIndex = 0;
-    findAllChoices($choiceList).each((key, element) => {
+    findAllChoices($choiceList).each((_key, element) => {
         const $input = $(element);
         const index = parseInt($input.attr('name').replace(/.*\[(.+)\]/, '$1'));
         if (index > maxIndex) {

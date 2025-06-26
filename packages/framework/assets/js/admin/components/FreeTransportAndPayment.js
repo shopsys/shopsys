@@ -1,8 +1,7 @@
 import Register from '../../common/utils/Register';
 
 export default class FreeTransportAndPayment {
-
-    constructor ($container) {
+    constructor($container) {
         this.$checkbox = $container.find('.js-free-transport-and-payment-price-limit-enabled');
         this.$input = $container.find('.js-free-transport-and-payment-price-limit-input');
 
@@ -10,12 +9,11 @@ export default class FreeTransportAndPayment {
         this.updateInputDisabledAttribute();
     }
 
-    updateInputDisabledAttribute () {
-        const _this = this;
-        _this.$input.attr('disabled', _this.$checkbox.is(':checked') ? null : 'disabled');
+    updateInputDisabledAttribute() {
+        this.$input.attr('disabled', this.$checkbox.is(':checked') ? null : 'disabled');
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-free-transport-and-payment-price-limit').each(function () {
             // eslint-disable-next-line no-new
             new FreeTransportAndPayment($(this));
@@ -23,4 +21,4 @@ export default class FreeTransportAndPayment {
     }
 }
 
-(new Register()).registerCallback(FreeTransportAndPayment.init, 'FreeTransportAndPayment.init');
+new Register().registerCallback(FreeTransportAndPayment.init, 'FreeTransportAndPayment.init');

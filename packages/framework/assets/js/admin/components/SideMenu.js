@@ -1,4 +1,5 @@
 import Register from '../../common/utils/Register';
+
 const jsSideMenuSubmenuSelector = '.js-side-menu-submenu';
 const jsSideMenuItemSelector = '.js-side-menu-item';
 const jsSideMenuSelector = '.js-side-menu';
@@ -6,20 +7,18 @@ const jsSideMenuCollapsedClass = 'menu-collapsed';
 const jsNoClickSelector = '.js-no-click';
 
 export default class SideMenu {
-
-    constructor ($sideMenu) {
-
+    constructor($sideMenu) {
         this.$webPanel = $('.js-web-panel');
         this.$sideMenuMobile = $('.js-side-menu-mobile');
         this.$sideMenuOverlay = $('.js-side-menu-overlay');
         this.$sideMenuCollapseButton = $('.js-side-menu-collapse-button');
-        this.$sideMenuItemLink = $(jsSideMenuItemSelector + ' .side-menu__submenu__item__link');
+        this.$sideMenuItemLink = $(`${jsSideMenuItemSelector} .side-menu__submenu__item__link`);
         this.$sideMenu = $sideMenu;
         this.$items = this.$sideMenu.filterAllNodes(jsSideMenuItemSelector);
 
-        this.$sideMenu.find(jsSideMenuItemSelector + '.open ul').removeClass('hidden');
+        this.$sideMenu.find(`${jsSideMenuItemSelector}.open ul`).removeClass('hidden');
 
-        $(jsSideMenuItemSelector + ' a.side-menu__submenu__item__link').click(event => {
+        $(`${jsSideMenuItemSelector} a.side-menu__submenu__item__link`).click(event => {
             event.stopPropagation();
         });
 
@@ -70,28 +69,32 @@ export default class SideMenu {
             if (!this.$webPanel.hasClass('active-menu')) {
                 this.$webPanel.removeClass('open');
                 this.$sideMenu.find(jsSideMenuItemSelector).removeClass('open');
-                this.$sideMenu.find(jsSideMenuItemSelector + ' > ul').addClass('hidden');
+                this.$sideMenu.find(`${jsSideMenuItemSelector} > ul`).addClass('hidden');
             } else {
                 this.$webPanel.addClass('open');
             }
         });
     }
 
-    closeMenusAfterMouseleave (timoutMilliseconds) {
+    closeMenusAfterMouseleave(timoutMilliseconds) {
         let timeoutHandle;
         this.$sideMenu.hover(
-            function () { clearTimeout(timeoutHandle); },
-            function () { timeoutHandle = setTimeout(self.closeMenus, timoutMilliseconds); }
+            () => {
+                clearTimeout(timeoutHandle);
+            },
+            () => {
+                timeoutHandle = setTimeout(self.closeMenus, timoutMilliseconds);
+            },
         );
     }
 
-    closeMenus () {
+    closeMenus() {
         this.$webPanel.filterAllNodes(jsSideMenuSubmenuSelector).addClass('hidden');
         this.$items.removeClass('open');
         this.$webPanel.removeClass('open');
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes(jsSideMenuSelector).each(function () {
             // eslint-disable-next-line no-new
             new SideMenu($(this));
@@ -99,4 +102,4 @@ export default class SideMenu {
     }
 }
 
-(new Register()).registerCallback(SideMenu.init, 'SideMenu.init');
+new Register().registerCallback(SideMenu.init, 'SideMenu.init');

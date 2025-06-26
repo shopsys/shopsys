@@ -1,8 +1,8 @@
 import Register from 'framework/common/utils/Register';
 import grapesjs from 'grapesjs';
-import webPagePlugin from 'grapesjs-preset-webpage';
 import ckeditorPlugin from 'grapesjs-plugin-ckeditor';
 import newsletterPlugin from 'grapesjs-preset-newsletter';
+import webPagePlugin from 'grapesjs-preset-webpage';
 import './grapesjs-non-editable-page';
 import './plugins/grapesjs-custom-buttons-plugin';
 import './plugins/grapesjs-products-plugin';
@@ -17,19 +17,18 @@ import './plugins/grapesjs-table-custom-plugin';
 import './plugins/grapesjs-mail-custom-image-with-variable-plugin';
 import './plugins/grapesjs-mail-custom-image-plugin';
 import 'magnific-popup';
-import { en } from './locales/en.js';
-import { cs } from './locales/cs.js';
 import Translator from 'bazinga-translator';
-
 import { Buffer } from 'buffer';
+import { cs } from './locales/cs.js';
+import { en } from './locales/en.js';
+
 global.Buffer = Buffer;
 
 export default class InitGrapesJs {
-
-    static init ($container) {
+    static init($container) {
         let isAnyButtonOnPage = false;
-        $container.filterAllNodes('.js-grapesjs-button').each((index, element) => {
-            $(element).on('click', (event) => {
+        $container.filterAllNodes('.js-grapesjs-button').each((_index, element) => {
+            $(element).on('click', event => {
                 const frontendUrl = $(element).data('template-url');
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
@@ -40,14 +39,21 @@ export default class InitGrapesJs {
             isAnyButtonOnPage = true;
         });
 
-        $container.filterAllNodes('.js-grapesjs-mail-button').each((index, element) => {
-            $(element).on('click', (event) => {
+        $container.filterAllNodes('.js-grapesjs-mail-button').each((_index, element) => {
+            $(element).on('click', event => {
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
                 const templateHtml = $(element).data('template');
                 const bodyVariables = $(element).data('variables');
                 const customPlugins = $(element).data('custom-plugins');
-                InitGrapesJs.openGrapesMailEditor(event, textareaId, elfinderUrl, templateHtml, bodyVariables, customPlugins);
+                InitGrapesJs.openGrapesMailEditor(
+                    event,
+                    textareaId,
+                    elfinderUrl,
+                    templateHtml,
+                    bodyVariables,
+                    customPlugins,
+                );
             });
 
             isAnyButtonOnPage = true;
@@ -58,13 +64,13 @@ export default class InitGrapesJs {
         }
     }
 
-    static openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl, allowProducts) {
+    static openGrapesEditor(_event, frontendUrl, textareaId, elfinderUrl, allowProducts) {
         InitGrapesJs.setupBodyForGrapesJsEditor();
 
         const content = $.get({
             url: frontendUrl,
             async: false,
-            crossDomain: true
+            crossDomain: true,
         }).responseText;
 
         const plugins = [
@@ -78,7 +84,7 @@ export default class InitGrapesJs {
             'custom-image',
             'custom-link',
             'custom-image-file',
-            'custom-iframe'
+            'custom-iframe',
         ];
 
         if (allowProducts) {
@@ -96,13 +102,14 @@ export default class InitGrapesJs {
             avoidInlineStyle: false,
             forceClass: false,
             nativeDnD: true,
-            plugins,
+            plugins: plugins,
             i18n: {
                 locale: Translator.locale,
                 detectLocale: false,
                 messages: {
-                    en, cs
-                }
+                    en,
+                    cs,
+                },
             },
             pluginsOpts: {
                 [ckeditorPlugin]: {
@@ -120,12 +127,23 @@ export default class InitGrapesJs {
                             { name: 'format', items: ['Format'] },
                             { name: 'size', items: ['FontSize'] },
                             { name: 'links', items: ['Link', 'Unlink'] },
-                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                            {
+                                name: 'paragraph',
+                                items: [
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                ],
+                            },
                             { name: 'colors', items: ['TextColor', 'BGColor'] },
                             { name: 'document', items: ['Source'] },
-                            { name: 'insert', items: ['SpecialChar'] }
-                        ]
-                    }
+                            { name: 'insert', items: ['SpecialChar'] },
+                        ],
+                    },
                 },
                 [webPagePlugin]: {
                     blocks: [],
@@ -133,66 +151,66 @@ export default class InitGrapesJs {
                         return {
                             label: Translator.trans('Link'),
                             category: Translator.trans('Basic objects'),
-                            attributes: { class: 'fa fa-link' }
+                            attributes: { class: 'fa fa-link' },
                         };
                     },
-                    useCustomTheme: false
+                    useCustomTheme: false,
                 },
                 customButtons: {
-                    textareaId
-                }
+                    textareaId: textareaId,
+                },
             },
             styleManager: {
                 clearProperties: true,
-                appendTo: document.querySelector('#panels')
+                appendTo: document.querySelector('#panels'),
             },
             selectorManager: {
-                componentFirst: true
+                componentFirst: true,
             },
             assetManager: {
                 custom: {
-                    open (props) {
+                    open(props) {
                         $.magnificPopup.open({
                             items: { src: elfinderUrl },
                             type: 'iframe',
                             closeOnBgClick: true,
                             callbacks: {
-                                close: function () {
+                                close: () => {
                                     props.close();
-                                }
-                            }
+                                },
+                            },
                         });
 
-                        window.document.fileManagerInsertImageCallback = function (selector, url) {
+                        window.document.fileManagerInsertImageCallback = (_selector, url) => {
                             props.options.target.set('src', url);
                             $.magnificPopup.close();
                             props.close();
                         };
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
 
         editor.TraitManager.addType('textarea', {
-            createInput () {
+            createInput() {
                 return document.createElement('textarea');
             },
-            onUpdate ({ elInput, _, trait }) {
+            onUpdate({ elInput, _, trait }) {
                 elInput.value = trait.changed.value;
-            }
+            },
         });
 
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
 
-            const editableContent = $('#' + textareaId).val();
+            const editableContent = $(`#${textareaId}`).val();
             editor.getWrapper().find('.gjs-editable')[0].append(editableContent);
         });
     }
 
-    static openGrapesMailEditor (event, textareaId, elfinderUrl, templateHtml, bodyVariables, customPlugins) {
+    static openGrapesMailEditor(_event, textareaId, elfinderUrl, templateHtml, bodyVariables, customPlugins) {
         InitGrapesJs.setupBodyForGrapesJsEditor();
-        const $templateHtml = $('<div>' + templateHtml + '</div>');
+        const $templateHtml = $(`<div>${templateHtml}</div>`);
 
         const variables = JSON.parse(JSON.stringify(bodyVariables));
 
@@ -201,7 +219,7 @@ export default class InitGrapesJs {
             ckeditorPlugin,
             'customButtons',
             'mail-template',
-            'mail-custom-image'
+            'mail-custom-image',
         ];
 
         const editor = grapesjs.init({
@@ -219,13 +237,14 @@ export default class InitGrapesJs {
                 locale: Translator.locale,
                 detectLocale: false,
                 messages: {
-                    en, cs
-                }
+                    en,
+                    cs,
+                },
             },
             pluginsOpts: {
                 [newsletterPlugin]: {
                     styleManagerSectors: [],
-                    useCustomTheme: false
+                    useCustomTheme: false,
                 },
                 [ckeditorPlugin]: {
                     ckeditor: '',
@@ -238,10 +257,21 @@ export default class InitGrapesJs {
                             { name: 'format', items: ['Format'] },
                             { name: 'size', items: ['FontSize'] },
                             { name: 'links', items: ['Link', 'Unlink'] },
-                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                            {
+                                name: 'paragraph',
+                                items: [
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                ],
+                            },
                             { name: 'colors', items: ['TextColor', 'BGColor'] },
                             { name: 'document', items: ['Source'] },
-                            { name: 'insert', items: ['SpecialChar', 'strinsert'] }
+                            { name: 'insert', items: ['SpecialChar', 'strinsert'] },
                         ],
                         extraPlugins: 'strinsert',
                         removePlugins: 'exportpdf',
@@ -249,53 +279,53 @@ export default class InitGrapesJs {
                         strinsert_strings: [
                             { name: Translator.trans('Mandatory variables') },
                             ...variables
-                                .filter((variable) => variable.isRequired === true)
-                                .map((variable) => {
+                                .filter(variable => variable.isRequired === true)
+                                .map(variable => {
                                     return { name: variable.label, value: variable.placeholder };
                                 }),
                             { name: Translator.trans('Optional variables') },
                             ...variables
-                                .filter((variable) => variable.isRequired === false)
-                                .map((variable) => {
+                                .filter(variable => variable.isRequired === false)
+                                .map(variable => {
                                     return { name: variable.label, value: variable.placeholder };
-                                })
-                        ]
-                    }
+                                }),
+                        ],
+                    },
                 },
                 customButtons: {
-                    textareaId,
-                    isMail: true
-                }
+                    textareaId: textareaId,
+                    isMail: true,
+                },
             },
             styleManager: {
                 clearProperties: true,
-                appendTo: document.querySelector('#panels')
+                appendTo: document.querySelector('#panels'),
             },
             selectorManager: {
-                componentFirst: true
+                componentFirst: true,
             },
             assetManager: {
                 custom: {
-                    open (props) {
+                    open(props) {
                         $.magnificPopup.open({
                             items: { src: elfinderUrl },
                             type: 'iframe',
                             closeOnBgClick: true,
                             callbacks: {
-                                close: function () {
+                                close: () => {
                                     props.close();
-                                }
-                            }
+                                },
+                            },
                         });
 
-                        window.document.fileManagerInsertImageCallback = function (selector, url) {
+                        window.document.fileManagerInsertImageCallback = (_selector, url) => {
                             props.options.target.set('src', url);
                             $.magnificPopup.close();
                             props.close();
                         };
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
 
         editor.addStyle(`
@@ -307,7 +337,7 @@ export default class InitGrapesJs {
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
 
-            const editableContent = $('#' + textareaId).val();
+            const editableContent = $(`#${textareaId}`).val();
             const $gjsEditable = editor.getWrapper().find('.gjs-editable')[0];
 
             if ($gjsEditable) {
@@ -329,16 +359,22 @@ export default class InitGrapesJs {
         editor.BlockManager.remove('list-items');
         editor.BlockManager.remove('text');
 
-        editor.BlockManager.get('link-block').set('category', Translator.trans('Basic objects')).set('attributes', { class: 'mail-icon' });
-        editor.BlockManager.get('sect50').set('category', Translator.trans('Basic objects')).set('attributes', { class: 'mail-icon' });
-        editor.BlockManager.get('sect100').set('category', Translator.trans('Basic objects')).set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('link-block')
+            .set('category', Translator.trans('Basic objects'))
+            .set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('sect50')
+            .set('category', Translator.trans('Basic objects'))
+            .set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('sect100')
+            .set('category', Translator.trans('Basic objects'))
+            .set('attributes', { class: 'mail-icon' });
     }
 
-    static setupBodyForGrapesJsEditor () {
+    static setupBodyForGrapesJsEditor() {
         if (!$('body').hasClass('grapes-js-editor-opened')) {
             $('body').addClass('grapes-js-editor-opened');
         }
     }
 }
 
-(new Register()).registerCallback(InitGrapesJs.init, 'InitGrapesJs.init');
+new Register().registerCallback(InitGrapesJs.init, 'InitGrapesJs.init');

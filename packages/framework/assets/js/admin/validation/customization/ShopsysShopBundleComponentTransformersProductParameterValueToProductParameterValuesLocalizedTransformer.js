@@ -1,36 +1,33 @@
-(function (window) {
+(window => {
+    const ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer =
+        function () {
+            this.transform = normData => normData;
 
-    const ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer = function () {
+            this.reverseTransform = viewData => {
+                var normData = [];
 
-        this.transform = function (normData) {
-            return normData;
-        };
+                for (var i in viewData) {
+                    var productParameterValuesLocalized = viewData[i];
 
-        this.reverseTransform = function (viewData) {
-            const normData = [];
+                    for (var locale in productParameterValuesLocalized.valueText) {
+                        var valueText = productParameterValuesLocalized.valueText[locale];
 
-            for (const i in viewData) {
-                const productParameterValuesLocalized = viewData[i];
+                        if (valueText !== '') {
+                            var productParameterValue = {
+                                parameter: productParameterValuesLocalized.parameter,
+                                locale: locale,
+                                valueText: valueText,
+                            };
 
-                for (const locale in productParameterValuesLocalized.valueText) {
-                    const valueText = productParameterValuesLocalized.valueText[locale];
-
-                    if (valueText !== '') {
-                        const productParameterValue = {
-                            parameter: productParameterValuesLocalized.parameter,
-                            locale,
-                            valueText
-                        };
-
-                        normData.push(productParameterValue);
+                            normData.push(productParameterValue);
+                        }
                     }
                 }
-            }
 
-            return normData;
+                return normData;
+            };
         };
-    };
 
-    window.ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer = ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer;
-
+    window.ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer =
+        ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer;
 })(window);

@@ -1,11 +1,11 @@
-import grapesjs from 'grapesjs';
-import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
 import Translator from 'bazinga-translator';
+import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
+import grapesjs from 'grapesjs';
 
 const BUTTON_CLOSE = Translator.trans('Close');
 const BUTTON_SAVE = Translator.trans('Save');
 
-const resetBody = (editor) => {
+const resetBody = editor => {
     if ($('body').hasClass('grapes-js-editor-opened')) {
         $('body').removeClass('grapes-js-editor-opened');
     }
@@ -14,17 +14,16 @@ const resetBody = (editor) => {
 };
 
 export default grapesjs.plugins.add('customButtons', (editor, options) => {
-
     const panels = editor.Panels;
     const textareaId = options.textareaId;
     const commands = editor.Commands;
 
     commands.add('export-inlined-html', {
-        run (editor, sender, opts = {}) {
+        run(editor, _sender, opts = {}) {
             const juice = require('juice');
-            const tmpl = editor.getHtml() + `<style>${editor.getCss()}</style>`;
+            const tmpl = `${editor.getHtml()}<style>${editor.getCss()}</style>`;
             return juice(tmpl, opts);
-        }
+        },
     });
 
     panels.removeButton('options', 'fullscreen');
@@ -36,21 +35,21 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
         id: BUTTON_SAVE,
         context: BUTTON_SAVE,
         className: 'fa fa-save',
-        command (editor) {
+        command(editor) {
             const template = editor.runCommand('export-inlined-html');
-            $('#' + textareaId).val(template);
+            $(`#${textareaId}`).val(template);
 
             FormChangeInfo.showInfo();
             resetBody(editor);
-        }
+        },
     });
 
     panels.addButton('options', {
         id: BUTTON_CLOSE,
         context: BUTTON_CLOSE,
         className: 'fa fa-times',
-        command (editor) {
+        command(editor) {
             resetBody(editor);
-        }
+        },
     });
 });

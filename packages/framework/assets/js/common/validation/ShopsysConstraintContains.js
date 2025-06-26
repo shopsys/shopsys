@@ -1,21 +1,18 @@
-(function (window) {
-
+(window => {
     const ShopsysFrameworkBundleFormConstraintsContains = function () {
-        const self = this;
         this.message = '';
         this.needle = null;
 
-        this.validate = function (value) {
+        this.validate = value => {
             const result = [];
 
-            if (value.indexOf(self.needle) === -1) {
-                result.push(FpJsBaseConstraint.prepareMessage(
-                    self.message,
-                    {
-                        '{{ value }}': '"' + value + '"',
-                        '{{ needle }}': '"' + self.needle + '"'
-                    }
-                ));
+            if (value.indexOf(this.needle) === -1) {
+                result.push(
+                    FpJsBaseConstraint.prepareMessage(this.message, {
+                        '{{ value }}': `"${value}"`,
+                        '{{ needle }}': `"${this.needle}"`,
+                    }),
+                );
             }
 
             return result;
@@ -23,5 +20,4 @@
     };
 
     window.ShopsysFrameworkBundleFormConstraintsContains = ShopsysFrameworkBundleFormConstraintsContains;
-
 })(window);

@@ -9,8 +9,8 @@ import './validation/form';
 
 import Register from '../common/utils/Register';
 
-export default function registerAdmin (afterRegistrationCallback = null) {
-    $(document).ready(function () {
+export default function registerAdmin(afterRegistrationCallback = null) {
+    $(document).ready(() => {
         const register = new Register();
         register.registerNewContent($('body'));
 

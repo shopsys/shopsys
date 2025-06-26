@@ -1,6 +1,6 @@
 import Register from '../utils/Register';
 
-export default function validationListeners ($container) {
+export default function validationListeners($container) {
     $container.filterAllNodes('.js-no-validate-button').click(function () {
         $(this).closest('form').addClass('js-no-validate');
     });
@@ -10,11 +10,8 @@ export default function validationListeners ($container) {
     });
 
     $container.filterAllNodes('.js-validation-error-toggle').click(function () {
-        $(this)
-            .closest('.js-validation-errors-list')
-            .find('.js-validation-error')
-            .toggle();
+        $(this).closest('.js-validation-errors-list').find('.js-validation-error').toggle();
     });
-};
+}
 
-(new Register()).registerCallback(validationListeners);
+new Register().registerCallback(validationListeners);

@@ -2,7 +2,7 @@ const parseFile = require('./parseFile');
 const fileWalker = require('./fileWalker');
 const findAndSaveTranslations = require('./findAndSaveTranslations');
 
-function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
+function process(dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
     fileWalker(dirWithJsFiles, (err, filePaths) => {
         if (err) {
             console.log(err);

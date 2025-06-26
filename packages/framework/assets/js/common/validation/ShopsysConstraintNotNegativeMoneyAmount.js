@@ -1,18 +1,16 @@
-(function (window) {
-
+(window => {
     const ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount = function () {
-        const self = this;
         this.message = '';
 
-        this.validate = function (value) {
+        this.validate = value => {
             if (value < 0) {
-                return [self.message];
+                return [this.message];
             }
 
             return [];
         };
     };
 
-    window.ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount = ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount;
-
+    window.ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount =
+        ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount;
 })(window);

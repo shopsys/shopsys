@@ -1,5 +1,5 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('table-custom', editor => {
     const addColumns = (element, numberOfColumns) => {
@@ -7,7 +7,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
         for (const row of rows) {
             for (let i = 0; i < numberOfColumns; i++) {
                 const td = row.components().add({ type: 'td' });
-                td.append('<div class="gjs-text-ckeditor text">' + Translator.trans('Insert your text here') + '</div>');
+                td.append(`<div class="gjs-text-ckeditor text">${Translator.trans('Insert your text here')}</div>`);
             }
         }
     };
@@ -36,9 +36,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
 
             for (let j = 0; j < columns; j++) {
                 const td = tr.components().add({ type: 'td' });
-                td.append(
-                    '<div class="gjs-text-ckeditor text">' + Translator.trans('Insert your text here') + '</div>'
-                );
+                td.append(`<div class="gjs-text-ckeditor text">${Translator.trans('Insert your text here')}</div>`);
             }
         }
     };
@@ -55,7 +53,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
         }
     };
 
-    const changeColumns = (element) => {
+    const changeColumns = element => {
         const oldColumnCount = element.find('tr')[0].find('td').length;
         const newColumnCount = element.get('attributes').columns;
         const numberOfColumnsToAddOrRemove = Math.abs(oldColumnCount - newColumnCount);
@@ -67,7 +65,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
         }
     };
 
-    const changeRows = (element) => {
+    const changeRows = element => {
         const oldRowCount = element.find('tr').length;
         const newRowCount = element.get('attributes').rows;
         const numberOfRowsToAddOrRemove = Math.abs(oldRowCount - newRowCount);
@@ -79,7 +77,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
         }
     };
 
-    const changeVariant = (element) => {
+    const changeVariant = element => {
         const variantValue = element.get('attributes').variant;
         element.find('table')[0].setClass(variantValue);
     };
@@ -97,7 +95,7 @@ export default grapesjs.plugins.add('table-custom', editor => {
                     type: 'text-ckeditor',
                     content: Translator.trans('Insert your text here'),
                     components: '',
-                    classes: ['gjs-text-ckeditor', 'text']
+                    classes: ['gjs-text-ckeditor', 'text'],
                 };
 
                 td.components.push(text);
@@ -119,8 +117,8 @@ export default grapesjs.plugins.add('table-custom', editor => {
         attributes: { class: 'fa fa-table' },
         content: {
             type: 'table-custom',
-            components: [createInitialTable(2, 2, 'default')]
-        }
+            components: [createInitialTable(2, 2, 'default')],
+        },
     });
 
     editor.DomComponents.addType('tr', {
@@ -129,9 +127,9 @@ export default grapesjs.plugins.add('table-custom', editor => {
             defaults: {
                 tagName: 'tr',
                 draggable: ['tbody'],
-                droppable: ['td']
-            }
-        }
+                droppable: ['td'],
+            },
+        },
     });
 
     editor.DomComponents.addType('td', {
@@ -140,15 +138,15 @@ export default grapesjs.plugins.add('table-custom', editor => {
             defaults: {
                 tagName: 'td',
                 draggable: ['tr'],
-                droppable: ['.gjs-text-ckeditor']
-            }
-        }
+                droppable: ['.gjs-text-ckeditor'],
+            },
+        },
     });
 
     editor.DomComponents.addType('table-custom', {
-        isComponent: (element) => element.classList && element.classList.contains('gjs-table-custom'),
+        isComponent: element => element.classList?.contains('gjs-table-custom'),
         model: {
-            init () {
+            init() {
                 this.on('change:attributes:rows', changeRows);
                 this.on('change:attributes:columns', changeColumns);
                 this.on('change:attributes:variant', changeVariant);
@@ -158,20 +156,20 @@ export default grapesjs.plugins.add('table-custom', editor => {
                     class: ['gjs-table-custom'],
                     rows: 2,
                     columns: 2,
-                    variant: 'default'
+                    variant: 'default',
                 },
                 traits: [
                     {
                         type: 'number',
                         label: Translator.trans('Rows'),
                         name: 'rows',
-                        min: 1
+                        min: 1,
                     },
                     {
                         type: 'number',
                         label: Translator.trans('Columns'),
                         name: 'columns',
-                        min: 1
+                        min: 1,
                     },
                     {
                         type: 'select',
@@ -179,11 +177,11 @@ export default grapesjs.plugins.add('table-custom', editor => {
                         name: 'variant',
                         options: [
                             { id: 'default', name: Translator.trans('Default') },
-                            { id: 'secondary', name: Translator.trans('Secondary') }
-                        ]
-                    }
-                ]
-            }
-        }
+                            { id: 'secondary', name: Translator.trans('Secondary') },
+                        ],
+                    },
+                ],
+            },
+        },
     });
 });

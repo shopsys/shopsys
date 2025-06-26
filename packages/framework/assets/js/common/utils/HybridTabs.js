@@ -29,28 +29,25 @@
  */
 
 export default class HybridTabs {
-
-    constructor ($container) {
+    constructor($container) {
         this.$tabButtons = $container.find('.js-tabs-button');
         this.$tabContents = $container.find('.js-tabs-content');
         this.tabsMode = null;
     }
 
-    init (initialTabsMode) {
+    init(initialTabsMode) {
         this.tabsMode = initialTabsMode;
-
-        const _this = this;
-        this.$tabButtons.click((event) => HybridTabs.onClickTabButton(event, _this));
+        this.$tabButtons.click(event => HybridTabs.onClickTabButton(event, this));
 
         this.fixTabsState();
     }
 
-    setTabsMode (newTabsMode) {
+    setTabsMode(newTabsMode) {
         this.tabsMode = newTabsMode;
         this.fixTabsState();
     }
 
-    fixTabsState () {
+    fixTabsState() {
         if (this.tabsMode === HybridTabs.TABS_MODE_SINGLE) {
             const $activeButtons = this.$tabButtons.filter('.active');
             if ($activeButtons.length > 0) {
@@ -62,7 +59,7 @@ export default class HybridTabs {
             const _this = this;
             this.$tabContents.each(function () {
                 const tabId = $(this).data('tab-id');
-                const $tabButton = _this.$tabButtons.filter('[data-tab-id="' + tabId + '"]');
+                const $tabButton = _this.$tabButtons.filter(`[data-tab-id="${tabId}"]`);
                 const isTabActive = $tabButton.hasClass('active');
 
                 _this.toggleTab(tabId, isTabActive);
@@ -70,7 +67,7 @@ export default class HybridTabs {
         }
     }
 
-    static onClickTabButton (event, hybridTabs) {
+    static onClickTabButton(event, hybridTabs) {
         const tabId = $(event.currentTarget).data('tab-id');
         if (hybridTabs.tabsMode === HybridTabs.TABS_MODE_SINGLE) {
             hybridTabs.activateOneTabAndDeactivateOther(tabId);
@@ -83,7 +80,7 @@ export default class HybridTabs {
     }
 
     // activates exactly one tab (in "single" mode)
-    activateOneTabAndDeactivateOther (tabId) {
+    activateOneTabAndDeactivateOther(tabId) {
         const _this = this;
         this.$tabButtons.each(function () {
             const currentTabId = $(this).data('tab-id');
@@ -94,9 +91,9 @@ export default class HybridTabs {
     }
 
     // use true to show the tab or false to hide it without checking single/multiple mode
-    toggleTab (tabId, display) {
-        const $tabButton = this.$tabButtons.filter('[data-tab-id="' + tabId + '"]');
-        const $tabContent = this.$tabContents.filter('[data-tab-id="' + tabId + '"]');
+    toggleTab(tabId, display) {
+        const $tabButton = this.$tabButtons.filter(`[data-tab-id="${tabId}"]`);
+        const $tabContent = this.$tabContents.filter(`[data-tab-id="${tabId}"]`);
 
         $tabButton.toggleClass('active', display);
         $tabContent.toggleClass('active', display);

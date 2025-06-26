@@ -1,7 +1,6 @@
 import grapesjs from 'grapesjs';
 
-export default grapesjs.plugins.add('nonEditablePage', (editor, options) => {
-
+export default grapesjs.plugins.add('nonEditablePage', (editor, _options) => {
     const Components = editor.Components;
 
     // Update the main wrapper
@@ -11,19 +10,19 @@ export default grapesjs.plugins.add('nonEditablePage', (editor, options) => {
                 selectable: false,
                 highlightable: false,
                 droppable: false,
-                propagate: ['highlightable', 'selectable', 'droppable']
+                propagate: ['highlightable', 'selectable', 'droppable'],
             },
             // Return always the content of editable content (defined below)
-            toHTML (opts) {
+            toHTML(_opts) {
                 const editable = this.findType('editable')[0];
                 return editable ? editable.getInnerHTML() : '';
-            }
+            },
         },
         view: {
-            onRender ({ el }) {
+            onRender({ el }) {
                 el.style.pointerEvents = 'none';
-            }
-        }
+            },
+        },
     });
 
     // Create the editable component
@@ -33,14 +32,14 @@ export default grapesjs.plugins.add('nonEditablePage', (editor, options) => {
                 removable: false,
                 draggable: false,
                 copyable: false,
-                propagate: []
-            }
+                propagate: [],
+            },
         },
         view: {
-            onRender ({ el }) {
+            onRender({ el }) {
                 el.style.pointerEvents = 'all';
-            }
-        }
+            },
+        },
     });
 
     // Patch for getCss to return always the content

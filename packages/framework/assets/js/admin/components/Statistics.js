@@ -1,42 +1,45 @@
+import Translator from 'bazinga-translator';
 import Chart from 'chart.js';
 import Register from '../../common/utils/Register';
-import Translator from 'bazinga-translator';
 
 export default class Statistics {
-
-    constructor ($chartCanvas) {
+    constructor($chartCanvas) {
         // eslint-disable-next-line no-new
         new Chart($chartCanvas, {
             type: 'bar',
             data: {
                 labels: $chartCanvas.data('chart-labels'),
-                datasets: [{
-                    data: $chartCanvas.data('chart-values'),
-                    backgroundColor: 'rgba(0, 155, 217, 0.2)',
-                    borderColor: 'rgb(0, 155, 217)',
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        data: $chartCanvas.data('chart-values'),
+                        backgroundColor: 'rgba(0, 155, 217, 0.2)',
+                        borderColor: 'rgb(0, 155, 217)',
+                        borderWidth: 1,
+                    },
+                ],
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
                 },
                 legend: {
-                    display: false
+                    display: false,
                 },
                 title: {
                     display: true,
-                    text: $chartCanvas.data('chart-title')
-                }
-            }
+                    text: $chartCanvas.data('chart-title'),
+                },
+            },
         });
     }
 
-    static lineChartForCron ($chartCanvas) {
+    static lineChartForCron($chartCanvas) {
         const originalLineDraw = Chart.controllers.line.prototype.draw;
         Chart.helpers.extend(Chart.controllers.line.prototype, {
             draw: function (...args) {
@@ -69,7 +72,7 @@ export default class Statistics {
                     ctx.stroke();
                     ctx.restore();
                 }
-            }
+            },
         });
 
         // eslint-disable-next-line no-new
@@ -77,33 +80,37 @@ export default class Statistics {
             type: 'line',
             data: {
                 labels: $chartCanvas.data('chart-labels'),
-                datasets: [{
-                    data: $chartCanvas.data('chart-values'),
-                    backgroundColor: 'rgba(0, 155, 217, 0.2)',
-                    borderColor: 'rgb(0, 155, 217)',
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        data: $chartCanvas.data('chart-values'),
+                        backgroundColor: 'rgba(0, 155, 217, 0.2)',
+                        borderColor: 'rgb(0, 155, 217)',
+                        borderWidth: 1,
+                    },
+                ],
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
                 },
                 legend: {
-                    display: false
+                    display: false,
                 },
                 title: {
                     display: true,
-                    text: $chartCanvas.data('chart-title')
-                }
-            }
+                    text: $chartCanvas.data('chart-title'),
+                },
+            },
         });
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-line-chart').each(function () {
             // eslint-disable-next-line no-new
             new Statistics($(this));
@@ -114,4 +121,4 @@ export default class Statistics {
         });
     }
 }
-(new Register()).registerCallback(Statistics.init, 'Statistics.init');
+new Register().registerCallback(Statistics.init, 'Statistics.init');

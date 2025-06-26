@@ -1,12 +1,12 @@
-import FormChangeInfo from '../../components/FormChangeInfo';
 import { highlightSubmitButtons } from '../../../common/validation/validationHelpers';
+import FormChangeInfo from '../../components/FormChangeInfo';
 
-export function addNewItemToCollection (collectionSelector, itemIndex) {
+export function addNewItemToCollection(collectionSelector, itemIndex) {
     $($(collectionSelector)).jsFormValidator('addPrototype', itemIndex);
     FormChangeInfo.showInfo();
 }
 
-export function removeItemFromCollection (collectionSelector, itemIndex) {
+export function removeItemFromCollection(collectionSelector, itemIndex) {
     if (itemIndex === undefined) {
         throw Error('ItemIndex is undefined while remove item from collections');
     }

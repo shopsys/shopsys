@@ -1,6 +1,6 @@
 import Register from '../../../common/utils/Register';
 
-export default function validationArticle () {
+export default function validationArticle() {
     const VALIDATION_GROUP_DEFAULT = 'Default';
     const VALIDATION_GROUP_TYPE_SITE = 'typeSite';
     const VALIDATION_GROUP_TYPE_LINK = 'typeLink';
@@ -9,21 +9,22 @@ export default function validationArticle () {
 
     const $articleForm = $('form[name="article_form"]');
 
-    const getCheckedType = function () {
-        return $articleForm.find('input[name="article_form[articleData][type]"]:checked').val();
-    };
+    const getCheckedType = () => $articleForm.find('input[name="article_form[articleData][type]"]:checked').val();
 
-    const initArticleForm = function () {
+    const initArticleForm = () => {
         const groups = {
-            site: [$('#article_form_articleData_text').closest('.form-line'), $('#article_form_seo').closest('.wrap-divider')],
-            link: [$('#article_form_articleData_url').closest('.form-line')]
+            site: [
+                $('#article_form_articleData_text').closest('.form-line'),
+                $('#article_form_seo').closest('.wrap-divider'),
+            ],
+            link: [$('#article_form_articleData_url').closest('.form-line')],
         };
 
-        $.each([].concat.apply(groups.site, groups.link), (index, item) => {
+        $.each([].concat.apply(groups.site, groups.link), (_index, item) => {
             item.hide();
         });
 
-        $.each(groups[getCheckedType()], (index, item) => {
+        $.each(groups[getCheckedType()], (_index, item) => {
             item.show();
         });
     };
@@ -32,7 +33,7 @@ export default function validationArticle () {
     initArticleForm();
 
     $articleForm.jsFormValidator({
-        groups: function () {
+        groups: () => {
             const groups = [VALIDATION_GROUP_DEFAULT];
 
             const checkedType = getCheckedType();
@@ -43,8 +44,8 @@ export default function validationArticle () {
             }
 
             return groups;
-        }
+        },
     });
 }
 
-(new Register()).registerCallback(validationArticle);
+new Register().registerCallback(validationArticle);

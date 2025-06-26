@@ -26,11 +26,11 @@
 import HybridTabs from '../utils/HybridTabs';
 import Register from '../utils/Register';
 
-export default function tabs ($container) {
+export default function tabs($container) {
     $container.filterAllNodes('.js-tabs').each(function () {
         const hybridTabs = new HybridTabs($(this));
         hybridTabs.init(HybridTabs.TABS_MODE_SINGLE);
     });
 }
 
-(new Register()).registerCallback(tabs, 'tabs');
+new Register().registerCallback(tabs, 'tabs');

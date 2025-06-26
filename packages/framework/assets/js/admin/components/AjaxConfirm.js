@@ -1,11 +1,10 @@
 import Ajax from '../../common/utils/Ajax';
-import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
+import Window from '../utils/Window';
 import ConfirmDelete from './ConfirmDelete';
 
 export default class AjaxConfirm {
-
-    static bind () {
+    static bind() {
         const _this = this;
         $(this)
             .off('click.ajaxConfirm')
@@ -16,23 +15,23 @@ export default class AjaxConfirm {
                     success: function (data) {
                         // eslint-disable-next-line no-new
                         new Window({
-                            content: data
+                            content: data,
                         });
                         const onOpen = $(_this).data('ajax-confirm-on-open');
                         if (onOpen) {
                             // eslint-disable-next-line no-new
                             new ConfirmDelete(this);
                         }
-                    }
+                    },
                 });
 
                 return false;
             });
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('a.js-ajax-confirm').each(AjaxConfirm.bind);
     }
 }
 
-(new Register()).registerCallback(AjaxConfirm.init, 'AjaxConfirm.init');
+new Register().registerCallback(AjaxConfirm.init, 'AjaxConfirm.init');

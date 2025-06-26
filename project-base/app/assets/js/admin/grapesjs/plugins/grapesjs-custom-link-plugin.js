@@ -1,57 +1,56 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 export const linkPositionDataAttribute = 'data-link-position';
-export default grapesjs.plugins.add('custom-link', (editor) => {
-
+export default grapesjs.plugins.add('custom-link', editor => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
         label: Translator.trans('Link Block'),
         category: Translator.trans('Basic objects'),
         content:
             `
-          <a data-gjs-type="link-block" class="gjs-link-block">`
-            + Translator.trans('Insert your text here')
-            + '</a>',
-        attributes: { class: 'fa fa-link' }
+          <a data-gjs-type="link-block" class="gjs-link-block">` +
+            Translator.trans('Insert your text here') +
+            `</a>`,
+        attributes: { class: 'fa fa-link' },
     });
 
     editor.DomComponents.addType('link-block', {
-        isComponent: (element) => element.tagName === 'A',
+        isComponent: element => element.tagName === 'A',
         model: {
-            init () {
+            init() {
                 this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
             },
 
-            handleLinkPositionChange (element) {
+            handleLinkPositionChange(element) {
                 element.setClass([
                     'gjs-link-block',
-                    `image-position-${this.getAttributes()[linkPositionDataAttribute]}`
+                    `image-position-${this.getAttributes()[linkPositionDataAttribute]}`,
                 ]);
             },
 
             defaults: {
                 attributes: {
                     [linkPositionDataAttribute]: 'left',
-                    class: ['image-position-left']
+                    class: ['image-position-left'],
                 },
                 traits: [
                     {
                         type: 'input',
                         name: 'href',
-                        label: Translator.trans('Href')
+                        label: Translator.trans('Href'),
                     },
                     {
                         type: 'input',
                         name: 'title',
-                        label: Translator.trans('Title')
+                        label: Translator.trans('Title'),
                     },
                     {
                         type: 'checkbox',
                         name: 'target',
                         label: Translator.trans('Open in new window'),
                         valueTrue: '_blank',
-                        valueFalse: ''
+                        valueFalse: '',
                     },
                     {
                         type: 'select',
@@ -60,20 +59,20 @@ export default grapesjs.plugins.add('custom-link', (editor) => {
                         options: [
                             {
                                 id: 'left',
-                                label: Translator.trans('Left')
+                                label: Translator.trans('Left'),
                             },
                             {
                                 id: 'center',
-                                label: Translator.trans('Center')
+                                label: Translator.trans('Center'),
                             },
                             {
                                 id: 'right',
-                                label: Translator.trans('Right')
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
+                                label: Translator.trans('Right'),
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
     });
 });

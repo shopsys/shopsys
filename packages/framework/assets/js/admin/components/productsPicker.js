@@ -1,13 +1,14 @@
 import 'magnific-popup';
-import Sortable from 'sortablejs';
-import FormChangeInfo from './FormChangeInfo';
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import Register from '../../common/utils/Register';
+import FormChangeInfo from './FormChangeInfo';
 
 window.ProductsPickerInstances = {};
 
 export default class ProductsPicker {
-
-    constructor ($productsPicker) {
+    constructor($productsPicker) {
         this.instanceId = Object.keys(window.ProductsPickerInstances).length;
         window.ProductsPickerInstances[this.instanceId] = this;
 
@@ -23,38 +24,33 @@ export default class ProductsPicker {
         this.$itemsContainer.find('.js-products-picker-item').each(function () {
             _this.initItem($(this));
         });
-
-        this.$itemsContainer.each((index, element) => {
-            Sortable.create(element, {
-                handle: '.js-products-picker-item-handle',
-                draggable: '.js-products-picker-item',
-                animation: 150,
-                onUpdate: () => this.updateOrdering()
-            });
+        this.$itemsContainer.sortable({
+            items: '.js-products-picker-item',
+            handle: '.js-products-picker-item-handle',
+            update: () => this.updateOrdering(),
         });
     }
 
-    openProductsPickerWindow () {
-        const _this = this;
+    openProductsPickerWindow() {
         $.magnificPopup.open({
-            items: { src: _this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', _this.instanceId) },
+            items: {
+                src: this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId),
+            },
             type: 'iframe',
-            closeOnBgClick: true
+            closeOnBgClick: true,
         });
 
         return false;
     }
 
-    initItem ($item) {
-        const _this = this;
-
-        _this.productItems.push($item);
+    initItem($item) {
+        this.productItems.push($item);
         $item.find('.js-products-picker-item-button-delete').click(() => {
-            _this.removeItem($item);
+            this.removeItem($item);
         });
     }
 
-    removeItem ($item) {
+    removeItem($item) {
         const productId = $item.find('.js-products-picker-item-input:first').val();
         delete this.productItems[this.findProductItemIndex(productId)];
         const productItem = this.findProductItemIndex(productId);
@@ -72,7 +68,7 @@ export default class ProductsPicker {
         FormChangeInfo.showInfo();
     }
 
-    findProductItemIndex (productId) {
+    findProductItemIndex(productId) {
         for (const key in this.productItems) {
             if (this.productItems[key].find('.js-products-picker-item-input:first').val() === productId.toString()) {
                 return key;
@@ -82,41 +78,41 @@ export default class ProductsPicker {
         return null;
     }
 
-    reIndex () {
+    reIndex() {
         this.$itemsContainer.find('.js-products-picker-item-input').each((index, element) => {
             const name = $(element).attr('name');
-            const newName = name.substr(0, name.lastIndexOf('[') + 1) + index + ']';
+            const newName = `${name.substr(0, name.lastIndexOf('[') + 1) + index}]`;
             $(element).attr('name', newName);
         });
     }
 
-    updateHeader () {
+    updateHeader() {
         this.$header.toggle(this.productItems.length !== 0);
     }
 
-    updateOrdering () {
+    updateOrdering() {
         this.reIndex();
         FormChangeInfo.showInfo();
     }
 
-    isMainProduct (productId) {
+    isMainProduct(productId) {
         return this.mainProductId !== '' && this.mainProductId === productId;
     }
 
-    removeItemByProductId (productId) {
+    removeItemByProductId(productId) {
         const $item = this.findProductItemByProductId(productId);
         this.removeItem($item);
     }
 
-    findProductItemByProductId (productId) {
+    findProductItemByProductId(productId) {
         return this.productItems[this.findProductItemIndex(productId)];
     }
 
-    hasProduct (productId) {
+    hasProduct(productId) {
         return this.findProductItemIndex(productId) !== null;
     }
 
-    addProduct (productId, productName) {
+    addProduct(productId, productName) {
         const nextIndex = this.$itemsContainer.find('.js-products-picker-item').length;
         const itemHtml = this.$productsPicker.data('products-picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
@@ -128,7 +124,7 @@ export default class ProductsPicker {
         FormChangeInfo.showInfo();
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-products-picker').each(function () {
             // eslint-disable-next-line no-new
             new ProductsPicker($(this));
@@ -140,4 +136,4 @@ export default class ProductsPicker {
     }
 }
 
-(new Register().registerCallback(ProductsPicker.init, 'ProductsPicker.init'));
+new Register().registerCallback(ProductsPicker.init, 'ProductsPicker.init');

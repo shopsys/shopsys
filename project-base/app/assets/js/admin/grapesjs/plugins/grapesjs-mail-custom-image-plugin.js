@@ -1,8 +1,8 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 import { linkPositionDataAttribute } from './grapesjs-custom-link-plugin';
 
-export default grapesjs.plugins.add('mail-custom-image', (editor) => {
+export default grapesjs.plugins.add('mail-custom-image', editor => {
     const imagePositionDataAttribute = 'data-image-position';
 
     editor.Blocks.add('mail-custom-image', {
@@ -14,43 +14,44 @@ export default grapesjs.plugins.add('mail-custom-image', (editor) => {
         content: {
             type: 'mail-custom-image',
             attributes: {
-                'data-gjs-type': 'mail-custom-image'
-            }
-        }
+                'data-gjs-type': 'mail-custom-image',
+            },
+        },
     });
 
     editor.DomComponents.addType('mail-custom-image', {
-        isComponent: (element) => element.tagName === 'IMG'
-                && element.getAttribute('data-gjs-type') === 'mail-custom-image'
-                && !element.hasAttribute('path'),
+        isComponent: element =>
+            element.tagName === 'IMG' &&
+            element.getAttribute('data-gjs-type') === 'mail-custom-image' &&
+            !element.hasAttribute('path'),
         extend: 'image',
         model: {
-            init () {
+            init() {
                 this.setStyle({});
                 this.on('change:src', this.handlePathChange);
                 this.on(`change:attributes:${imagePositionDataAttribute}`, this.handleImagePositionChange);
             },
-            handlePathChange (element) {
+            handlePathChange(element) {
                 element.addAttributes({ path: this.attributes.src });
             },
-            handleImagePositionChange (element) {
+            handleImagePositionChange(element) {
                 element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
                     element.collection.parent.setAttributes({
-                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute]
+                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute],
                     });
                 }
             },
             defaults: {
                 attributes: {
                     [imagePositionDataAttribute]: 'left',
-                    class: ['image-position-left']
+                    class: ['image-position-left'],
                 },
                 traits: [
                     {
                         type: 'text',
                         name: 'path',
-                        label: Translator.trans('Path to file')
+                        label: Translator.trans('Path to file'),
                     },
                     {
                         type: 'select',
@@ -59,27 +60,27 @@ export default grapesjs.plugins.add('mail-custom-image', (editor) => {
                         options: [
                             {
                                 id: 'left',
-                                label: Translator.trans('Left')
+                                label: Translator.trans('Left'),
                             },
                             {
                                 id: 'center',
-                                label: Translator.trans('Center')
+                                label: Translator.trans('Center'),
                             },
                             {
                                 id: 'right',
-                                label: Translator.trans('Right')
-                            }
-                        ]
+                                label: Translator.trans('Right'),
+                            },
+                        ],
                     },
                     {
                         type: 'input',
                         name: 'alt',
-                        label: Translator.trans('Alt')
-                    }
+                        label: Translator.trans('Alt'),
+                    },
                 ],
-                resizable: false
-            }
-        }
+                resizable: false,
+            },
+        },
     });
 
     editor.addStyle(`

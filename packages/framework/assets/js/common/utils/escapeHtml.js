@@ -1,1 +1,1 @@
-export const escapeHtml = (string) => $('<textarea/>').text(string).html();
+export const escapeHtml = string => $('<textarea/>').text(string).html();

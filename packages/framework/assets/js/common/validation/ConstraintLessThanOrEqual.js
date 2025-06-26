@@ -1,13 +1,11 @@
 import { parseNumber } from '../utils/number';
 
-(function (window) {
-
+(window => {
     const SymfonyComponentValidatorConstraintsLessThanOrEqual = function () {
         this.message = '';
         this.value = null;
 
         this.validate = function (value) {
-
             const f = FpJsFormValidator;
             const compareValue = parseNumber(value);
 
@@ -17,12 +15,11 @@ import { parseNumber } from '../utils/number';
                 return [
                     this.message
                         .replace('{{ value }}', String(value))
-                        .replace('{{ compared_value }}', String(this.value))
+                        .replace('{{ compared_value }}', String(this.value)),
                 ];
             }
         };
     };
 
     window.SymfonyComponentValidatorConstraintsLessThanOrEqual = SymfonyComponentValidatorConstraintsLessThanOrEqual;
-
 })(window);

@@ -3,7 +3,7 @@ export const en = {
         addButton: 'Insert image',
         inputPlh: 'https://path/to/the/image.jpg',
         modalTitle: 'Choose image',
-        uploadTitle: 'Drag images here or click upload'
+        uploadTitle: 'Drag images here or click upload',
     },
     // Here just as a reference, GrapesJS core doesn't contain any block,
     // so this should be omitted from other local files
@@ -14,11 +14,11 @@ export const en = {
             text: 'Text',
             sect100: '1 column',
             sect50: '2 columns',
-            'link-block': 'Link Block'
+            'link-block': 'Link Block',
         },
         categories: {
             // 'category-id': 'Category Label',
-        }
+        },
     },
     domComponents: {
         names: {
@@ -36,8 +36,8 @@ export const en = {
             thead: 'Table header',
             table: 'Table',
             row: 'Table row',
-            cell: 'Table cell'
-        }
+            cell: 'Table cell',
+        },
     },
     deviceManager: {
         device: 'Device',
@@ -45,8 +45,8 @@ export const en = {
             desktop: 'Desktop',
             tablet: 'Tablet',
             mobileLandscape: 'Mobil landscape',
-            mobilePortrait: 'Mobil portrait'
-        }
+            mobilePortrait: 'Mobil portrait',
+        },
     },
     panels: {
         buttons: {
@@ -66,16 +66,16 @@ export const en = {
                 cmdClear: 'Clear changes',
                 cmdTglImages: 'Toggle images',
                 cmdOpenImport: 'Import content',
-                activateOutline: 'Components'
-            }
+                activateOutline: 'Components',
+            },
         },
         options: {
             devices: {
                 cmdDeviceDesktop: 'Desktop',
                 cmdDeviceTablet: 'Tablet',
-                cmdDeviceMobile: 'Mobil'
-            }
-        }
+                cmdDeviceMobile: 'Mobil',
+            },
+        },
     },
     selectorManager: {
         label: 'Classes',
@@ -84,8 +84,8 @@ export const en = {
         states: {
             hover: 'Hover',
             active: 'Click',
-            'nth-of-type(2n)': 'Even/odd'
-        }
+            'nth-of-type(2n)': 'Even/odd',
+        },
     },
     styleManager: {
         empty: 'Select an element before using the Style Editor',
@@ -98,7 +98,7 @@ export const en = {
             decorations: 'Decorations',
             extra: 'Extra',
             flex: 'Flex',
-            dimension: 'Dimension'
+            dimension: 'Dimension',
         },
         // Default names for sub properties in Composite and Stack types.
         // Other labels are generated directly from their property names (eg. 'font-size' will be 'Font size').
@@ -141,8 +141,8 @@ export const en = {
             'background-repeat-sub': 'Repeat',
             'background-position-sub': 'Position',
             'background-attachment-sub': 'Attachment',
-            'background-size-sub': 'Size'
-        }
+            'background-size-sub': 'Size',
+        },
         // Translate options in style properties
         // options: {
         //   float: { // Id of the property
@@ -169,7 +169,7 @@ export const en = {
                 loop: 'Loop',
                 controls: 'Controls',
                 startfrom: 'Start from',
-                endText: 'End text'
+                endText: 'End text',
             },
             // In a simple trait, like text input, these are used on input attributes
             /*
@@ -184,12 +184,12 @@ export const en = {
             options: {
                 target: {
                     false: 'This window',
-                    _blank: '_blank'
-                }
-            }
-        }
+                    _blank: '_blank',
+                },
+            },
+        },
     },
     storageManager: {
-        recover: 'Do you want to restore unsaved changes?'
-    }
+        recover: 'Do you want to restore unsaved changes?',
+    },
 };

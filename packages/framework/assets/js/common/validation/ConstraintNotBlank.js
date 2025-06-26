@@ -1,5 +1,4 @@
-(function (window) {
-
+(window => {
     const SymfonyComponentValidatorConstraintsNotBlank = function () {
         this.message = '';
 
@@ -16,5 +15,4 @@
     };
 
     window.SymfonyComponentValidatorConstraintsNotBlank = SymfonyComponentValidatorConstraintsNotBlank;
-
 })(window);

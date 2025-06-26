@@ -1,11 +1,11 @@
 import Register from '../../common/utils/Register';
 import {
     addNewItemToCollection,
-    removeItemFromCollection
+    removeItemFromCollection,
 } from '../validation/customization/customizeCollectionBundle';
 
 export default class HreflangSetting {
-    static init ($container) {
+    static init($container) {
         const $collectionItemAddButton = $container.filterAllNodes('.js-hreflang-setting-item-add');
         const $collection = $container.filterAllNodes('.js-hreflang-setting');
 
@@ -26,16 +26,14 @@ export default class HreflangSetting {
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
             const $item = $($.parseHTML(item));
 
             $item.data('index', index);
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
 
             addNewItemToCollection('.js-hreflang-setting', index);
             HreflangSetting.refreshCount($collection);
@@ -46,7 +44,7 @@ export default class HreflangSetting {
         HreflangSetting.refreshCount($collection);
     }
 
-    static refreshCount ($collection) {
+    static refreshCount($collection) {
         if ($collection.find('.js-hreflang-setting-item').length === 0) {
             $collection.find('.js-hreflang-setting-empty-item').show();
         } else {
@@ -55,4 +53,4 @@ export default class HreflangSetting {
     }
 }
 
-(new Register()).registerCallback(HreflangSetting.init, 'HreflangSetting.init');
+new Register().registerCallback(HreflangSetting.init, 'HreflangSetting.init');

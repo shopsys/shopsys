@@ -1,13 +1,13 @@
 import Register from '../../../common/utils/Register';
 
-function validationComplaintItem ($container) {
+function validationComplaintItem(_$container) {
     window.$('form[name="complaint_form"]').jsFormValidator({
         callbacks: {
-            validateQuantityIsLessOrEqualThanOrdered: function () {
+            validateQuantityIsLessOrEqualThanOrdered: () => {
                 // JS validation is not necessary
-            }
-        }
+            },
+        },
     });
 }
 
-(new Register()).registerCallback(validationComplaintItem);
+new Register().registerCallback(validationComplaintItem);

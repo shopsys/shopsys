@@ -1,16 +1,16 @@
-import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
 import InfoCircle from 'icons/tabler/info-circle-filled.svg';
+import Register from '../../common/utils/Register';
 
 export default class FormChangeInfo {
-
-    constructor () {
+    constructor() {
         FormChangeInfo.isFormSubmitted = FormChangeInfo.isFormSubmitted || false;
         FormChangeInfo.isInfoShown = FormChangeInfo.isInfoShown || false;
     }
 
-    initContent ($container) {
-        $container.filterAllNodes('.web__content form')
+    initContent($container) {
+        $container
+            .filterAllNodes('.web__content form')
             .change(() => FormChangeInfo.showInfo())
             .each(function () {
                 if ($(this).find('.form-input-error:first, .js-validation-errors-list li:first').length > 0) {
@@ -19,21 +19,21 @@ export default class FormChangeInfo {
             });
     }
 
-    initDocument () {
-        $(document).on('submit', '.web__content form', function (event) {
+    initDocument() {
+        $(document).on('submit', '.web__content form', event => {
             if (event.isDefaultPrevented() === false) {
                 FormChangeInfo.isFormSubmitted = true;
             }
         });
 
-        $(window).on('beforeunload', function () {
+        $(window).on('beforeunload', () => {
             if (FormChangeInfo.isInfoShown && !FormChangeInfo.isFormSubmitted) {
                 return Translator.trans('You have unsaved changes!');
             }
         });
     }
 
-    initWysiwygEditors () {
+    initWysiwygEditors() {
         if (typeof CKEDITOR !== 'undefined') {
             for (const i in CKEDITOR.instances) {
                 const instance = CKEDITOR.instances[i];
@@ -45,17 +45,21 @@ export default class FormChangeInfo {
         }
     }
 
-    static showInfo () {
-        const textToShow = Translator.trans('You have made changes, don\'t forget to save them!');
+    static showInfo() {
+        const textToShow = Translator.trans("You have made changes, don't forget to save them!");
         const $fixedBarIn = $('.web__content .window-fixed-bar .window-fixed-bar__in');
         const $infoDiv = $fixedBarIn.find('#js-form-change-info');
         if (!FormChangeInfo.isInfoShown) {
             $fixedBarIn.prepend(
-                '<div class="window-fixed-bar__item">'
-                    + '<div id="js-form-change-info" class="window-fixed-bar__item__cell">'
-                        + '<strong>' + InfoCircle + textToShow + '</strong>'
-                    + '</div>'
-                + '</div>');
+                '<div class="window-fixed-bar__item">' +
+                    '<div id="js-form-change-info" class="window-fixed-bar__item__cell">' +
+                    '<strong>' +
+                    InfoCircle +
+                    textToShow +
+                    '</strong>' +
+                    '</div>' +
+                    '</div>',
+            );
         } else {
             $infoDiv.text = textToShow;
         }
@@ -64,18 +68,17 @@ export default class FormChangeInfo {
         }
     }
 
-    static removeInfo () {
+    static removeInfo() {
         $('#js-form-change-info').remove();
         FormChangeInfo.isInfoShown = false;
     }
 
-    static init ($container) {
+    static init($container) {
         const formChangeInfo = new FormChangeInfo();
         formChangeInfo.initContent($container);
         formChangeInfo.initWysiwygEditors();
         formChangeInfo.initDocument();
     }
-
 }
 
-(new Register()).registerCallback(FormChangeInfo.init, 'FormChangeInfo.init');
+new Register().registerCallback(FormChangeInfo.init, 'FormChangeInfo.init');

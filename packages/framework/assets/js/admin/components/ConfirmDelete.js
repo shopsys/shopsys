@@ -1,9 +1,8 @@
-import Ajax from '../../common/utils/Ajax';
 import Translator from 'bazinga-translator';
+import Ajax from '../../common/utils/Ajax';
 
 export default class ConfirmDelete {
-
-    constructor (confirmLink, messageContainerSelector = '#window-main-container .window .js-window-content') {
+    constructor(confirmLink, messageContainerSelector = '#window-main-container .window .js-window-content') {
         this.confirmLink = confirmLink;
         this.messageContainerSelector = messageContainerSelector;
         this.$confirmLink = $(confirmLink);
@@ -22,7 +21,7 @@ export default class ConfirmDelete {
         }
     }
 
-    canDeleteDirectly () {
+    canDeleteDirectly() {
         const _this = this;
         Ajax.ajax({
             url: this.$confirmLink.attr('href'),
@@ -34,32 +33,28 @@ export default class ConfirmDelete {
                     // eslint-disable-next-line no-new
                     new ConfirmDelete(_this.confirmLink, _this.messageContainerSelector);
                 }
-            }
+            },
         });
 
         return false;
     }
 
-    refreshSubmitButton () {
+    refreshSubmitButton() {
         if (this.isSelectedNewValue()) {
-            this.$confirmDeleteFormButton
-                .removeClass('btn--disabled cursor-help')
-                .tooltip('destroy');
+            this.$confirmDeleteFormButton.removeClass('btn--disabled cursor-help').tooltip('destroy');
         } else {
-            this.$confirmDeleteFormButton
-                .addClass('btn--disabled cursor-help')
-                .tooltip({
-                    title: Translator.trans('Choose new value first'),
-                    placement: 'right'
-                });
+            this.$confirmDeleteFormButton.addClass('btn--disabled cursor-help').tooltip({
+                title: Translator.trans('Choose new value first'),
+                placement: 'right',
+            });
         }
     }
 
-    onConfirmDeleteFormSubmit () {
+    onConfirmDeleteFormSubmit() {
         return this.isSelectedNewValue();
     }
 
-    isSelectedNewValue () {
+    isSelectedNewValue() {
         return this.$confirmDeleteFormSelect.val() !== '';
     }
 }

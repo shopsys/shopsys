@@ -1,33 +1,31 @@
 import Register from '../../common/utils/Register';
 
 export default class SelectToggle {
-
-    constructor ($container) {
+    constructor($container) {
         this.optionClassPrefix = 'js-select-toggle-option-';
 
         const $selects = $container.filterAllNodes('.js-toggle-opt-group');
 
         if ($selects.length > 0) {
-            $selects.each((index, element) => {
+            $selects.each((_index, element) => {
                 this.toggleOptgroupOnControlChange($(element));
             });
         }
     }
 
-    toggleOptgroupOnControlChange ($select) {
+    toggleOptgroupOnControlChange($select) {
         const $control = $($select.data('js-toggle-opt-group-control'));
 
         if ($control.length > 0) {
-            $control
-                .on('change', event => {
-                    this.showOptionsBySelector($select, '.' + this.optionClassPrefix + event.target.value);
-                });
-            this.showOptionsBySelector($select, '.' + this.optionClassPrefix + $control.val());
+            $control.on('change', event => {
+                this.showOptionsBySelector($select, `.${this.optionClassPrefix}${event.target.value}`);
+            });
+            this.showOptionsBySelector($select, `.${this.optionClassPrefix}${$control.val()}`);
         }
     }
 
-    showOptionsBySelector ($select, optionSelector) {
-        $select.find('option').each((index, element) => {
+    showOptionsBySelector($select, optionSelector) {
+        $select.find('option').each((_index, element) => {
             if ($(element).is(optionSelector)) {
                 $(element).prop('disabled', false);
             } else {
@@ -37,10 +35,10 @@ export default class SelectToggle {
         $select.val($select.find('option:not([disabled]):first').val()).change();
     }
 
-    static init ($container) {
+    static init($container) {
         // eslint-disable-next-line no-new
         new SelectToggle($container);
     }
 }
 
-(new Register().registerCallback(SelectToggle.init, 'SelectToggle.init'));
+new Register().registerCallback(SelectToggle.init, 'SelectToggle.init');
