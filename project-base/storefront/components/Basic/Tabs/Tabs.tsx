@@ -15,6 +15,7 @@ import {
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
 import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
+import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
 /**
@@ -43,13 +44,13 @@ export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
     <TabList className="z-above hidden flex-row lg:flex lg:gap-5">{children}</TabList>
 );
 
-export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, tabIndex, ...props }) => (
+export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
     <Tab
         selectedClassName="isActive"
-        tabIndex={tabIndex}
-        className={twJoin(
+        tabIndex="0"
+        className={twMergeCustom(
             'bg-background-more hover:bg-background-most font-secondary outline-border-success [&.isActive]:bg-background-default cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
-            'focus-visible:text-text-default focus-visible:bg-orange-500 focus-visible:outline-none',
+            'focus-visible:text-text-default! focus-visible:bg-orange-500! focus-visible:outline-none!',
             className,
         )}
         {...props}
