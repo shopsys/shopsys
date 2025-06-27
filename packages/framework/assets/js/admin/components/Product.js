@@ -34,12 +34,12 @@ export default class Product {
             const $collection = $(this).closest('.js-form-group').find('.js-videos-collection');
             let index = $collection.data('index');
             index++;
-            let prototype = $collection.data('prototype');
-            let item = prototype
+            const prototype = $collection.data('prototype');
+            const item = prototype
                 .replace(/__name__label__/g, index)
                 .replace(/__name__/g, index);
 
-            let $item = $($.parseHTML(item));
+            const $item = $($.parseHTML(item));
 
             $item.data('index', index);
             $collection.data('index', index);

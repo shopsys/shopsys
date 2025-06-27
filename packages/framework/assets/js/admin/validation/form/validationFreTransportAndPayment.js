@@ -5,7 +5,7 @@ export default function validationFreeTransportAndPayment () {
     $('.js-free-transport-and-payment-price-limit').each(function () {
         const $priceLimitForm = $(this);
         $priceLimitForm.jsFormValidator({
-            'groups': function () {
+            groups: function () {
 
                 const groups = [VALIDATION_GROUP_DEFAULT];
                 if ($priceLimitForm.find('.js-free-transport-and-payment-price-limit-enabled').is(':checked')) {

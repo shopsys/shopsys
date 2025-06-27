@@ -134,7 +134,7 @@ export default class Window {
 
     moveToCenter () {
         let relativeY = window.innerHeight / 2 - this.$window.height() / 2;
-        let minRelativeY = window.innerHeight * 0.1;
+        const minRelativeY = window.innerHeight * 0.1;
 
         if (relativeY < minRelativeY) {
             relativeY = minRelativeY;
@@ -167,7 +167,7 @@ export default class Window {
     }
 
     static showOverlay () {
-        let $overlay = Window.getOverlay();
+        const $overlay = Window.getOverlay();
         $('body').append($overlay);
     }
 

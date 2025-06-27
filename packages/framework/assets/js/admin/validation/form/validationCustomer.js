@@ -13,8 +13,8 @@ export default function validationCustomer () {
 
     const $customerBillingAddressForm = $('#customer_user_update_form_billingAddressData');
     $customerBillingAddressForm.jsFormValidator({
-        'groups': function () {
-            var groups = [VALIDATION_GROUP_DEFAULT];
+        groups: function () {
+            const groups = [VALIDATION_GROUP_DEFAULT];
             if ($customerBillingAddressForm.find('#customer_user_update_form_billingAddressData_companyData_companyCustomer').is(':checked')) {
                 groups.push('companyCustomer');
             }

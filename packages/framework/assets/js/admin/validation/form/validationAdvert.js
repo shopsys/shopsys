@@ -35,7 +35,7 @@ export default function validationAdvert () {
     initAdvertProductList();
 
     $advertForm.jsFormValidator({
-        'groups': function () {
+        groups: function () {
             const groups = [VALIDATION_GROUP_DEFAULT];
 
             const checkedType = getCheckedType();

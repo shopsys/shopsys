@@ -14,7 +14,7 @@ const createObject = (args, domainPosition, localePosition, filePath, line) => {
         domain: args[domainPosition] && args[domainPosition].value,
         locale: args[localePosition] && args[localePosition].value,
         source: filePath,
-        line: line
+        line
     };
 };
 

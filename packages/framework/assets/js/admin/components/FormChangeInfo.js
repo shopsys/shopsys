@@ -35,7 +35,7 @@ export default class FormChangeInfo {
 
     initWysiwygEditors () {
         if (typeof CKEDITOR !== 'undefined') {
-            for (let i in CKEDITOR.instances) {
+            for (const i in CKEDITOR.instances) {
                 const instance = CKEDITOR.instances[i];
                 if (!instance.formChangeInfoInitilized) {
                     instance.on('change', FormChangeInfo.showInfo);

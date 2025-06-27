@@ -55,13 +55,13 @@ export default class MailTemplate {
             dataType: 'json',
             loaderElement: $form,
             success: (data) => {
-                if (data['result'] === 'valid') {
+                if (data.result === 'valid') {
                     document.location.reload();
-                } else if (data['result'] === 'invalid') {
+                } else if (data.result === 'invalid') {
                     const $errorsList = $errorsContainer.show().find('ul');
                     $errorsList.find('li').remove();
-                    for (let i in data['errors']) {
-                        $errorsList.append('<li>' + data['errors'][i] + '</li>');
+                    for (const i in data.errors) {
+                        $errorsList.append('<li>' + data.errors[i] + '</li>');
                     }
                 }
             }

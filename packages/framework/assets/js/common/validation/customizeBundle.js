@@ -85,7 +85,7 @@ export default class CustomizeBundle {
                 $(this).closest('.form-input-error').removeClass('form-input-error');
             })
             .jsFormValidator({
-                'showErrors': CustomizeBundle.showErrors
+                showErrors: CustomizeBundle.showErrors
             });
     }
 
@@ -121,7 +121,7 @@ export default class CustomizeBundle {
         }
 
         const childDomElements = [];
-        for (let i in model.children) {
+        for (const i in model.children) {
             const child = model.children[i];
             const childDomElement = CustomizeBundle.findDomElementRecursive(child, fpJsFormValidator);
 
@@ -140,7 +140,7 @@ export default class CustomizeBundle {
 
         const domElementsAncestors = [];
 
-        for (let i in domElements) {
+        for (const i in domElements) {
             const domElement = domElements[i];
             const $domElementParents = $(domElement).parents();
 
@@ -197,9 +197,9 @@ export default class CustomizeBundle {
     static getFormattedFormErrors (container) {
         const errorsByLabel = CustomizeBundle.getFormErrorsIndexedByLabel(container);
         const $formattedFormErrors = $('<ul/>');
-        for (let label in errorsByLabel) {
+        for (const label in errorsByLabel) {
             const $errorsUl = $('<ul/>');
-            for (let i in errorsByLabel[label]) {
+            for (const i in errorsByLabel[label]) {
                 $errorsUl.append($('<li/>').text(errorsByLabel[label][i]));
             }
             $formattedFormErrors.append($('<li/>').text(label).append($errorsUl));
@@ -238,7 +238,7 @@ export default class CustomizeBundle {
 
     static findLabelByInputId (inputId) {
         let $label = $('label[for="' + inputId + '"]');
-        let $input = $('#' + inputId);
+        const $input = $('#' + inputId);
 
         if ($label.length === 0) {
             $label = $('#js-label-' + inputId);

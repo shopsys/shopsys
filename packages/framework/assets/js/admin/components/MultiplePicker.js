@@ -1,9 +1,7 @@
 import 'magnific-popup';
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import FormChangeInfo from './FormChangeInfo';
 import Register from '../../common/utils/Register';
+import Sortable from 'sortablejs';
 
 window.PickerInstances = {};
 
@@ -24,10 +22,14 @@ export default class MultiplePicker {
         this.$itemsContainer.find('.js-picker-item').each(function () {
             _this.initItem($(this));
         });
-        this.$itemsContainer.sortable({
-            items: '.js-picker-item',
-            handle: '.js-picker-item-handle',
-            update: () => this.updateOrdering()
+
+        this.$itemsContainer.each(function (index, element) {
+            Sortable.create(element, {
+                handle: '.js-picker-item-handle',
+                draggable: '.js-picker-item',
+                animation: 150,
+                onUpdate: _this.updateOrdering
+            });
         });
     }
 
@@ -57,7 +59,7 @@ export default class MultiplePicker {
         delete this.items[this.findItemIndex(Id)];
         const Item = this.findItemIndex(Id);
         const newItems = [];
-        for (let key in this.items) {
+        for (const key in this.items) {
             if (this.items[key] !== Item) {
                 newItems.push(this.items[key]);
             }
@@ -71,7 +73,7 @@ export default class MultiplePicker {
     }
 
     findItemIndex (Id) {
-        for (let key in this.items) {
+        for (const key in this.items) {
             if (this.items[key].find('.js-picker-item-input:first').val() === Id.toString()) {
                 return key;
             }

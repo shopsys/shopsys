@@ -10,7 +10,7 @@ function processDump (dirWithJsFiles, outputDirForExportedTranslations) {
 
         const translations = [];
 
-        filePaths.map(filePath => {
+        filePaths.forEach(filePath => {
             if (filePath.match(/(\w*)\.js$/) === null) {
                 return;
             }

@@ -11,7 +11,7 @@
          * Should return an error message or an array of messages
          */
         this.validate = function (value) {
-            let result = new Set();
+            const result = new Set();
 
             $.each(value, function (key1, value1) {
                 $.each(value, function (key2, value2) {

@@ -1,6 +1,4 @@
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
+import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
@@ -13,14 +11,15 @@ export default class GridMultipleDragAndDrop {
 
         const _this = this;
         $content.find('.js-multiple-grids-save-all-button').click((event) => this.saveOrdering($content, event));
-        $content.find('.js-multiple-grids-rows-unified').sortable({
-            cursor: 'move',
-            handle: '.cursor-move',
-            items: '.js-grid-row, .js-grid-row-holder',
-            placeholder: 'in-drop-place',
-            revert: 200,
-            change: () => _this.onUpdate($content),
-            update: () => _this.onUpdate($content)
+        $content.find('.js-inline-edit-rows').each(function () {
+            Sortable.create(this, {
+                group: 'multiple-grids',
+                handle: '.js-move-handle',
+                draggable: '.js-grid-row',
+                animation: 150,
+                onChange: () => _this.onUpdate($content),
+                onEnd: () => _this.onUpdate($content)
+            });
         });
     }
 
@@ -35,7 +34,7 @@ export default class GridMultipleDragAndDrop {
             loaderElement: $content.find('.js-multiple-grids-save-all-button'),
             url: $saveButton.data('drag-and-drop-url-save-ordering'),
             type: 'POST',
-            data: data,
+            data,
             dataType: 'json',
             success: function () {
                 // eslint-disable-next-line no-new

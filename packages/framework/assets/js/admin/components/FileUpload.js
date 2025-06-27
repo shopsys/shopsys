@@ -125,7 +125,7 @@ export default class FileUpload {
         }
         // eslint-disable-next-line no-new
         new Window({
-            content: Translator.trans('Error occurred while uploading file: %message%', { 'message': message })
+            content: Translator.trans('Error occurred while uploading file: %message%', { message })
         });
         this.$status.parent().hide();
     }
@@ -138,7 +138,7 @@ export default class FileUpload {
         Ajax.ajax({
             url: this.deleteUrl,
             type: 'POST',
-            data: { filename: filename },
+            data: { filename },
             dataType: 'json'
         });
     }

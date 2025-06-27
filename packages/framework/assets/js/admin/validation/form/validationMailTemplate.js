@@ -7,7 +7,7 @@ export default function validationMailTemplate () {
         const sendMailId = $(this).attr('id') + '_sendMail';
 
         $(this).jsFormValidator({
-            'groups': function () {
+            groups: function () {
 
                 const groups = [VALIDATION_GROUP_DEFAULT];
                 if ($(self).find('#' + sendMailId).is(':checked')) {

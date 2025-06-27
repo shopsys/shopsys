@@ -24,8 +24,8 @@ export default class CharactersCounter {
         charactersCounter.$info.text(Translator.trans(
             'Used: %currentLength% characters. Recommended max. %recommendedLength%',
             {
-                'currentLength': currentLength,
-                'recommendedLength': charactersCounter.recommendedLength
+                currentLength,
+                recommendedLength: charactersCounter.recommendedLength
             }
         ));
     }

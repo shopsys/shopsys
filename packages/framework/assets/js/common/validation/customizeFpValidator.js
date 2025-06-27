@@ -16,7 +16,7 @@ FpJsFormValidator.preparePrototype = function (prototype, name) {
     prototype.id = prototype.id.replace(/__name__/g, name);
 
     if (typeof prototype.children === 'object') {
-        for (let childName in prototype.children) {
+        for (const childName in prototype.children) {
             prototype.children[childName] = this.preparePrototype(prototype.children[childName], name);
         }
     }
@@ -27,7 +27,7 @@ FpJsFormValidator.preparePrototype = function (prototype, name) {
 FpJsFormValidator.ajax._checkQueue = FpJsFormValidator.ajax.checkQueue;
 FpJsFormValidator.ajax.checkQueue = function () {
     if (FpJsFormValidator.ajax.queue === 0) {
-        for (let i in this.callbacks) {
+        for (const i in this.callbacks) {
             if (typeof this.callbacks[i] === 'function') {
                 this.callbacks[i]();
             }
@@ -102,8 +102,8 @@ FpJsFormValidator.attachElement = function (element) {
 
 FpJsFormValidator._getElementValue = FpJsFormValidator.getElementValue;
 FpJsFormValidator.getElementValue = function (element) {
-    var i = element.transformers.length;
-    var value = this.getInputValue(element);
+    let i = element.transformers.length;
+    let value = this.getInputValue(element);
 
     if (i && undefined === value) {
         value = this.getMappedValue(element);
@@ -112,7 +112,7 @@ FpJsFormValidator.getElementValue = function (element) {
         || (Object.keys(element.children).length > 0 && element.type !== 'Shopsys\\FrameworkBundle\\Form\\FileUploadType' && element.type !== 'Shopsys\\FrameworkBundle\\Form\\ImageUploadType')
     ) {
         value = {};
-        for (var childName in element.children) {
+        for (const childName in element.children) {
             value[childName] = this.getMappedValue(element.children[childName]);
         }
     } else {
@@ -137,7 +137,7 @@ FpJsFormValidator.getInputValue = function (element) {
         return $(element.domNode).find('.js-file-upload-uploaded-file').toArray();
     }
     if (element.type === 'Shopsys\\FrameworkBundle\\Form\\ProductsType') {
-        var value = [];
+        const value = [];
         $(element.domNode).find('.js-products-picker-item-input').each(function () {
             value.push($(this).val());
         });
@@ -156,11 +156,11 @@ FpJsFormValidator.getErrorPathElement = function (element) {
 // reported as https://github.com/formapro/JsFormValidatorBundle/issues/61
 FpJsFormValidator._initModel = FpJsFormValidator.initModel;
 FpJsFormValidator.initModel = function (model) {
-    var element = this.createElement(model);
+    const element = this.createElement(model);
     if (!element) {
         return null;
     }
-    var form = this.findFormElement(element);
+    const form = this.findFormElement(element);
     element.domNode = form;
 
     this.attachElement(element);
@@ -175,7 +175,7 @@ FpJsFormValidator.initModel = function (model) {
 // disable JS validation for form fields in element with class js-no-validate
 FpJsFormValidator._createElement = FpJsFormValidator.createElement;
 FpJsFormValidator.createElement = function (model) {
-    var element = this._createElement(model);
+    const element = this._createElement(model);
     if (!element) {
         return null;
     }

@@ -11,14 +11,14 @@ export default class SymfonyToolbarSupport {
     }
 
     static notifyOnToolbarShow () {
-        for (let i in SymfonyToolbarSupport.onToolbarShowCallbacks) {
+        for (const i in SymfonyToolbarSupport.onToolbarShowCallbacks) {
             const callback = SymfonyToolbarSupport.onToolbarShowCallbacks[i];
             callback.call();
         }
     }
 
     static notifyOnToolbarHide () {
-        for (let i in SymfonyToolbarSupport.onToolbarHideCallbacks) {
+        for (const i in SymfonyToolbarSupport.onToolbarHideCallbacks) {
             const callback = SymfonyToolbarSupport.onToolbarHideCallbacks[i];
             callback.call();
         }

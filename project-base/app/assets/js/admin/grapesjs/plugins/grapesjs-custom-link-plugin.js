@@ -12,7 +12,7 @@ export default grapesjs.plugins.add('custom-link', (editor) => {
             `
           <a data-gjs-type="link-block" class="gjs-link-block">`
             + Translator.trans('Insert your text here')
-            + `</a>`,
+            + '</a>',
         attributes: { class: 'fa fa-link' }
     });
 

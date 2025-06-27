@@ -4,9 +4,9 @@ import { VALIDATION_GROUP_DEFAULT } from './validation';
 export default function validationOrder ($container) {
     const $orderForm = $container.filterAllNodes('form[name="order_form"]');
     $orderForm.jsFormValidator({
-        'groups': function () {
+        groups: function () {
 
-            var groups = [VALIDATION_GROUP_DEFAULT];
+            const groups = [VALIDATION_GROUP_DEFAULT];
             if (!$orderForm.find('#order_form_shippingAddressGroup_deliveryAddressSameAsBillingAddress').is(':checked')) {
                 groups.push('deliveryAddressSameAsBillingAddress');
             }
@@ -20,7 +20,7 @@ export default function validationOrder ($container) {
         const $orderItemForm = $(this);
 
         $orderItemForm.jsFormValidator({
-            'groups': function () {
+            groups: function () {
 
                 const groups = [VALIDATION_GROUP_DEFAULT];
                 if ($orderItemForm.find('.js-set-prices-manually').is(':checked')) {

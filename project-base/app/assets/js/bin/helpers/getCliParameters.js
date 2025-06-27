@@ -4,6 +4,8 @@ const getCliParameters = (parameters, parameterName) => {
         if (keyValueParameter[0] === parameterName) {
             return keyValueParameter[1];
         }
+
+        return undefined;
     }).filter(item => item !== undefined);
 };
 

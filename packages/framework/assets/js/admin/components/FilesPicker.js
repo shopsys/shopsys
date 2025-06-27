@@ -1,7 +1,4 @@
 import 'magnific-popup';
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import FormChangeInfo from './FormChangeInfo';
 import Register from '../../common/utils/Register';
 import MultiplePicker from './MultiplePicker';
@@ -14,6 +11,7 @@ export default class FilesPicker extends MultiplePicker {
         this.$addButton = $('[data-picker-target="' + $picker.attr('id') + '"]');
         this.$addButton.click(() => this.openPickerWindow());
     }
+
     addItem ($selectedElement) {
         const nextIndex = this.$itemsContainer.find('.js-picker-item').length;
         const itemHtml = this.$picker.data('picker-prototype').replace(/__name__/g, nextIndex);
@@ -26,7 +24,7 @@ export default class FilesPicker extends MultiplePicker {
 
         const names = $selectedElement.data('picker-names');
         const namesInputs = $item.find('.js-picker-item-names');
-        for (let locale in names) {
+        for (const locale in names) {
             namesInputs.find('input[data-locale="' + locale + '"]').val(names[locale]);
         }
 

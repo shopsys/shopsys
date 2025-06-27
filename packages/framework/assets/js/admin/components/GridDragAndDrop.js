@@ -1,23 +1,22 @@
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import formChangeInfo from './FormChangeInfo';
 import Ajax from '../../common/utils/Ajax';
 import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import Sortable from 'sortablejs';
 
 export default class GridDragAndDrop {
 
     constructor ($content) {
         const _this = this;
-        $content.find('.js-drag-and-drop-grid-rows').sortable({
-            cursor: 'move',
-            handle: '.cursor-move',
-            items: '.js-grid-row',
-            placeholder: 'in-drop-place',
-            revert: 200,
-            update: (event) => _this.onUpdate(event)
+
+        $content.find('.js-drag-and-drop-grid-rows').each(function () {
+            Sortable.create(this, {
+                handle: '.js-move-handle',
+                draggable: '.js-grid-row',
+                animation: 150,
+                onChange: (event) => _this.onUpdate(event)
+            });
         });
 
         $content.find('.js-grid').each(function () {
@@ -93,7 +92,7 @@ export default class GridDragAndDrop {
             loaderElement: $grid.find('.js-drag-and-drop-grid-submit, js-drag-and-drop-grid-submit-all'),
             url: $grid.data('drag-and-drop-url-save-ordering'),
             type: 'POST',
-            data: data,
+            data,
             dataType: 'json',
             success: function () {
                 $grid.data('positionsChanged', false);

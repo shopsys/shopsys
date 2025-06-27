@@ -6,7 +6,7 @@
         this.validate = function (value, ele) {
             let anyDomainSelected = false;
 
-            for (var i in value) {
+            for (const i in value) {
                 if (value[i] === true) {
                     anyDomainSelected = true;
                     break;

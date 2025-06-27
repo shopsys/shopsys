@@ -7,19 +7,19 @@
         };
 
         this.reverseTransform = function (viewData) {
-            var normData = [];
+            const normData = [];
 
-            for (var i in viewData) {
-                var productParameterValuesLocalized = viewData[i];
+            for (const i in viewData) {
+                const productParameterValuesLocalized = viewData[i];
 
-                for (var locale in productParameterValuesLocalized.valueText) {
-                    var valueText = productParameterValuesLocalized.valueText[locale];
+                for (const locale in productParameterValuesLocalized.valueText) {
+                    const valueText = productParameterValuesLocalized.valueText[locale];
 
                     if (valueText !== '') {
-                        var productParameterValue = {
+                        const productParameterValue = {
                             parameter: productParameterValuesLocalized.parameter,
-                            locale: locale,
-                            valueText: valueText
+                            locale,
+                            valueText
                         };
 
                         normData.push(productParameterValue);

@@ -1,7 +1,5 @@
 import 'magnific-popup';
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
+import Sortable from 'sortablejs';
 import FormChangeInfo from './FormChangeInfo';
 import Register from '../../common/utils/Register';
 
@@ -25,10 +23,14 @@ export default class ProductsPicker {
         this.$itemsContainer.find('.js-products-picker-item').each(function () {
             _this.initItem($(this));
         });
-        this.$itemsContainer.sortable({
-            items: '.js-products-picker-item',
-            handle: '.js-products-picker-item-handle',
-            update: () => this.updateOrdering()
+
+        this.$itemsContainer.each((index, element) => {
+            Sortable.create(element, {
+                handle: '.js-products-picker-item-handle',
+                draggable: '.js-products-picker-item',
+                animation: 150,
+                onUpdate: () => this.updateOrdering()
+            });
         });
     }
 
@@ -57,7 +59,7 @@ export default class ProductsPicker {
         delete this.productItems[this.findProductItemIndex(productId)];
         const productItem = this.findProductItemIndex(productId);
         const newProductItems = [];
-        for (let key in this.productItems) {
+        for (const key in this.productItems) {
             if (this.productItems[key] !== productItem) {
                 newProductItems.push(this.productItems[key]);
             }
@@ -71,7 +73,7 @@ export default class ProductsPicker {
     }
 
     findProductItemIndex (productId) {
-        for (let key in this.productItems) {
+        for (const key in this.productItems) {
             if (this.productItems[key].find('.js-products-picker-item-input:first').val() === productId.toString()) {
                 return key;
             }

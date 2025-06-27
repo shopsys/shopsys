@@ -5,7 +5,6 @@ import Window from '../../admin/utils/Window';
 export default class Ajax {
 
     static ajax (options) {
-        let loaderOverlayTimeout;
         const defaults = {
             loaderElement: undefined,
             loaderMessage: undefined,
@@ -13,6 +12,11 @@ export default class Ajax {
             error: Ajax.showDefaultError,
             complete: function () {}
         };
+
+        const loaderOverlayTimeout = setTimeout(function () {
+            showLoaderOverlay($loaderOverlay);
+        }, options.overlayDelay);
+
         options = $.extend(defaults, options);
         const userCompleteCallback = options.complete;
         const $loaderOverlay = createLoaderOverlay(options.loaderElement, options.loaderMessage);
@@ -31,9 +35,6 @@ export default class Ajax {
             }
         };
 
-        loaderOverlayTimeout = setTimeout(function () {
-            showLoaderOverlay($loaderOverlay);
-        }, options.overlayDelay);
         $.ajax(options);
     }
 
@@ -46,7 +47,7 @@ export default class Ajax {
 
         // eslint-disable-next-line no-new
         new Window({
-            content: content
+            content
         });
     }
 
@@ -85,7 +86,7 @@ export default class Ajax {
 
         Ajax.ajaxPendingCalls[pendingCallName] = {
             isPending: true,
-            options: options
+            options
         };
 
         if (callImmediately) {
