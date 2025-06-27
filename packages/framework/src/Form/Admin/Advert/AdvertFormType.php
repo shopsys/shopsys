@@ -107,7 +107,6 @@ final class AdvertFormType extends AbstractType
                 'required' => false,
                 'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
                 'label' => t('Assign to category'),
-                'display_as_row' => true,
             ])
             ->add('hidden', YesNoType::class, [
                 'label' => t('Hide advertisement'),

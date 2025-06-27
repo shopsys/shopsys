@@ -519,68 +519,6 @@
     </div>
 {% endblock products_widget %}
 
-{% block categories_widget %}
-    {% if main_category_path is not null %}
-        <div class="form-line__item form-line__item--full-width">
-            {{ ux_icon('tag') }}
-            <strong>{{ 'Main category'|trans }}:</strong>
-            {{ main_category_path }}
-        </div>
-    {% endif %}
-    <div class="form-line__{% if display_as_row == true %}side{% else %}line{% endif %}">
-        <div
-            class="form-tree form-tree--open js-category-tree-form"
-            data-prototype="{{
-                '<li class="form-tree__item js-category-tree-form-item">' ~
-                form_widget(form.vars.prototype) ~
-                '<ul class="js-category-tree-form-children-container">' ~
-                '</ul></li>'
-            }}"
-            data-hidden-item-class="form-tree__item--muted"
-        >
-            <ul class="js-category-tree-form-children-container form-tree__content">
-                {% set level = 1 %}
-
-                {% for child in form.children %}
-                    {% set currentLevel = child.vars.level %}
-
-                    {% if not loop.first %}
-                        {% if currentLevel <= level %}
-                            {% for i in currentLevel .. level %}</ul></li>{% endfor %}
-                        {% endif %}
-                    {% endif %}
-
-                    <li
-                        class="form-tree__item {% if not child.vars.visible %}form-tree__item--muted{% endif %} js-category-tree-form-item"
-                        data-load-url="{{ url('admin_category_loadbranchjson', {id: child.vars.name, domainId: domain_id}) }}"
-                        data-has-children="{{ child.vars.has_children ? 'true' : 'false' }}"
-                    >
-                        {{ form_widget(child) }}
-                        <ul class="js-category-tree-form-children-container">
-
-                    {% set level = currentLevel %}
-                {% endfor %}
-
-                {% for i in 1 .. level %}</ul></li>{% endfor %}
-            </ul>
-
-        </div>
-        {{- block('appendix_block') -}}
-    </div>
-{% endblock %}
-
-{% block category_checkbox_widget %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' js-category-tree-form-item-checkbox'}) %}
-    <div class="form-tree__item__click">
-        <span class="form-tree__item__icon js-category-tree-form-item-icon"></span>
-        <span class="form-tree__item__name">
-            <label>
-                {{ block('checkbox_widget') }} {{ category_name }}
-            </label>
-        </span>
-    </div>
-{% endblock %}
-
 {% block form_errors %}
     {% set inline = errors_attr.inline|default(false) %}
     {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default(inline ? '' : 'form-line__error'))}) %}

@@ -17,8 +17,9 @@ final class CategoryCheckboxType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
-    public function __construct(private readonly CategoryFacade $categoryFacade)
-    {
+    public function __construct(
+        private readonly CategoryFacade $categoryFacade,
+    ) {
     }
 
     /**
@@ -36,12 +37,12 @@ final class CategoryCheckboxType extends AbstractType
 
             $view->vars['visible'] = $category->isVisible($options['domain_id']);
             $view->vars['has_children'] = $category->hasChildren();
-            $view->vars['category_name'] = $category->getName();
+            $view->vars['label'] = $category->getName();
             $view->vars['level'] = $category->getLevel();
         } else {
             $view->vars['visible'] = null;
             $view->vars['has_children'] = null;
-            $view->vars['category_name'] = '__category_name__';
+            $view->vars['label'] = '__category_name__';
             $view->vars['level'] = 0;
         }
     }
