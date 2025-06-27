@@ -37,12 +37,12 @@ final class BlogCategoryCheckboxType extends AbstractType
 
             $view->vars['visible'] = $blogCategory->isVisible($options['domain_id']);
             $view->vars['has_children'] = $blogCategory->hasChildren();
-            $view->vars['category_name'] = $blogCategory->getName();
+            $view->vars['label'] = $blogCategory->getName();
             $view->vars['level'] = $blogCategory->getLevel();
         } else {
             $view->vars['visible'] = null;
             $view->vars['has_children'] = null;
-            $view->vars['category_name'] = '__category_name__';
+            $view->vars['label'] = '__category_name__';
             $view->vars['level'] = 0;
         }
     }
