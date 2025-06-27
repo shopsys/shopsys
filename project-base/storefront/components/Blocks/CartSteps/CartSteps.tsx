@@ -18,7 +18,7 @@ export const CartSteps: FC<CartStepsProps> = ({ activeStep, domainUrl }) => {
     );
 
     return (
-        <nav>
+        <nav aria-label={t('Checkout steps navigation')}>
             <ul className="mx-auto flex max-w-[840px] items-baseline justify-between gap-2.5 px-2.5 pt-1 pb-5 md:px-0 lg:items-center xl:gap-5 xl:pt-6 xl:pb-10">
                 <CartStep
                     activeStep={activeStep}

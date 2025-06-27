@@ -16,15 +16,19 @@ export const DeferredFilterAndSortingBar: FC<SortingBarProps> = ({ ...sortingBar
     const { t } = useTranslation();
     const shouldRender = useDeferredRender('sorting_bar');
     const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
+    const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
 
     return shouldRender ? (
         <div className="vl:border-b vl:border-border-less relative flex flex-col items-center justify-between gap-2.5 sm:flex-row">
             <Button
+                aria-controls="filter-panel"
+                aria-expanded={isFilterPanelOpen}
+                aria-label={t('Open product filters')}
                 className="vl:hidden w-full flex-1 justify-start sm:w-auto"
                 variant="secondary"
                 onClick={() => setIsFilterPanelOpen(true)}
             >
-                <FilterIcon className="size-5" />
+                <FilterIcon aria-hidden="true" className="size-5" />
                 {t('Filter')}
             </Button>
             <SortingBar {...sortingBarProps} />

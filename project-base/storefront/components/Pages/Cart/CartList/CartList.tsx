@@ -17,10 +17,12 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
     const { addToCart, isAddingToCart } = useAddToCart(GtmMessageOriginType.cart, GtmProductListNameType.cart);
 
     return (
-        <>
-            <h2 className="sr-only">{t('Products')}</h2>
+        <section aria-labelledby="cart-items-heading">
+            <h2 className="sr-only" id="cart-items-heading">
+                {t('Shopping cart with {{count}} items', { count: cartItems.length })}
+            </h2>
 
-            <ul className="flex flex-col gap-4">
+            <ul aria-label={t('Cart items list')} aria-live="polite" className="flex flex-col gap-4">
                 {(isRemovingFromCart || isAddingToCart) && <LoaderWithOverlay className="w-16" />}
 
                 {cartItems.map((cartItem, listIndex) => (
@@ -33,6 +35,6 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
                     />
                 ))}
             </ul>
-        </>
+        </section>
     );
 };

@@ -3,6 +3,7 @@ import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
 import { AnimatePresence, m } from 'framer-motion';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -14,6 +15,7 @@ export type MenuItem = {
 };
 
 export const MobileMenu: FC = () => {
+    const { t } = useTranslation();
     const [{ data: navigationData }] = useNavigationQuery();
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
@@ -39,8 +41,10 @@ export const MobileMenu: FC = () => {
                 {isMenuOpened && (
                     <m.div
                         animate={{ translateX: '0%' }}
+                        aria-label={t('Mobile navigation menu')}
                         exit={{ translateX: '-100%' }}
                         initial={{ translateX: '-100%' }}
+                        role="navigation"
                         transition={{ duration: 0.2, type: 'tween' }}
                         className={twJoin(
                             'z-maximum bg-background-default pointer-events-auto fixed top-0 left-0 h-dvh w-[315px] overflow-x-hidden overflow-y-auto',

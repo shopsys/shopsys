@@ -73,6 +73,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     >
                         {inputType === 'checkbox' ? (
                             <CheckmarkIcon
+                                aria-hidden="true"
                                 className={twMergeCustom(
                                     'text-icon-inverted h-full opacity-0 transition',
                                     checked && 'opacity-100',

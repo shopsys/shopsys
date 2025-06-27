@@ -53,11 +53,15 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         <div
             aria-controls={storeInfoId}
             aria-expanded={isExpanded}
-            aria-label={isExpanded ? t('Collapse store info') : t('Expand store info')}
             ref={itemRef}
             role="button"
             tabIndex={0}
             title={isExpanded ? t('Collapse store info') : t('Expand store info')}
+            aria-label={
+                isExpanded
+                    ? t('Collapse store info {{storeName}}', { storeName: store.name })
+                    : t('Expand store info {{storeName}}', { storeName: store.name })
+            }
             className={twMergeCustom(
                 'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5 text-left',
                 isExpanded && 'border-border-less',

@@ -64,7 +64,13 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     return (
         <>
             <Button
+                aria-controls="sort-dropdown"
+                aria-expanded={isSortMenuOpen}
+                aria-haspopup="listbox"
                 variant="inverted"
+                aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
+                    currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
+                })}
                 className={twJoin(
                     'vl:hidden relative w-full flex-1 justify-start sm:w-auto',
                     isSortMenuOpen && 'z-aboveOverlay',
@@ -77,6 +83,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 </span>
             </Button>
             <div
+                aria-label={t('Sort options')}
+                id="sort-dropdown"
+                role="listbox"
                 className={twJoin(
                     'bg-background-default vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
                     isSortMenuOpen

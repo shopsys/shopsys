@@ -44,12 +44,18 @@ export const FilterPanel: FC<FilterPanelProps> = ({
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     return (
-        <div className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1">
+        <div
+            aria-label={t('Product filters')}
+            className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1"
+            id="filter-panel"
+            role="region"
+        >
             <AccessibleLink className="vl:block hidden rounded-md" href="#product-list" title={t('Skip filters')} />
 
             <div className="vl:hidden flex items-center justify-between p-5">
-                <span className="h5">{t('Product filter')}</span>
+                <h2 className="h5">{t('Product filter')}</h2>
                 <button
+                    aria-label={t('Close filter panel')}
                     className="text-icon-less hover:text-icon-accent flex cursor-pointer items-center justify-center"
                     tabIndex={0}
                     title={t('Close filter panel')}
@@ -120,7 +126,12 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
                 {currentFilter !== null && (
-                    <Button size="large" variant="inverted" onClick={resetAllFilterQueries}>
+                    <Button
+                        aria-label={t('Clear all active filters')}
+                        size="large"
+                        variant="inverted"
+                        onClick={resetAllFilterQueries}
+                    >
                         {t('Clear all')}
                     </Button>
                 )}

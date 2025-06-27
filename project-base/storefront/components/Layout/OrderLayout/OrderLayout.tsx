@@ -32,7 +32,11 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     <Header simpleHeader />
                 </header>
 
-                <main className="mt-4 mb-10 flex flex-col" id="main-content">
+                <main
+                    aria-label={t('Order process main content')}
+                    className="mt-4 mb-10 flex flex-col"
+                    id="main-content"
+                >
                     <SkeletonManager
                         isFetchingData={!canContentBeDisplayed || isFetchingData}
                         isPageLoading={isPageLoading}
@@ -42,7 +46,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer className="mt-auto h-fit">
+                <footer aria-label={t('Site information')} className="mt-auto h-fit">
                     <Webline wrapperClassName="bg-background-accent-less">
                         <Footer simpleFooter />
                     </Webline>

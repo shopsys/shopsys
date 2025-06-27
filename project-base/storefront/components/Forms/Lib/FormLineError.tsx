@@ -24,6 +24,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
     return (
         <div className="relative mt-2">
             <CrossIcon
+                aria-hidden="true"
                 className={twJoin(
                     'text-text-error absolute flex w-4',
                     isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,

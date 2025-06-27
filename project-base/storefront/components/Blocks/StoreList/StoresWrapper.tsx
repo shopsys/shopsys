@@ -56,6 +56,7 @@ export const StoresWrapper: FC = () => {
             <div className="flex flex-col-reverse gap-5 lg:flex-row">
                 <div className="basis-1/2">
                     <SearchInput
+                        ariaLabelForSearchButton={t('Search for a store')}
                         label={t('City or postcode')}
                         shouldShowSpinnerInInput={isFetching}
                         value={searchTextValue}

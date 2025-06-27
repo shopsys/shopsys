@@ -40,7 +40,7 @@ export const HomePageContent: FC = () => {
                         <DeferredRecommendedProducts
                             recommendationType={TypeRecommendationType.Personalized}
                             render={(recommendedProductsContent) => (
-                                <section>
+                                <section aria-label={t('Recommended products')}>
                                     <h2 className="h3 mb-3">{t('Recommended for you')}</h2>
                                     {recommendedProductsContent}
                                 </section>

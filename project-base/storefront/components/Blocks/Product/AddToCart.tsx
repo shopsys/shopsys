@@ -78,13 +78,12 @@ export const AddToCart: FC<AddToCartProps> = ({
         }
     };
 
+    const quantity = isWithSpinbox ? spinboxRef.current?.valueAsNumber : 1;
     const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
         productName: ariaProductName,
-        quantity: isWithSpinbox ? spinboxRef.current!.valueAsNumber : 1,
+        quantity,
         unit: ariaUnit,
-        price: formatPrice(
-            (isWithSpinbox ? spinboxRef.current!.valueAsNumber : 1) * mapPriceForCalculations(ariaPrice),
-        ),
+        price: quantity ? formatPrice(quantity * mapPriceForCalculations(ariaPrice)) : undefined,
     });
 
     return (

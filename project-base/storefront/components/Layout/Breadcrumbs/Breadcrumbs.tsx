@@ -32,8 +32,8 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
         <Webline className="mb-4">
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
-            <div className={twMergeCustom(breadcrumbsTwClass, className)}>
-                <ArrowIcon className="text-icon-less size-4 rotate-90 lg:hidden" />
+            <nav aria-label={t('Breadcrumb navigation')} className={twMergeCustom(breadcrumbsTwClass, className)}>
+                <ArrowIcon aria-hidden="true" className="text-icon-less size-4 rotate-90 lg:hidden" />
 
                 <BreadcrumbsLink href="/" skeletonType="homepage">
                     {t('Home page')}
@@ -56,13 +56,13 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                 >
                     {lastBreadcrumb.name}
                 </span>
-            </div>
+            </nav>
         </Webline>
     );
 };
 
 export const BreadcrumbsSpan: FC = ({ tid }) => (
-    <span className="text-border-default hidden items-center lg:flex" data-tid={tid}>
+    <span aria-hidden="true" className="text-border-default hidden items-center lg:flex" data-tid={tid}>
         <ArrowIcon className="size-4 -rotate-90" />
     </span>
 );

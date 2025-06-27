@@ -1,7 +1,7 @@
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type AccessibilityNavigationProps = {
     simpleHeader?: boolean;
@@ -12,6 +12,7 @@ export const AccessibilityNavigation: FC<AccessibilityNavigationProps> = ({ simp
     const router = useRouter();
     const accessibilityLinksRef = useRef<HTMLDivElement>(null);
     const previousRouteRef = useRef<string>('');
+    const [pageTitle, setPageTitle] = useState('');
 
     // reset focus to accessibility menu only on actual route changes
     useEffect(() => {
@@ -37,7 +38,11 @@ export const AccessibilityNavigation: FC<AccessibilityNavigationProps> = ({ simp
         };
     }, [router.events]);
 
-    const pageTitle = typeof document !== 'undefined' ? document.title || '' : '';
+    // set page title after hydration to avoid hydration mismatch
+    useEffect(() => {
+        setPageTitle(document.title || '');
+    }, []);
+
     const announceText = pageTitle ? t('You are on {{pageTitle}} page', { pageTitle }) : '';
 
     return (
@@ -46,7 +51,7 @@ export const AccessibilityNavigation: FC<AccessibilityNavigationProps> = ({ simp
                 {announceText}
             </span>
 
-            <nav>
+            <nav aria-label={t('Skip navigation')}>
                 <ul>
                     <li>
                         <AccessibleLink href="#main-content" title={t('Skip to main content')} />

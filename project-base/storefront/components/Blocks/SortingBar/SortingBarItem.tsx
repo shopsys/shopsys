@@ -12,7 +12,9 @@ export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, hr
     return (
         <a
             aria-label={ariaLabel}
+            aria-selected={isActive}
             href={href}
+            role="option"
             className={twMergeCustom(
                 'font-secondary text-link-default hover:text-link-hovered vl:relative vl:rounded-t-xl vl:rounded-b-none vl:bg-background-more vl:px-5 vl:py-2.5 vl:text-center py-4 text-right text-xs font-bold uppercase underline',
                 isActive &&
