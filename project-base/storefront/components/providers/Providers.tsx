@@ -22,6 +22,7 @@ import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import framerMotionPlugins from 'utils/animations/framerMotionPlugins';
 import { getDictionary } from 'utils/getDictionary';
+import { GoogleTagManager } from '@next/third-parties/google';
 
 type ProvidersProps = {
     children: React.ReactNode;
@@ -99,6 +100,7 @@ export default async function Providers({ children }: ProvidersProps) {
             >
                 <TranslationProvider dictionary={await dictionaryPromise} lang={lang}>
                     <html lang={lang}>
+                        {domainConfig.gtmId && <GoogleTagManager gtmId={domainConfig.gtmId} />}
                         {/* suppressHydrationWarning for ignoring grammarly extension */}
                         <body suppressHydrationWarning>
                             <Suspense fallback={<SkeletonLayout />}>
