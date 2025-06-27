@@ -1,19 +1,17 @@
 import { DeferredUserConsent } from './_components/Blocks/UserConsent/DeferredUserConsent';
+import { GoogleTagManager } from '@next/third-parties/google';
 import { Footer } from 'app/_components/Layout/Footer/Footer';
 import { Header } from 'app/_components/Layout/Header/Header';
 import { NotificationBars } from 'app/_components/Layout/NotificationBars/NotificationBars';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import { SkeletonLayout } from 'components/Blocks/Skeleton/SkeletonLayout';
 import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
-import 'nprogress/nprogress.css';
+import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import 'styles/theme.css';
 
-type MetadataProps = {
-    params: Promise<{ id: string }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-export const generateMetadata = async (props: MetadataProps): Promise<Metadata> => {
+export const generateMetadata = async (): Promise<Metadata> => {
     // TODO: Dynamic metadata generation based on the route (refactor `useSeo`)
     return {
         title: 'Shopsys Platform App Router',
@@ -27,26 +25,37 @@ type RootLayoutProps = {
 };
 
 const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
+    const { defaultLocale: lang } = domainConfig;
+
     return (
-        <Providers>
-            <NotificationBars />
+        <html lang={lang}>
+            {domainConfig.gtmId && <GoogleTagManager gtmId={domainConfig.gtmId!} />}
+            {/* suppressHydrationWarning for ignoring grammarly extension */}
+            <body suppressHydrationWarning>
+                <Suspense fallback={<SkeletonLayout />}>
+                    <Providers>
+                        <NotificationBars />
 
-            <div className="flex min-h-dvh flex-col">
-                <Header />
+                        <div className="flex min-h-dvh flex-col">
+                            <Header />
 
-                {breadcrumbs}
+                            {breadcrumbs}
 
-                <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">
-                    <Suspense fallback={<div>Layout loading...</div>}>{children}</Suspense>
-                </main>
+                            <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">
+                                <Suspense fallback={<div>Layout loading...</div>}>{children}</Suspense>
+                            </main>
 
-                <Footer />
+                            <Footer />
 
-                <Suspense fallback={null}>
-                    <DeferredUserConsent />
+                            <Suspense fallback={null}>
+                                <DeferredUserConsent />
+                            </Suspense>
+                        </div>
+                    </Providers>
                 </Suspense>
-            </div>
-        </Providers>
+            </body>
+        </html>
     );
 };
 
