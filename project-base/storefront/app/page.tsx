@@ -1,3 +1,6 @@
+import { BlogPreview } from './_components/Blocks/BlogPreview/BlogPreview';
+import { Container } from './_components/Layout/Container/Container';
+import { getPromotedCategoriesQuery } from './_queries/getPromotedCategoriesQuery';
 import { HomepageMetadataJsonLd } from 'app/_components/Basic/Head/HomepageMetadataJsonLd';
 import { PromotedCategories } from 'app/_components/Blocks/Categories/PromotedCategories';
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
@@ -8,9 +11,6 @@ import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { Banners } from 'components/Blocks/Banners/Banners';
 import { TypeRecommendationType } from 'graphql/types';
 import { headers } from 'next/headers';
-import { BlogPreview } from './_components/Blocks/BlogPreview/BlogPreview';
-import { Container } from './_components/Layout/Container/Container';
-import { getPromotedCategoriesQuery } from './_queries/getPromotedCategoriesQuery';
 
 const HomePage = async () => {
     // const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.homepage);
