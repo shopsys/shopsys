@@ -3,18 +3,6 @@
   "baseElement": <body>
     <div>
       <a
-        href="/test-href"
-        tabindex="0"
-      >
-        <div>
-          <span>
-            link text
-          </span>
-        </div>
-      </a>
-    </div>
-    <div>
-      <a
         href="/nice-test-href"
         tabindex="0"
       >
