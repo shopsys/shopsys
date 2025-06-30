@@ -636,6 +636,7 @@
     "Store address": "Adresa obchodu",
     "Store description": "Popis prodejny",
     "Store detail": "Detail prodejny",
+    "Store detail for {{storeName}}": "Detail prodejny {{storeName}}",
     "Store image of": "Obrázek prodejny",
     "Store not found.": "Prodejna nenalezena.",
     "Stores": "Prodejny",

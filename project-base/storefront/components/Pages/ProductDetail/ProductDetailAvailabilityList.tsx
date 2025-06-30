@@ -39,6 +39,9 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     className="ml-auto flex items-center"
                                     href={storeAvailability.store.slug}
                                     type="store"
+                                    aria-label={t('Store detail for {{storeName}}', {
+                                        storeName: storeAvailability.store.storeName,
+                                    })}
                                 >
                                     {t('Store detail')}
                                 </ExtendedNextLink>

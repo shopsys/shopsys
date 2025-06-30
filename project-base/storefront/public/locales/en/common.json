@@ -606,6 +606,7 @@
     "Store address": "Store address",
     "Store description": "Store description",
     "Store detail": "Store detail",
+    "Store detail for {{storeName}}": "Store detail for {{storeName}}",
     "Store image of": "Store image of",
     "Store not found.": "Store not found.",
     "Stores": "Stores",
