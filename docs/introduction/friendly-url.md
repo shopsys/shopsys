@@ -12,6 +12,7 @@ The rest of the work is done automatically and URLs provided by these providers 
 - Create new class with name ending with `FriendlyUrlDataProvider` implementing `FriendlyUrlDataProviderInterface` interface
 
 - This interface requires you to implement two methods _(see [ProductDetailFriendlyUrlDataProvider]({{github.link}}/packages/framework/src/Model/Product/ProductDetailFriendlyUrlDataProvider.php) class as an example of the implementation)_:
+
     - `getFriendlyUrlData` method that generates `FriendlyUrlData` for all your entities
 
     - `getRouteName` method returns name of route that you have to declare in `routing_friendly_url.yaml` file like:

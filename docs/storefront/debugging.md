@@ -29,6 +29,7 @@ the Storefront is already running locally in development mode with the Node.js i
 - You can open the dedicated DevTools for Node:
 
     ![Open dedicated DevTools for Node](./images/03_node-debug_dedicated-devtools.png)
+
     - If the icon is not there for some reason open it by clicking on **trace** link of newly added targets under "Remote Target #127.0.0.1":
 
     ![Trace link DevTools for Node](./images/04_node.debug_target-trace.png)
