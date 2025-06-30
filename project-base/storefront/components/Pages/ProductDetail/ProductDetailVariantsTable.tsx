@@ -90,6 +90,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                                     availability={variant.availability}
                                     isInquiryType={variant.isInquiryType}
                                     productIsSellingDenied={variant.isSellingDenied}
+                                    productName={variant.fullName}
                                     productUuid={variant.uuid}
                                 />
 

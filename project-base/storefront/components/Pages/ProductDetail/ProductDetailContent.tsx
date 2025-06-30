@@ -81,6 +81,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 className="self-start"
                                 isInquiryType={product.isInquiryType}
                                 productIsSellingDenied={product.isSellingDenied}
+                                productName={product.name}
                                 productUuid={product.uuid}
                             />
 

@@ -14,6 +14,7 @@ const WatchdogPopup = dynamic(
 );
 
 type WatchDogButtonProps = {
+    productName: string;
     productUuid: string | undefined;
     isInquiryType: boolean;
     availability: TypeAvailability;
@@ -21,6 +22,7 @@ type WatchDogButtonProps = {
 };
 
 export const WatchDogButton: FC<WatchDogButtonProps> = ({
+    productName,
     productUuid,
     isInquiryType,
     availability,
@@ -50,7 +52,7 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({
     return (
         <Button
             aria-haspopup="dialog"
-            aria-label={t('Open watchdog popup')}
+            aria-label={t('Open watchdog popup for {{productName}}', { productName })}
             className={twJoin('whitespace-nowrap', className)}
             size="large"
             title={t('Watchdog popup')}
