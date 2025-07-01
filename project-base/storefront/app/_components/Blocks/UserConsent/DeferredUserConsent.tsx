@@ -12,7 +12,7 @@ const UserConsent = dynamic(
     },
 );
 
-const CONSENT_DELAY = 1250;
+const CONSENT_DELAY = 750;
 
 const useDeferredRender = (delay: number) => {
     const [shouldRender, setShouldRender] = useState(false);
