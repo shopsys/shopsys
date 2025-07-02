@@ -4,6 +4,7 @@
         "ignoreUnknown": false,
         "includes": [
             "assets/js/**",
+            "!var/**",
             "!**/node_modules/**",
             "!assets/js/commands/translations/mocks",
             "!assets/js/bundles",
