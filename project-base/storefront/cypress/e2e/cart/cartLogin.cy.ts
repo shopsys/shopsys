@@ -43,6 +43,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -55,6 +56,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -82,6 +84,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -110,6 +113,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -129,6 +133,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -140,6 +145,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -156,6 +162,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });

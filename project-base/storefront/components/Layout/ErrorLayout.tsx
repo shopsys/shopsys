@@ -1,7 +1,6 @@
 import { Footer } from './Footer/Footer';
 import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
-import { Webline } from './Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 
 export const ErrorLayout: FC = ({ children }) => {
@@ -19,10 +18,8 @@ export const ErrorLayout: FC = ({ children }) => {
                 {children}
             </main>
 
-            <footer aria-label={t('Site information')} className="mt-auto h-fit">
-                <Webline wrapperClassName="bg-background-accent-less">
-                    <Footer simpleFooter />
-                </Webline>
+            <footer aria-label={t('Site information')} className="bg-background-accent-less mt-auto h-fit">
+                <Footer simpleFooter />
             </footer>
         </div>
     );

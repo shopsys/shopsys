@@ -5,7 +5,6 @@ import { AccessibilityNavigation } from './Header/AccessibilityNavigation/Access
 import { Header } from './Header/Header';
 import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
 import { NotificationBars } from './NotificationBars/NotificationBars';
-import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
@@ -91,10 +90,9 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </main>
 
                 <footer aria-label={t('Site information and navigation')} className="mt-auto h-fit">
-                    <Webline wrapperClassName="bg-background-accent-less">
-                        <DeferredNewsletterForm />
-                        <DeferredFooter />
-                    </Webline>
+                    <DeferredNewsletterForm />
+
+                    <DeferredFooter />
                 </footer>
             </div>
         </>

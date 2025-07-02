@@ -59,6 +59,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -77,6 +78,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -102,6 +104,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -121,6 +124,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -133,6 +137,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -140,7 +145,11 @@ describe('Cart Page Tests', () => {
         removeProductFromCartPage(products.helloKitty.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty cart after second removal', {
-            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
+            blackout: [
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 
@@ -174,6 +183,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -201,6 +211,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -211,6 +222,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -225,6 +237,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -235,6 +248,7 @@ describe('Cart Page Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -254,6 +268,7 @@ describe('Cart Page Tests', () => {
                 blackout: [
                     { tid: TIDs.cart_list_item_image },
                     { tid: TIDs.footer_social_links },
+                    { tid: TIDs.footer_payment_images },
                     { tid: TIDs.footer_copyright },
                 ],
             },
