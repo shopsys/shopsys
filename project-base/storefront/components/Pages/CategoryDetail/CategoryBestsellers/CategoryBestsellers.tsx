@@ -5,7 +5,7 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import { memo, useState } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 const NUMBER_OF_VISIBLE_ITEMS = 3;
@@ -17,12 +17,46 @@ type CategoryBestsellersProps = {
 const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => {
     const { t } = useTranslation();
     const [isCollapsed, setIsCollapsed] = useState(true);
+    const [shouldFocusNewItem, setShouldFocusNewItem] = useState(false);
+    const listRef = useRef<HTMLDivElement>(null);
     const shownProducts = products.filter((_, index) => index + 1 <= NUMBER_OF_VISIBLE_ITEMS || !isCollapsed);
-
-    useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     const showMoreCount = products.length - NUMBER_OF_VISIBLE_ITEMS;
     const itemsLabel = t('products count', { count: showMoreCount });
+    const showMoreLabel = t('Show {{ count }} more {{ items }}', { count: showMoreCount, items: itemsLabel });
+    const showLessLabel = t('Show less');
+    const ariaLabel = isCollapsed
+        ? t('Show {{ count }} more bestseller {{ items }}', {
+              count: showMoreCount,
+              items: itemsLabel,
+          })
+        : t('Show less');
+
+    useEffect(() => {
+        if (shouldFocusNewItem && !isCollapsed && listRef.current) {
+            const focusableLinks = listRef.current.querySelectorAll('a[tabindex="0"]');
+            const targetLink = focusableLinks[NUMBER_OF_VISIBLE_ITEMS] as HTMLElement | undefined;
+
+            if (targetLink) {
+                setTimeout(() => {
+                    targetLink.focus();
+                }, 150);
+            }
+
+            setShouldFocusNewItem(false);
+        }
+    }, [isCollapsed, shouldFocusNewItem]);
+
+    const handleShowMoreClick = () => {
+        setIsCollapsed((prev) => {
+            if (prev) {
+                setShouldFocusNewItem(true);
+            }
+            return !prev;
+        });
+    };
+
+    useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     return (
         <div className="bg-background-more relative rounded-xl p-5">
@@ -32,7 +66,7 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
                 {t('Do not want to choose? Choose certainty')}
             </div>
 
-            <div className="divide-border-less mb-3 flex flex-col divide-y" id="bestsellers-list">
+            <div className="divide-border-less mb-3 flex flex-col divide-y" id="bestsellers-list" ref={listRef}>
                 <AnimatePresence initial={false}>
                     {shownProducts.map((product, index) => (
                         <AnimateCollapseDiv key={product.uuid} className={twJoin('!block')} keyName={product.uuid}>
@@ -52,18 +86,13 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
                     <button
                         aria-controls="bestsellers-list"
                         aria-expanded={!isCollapsed}
+                        aria-label={ariaLabel}
                         className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
                         tabIndex={0}
                         title={t('Toggle bestseller list')}
-                        aria-label={t('Show {{ count }} more bestseller {{ items }}', {
-                            count: showMoreCount,
-                            items: itemsLabel,
-                        })}
-                        onClick={() => setIsCollapsed((prev) => !prev)}
+                        onClick={handleShowMoreClick}
                     >
-                        {isCollapsed
-                            ? t('Show {{ count }} more {{ items }}', { count: showMoreCount, items: itemsLabel })
-                            : t('Show less')}
+                        {isCollapsed ? showMoreLabel : showLessLabel}
                     </button>
                 </div>
             )}
