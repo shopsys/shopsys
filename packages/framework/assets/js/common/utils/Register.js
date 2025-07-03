@@ -1,7 +1,5 @@
 export default class Register {
-
-    constructor () {
-
+    constructor() {
         Register.CALL_PRIORITY_NORMAL = 500;
         Register.CALL_PRIORITY_HIGH = 300;
 
@@ -15,8 +13,7 @@ export default class Register {
         return this;
     }
 
-    registerCallback (callback, arg1, arg2) {
-
+    registerCallback(callback, arg1, arg2) {
         let callPriority = Register.CALL_PRIORITY_NORMAL;
         let callbackName = null;
 
@@ -41,16 +38,16 @@ export default class Register {
         this.callbackQueue.push({
             callbackName,
             callPriority,
-            callback
+            callback: callback,
         });
     }
 
-    replaceCallback (callbackName, newCallback) {
+    replaceCallback(callbackName, newCallback) {
         this.callbackQueue = this.callbackQueue.map(callbackItem => {
             if (callbackItem.callbackName === callbackName) {
                 return {
                     ...callbackItem,
-                    callback: newCallback
+                    callback: newCallback,
                 };
             }
 
@@ -58,14 +55,12 @@ export default class Register {
         });
     }
 
-    removeCallback (callbackName) {
+    removeCallback(callbackName) {
         this.callbackQueue = this.callbackQueue.filter(callbackItem => callbackItem.callbackName !== callbackName);
     }
 
-    registerNewContent ($container) {
-        this.callbackQueue.sort(function (a, b) {
-            return a.callPriority - b.callPriority;
-        });
+    registerNewContent($container) {
+        this.callbackQueue.sort((a, b) => a.callPriority - b.callPriority);
 
         for (const i in this.callbackQueue) {
             this.callbackQueue[i].callback($container);

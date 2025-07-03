@@ -1,8 +1,11 @@
 import Register from '../../common/utils/Register';
-import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
+import {
+    addNewItemToCollection,
+    removeItemFromCollection,
+} from '../validation/customization/customizeCollectionBundle';
 
 export default class OpeningHoursCollection {
-    static init ($container) {
+    static init($container) {
         const $openingHoursItemAdd = $container.filterAllNodes('.js-opening-hours-item-add');
         const $openingHoursCollection = $container.filterAllNodes('.js-opening-hours');
 
@@ -20,16 +23,14 @@ export default class OpeningHoursCollection {
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
             const $item = $($.parseHTML(item));
             $item.data('index', index);
 
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
 
             addNewItemToCollection('.js-opening-hours', index);
 
@@ -39,4 +40,4 @@ export default class OpeningHoursCollection {
     }
 }
 
-(new Register()).registerCallback(OpeningHoursCollection.init, 'OpeningHoursCollection.init');
+new Register().registerCallback(OpeningHoursCollection.init, 'OpeningHoursCollection.init');

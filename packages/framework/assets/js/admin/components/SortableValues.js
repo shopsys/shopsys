@@ -1,23 +1,21 @@
-import Register from '../../common/utils/Register';
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import { escapeHtml } from '../../common/utils/escapeHtml';
-import Sortable from 'sortablejs';
+import Register from '../../common/utils/Register';
 
 export default class SortableValues {
+    constructor($container) {
+        $container.filterAllNodes('.js-sortable-values-item-add').click(event => this.addItemButtonClick(event));
+        $container.filterAllNodes('.js-sortable-values-item-remove').click(event => this.removeItemButtonClick(event));
 
-    constructor ($container) {
-        $container.filterAllNodes('.js-sortable-values-item-add').click((event) => this.addItemButtonClick(event));
-        $container.filterAllNodes('.js-sortable-values-item-remove').click((event) => this.removeItemButtonClick(event));
-
-        $container.filterAllNodes('.js-sortable-values-items').each((index, element) => {
-            Sortable.create(element, {
-                handle: '.js-sortable-values-item-handle',
-                draggable: '.js-sortable-values-item',
-                animation: 150
-            });
+        $container.filterAllNodes('.js-sortable-values-items').sortable({
+            items: '.js-sortable-values-item',
+            handle: '.js-sortable-values-item-handle',
         });
     }
 
-    addItemButtonClick (event) {
+    addItemButtonClick(event) {
         const $button = $(event.currentTarget);
         const $container = $button.closest('.js-sortable-values-container');
         const $option = $container.find('.js-sortable-values-input :selected');
@@ -26,44 +24,44 @@ export default class SortableValues {
             const $item = this.createItem($button.data('item-template'), $option.val(), $option.text());
 
             $container.find('.js-sortable-values-items').prepend($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
             this.disableOption($option);
         }
     }
 
-    createItem (html, value, label) {
+    createItem(html, value, label) {
         html = html.replace(/%value%/g, escapeHtml(value));
         html = html.replace(/%label%/g, escapeHtml(label));
 
         return $($.parseHTML(html));
     }
 
-    removeItemButtonClick (event) {
+    removeItemButtonClick(event) {
         const $item = $(event.currentTarget).closest('.js-sortable-values-item');
         this.enableOptionOfItem($item);
 
         $item.remove();
     }
 
-    disableOption ($option) {
+    disableOption($option) {
         const $select = $option.closest('.js-sortable-values-input');
 
         $option.prop('disabled', true);
         $select.val('').trigger('change.select2');
     }
 
-    enableOptionOfItem ($item) {
+    enableOptionOfItem($item) {
         const $container = $item.closest('.js-sortable-values-container');
         const $input = $item.find('.js-sortable-values-item-input');
-        const $option = $container.find('.js-sortable-values-input [value="' + $input.val() + '"]');
+        const $option = $container.find(`.js-sortable-values-input [value="${$input.val()}"]`);
 
         $option.prop('disabled', false);
     }
 
-    static init ($container) {
+    static init($container) {
         // eslint-disable-next-line no-new
         new SortableValues($container);
     }
 }
 
-(new Register()).registerCallback(SortableValues.init, 'SortableValues.init');
+new Register().registerCallback(SortableValues.init, 'SortableValues.init');

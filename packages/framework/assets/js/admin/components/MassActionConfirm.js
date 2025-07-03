@@ -1,14 +1,12 @@
-import Window from '../utils/Window';
-import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import Register from '../../common/utils/Register';
+import Window from '../utils/Window';
 
 export default class MassActionConfirm {
-
-    static init ($container) {
-
+    static init($container) {
         MassActionConfirm.isConfirmed = MassActionConfirm.isConfirmed || false;
 
-        $container.filterAllNodes('.js-mass-action-submit').click((event) => {
+        $container.filterAllNodes('.js-mass-action-submit').click(event => {
             const $button = $(event.currentTarget);
             if (!MassActionConfirm.isConfirmed) {
                 const action = $('.js-mass-action-value option:selected').text().toLowerCase();
@@ -25,21 +23,22 @@ export default class MassActionConfirm {
 
                 // eslint-disable-next-line no-new
                 new Window({
-                    content: Translator.trans('Do you really want to %action% %count% product?', { action, count }),
+                    content: Translator.trans('Do you really want to %action% %count% product?', {
+                        action: action,
+                        count: count,
+                    }),
                     buttonCancel: true,
                     buttonContinue: true,
                     eventContinue: () => {
                         MassActionConfirm.isConfirmed = true;
                         $button.trigger('click');
-                    }
+                    },
                 });
 
                 return false;
             }
         });
-
     }
-
 }
 
-(new Register()).registerCallback(MassActionConfirm.init, 'MassActionConfirm.init');
+new Register().registerCallback(MassActionConfirm.init, 'MassActionConfirm.init');

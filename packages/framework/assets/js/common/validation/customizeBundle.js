@@ -1,26 +1,27 @@
-import { highlightSubmitButtons, findElementsToHighlight } from './validationHelpers';
-import Timeout from '../utils/Timeout';
-import Window from '../../admin/utils/Window';
 import Translator from 'bazinga-translator';
+import Window from '../../admin/utils/Window';
+import Timeout from '../utils/Timeout';
+import { findElementsToHighlight, highlightSubmitButtons } from './validationHelpers';
 
 export default class CustomizeBundle {
-
-    static isFormValid (form) {
+    static isFormValid(form) {
         return $(form).find('.js-validation-errors-message').length === 0;
     }
 
-    static getErrorListClass (elementName) {
-        return elementName.replace(/-/g, '_')
+    static getErrorListClass(elementName) {
+        return elementName
+            .replace(/-/g, '_')
             .replace('form_error_', 'js-validation-error-list-')
             .replace('value_to_duplicates_', 'js-validation-error-list-'); // defined in function SymfonyComponentFormExtensionCoreDataTransformerValueToDuplicatesTransformer()
     }
 
-    static ckeditorValidationInit (element) {
-        $.each(element.children, function (index, childElement) {
-            if (childElement.type === 'FOS\\CKEditorBundle\\Form\\Type\\CKEditorType'
-                && CKEDITOR.instances[childElement.id]
+    static ckeditorValidationInit(element) {
+        $.each(element.children, (_index, childElement) => {
+            if (
+                childElement.type === 'FOS\\CKEditorBundle\\Form\\Type\\CKEditorType' &&
+                CKEDITOR.instances[childElement.id]
             ) {
-                CKEDITOR.instances[childElement.id].on('change', function () {
+                CKEDITOR.instances[childElement.id].on('change', () => {
                     $(childElement.domNode).jsFormValidator('validate');
                 });
             }
@@ -48,7 +49,7 @@ export default class CustomizeBundle {
      * This prevents from showing "passwords are not the same" error when user fills-in the first password
      * and focuses the second password field (before even starting to fill-in the second password field).
      */
-    static elementBind (element) {
+    static elementBind(element) {
         if (!element.domNode) {
             return;
         }
@@ -85,20 +86,24 @@ export default class CustomizeBundle {
                 $(this).closest('.form-input-error').removeClass('form-input-error');
             })
             .jsFormValidator({
-                showErrors: CustomizeBundle.showErrors
+                showErrors: CustomizeBundle.showErrors,
             });
     }
 
-    static validateWithParentsDelayed (jsFormValidator) {
+    static validateWithParentsDelayed(jsFormValidator) {
         do {
             CustomizeBundle.delayedValidators[jsFormValidator.id] = jsFormValidator;
             jsFormValidator = jsFormValidator.parent;
         } while (jsFormValidator);
 
-        Timeout.setTimeoutAndClearPrevious('Shopsys.validation.validateWithParentsDelayed', this.executeDelayedValidators, 100);
+        Timeout.setTimeoutAndClearPrevious(
+            'Shopsys.validation.validateWithParentsDelayed',
+            this.executeDelayedValidators,
+            100,
+        );
     }
 
-    static executeDelayedValidators () {
+    static executeDelayedValidators() {
         const validators = CustomizeBundle.delayedValidators;
 
         $.each(validators, function () {
@@ -106,14 +111,14 @@ export default class CustomizeBundle {
         });
     }
 
-    static removeDelayedValidationWithParents (jsFormValidator) {
+    static removeDelayedValidationWithParents(jsFormValidator) {
         do {
             delete CustomizeBundle.delayedValidators[jsFormValidator.id];
             jsFormValidator = jsFormValidator.parent;
         } while (jsFormValidator);
     }
 
-    static findDomElementRecursive (model, fpJsFormValidator) {
+    static findDomElementRecursive(model, fpJsFormValidator) {
         const domElement = fpJsFormValidator._findDomElement(model);
 
         if (domElement !== null) {
@@ -133,7 +138,7 @@ export default class CustomizeBundle {
         return CustomizeBundle.findClosestCommonAncestor(childDomElements);
     }
 
-    static findClosestCommonAncestor (domElements) {
+    static findClosestCommonAncestor(domElements) {
         if (domElements.length === 0) {
             return null;
         }
@@ -167,7 +172,7 @@ export default class CustomizeBundle {
         return closestCommonAncestor;
     }
 
-    static reverseCollectionToArray ($collection) {
+    static reverseCollectionToArray($collection) {
         const result = [];
 
         for (let i = $collection.length - 1; i >= 0; i--) {
@@ -177,14 +182,14 @@ export default class CustomizeBundle {
         return result;
     }
 
-    static isExpandedChoiceFormType (element, value) {
+    static isExpandedChoiceFormType(element, value) {
         return element.type === 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType' && $.isArray(value);
     }
 
-    static isExpandedChoiceEmpty (value) {
+    static isExpandedChoiceEmpty(value) {
         let isEmpty = true;
 
-        $.each(value, function (key, element) {
+        $.each(value, (_key, element) => {
             if (element !== false) {
                 isEmpty = false;
                 return false;
@@ -194,7 +199,7 @@ export default class CustomizeBundle {
         return isEmpty;
     }
 
-    static getFormattedFormErrors (container) {
+    static getFormattedFormErrors(container) {
         const errorsByLabel = CustomizeBundle.getFormErrorsIndexedByLabel(container);
         const $formattedFormErrors = $('<ul/>');
         for (const label in errorsByLabel) {
@@ -208,26 +213,28 @@ export default class CustomizeBundle {
         return $formattedFormErrors;
     }
 
-    static getFormErrorsIndexedByLabel (container) {
+    static getFormErrorsIndexedByLabel(container) {
         let errorsByLabel = {};
 
-        $(container).find('.js-validation-errors-list li').each(function () {
-            const $errorList = $(this).closest('.js-validation-errors-list');
-            const errorMessage = $(this).text();
-            const inputId = CustomizeBundle.getInputIdByErrorList($errorList);
+        $(container)
+            .find('.js-validation-errors-list li')
+            .each(function () {
+                const $errorList = $(this).closest('.js-validation-errors-list');
+                const errorMessage = $(this).text();
+                const inputId = CustomizeBundle.getInputIdByErrorList($errorList);
 
-            if (inputId !== undefined) {
-                const $label = CustomizeBundle.findLabelByInputId(inputId);
-                if ($label.length > 0) {
-                    errorsByLabel = CustomizeBundle.addLabelError(errorsByLabel, $label.text(), errorMessage);
+                if (inputId !== undefined) {
+                    const $label = CustomizeBundle.findLabelByInputId(inputId);
+                    if ($label.length > 0) {
+                        errorsByLabel = CustomizeBundle.addLabelError(errorsByLabel, $label.text(), errorMessage);
+                    }
                 }
-            }
-        });
+            });
 
         return errorsByLabel;
     }
 
-    static getInputIdByErrorList ($errorList) {
+    static getInputIdByErrorList($errorList) {
         const inputIdMatch = $errorList.attr('class').match(/js-validation-error-list-([^\s]+)/);
         if (inputIdMatch) {
             return inputIdMatch[1];
@@ -236,12 +243,12 @@ export default class CustomizeBundle {
         return undefined;
     }
 
-    static findLabelByInputId (inputId) {
-        let $label = $('label[for="' + inputId + '"]');
-        const $input = $('#' + inputId);
+    static findLabelByInputId(inputId) {
+        let $label = $(`label[for="${inputId}"]`);
+        const $input = $(`#${inputId}`);
 
         if ($label.length === 0) {
-            $label = $('#js-label-' + inputId);
+            $label = $(`#js-label-${inputId}`);
         }
         if ($label.length === 0) {
             $label = CustomizeBundle.getClosestLabel($input, '.js-validation-label');
@@ -256,12 +263,14 @@ export default class CustomizeBundle {
         return $label;
     }
 
-    static getClosestLabel ($input, selector) {
-        const $formLine = $input.closest('.form-line:has(' + selector + '), .js-form-group:has(' + selector + '), .form-full:has(' + selector + ')');
+    static getClosestLabel($input, selector) {
+        const $formLine = $input.closest(
+            `.form-line:has(${selector}), .js-form-group:has(${selector}), .form-full:has(${selector})`,
+        );
         return $formLine.find(selector).filter(':first');
     }
 
-    static addLabelError (errorsByLabel, labelText, errorMessage) {
+    static addLabelError(errorsByLabel, labelText, errorMessage) {
         labelText = CustomizeBundle.normalizeLabelText(labelText);
 
         if (errorsByLabel[labelText] === undefined) {
@@ -274,45 +283,41 @@ export default class CustomizeBundle {
         return errorsByLabel;
     }
 
-    static normalizeLabelText (labelText) {
+    static normalizeLabelText(labelText) {
         return labelText.replace(/^\s*(.*)[\s:*]*$/, '$1');
     }
 
-    static showFormErrorsWindow (container) {
+    static showFormErrorsWindow(container) {
         const $formattedFormErrors = CustomizeBundle.getFormattedFormErrors(container);
         const $window = $('#js-window');
 
-        const $errorListHtml = '<div class="text-left">'
-            + Translator.trans('Please check the entered values.<br>')
-            + $formattedFormErrors[0].outerHTML
-            + '</div>';
+        const $errorListHtml =
+            '<div class="text-left">' +
+            Translator.trans('Please check the entered values.<br>') +
+            $formattedFormErrors[0].outerHTML +
+            '</div>';
 
         if ($window.length === 0) {
             // eslint-disable-next-line no-new
             new Window({
-                content: $errorListHtml
+                content: $errorListHtml,
             });
         } else {
-            $window.filterAllNodes('.js-window-validation-errors')
-                .html($errorListHtml)
-                .removeClass('display-none');
+            $window.filterAllNodes('.js-window-validation-errors').html($errorListHtml).removeClass('display-none');
         }
     }
 
-    static showErrors (errors, sourceId) {
+    static showErrors(errors, sourceId) {
         const $errorList = CustomizeBundle.findOrCreateErrorList($(this), sourceId);
         const $errorListUl = $errorList.find('ul:first');
         const $elementsToHighlight = findElementsToHighlight($(this));
 
-        const errorSourceClass = 'js-error-source-id-' + sourceId;
-        $errorListUl.find('li.' + errorSourceClass).remove();
+        const errorSourceClass = `js-error-source-id-${sourceId}`;
+        $errorListUl.find(`li.${errorSourceClass}`).remove();
 
-        $.each(errors, function (key, message) {
+        $.each(errors, (_key, message) => {
             $errorListUl.append(
-                $('<li/>')
-                    .addClass('js-validation-errors-message')
-                    .addClass(errorSourceClass)
-                    .text(message)
+                $('<li/>').addClass('js-validation-errors-message').addClass(errorSourceClass).text(message),
             );
         });
 
@@ -323,15 +328,19 @@ export default class CustomizeBundle {
         highlightSubmitButtons($(this).closest('form'));
     }
 
-    static findOrCreateErrorList ($formInput, elementName) {
+    static findOrCreateErrorList($formInput, elementName) {
         const errorListClass = CustomizeBundle.getErrorListClass(elementName);
-        let $errorList = $('.' + errorListClass);
+        let $errorList = $(`.${errorListClass}`);
         if ($errorList.length === 0) {
-            $errorList = $($.parseHTML(
-                '<div class="in-message in-message--danger js-validation-errors-list ' + errorListClass + '">'
-                + '<ul class="in-message__list"></ul>'
-            + '</div>'
-            ));
+            $errorList = $(
+                $.parseHTML(
+                    '<div class="in-message in-message--danger js-validation-errors-list ' +
+                        errorListClass +
+                        '">' +
+                        '<ul class="in-message__list"></ul>' +
+                        '</div>',
+                ),
+            );
             $errorList.insertBefore($formInput);
         }
 

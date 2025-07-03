@@ -1,8 +1,8 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 import { linkPositionDataAttribute } from './grapesjs-custom-link-plugin';
 
-export default grapesjs.plugins.add('custom-image', (editor) => {
+export default grapesjs.plugins.add('custom-image', editor => {
     const imagePositionDataAttribute = 'data-image-position';
 
     editor.Blocks.add('image', {
@@ -14,24 +14,24 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
         content: {
             type: 'image',
             attributes: {
-                'data-gjs-type': 'image'
-            }
-        }
+                'data-gjs-type': 'image',
+            },
+        },
     });
 
     editor.DomComponents.addType('image', {
-        isComponent: (element) => element.tagName === 'IMG' && element.getAttribute('data-gjs-type') === 'image',
+        isComponent: element => element.tagName === 'IMG' && element.getAttribute('data-gjs-type') === 'image',
         extend: 'image',
         model: {
-            init () {
+            init() {
                 this.on(`change:attributes:${imagePositionDataAttribute}`, this.handleImagePositionChange);
             },
 
-            handleImagePositionChange (element) {
+            handleImagePositionChange(element) {
                 element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
                     element.collection.parent.setAttributes({
-                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute]
+                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute],
                     });
                 }
             },
@@ -40,7 +40,7 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
                 resizable: false,
                 attributes: {
                     [imagePositionDataAttribute]: 'left',
-                    class: ['image-position-left']
+                    class: ['image-position-left'],
                 },
                 traits: [
                     {
@@ -50,25 +50,25 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
                         options: [
                             {
                                 id: 'left',
-                                label: Translator.trans('Left')
+                                label: Translator.trans('Left'),
                             },
                             {
                                 id: 'center',
-                                label: Translator.trans('Center')
+                                label: Translator.trans('Center'),
                             },
                             {
                                 id: 'right',
-                                label: Translator.trans('Right')
-                            }
-                        ]
+                                label: Translator.trans('Right'),
+                            },
+                        ],
                     },
                     {
                         type: 'input',
                         name: 'alt',
-                        label: Translator.trans('Alt')
-                    }
-                ]
-            }
-        }
+                        label: Translator.trans('Alt'),
+                    },
+                ],
+            },
+        },
     });
 });

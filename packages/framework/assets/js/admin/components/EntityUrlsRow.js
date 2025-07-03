@@ -1,9 +1,8 @@
-import FormChangeInfo from './FormChangeInfo';
 import Register from '../../common/utils/Register';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class EntityUrlsRow {
-
-    constructor ($row) {
+    constructor($row) {
         this.$label = $row.find('.js-entity-url-list-row-label');
         this.$checkbox = $row.find('.js-entity-url-list-row-checkbox');
         this.$deleteBlock = $row.find('.js-entity-url-list-row-delete-block');
@@ -15,20 +14,22 @@ export default class EntityUrlsRow {
         this.$deleteRevertWrapper = $row.find('.js-entity-url-list-row-delete-revert-wrapper');
 
         const _this = this;
-        _this.$deleteBlockButton.click(function () {
+        _this.$deleteBlockButton.click(() => {
             _this.markAsDeleted(true);
             FormChangeInfo.showInfo();
             return false;
         });
 
-        _this.$revertBlockButton.click(function () {
+        _this.$revertBlockButton.click(() => {
             _this.markAsDeleted(false);
             FormChangeInfo.showInfo();
             return false;
         });
 
-        _this.$radio.change(function () {
-            const $allRadioButtons = _this.$radio.closest('table').find('.js-entity-url-list-select-main');
+        _this.$radio.change(() => {
+            const $allRadioButtons = _this.$radio
+                .closest('.js-entity-url-list-container')
+                .find('.js-entity-url-list-select-main');
             $allRadioButtons.each(function () {
                 _this.updateMain($(this));
             });
@@ -38,7 +39,7 @@ export default class EntityUrlsRow {
         _this.markAsMain(_this.$radio.is(':checked'));
     }
 
-    markAsDeleted (toDelete) {
+    markAsDeleted(toDelete) {
         this.$checkbox.prop('checked', toDelete);
         this.$radio.attr('disabled', toDelete);
         this.$label.toggleClass('text-disabled', toDelete);
@@ -46,12 +47,12 @@ export default class EntityUrlsRow {
         this.$revertBlock.toggle(toDelete);
     }
 
-    markAsMain (isMain) {
+    markAsMain(isMain) {
         this.$deleteRevertWrapper.toggle(!isMain);
         this.$mainDeleteInfo.toggle(isMain);
     }
 
-    updateMain (radio) {
+    updateMain(radio) {
         const $row = radio.closest('.js-entity-url-list-friendly-url');
         const isMain = radio.is(':checked');
         const $mainDeleteInfo = $row.find('.js-entity-url-list-info-main-delete');
@@ -60,7 +61,7 @@ export default class EntityUrlsRow {
         $mainDeleteInfo.toggle(isMain);
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-entity-url-list-friendly-url').each(function () {
             // eslint-disable-next-line no-new
             new EntityUrlsRow($(this));
@@ -68,4 +69,4 @@ export default class EntityUrlsRow {
     }
 }
 
-(new Register()).registerCallback(EntityUrlsRow.init, 'EntityUrlsRow.init');
+new Register().registerCallback(EntityUrlsRow.init, 'EntityUrlsRow.init');

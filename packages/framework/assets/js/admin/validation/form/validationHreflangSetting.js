@@ -1,14 +1,12 @@
 import Register from '../../../common/utils/Register';
 
-export default function validationHreflangSetting () {
+export default function validationHreflangSetting() {
     const hreflangForm = $('#hreflang_setting_form_hreflang_collection');
     hreflangForm.jsFormValidator({
         callbacks: {
-            validateDomainUniqueness: function () {
-
-            }
-        }
+            validateDomainUniqueness: () => {},
+        },
     });
 }
 
-(new Register()).registerCallback(validationHreflangSetting, 'validationHreflangSetting');
+new Register().registerCallback(validationHreflangSetting, 'validationHreflangSetting');

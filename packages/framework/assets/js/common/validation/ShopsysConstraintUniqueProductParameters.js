@@ -1,5 +1,4 @@
-(function (window) {
-
+(window => {
     const ShopsysFrameworkBundleFormConstraintsUniqueProductParameters = function () {
         this.message = '';
 
@@ -15,9 +14,8 @@
 
             return uniqueCollectionValidator.validate(value);
         };
-
     };
 
-    window.ShopsysFrameworkBundleFormConstraintsUniqueProductParameters = ShopsysFrameworkBundleFormConstraintsUniqueProductParameters;
-
+    window.ShopsysFrameworkBundleFormConstraintsUniqueProductParameters =
+        ShopsysFrameworkBundleFormConstraintsUniqueProductParameters;
 })(window);

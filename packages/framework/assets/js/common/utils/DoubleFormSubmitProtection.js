@@ -2,8 +2,7 @@ const doubleFormSubmitProtectionAttribute = 'submit-protection';
 const RESET_PROTECTION_TIME = 1500;
 
 export default class DoubleFormSubmitProtection {
-
-    protection (event) {
+    protection(event) {
         const $form = $(event.target);
 
         if ($form.attr(doubleFormSubmitProtectionAttribute) === 'true') {

@@ -1,7 +1,7 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
-export default grapesjs.plugins.add('mail-custom-image-with-variable', (editor) => {
+export default grapesjs.plugins.add('mail-custom-image-with-variable', editor => {
     editor.Blocks.add('mail-custom-image-with-variable', {
         select: true,
         activate: true,
@@ -15,20 +15,20 @@ export default grapesjs.plugins.add('mail-custom-image-with-variable', (editor) 
                 src: '',
                 path: '{product_image}',
                 style: 'display: block; margin: auto;',
-                'data-gjs-type': 'mail-custom-image-with-variable'
-            }
-        }
+                'data-gjs-type': 'mail-custom-image-with-variable',
+            },
+        },
     });
 
     editor.DomComponents.addType('mail-custom-image-with-variable', {
-        isComponent: (element) =>
-            element.tagName === 'IMG'
-            && element.getAttribute('data-gjs-type') === 'mail-custom-image-with-variable'
-            && element.hasAttribute('path')
-            && element.getAttribute('path') === '{product_image}',
+        isComponent: element =>
+            element.tagName === 'IMG' &&
+            element.getAttribute('data-gjs-type') === 'mail-custom-image-with-variable' &&
+            element.hasAttribute('path') &&
+            element.getAttribute('path') === '{product_image}',
         extend: 'image',
         model: {
-            init () {
+            init() {
                 this.set('void', true);
             },
             defaults: {
@@ -37,12 +37,12 @@ export default grapesjs.plugins.add('mail-custom-image-with-variable', (editor) 
                     src: '',
                     path: '{product_image}',
                     style: 'display: block; margin: auto;',
-                    class: 'mail-custom-image-with-variable'
+                    class: 'mail-custom-image-with-variable',
                 },
                 editable: false,
                 highlightable: true,
-                resizable: false
-            }
-        }
+                resizable: false,
+            },
+        },
     });
 });

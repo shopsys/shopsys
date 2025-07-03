@@ -1,10 +1,9 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const PO = require('pofile');
 const fileWalker = require('./fileWalker');
 const parseLangFromFileName = require('./parseLangFromFileName');
 
-function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
-
+function findAndSaveTranslations(translations, _dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
     fileWalker(dirWithTranslations, (walkErr, filePaths) => {
         if (walkErr) {
             console.log(walkErr);
@@ -16,7 +15,7 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
             }
 
             const lang = parseLangFromFileName(filePath);
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve, _reject) => {
                 PO.load(filePath, (loadErr, po) => {
                     if (loadErr) {
                         console.log(loadErr);
@@ -28,7 +27,7 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
                         .forEach(item => {
                             translated.push({
                                 msgid: item.msgid,
-                                msgstr: item.msgstr[0]
+                                msgstr: item.msgstr[0],
                             });
                         });
                     resolve({ lang, translated });
@@ -46,21 +45,29 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
                     }
 
                     const filteredTranslated = translatedObject.translated.filter(
-                        item => !allTranslations[translatedObject.lang].some(
-                            translation => translation.msgid === item.msgid
-                        ) && item.msgstr !== ''
+                        item =>
+                            !allTranslations[translatedObject.lang].some(
+                                translation => translation.msgid === item.msgid,
+                            ) && item.msgstr !== '',
                     );
 
-                    allTranslations[translatedObject.lang] = allTranslations[translatedObject.lang].concat(filteredTranslated);
+                    allTranslations[translatedObject.lang] =
+                        allTranslations[translatedObject.lang].concat(filteredTranslated);
                 });
 
-            fs.writeFile(outputDirForExportedTranslations + 'translations.json', JSON.stringify(allTranslations), (writeErr) => {
-                if (writeErr) {
-                    return console.log(writeErr);
-                }
+            fs.writeFile(
+                `${outputDirForExportedTranslations}translations.json`,
+                JSON.stringify(allTranslations),
+                writeErr => {
+                    if (writeErr) {
+                        return console.log(writeErr);
+                    }
 
-                return console.log('Translations were saved in ' + outputDirForExportedTranslations + 'translations.json');
-            });
+                    return console.log(
+                        `Translations were saved in ${outputDirForExportedTranslations}translations.json`,
+                    );
+                },
+            );
         });
     });
 }

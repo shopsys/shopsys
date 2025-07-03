@@ -1,12 +1,12 @@
 import Register from '../../common/utils/Register';
 
 export default class Product {
-    static init ($container) {
+    static init($container) {
         Product.initializeSideNavigation($container);
         Product.initProductVideos($container);
     }
 
-    static initializeSideNavigation ($container) {
+    static initializeSideNavigation($container) {
         const $productDetailNavigation = $container.find('.js-product-detail-navigation');
         const $webContent = $('.web__content');
 
@@ -15,29 +15,29 @@ export default class Product {
             const $titleClone = $title.clone();
 
             $titleClone.find('.js-validation-errors-list').remove();
-            const $navigationItem = $('<li class="side-menu__item"><span class="side-menu__item__link"><span class="side-menu__item__text">' + $titleClone.text() + '</span></span></li>');
+            const $navigationItem = $(
+                `<li class="side-menu__item"><span class="side-menu__item__link"><span class="side-menu__item__text">${$titleClone.text()}</span></span></li>`,
+            );
             $productDetailNavigation.append($navigationItem);
 
-            $navigationItem.click(function () {
+            $navigationItem.click(() => {
                 const scrollOffsetTop = $title.offset().top - $webContent.offset().top;
                 $('html, body').animate({ scrollTop: scrollOffsetTop }, 'slow');
             });
         });
     }
 
-    static initProductVideos ($container) {
+    static initProductVideos($container) {
         $container.filterAllNodes('.js-videos-collection').on('click', '.js-remove-row', function () {
             $(this).parent().parent().remove();
         });
 
-        $container.filterAllNodes('.js-videos-collection-add-row').on('click', function (event) {
+        $container.filterAllNodes('.js-videos-collection-add-row').on('click', function (_event) {
             const $collection = $(this).closest('.js-form-group').find('.js-videos-collection');
             let index = $collection.data('index');
             index++;
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
 
             const $item = $($.parseHTML(item));
 
@@ -48,4 +48,4 @@ export default class Product {
     }
 }
 
-(new Register()).registerCallback(Product.init, 'Product.init');
+new Register().registerCallback(Product.init, 'Product.init');

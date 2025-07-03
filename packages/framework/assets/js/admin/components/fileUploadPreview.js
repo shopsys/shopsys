@@ -1,11 +1,12 @@
-import formChangeInfo from './FormChangeInfo';
-import { deselect, getSelectedValues, select } from './choiceControl';
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import Register from '../../common/utils/Register';
-import Sortable from 'sortablejs';
+import { deselect, getSelectedValues, select } from './choiceControl';
+import formChangeInfo from './FormChangeInfo';
 
 export default class FileUploadPreview {
-
-    static initDelete () {
+    static initDelete() {
         $('.js-file-upload-file').each(function () {
             const $file = $(this);
             const $filePreview = $file.find('.js-file-upload-preview');
@@ -40,21 +41,17 @@ export default class FileUploadPreview {
         });
     }
 
-    static initSort () {
-        document.querySelectorAll('.js-file-upload').forEach(element => {
-            Sortable.create(element, {
-                handle: '.js-file-upload-file-handle',
-                animation: 150,
-                onUpdate: formChangeInfo.showInfo
-            });
+    static initSort() {
+        $('.js-file-upload').sortable({
+            handle: '.js-file-upload-file-handle',
+            update: formChangeInfo.showInfo,
         });
     }
 
-    static init () {
+    static init() {
         FileUploadPreview.initDelete();
         FileUploadPreview.initSort();
     }
-
 }
 
-(new Register()).registerCallback(FileUploadPreview.init, 'FileUploadPreview.init');
+new Register().registerCallback(FileUploadPreview.init, 'FileUploadPreview.init');

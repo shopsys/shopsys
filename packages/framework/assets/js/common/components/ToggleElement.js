@@ -1,28 +1,27 @@
 import Register from '../utils/Register';
 
 export default class ToggleElement {
-
-    static show ($container) {
+    static show($container) {
         const $content = $container.find('.js-toggle-content');
 
         $container.trigger('showContent.toggleElement');
 
-        $content.slideDown('fast', function () {
+        $content.slideDown('fast', () => {
             $content.removeClass('display-none');
         });
     }
 
-    static hide ($container) {
+    static hide($container) {
         const $content = $container.find('.js-toggle-content');
 
         $container.trigger('hideContent.toggleElement');
 
-        $content.slideUp('fast', function () {
+        $content.slideUp('fast', () => {
             $content.addClass('display-none');
         });
     }
 
-    static toggle () {
+    static toggle() {
         const $container = $(this).closest('.js-toggle-container');
         const $content = $container.find('.js-toggle-content');
         if ($content.hasClass('display-none')) {
@@ -32,10 +31,9 @@ export default class ToggleElement {
         }
     }
 
-    static init ($container) {
-        $container.filterAllNodes('.js-toggle-container .js-toggle-button')
-            .bind('click', ToggleElement.toggle);
+    static init($container) {
+        $container.filterAllNodes('.js-toggle-container .js-toggle-button').bind('click', ToggleElement.toggle);
     }
 }
 
-(new Register()).registerCallback(ToggleElement.init, 'ToggleElement.init');
+new Register().registerCallback(ToggleElement.init, 'ToggleElement.init');

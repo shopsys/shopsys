@@ -1,13 +1,11 @@
 import { parseNumber } from '../utils/number';
 
-(function (window) {
-
+(window => {
     const SymfonyComponentValidatorConstraintNotIdenticalTo = function () {
         this.message = '';
         this.value = null;
 
         this.validate = function (value) {
-
             const f = FpJsFormValidator;
             let compareValue = value;
             if (parseNumber(this.value) !== null) {
@@ -20,12 +18,11 @@ import { parseNumber } from '../utils/number';
                 return [
                     this.message
                         .replace('{{ value }}', String(value))
-                        .replace('{{ compared_value }}', String(this.value))
+                        .replace('{{ compared_value }}', String(this.value)),
                 ];
             }
         };
     };
 
     window.SymfonyComponentValidatorConstraintNotIdenticalTo = SymfonyComponentValidatorConstraintNotIdenticalTo;
-
 })(window);

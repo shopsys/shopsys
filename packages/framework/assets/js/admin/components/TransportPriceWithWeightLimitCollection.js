@@ -1,8 +1,11 @@
 import Register from '../../common/utils/Register';
-import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
+import {
+    addNewItemToCollection,
+    removeItemFromCollection,
+} from '../validation/customization/customizeCollectionBundle';
 
 export default class TransportPriceWithWeightLimitCollection {
-    static init () {
+    static init() {
         const $transportPriceItemAdd = $('.js-transport-prices-item-add');
         const $transportPricesCollection = $('.js-transport-prices');
 
@@ -23,16 +26,14 @@ export default class TransportPriceWithWeightLimitCollection {
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
             const $item = $($.parseHTML(item));
             $item.data('index', index);
 
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
 
             addNewItemToCollection('.js-transport-prices', index);
 
@@ -42,4 +43,7 @@ export default class TransportPriceWithWeightLimitCollection {
     }
 }
 
-(new Register()).registerCallback(TransportPriceWithWeightLimitCollection.init, 'TransportPriceWithWeightLimitCollection.init');
+new Register().registerCallback(
+    TransportPriceWithWeightLimitCollection.init,
+    'TransportPriceWithWeightLimitCollection.init',
+);

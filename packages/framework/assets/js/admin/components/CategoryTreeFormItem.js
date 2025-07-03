@@ -1,10 +1,9 @@
-import Ajax from '../../common/utils/Ajax';
-import IconPlus from 'icons/tabler/circle-plus.svg';
 import IconMinus from 'icons/tabler/circle-minus.svg';
+import IconPlus from 'icons/tabler/circle-plus.svg';
+import Ajax from '../../common/utils/Ajax';
 
 export default class CategoryTreeFormItem {
-
-    constructor ($item, parent) {
+    constructor($item, parent) {
         this.$item = $item;
         this.status = null;
         this.loaded = null;
@@ -21,7 +20,7 @@ export default class CategoryTreeFormItem {
         this.$statusIcon.click(() => this.statusToggle());
     }
 
-    initChildren () {
+    initChildren() {
         const _this = this;
         this.$childrenContainer.find('> .js-category-tree-form-item').each(function () {
             const childItem = new CategoryTreeFormItem($(this), _this);
@@ -29,7 +28,7 @@ export default class CategoryTreeFormItem {
         });
     }
 
-    initStatus () {
+    initStatus() {
         // status could be set to "opened" by children
         if (this.status === null) {
             if (this.$item.data('has-children')) {
@@ -37,11 +36,9 @@ export default class CategoryTreeFormItem {
             } else {
                 this.setStatus(CategoryTreeFormItem.STATUS_NONE);
             }
-
-            const _this = this;
             if (this.$checkbox.is(':checked')) {
-                if (_this.parent instanceof CategoryTreeFormItem) {
-                    _this.parent.open(false);
+                if (this.parent instanceof CategoryTreeFormItem) {
+                    this.parent.open(false);
                 }
             }
         }
@@ -50,20 +47,19 @@ export default class CategoryTreeFormItem {
         }
     }
 
-    close (animate) {
-        const _this = this;
+    close(animate) {
         if (!this.$childrenContainer.is(':animated')) {
-            _this.$childrenContainer.slideUp(animate === true ? 'normal' : 0);
-            _this.setStatus(CategoryTreeFormItem.STATUS_CLOSED);
+            this.$childrenContainer.slideUp(animate === true ? 'normal' : 0);
+            this.setStatus(CategoryTreeFormItem.STATUS_CLOSED);
         }
     }
 
-    setStatus (newStatus) {
+    setStatus(newStatus) {
         this.status = newStatus;
         this.updateStatusIcon();
     }
 
-    updateStatusIcon () {
+    updateStatusIcon() {
         this.$statusIcon.removeClass('sprite sprite-level cursor-pointer form-tree__item__icon--level');
         switch (this.status) {
             case CategoryTreeFormItem.STATUS_OPENED:
@@ -81,7 +77,7 @@ export default class CategoryTreeFormItem {
         }
     }
 
-    statusToggle () {
+    statusToggle() {
         if (this.status === CategoryTreeFormItem.STATUS_CLOSED) {
             this.open(true);
         } else if (this.status === CategoryTreeFormItem.STATUS_OPENED) {
@@ -89,27 +85,26 @@ export default class CategoryTreeFormItem {
         }
     }
 
-    open (animate) {
-        const _this = this;
+    open(animate) {
         if (this.loaded === false) {
             this.loadChildren();
         } else if (!this.$childrenContainer.is(':animated')) {
-            _this.$childrenContainer.slideDown(animate === true ? 'normal' : 0);
-            _this.setStatus(CategoryTreeFormItem.STATUS_OPENED);
-            if (_this.parent instanceof CategoryTreeFormItem) {
-                _this.parent.open(animate);
+            this.$childrenContainer.slideDown(animate === true ? 'normal' : 0);
+            this.setStatus(CategoryTreeFormItem.STATUS_OPENED);
+            if (this.parent instanceof CategoryTreeFormItem) {
+                this.parent.open(animate);
             }
         }
     }
 
-    loadChildren () {
+    loadChildren() {
         this.setStatus(CategoryTreeFormItem.STATUS_LOADING);
         const _this = this;
         Ajax.ajax({
             loaderElement: this.$item,
             url: this.$item.data('load-url'),
             dataType: 'json',
-            success: function (data) {
+            success: data => {
                 _this.loaded = true;
 
                 $.each(data, function () {
@@ -120,15 +115,15 @@ export default class CategoryTreeFormItem {
 
                 _this.open(true);
             },
-            complete: function () {
+            complete: () => {
                 if (_this.status === CategoryTreeFormItem.STATUS_LOADING) {
                     _this.setStatus(CategoryTreeFormItem.STATUS_CLOSED);
                 }
-            }
+            },
         });
     }
 
-    createItem (itemData) {
+    createItem(itemData) {
         const $form = this.$item.closest('.js-category-tree-form');
         let newItemHtml = $form.data('prototype');
 

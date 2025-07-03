@@ -1,12 +1,11 @@
 import '../../common/bootstrap/tooltip';
-import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
 import Check from 'icons/tabler/check.svg';
 import Denied from 'icons/tabler/circle-x-filled.svg';
+import Register from '../../common/utils/Register';
 
 export default class ProductsPickerWindow {
-
-    constructor ($addButton) {
+    constructor($addButton) {
         const productsPicker = window.parent.ProductsPickerInstances[$addButton.data('product-picker-instance-id')];
         const productId = $addButton.data('product-picker-product-id');
 
@@ -15,50 +14,60 @@ export default class ProductsPickerWindow {
         } else if (productsPicker.hasProduct(productId)) {
             this.markAddButtonAsAdded($addButton);
         } else {
-            $addButton.on('click.addProduct', (event) => this.onClickAddButton(event));
+            $addButton.on('click.addProduct', event => this.onClickAddButton(event));
         }
     }
 
-    markAddButtonAsAdded ($addButton) {
+    markAddButtonAsAdded($addButton) {
         const originalLabelText = $addButton.find('.js-products-picker-label').text();
         const originalIconText = $addButton.find('.js-products-picker-icon').text();
         $addButton
-            .addClass('cursor-auto btn--success').removeClass('btn--plus btn--light')
-            .find('.js-products-picker-label').text(Translator.trans('Added')).end()
-            .find('.js-products-picker-icon').html(Check).end()
+            .addClass('cursor-auto btn--success')
+            .removeClass('btn--plus btn--light')
+            .find('.js-products-picker-label')
+            .text(Translator.trans('Added'))
+            .end()
+            .find('.js-products-picker-icon')
+            .html(Check)
+            .end()
             .on('click.removeProduct', () => {
                 this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
             })
-            .click(function () {
-                return false;
-            });
+            .click(() => false);
     }
 
-    markAddButtonAsDeny ($addButton) {
+    markAddButtonAsDeny($addButton) {
         $addButton
             .addClass('cursor-help')
             .tooltip({
                 title: Translator.trans('Not possible to assign product to itself'),
-                placement: 'left'
+                placement: 'left',
             })
-            .find('.js-products-picker-label').text(Translator.trans('Unable to add')).end()
-            .find('.js-products-picker-icon').removeClass('in-icon--add').addClass('in-icon--denied').html(Denied).end()
+            .find('.js-products-picker-label')
+            .text(Translator.trans('Unable to add'))
+            .end()
+            .find('.js-products-picker-icon')
+            .removeClass('in-icon--add')
+            .addClass('in-icon--denied')
+            .html(Denied)
+            .end()
             .click(() => false);
     }
 
-    onClickAddButton (event) {
-        const productsPicker = window.parent.ProductsPickerInstances[$(event.currentTarget).data('product-picker-instance-id')];
+    onClickAddButton(event) {
+        const productsPicker =
+            window.parent.ProductsPickerInstances[$(event.currentTarget).data('product-picker-instance-id')];
         this.markAddButtonAsAdded($(event.currentTarget));
         $(event.currentTarget).off('click.addProduct');
         productsPicker.addProduct(
             $(event.currentTarget).data('product-picker-product-id'),
-            $(event.currentTarget).data('product-picker-product-name')
+            $(event.currentTarget).data('product-picker-product-name'),
         );
 
         return false;
     }
 
-    onClickOnAddedButton ($addButton, originalLabelText, originalIconText) {
+    onClickOnAddedButton($addButton, originalLabelText, originalIconText) {
         const productsPicker = window.parent.ProductsPickerInstances[$addButton.data('product-picker-instance-id')];
         this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText);
         $addButton.off('click.removeProduct');
@@ -67,16 +76,21 @@ export default class ProductsPickerWindow {
         return false;
     }
 
-    unmarkAddButtonAsAdded ($addButton, originalLabelText, originalIconText) {
+    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText) {
         $addButton
-            .addClass('btn--plus btn--light').removeClass('cursor-auto btn--success')
-            .find('.js-products-picker-label').text(originalLabelText).end()
-            .find('.js-products-picker-icon').text(originalIconText).end()
-            .on('click.addProduct', (event) => this.onClickAddButton(event))
+            .addClass('btn--plus btn--light')
+            .removeClass('cursor-auto btn--success')
+            .find('.js-products-picker-label')
+            .text(originalLabelText)
+            .end()
+            .find('.js-products-picker-icon')
+            .text(originalIconText)
+            .end()
+            .on('click.addProduct', event => this.onClickAddButton(event))
             .click(() => false);
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-products-picker-window-add-product').each(function () {
             // eslint-disable-next-line no-new
             new ProductsPickerWindow($(this));
@@ -84,4 +98,4 @@ export default class ProductsPickerWindow {
     }
 }
 
-(new Register()).registerCallback(ProductsPickerWindow.init, 'ProductsPickerWindow.init');
+new Register().registerCallback(ProductsPickerWindow.init, 'ProductsPickerWindow.init');

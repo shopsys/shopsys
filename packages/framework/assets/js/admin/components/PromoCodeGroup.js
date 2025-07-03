@@ -1,8 +1,7 @@
-import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import Register from '../../common/utils/Register';
 
-(function ($) {
-
+($ => {
     const Shopsys = window.Shopsys || {};
     Shopsys.promoCode = Shopsys.promoCode || {};
 
@@ -11,15 +10,22 @@ import Translator from 'bazinga-translator';
         const $firstRow = $promoCodeGroup.first().closest('.js-grid-row');
         const prefix = $firstRow.filterAllNodes('.js-promo-code-mass').attr('data-promo-code-prefix');
 
-        this.init = function () {
+        this.init = () => {
             $rows.addClass('display-none');
 
-            const unpackButtonHtml = '<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="' + prefix + '">' + Translator.trans('Expand') + '</span>';
-            const $parentRow = $('<tr class="table-grid__row js-grid-row background-color-ddd">'
-                + '<td colspan="2" class="table-grid__cell">' + Translator.trans('Bulk coupons with prefix') + ' <b>' + prefix + '</b></td>'
-                + '<td></td>'
-                + '<td class="table-grid__cell">' + unpackButtonHtml + '</td>'
-                + '</tr>'
+            const unpackButtonHtml = `<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="${prefix}">${Translator.trans('Expand')}</span>`;
+            const $parentRow = $(
+                '<tr class="table-grid__row js-grid-row background-color-ddd">' +
+                    '<td colspan="2" class="table-grid__cell">' +
+                    Translator.trans('Bulk coupons with prefix') +
+                    ' <b>' +
+                    prefix +
+                    '</b></td>' +
+                    '<td></td>' +
+                    '<td class="table-grid__cell">' +
+                    unpackButtonHtml +
+                    '</td>' +
+                    '</tr>',
             );
 
             $parentRow.insertBefore($firstRow);
@@ -31,8 +37,8 @@ import Translator from 'bazinga-translator';
                 $row.filterAllNodes('td').first().css('padding-left', '40px');
             });
 
-            $('.js-promo-code-group-unpack[data-promo-code-prefix="' + prefix + '"]').click(function () {
-                $(this).text(function (i, text) {
+            $(`.js-promo-code-group-unpack[data-promo-code-prefix="${prefix}"]`).click(function () {
+                $(this).text((_i, text) => {
                     const pack = Translator.trans('Collapse');
                     const unpack = Translator.trans('Expand');
                     return text === unpack ? pack : unpack;
@@ -42,11 +48,9 @@ import Translator from 'bazinga-translator';
         };
     };
 
-    (new Register()).registerCallback($container => {
-        function arrayUnique (array) {
-            return $.grep(array, function (el, index) {
-                return index == $.inArray(el, array);
-            });
+    new Register().registerCallback($container => {
+        function arrayUnique(array) {
+            return $.grep(array, (el, index) => index === $.inArray(el, array));
         }
 
         let prefixJsClasses = [];
@@ -61,10 +65,9 @@ import Translator from 'bazinga-translator';
         prefixJsClasses = arrayUnique(prefixJsClasses);
 
         for (let i = 0; i < prefixJsClasses.length; i++) {
-            const $promoCodeGroup = $('.' + prefixJsClasses[i]);
+            const $promoCodeGroup = $(`.${prefixJsClasses[i]}`);
             const promoCodeGroup = new Shopsys.promoCode.PromoCodeGroup($promoCodeGroup);
             promoCodeGroup.init();
         }
     });
-
 })(jQuery);

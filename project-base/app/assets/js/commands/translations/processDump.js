@@ -1,8 +1,8 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const parseFile = require('./parseFile');
 const fileWalker = require('./fileWalker');
 
-function processDump (dirWithJsFiles, outputDirForExportedTranslations) {
+function processDump(dirWithJsFiles, outputDirForExportedTranslations) {
     fileWalker(dirWithJsFiles, (err, filePaths) => {
         if (err) {
             console.log(err);
@@ -22,12 +22,18 @@ function processDump (dirWithJsFiles, outputDirForExportedTranslations) {
             });
         });
 
-        fs.writeFile(outputDirForExportedTranslations + 'translationsDump.json', JSON.stringify(translations), (writeErr) => {
-            if (writeErr) {
-                return console.log(writeErr);
-            }
-            return console.log('Translation dump was save in ' + outputDirForExportedTranslations + 'translationsDump.json');
-        });
+        fs.writeFile(
+            `${outputDirForExportedTranslations}translationsDump.json`,
+            JSON.stringify(translations),
+            writeErr => {
+                if (writeErr) {
+                    return console.log(writeErr);
+                }
+                return console.log(
+                    `Translation dump was save in ${outputDirForExportedTranslations}translationsDump.json`,
+                );
+            },
+        );
     });
 }
 

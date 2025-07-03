@@ -1,7 +1,7 @@
 import Register from '../../common/utils/Register';
 
 export default class Complaint {
-    static init () {
+    static init() {
         const $complaintResolutionInput = $('.js-complaint-resolution');
         const $bankAccountNumberInput = $('.js-complaint-bank-account-number');
 
@@ -17,4 +17,4 @@ export default class Complaint {
     }
 }
 
-(new Register()).registerCallback(Complaint.init, 'Complaint.init');
+new Register().registerCallback(Complaint.init, 'Complaint.init');

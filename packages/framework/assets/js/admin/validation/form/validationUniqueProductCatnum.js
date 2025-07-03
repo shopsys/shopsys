@@ -1,9 +1,9 @@
-(function ($, window) {
+(($, window) => {
     window.ShopsysFrameworkBundleFormConstraintsUniqueProductCatnum = function () {
         this.message = null;
 
         this.validate = (value, element) => {
-            const $catnumInput = $('#' + element.id);
+            const $catnumInput = $(`#${element.id}`);
 
             const url = $catnumInput.data('unique-catnum-url');
             const currentProductCatnum = $catnumInput.data('current-product-catnum');
@@ -16,22 +16,21 @@
                 url,
                 {
                     catnum: value,
-                    currentProductCatnum
+                    currentProductCatnum,
                 },
-                (response) => {
+                response => {
                     const catnumExists = JSON.parse(response);
 
                     if (catnumExists) {
                         $catnumInput.jsFormValidator('showErrors', {
                             errors: [this.message],
-                            sourceId: 'form-error-' + String(element.id).replace(/_/g, '-')
+                            sourceId: `form-error-${String(element.id).replace(/_/g, '-')}`,
                         });
                     }
-                }
+                },
             );
 
             return [];
         };
     };
-
 })(jQuery, window);

@@ -1,8 +1,7 @@
 import Register from '../../common/utils/Register';
 
 export default class AdministratorForm {
-
-    constructor ($container) {
+    constructor($container) {
         const $roleGroupInput = $container.find('.js-role-group-select');
         const $rolesCustomInputLine = $container.find('.js-role-group-custom').closest('.form-line');
 
@@ -19,12 +18,12 @@ export default class AdministratorForm {
         });
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('form[name=administrator_form]').each(function () {
             // eslint-disable-next-line no-new
             new AdministratorForm($(this));
         });
-    };
+    }
 }
 
-(new Register()).registerCallback(AdministratorForm.init, 'AdministratorForm.init');
+new Register().registerCallback(AdministratorForm.init, 'AdministratorForm.init');

@@ -1,18 +1,17 @@
 import Register from '../../common/utils/Register';
 
 export default class GridMassAction {
-
-    constructor ($grid) {
+    constructor($grid) {
         this.$grid = $grid;
         this.$selectAllCheckbox = $grid.find('.js-grid-mass-action-select-all');
         this.$selectAllCheckbox.click(() => this.onSelectAll());
     }
 
-    onSelectAll () {
+    onSelectAll() {
         this.$grid.find('.js-grid-mass-action-select-row').prop('checked', this.$selectAllCheckbox.is(':checked'));
     }
 
-    static init () {
+    static init() {
         $('.js-grid').each(function () {
             // eslint-disable-next-line no-new
             new GridMassAction($(this));
@@ -20,4 +19,4 @@ export default class GridMassAction {
     }
 }
 
-(new Register()).registerCallback(GridMassAction.init, 'GridMassAction.init');
+new Register().registerCallback(GridMassAction.init, 'GridMassAction.init');

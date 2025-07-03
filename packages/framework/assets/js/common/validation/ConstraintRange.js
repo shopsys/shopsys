@@ -1,7 +1,6 @@
 import { parseNumber } from '../utils/number';
 
-(function (window) {
-
+(window => {
     const SymfonyComponentValidatorConstraintsRange = function () {
         this.maxMessage = '';
         this.minMessage = '';
@@ -10,28 +9,23 @@ import { parseNumber } from '../utils/number';
         this.min = null;
 
         this.validate = function (value) {
-
             const f = FpJsFormValidator;
             const compareValue = parseNumber(value);
 
-            if (f.isValueEmty(value) || (compareValue !== null && compareValue >= this.min && compareValue <= this.max)) {
+            if (
+                f.isValueEmty(value) ||
+                (compareValue !== null && compareValue >= this.min && compareValue <= this.max)
+            ) {
                 return [];
             } else if (compareValue < this.min) {
-                return [
-                    this.minMessage.replace('{{ limit }}', String(this.min))
-                ];
+                return [this.minMessage.replace('{{ limit }}', String(this.min))];
             } else if (compareValue > this.max) {
-                return [
-                    this.maxMessage.replace('{{ limit }}', String(this.max))
-                ];
+                return [this.maxMessage.replace('{{ limit }}', String(this.max))];
             } else {
-                return [
-                    this.invalidMessage
-                ];
+                return [this.invalidMessage];
             }
         };
     };
 
     window.SymfonyComponentValidatorConstraintsRange = SymfonyComponentValidatorConstraintsRange;
-
 })(window);

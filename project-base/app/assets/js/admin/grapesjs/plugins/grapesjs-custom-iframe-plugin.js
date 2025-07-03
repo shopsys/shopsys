@@ -1,28 +1,28 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 const IFRAME_WIDTH_ATTRIBUTE = 'width';
 const IFRAME_HEIGHT_ATTRIBUTE = 'height';
 
-export default grapesjs.plugins.add('custom-iframe', (editor) => {
+export default grapesjs.plugins.add('custom-iframe', editor => {
     editor.DomComponents.addType('iframe', {
-        isComponent: (el) => el.tagName === 'IFRAME',
+        isComponent: el => el.tagName === 'IFRAME',
         model: {
-            init () {
+            init() {
                 this.on(`change:attributes:${IFRAME_WIDTH_ATTRIBUTE}`, this.handleWidthChange);
                 this.on(`change:attributes:${IFRAME_HEIGHT_ATTRIBUTE}`, this.handleHeightChange);
             },
-            handleWidthChange (component) {
+            handleWidthChange(component) {
                 console.log(
                     'Input width changed to: ',
                     this.getAttributes()[IFRAME_WIDTH_ATTRIBUTE],
                     component.getStyle(),
-                    component
+                    component,
                 );
                 component.setStyle({ ...component.getStyle(), width: this.getAttributes()[IFRAME_WIDTH_ATTRIBUTE] });
                 // component.setStyle({ ...component.getStyle(), id: 'width', 'data-key': this.getAttributes()[IFRAME_WIDTH_ATTRIBUTE] });
             },
-            handleHeightChange (component) {
+            handleHeightChange(component) {
                 console.log('Input height changed to: ', this.getAttributes()[IFRAME_HEIGHT_ATTRIBUTE], component);
                 component.setStyle({ ...component.getStyle(), height: this.getAttributes()[IFRAME_HEIGHT_ATTRIBUTE] });
                 // component.setAttributes({ height: this.getAttributes()[IFRAME_HEIGHT_ATTRIBUTE] });
@@ -33,31 +33,30 @@ export default grapesjs.plugins.add('custom-iframe', (editor) => {
                     {
                         type: 'text',
                         label: Translator.trans('Src'),
-                        name: 'src'
+                        name: 'src',
                     },
                     {
                         type: 'text',
                         label: Translator.trans('Width'),
                         name: IFRAME_WIDTH_ATTRIBUTE,
-                        placeholder: '100%'
+                        placeholder: '100%',
                     },
                     {
                         type: 'text',
                         label: Translator.trans('Height'),
-                        name: IFRAME_HEIGHT_ATTRIBUTE
-                    }
-                ]
-            }
-        }
+                        name: IFRAME_HEIGHT_ATTRIBUTE,
+                    },
+                ],
+            },
+        },
     });
 
     editor.BlockManager.add('iframe', {
         label: 'Iframe',
         type: 'iframe',
-        content:
-            '<iframe class="gjs-iframe" style="width: 100%"></iframe>',
+        content: '<iframe class="gjs-iframe" style="width: 100%"></iframe>',
         category: Translator.trans('Basic objects'),
         selectable: true,
-        attributes: { class: 'fa fa-crop' }
+        attributes: { class: 'fa fa-crop' },
     });
 });

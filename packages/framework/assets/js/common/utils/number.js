@@ -1,4 +1,4 @@
-export const parseNumber = (value) => {
+export const parseNumber = value => {
     if (!value) {
         return null;
     }

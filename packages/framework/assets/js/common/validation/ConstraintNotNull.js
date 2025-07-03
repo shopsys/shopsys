@@ -1,5 +1,4 @@
-(function (window) {
-
+(window => {
     const SymfonyComponentValidatorConstraintsNotNull = function () {
         this.message = '';
 
@@ -14,7 +13,7 @@
             } else if (element.type === 'Shopsys\\FrameworkBundle\\Form\\SingleCheckboxChoiceType') {
                 isValueNull = true;
                 for (const i in value) {
-                    if (value.hasOwnProperty(i) && value[i] === true) {
+                    if (Object.hasOwn(value, i) && value[i] === true) {
                         isValueNull = false;
                         break;
                     }
@@ -32,5 +31,4 @@
     };
 
     window.SymfonyComponentValidatorConstraintsNotNull = SymfonyComponentValidatorConstraintsNotNull;
-
 })(window);

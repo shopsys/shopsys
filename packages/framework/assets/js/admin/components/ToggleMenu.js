@@ -1,8 +1,7 @@
 import Register from '../../common/utils/Register';
 
 export default class ToggleMenu {
-
-    constructor ($toggleMenu) {
+    constructor($toggleMenu) {
         const _this = this;
         this.$items = $toggleMenu.filterAllNodes('.js-toggle-menu-item');
 
@@ -19,21 +18,21 @@ export default class ToggleMenu {
             event.stopPropagation();
         });
 
-        $(document).on('click', function () {
+        $(document).on('click', () => {
             ToggleMenu.hideAllSubmenus(_this);
         });
 
-        this.$items.find('.js-toggle-menu-submenu').on('click', function (event) {
+        this.$items.find('.js-toggle-menu-submenu').on('click', event => {
             event.stopPropagation();
         });
     }
 
-    static hideAllSubmenus (toggleMenu) {
+    static hideAllSubmenus(toggleMenu) {
         toggleMenu.$items.filterAllNodes('.js-toggle-menu-submenu').hide();
         toggleMenu.$items.removeClass('open');
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-toggle-menu').each(function () {
             // eslint-disable-next-line no-new
             new ToggleMenu($(this));
@@ -41,4 +40,4 @@ export default class ToggleMenu {
     }
 }
 
-(new Register()).registerCallback(ToggleMenu.init, 'ToggleMenu.init');
+new Register().registerCallback(ToggleMenu.init, 'ToggleMenu.init');

@@ -1,15 +1,16 @@
+import 'jquery-ui-touch-punch';
+import 'jquery-ui/ui/widgets/mouse';
 import 'magnific-popup';
-import FormChangeInfo from './FormChangeInfo';
-import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import Translator from 'bazinga-translator';
 import { formatPrice } from '../../common/utils/priceFormatter';
+import Register from '../../common/utils/Register';
+import Window from '../utils/Window';
+import FormChangeInfo from './FormChangeInfo';
 
 window.PriceListProductPickerInstances = {};
 
 export default class PriceListProductPicker {
-
-    constructor ($productsPicker) {
+    constructor($productsPicker) {
         this.instanceId = Object.keys(window.PriceListProductPickerInstances).length;
         window.PriceListProductPickerInstances[this.instanceId] = this;
 
@@ -28,7 +29,7 @@ export default class PriceListProductPicker {
         });
     }
 
-    initDomainChangeListener () {
+    initDomainChangeListener() {
         const $domainSelectInput = $('.js-update-domain-id');
 
         $domainSelectInput.on('change', function () {
@@ -39,11 +40,13 @@ export default class PriceListProductPicker {
             if (FormChangeInfo.isInfoShown) {
                 // eslint-disable-next-line no-new
                 new Window({
-                    content: Translator.trans('Changing the domain will cause the loss of unsaved changes. Do you want to continue?'),
+                    content: Translator.trans(
+                        'Changing the domain will cause the loss of unsaved changes. Do you want to continue?',
+                    ),
                     buttonCancel: true,
                     buttonContinue: true,
                     textContinue: Translator.trans('Yes'),
-                    urlContinue: url.toString()
+                    urlContinue: url.toString(),
                 });
             } else {
                 window.location.href = url.toString();
@@ -51,35 +54,35 @@ export default class PriceListProductPicker {
         });
     }
 
-    openProductsPickerWindow () {
-        const _this = this;
+    openProductsPickerWindow() {
         $.magnificPopup.open({
-            items: { src: _this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', _this.instanceId) },
+            items: {
+                src: this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId),
+            },
             type: 'iframe',
-            closeOnBgClick: true
+            closeOnBgClick: true,
         });
 
         return false;
     }
 
-    initItem ($item) {
-        const _this = this;
+    initItem($item) {
         const inputs = $item.find('input[type=text]');
 
         if (inputs.length > 0) {
-            $(inputs[0]).change(function () {
-                _this.updateDiscount($item);
+            $(inputs[0]).change(() => {
+                this.updateDiscount($item);
             });
         }
 
-        _this.updateDiscount($item);
-        _this.productItems.push($item);
+        this.updateDiscount($item);
+        this.productItems.push($item);
         $item.find('.js-price-list-product-picker-item-button-delete').click(() => {
-            _this.removeItem($item);
+            this.removeItem($item);
         });
     }
 
-    removeItem ($item) {
+    removeItem($item) {
         const productId = $item.find('.js-price-list-product-picker-item-input:first').val();
         const productItemIndex = this.findProductItemIndex(productId);
 
@@ -98,9 +101,12 @@ export default class PriceListProductPicker {
         FormChangeInfo.showInfo();
     }
 
-    findProductItemIndex (productId) {
+    findProductItemIndex(productId) {
         for (const key in this.productItems) {
-            if (this.productItems[key].find('.js-price-list-product-picker-item-input:first').val() === productId.toString()) {
+            if (
+                this.productItems[key].find('.js-price-list-product-picker-item-input:first').val() ===
+                productId.toString()
+            ) {
                 return key;
             }
         }
@@ -108,10 +114,10 @@ export default class PriceListProductPicker {
         return null;
     }
 
-    reIndex () {
+    reIndex() {
         const elements = {};
 
-        this.$itemsContainer.find('.js-price-list-product-picker-item-input-reorder').each((index, element) => {
+        this.$itemsContainer.find('.js-price-list-product-picker-item-input-reorder').each((_index, element) => {
             const $element = $(element);
             const name = $element.data('name');
 
@@ -125,17 +131,17 @@ export default class PriceListProductPicker {
         for (const key in elements) {
             elements[key].forEach((element, index) => {
                 const name = element.attr('name');
-                const newName = name.substr(0, name.lastIndexOf('[', name.lastIndexOf('[') - 1) + 1) + index + '][' + element.data('name') + ']';
+                const newName = `${name.substr(0, name.lastIndexOf('[', name.lastIndexOf('[') - 1) + 1) + index}][${element.data('name')}]`;
                 element.attr('name', newName);
             });
         }
     }
 
-    updateHeader () {
+    updateHeader() {
         this.$header.toggle(this.productItems.length !== 0);
     }
 
-    updateDiscount ($item) {
+    updateDiscount($item) {
         const inputs = $item.find('input[type=text]');
         const prices = $item.find('.js-price-list-product-picker-item-product-price');
         const discounts = $item.find('.js-price-list-product-picker-item-product-price-discount');
@@ -149,32 +155,34 @@ export default class PriceListProductPicker {
 
             const inputPrice = parseFloat($input.val().replace(',', '.'));
             const basicDataPrice = $basicPrice.data('price');
-            const basicPrice = parseFloat(typeof basicDataPrice === 'string' ? basicDataPrice.replace(',', '.') : basicDataPrice);
+            const basicPrice = parseFloat(
+                typeof basicDataPrice === 'string' ? basicDataPrice.replace(',', '.') : basicDataPrice,
+            );
             const discount = Math.round((basicPrice - inputPrice) * 100) / 100;
             const discountColor = basicPrice > inputPrice ? 'green' : 'red';
-            const discountPercentage = Math.floor(discount / (basicPrice === 0 ? 1 : basicPrice) * 100);
+            const discountPercentage = Math.floor((discount / (basicPrice === 0 ? 1 : basicPrice)) * 100);
 
             $discount.text(formatPrice(discount, $basicPrice.data('locale'), $basicPrice.data('currency')));
-            $discountPercentage.text(discountPercentage + '%');
+            $discountPercentage.text(`${discountPercentage}%`);
             $discount.css('color', discountColor);
             $discountPercentage.css('color', discountColor);
         }
     }
 
-    removeItemByProductId (productId) {
+    removeItemByProductId(productId) {
         const $item = this.findProductItemByProductId(productId);
         this.removeItem($item);
     }
 
-    findProductItemByProductId (productId) {
+    findProductItemByProductId(productId) {
         return this.productItems[this.findProductItemIndex(productId)];
     }
 
-    hasProduct (productId) {
+    hasProduct(productId) {
         return this.findProductItemIndex(productId) !== null;
     }
 
-    addProduct (productId, productName, productPrice, productEan, productCatnum) {
+    addProduct(productId, productName, productPrice, productEan, productCatnum) {
         const nextIndex = this.$itemsContainer.find('.js-price-list-product-picker-item').length;
         const itemHtml = this.$productsPicker.data('products-picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
@@ -195,7 +203,7 @@ export default class PriceListProductPicker {
         FormChangeInfo.showInfo();
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-price-list-product-picker').each(function () {
             // eslint-disable-next-line no-new
             new PriceListProductPicker($(this));
@@ -207,4 +215,4 @@ export default class PriceListProductPicker {
     }
 }
 
-(new Register().registerCallback(PriceListProductPicker.init, 'PriceListProductPicker.init'));
+new Register().registerCallback(PriceListProductPicker.init, 'PriceListProductPicker.init');

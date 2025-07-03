@@ -1,9 +1,8 @@
-(function (window) {
-
+(window => {
     const ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow = function () {
         this.message = '';
 
-        this.validate = function (value, ele) {
+        this.validate = function (value, _ele) {
             let anyDomainSelected = false;
 
             for (const i in value) {
@@ -21,6 +20,6 @@
         };
     };
 
-    window.ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow = ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow;
-
+    window.ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow =
+        ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow;
 })(window);

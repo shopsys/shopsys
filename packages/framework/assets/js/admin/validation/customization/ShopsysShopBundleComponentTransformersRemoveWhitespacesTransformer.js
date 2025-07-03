@@ -1,11 +1,8 @@
-(function (window) {
-
+(window => {
     const ShopsysFrameworkBundleComponentTransformersRemoveWhitespacesTransformer = function () {
-        this.reverseTransform = function (value, ele) {
-            return value.replace(/\s/g, '');
-        };
+        this.reverseTransform = (value, _ele) => value.replace(/\s/g, '');
     };
 
-    window.ShopsysFrameworkBundleComponentTransformersRemoveWhitespacesTransformer = ShopsysFrameworkBundleComponentTransformersRemoveWhitespacesTransformer;
-
+    window.ShopsysFrameworkBundleComponentTransformersRemoveWhitespacesTransformer =
+        ShopsysFrameworkBundleComponentTransformersRemoveWhitespacesTransformer;
 })(window);

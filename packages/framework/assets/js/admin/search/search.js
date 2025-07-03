@@ -2,7 +2,7 @@ import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class Search {
-    static init ($container) {
+    static init($container) {
         if ($container.is('body') === false) {
             return;
         }
@@ -13,14 +13,14 @@ export default class Search {
         const $searchIcon = $container.filterAllNodes('.js-search-icon');
         const $searchElement = $container.filterAllNodes('.js-header-search');
 
-        $container.on('keydown', function (event) {
+        $container.on('keydown', event => {
             if (
-                (event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowUp')
-                && $searchResults.is(':visible')
+                (event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowUp') &&
+                $searchResults.is(':visible')
             ) {
                 event.preventDefault();
                 const focusableElements = $searchResults.filterAllNodes(
-                    'div.web__header__search--results--container a'
+                    'div.web__header__search--results--container a',
                 );
                 $searchResults
                     .filterAllNodes('div.web__header__search--results--container div.result--item')
@@ -52,7 +52,7 @@ export default class Search {
             }
         });
 
-        $searchIcon.on('click', function () {
+        $searchIcon.on('click', () => {
             if ($searchElement.hasClass('active')) {
                 $searchElement.removeClass('active');
             } else {
@@ -61,13 +61,13 @@ export default class Search {
             }
         });
 
-        $searchResultsCloseButton.on('click', function (event) {
+        $searchResultsCloseButton.on('click', event => {
             event.preventDefault();
             Search.closeResults($searchResults, $searchInput);
             $searchResultsCloseButton.hide();
         });
 
-        $(document).on('click', function (event) {
+        $(document).on('click', event => {
             if (!$(event.target).closest('.js-search-results').length) {
                 Search.closeResults($searchResults, $searchInput);
                 $searchResultsCloseButton.hide();
@@ -82,7 +82,7 @@ export default class Search {
             } else {
                 $searchResultsCloseButton.hide();
             }
-            timeout = setTimeout(function () {
+            timeout = setTimeout(() => {
                 if ($input.val().length >= 3) {
                     Search.findResultsByInput($input, $searchResults);
                 }
@@ -93,33 +93,33 @@ export default class Search {
         });
     }
 
-    static closeResults ($searchResults, $searchInput) {
+    static closeResults($searchResults, $searchInput) {
         Search.clearResults($searchResults);
         $searchInput.val('');
     }
 
-    static clearResults ($searchResults) {
+    static clearResults($searchResults) {
         $searchResults.find('.js-search-results__window').text('');
         $searchResults.find('.js-search-results__search').text('');
         $searchResults.hide();
     }
 
-    static findResultsByInput ($searchInput, $searchResults) {
+    static findResultsByInput($searchInput, $searchResults) {
         const value = $searchInput.val();
         Ajax.ajax({
             url: $searchInput.data('search-callback-url'),
             loaderElement: 'none',
             type: 'GET',
             data: {
-                search: value
+                search: value,
             },
-            success: function (results) {
+            success: results => {
                 Search.showResults(value, results, $searchResults);
-            }
+            },
         });
     }
 
-    static showResults (search, results, $searchResults) {
+    static showResults(search, results, $searchResults) {
         const $htmlResult = $($.parseHTML(results));
         $searchResults.find('.js-search-results__window').html($htmlResult);
         $searchResults.find('.js-search-results__search').text(search);

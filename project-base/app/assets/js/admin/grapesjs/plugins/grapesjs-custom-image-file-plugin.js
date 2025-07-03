@@ -1,7 +1,7 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
-export default grapesjs.plugins.add('custom-image-file', (editor) => {
+export default grapesjs.plugins.add('custom-image-file', editor => {
     editor.Blocks.add('image-file', {
         select: true,
         activate: true,
@@ -10,19 +10,19 @@ export default grapesjs.plugins.add('custom-image-file', (editor) => {
         attributes: { class: 'fa fa-regular fa-file' },
         content: {
             type: 'image-file',
-            class: 'gjs-image-block'
-        }
+            class: 'gjs-image-block',
+        },
     });
 
     editor.DomComponents.addType('image-file', {
-        isComponent: (element) => element.tagName === 'img',
+        isComponent: element => element.tagName === 'img',
         extend: 'image',
         model: {
-            init () {
+            init() {
                 this.on('change:src', this.handlePathChange);
             },
 
-            handlePathChange (element) {
+            handlePathChange(element) {
                 element.addAttributes({ path: this.attributes.src });
             },
 
@@ -31,10 +31,10 @@ export default grapesjs.plugins.add('custom-image-file', (editor) => {
                     {
                         type: 'text',
                         name: 'path',
-                        label: Translator.trans('Path to file')
-                    }
-                ]
-            }
-        }
+                        label: Translator.trans('Path to file'),
+                    },
+                ],
+            },
+        },
     });
 });

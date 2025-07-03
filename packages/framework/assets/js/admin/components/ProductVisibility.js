@@ -1,11 +1,10 @@
 import 'jquery-hoverintent';
 import Ajax from '../../common/utils/Ajax';
-import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
+import Window from '../utils/Window';
 
 export default class ProductVisibility {
-
-    constructor ($productVisibility) {
+    constructor($productVisibility) {
         this.$visibilityIcon = $productVisibility.find('.js-product-visibility-icon');
         this.$visibilityBox = $productVisibility.find('.js-product-visibility-box');
         this.$visibilityBoxWindow = this.$visibilityBox.find('.js-product-visibility-box-window');
@@ -16,55 +15,54 @@ export default class ProductVisibility {
         this.showInWindowAfterLoad = false;
 
         let keepVisible = false;
-        const _this = this;
         this.$visibilityIcon
-            .mouseleave(function () {
+            .mouseleave(() => {
                 keepVisible = false;
-                setTimeout(function () {
+                setTimeout(() => {
                     if (!keepVisible) {
-                        _this.$visibilityBox.hide();
+                        this.$visibilityBox.hide();
                     }
                 }, 20); // Mouse needs some time to leave the icon and enter the $visibilityBox
             })
-            .click(function () {
-                if (_this.isLoaded) {
-                    ProductVisibility.showInWindow(_this);
+            .click(() => {
+                if (this.isLoaded) {
+                    ProductVisibility.showInWindow(this);
                 } else {
-                    _this.showInWindowAfterLoad = true;
+                    this.showInWindowAfterLoad = true;
                 }
             })
             .hoverIntent({
                 interval: 200,
-                over: function () {
-                    _this.$visibilityBox.show();
-                    if (!_this.isLoaded && !_this.isLoading) {
-                        _this.isLoading = true;
+                over: () => {
+                    this.$visibilityBox.show();
+                    if (!this.isLoaded && !this.isLoading) {
+                        this.isLoading = true;
                         Ajax.ajax({
-                            loaderElement: _this.$visibilityIcon,
-                            url: _this.url,
-                            success: (response) => ProductVisibility.onLoadVisibility(response, _this)
+                            loaderElement: this.$visibilityIcon,
+                            url: this.url,
+                            success: response => ProductVisibility.onLoadVisibility(response, this),
                         });
                     }
                 },
-                out: function () {}
+                out: () => {},
             });
         this.$visibilityBox
-            .mouseenter(function () {
+            .mouseenter(() => {
                 keepVisible = true;
             })
-            .mouseleave(function () {
-                _this.$visibilityBox.hide();
+            .mouseleave(() => {
+                this.$visibilityBox.hide();
             });
     }
 
-    static showInWindow (productVisibility) {
+    static showInWindow(productVisibility) {
         // eslint-disable-next-line no-new
         new Window({
-            content: productVisibility.$visibilityBoxWindow.html()
+            content: productVisibility.$visibilityBoxWindow.html(),
         });
     }
 
-    static onLoadVisibility (responseHtml, productVisibility) {
+    static onLoadVisibility(responseHtml, productVisibility) {
         productVisibility.isLoading = false;
         productVisibility.isLoaded = true;
         productVisibility.$visibilityBoxWindow.html(responseHtml);
@@ -74,7 +72,7 @@ export default class ProductVisibility {
         }
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-product-visibility').each(function () {
             // eslint-disable-next-line no-new
             new ProductVisibility($(this));
@@ -82,4 +80,4 @@ export default class ProductVisibility {
     }
 }
 
-(new Register()).registerCallback(ProductVisibility.init, 'ProductVisibility.init');
+new Register().registerCallback(ProductVisibility.init, 'ProductVisibility.init');

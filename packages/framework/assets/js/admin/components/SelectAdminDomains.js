@@ -1,7 +1,7 @@
 import Register from '../../common/utils/Register';
 
 export default class SelectAdminDomains {
-    constructor ($selectDomainsDropdown) {
+    constructor($selectDomainsDropdown) {
         this.$selectDomainsDropdown = $selectDomainsDropdown;
         this.$selectDomainsDropdown
             .find('input[type=checkbox]:not(.js-domains-select-all-checkbox)')
@@ -10,14 +10,14 @@ export default class SelectAdminDomains {
         this.updateIndeterminate();
     }
 
-    static init () {
+    static init() {
         $('.js-domains-select').each(function () {
             // eslint-disable-next-line no-new
             new SelectAdminDomains($(this));
         });
     }
 
-    updateIndeterminate () {
+    updateIndeterminate() {
         let allChecked = true;
         let allUnchecked = true;
         this.$selectDomainsDropdown
@@ -41,19 +41,19 @@ export default class SelectAdminDomains {
         this.$selectDomainsDropdown.find('.js-domains-select-all-checkbox').prop('indeterminate', true);
     }
 
-    selectAll () {
+    selectAll() {
         this.$selectDomainsDropdown
             .find('input[type=checkbox]:not(.js-domains-select-all-checkbox)')
             .prop('checked', true);
     }
 
-    selectNone () {
+    selectNone() {
         this.$selectDomainsDropdown
             .find('input[type=checkbox]:not(.js-domains-select-all-checkbox)')
             .prop('checked', false);
     }
 
-    checkboxChange () {
+    checkboxChange() {
         if (!this.$selectDomainsDropdown.find('.js-domains-select-all-checkbox').prop('checked')) {
             this.selectNone();
             return;

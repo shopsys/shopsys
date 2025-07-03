@@ -1,21 +1,20 @@
-import { createLoaderOverlay, showLoaderOverlay, removeLoaderOverlay } from './loaderOverlay';
 import Translator from 'bazinga-translator';
 import Window from '../../admin/utils/Window';
+import { createLoaderOverlay, removeLoaderOverlay, showLoaderOverlay } from './loaderOverlay';
 
 export default class Ajax {
+    static ajax(options) {
+        const loaderOverlayTimeout = setTimeout(() => {
+            showLoaderOverlay($loaderOverlay);
+        }, options.overlayDelay);
 
-    static ajax (options) {
         const defaults = {
             loaderElement: undefined,
             loaderMessage: undefined,
             overlayDelay: 200,
             error: Ajax.showDefaultError,
-            complete: function () {}
+            complete: () => {},
         };
-
-        const loaderOverlayTimeout = setTimeout(function () {
-            showLoaderOverlay($loaderOverlay);
-        }, options.overlayDelay);
 
         options = $.extend(defaults, options);
         const userCompleteCallback = options.complete;
@@ -34,20 +33,19 @@ export default class Ajax {
                 userErrorCallback.apply(this, [jqXHR]);
             }
         };
-
         $.ajax(options);
     }
 
-    static showDefaultError (response) {
+    static showDefaultError(response) {
         let content = Translator.trans('Error occurred, try again please.');
 
         if (response.status === 403) {
-            content = Translator.trans('You don\'t have permission to perform this action.');
+            content = Translator.trans("You don't have permission to perform this action.");
         }
 
         // eslint-disable-next-line no-new
         new Window({
-            content
+            content: content,
         });
     }
 
@@ -57,14 +55,13 @@ export default class Ajax {
      * @param {string} pendingCallName
      * @param {object} options
      */
-    static ajaxPendingCall (pendingCallName, options) {
-
+    static ajaxPendingCall(pendingCallName, options) {
         Ajax.ajaxPendingCalls = Ajax.ajaxPendingCalls || {};
 
         if (typeof pendingCallName !== 'string') {
             throw new Error('Ajax queued call must have name!');
         }
-        const userCompleteCallback = options.hasOwnProperty('complete') ? options.complete : null;
+        const userCompleteCallback = Object.hasOwn(options, 'complete') ? options.complete : null;
         const _this = this;
 
         options.complete = function (jqXHR, textStatus) {
@@ -72,7 +69,7 @@ export default class Ajax {
                 userCompleteCallback.apply(this, [jqXHR, textStatus]);
             }
 
-            if (Ajax.ajaxPendingCalls.hasOwnProperty(pendingCallName) === true) {
+            if (Object.hasOwn(Ajax.ajaxPendingCalls, pendingCallName) === true) {
                 if (Ajax.ajaxPendingCalls[pendingCallName].isPending === true) {
                     Ajax.ajaxPendingCalls[pendingCallName].isPending = false;
                     _this.ajax(Ajax.ajaxPendingCalls[pendingCallName].options);
@@ -82,11 +79,11 @@ export default class Ajax {
             }
         };
 
-        const callImmediately = Ajax.ajaxPendingCalls.hasOwnProperty(pendingCallName) === false;
+        const callImmediately = Object.hasOwn(Ajax.ajaxPendingCalls, pendingCallName) === false;
 
         Ajax.ajaxPendingCalls[pendingCallName] = {
             isPending: true,
-            options
+            options: options,
         };
 
         if (callImmediately) {

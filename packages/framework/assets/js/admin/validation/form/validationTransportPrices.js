@@ -1,13 +1,13 @@
 import Register from '../../../common/utils/Register';
 
-function validationTransportPrices ($container) {
+function validationTransportPrices(_$container) {
     window.$('form[name="transport_form"]').jsFormValidator({
         callbacks: {
-            validateTransportPricesOnDomain: function () {
+            validateTransportPricesOnDomain: () => {
                 // JS validation is not necessary
-            }
-        }
+            },
+        },
     });
 }
 
-(new Register()).registerCallback(validationTransportPrices);
+new Register().registerCallback(validationTransportPrices);

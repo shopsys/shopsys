@@ -4,12 +4,9 @@ import Register from '../../common/utils/Register';
 window.ProductPickerInstances = {};
 
 export default class ProductPicker {
-
-    constructor ($pickerButton, onSelectProductCallback) {
+    constructor($pickerButton, onSelectProductCallback) {
         this.instanceId = Object.keys(window.ProductPickerInstances).length;
         window.ProductPickerInstances[this.instanceId] = this;
-
-        const _this = this;
         this.$pickerButton = $pickerButton;
         this.onSelectProductCallback = onSelectProductCallback;
         this.$container = this.$pickerButton.closest('.js-product-picker-container');
@@ -17,16 +14,16 @@ export default class ProductPicker {
         this.$label = this.$container.find('.js-product-picker-label');
         this.$removeButton = this.$container.find('.js-product-picker-remove-button');
 
-        this.$pickerButton.click((event) => _this.makePicker(event));
+        this.$pickerButton.click(event => this.makePicker(event));
         this.$removeButton.toggle(this.$label.val() !== this.$container.data('placeholder'));
 
         this.$removeButton.click(() => {
-            _this.selectProduct('', _this.$container.data('placeholder'));
+            this.selectProduct('', this.$container.data('placeholder'));
             return false;
         });
     }
 
-    onSelectProduct (productId, productName) {
+    onSelectProduct(productId, productName) {
         if (this.onSelectProductCallback !== undefined) {
             this.onSelectProductCallback(productId, productName);
         } else {
@@ -34,43 +31,42 @@ export default class ProductPicker {
         }
     }
 
-    makePicker (event) {
-        const _this = this;
+    makePicker(event) {
         $.magnificPopup.open({
-            items: { src: _this.$pickerButton.data('product-picker-url').replace('__instance_id__', _this.instanceId) },
+            items: { src: this.$pickerButton.data('product-picker-url').replace('__instance_id__', this.instanceId) },
             type: 'iframe',
-            closeOnBgClick: true
+            closeOnBgClick: true,
         });
 
         event.preventDefault();
     }
 
-    selectProduct (productId, productName) {
+    selectProduct(productId, productName) {
         this.$input.val(productId);
         this.$label.val(productName);
         this.$removeButton.toggle(productId !== '');
     }
 
-    static onClickSelectProduct (instanceId, productId, productName) {
+    static onClickSelectProduct(instanceId, productId, productName) {
         window.parent.ProductPickerInstances[instanceId].onSelectProduct(productId, productName);
         window.parent.$.magnificPopup.instance.close();
     }
 
-    static init ($container) {
+    static init($container) {
         $container.filterAllNodes('.js-product-picker-create-picker-button').each(function () {
             // eslint-disable-next-line no-new
             new ProductPicker($(this));
         });
 
-        $('.js-product-picker-select').click((event) => {
+        $('.js-product-picker-select').click(event => {
             const $btnElement = $(event.currentTarget);
             ProductPicker.onClickSelectProduct(
                 $btnElement.data('instance-id'),
                 $btnElement.data('product-id'),
-                $btnElement.data('product-name')
+                $btnElement.data('product-name'),
             );
         });
     }
 }
 
-(new Register()).registerCallback(ProductPicker.init, 'ProductPicker.init');
+new Register().registerCallback(ProductPicker.init, 'ProductPicker.init');

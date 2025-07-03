@@ -1,17 +1,16 @@
-import SymfonyToolbarSupport from './SymfonyToolbarSupport';
 import Register from '../../common/utils/Register';
+import SymfonyToolbarSupport from './SymfonyToolbarSupport';
 
 export default class FixedBar {
-
-    static onSymfonyToolbarShow () {
+    static onSymfonyToolbarShow() {
         $('.window-fixed-bar').addClass('window-fixed-bar--developer-mode');
     }
 
-    static onSymfonyToolbarHide () {
+    static onSymfonyToolbarHide() {
         $('.window-fixed-bar').removeClass('window-fixed-bar--developer-mode');
     }
 
-    static init () {
+    static init() {
         SymfonyToolbarSupport.registerOnToolbarShow(FixedBar.onSymfonyToolbarShow);
         SymfonyToolbarSupport.registerOnToolbarHide(FixedBar.onSymfonyToolbarHide);
 
@@ -22,4 +21,4 @@ export default class FixedBar {
     }
 }
 
-(new Register()).registerCallback(FixedBar.init, 'FixedBar.init');
+new Register().registerCallback(FixedBar.init, 'FixedBar.init');

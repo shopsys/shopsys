@@ -1,4 +1,4 @@
-export default function registerFilterAllNodes () {
+export default function registerFilterAllNodes() {
     $.extend($.fn, {
         filterAllNodes: function (selector) {
             const $result = $(this).find(selector).addBack(selector);
@@ -7,6 +7,6 @@ export default function registerFilterAllNodes () {
             $result.prevObject = $result.prevObject.prevObject;
 
             return $result;
-        }
+        },
     });
 }

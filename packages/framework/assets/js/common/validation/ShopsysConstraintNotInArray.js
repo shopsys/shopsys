@@ -1,5 +1,4 @@
-(function ($, window) {
-
+(($, window) => {
     const ShopsysFrameworkBundleFormConstraintsNotInArray = function () {
         const self = this;
         this.message = '';
@@ -14,7 +13,7 @@
             }
         };
 
-        this.formatArray = function (values) {
+        this.formatArray = values => {
             if (!$.isArray(values)) {
                 return values;
             }
@@ -24,5 +23,4 @@
     };
 
     window.ShopsysFrameworkBundleFormConstraintsNotInArray = ShopsysFrameworkBundleFormConstraintsNotInArray;
-
 })(jQuery, window);

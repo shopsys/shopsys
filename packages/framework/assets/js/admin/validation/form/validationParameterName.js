@@ -1,13 +1,13 @@
 import Register from '../../../common/utils/Register';
 
-function validationParameterName ($container) {
+function validationParameterName(_$container) {
     window.$('form[name="parameter_form"]').jsFormValidator({
         callbacks: {
-            validateUniqueParameterName: function () {
+            validateUniqueParameterName: () => {
                 // JS validation is not necessary
-            }
-        }
+            },
+        },
     });
 }
 
-(new Register()).registerCallback(validationParameterName);
+new Register().registerCallback(validationParameterName);

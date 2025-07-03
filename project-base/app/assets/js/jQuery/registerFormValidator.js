@@ -1,16 +1,17 @@
-export default function registerFormValidator () {
+export default function registerFormValidator() {
     $.extend($.fn, {
-        jsFormValidator: function (method) {
+        jsFormValidator: function (...args) {
+            const method = args[0];
             if (!method) {
-                return FpJsFormValidator.customizeMethods.get.apply($.makeArray(this), arguments);
+                return FpJsFormValidator.customizeMethods.get.apply($.makeArray(this), args);
             } else if (typeof method === 'object') {
-                return $(FpJsFormValidator.customizeMethods.init.apply($.makeArray(this), arguments));
+                return $(FpJsFormValidator.customizeMethods.init.apply($.makeArray(this), args));
             } else if (FpJsFormValidator.customizeMethods[method]) {
-                return FpJsFormValidator.customizeMethods[method].apply($.makeArray(this), Array.prototype.slice.call(arguments, 1));
+                return FpJsFormValidator.customizeMethods[method].apply($.makeArray(this), args.slice(1));
             } else {
-                $.error('Method ' + method + ' does not exist');
+                $.error(`Method ${method} does not exist`);
                 return this;
             }
-        }
+        },
     });
 }

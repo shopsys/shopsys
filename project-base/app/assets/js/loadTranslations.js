@@ -1,8 +1,9 @@
-import Register from 'framework/common/utils/Register';
 import Translation from 'bazinga-translator';
+import Register from 'framework/common/utils/Register';
+
 const translations = require('./translations.json');
 
-export default function loadTranslations () {
+export default function loadTranslations() {
     Object.keys(translations).forEach(locale => {
         translations[locale].forEach(translation => {
             let msgstr = translation.msgstr;
@@ -14,4 +15,4 @@ export default function loadTranslations () {
     });
 }
 
-(new Register()).registerCallback(loadTranslations, 200);
+new Register().registerCallback(loadTranslations, 200);

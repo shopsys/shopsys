@@ -1,13 +1,12 @@
-import { forceValidateElement } from '../../common/validation/validationHelpers';
-import IconPdf from 'icons/tabler/file-type-pdf.svg';
-import IconDoc from 'icons/tabler/file-type-doc.svg';
-import IconXml from 'icons/tabler/file-type-xml.svg';
-import IconXls from 'icons/tabler/file-type-xls.svg';
 import IconText from 'icons/tabler/file-text.svg';
+import IconDoc from 'icons/tabler/file-type-doc.svg';
+import IconPdf from 'icons/tabler/file-type-pdf.svg';
+import IconXls from 'icons/tabler/file-type-xls.svg';
+import IconXml from 'icons/tabler/file-type-xml.svg';
+import { forceValidateElement } from '../../common/validation/validationHelpers';
 
 export default class FileItem {
-
-    constructor (uploader, $file, loaded) {
+    constructor(uploader, $file, loaded) {
         this.uploader = uploader;
         this.$file = $file;
         this.$label = $file.find('.js-file-upload-label');
@@ -27,68 +26,65 @@ export default class FileItem {
         }
     }
 
-    deleteItem () {
+    deleteItem() {
         FileItem.removeError(this.$deleteButton);
         this.uploader.deleteTemporaryFile(this.$input.val());
         this.$file.remove();
         forceValidateElement(this.uploader.$uploader);
     }
 
-    setLabel (filename, fileSize) {
-        const sizeInMB = Math.round(fileSize / 1000 / 1000 * 100) / 100; // https://en.wikipedia.org/wiki/Binary_prefix
-        this.$label.text(filename + ' (' + sizeInMB + ' MB)');
+    setLabel(filename, fileSize) {
+        const sizeInMB = Math.round((fileSize / 1000 / 1000) * 100) / 100; // https://en.wikipedia.org/wiki/Binary_prefix
+        this.$label.text(`${filename} (${sizeInMB} MB)`);
     }
 
-    setName (filename) {
+    setName(filename) {
         this.$name.val(filename);
     }
 
-    setProgress (percent) {
+    setProgress(percent) {
         this.$progress.show();
-        this.$progressBar.width(percent + '%');
-        this.$progressBarValue.text(percent + '%');
-
-        const _this = this;
+        this.$progressBar.width(`${percent}%`);
+        this.$progressBarValue.text(`${percent}%`);
         if (percent === 100) {
-            setTimeout(function () {
-                _this.$progress.fadeOut();
+            setTimeout(() => {
+                this.$progress.fadeOut();
             }, 1000);
         }
     }
 
-    setAsUploaded (filename, iconType, imageThumbnailUri) {
+    setAsUploaded(filename, iconType, imageThumbnailUri) {
         this.$input.val(filename);
         this.setIconType(iconType);
         this.setImageThumbnail(imageThumbnailUri);
     }
 
-    setImageThumbnail (imageThumbnailUri) {
+    setImageThumbnail(imageThumbnailUri) {
         if (imageThumbnailUri !== null) {
             this.$imageThumbnail.attr('src', imageThumbnailUri).show();
         }
     }
 
-    setIconType (iconType) {
+    setIconType(iconType) {
         if (iconType !== null) {
             const iconMap = {
                 pdf: IconPdf,
                 word: IconDoc,
                 xml: IconXml,
-                excel: IconXls
+                excel: IconXls,
             };
 
             const icon = iconMap[iconType] || IconText;
 
-            const $icon = $('<span class="list-files__item__file__type list-files__item__file__type--' + iconType + ' text-no-decoration cursor-pointer">' + icon + '</span>');
+            const $icon = $(
+                `<span class="list-files__item__file__type list-files__item__file__type--${iconType} text-no-decoration cursor-pointer">${icon}</span>`,
+            );
 
             this.$itemContainer.prepend($icon);
         }
     }
 
-    static removeError ($button) {
-        $button
-            .closest('.js-file-upload')
-            .siblings('.js-validation-errors-list')
-            .remove();
+    static removeError($button) {
+        $button.closest('.js-file-upload').siblings('.js-validation-errors-list').remove();
     }
 }

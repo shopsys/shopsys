@@ -2,12 +2,11 @@ import Register from '../../common/utils/Register';
 import Window from '../utils/Window';
 
 export default class StaticConfirmWindow {
-
-    constructor (element) {
-        $(element).on('click', (event) => this.showWindow(event));
+    constructor(element) {
+        $(element).on('click', event => this.showWindow(event));
     }
 
-    showWindow (event) {
+    showWindow(event) {
         event.preventDefault();
 
         let urlToContinue = $(event.currentTarget).data('confirm-contiue-url');
@@ -21,16 +20,16 @@ export default class StaticConfirmWindow {
             content: $(event.currentTarget).data('confirm-message'),
             buttonCancel: true,
             buttonContinue: true,
-            urlContinue: urlToContinue
+            urlContinue: urlToContinue,
         });
     }
 
-    static init ($container) {
-        $container.filterAllNodes('a[data-confirm-window]').each((idx, element) => {
+    static init($container) {
+        $container.filterAllNodes('a[data-confirm-window]').each((_idx, element) => {
             // eslint-disable-next-line no-new
             new StaticConfirmWindow(element);
         });
     }
 }
 
-(new Register()).registerCallback(StaticConfirmWindow.init, 'StaticConfirmWindow.init');
+new Register().registerCallback(StaticConfirmWindow.init, 'StaticConfirmWindow.init');

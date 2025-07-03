@@ -1,8 +1,11 @@
 import Register from '../../common/utils/Register';
-import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
+import {
+    addNewItemToCollection,
+    removeItemFromCollection,
+} from '../validation/customization/customizeCollectionBundle';
 
 export default class PromoCodeFlags {
-    static init ($container) {
+    static init($container) {
         const $flagsItemAdd = $container.filterAllNodes('.js-flags-item-add');
         const $flags = $container.filterAllNodes('.js-flags');
 
@@ -23,16 +26,14 @@ export default class PromoCodeFlags {
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
-            const item = prototype
-                .replace(/__name__label__/g, index)
-                .replace(/__name__/g, index);
+            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
             const $item = $($.parseHTML(item));
             $item.data('index', index);
 
             $collection.data('index', index + 1);
 
             $collection.append($item);
-            (new Register()).registerNewContent($item);
+            new Register().registerNewContent($item);
 
             addNewItemToCollection('.js-flags', index);
             PromoCodeFlags.refreshCount($collection);
@@ -43,7 +44,7 @@ export default class PromoCodeFlags {
         PromoCodeFlags.refreshCount($flags);
     }
 
-    static refreshCount ($collection) {
+    static refreshCount($collection) {
         if ($collection.find('.js-flags-item').length === 0) {
             $collection.find('.js-flags-empty-item').show();
         } else {
@@ -52,4 +53,4 @@ export default class PromoCodeFlags {
     }
 }
 
-(new Register()).registerCallback(PromoCodeFlags.init, 'PromoCodeFlags.init');
+new Register().registerCallback(PromoCodeFlags.init, 'PromoCodeFlags.init');

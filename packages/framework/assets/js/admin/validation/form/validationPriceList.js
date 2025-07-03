@@ -1,24 +1,24 @@
 import Register from '../../../common/utils/Register';
 
-export default function priceListValidator ($container) {
+export default function priceListValidator($container) {
     $container.filterAllNodes('form[name="price_list_form"]').jsFormValidator({
         callbacks: {
-            checkDateValidity: function () {
+            checkDateValidity: () => {
                 // JS validation is not necessary
             },
-            checkPricesValidity: function () {
+            checkPricesValidity: () => {
                 // JS validation is not necessary
-            }
-        }
+            },
+        },
     });
 
     window.$('form[name="import_price_list_form"]').jsFormValidator({
         callbacks: {
-            checkDateValidity: function () {
+            checkDateValidity: () => {
                 // JS validation is not necessary
-            }
-        }
+            },
+        },
     });
 }
 
-(new Register()).registerCallback(priceListValidator, 'priceListValidator');
+new Register().registerCallback(priceListValidator, 'priceListValidator');
