@@ -29,8 +29,10 @@ export const DeferredFilterAndSortingBar: FC<SortingBarProps> = ({ ...sortingBar
                 onClick={() => setIsFilterPanelOpen(true)}
             >
                 <FilterIcon aria-hidden="true" className="size-5" />
+
                 {t('Filter')}
             </Button>
+
             <SortingBar {...sortingBarProps} />
         </div>
     ) : (

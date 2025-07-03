@@ -54,6 +54,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
             <div className="vl:hidden flex items-center justify-between p-5">
                 <h2 className="h5">{t('Product filter')}</h2>
+
                 <button
                     aria-label={t('Close filter panel')}
                     className="text-icon-less hover:text-icon-accent flex cursor-pointer items-center justify-center"
@@ -125,6 +126,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <Button className="ml:auto" size="large" onClick={() => setIsFilterPanelOpen(false)}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
+
                 {currentFilter !== null && (
                     <Button
                         aria-label={t('Clear all active filters')}

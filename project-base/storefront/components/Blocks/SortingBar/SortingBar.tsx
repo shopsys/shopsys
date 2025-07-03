@@ -78,10 +78,12 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
             >
                 <SortIcon className="size-5" />
+
                 <span className="line-clamp-1 overflow-hidden text-left leading-tight">
                     {sortOptionsLabels[selectedSortOption] || t('Sort')}
                 </span>
             </Button>
+
             <div
                 aria-label={t('Sort options')}
                 id="sort-dropdown"
@@ -120,9 +122,11 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     );
                 })}
             </div>
+
             <div className="font-secondary text-input-placeholder-default vl:block hidden text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
+
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}
         </>
     );

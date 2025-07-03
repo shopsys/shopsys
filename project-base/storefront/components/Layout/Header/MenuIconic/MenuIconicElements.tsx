@@ -36,7 +36,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
         'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default cursor-pointer w-full rounded-md',
-        isActive && 'text-text-accent',
+        isActive && '!text-text-accent',
     );
 
     if (href) {
@@ -116,7 +116,7 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 > = ({ children, isActive = false }) => (
     <li
         className={twMergeCustom(
-            'border-background-default bg-background-more h-14 rounded-sm border',
+            'border-background-default bg-background-more h-14 rounded-xl border',
             'hover:border-border-less hover:bg-background-default',
             isActive && 'border-border-less bg-background-default',
         )}

@@ -30,7 +30,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                         className,
                     )}
                 >
-                    <div className="flex flex-row justify-between">
+                    <div className="mb-5 flex flex-row justify-between">
                         <span className="w-full text-center text-base">{title}</span>
 
                         <button
@@ -42,6 +42,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                             <RemoveIcon className="size-4" />
                         </button>
                     </div>
+
                     {children}
                 </m.div>
             )}

@@ -43,8 +43,8 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                                 <>
                                     <ArticleDate
                                         className="mr-3.5"
-                                        data-tid={TIDs.blog_article_publication_date}
                                         date={article.publishDate}
+                                        tid={TIDs.blog_article_publication_date}
                                     />
 
                                     {article.blogCategories.map((blogPreviewCategory) => {
