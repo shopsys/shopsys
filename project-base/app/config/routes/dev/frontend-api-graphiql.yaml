@@ -1,3 +1,5 @@
 shopsys_frontend_api_graphiql:
-    prefix: /graphql
+    prefix: /{domainPostfix}graphql
+    requirements:
+        domainPostfix: '([a-z]+/)?'
     resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yaml"
