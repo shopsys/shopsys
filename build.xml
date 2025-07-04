@@ -7,12 +7,14 @@
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
+    <property name="path.administration" value="${path.packages}/administration"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="path.upgrade-notes" value="${project.basedir}/upgrade-notes"/>
     <property name="translations.dump.flags" value=""/>
 
     <import file="${path.framework}/build.xml"/>
     <import file="${path.frontend-api}/build.xml"/>
+    <import file="${path.administration}/build.xml"/>
     <import file="${path.root}/build-cron.xml"/>
 
     <target name="build-demo-ci" depends="composer-dev,shopsys_framework.build-demo-ci" description="Builds application for development with clean demo DB and runs CI checks."/>

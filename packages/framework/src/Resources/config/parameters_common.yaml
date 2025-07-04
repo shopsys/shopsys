@@ -25,11 +25,3 @@ parameters:
     shopsys.entity_extension.map: {}
 
     shopsys.mail_template.display_price: 'selling_price'
-
-    shopsys.route_names_excluded_from_access_control_check:
-        - '2fa_login'
-        - '2fa_login_check'
-        - 'admin_access_denied'
-        - 'admin_login'
-        - 'admin_login_check'
-        - 'admin_logout'

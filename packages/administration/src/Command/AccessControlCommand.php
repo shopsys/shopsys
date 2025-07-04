@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Command;
+namespace Shopsys\AdministrationBundle\Command;
 
 use Override;
+use Shopsys\AdministrationBundle\Component\Configuration\AccessControlConfiguration;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,20 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'shopsys:check-access-control-rules',
-    description: 'Checks that all routes are covered by access control rules',
+    name: 'shopsys:admin:access-control',
+    description: 'validate access control rules for admin routes',
 )]
-class CheckAccessControlRulesCommand extends Command
+final class AccessControlCommand extends Command
 {
     /**
-     * @param string[] $excludedRouteNames
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\AdministrationBundle\Component\Configuration\AccessControlConfiguration $accessControlConfiguration
      * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider $routeAccessControlDataProvider
      */
     public function __construct(
-        protected readonly array $excludedRouteNames,
-        protected readonly DomainRouterFactory $domainRouterFactory,
-        protected readonly RouteAccessControlDataProvider $routeAccessControlDataProvider,
+        private readonly AccessControlConfiguration $accessControlConfiguration,
+        private readonly RouteAccessControlDataProvider $routeAccessControlDataProvider,
     ) {
         parent::__construct();
     }
@@ -47,10 +45,10 @@ class CheckAccessControlRulesCommand extends Command
         $allUncoveredRoutes = array_filter($this->routeAccessControlDataProvider->getAll(), fn (RouteAccessControlData $routeData) => !$routeData->hasAnyRules());
 
         // Remove excluded routes from uncovered routes
-        $notCoveredRoutes = array_filter($allUncoveredRoutes, fn (RouteAccessControlData $routeData) => !in_array($routeData->routeName, $this->excludedRouteNames, true));
+        $notCoveredRoutes = array_filter($allUncoveredRoutes, fn (RouteAccessControlData $routeData) => !in_array($routeData->routeName, $this->accessControlConfiguration->getExcludedRouteNames(), true));
 
         if (count($notCoveredRoutes) > 0) {
-            $io->error('Some routes are not covered by access control rules:');
+            $io->section('Uncovered Routes - Missing Access Control Rules');
 
             $tableData = [];
 
@@ -63,8 +61,8 @@ class CheckAccessControlRulesCommand extends Command
 
             $io->table(['Route Name', 'Controller'], $tableData);
 
-            $io->warning(sprintf('Found %d routes missing access control rules', count($notCoveredRoutes)));
-            $io->note('Either add one of attribute from "Shopsys\FrameworkBundle\Component\Security" namespace to the corresponding controller action or add the routes to "shopsys.route_names_excluded_from_access_control_check" parameter.');
+            $io->error(sprintf('Found %d routes missing access control rules', count($notCoveredRoutes)));
+            $io->note('Either add one of attribute from "Shopsys\FrameworkBundle\Component\Security" namespace to the corresponding controller action or add the routes to "shopsys_administration.access_control.additional_excluded_route_names" configuration.');
 
             return Command::FAILURE;
         }

@@ -8,9 +8,11 @@ use Override;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\InitializeControllersCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\LoadControllersExtensionCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\RegisterControllerExtensionsCompilerPass;
+use Shopsys\AdministrationBundle\DependencyInjection\ShopsysAdministrationExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
@@ -20,9 +22,9 @@ class ShopsysAdministrationBundle extends AbstractBundle
      * {@inheritdoc}
      */
     #[Override]
-    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+    public function getContainerExtension(): ?ExtensionInterface
     {
-        $container->import('../config/services.yaml');
+        return new ShopsysAdministrationExtension();
     }
 
     /**

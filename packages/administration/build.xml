@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Shopsys Administration Bundle" default="list" phingVersion="3">
+
+    <import file="${path.framework}/build.xml"/>
+
+    <target name="access-control-rules-check" depends="clean" description="Checks access control rules in the project.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:admin:access-control"/>
+            <arg value="--verbose"/>
+            <arg value="--ansi" />
+        </exec>
+    </target>
+
+    <!-- Extend framework standards targets to include access control -->
+    <target name="standards" depends="shopsys_framework.standards,access-control-rules-check" description="Checks coding standards including access control."/>
+    
+    <target name="standards-diff" depends="shopsys_framework.standards-diff,access-control-rules-check" description="Checks coding standards for changed files including access control."/>
+    
+    <target name="standards-fix" depends="shopsys_framework.standards-fix,access-control-rules-check" description="Automatically fixes coding standards violations including access control."/>
+    
+    <target name="standards-fix-diff" depends="shopsys_framework.standards-fix-diff,access-control-rules-check" description="Automatically fixes coding standards violations for changed files including access control."/>
+
+</project>
