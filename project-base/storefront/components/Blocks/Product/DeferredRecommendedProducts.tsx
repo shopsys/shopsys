@@ -7,7 +7,7 @@ import { TypeRecommendationType } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
@@ -30,6 +30,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const { isLuigisBoxActive } = useDomainConfig();
     const { pathname } = useRouter();
+    const [isClientMounted, setIsClientMounted] = useState(false);
     const [{ data: recommendedProductsData, fetching: areRecommendedProductsFetching }] = useRecommendedProductsQuery({
         variables: {
             itemUuids,
@@ -40,14 +41,22 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
         },
         pause: !isLuigisBoxActive,
     });
-    const shouldRender = useDeferredRender('recommended_products');
 
-    if (areRecommendedProductsFetching) {
+    const shouldRender = useDeferredRender('recommended_products');
+    const isBasketPopup = recommendationType === TypeRecommendationType.BasketPopup;
+
+    useEffect(() => {
+        setIsClientMounted(true);
+    }, []);
+
+    const shouldShowSkeleton =
+        (isClientMounted && areRecommendedProductsFetching) ||
+        (isBasketPopup && !recommendedProductsData?.recommendedProducts.length && areRecommendedProductsFetching);
+
+    if (shouldShowSkeleton) {
         return (
             <Webline>
-                <SkeletonModuleProductSlider
-                    isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
-                />
+                <SkeletonModuleProductSlider isWithSimpleCards={isBasketPopup} />
             </Webline>
         );
     }
