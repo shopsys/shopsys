@@ -8,6 +8,12 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use ReflectionClass;
 use ReflectionException;
+use SlevomatCodingStandard\Helpers\ClassHelper;
+use SlevomatCodingStandard\Helpers\FunctionHelper;
+use SlevomatCodingStandard\Helpers\NamespaceHelper;
+use SlevomatCodingStandard\Helpers\UseStatementHelper;
+
+use const T_ANON_CLASS;
 
 class RequireOverrideAttributeSniff implements Sniff
 {
@@ -27,176 +33,250 @@ class RequireOverrideAttributeSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $classPtr = $phpcsFile->findPrevious([T_CLASS, T_TRAIT], $stackPtr);
+        // Find the class containing this method
+        $classPtr = ClassHelper::getClassPointer($phpcsFile, $stackPtr);
 
-        if ($classPtr === false) {
+        if ($classPtr === null) {
             return;
         }
 
-        $classNamePtr = $phpcsFile->findNext(T_STRING, $classPtr);
-
-        if ($classNamePtr === false) {
+        // Skip anonymous classes
+        if ($tokens[$classPtr]['code'] === T_ANON_CLASS) {
             return;
         }
-        $className = $tokens[$classNamePtr]['content'];
 
-        $methodNamePtr = $phpcsFile->findNext(T_STRING, $stackPtr);
+        // Get method name
+        $methodName = FunctionHelper::getName($phpcsFile, $stackPtr);
 
-        if ($methodNamePtr === false) {
+        if ($methodName === null) {
             return;
         }
-        $methodName = $tokens[$methodNamePtr]['content'];
 
+        // Skip constructors
         if ($methodName === '__construct') {
             return;
         }
 
-        $parentClassPtr = $phpcsFile->findNext(T_EXTENDS, $classNamePtr);
+        // Get parent class name from extends clause
+        $parentClassName = $this->getParentClassName($phpcsFile, $classPtr);
 
-        if ($parentClassPtr === false) {
+        if ($parentClassName === null) {
             return;
         }
 
-        $parentClassNamePtr = $phpcsFile->findNext(T_STRING, $parentClassPtr);
+        // Resolve parent class FQN
+        $parentClassFqn = $this->resolveClassName($phpcsFile, $parentClassName);
+
+        if ($parentClassFqn === null) {
+            return;
+        }
+
+        // Check if method exists in parent class
+        if (!$this->methodExistsInParentClass($parentClassFqn, $methodName)) {
+            return;
+        }
+
+        // Check if method already has #[Override] attribute
+        if ($this->hasOverrideAttribute($phpcsFile, $stackPtr)) {
+            return;
+        }
+
+        // Add error and fix
+        $this->addOverrideAttributeError($phpcsFile, $stackPtr, $methodName, $parentClassName);
+    }
+
+    /**
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile
+     * @param int $classPtr
+     * @return string|null
+     */
+    private function getParentClassName(File $phpcsFile, int $classPtr): ?string
+    {
+        $tokens = $phpcsFile->getTokens();
+        $classBracePtr = $tokens[$classPtr]['scope_opener'];
+
+        // Look for 'extends' keyword after class name
+        $extendsPtr = $phpcsFile->findNext(T_EXTENDS, $classPtr, $classBracePtr);
+
+        if ($extendsPtr === false) {
+            return null;
+        }
+
+        // Get parent class name after 'extends'
+        $parentClassNamePtr = $phpcsFile->findNext(T_STRING, $extendsPtr, $classBracePtr);
 
         if ($parentClassNamePtr === false) {
-            return;
+            return null;
         }
 
-        $parentClassName = $tokens[$parentClassNamePtr]['content'];
-        $parentClassFqn = $this->getFqnOfClass($phpcsFile, $tokens, $parentClassName);
+        return $tokens[$parentClassNamePtr]['content'];
+    }
 
-        if ($parentClassFqn === '') {
-            return;
+    /**
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile
+     * @param string $className
+     * @return string|null
+     */
+    private function resolveClassName(File $phpcsFile, string $className): ?string
+    {
+        // Get all use statements for the file
+        $allUseStatements = UseStatementHelper::getFileUseStatements($phpcsFile);
+
+        // Check all use statement groups
+        foreach ($allUseStatements as $useStatements) {
+            if (isset($useStatements[$className])) {
+                return $useStatements[$className]->getFullyQualifiedTypeName();
+            }
         }
 
+        // If no use statement found, try to resolve with current namespace
+        $namespace = NamespaceHelper::findCurrentNamespaceName($phpcsFile, 0);
 
+        return $namespace ? $namespace . '\\' . $className : $className;
+    }
+
+    /**
+     * @param string $parentClassFqn
+     * @param string $methodName
+     * @return bool
+     */
+    private function methodExistsInParentClass(string $parentClassFqn, string $methodName): bool
+    {
         try {
-            $parentClassReflection = new ReflectionClass($parentClassFqn);
+            $parentClass = new ReflectionClass($parentClassFqn);
 
-            $hasMethod = $this->hasParentClassMethod($parentClassReflection, $methodName);
-        } catch (ReflectionException $e) {
-            return;
+            // Check if method exists in parent class hierarchy (not interfaces)
+            while ($parentClass !== false) {
+                if ($parentClass->hasMethod($methodName)) {
+                    $method = $parentClass->getMethod($methodName);
+                    $declaringClass = $method->getDeclaringClass();
+
+                    // Only consider methods from classes, not interfaces
+                    if (!$declaringClass->isInterface()) {
+                        return true;
+                    }
+                }
+                $parentClass = $parentClass->getParentClass();
+            }
+        } catch (ReflectionException) {
+            return false;
         }
 
-        if ($hasMethod === false) {
-            return;
+        return false;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile
+     * @param int $stackPtr
+     * @return bool
+     */
+    private function hasOverrideAttribute(File $phpcsFile, int $stackPtr): bool
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Look backwards for #[Override] attribute before this method
+        for ($i = $stackPtr - 1; $i >= 0; $i--) {
+            if ($tokens[$i]['code'] === T_ATTRIBUTE) {
+                // Find the attribute content between [ and ]
+                $attributeEnd = $phpcsFile->findNext(T_ATTRIBUTE_END, $i);
+
+                if ($attributeEnd !== false) {
+                    // Check if 'Override' is anywhere between the attribute brackets
+                    for ($j = $i; $j < $attributeEnd; $j++) {
+                        if ($tokens[$j]['code'] === T_STRING && $tokens[$j]['content'] === 'Override') {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            // Stop if we hit another method or class
+            if (in_array($tokens[$i]['code'], [T_FUNCTION, T_CLASS, T_TRAIT], true)) {
+                break;
+            }
         }
 
-        $hasOverride = $this->checkMethodHasOverrideAttribute($phpcsFile, $methodNamePtr, $tokens, $hasOverride);
+        return false;
+    }
 
-        if ($hasOverride === true) {
-            return;
-        }
-
-        $error = "Method {$className}::{$methodName} overrides {$parentClassName}::{$methodName} but is missing #[Override] attribute.";
+    /**
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile
+     * @param int $stackPtr
+     * @param string $methodName
+     * @param string $parentClassName
+     */
+    private function addOverrideAttributeError(
+        File $phpcsFile,
+        int $stackPtr,
+        string $methodName,
+        string $parentClassName,
+    ): void {
+        $error = "Method {$methodName} overrides {$parentClassName}::{$methodName} but is missing #[Override] attribute.";
         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MissingOverride');
 
         if (!$fix) {
             return;
         }
 
+        $tokens = $phpcsFile->getTokens();
         $phpcsFile->fixer->beginChangeset();
 
-        $previousLine = $phpcsFile->findPrevious(T_WHITESPACE, $methodNamePtr, value: PHP_EOL);
-        $indent = $tokens[$previousLine + 1]['content'];
-        $phpcsFile->fixer->addContentBefore($previousLine + 1, "{$indent}#[Override]" . PHP_EOL);
+        // Find the line before the method
+        $methodNamePtr = $phpcsFile->findNext(T_STRING, $stackPtr);
+        $previousLinePtr = $phpcsFile->findPrevious(T_WHITESPACE, $methodNamePtr, null, false, PHP_EOL);
 
-        $overrideFqn = $this->getFqnOfClass($phpcsFile, $tokens, 'Override');
+        // Get indentation from the next line
+        $indent = '';
 
-        if ($overrideFqn === '') {
-            $usePtr = $phpcsFile->findNext(T_USE, 0);
-            $previousLine = $phpcsFile->findPrevious(T_WHITESPACE, $usePtr, value: PHP_EOL);
-            $phpcsFile->fixer->addContentBefore($previousLine + 1, 'use Override;' . PHP_EOL);
+        if ($previousLinePtr !== false && isset($tokens[$previousLinePtr + 1])) {
+            $nextToken = $tokens[$previousLinePtr + 1];
+
+            if ($nextToken['code'] === T_WHITESPACE) {
+                $indent = $nextToken['content'];
+            }
+        }
+
+        // Add the #[Override] attribute
+        $phpcsFile->fixer->addContentBefore($previousLinePtr + 1, $indent . '#[Override]' . PHP_EOL);
+
+        // Add use statement if needed
+        if (!$this->hasOverrideUseStatement($phpcsFile)) {
+            $this->addUseStatement($phpcsFile, 'Override');
         }
 
         $phpcsFile->fixer->endChangeset();
     }
 
     /**
-     * @param \ReflectionClass $parentClass
-     * @param string $methodName
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @return bool
      */
-    protected function hasParentClassMethod(ReflectionClass $parentClass, string $methodName): bool
+    private function hasOverrideUseStatement(File $phpcsFile): bool
     {
-        if ($parentClass->hasMethod($methodName)) {
-            return true;
+        $allUseStatements = UseStatementHelper::getFileUseStatements($phpcsFile);
+
+        foreach ($allUseStatements as $useStatements) {
+            if (isset($useStatements['Override'])) {
+                return true;
+            }
         }
 
-        $parentClass = $parentClass->getParentClass();
-
-        if ($parentClass === false) {
-            return false;
-        }
-
-        return $parentClass->hasMethod($methodName);
+        return false;
     }
 
     /**
      * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param array $tokens
-     * @param string $parentClassName
-     * @return string
+     * @param string $className
      */
-    private function getFqnOfClass(File $phpcsFile, array $tokens, mixed $parentClassName): string
+    private function addUseStatement(File $phpcsFile, string $className): void
     {
         $usePtr = $phpcsFile->findNext(T_USE, 0);
 
-        $parentClassFqn = '';
-
-        while ($usePtr !== false) {
-            $semicolonPtr = $phpcsFile->findNext(T_SEMICOLON, $usePtr);
-            $fqnClassNamePtr = $phpcsFile->findPrevious(T_STRING, $semicolonPtr);
-
-            $fqnClassName = $tokens[$fqnClassNamePtr]['content'];
-
-            if ($fqnClassName !== $parentClassName) {
-                $usePtr = $phpcsFile->findNext(T_USE, $usePtr + 1);
-
-                continue;
-            }
-
-            $fqnCurrentPtr = $usePtr + 2;
-
-            while ($tokens[$fqnCurrentPtr]['type'] !== 'T_WHITESPACE' && $tokens[$fqnCurrentPtr]['type'] !== 'T_SEMICOLON') {
-                $parentClassFqn .= $tokens[$fqnCurrentPtr]['content'];
-                $fqnCurrentPtr++;
-            }
-
-            break;
+        if ($usePtr === false) {
+            return;
         }
 
-        return $parentClassFqn;
-    }
-
-    /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
-     * @param int $methodNamePtr
-     * @param array $tokens
-     * @return bool
-     */
-    private function checkMethodHasOverrideAttribute(File $phpcsFile, int $methodNamePtr, array $tokens): bool
-    {
-        $hasOverride = false;
-        $previousLinePtr = $phpcsFile->findPrevious(T_WHITESPACE, $methodNamePtr, value: PHP_EOL);
-
-        for ($i = $previousLinePtr - 1; $i >= 0; $i--) {
-            if ($tokens[$i]['code'] === T_ATTRIBUTE) {
-                $attributeNamePtr = $phpcsFile->findNext(T_STRING, $i);
-
-                if ($attributeNamePtr !== false && $tokens[$attributeNamePtr]['content'] === 'Override') {
-                    $hasOverride = true;
-
-                    break;
-                }
-            }
-
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG || $tokens[$i]['code'] === T_FUNCTION) {
-                break;
-            }
-        }
-
-        return $hasOverride;
+        $previousLinePtr = $phpcsFile->findPrevious(T_WHITESPACE, $usePtr, null, false, PHP_EOL);
+        $phpcsFile->fixer->addContentBefore($previousLinePtr + 1, 'use ' . $className . ';' . PHP_EOL);
     }
 }
