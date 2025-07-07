@@ -8,14 +8,23 @@ use GraphQL\Error\SyntaxError;
 use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\Parser;
 use Override;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
+use Shopsys\FrontendApiBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class TransactionalMasterRequestConditionProvider implements TransactionalMasterRequestConditionProviderInterface
 {
-    protected const GRAPHQL_ENDPOINT_ROUTE = 'overblog_graphql_endpoint';
     protected const QUERY_TYPE = 'query';
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
+     */
+    public function __construct(
+        protected readonly ContextResolverInterface $contextResolver,
+    ) {
+    }
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
@@ -33,7 +42,7 @@ class TransactionalMasterRequestConditionProvider implements TransactionalMaster
      */
     protected function isRequestGraphQlQuery(RequestEvent $requestEvent): bool
     {
-        if ($requestEvent->getRequest()->attributes->get('_route') !== static::GRAPHQL_ENDPOINT_ROUTE) {
+        if (!$this->contextResolver->isCurrentContext(FrontendApiContext::class)) {
             return false;
         }
 

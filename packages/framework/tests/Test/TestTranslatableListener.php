@@ -6,9 +6,10 @@ namespace Tests\FrameworkBundle\Test;
 
 use Metadata\MetadataFactory;
 use Override;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
-use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
@@ -17,14 +18,14 @@ class TestTranslatableListener extends TranslatableListener
     /**
      * @param \Metadata\MetadataFactory $factory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
      */
     public function __construct(
         MetadataFactory $factory,
         Domain $domain,
-        protected readonly AdministrationFacade $administrationFacade,
         protected readonly Localization $localization,
+        protected readonly ContextResolverInterface $contextResolver,
     ) {
         parent::__construct($domain, $factory);
     }
@@ -35,7 +36,7 @@ class TestTranslatableListener extends TranslatableListener
     #[Override]
     public function getCurrentLocale()
     {
-        if ($this->administrationFacade->isInAdmin()) {
+        if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
             return $this->localization->getCurrentLocaleForTranslatableEntities();
         }
 
