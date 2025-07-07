@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Context;
 
 use InvalidArgumentException;
+use Override;
 use Webmozart\Assert\Assert;
 
 final class ContextResolver implements ContextResolverInterface
@@ -37,6 +38,7 @@ final class ContextResolver implements ContextResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function validateContextClass(string $fcqn): void
     {
         Assert::classExists($fcqn);
@@ -49,6 +51,7 @@ final class ContextResolver implements ContextResolverInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isCurrentContext(string $identifier): bool
     {
         $this->validateContextClass($identifier);
@@ -57,6 +60,15 @@ final class ContextResolver implements ContextResolverInterface
         return $this->contextMatchingResults[$identifier] ?? throw new InvalidArgumentException(
             sprintf('Context "%s" is not registered', $identifier),
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getRegisteredContexts(): array
+    {
+        return array_values($this->contexts);
     }
 
     /**

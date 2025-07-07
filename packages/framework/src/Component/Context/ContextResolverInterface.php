@@ -17,7 +17,7 @@ interface ContextResolverInterface
     /**
      * Validate that a context class exists and extends AbstractContext
      *
-     * @param string $fcqn Fully qualified class name
+     * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $fcqn Fully qualified class name
      */
     public function validateContextClass(string $fcqn): void;
 
