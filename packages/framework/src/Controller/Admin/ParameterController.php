@@ -5,19 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_PARAMETER')]
 class ParameterController extends AdminBaseController
 {
     /**
@@ -38,10 +43,10 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter/list/')]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->parameterGridFactory->create(Roles::ROLE_PARAMETER_FULL);
+        $grid = $this->parameterGridFactory->create('ROLE_PARAMETER');
 
         return $this->render('@ShopsysFramework/Admin/Content/Parameter/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -53,7 +58,7 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter/new/')]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $parameterData = $this->parameterDataFactory->create();
@@ -98,8 +103,8 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $parameter = $this->parameterFacade->getById($id);
@@ -144,7 +149,7 @@ class ParameterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/product/parameter/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Security;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Security\Role\CoreRoleProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection;
@@ -18,6 +19,7 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     /**
      * @return int
      */
+    #[Override]
     public function getPriority(): int
     {
         return -1;
@@ -26,6 +28,7 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     /**
      * @return class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>
      */
+    #[Override]
     public function getTargetContext(): string
     {
         return FrontendApiContext::class;
@@ -34,6 +37,7 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $roleCollection
      */
+    #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {
         $roleCollection->add(new Role(CustomerUserRole::ROLE_API_ALL, t('B2B data and user management'), allowOverwrite: false));

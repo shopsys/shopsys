@@ -8,7 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Brand\BrandFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -16,13 +22,12 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_BRAND')]
 class BrandController extends AdminBaseController
 {
     /**
@@ -51,8 +56,8 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/brand/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BRAND_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_BRAND_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $brand = $this->brandFacade->getById($id);
@@ -92,13 +97,13 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/brand/list/')]
-    #[AccessControlRule([Roles::ROLE_BRAND_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'b.id');
 
-        $grid = $this->gridFactory->create('brandList', $dataSource, Roles::ROLE_BRAND_FULL);
+        $grid = $this->gridFactory->create('brandList', $dataSource, 'ROLE_BRAND');
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 
@@ -126,7 +131,7 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/brand/new/')]
-    #[AccessControlRule([Roles::ROLE_BRAND_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): RedirectResponse|Response
     {
         $brandData = $this->brandDataFactory->create();
@@ -165,7 +170,7 @@ class BrandController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/brand/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BRAND_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

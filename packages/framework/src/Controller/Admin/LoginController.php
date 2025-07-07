@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

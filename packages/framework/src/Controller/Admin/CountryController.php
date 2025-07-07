@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Country\CountryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactory;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Country\Grid\CountryGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_COUNTRY')]
 class CountryController extends AdminBaseController
 {
     /**
@@ -38,10 +42,10 @@ class CountryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/country/list/')]
-    #[AccessControlRule([Roles::ROLE_COUNTRY_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->countryGridFactory->create(Roles::ROLE_COUNTRY_FULL);
+        $grid = $this->countryGridFactory->create('ROLE_COUNTRY');
 
         return $this->render('@ShopsysFramework/Admin/Content/Country/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -54,8 +58,8 @@ class CountryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/country/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_COUNTRY_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_COUNTRY_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $country = $this->countryFacade->getById($id);
@@ -96,7 +100,7 @@ class CountryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/country/new/')]
-    #[AccessControlRule([Roles::ROLE_COUNTRY_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $countryData = $this->countryDataFactory->create();

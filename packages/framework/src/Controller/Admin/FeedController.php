@@ -8,16 +8,20 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_FEED')]
 class FeedController extends AdminBaseController
 {
     /**
@@ -42,7 +46,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
+    #[SuperAdminOnly]
     public function generateAction(string $feedName, int $domainId): Response
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
@@ -74,7 +78,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/feed/schedule/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FEED_FULL])]
+    #[CanEdit]
     public function scheduleAction(string $feedName, int $domainId): RedirectResponse
     {
         try {
@@ -104,7 +108,7 @@ class FeedController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/feed/list/')]
-    #[AccessControlRule([Roles::ROLE_FEED_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $feedsData = [];
@@ -144,7 +148,7 @@ class FeedController extends AdminBaseController
         $grid->addColumn('created', 'created', t('Generated'));
         $grid->addColumn('url', 'url', t('Url address'));
 
-        if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
+        if ($this->isGranted(SystemRole::SUPER_ADMIN)) {
             $grid->addColumn('generate', 'generate', t('Generate'));
         }
 

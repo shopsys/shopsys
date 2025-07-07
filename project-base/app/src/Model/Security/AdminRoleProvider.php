@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Security;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
@@ -18,6 +19,7 @@ class AdminRoleProvider implements RoleProviderInterface
     /**
      * @return int
      */
+    #[Override]
     public function getPriority(): int
     {
         return 100; // High priority - can modify core roles
@@ -26,6 +28,7 @@ class AdminRoleProvider implements RoleProviderInterface
     /**
      * @return class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>
      */
+    #[Override]
     public function getTargetContext(): string
     {
         return AdminContext::class;
@@ -34,6 +37,7 @@ class AdminRoleProvider implements RoleProviderInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection $roleCollection
      */
+    #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {
         // Example 1: Add custom roles to custom sections

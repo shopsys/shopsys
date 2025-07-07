@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Security;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
@@ -26,6 +27,7 @@ final class FrontendApiRoleHierarchyProvider extends AbstractRoleHierarchyProvid
     /**
      * @return class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>
      */
+    #[Override]
     public function getTargetContext(): string
     {
         return FrontendApiContext::class;
@@ -34,6 +36,7 @@ final class FrontendApiRoleHierarchyProvider extends AbstractRoleHierarchyProvid
     /**
      * @return array<string, string[]>
      */
+    #[Override]
     protected function buildRoleHierarchy(): array
     {
         $regularRoles = $this->getRegularRoles();

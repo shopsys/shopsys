@@ -6,7 +6,13 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\CategorySeoFilterFormType;
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\ReadyCategorySeoCombinationFormType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -24,13 +30,12 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_CATEGORY_SEO')]
 class CategorySeoController extends AdminBaseController
 {
     /**
@@ -63,7 +68,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/')]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $grid = $this->readyCategorySeoMixGridFactory->create(
@@ -80,7 +85,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/category')]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
+    #[CanCreate]
     public function newCategoryAction(): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -102,7 +107,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/filters/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
+    #[CanCreate]
     public function newFiltersAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -137,7 +142,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/combinations/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
+    #[CanCreate]
     public function newCombinationsAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -199,8 +204,8 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/new/ready-combination/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function readyCombinationAction(Request $request, int $categoryId): Response
     {
         $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
@@ -322,7 +327,7 @@ class CategorySeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_SEO_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {

@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class AdminBaseController extends AbstractController
 {
     use FlashMessageTrait;
+
+    #[Required]
+    public AccessCheckerInterface $accessChecker;
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator

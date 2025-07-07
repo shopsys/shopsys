@@ -6,7 +6,13 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorRoleGroupFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
@@ -14,12 +20,12 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_ADMINISTRATOR')]
 class AdministratorRoleGroupController extends AdminBaseController
 {
     /**
@@ -40,7 +46,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/list/')]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $queryBuilder = $this->administratorRoleGroupFacade->getAllQueryBuilder();
@@ -67,7 +73,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/new/')]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $roleGroupData = new AdministratorRoleGroupData();
@@ -112,8 +118,8 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
@@ -168,7 +174,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/copy/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
+    #[CanCreate]
     public function copyAction(Request $request, int $id): Response
     {
         try {
@@ -199,7 +205,7 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/groups/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         $namesUsingThisRoleGroup = $this->administratorFacade->findAdministratorNamesWithRoleGroup($id);

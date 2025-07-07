@@ -18,7 +18,6 @@ final readonly class AccessControlConfiguration
         'admin_login',
         'admin_login_check',
         'admin_logout',
-        'admin_access_denied',
     ];
 
     /**

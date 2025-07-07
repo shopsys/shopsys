@@ -8,18 +8,20 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberNotFoundException;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use SplFileObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_NEWSLETTER')]
 class NewsletterController extends AdminBaseController
 {
     /**
@@ -39,7 +41,7 @@ class NewsletterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/newsletter/list/')]
-    #[AccessControlRule([Roles::ROLE_NEWSLETTER_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -51,7 +53,7 @@ class NewsletterController extends AdminBaseController
         );
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
-        $grid = $this->gridFactory->create('customerList', $dataSource, Roles::ROLE_NEWSLETTER_FULL);
+        $grid = $this->gridFactory->create('customerList', $dataSource, 'ROLE_NEWSLETTER');
         $grid->enablePaging();
 
         $grid->addColumn('email', 'email', 'Email');
@@ -77,7 +79,7 @@ class NewsletterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/newsletter/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_NEWSLETTER_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -102,7 +104,7 @@ class NewsletterController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     #[Route(path: '/newsletter/export-csv/')]
-    #[AccessControlRule([Roles::ROLE_NEWSLETTER_FULL])]
+    #[CanView]
     public function exportAction(): StreamedResponse
     {
         $response = new StreamedResponse();

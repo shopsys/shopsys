@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,7 +28,7 @@ class MailAllowedRecipientController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole([SystemRole::ADMIN])]
     public function listAction(): Response
     {
         $patternsByDomainId = [];

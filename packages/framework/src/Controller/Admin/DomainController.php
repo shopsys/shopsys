@@ -11,14 +11,19 @@ use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedExc
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Domain\DomainFormType;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_DOMAIN')]
 class DomainController extends AdminBaseController
 {
     /**
@@ -54,7 +59,7 @@ class DomainController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/multidomain/select-domain/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function selectDomainAction(Request $request, int $id): Response
     {
         $this->adminDomainTabsFacade->setSelectedDomainId($id);
@@ -72,7 +77,7 @@ class DomainController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/domain/list')]
-    #[AccessControlRule([Roles::ROLE_DOMAIN_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');
@@ -97,8 +102,8 @@ class DomainController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/domain/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_DOMAIN_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_DOMAIN_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $domain = $this->domain->getDomainConfigById($id);

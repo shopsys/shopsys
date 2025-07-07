@@ -7,6 +7,10 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\SliderParameterValuesUpdateFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -15,12 +19,11 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_PARAMETER_VALUE')]
 class ParameterValueController extends AdminBaseController
 {
     /**
@@ -47,7 +50,7 @@ class ParameterValueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-value/list', name: 'admin_parametervalue_list')]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
@@ -76,8 +79,8 @@ class ParameterValueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $parameterValue = $this->parameterFacade->getParameterValueById($id);
@@ -120,8 +123,8 @@ class ParameterValueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-values/edit/{id}', name: 'admin_parametervalues_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_VALUE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function parameterValuesEditAction(Request $request, int $id): Response
     {
         $parameter = $this->parameterFacade->getById($id);

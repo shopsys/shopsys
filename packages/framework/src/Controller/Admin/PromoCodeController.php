@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use League\Csv\Writer;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -16,13 +22,12 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_PROMO_CODE')]
 class PromoCodeController extends AdminBaseController
 {
     /**
@@ -48,13 +53,13 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/list')]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $grid = $this->promoCodeGridFactory->create(Roles::ROLE_PROMO_CODE_FULL, search: $quickSearchForm->getData()->text);
+        $grid = $this->promoCodeGridFactory->create('ROLE_PROMO_CODE', search: $quickSearchForm->getData()->text);
         $grid->enablePaging();
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
@@ -71,7 +76,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/promo-code/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
@@ -97,7 +102,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/new')]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $fillFromPromoCodeId = $request->query->get('fillFromPromoCodeId');
@@ -144,8 +149,8 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $promoCode = $this->promoCodeFacade->getById($id);
@@ -189,7 +194,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/new-mass-generate')]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_FULL])]
+    #[CanCreate]
     public function newMassGenerateAction(Request $request): Response
     {
         $promoCodeData = $this->promoCodeDataFactory->create();
@@ -236,7 +241,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/list-mass-generate-batch')]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW])]
+    #[CanView]
     public function listMassGenerateBatchAction(Request $request): Response
     {
         $grid = $this->promoCodeMassGeneratedBatchGridFactory->create();
@@ -255,7 +260,7 @@ class PromoCodeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
-    #[AccessControlRule([Roles::ROLE_PROMO_CODE_VIEW])]
+    #[CanView]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
         $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');

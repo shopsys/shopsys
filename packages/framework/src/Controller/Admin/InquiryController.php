@@ -6,17 +6,18 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryGridFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_INQUIRY')]
 class InquiryController extends AdminBaseController
 {
     /**
@@ -40,7 +41,7 @@ class InquiryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/inquiry/list/')]
-    #[AccessControlRule([Roles::ROLE_INQUIRY_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'inquiries';
@@ -77,7 +78,7 @@ class InquiryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/inquiry/detail/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_INQUIRY_VIEW])]
+    #[CanView]
     public function detailAction(int $id): Response
     {
         $inquiry = $this->inquiryFacade->getById($id);

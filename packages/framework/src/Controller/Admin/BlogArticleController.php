@@ -6,7 +6,13 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogArticleFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -15,12 +21,11 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_BLOG_ARTICLE')]
 class BlogArticleController extends AdminBaseController
 {
     /**
@@ -46,7 +51,7 @@ class BlogArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/list/', name: 'admin_blogarticle_list')]
-    #[AccessControlRule([Roles::ROLE_BLOG_ARTICLE_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'blog-article';
@@ -76,8 +81,8 @@ class BlogArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/edit/{id}', name: 'admin_blogarticle_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_ARTICLE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_ARTICLE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $blogArticle = $this->blogArticleFacade->getById($id);
@@ -120,7 +125,7 @@ class BlogArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/new/', name: 'admin_blogarticle_new')]
-    #[AccessControlRule([Roles::ROLE_BLOG_ARTICLE_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
@@ -160,7 +165,7 @@ class BlogArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/delete/{id}', name: 'admin_blogarticle_delete', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_ARTICLE_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -187,7 +192,7 @@ class BlogArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/delete-confirm/{id}', name: 'admin_blogarticle_deleteconfirm', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_ARTICLE_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         $message = t('Do you really want to remove this blog article?');

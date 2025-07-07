@@ -5,8 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Grid\UploadedFileGridFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
@@ -18,13 +24,12 @@ use Shopsys\FrameworkBundle\Form\Admin\UploadedFile\UploadedFileFormType;
 use Shopsys\FrameworkBundle\Form\MultiLocaleBasicFileUploadType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_FILES')]
 class UploadedFileController extends AdminBaseController
 {
     /**
@@ -52,7 +57,7 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/list')]
-    #[AccessControlRule([Roles::ROLE_FILES_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $quickSearchData = new QuickSearchFormData();
@@ -76,8 +81,8 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FILES_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_FILES_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $uploadedFile = $this->uploadedFileFacade->getById($id);
@@ -124,7 +129,7 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/new/')]
-    #[AccessControlRule([Roles::ROLE_FILES_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $uploadedFileData = $this->uploadedFileDataFactory->create();
@@ -175,7 +180,7 @@ class UploadedFileController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/uploaded-file/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FILES_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {

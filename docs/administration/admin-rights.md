@@ -239,9 +239,11 @@ public function complexReportAction(): Response { }
 ### 4. Method-Specific HTTP Methods
 
 ```php
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+
 #[Route('/product/edit/{id}')]
-#[CanView(methods: ['GET'])]     // GET requires VIEW
-#[CanEdit(methods: ['POST'])]    // POST requires EDIT
+#[CanView(methods: [HttpMethod::GET])]     // GET requires VIEW
+#[CanEdit(methods: [HttpMethod::POST])]    // POST requires EDIT
 #[SuperAdminOnly(methods: ['DELETE'])] // DELETE requires super admin
 public function editAction(Request $request): Response { }
 ```

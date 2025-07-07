@@ -7,18 +7,23 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\NotificationBar\NotificationBarFormType;
 use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFoundException;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_NOTIFICATION_BAR')]
 class NotificationBarController extends AdminBaseController
 {
     /**
@@ -39,13 +44,13 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/notification-bar/list/')]
-    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $queryBuilder = $this->notificationBarFacade->getAllByDomainIdQueryBuilderForGrid($this->adminDomainTabsFacade->getSelectedDomainId());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'nb.id');
 
-        $grid = $this->gridFactory->create('NotificationBarList', $dataSource, Roles::ROLE_NOTIFICATION_BAR_FULL);
+        $grid = $this->gridFactory->create('NotificationBarList', $dataSource, 'ROLE_NOTIFICATION_BAR');
 
         $grid->addColumn('visible', 'visibility', t('Visibility'), true)->setClassAttribute('table-col table-col-10');
         $grid->addColumn('text', 'nb.text', t('Text'));
@@ -67,7 +72,7 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/notification-bar/new/')]
-    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $notificationBarData = $this->notificationBarDataFactory->create();
@@ -102,8 +107,8 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/notification-bar/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $notificationBar = $this->notificationBarFacade->getById($id);
@@ -144,7 +149,7 @@ class NotificationBarController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/notification-bar/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_NOTIFICATION_BAR_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

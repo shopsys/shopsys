@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
@@ -16,12 +17,11 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[SuperAdminOnly]
 class SuperadminController extends AdminBaseController
 {
     /**
@@ -53,7 +53,6 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/pricing/')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function pricingAction(Request $request): Response
     {
         $pricingSettingData = [
@@ -87,7 +86,6 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/urls/')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function urlsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
@@ -98,7 +96,6 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/modules/')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function modulesAction(Request $request): Response
     {
         $formData = [];
@@ -131,7 +128,6 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/css-documentation/')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function cssDocumentationAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
@@ -142,7 +138,6 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/mail-whitelist')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function mailWhitelistAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

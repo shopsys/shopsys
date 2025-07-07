@@ -6,10 +6,14 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoPageFormType;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\DefaultSeoPageCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
@@ -19,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_SEO')]
 class SeoPageController extends AdminBaseController
 {
     /**
@@ -41,7 +46,7 @@ class SeoPageController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/page/list')]
-    #[AccessControlRule([Roles::ROLE_SEO_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $grid = $this->seoPageGridFactory->create($this->domain->getId());
@@ -56,7 +61,7 @@ class SeoPageController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/page/new')]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $seoPageData = $this->seoPageDataFactory->create();
@@ -102,8 +107,8 @@ class SeoPageController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/page/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_SEO_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(int $id, Request $request): Response
     {
         $seoPage = $this->seoPageFacade->getById($id);
@@ -145,7 +150,7 @@ class SeoPageController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/page/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -173,7 +178,7 @@ class SeoPageController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/page/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         $message = t('Do you really want to remove this SEO page?');

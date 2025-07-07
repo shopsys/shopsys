@@ -442,6 +442,9 @@ services:
         arguments:
             - '@annotations.reader'
 
+    Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface:
+        class: Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessChecker
+
     Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\ContextAwareRoleHierarchy:
         decorates: security.role_hierarchy
 

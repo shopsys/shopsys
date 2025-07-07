@@ -6,7 +6,12 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\LanguageConstant\LanguageConstantFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -14,12 +19,11 @@ use Shopsys\FrameworkBundle\Model\LanguageConstant\Exception\LanguageConstantNot
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_LANGUAGE_CONSTANTS')]
 class LanguageConstantController extends AdminBaseController
 {
     /**
@@ -41,7 +45,7 @@ class LanguageConstantController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/list/')]
-    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData())->handleRequest($request);
@@ -66,8 +70,8 @@ class LanguageConstantController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/edit/')]
-    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request): Response
     {
         $key = $request->query->get('key');
@@ -130,7 +134,7 @@ class LanguageConstantController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/delete/')]
-    #[AccessControlRule([Roles::ROLE_LANGUAGE_CONSTANTS_FULL])]
+    #[CanDelete]
     public function deleteAction(Request $request): Response
     {
         $key = $request->query->get('key');

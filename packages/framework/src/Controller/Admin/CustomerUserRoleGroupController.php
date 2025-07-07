@@ -6,17 +6,17 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup\CustomerUserRoleGroupFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[SuperAdminOnly]
 class CustomerUserRoleGroupController extends AdminBaseController
 {
     /**
@@ -39,10 +39,9 @@ class CustomerUserRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/customer/role-group/list/', name: 'admin_superadmin_customer_user_role_group_list')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function listAction(): Response
     {
-        $grid = $this->gridFactory->create(Roles::ROLE_SUPER_ADMIN);
+        $grid = $this->gridFactory->create('ROLE_SUPERADMIN');
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -54,7 +53,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/customer/role-group/new/', name: 'admin_superadmin_customer_user_role_group_new')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function newAction(Request $request): Response
     {
         $roleGroupData = $this->customerUserRoleGroupDataFactory->create();
@@ -96,7 +94,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/customer/role-group/edit/{id}', name: 'admin_superadmin_customer_user_role_group_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function editAction(Request $request, int $id): Response
     {
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->getById($id);
@@ -141,7 +138,6 @@ class CustomerUserRoleGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/customer/role-group/delete/{id}', name: 'admin_superadmin_customer_user_role_group_delete', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
     public function deleteAction(int $id): Response
     {
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->getById($id);

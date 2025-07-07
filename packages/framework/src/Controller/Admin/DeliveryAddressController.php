@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
@@ -12,13 +18,12 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_CUSTOMER')]
 class DeliveryAddressController extends AdminBaseController
 {
     /**
@@ -41,7 +46,7 @@ class DeliveryAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/delivery-address/new/{customerId}', name: 'admin_delivery_address_new', requirements: ['customerId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
+    #[CanCreate]
     public function newAction(Request $request, int $customerId): Response
     {
         $customer = $this->customerFacade->getById($customerId);
@@ -94,8 +99,8 @@ class DeliveryAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/delivery-address/edit/{id}', name: 'admin_delivery_address_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);
@@ -154,7 +159,7 @@ class DeliveryAddressController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/delivery-address/delete/{id}', name: 'admin_delivery_address_delete', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);

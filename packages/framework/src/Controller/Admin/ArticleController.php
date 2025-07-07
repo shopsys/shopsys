@@ -9,7 +9,13 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\Article;
@@ -17,14 +23,13 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_ARTICLE')]
 class ArticleController extends AdminBaseController
 {
     /**
@@ -55,8 +60,8 @@ class ArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $article = $this->articleFacade->getById($id);
@@ -99,7 +104,7 @@ class ArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/list/')]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1);
@@ -124,7 +129,7 @@ class ArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/new/')]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -166,7 +171,7 @@ class ArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -193,7 +198,7 @@ class ArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         $article = $this->articleFacade->getById($id);
@@ -220,7 +225,7 @@ class ArticleController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/article/save-ordering/', condition: 'request.isXmlHttpRequest()')]
-    #[AccessControlRule([Roles::ROLE_ARTICLE_FULL])]
+    #[CanEdit]
     public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
@@ -244,7 +249,7 @@ class ArticleController extends AdminBaseController
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
         $gridId = $articlePlacement;
-        $grid = $this->gridFactory->create($gridId, $dataSource, Roles::ROLE_ARTICLE_FULL);
+        $grid = $this->gridFactory->create($gridId, $dataSource, 'ROLE_ARTICLE');
         $grid->setDefaultOrder('position');
 
         $grid->addColumn('name', 'a.name', t('Name'));

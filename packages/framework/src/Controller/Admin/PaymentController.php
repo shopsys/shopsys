@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
@@ -12,12 +18,11 @@ use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_TRANSPORT_AND_PAYMENT')]
 class PaymentController extends AdminBaseController
 {
     /**
@@ -41,7 +46,7 @@ class PaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/new/')]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $paymentData = $this->paymentDataFactory->create();
@@ -81,8 +86,8 @@ class PaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $payment = $this->paymentFacade->getById($id);
@@ -126,7 +131,7 @@ class PaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -152,7 +157,7 @@ class PaymentController extends AdminBaseController
      */
     public function listAction(): Response
     {
-        $grid = $this->paymentGridFactory->create(Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL);
+        $grid = $this->paymentGridFactory->create('ROLE_TRANSPORT_AND_PAYMENT');
 
         return $this->render('@ShopsysFramework/Admin/Content/Payment/list.html.twig', [
             'gridView' => $grid->createView(),

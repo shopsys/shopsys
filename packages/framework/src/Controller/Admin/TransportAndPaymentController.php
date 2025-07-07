@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\TransportAndPayment\FreeTransportAndPaymentPriceLimitsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_TRANSPORT_AND_PAYMENT')]
 class TransportAndPaymentController extends AdminBaseController
 {
     /**
@@ -29,7 +32,7 @@ class TransportAndPaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport-and-payment/list/')]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/list.html.twig');
@@ -40,8 +43,8 @@ class TransportAndPaymentController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport-and-payment/free-transport-and-payment-limit/')]
-    #[AccessControlRule([Roles::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function freeTransportAndPaymentLimitAction(Request $request): Response
     {
         $formData = [];

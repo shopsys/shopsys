@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,6 +17,7 @@ class AccessController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/access-denied/')]
+    #[RequireRole(SystemRole::ADMIN)]
     public function deniedAction(Request $request): Response
     {
         $this->addErrorFlash(

@@ -7,14 +7,16 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole('ROLE_FRIENDLY_URL')]
 class UnusedFriendlyUrlController extends AdminBaseController
 {
     /**
@@ -32,7 +34,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/unused-friendly-url/list/', name: 'admin_unused_friendly_url_list')]
-    #[AccessControlRule([Roles::ROLE_FRIENDLY_URL_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -58,7 +60,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
         'domainId' => '\d+',
         'slug' => '.+',
     ], name: 'admin_unused_friendly_url_delete')]
-    #[AccessControlRule([Roles::ROLE_FRIENDLY_URL_FULL])]
+    #[CanDelete]
     public function deleteAction(Request $request, int $domainId, string $slug): Response
     {
         $this->friendlyUrlFacade->removeFriendlyUrl($domainId, $slug);

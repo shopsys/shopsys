@@ -7,8 +7,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -30,7 +30,7 @@ class GridController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/_grid/get-form/')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function getFormAction(Request $request): JsonResponse
     {
         $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
@@ -48,7 +48,7 @@ class GridController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/_grid/save-form/')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function saveFormAction(Request $request): JsonResponse
     {
         $responseData = [];
@@ -76,7 +76,7 @@ class GridController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/_grid/save-ordering/')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->gridOrderingFacade->saveOrdering(
