@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterGroupFormType;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -33,15 +33,15 @@ class ParameterGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly ParameterGroupFacade $parameterGroupFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly ParameterGroupDataFactory $parameterGroupDataFactory,
-        protected readonly Domain $domain,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -170,7 +170,7 @@ class ParameterGroupController extends AdminBaseController
      */
     protected function getGrid(): Grid
     {
-        $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($this->domain->getLocale());
+        $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
 
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'pg.id');
 
