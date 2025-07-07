@@ -1,21 +1,18 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TypeLastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
 import {
+    LastOrderQueryDocument,
     TypeLastOrderQuery,
     TypeLastOrderQueryVariables,
-    LastOrderQueryDocument,
 } from 'graphql/requests/orders/queries/LastOrderQuery.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import {
+    StoreQueryDocument,
     TypeStoreQuery,
     TypeStoreQueryVariables,
-    StoreQueryDocument,
 } from 'graphql/requests/stores/queries/StoreQuery.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { Maybe } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { getGtmPickupPlaceFromLastOrder } from 'gtm/mappers/getGtmPickupPlaceFromLastOrder';
-import { getGtmPickupPlaceFromStore } from 'gtm/mappers/getGtmPickupPlaceFromStore';
 import { Translate } from 'next-translate';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
@@ -25,6 +22,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { getLastOrderPickupPlace, PICKUP_POINT_NOT_SET_ERROR_MESSAGE } from 'utils/cart/pickupPlaceCalculations';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -33,8 +31,6 @@ import { logException } from 'utils/errors/logException';
 import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-
-const PICKUP_POINT_NOT_SET_ERROR_MESSAGE = 'Packetery pickup point is not set';
 
 const PickupPlacePopup = dynamic(
     () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
@@ -181,27 +177,6 @@ export const useTransportChangeInSelect = (
         resetTransportAndPayment,
         openPickupPlacePopup,
     };
-};
-
-const getLastOrderPickupPlace = (
-    lastOrder: TypeLastOrderFragment,
-    lastOrderPickupPlaceIdentifier: string,
-    lastOrderPickupPlaceFromApi: StoreOrPacketeryPoint | undefined | null,
-    packeteryPickupPoint: StoreOrPacketeryPoint | null,
-): StoreOrPacketeryPoint | null => {
-    if (packeteryPickupPoint?.identifier === lastOrderPickupPlaceIdentifier) {
-        return packeteryPickupPoint;
-    }
-
-    if (lastOrderPickupPlaceFromApi?.identifier) {
-        return getGtmPickupPlaceFromStore(lastOrderPickupPlaceFromApi);
-    }
-
-    if (!packeteryPickupPoint) {
-        throw new Error(PICKUP_POINT_NOT_SET_ERROR_MESSAGE);
-    }
-
-    return getGtmPickupPlaceFromLastOrder(lastOrderPickupPlaceIdentifier, lastOrder);
 };
 
 type TransportAndPaymentErrorsType = {
