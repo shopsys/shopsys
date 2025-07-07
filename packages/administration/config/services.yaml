@@ -27,6 +27,22 @@ services:
         tags:
             - { name: routing.loader }
 
+    Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface:
+        alias: Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider
+
+    Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider:
+        arguments:
+            $cache: '@cache.app'
+            $environment: '%kernel.environment%'
+            $adminUrl: '%admin_url%'
+
+    Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
     Shopsys\AdministrationBundle\Controller\:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
+
+    Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface:
+        alias: Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessChecker

@@ -9,7 +9,6 @@ services:
 
     Shopsys\FrameworkBundle\Command\CheckAccessControlRulesCommand:
         arguments:
-            $adminUrl: '%admin_url%'
             $excludedRouteNames: '%shopsys.route_names_excluded_from_access_control_check%'
 
     Shopsys\FrameworkBundle\Command\CheckMigrateUploadedFilesCommand:

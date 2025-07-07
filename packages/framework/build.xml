@@ -71,6 +71,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:check-access-control-rules"/>
             <arg value="--verbose"/>
+            <arg value="--ansi"/>
         </exec>
     </target>
 

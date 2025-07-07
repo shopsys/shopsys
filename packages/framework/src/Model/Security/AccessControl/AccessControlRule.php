@@ -35,26 +35,4 @@ class AccessControlRule
         public readonly ?string $requiresChannel = null,
     ) {
     }
-
-    /**
-     * Used for caching into the PHP file using var_export
-     *
-     * @see \Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider::findAll()
-     * @param array $array
-     * @return self
-     */
-    public static function __set_state(array $array): self
-    {
-        return new self(
-            $array['roles'] ?? [],
-            $array['methods'] ?? [],
-            $array['attributes'] ?? [],
-            $array['host'] ?? null,
-            $array['ips'] ?? null,
-            $array['port'] ?? null,
-            $array['requestMatcher'] ?? null,
-            $array['allowIf'] ?? null,
-            $array['requiresChannel'] ?? null,
-        );
-    }
 }

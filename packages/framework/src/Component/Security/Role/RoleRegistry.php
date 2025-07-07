@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Security\Role;
 
 use InvalidArgumentException;
+use Override;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
@@ -44,9 +45,53 @@ final class RoleRegistry implements RoleRegistryInterface
     }
 
     /**
-     * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context Context class name
-     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Role[]
+     * {@inheritdoc}
      */
+    #[Override]
+    public function getRole(string $roleIdentifier, string $context): Role
+    {
+        // first try to get the role by identifier
+        try {
+            return $this->getRoleCollection($context)->get($roleIdentifier);
+        } catch (RuntimeException) {
+            // if not found, try to parse the identifier and get the role by constant
+        }
+
+        $roleConstant = RoleIdentifierHelper::getRoleConstantFromIdentifier($roleIdentifier);
+
+        try {
+            $role = $this->getRoleCollection($context)->get($roleConstant);
+        } catch (RuntimeException) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Role "%s" not found in role registry for context "%s"',
+                    $roleConstant,
+                    $context,
+                ),
+            );
+        }
+
+        // Validate permission if specified
+        $permission = RoleIdentifierHelper::getPermissionFromIdentifier($roleIdentifier);
+
+        if ($permission !== null && !$role->hasPermission($permission)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Role "%s" does not have permission "%s". Available permissions: %s',
+                    $role->getConstant(),
+                    $permission->value,
+                    implode(', ', array_map(fn (Permission $p) => $p->value, $role->getAvailablePermissions())),
+                ),
+            );
+        }
+
+        return $role;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
     public function getRoles(string $context): array
     {
         return $this->getRoleCollection($context)->all();

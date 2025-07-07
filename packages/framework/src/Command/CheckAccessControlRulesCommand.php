@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData;
+use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'shopsys:check-access-control-rules',
@@ -20,13 +21,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CheckAccessControlRulesCommand extends Command
 {
     /**
-     * @param string $adminUrl
      * @param string[] $excludedRouteNames
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider $routeAccessControlDataProvider
+     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider $routeAccessControlDataProvider
      */
     public function __construct(
-        protected readonly string $adminUrl,
         protected readonly array $excludedRouteNames,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly RouteAccessControlDataProvider $routeAccessControlDataProvider,
@@ -42,54 +41,34 @@ class CheckAccessControlRulesCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $routeNamesThatShouldBeCovered = $this->getRuteNamesThatShouldBeCovered();
-        $actuallyCoveredRouteNames = $this->getActuallyCoveredRouteNames();
+        $io = new SymfonyStyle($input, $output);
 
-        $notCoveredRouteNames = array_diff($routeNamesThatShouldBeCovered, $actuallyCoveredRouteNames);
+        // Get all registered uncovered routes (routes without access control rules)
+        $allUncoveredRoutes = array_filter($this->routeAccessControlDataProvider->getAll(), fn (RouteAccessControlData $routeData) => !$routeData->hasAnyRules());
 
-        if (count($notCoveredRouteNames) > 0) {
-            $output->writeln('<error>Some routes are not covered by access control rules:</error>');
+        // Remove excluded routes from uncovered routes
+        $notCoveredRoutes = array_filter($allUncoveredRoutes, fn (RouteAccessControlData $routeData) => !in_array($routeData->routeName, $this->excludedRouteNames, true));
 
-            foreach ($notCoveredRouteNames as $routeName) {
-                $output->writeln(' - ' . $routeName);
+        if (count($notCoveredRoutes) > 0) {
+            $io->error('Some routes are not covered by access control rules:');
+
+            $tableData = [];
+
+            foreach ($notCoveredRoutes as $routeData) {
+                $tableData[] = [$routeData->routeName, $routeData->formatControllerInfo()];
             }
-            $output->writeln('<info>Either add #[AccessControlRule] attribute to the corresponding controller action or add the routes to "shopsys.route_names_excluded_from_access_control_check" parameter.</info>');
+
+            // Sort by route name
+            usort($tableData, fn ($a, $b) => strcmp($a[0], $b[0]));
+
+            $io->table(['Route Name', 'Controller'], $tableData);
+
+            $io->warning(sprintf('Found %d routes missing access control rules', count($notCoveredRoutes)));
+            $io->note('Either add one of attribute from "Shopsys\FrameworkBundle\Component\Security" namespace to the corresponding controller action or add the routes to "shopsys.route_names_excluded_from_access_control_check" parameter.');
 
             return Command::FAILURE;
         }
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getRuteNamesThatShouldBeCovered(): array
-    {
-        $router = $this->domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
-        $routeNamesThatShouldBeCovered = [];
-
-        foreach ($router->getRouteCollection()->all() as $routeName => $route) {
-            if (in_array($routeName, $this->excludedRouteNames, true) || !str_starts_with($route->getPath(), '/' . $this->adminUrl)) {
-                continue;
-            }
-            $routeNamesThatShouldBeCovered[] = $routeName;
-        }
-
-        return $routeNamesThatShouldBeCovered;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getActuallyCoveredRouteNames(): array
-    {
-        $actuallyCoveredRouteNames = [];
-
-        foreach ($this->routeAccessControlDataProvider->findAll() as $routeAccessControlRule) {
-            $actuallyCoveredRouteNames[] = $routeAccessControlRule->routeName;
-        }
-
-        return $actuallyCoveredRouteNames;
     }
 }

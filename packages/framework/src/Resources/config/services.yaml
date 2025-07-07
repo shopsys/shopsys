@@ -755,14 +755,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
 
-    Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider:
-        arguments:
-            $projectRootDirectory: '%kernel.project_dir%'
-            $cacheDirectory: '%kernel.cache_dir%'
-            $frameworkRootDirectory: '%shopsys.framework.root_dir%'
-            $packagesRegistry: '%shopsys.packages.registry%'
-            $environment: '%kernel.environment%'
-
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
             - '%kernel.environment%'
