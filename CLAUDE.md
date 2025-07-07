@@ -354,11 +354,11 @@ public function buildGrid(string $context, array $excludedRoles): array
 
 ### Documentation Best Practices
 
-- **Use `@inheritdoc` for simple interface implementations**: When implementing an interface method and the interface docblock is sufficient, use `@inheritdoc`
+- **Use `{@inheritdoc}` for simple interface implementations**: When implementing an interface method and the interface docblock is sufficient, use `{@inheritdoc}`
 - **Provide specific docblocks when adding value**: When you need to specify exact types, provide examples, or add implementation-specific details, write a full docblock
 - **Don't duplicate generic interface documentation**: Avoid copying basic interface docs without adding specificity
 
-**Use `@inheritdoc` when:**
+**Use `{@inheritdoc}` when:**
 
 - Interface docblock is comprehensive and sufficient
 - No additional type specificity needed
@@ -373,7 +373,7 @@ public function buildGrid(string $context, array $excludedRoles): array
 
 **Examples:**
 
-**GOOD - Use @inheritdoc (simple case):**
+**GOOD - Use {@inheritdoc} (simple case):**
 
 ```php
 interface UserRepositoryInterface
@@ -388,7 +388,7 @@ interface UserRepositoryInterface
 class UserRepository implements UserRepositoryInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findById(int $id): ?User { /* implementation */ }
 }
