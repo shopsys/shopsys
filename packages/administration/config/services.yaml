@@ -16,16 +16,14 @@ services:
 
     Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry:
         arguments:
-            - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
-            - '%shopsys.admin.crud_controllers%'
+            $entityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
+            $crudControllers: '%shopsys.admin.crud_controllers%'
 
     Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry:
         arguments:
             $crudControllerExtensions: '%shopsys.admin.crud_controllers_extensions%'
 
     Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader:
-        arguments:
-            - '@Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry'
         tags:
             - { name: routing.loader }
 

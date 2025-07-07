@@ -442,6 +442,12 @@ services:
         arguments:
             - '@annotations.reader'
 
+    Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\ContextAwareRoleHierarchy:
+        decorates: security.role_hierarchy
+
+    Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistry
+
     Shopsys\FrameworkBundle\Component\Setting\Setting: ~
 
     Shopsys\FrameworkBundle\Component\Translation\ConfigConstraintMessageExtractor:

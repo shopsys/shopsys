@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExten
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectShopsysClassExtensionsCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterRoleProviderCompilerPass;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -42,6 +43,7 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new RegisterExtendedEntitiesCompilerPass());
         $container->addCompilerPass(new AddConstraintValidatorsPass());
         $container->addCompilerPass(new RegisterContextsCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 150);
+        $container->addCompilerPass(new RegisterRoleProviderCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 140);
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
 

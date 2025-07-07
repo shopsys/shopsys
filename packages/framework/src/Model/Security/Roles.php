@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleIdentifierHelper;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+
 class Roles
 {
     public const string ROLE_ADMIN = 'ROLE_ADMIN';
@@ -180,11 +185,39 @@ class Roles
     public const string ROLE_CLOSED_DAYS_VIEW = 'ROLE_CLOSED_DAYS_VIEW';
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
+     */
+    public function __construct(
+        protected readonly RoleRegistryInterface $roleRegistry,
+    ) {
+    }
+
+    /**
      * @return array<string, string>
      */
     public function getAvailableAdministratorRolesChoices(): array
     {
-        return array_flip($this->getAvailableAdministratorRoles());
+        /** @var array<string, string> $choices */
+        $choices = [];
+
+        // Add ROLE_ALL choices first
+        $choices['All - full'] = SystemRole::ALL;
+        $choices['All - view'] = SystemRole::ALL_VIEW;
+
+        // Add individual role choices from registry
+        foreach ($this->roleRegistry->getRoles(AdminContext::class) as $role) {
+            if (in_array($role->getConstant(), [SystemRole::ADMIN, SystemRole::SUPER_ADMIN], true)) {
+                continue;
+            }
+
+            foreach ($role->getAvailablePermissions() as $permission) {
+                $identifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
+                $label = sprintf('%s - %s', $role->getName(), $permission->getName());
+                $choices[$label] = $identifier;
+            }
+        }
+
+        return $choices;
     }
 
     /**
@@ -192,489 +225,33 @@ class Roles
      */
     public function getAvailableAdministratorRolesGrid(): array
     {
-        $rolesGrid = [
-            [
-                static::ROLE_ALL => t('All - full'),
-                static::ROLE_ALL_VIEW => t('All - view'),
-            ],
-            [
-                static::ROLE_ORDER_FULL => t('Orders - full'),
-                static::ROLE_ORDER_VIEW => t('Orders - view'),
-            ],
-            [
-                static::ROLE_CUSTOMER_FULL => t('Customers - full'),
-                static::ROLE_CUSTOMER_VIEW => t('Customers - view'),
-            ],
-            [
-                static::ROLE_NEWSLETTER_FULL => t('Newsletter - full'),
-                static::ROLE_NEWSLETTER_VIEW => t('Newsletter - view'),
-            ],
-            [
-                static::ROLE_PROMO_CODE_FULL => t('Promo codes - full'),
-                static::ROLE_PROMO_CODE_VIEW => t('Promo codes - view'),
-            ],
-            [
-                static::ROLE_SALES_REPRESENTATIVE_FULL => t('Sales representatives - full'),
-                static::ROLE_SALES_REPRESENTATIVE_VIEW => t('Sales representatives - view'),
-            ],
-            [
-                static::ROLE_PRODUCT_FULL => t('Products - full'),
-                static::ROLE_PRODUCT_VIEW => t('Products - view'),
-            ],
-            [
-                static::ROLE_TOP_PRODUCT_FULL => t('Top products - full'),
-                static::ROLE_TOP_PRODUCT_VIEW => t('Top products - view'),
-            ],
-            [
-                static::ROLE_BESTSELLING_PRODUCT_FULL => t('Bestselling products - full'),
-                static::ROLE_BESTSELLING_PRODUCT_VIEW => t('Bestselling products - view'),
-            ],
-            [
-                static::ROLE_FLAG_FULL => t('Flags - full'),
-                static::ROLE_FLAG_VIEW => t('Flags - view'),
-            ],
-            [
-                static::ROLE_PARAMETER_FULL => t('Parameters - full'),
-                static::ROLE_PARAMETER_VIEW => t('Parameters - view'),
-            ],
-            [
-                static::ROLE_PARAMETER_GROUP_FULL => t('Parameter groups - full'),
-                static::ROLE_PARAMETER_GROUP_VIEW => t('Parameter groups - view'),
-            ],
-            [
-                static::ROLE_UNIT_FULL => t('Units - full'),
-                static::ROLE_UNIT_VIEW => t('Units - view'),
-            ],
-            [
-                static::ROLE_CATEGORY_FULL => t('Categories - full'),
-                static::ROLE_CATEGORY_VIEW => t('Categories - view'),
-            ],
-            [
-                static::ROLE_TOP_CATEGORY_FULL => t('Top categories - full'),
-                static::ROLE_TOP_CATEGORY_VIEW => t('Top categories - view'),
-            ],
-            [
-                static::ROLE_PRICING_GROUP_FULL => t('Pricing groups - full'),
-                static::ROLE_PRICING_GROUP_VIEW => t('Pricing groups - view'),
-            ],
-            [
-                static::ROLE_VAT_FULL => t('Vats - full'),
-                static::ROLE_VAT_VIEW => t('Vats - view'),
-            ],
-            [
-                static::ROLE_ARTICLE_FULL => t('Articles - full'),
-                static::ROLE_ARTICLE_VIEW => t('Articles - view'),
-            ],
-            [
-                static::ROLE_ADVERT_FULL => t('Adverts - full'),
-                static::ROLE_ADVERT_VIEW => t('Adverts - view'),
-            ],
-            [
-                static::ROLE_SLIDER_ITEM_FULL => t('Slider items - full'),
-                static::ROLE_SLIDER_ITEM_VIEW => t('Slider items - view'),
-            ],
-            [
-                static::ROLE_NAVIGATION_FULL => t('Navigation - full'),
-                static::ROLE_NAVIGATION_VIEW => t('Navigation - view'),
-            ],
-            [
-                static::ROLE_BLOG_CATEGORY_FULL => t('Blog category - full'),
-                static::ROLE_BLOG_CATEGORY_VIEW => t('Blog category - view'),
-            ],
-            [
-                static::ROLE_BLOG_ARTICLE_FULL => t('Blog article - full'),
-                static::ROLE_BLOG_ARTICLE_VIEW => t('Blog article - view'),
-            ],
-            [
-                static::ROLE_NOTIFICATION_BAR_FULL => t('Notification bar - full'),
-                static::ROLE_NOTIFICATION_BAR_VIEW => t('Notification bar - view'),
-            ],
-            [
-                static::ROLE_ORDER_SUBMITTED_FULL => t('Order submitted page setting - full'),
-                static::ROLE_ORDER_SUBMITTED_VIEW => t('Order submitted page setting - view'),
-            ],
-            [
-                static::ROLE_LEGAL_CONDITIONS_FULL => t('Legal conditions article setting - full'),
-                static::ROLE_LEGAL_CONDITIONS_VIEW => t('Legal conditions article setting - view'),
-            ],
-            [
-                static::ROLE_PRIVACY_POLICY_FULL => t('Privacy policy article setting - full'),
-                static::ROLE_PRIVACY_POLICY_VIEW => t('Privacy policy article setting - view'),
-            ],
-            [
-                static::ROLE_PERSONAL_DATA_FULL => t('Personal data access pages setting - full'),
-                static::ROLE_PERSONAL_DATA_VIEW => t('Personal data access pages setting - view'),
-            ],
-            [
-                static::ROLE_USER_CONSENT_POLICY_FULL => t('User consent policy article setting - full'),
-                static::ROLE_USER_CONSENT_POLICY_VIEW => t('User consent policy article setting - view'),
-            ],
-            [
-                static::ROLE_ADMINISTRATOR_FULL => t('Administrators - full'),
-                static::ROLE_ADMINISTRATOR_VIEW => t('Administrators - view'),
-            ],
-            [
-                static::ROLE_DOMAIN_FULL => t('E-shop identification - full'),
-                static::ROLE_DOMAIN_VIEW => t('E-shop identification - view'),
-            ],
-            [
-                static::ROLE_SHOP_INFO_FULL => t('Operator information - full'),
-                static::ROLE_SHOP_INFO_VIEW => t('Operator information - view'),
-            ],
-            [
-                static::ROLE_MAIL_SETTING_FULL => t('Mail setting - full'),
-                static::ROLE_MAIL_SETTING_VIEW => t('Mail setting - view'),
-            ],
-            [
-                static::ROLE_MAIL_TEMPLATE_FULL => t('Mail templates - full'),
-                static::ROLE_MAIL_TEMPLATE_VIEW => t('Mail templates - view'),
-            ],
-            [
-                static::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL => t('Free transport and payment - full'),
-                static::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW => t('Free transport and payment - view'),
-            ],
-            [
-                static::ROLE_TRANSPORT_AND_PAYMENT_FULL => t('Transports and payments - full'),
-                static::ROLE_TRANSPORT_AND_PAYMENT_VIEW => t('Transports and payments - view'),
-            ],
-            [
-                static::ROLE_ORDER_STATUS_FULL => t('Order statuses - full'),
-                static::ROLE_ORDER_STATUS_VIEW => t('Order statuses - view'),
-            ],
-            [
-                static::ROLE_BRAND_FULL => t('Brands - full'),
-                static::ROLE_BRAND_VIEW => t('Brands - view'),
-            ],
-            [
-                static::ROLE_COUNTRY_FULL => t('Countries - full'),
-                static::ROLE_COUNTRY_VIEW => t('Countries - view'),
-            ],
-            [
-                static::ROLE_STORE_FULL => t('Stores - full'),
-                static::ROLE_STORE_VIEW => t('Stores - view'),
-            ],
-            [
-                static::ROLE_PARAMETER_VALUE_FULL => t('Color parameter values - full'),
-                static::ROLE_PARAMETER_VALUE_VIEW => t('Color parameter values - view'),
-            ],
-            [
-                static::ROLE_SEO_FULL => t('SEO - full'),
-                static::ROLE_SEO_VIEW => t('SEO - view'),
-            ],
-            [
-                static::ROLE_CATEGORY_SEO_FULL => t('Categories extended SEO - full'),
-                static::ROLE_CATEGORY_SEO_VIEW => t('Categories extended SEO - view'),
-            ],
-            [
-                static::ROLE_FRIENDLY_URL_FULL => t('Unused friendly URLs - full'),
-                static::ROLE_FRIENDLY_URL_VIEW => t('Unused friendly URLs - view'),
-            ],
-            [
-                static::ROLE_CONTACT_FORM_FULL => t('Contact form - full'),
-                static::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
-            ],
-            [
-                static::ROLE_STOCK_FULL => t('Warehouses - full'),
-                static::ROLE_STOCK_VIEW => t('Warehouses - view'),
-            ],
-            [
-                static::ROLE_HEUREKA_FULL => t('Heureka setting - full'),
-                static::ROLE_HEUREKA_VIEW => t('Heureka setting - view'),
-            ],
-            [
-                static::ROLE_LANGUAGE_CONSTANTS_FULL => t('Language constants - full'),
-                static::ROLE_LANGUAGE_CONSTANTS_VIEW => t('Language constants - view'),
-            ],
-            [
-                static::ROLE_FEED_FULL => t('Feeds - full'),
-                static::ROLE_FEED_VIEW => t('Feeds - view'),
-            ],
-            [
-                static::ROLE_TRANSFER_FULL => t('Transfers - full'),
-                static::ROLE_TRANSFER_VIEW => t('Transfers - view'),
-            ],
-            [
-                static::ROLE_FILES_FULL => t('Files - full'),
-                static::ROLE_FILES_VIEW => t('Files - view'),
-            ],
-            [
-                static::ROLE_COMPLAINT_FULL => t('Complaints - full'),
-                static::ROLE_COMPLAINT_VIEW => t('Complaints - view'),
-            ],
-            [
-                static::ROLE_COMPLAINT_STATUS_FULL => t('Complaint statuses - full'),
-                static::ROLE_COMPLAINT_STATUS_VIEW => t('Complaint statuses - view'),
-            ],
-            [
-                static::ROLE_INQUIRY_VIEW => t('Inquiries - view'),
-            ],
-            [
-                static::ROLE_WATCHDOG_FULL => t('Watchdogs - full'),
-                static::ROLE_WATCHDOG_VIEW => t('Watchdogs - view'),
-            ],
-            [
-                static::ROLE_PRICE_LIST_FULL => t('Price lists - full'),
-                static::ROLE_PRICE_LIST_VIEW => t('Price lists - view'),
-            ],
-            [
-                static::ROLE_CLOSED_DAYS_FULL => t('Closed days - full'),
-                static::ROLE_CLOSED_DAYS_VIEW => t('Closed days - view'),
-            ],
+        $rolesGrid = [];
+
+        // Add ROLE_ALL and ROLE_ALL_VIEW first
+        $rolesGrid[] = [
+            self::ROLE_ALL => 'All - full',
+            self::ROLE_ALL_VIEW => 'All - view',
         ];
 
-        return $this->addRolesToGrid($rolesGrid);
-    }
+        // Add all other roles grouped by role
+        foreach ($this->roleRegistry->getRoles(AdminContext::class) as $role) {
+            if (in_array($role->getConstant(), [self::ROLE_ADMIN, self::ROLE_SUPER_ADMIN], true)) {
+                continue;
+            }
 
-    /**
-     * @param array<array<string, string>> $rolesGrid
-     * @param array<array<string, string>> $rolePairs
-     * @return array<array<string, string>>
-     */
-    protected function addRolePairsToGrid(array $rolesGrid, array $rolePairs): array
-    {
-        foreach ($rolePairs as $rolePair) {
-            $rolesGrid[] = $rolePair;
+            $roleRow = [];
+
+            foreach ($role->getAvailablePermissions() as $permission) {
+                $identifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
+                $label = sprintf('%s - %s', $role->getName(), $permission->getName());
+                $roleRow[$identifier] = $label;
+            }
+
+            if (count($roleRow) > 0) {
+                $rolesGrid[] = $roleRow;
+            }
         }
 
         return $rolesGrid;
-    }
-
-    /**
-     * @param array<array<string, string>> $rolesGrid
-     * @return array<array<string, string>>
-     */
-    protected function addRolesToGrid(array $rolesGrid): array
-    {
-        /**
-         * to be overridden on a project when adding new roles like this:
-         * $rolesPair = [
-         * static::ROLE_CUSTOM_FEATURE_VIEW => t('Custom feature - view'),
-         * static::ROLE_CUSTOM_FEATURE_FULL => t('Custom feature - full'),
-         * ];
-         *
-         * return $this->addRolePairsToGrid($rolesGrid, [$rolesPair]);
-         */
-
-        return $rolesGrid;
-    }
-
-    /**
-     * @return array<string, string[]>
-     */
-    public static function getRolesHierarchy(): array
-    {
-        $hierarchy = [
-            static::ROLE_SUPER_ADMIN => [static::ROLE_ADMIN, static::ROLE_ALL],
-            static::ROLE_ALL => [
-                static::ROLE_ORDER_FULL,
-                static::ROLE_CUSTOMER_FULL,
-                static::ROLE_NEWSLETTER_FULL,
-                static::ROLE_PROMO_CODE_FULL,
-                static::ROLE_SALES_REPRESENTATIVE_FULL,
-                static::ROLE_PRODUCT_FULL,
-                static::ROLE_TOP_PRODUCT_FULL,
-                static::ROLE_BESTSELLING_PRODUCT_FULL,
-                static::ROLE_FLAG_FULL,
-                static::ROLE_PARAMETER_FULL,
-                static::ROLE_UNIT_FULL,
-                static::ROLE_CATEGORY_FULL,
-                static::ROLE_TOP_CATEGORY_FULL,
-                static::ROLE_PRICING_GROUP_FULL,
-                static::ROLE_VAT_FULL,
-                static::ROLE_ARTICLE_FULL,
-                static::ROLE_ADVERT_FULL,
-                static::ROLE_SLIDER_ITEM_FULL,
-                static::ROLE_NAVIGATION_FULL,
-                static::ROLE_BLOG_CATEGORY_FULL,
-                static::ROLE_BLOG_ARTICLE_FULL,
-                static::ROLE_NOTIFICATION_BAR_FULL,
-                static::ROLE_ORDER_SUBMITTED_FULL,
-                static::ROLE_LEGAL_CONDITIONS_FULL,
-                static::ROLE_PRIVACY_POLICY_FULL,
-                static::ROLE_PERSONAL_DATA_FULL,
-                static::ROLE_USER_CONSENT_POLICY_FULL,
-                static::ROLE_ADMINISTRATOR_FULL,
-                static::ROLE_DOMAIN_FULL,
-                static::ROLE_SHOP_INFO_FULL,
-                static::ROLE_MAIL_SETTING_FULL,
-                static::ROLE_MAIL_TEMPLATE_FULL,
-                static::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL,
-                static::ROLE_TRANSPORT_AND_PAYMENT_FULL,
-                static::ROLE_ORDER_STATUS_FULL,
-                static::ROLE_BRAND_FULL,
-                static::ROLE_COUNTRY_FULL,
-                static::ROLE_STORE_FULL,
-                static::ROLE_PARAMETER_VALUE_FULL,
-                static::ROLE_PARAMETER_GROUP_FULL,
-                static::ROLE_SEO_FULL,
-                static::ROLE_CATEGORY_SEO_FULL,
-                static::ROLE_FRIENDLY_URL_FULL,
-                static::ROLE_CONTACT_FORM_FULL,
-                static::ROLE_STOCK_FULL,
-                static::ROLE_FEED_FULL,
-                static::ROLE_HEUREKA_FULL,
-                static::ROLE_LANGUAGE_CONSTANTS_FULL,
-                static::ROLE_TRANSFER_FULL,
-                static::ROLE_FILES_FULL,
-                static::ROLE_COMPLAINT_FULL,
-                static::ROLE_COMPLAINT_STATUS_FULL,
-                static::ROLE_INQUIRY_VIEW,
-                static::ROLE_WATCHDOG_FULL,
-                static::ROLE_PRICE_LIST_FULL,
-                static::ROLE_CLOSED_DAYS_FULL,
-            ],
-            static::ROLE_ALL_VIEW => [
-                static::ROLE_ORDER_VIEW,
-                static::ROLE_CUSTOMER_VIEW,
-                static::ROLE_NEWSLETTER_VIEW,
-                static::ROLE_PROMO_CODE_VIEW,
-                static::ROLE_SALES_REPRESENTATIVE_VIEW,
-                static::ROLE_PRODUCT_VIEW,
-                static::ROLE_TOP_PRODUCT_VIEW,
-                static::ROLE_BESTSELLING_PRODUCT_VIEW,
-                static::ROLE_FLAG_VIEW,
-                static::ROLE_PARAMETER_VIEW,
-                static::ROLE_UNIT_VIEW,
-                static::ROLE_CATEGORY_VIEW,
-                static::ROLE_TOP_CATEGORY_VIEW,
-                static::ROLE_PRICING_GROUP_VIEW,
-                static::ROLE_VAT_VIEW,
-                static::ROLE_ARTICLE_VIEW,
-                static::ROLE_ADVERT_VIEW,
-                static::ROLE_SLIDER_ITEM_VIEW,
-                static::ROLE_NAVIGATION_VIEW,
-                static::ROLE_BLOG_CATEGORY_VIEW,
-                static::ROLE_BLOG_ARTICLE_VIEW,
-                static::ROLE_NOTIFICATION_BAR_VIEW,
-                static::ROLE_ORDER_SUBMITTED_VIEW,
-                static::ROLE_LEGAL_CONDITIONS_VIEW,
-                static::ROLE_PRIVACY_POLICY_VIEW,
-                static::ROLE_PERSONAL_DATA_VIEW,
-                static::ROLE_USER_CONSENT_POLICY_VIEW,
-                static::ROLE_ADMINISTRATOR_VIEW,
-                static::ROLE_DOMAIN_VIEW,
-                static::ROLE_SHOP_INFO_VIEW,
-                static::ROLE_MAIL_SETTING_VIEW,
-                static::ROLE_MAIL_TEMPLATE_VIEW,
-                static::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW,
-                static::ROLE_TRANSPORT_AND_PAYMENT_VIEW,
-                static::ROLE_ORDER_STATUS_VIEW,
-                static::ROLE_BRAND_VIEW,
-                static::ROLE_COUNTRY_VIEW,
-                static::ROLE_STORE_VIEW,
-                static::ROLE_PARAMETER_VALUE_VIEW,
-                static::ROLE_PARAMETER_GROUP_VIEW,
-                static::ROLE_SEO_VIEW,
-                static::ROLE_CATEGORY_SEO_VIEW,
-                static::ROLE_FRIENDLY_URL_VIEW,
-                static::ROLE_CONTACT_FORM_VIEW,
-                static::ROLE_STOCK_VIEW,
-                static::ROLE_FEED_VIEW,
-                static::ROLE_HEUREKA_VIEW,
-                static::ROLE_LANGUAGE_CONSTANTS_VIEW,
-                static::ROLE_TRANSFER_VIEW,
-                static::ROLE_FILES_VIEW,
-                static::ROLE_COMPLAINT_VIEW,
-                static::ROLE_COMPLAINT_STATUS_VIEW,
-                static::ROLE_INQUIRY_VIEW,
-                static::ROLE_WATCHDOG_VIEW,
-                static::ROLE_PRICE_LIST_VIEW,
-                static::ROLE_CLOSED_DAYS_VIEW,
-            ],
-            static::ROLE_ORDER_FULL => [static::ROLE_ORDER_VIEW],
-            static::ROLE_CUSTOMER_FULL => [static::ROLE_CUSTOMER_VIEW],
-            static::ROLE_NEWSLETTER_FULL => [static::ROLE_NEWSLETTER_VIEW],
-            static::ROLE_PROMO_CODE_FULL => [static::ROLE_PROMO_CODE_VIEW],
-            static::ROLE_SALES_REPRESENTATIVE_FULL => [static::ROLE_SALES_REPRESENTATIVE_VIEW],
-            static::ROLE_PRODUCT_FULL => [static::ROLE_PRODUCT_VIEW],
-            static::ROLE_TOP_PRODUCT_FULL => [static::ROLE_TOP_PRODUCT_VIEW],
-            static::ROLE_BESTSELLING_PRODUCT_FULL => [static::ROLE_BESTSELLING_PRODUCT_VIEW],
-            static::ROLE_FLAG_FULL => [static::ROLE_FLAG_VIEW],
-            static::ROLE_PARAMETER_FULL => [static::ROLE_PARAMETER_VIEW],
-            static::ROLE_UNIT_FULL => [static::ROLE_UNIT_VIEW],
-            static::ROLE_CATEGORY_FULL => [static::ROLE_CATEGORY_VIEW],
-            static::ROLE_TOP_CATEGORY_FULL => [static::ROLE_TOP_CATEGORY_VIEW],
-            static::ROLE_PRICING_GROUP_FULL => [static::ROLE_PRICING_GROUP_VIEW],
-            static::ROLE_VAT_FULL => [static::ROLE_VAT_VIEW],
-            static::ROLE_ARTICLE_FULL => [static::ROLE_ARTICLE_VIEW],
-            static::ROLE_ADVERT_FULL => [static::ROLE_ADVERT_VIEW],
-            static::ROLE_SLIDER_ITEM_FULL => [static::ROLE_SLIDER_ITEM_VIEW],
-            static::ROLE_NAVIGATION_FULL => [static::ROLE_NAVIGATION_VIEW],
-            static::ROLE_BLOG_CATEGORY_FULL => [static::ROLE_BLOG_CATEGORY_VIEW],
-            static::ROLE_BLOG_ARTICLE_FULL => [static::ROLE_BLOG_ARTICLE_VIEW],
-            static::ROLE_NOTIFICATION_BAR_FULL => [static::ROLE_NOTIFICATION_BAR_VIEW],
-            static::ROLE_ORDER_SUBMITTED_FULL => [static::ROLE_ORDER_SUBMITTED_VIEW],
-            static::ROLE_LEGAL_CONDITIONS_FULL => [static::ROLE_LEGAL_CONDITIONS_VIEW],
-            static::ROLE_PRIVACY_POLICY_FULL => [static::ROLE_PRIVACY_POLICY_VIEW],
-            static::ROLE_PERSONAL_DATA_FULL => [static::ROLE_PERSONAL_DATA_VIEW],
-            static::ROLE_USER_CONSENT_POLICY_FULL => [static::ROLE_USER_CONSENT_POLICY_VIEW],
-            static::ROLE_ADMINISTRATOR_FULL => [static::ROLE_ADMINISTRATOR_VIEW],
-            static::ROLE_DOMAIN_FULL => [static::ROLE_DOMAIN_VIEW],
-            static::ROLE_SHOP_INFO_FULL => [static::ROLE_SHOP_INFO_VIEW],
-            static::ROLE_MAIL_SETTING_FULL => [static::ROLE_MAIL_SETTING_VIEW],
-            static::ROLE_MAIL_TEMPLATE_FULL => [static::ROLE_MAIL_TEMPLATE_VIEW],
-            static::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL => [static::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW],
-            static::ROLE_TRANSPORT_AND_PAYMENT_FULL => [static::ROLE_TRANSPORT_AND_PAYMENT_VIEW],
-            static::ROLE_ORDER_STATUS_FULL => [static::ROLE_ORDER_STATUS_VIEW],
-            static::ROLE_BRAND_FULL => [static::ROLE_BRAND_VIEW],
-            static::ROLE_COUNTRY_FULL => [static::ROLE_COUNTRY_VIEW],
-            static::ROLE_STORE_FULL => [static::ROLE_STORE_VIEW],
-            static::ROLE_PARAMETER_VALUE_FULL => [static::ROLE_PARAMETER_VALUE_VIEW],
-            static::ROLE_PARAMETER_GROUP_FULL => [static::ROLE_PARAMETER_GROUP_VIEW],
-            static::ROLE_SEO_FULL => [static::ROLE_SEO_VIEW],
-            static::ROLE_CATEGORY_SEO_FULL => [static::ROLE_CATEGORY_SEO_VIEW],
-            static::ROLE_FRIENDLY_URL_FULL => [static::ROLE_FRIENDLY_URL_VIEW],
-            static::ROLE_CONTACT_FORM_FULL => [static::ROLE_CONTACT_FORM_VIEW],
-            static::ROLE_STOCK_FULL => [static::ROLE_STOCK_VIEW],
-            static::ROLE_HEUREKA_FULL => [static::ROLE_HEUREKA_VIEW],
-            static::ROLE_LANGUAGE_CONSTANTS_FULL => [static::ROLE_LANGUAGE_CONSTANTS_VIEW],
-            static::ROLE_FILES_FULL => [static::ROLE_FILES_VIEW],
-            static::ROLE_COMPLAINT_FULL => [static::ROLE_COMPLAINT_VIEW],
-            static::ROLE_COMPLAINT_STATUS_FULL => [static::ROLE_COMPLAINT_STATUS_VIEW],
-            static::ROLE_WATCHDOG_FULL => [static::ROLE_WATCHDOG_VIEW],
-            static::ROLE_PRICE_LIST_FULL => [static::ROLE_PRICE_LIST_VIEW],
-            static::ROLE_CLOSED_DAYS_FULL => [static::ROLE_CLOSED_DAYS_VIEW],
-            static::ROLE_TRANSFER_FULL => [static::ROLE_TRANSFER_VIEW],
-            static::ROLE_FEED_FULL => [static::ROLE_FEED_VIEW],
-        ];
-
-        return static::addRolesToHierarchy($hierarchy);
-    }
-
-    /**
-     * @param array<string, string[]> $rolesHierarchy
-     * @param array<string, string> $rolePairs
-     * @return array<string, string[]>
-     */
-    protected static function addRolePairsToHierarchy(array $rolesHierarchy, array $rolePairs): array
-    {
-        foreach ($rolePairs as $fullRole => $viewRole) {
-            $rolesHierarchy[static::ROLE_ALL][] = $fullRole;
-            $rolesHierarchy[static::ROLE_ALL_VIEW][] = $viewRole;
-            $rolesHierarchy[$fullRole] = [$viewRole];
-        }
-
-        return $rolesHierarchy;
-    }
-
-    /**
-     * @param array<string, string[]> $rolesHierarchy
-     * @return array<string, string[]>
-     */
-    protected static function addRolesToHierarchy(array $rolesHierarchy): array
-    {
-        /**
-         * to be overridden on a project when adding new roles like this:
-         * return static::addRolePair($rolesHierarchy, static::ROLE_CUSTOM_FEATURE_VIEW, static::ROLE_CUSTOM_FEATURE_FULL);
-         */
-        return $rolesHierarchy;
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    protected function getAvailableAdministratorRoles(): array
-    {
-        return array_merge(...$this->getAvailableAdministratorRolesGrid());
     }
 }

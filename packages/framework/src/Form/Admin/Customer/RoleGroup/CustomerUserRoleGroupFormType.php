@@ -6,10 +6,11 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData;
+use Shopsys\FrontendApiBundle\Component\Context\FrontendApiContext;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,9 +20,9 @@ use Symfony\Component\Validator\Constraints;
 final class CustomerUserRoleGroupFormType extends AbstractType
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole $customerUserRole
+     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
      */
-    public function __construct(protected readonly CustomerUserRole $customerUserRole)
+    public function __construct(protected readonly RoleRegistryInterface $roleRegistry)
     {
     }
 
@@ -49,7 +50,7 @@ final class CustomerUserRoleGroupFormType extends AbstractType
             'required' => false,
             'multiple' => true,
             'expanded' => true,
-            'choices' => $this->customerUserRole->getAvailableRoles(),
+            'choices' => array_flip($this->getAvailableRoles()),
         ]);
 
         $builder->add('actionBar', ActionBarType::class, [
@@ -72,5 +73,19 @@ final class CustomerUserRoleGroupFormType extends AbstractType
                 'data_class' => CustomerUserRoleGroupData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getAvailableRoles(): array
+    {
+        $roleNameByRoleConstant = [];
+
+        foreach ($this->roleRegistry->getRoles(FrontendApiContext::class) as $role) {
+            $roleNameByRoleConstant[$role->getConstant()] = $role->getName();
+        }
+
+        return $roleNameByRoleConstant;
     }
 }
