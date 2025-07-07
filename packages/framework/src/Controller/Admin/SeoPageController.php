@@ -50,7 +50,7 @@ class SeoPageController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->seoPageGridFactory->create($this->domain->getId());
+        $grid = $this->seoPageGridFactory->create(Domain::FIRST_DOMAIN_ID);
 
         return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/list.html.twig', [
             'gridView' => $grid->createView(),
