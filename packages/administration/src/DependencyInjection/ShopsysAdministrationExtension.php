@@ -30,6 +30,9 @@ class ShopsysAdministrationExtension extends Extension
         ]);
         $container->setDefinition(AccessControlConfiguration::class, $accessControlConfigDefinition);
 
+        // Override Framework bundle parameter for RolesType simple permissions
+        $container->setParameter('shopsys.administration.roles.simple_permissions', $config['roles']['simple_permissions']);
+
         // Load services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.yaml');

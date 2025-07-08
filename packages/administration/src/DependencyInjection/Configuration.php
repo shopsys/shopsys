@@ -33,6 +33,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('roles')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('simple_permissions')
+                            ->info('Whether to use simple permissions (VIEW, FULL) instead of all permissions')
+                            ->defaultValue(false)
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

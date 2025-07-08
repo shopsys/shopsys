@@ -361,6 +361,26 @@ class MarketingController extends AdminBaseController
 
 The admin menu automatically respects access control rules. Menu items are only shown if the user has access to the linked route. This is handled by `MenuItemsGrantedRolesSubscriber`.
 
+## Simple Permission Mode
+
+For simplified administration, you can enable a streamlined interface that only shows:
+
+- **VIEW** - Read-only access
+- **FULL** - All permissions combined
+
+#### Enabling Simple Permission Mode
+
+To enable simple permission mode, add the following to your `config/packages/shopsys_administration.yaml`:
+
+```yaml
+shopsys_administration:
+    roles:
+        # Enable simple permissions (VIEW, FULL) instead of all permissions
+        simple_permissions: true
+```
+
+**Note**: In simple permissions mode, only VIEW and FULL columns are displayed in the roles grid. The backend functionality remains unchanged. When FULL is checked: if the role supports FULL permission, it saves FULL; if the role doesn't support FULL, it saves all available permissions for that role instead.
+
 ## Best Practices
 
 1. **Use intention-revealing attributes** - `#[CanView('ROLE_PRODUCT')]` is clearer than complex configurations

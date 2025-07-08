@@ -6,6 +6,9 @@ parameters:
     fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
     fp_js_form_validator.twig_extension.class: Shopsys\FrameworkBundle\Twig\JsFormValidatorTwigExtension
 
+    # RolesType configuration
+    shopsys.administration.roles.simple_permissions: false
+
 services:
     _defaults:
         autoconfigure: true
@@ -540,6 +543,10 @@ services:
     Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
+
+    Shopsys\FrameworkBundle\Form\RolesType:
+        arguments:
+            $useSimplePermissions: '%shopsys.administration.roles.simple_permissions%'
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 

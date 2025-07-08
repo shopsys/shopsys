@@ -219,39 +219,4 @@ class Roles
 
         return $choices;
     }
-
-    /**
-     * @return array<array<string, string>>
-     */
-    public function getAvailableAdministratorRolesGrid(): array
-    {
-        $rolesGrid = [];
-
-        // Add ROLE_ALL and ROLE_ALL_VIEW first
-        $rolesGrid[] = [
-            self::ROLE_ALL => 'All - full',
-            self::ROLE_ALL_VIEW => 'All - view',
-        ];
-
-        // Add all other roles grouped by role
-        foreach ($this->roleRegistry->getRoles(AdminContext::class) as $role) {
-            if (in_array($role->getConstant(), [self::ROLE_ADMIN, self::ROLE_SUPER_ADMIN], true)) {
-                continue;
-            }
-
-            $roleRow = [];
-
-            foreach ($role->getAvailablePermissions() as $permission) {
-                $identifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
-                $label = sprintf('%s - %s', $role->getName(), $permission->getName());
-                $roleRow[$identifier] = $label;
-            }
-
-            if (count($roleRow) > 0) {
-                $rolesGrid[] = $roleRow;
-            }
-        }
-
-        return $rolesGrid;
-    }
 }

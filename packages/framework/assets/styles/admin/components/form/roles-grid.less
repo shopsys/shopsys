@@ -1,0 +1,141 @@
+@roles-grid-max-width: 700px;
+@roles-grid-cell-padding: 0.75rem;
+@roles-grid-border-color: @color-grey-light;
+@roles-grid-header-bg: @color-f;
+@roles-grid-row-stripe-bg: @color-grey-light;
+@roles-grid-row-hover-bg: @color-e;
+@roles-grid-role-name-width: 250px;
+@roles-grid-permission-width: 120px;
+@roles-grid-checkbox-scale: 1.2;
+
+.roles-grid {
+    display: table;
+    width: auto;
+    max-width: @roles-grid-max-width;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1rem 0;
+    border: 2px solid @roles-grid-border-color;
+    border-radius: 4px;
+    overflow: hidden;
+
+    &__header,
+    &__row {
+        display: table-row;
+    }
+
+    &__header {
+        background-color: @roles-grid-header-bg;
+        font-weight: bold;
+        border-bottom: 3px solid @roles-grid-border-color;
+        
+        .roles-grid__cell {
+            padding: @roles-grid-cell-padding;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+            color: @color-3;
+        }
+    }
+
+    &__cell {
+        display: table-cell;
+        padding: @roles-grid-cell-padding;
+        border: 1px solid @roles-grid-border-color;
+        vertical-align: middle;
+
+        &--role-name {
+            width: @roles-grid-role-name-width;
+            max-width: @roles-grid-role-name-width;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+
+        &--permission {
+            text-align: center;
+            width: @roles-grid-permission-width;
+            min-width: @roles-grid-permission-width;
+            padding: @roles-grid-cell-padding 0.5rem;
+            vertical-align: middle;
+        }
+
+        &--empty {
+            color: @color-grey;
+            font-style: italic;
+        }
+    }
+
+    &__header-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 40px;
+    }
+
+    &__permission-label {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        letter-spacing: 0.5px;
+        color: @color-3;
+        margin: 0;
+    }
+
+    &__header-checkbox {
+        display: flex;
+        align-items: center;
+        margin: 0;
+    }
+
+    &__select-all {
+        margin: 0;
+        display: inline-block;
+        transform: scale(@roles-grid-checkbox-scale);
+
+        &-label {
+            display: none;
+        }
+    }
+
+    &__checkbox {
+        text-align: center;
+        padding: 0.5rem;
+
+        input[type="checkbox"] {
+            margin: 0 auto;
+            display: block;
+            transform: scale(@roles-grid-checkbox-scale);
+        }
+    }
+
+    &__row {
+        &:nth-child(even) {
+            background-color: @roles-grid-row-stripe-bg;
+            
+            .roles-grid__cell--role-name {
+                background-color: @roles-grid-row-stripe-bg;
+            }
+        }
+
+        &:nth-child(odd) {
+            background-color: @color-f;
+            
+            .roles-grid__cell--role-name {
+                background-color: @color-f;
+            }
+        }
+
+        &:hover {
+            background-color: @roles-grid-row-hover-bg;
+            
+            .roles-grid__cell--role-name {
+                background-color: @roles-grid-row-hover-bg;
+            }
+        }
+    }
+}
