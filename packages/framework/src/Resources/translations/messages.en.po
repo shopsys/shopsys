@@ -1255,10 +1255,10 @@ msgstr ""
 msgid "Days until delivery"
 msgstr ""
 
-msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
 msgstr ""
 
-msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
 msgstr ""
 
 msgid "Declined by issuer - account error"
