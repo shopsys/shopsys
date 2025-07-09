@@ -1,11 +1,39 @@
 @layer components {
     .user-text {
         ul {
-            @apply list-inside list-disc;
+            @apply ml-5 list-inside list-["•\0020"] space-y-2;
+
+            li {
+                @apply marker:text-base marker:text-current;
+            }
+
+            ul {
+                @apply my-2 list-inside list-["◦\0020"] space-y-2;
+
+                li {
+                    @apply marker:text-base marker:text-current;
+                }
+
+                ul {
+                    @apply list-inside list-["▪\0020"] space-y-2;
+
+                    li {
+                        @apply marker:text-base marker:text-current;
+                    }
+                }
+            }
         }
 
         ol {
-            @apply list-inside list-decimal;
+            @apply ml-5 list-inside list-decimal;
+
+            ul {
+                @apply my-2 space-y-2;
+
+                ul {
+                    @apply space-y-2;
+                }
+            }
         }
 
         img {
