@@ -6,6 +6,7 @@ import { twMergeCustom } from 'utils/twMerge';
 type TagProps = {
     isDisabled?: boolean;
     isActive?: boolean;
+    ariaLabel?: string;
     onClick?: () => void;
 } & (
     | {
@@ -26,12 +27,21 @@ type TagProps = {
       ))
 );
 
-export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, className, render, onClick }) => {
+export const Tag: FC<TagProps> = ({
+    href,
+    type,
+    children,
+    isDisabled,
+    isActive,
+    className,
+    render,
+    onClick,
+    ariaLabel,
+}) => {
     const TagTwClassName = twMergeCustom(
         'px-4 py-1 rounded-tag no-underline transition-all flex justify-center items-center font-semibold font-secondary cursor-pointer',
         'bg-tag-bg-default text-tag-text-default border-tag-border-default text-sm',
         'hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:border-tag-border-hovered hover:no-underline hover:cursor-pointer',
-        'focus-visible:outline-tag-border-hovered focus-visible:outline-2',
         isDisabled && 'bg-tag-bg-disabled text-tag-text-disabled border-tag-border-disabled',
         isActive && 'bg-tag-bg-active text-tag-text-active border-tag-border-active',
         className,
@@ -45,8 +55,21 @@ export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, 
         );
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter') {
+            onClick?.();
+        }
+    };
+
     const content = (
-        <div className={TagTwClassName} onClick={onClick}>
+        <div
+            aria-label={ariaLabel}
+            className={TagTwClassName}
+            role="button"
+            tabIndex={0}
+            onClick={onClick}
+            onKeyDown={handleKeyDown}
+        >
             {children}
         </div>
     );

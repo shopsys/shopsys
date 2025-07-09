@@ -43,13 +43,14 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
     }
 
     return (
-        <div tid={TIDs.layout_header_search_autocomplete_popup_products}>
+        <div data-tid={TIDs.layout_header_search_autocomplete_popup_products}>
             <SearchResultSectionTitle>
                 {t('Products')}
                 {productsSearch.totalCount !== -1 && ` (${productsSearch.totalCount})`}
             </SearchResultSectionTitle>
 
             <ProductsSlider
+                ariaAnchorName="product-slider-autocomplete"
                 gtmProductListName={GtmProductListNameType.autocomplete_search_results}
                 isWithArrows={false}
                 products={mappedProductSearchResults.slice(0, AUTOCOMPLETE_PRODUCT_LIMIT)}

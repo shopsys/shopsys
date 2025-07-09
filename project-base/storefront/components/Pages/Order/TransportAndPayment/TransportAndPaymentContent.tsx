@@ -46,6 +46,8 @@ export const TransportAndPaymentContent: FC = () => {
             isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsFetching}
             page="transport-and-payment"
         >
+            <h1 className="sr-only">{t('Transport and payment')}</h1>
+
             <OrderContentWrapper
                 activeStep={2}
                 isTransportOrPaymentLoading={isChangingTransportInCart || isChangingPaymentInOrder}
@@ -61,6 +63,7 @@ export const TransportAndPaymentContent: FC = () => {
                 )}
 
                 <OrderAction
+                    ariaLabelNextStep={t('Continue with order to {{ step }}', { step: t('Contact information') })}
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}

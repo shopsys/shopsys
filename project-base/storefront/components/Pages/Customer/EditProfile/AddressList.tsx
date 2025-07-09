@@ -101,13 +101,51 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
         }
     }, [defaultDeliveryAddress, deliveryAddresses]);
 
+    const getDeliveryAddressAriaLabel = (address: DeliveryAddressType): string => {
+        const addressParts = [
+            `${address.firstName} ${address.lastName}`,
+            `${address.street} ${address.city}`,
+            address.postcode,
+            address.country.name,
+            `${t('telephone:')} ${address.telephone}`,
+        ];
+
+        return ` ${addressParts.join(', ')}`;
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, address: DeliveryAddressType) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            setDefaultItemHandler(address.uuid);
+        }
+    };
+
+    const title = (address: DeliveryAddressType) => {
+        return defaultDeliveryAddress?.uuid === address.uuid
+            ? t('Default delivery address')
+            : canManagePersonalData
+              ? t('Set as default delivery address')
+              : t('Your default delivery address');
+    };
+
+    const ariaLabel = (address: DeliveryAddressType) => {
+        return defaultDeliveryAddress?.uuid === address.uuid
+            ? t('This is your default delivery address:') + getDeliveryAddressAriaLabel(defaultDeliveryAddress)
+            : canManagePersonalData
+              ? t('By clicking this button you will set this address as your default delivery address:') +
+                getDeliveryAddressAriaLabel(address)
+              : undefined;
+    };
+
     return (
         <div className="vl:grid-cols-2 grid w-full gap-4">
             {deliveryAddresses.map((address) => (
                 <div
                     key={address.uuid}
+                    aria-label={ariaLabel(address)}
                     role="button"
                     tabIndex={0}
+                    title={title(address)}
                     className={twJoin(
                         'relative flex w-full justify-between rounded-md border-2 p-4 text-left',
                         defaultDeliveryAddress?.uuid === address.uuid
@@ -115,20 +153,8 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             : 'border-border-less bg-background-default',
                         defaultDeliveryAddress?.uuid !== address.uuid && canManagePersonalData ? 'cursor-pointer' : '',
                     )}
-                    title={
-                        defaultDeliveryAddress?.uuid === address.uuid
-                            ? t('Default delivery address')
-                            : canManagePersonalData
-                              ? t('Set as default delivery address')
-                              : undefined
-                    }
                     onClick={() => setDefaultItemHandler(address.uuid)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            setDefaultItemHandler(address.uuid);
-                        }
-                    }}
+                    onKeyDown={(e) => handleKeyDown(e, address)}
                 >
                     <div className="flex w-full flex-col">
                         <strong className="mr-1">
@@ -149,7 +175,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <div className="space-between mt-auto flex gap-2 pt-2">
                                 <Button
                                     aria-haspopup="dialog"
-                                    aria-label={t('Delete')}
+                                    aria-label={t('Delete this delivery address')}
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"
@@ -157,8 +183,10 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                                 >
                                     <RemoveIcon className="size-4" /> {t('Delete')}
                                 </Button>
+
                                 <Button
                                     aria-haspopup="dialog"
+                                    aria-label={t('Edit this delivery address')}
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"

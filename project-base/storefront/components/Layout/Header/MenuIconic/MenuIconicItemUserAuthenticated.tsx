@@ -20,9 +20,13 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     return (
         <>
             <div
-                className={twMergeCustom('group lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
-                tid={TIDs.my_account_link}
-                title={t('My account')}
+                aria-expanded={isUserMenuOpen}
+                aria-haspopup="menu"
+                aria-label={t('Show logged in user poup')}
+                className={twMergeCustom('group outline-none lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
+                data-tid={TIDs.my_account_link}
+                role="button"
+                tabIndex={0}
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
                 onKeyDown={(e) => {
@@ -36,8 +40,9 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 }}
             >
                 <MenuIconicItemLink
-                    className="cursor-pointer text-nowrap transition-all"
-                    title={t('My account')}
+                    className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500"
+                    tabIndex={-1}
+                    title={t('Go to my account page')}
                     onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

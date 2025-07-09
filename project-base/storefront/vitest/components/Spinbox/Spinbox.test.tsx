@@ -329,7 +329,7 @@ describe('Spinbox Component', () => {
             const { container } = render(<Spinbox {...defaultProps} />);
 
             const input = container.querySelector('input[type="number"]') as HTMLInputElement;
-            expect(input.getAttribute('aria-label')).toBe('Quantity test-spinbox');
+            expect(input.getAttribute('aria-label')).toBe('Quantity');
         });
 
         test('buttons have proper titles', () => {

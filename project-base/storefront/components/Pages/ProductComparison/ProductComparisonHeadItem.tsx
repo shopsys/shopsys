@@ -13,6 +13,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 
 type ProductComparisonItemProps = {
@@ -46,7 +47,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 <div className="flex flex-col gap-2">
                     <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
                         <Image
-                            alt={product.mainImage?.name || product.fullName}
+                            alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
                             className="max-h-full w-auto"
                             height={185}
                             src={product.mainImage?.url}
@@ -54,6 +55,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                         />
                     </div>
                     <ExtendedNextLink
+                        aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                         href={product.slug}
                         type="product"
                         onClick={() =>
@@ -78,6 +80,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 />
             </div>
             <Button
+                aria-label={t('Remove product {{ productName }} from comparison', { productName: product.fullName })}
                 className="bg-background-default absolute top-0 right-3 p-2 sm:right-5"
                 title={t('Remove product from comparison')}
                 variant="inverted"

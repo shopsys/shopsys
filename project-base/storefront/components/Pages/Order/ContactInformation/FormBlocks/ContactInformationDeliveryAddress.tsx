@@ -262,6 +262,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         <>
                                                             <Select
                                                                 isRequired
+                                                                ariaLabel={t('Select country')}
                                                                 label={formMeta.fields.deliveryCountry.label}
                                                                 activeOption={countriesAsSelectOptions.find(
                                                                     (option) => option.value === field.value.value,

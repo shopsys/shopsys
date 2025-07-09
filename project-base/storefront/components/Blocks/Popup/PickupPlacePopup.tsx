@@ -40,9 +40,8 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
         <Popup
             className="min-h-[min(600px,80dvh)] w-11/12 max-w-4xl md:min-h-auto"
             contentClassName="overflow-y-auto flex flex-col flex-1"
+            title={t('Choose the store where you are going to pick up your order')}
         >
-            <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
-
             {isFetchingTransportStores && <SkeletonModuleTransportStores />}
 
             {transportStoresData?.transport?.stores && (

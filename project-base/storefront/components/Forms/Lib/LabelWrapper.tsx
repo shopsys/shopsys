@@ -36,7 +36,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     inputType === 'text-input' &&
                         'pointer-events-none top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-2 peer-focus:text-sm peer-focus:font-normal',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        'text-input-placeholder-default peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled absolute left-3 z-[2] block transform-none transition-all peer-placeholder-shown:-translate-y-1/2 peer-focus:translate-none',
+                        'text-input-placeholder-default peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled absolute left-3 z-[2] block transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:translate-none motion-safe:transition-all',
                     (inputType === 'checkbox' || inputType === 'radio') && [
                         'group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
                         checked
@@ -58,7 +58,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 )}
             >
                 {(inputType === 'checkbox' || inputType === 'radio') && (
-                    <div
+                    <span
                         className={twMergeCustom(
                             'border-input-border-default bg-input-bg-default group-hover:bg-fill-accent-less flex size-5 min-w-5 border p-[3px] transition',
                             inputType === 'checkbox' ? 'rounded-checkbox' : 'rounded-full p-[5px]',
@@ -73,6 +73,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     >
                         {inputType === 'checkbox' ? (
                             <CheckmarkIcon
+                                aria-hidden="true"
                                 className={twMergeCustom(
                                     'text-icon-inverted h-full opacity-0 transition',
                                     checked && 'opacity-100',
@@ -87,19 +88,23 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                                 )}
                             />
                         )}
-                    </div>
+                    </span>
                 )}
 
-                <div className="flex w-full justify-between">
-                    <div className="w-full">
+                <span className="flex w-full justify-between">
+                    <span className="w-full">
                         {label}
-                        {required && <span className="text-text-error ml-1">*</span>}
-                    </div>
+                        {required && (
+                            <span aria-hidden="true" className="text-text-error ml-1">
+                                *
+                            </span>
+                        )}
+                    </span>
 
                     {!!count && !checked && (
-                        <div className="text-input-placeholder-default ml-auto font-normal">({count})</div>
+                        <span className="text-input-placeholder-default ml-auto font-normal">({count})</span>
                     )}
-                </div>
+                </span>
             </label>
         )}
     </div>

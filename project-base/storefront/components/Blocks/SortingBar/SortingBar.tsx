@@ -64,7 +64,13 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     return (
         <>
             <Button
+                aria-controls="sort-dropdown"
+                aria-expanded={isSortMenuOpen}
+                aria-haspopup="listbox"
                 variant="inverted"
+                aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
+                    currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
+                })}
                 className={twJoin(
                     'vl:hidden relative w-full flex-1 justify-start sm:w-auto',
                     isSortMenuOpen && 'z-aboveOverlay',
@@ -72,11 +78,16 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
             >
                 <SortIcon className="size-5" />
+
                 <span className="line-clamp-1 overflow-hidden text-left leading-tight">
                     {sortOptionsLabels[selectedSortOption] || t('Sort')}
                 </span>
             </Button>
+
             <div
+                aria-label={t('Sort options')}
+                id="sort-dropdown"
+                role="listbox"
                 className={twJoin(
                     'bg-background-default vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
                     isSortMenuOpen
@@ -99,6 +110,11 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                             key={sortOption}
                             href={sortHref}
                             isActive={isSelectedSortOption}
+                            ariaLabel={
+                                isSelectedSortOption
+                                    ? t('Sorted by {{ sortOption }}', { sortOption: sortOptionsLabels[sortOption] })
+                                    : t('Sort by {{ sortOption }}', { sortOption: sortOptionsLabels[sortOption] })
+                            }
                             onClick={() => handleChangeSort(sortOption)}
                         >
                             {sortOptionsLabels[sortOption]}
@@ -106,9 +122,11 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     );
                 })}
             </div>
+
             <div className="font-secondary text-input-placeholder-default vl:block hidden text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
+
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}
         </>
     );

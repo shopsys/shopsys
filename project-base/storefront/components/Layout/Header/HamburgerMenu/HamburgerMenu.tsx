@@ -18,9 +18,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ onClick }) => {
             type="button"
             onClick={onClick}
         >
-            <div className="flex items-center justify-center">
-                <MenuIcon className="size-6" />
-            </div>
+            <MenuIcon className="size-6" />
         </button>
     );
 };

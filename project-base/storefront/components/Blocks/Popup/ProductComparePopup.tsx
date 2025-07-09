@@ -11,9 +11,7 @@ export const ProductComparePopup: FC = () => {
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
 
     return (
-        <Popup>
-            <div className="text-base lg:text-lg">{t('Comparison')}</div>
-
+        <Popup title={t('Comparison')}>
             <div className="flex flex-col">
                 <p className="font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
 

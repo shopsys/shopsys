@@ -13,8 +13,6 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
 
     return (
         <div className="vl:max-w-xl">
-            <div className="text-xl font-bold">{t('Availability in stores')}</div>
-
             <ul>
                 {storeAvailabilities.map(
                     (storeAvailability, index) =>
@@ -41,6 +39,9 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     className="ml-auto flex items-center"
                                     href={storeAvailability.store.slug}
                                     type="store"
+                                    aria-label={t('Store detail for {{storeName}}', {
+                                        storeName: storeAvailability.store.storeName,
+                                    })}
                                 >
                                     {t('Store detail')}
                                 </ExtendedNextLink>

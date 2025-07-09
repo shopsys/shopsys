@@ -7,8 +7,11 @@ export interface SkeletonProps {
 export const Skeleton: FC<SkeletonProps> = ({ className }) => {
     return (
         <div
-            className={twMergeCustom('custom-loading-skeleton bg-skeleton-default animate-pulse rounded-md', className)}
             role="status"
+            className={twMergeCustom(
+                'custom-loading-skeleton bg-skeleton-default rounded-md motion-safe:animate-pulse',
+                className,
+            )}
         />
     );
 };

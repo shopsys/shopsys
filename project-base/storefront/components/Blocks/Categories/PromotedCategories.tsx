@@ -22,7 +22,7 @@ export const PromotedCategories: FC = () => {
 
     return (
         <Webline>
-            <h3 className="mb-3">{t('Shop by category')}</h3>
+            <h2 className="h3 mb-3">{t('Shop by category')}</h2>
 
             <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
         </Webline>

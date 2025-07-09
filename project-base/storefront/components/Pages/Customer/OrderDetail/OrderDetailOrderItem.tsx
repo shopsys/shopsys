@@ -83,6 +83,9 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                 className="vl:w-fit text-text-default hover:text-text-hovered w-full text-sm no-underline hover:underline"
                                 href={orderItem.product.slug}
                                 skeletonType="product"
+                                aria-label={t('Go to product {{ productName }}', {
+                                    productName: orderItem.name,
+                                })}
                             >
                                 {orderItem.name}
                             </ExtendedNextLink>
@@ -92,9 +95,12 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                 orderItem.type === TypeOrderItemTypeEnum.Product && (
                                     <button
                                         aria-haspopup="dialog"
-                                        className="text-link-default hover:text-link-hovered focus-visible:ring-link-active cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none focus-visible:ring-2"
+                                        className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
+                                        data-tid={TIDs.order_detail_create_complaint_button}
                                         tabIndex={0}
-                                        tid={TIDs.order_detail_create_complaint_button}
+                                        aria-label={t('Create complaint for product {{ productName }}', {
+                                            productName: orderItem.name,
+                                        })}
                                         onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
                                     >
                                         <FillIcon className="mr-2 size-6" />

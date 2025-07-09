@@ -9,6 +9,7 @@ export type ProductDetailAccessoriesProps = {
 
 export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => (
     <ProductsSlider
+        ariaAnchorName="product-slider-accessories"
         gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
         gtmProductListName={GtmProductListNameType.product_detail_accessories}
         products={accessories}

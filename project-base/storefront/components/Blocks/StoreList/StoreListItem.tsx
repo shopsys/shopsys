@@ -21,7 +21,8 @@ type StoreListItemProps = {
 export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
-    const itemRef = useRef<HTMLButtonElement>(null);
+    const itemRef = useRef<HTMLDivElement>(null);
+    const storeInfoId = `store-info-${store.slug.replace(/\//g, '-')}`;
 
     useEffect(() => {
         setIsExpanded(isSelected);
@@ -42,18 +43,30 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         return undefined;
     }, [isExpanded]);
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            setIsExpanded((isExpanded) => !isExpanded);
+        }
+    };
+
     return (
-        <button
-            aria-controls="store-info"
+        <div
+            aria-controls={storeInfoId}
             aria-expanded={isExpanded}
             ref={itemRef}
+            role="button"
             tabIndex={0}
             title={isExpanded ? t('Collapse store info') : t('Expand store info')}
-            type="button"
+            aria-label={
+                isExpanded
+                    ? t('Collapse store info {{storeName}}', { storeName: store.name })
+                    : t('Expand store info {{storeName}}', { storeName: store.name })
+            }
             className={twMergeCustom(
                 'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5 text-left',
                 isExpanded && 'border-border-less',
             )}
+            onKeyDown={handleKeyDown}
             onClick={() => {
                 setIsExpanded((isExpanded) => !isExpanded);
             }}
@@ -61,7 +74,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             <div className="flex items-center justify-between gap-3.5">
                 <div className="w-full items-center justify-between xl:flex">
                     <div className="max-xl:mb-2.5 xl:w-[215px]">
-                        <h5>{store.name}</h5>
+                        <span className="h5">{store.name}</span>
                         <p className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
@@ -73,49 +86,52 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             })}
                         </p>
                     )}
-                    <div className="flex w-44 items-center xl:block xl:text-right" tid={TIDs.store_opening_status}>
+                    <div className="flex w-44 items-center xl:block xl:text-right" data-tid={TIDs.store_opening_status}>
                         <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
-                        <p className="ml-2.5 text-xs" tid={TIDs.store_opening_hours}>
+                        <p className="ml-2.5 text-xs" data-tid={TIDs.store_opening_hours}>
                             {getTodayOpeningHours(store.openingHours)}
                         </p>
                     </div>
                 </div>
                 <div>
-                    <ArrowIcon className={`size-5 transform ${isExpanded ? 'rotate-180' : ''}`} />
+                    <ArrowIcon className={`size-5 motion-safe:transform ${isExpanded ? 'rotate-180' : ''}`} />
                 </div>
             </div>
-            <AnimatePresence initial={false}>
-                {isExpanded && (
-                    <AnimateCollapseDiv className="mt-2.5 !block" keyName="store-info">
-                        {!!store.specialMessage && (
-                            <InfoItem>
-                                <Infobox message={store.specialMessage} />
-                            </InfoItem>
-                        )}
-                        {store.description && (
-                            <InfoItem>
-                                <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />
-                            </InfoItem>
-                        )}
 
-                        {store.phone || store.email ? (
+            <div id={storeInfoId}>
+                <AnimatePresence initial={false}>
+                    {isExpanded && (
+                        <AnimateCollapseDiv className="mt-2.5 !block" keyName={storeInfoId}>
+                            {!!store.specialMessage && (
+                                <InfoItem>
+                                    <Infobox message={store.specialMessage} />
+                                </InfoItem>
+                            )}
+                            {store.description && (
+                                <InfoItem>
+                                    <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />
+                                </InfoItem>
+                            )}
+
+                            {store.phone || store.email ? (
+                                <InfoItem>
+                                    <StoreContact email={store.email} phone={store.phone} />
+                                </InfoItem>
+                            ) : null}
+
                             <InfoItem>
-                                <StoreContact email={store.email} phone={store.phone} />
+                                <p className="h5 mb-2">{t('Opening hours')}</p>
+                                <OpeningHours openingHours={store.openingHours} />
                             </InfoItem>
-                        ) : null}
 
-                        <InfoItem>
-                            <h5 className="mb-2">{t('Opening hours')}</h5>
-                            <OpeningHours openingHours={store.openingHours} />
-                        </InfoItem>
-
-                        <LinkButton href={store.slug} size="small" type="store" variant="secondary">
-                            {t('Store detail')}
-                        </LinkButton>
-                    </AnimateCollapseDiv>
-                )}
-            </AnimatePresence>
-        </button>
+                            <LinkButton href={store.slug} size="small" type="store" variant="secondary">
+                                {t('Store detail')}
+                            </LinkButton>
+                        </AnimateCollapseDiv>
+                    )}
+                </AnimatePresence>
+            </div>
+        </div>
     );
 };
 

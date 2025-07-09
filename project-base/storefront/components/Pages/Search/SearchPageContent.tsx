@@ -28,7 +28,7 @@ export const SearchPageContent: FC = () => {
     return (
         <VerticalStack gap="md">
             <Webline>
-                <h1 tid={TIDs.search_results_heading}>{searchHeading}</h1>
+                <h1 data-tid={TIDs.search_results_heading}>{searchHeading}</h1>
             </Webline>
 
             {!searchString && (

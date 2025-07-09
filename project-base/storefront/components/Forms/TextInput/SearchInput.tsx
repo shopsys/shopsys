@@ -15,6 +15,7 @@ type SearchInputProps = NativeProps & {
     shouldShowSpinnerInInput: boolean;
     onClear: () => void;
     onSearch?: () => void;
+    ariaLabelForSearchButton: string;
 };
 
 export const SearchInput: FC<SearchInputProps> = ({
@@ -25,6 +26,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     onChange,
     onClear,
     onSearch,
+    ariaLabelForSearchButton,
 }) => {
     const { t } = useTranslation();
 
@@ -39,9 +41,9 @@ export const SearchInput: FC<SearchInputProps> = ({
             <input
                 aria-label={label}
                 autoComplete="off"
+                data-tid={TIDs.layout_header_search_autocomplete_input}
+                id="search-input"
                 placeholder={label}
-                role="searchbox"
-                tid={TIDs.layout_header_search_autocomplete_input}
                 type="search"
                 value={value}
                 className={twMergeCustom(
@@ -60,7 +62,8 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
-                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center"
+                aria-label={ariaLabelForSearchButton}
+                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center rounded-sm"
                 tabIndex={0}
                 title={t('Search')}
                 type="submit"
@@ -71,6 +74,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {!!value && !shouldShowSpinnerInInput && (
                 <button
+                    aria-label={t('Clear search input')}
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
                     tabIndex={0}
                     title={t('Clear search')}

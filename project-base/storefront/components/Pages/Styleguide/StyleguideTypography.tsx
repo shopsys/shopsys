@@ -22,8 +22,8 @@ export const StyleguideTypography: FC = () => {
                 soluta temporibus corrupti, alias velit nobis.
             </p>
 
-            <a>Simple anchor link</a>
-            <ExtendedNextLink href="#">ExtendedNextLink</ExtendedNextLink>
+            <a href="/styleguide">Simple anchor link</a>
+            <ExtendedNextLink href="/styleguide">ExtendedNextLink</ExtendedNextLink>
         </StyleguideSection>
     );
 };

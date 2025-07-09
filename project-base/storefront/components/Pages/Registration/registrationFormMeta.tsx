@@ -208,6 +208,7 @@ export const useRegistrationFormMeta = (
                                 lnk1: privacyPolicyArticleUrl ? (
                                     <Link
                                         isExternal
+                                        aria-label={t('Go to privacy policy article')}
                                         className="inline text-sm"
                                         href={privacyPolicyArticleUrl}
                                         target="_blank"

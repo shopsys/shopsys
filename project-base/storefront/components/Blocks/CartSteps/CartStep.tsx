@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { useCartStepNavigation } from 'utils/cart/useCartStepNavigation';
@@ -21,21 +22,23 @@ export const CartStep: FC<CartStepProps> = ({
     onClickHandler,
     isClickable,
 }) => {
+    const { t } = useTranslation();
     const isDisabled = (activeStep === 1 && step === 3 && !isClickable) || activeStep === step;
 
     return (
         <li>
             <button
+                aria-label={t('Go to {{ step }} step', { step: step })}
                 disabled={isDisabled}
                 tabIndex={0}
                 className={twJoin(
                     'group flex max-w-[70px] flex-col items-center gap-2.5 outline-hidden md:max-w-none lg:flex-row lg:gap-5',
-                    'focus-visible:ring-button-inverted-border-default rounded-md focus-visible:ring-2 focus-visible:ring-offset-4',
+                    'rounded-md',
                     isDisabled ? 'cursor-default' : 'cursor-pointer',
                 )}
                 onClick={() => onClickHandler(step, url, pageType)(activeStep)}
             >
-                <div
+                <span
                     className={twJoin(
                         'flex size-11 items-center justify-center rounded-full',
                         step === activeStep
@@ -43,18 +46,18 @@ export const CartStep: FC<CartStepProps> = ({
                             : 'bg-background-accent-less text-text-accent',
                     )}
                 >
-                    <h4>{step}</h4>
-                </div>
+                    <span className="h4">{step}</span>
+                </span>
 
-                <h4
+                <span
                     className={twJoin(
-                        'text-xs lg:text-lg',
+                        'font-secondary text-xs font-semibold lg:text-lg',
                         !isDisabled && 'group-hover:text-link-hovered',
                         step === activeStep ? 'text-link-default' : '',
                     )}
                 >
                     {label}
-                </h4>
+                </span>
             </button>
         </li>
     );

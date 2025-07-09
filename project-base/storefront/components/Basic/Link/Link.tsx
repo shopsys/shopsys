@@ -46,7 +46,6 @@ export const Link: FC<LinkProps> = ({
     const classNameTwClass = twMergeCustom(
         linkPlaceholderTwClassSegments[0],
         isButton ? 'no-underline hover:no-underline' : linkPlaceholderTwClassSegments[1],
-        'focus-visible:ring-2',
         className,
     );
 
@@ -55,7 +54,7 @@ export const Link: FC<LinkProps> = ({
         href: isExternal ? href : undefined,
         rel,
         target,
-        tid: tid ?? TIDs.basic_link,
+        tabIndex: 0,
     };
 
     const content = isButton ? (
@@ -68,14 +67,14 @@ export const Link: FC<LinkProps> = ({
 
     if (isExternal) {
         return (
-            <a {...props} tabIndex={0}>
+            <a {...props} data-tid={tid ?? TIDs.basic_link}>
                 {content}
             </a>
         );
     }
 
     return (
-        <ExtendedNextLink {...props} passHref href={href}>
+        <ExtendedNextLink {...props} passHref href={href} tid={tid ?? TIDs.basic_link}>
             {content}
         </ExtendedNextLink>
     );

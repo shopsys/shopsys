@@ -1,5 +1,7 @@
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
+import useTranslation from 'next-translate/useTranslation';
+import { removeSpaces } from 'utils/removeSpaces';
 
 type StoreContactItemProps = {
     email: string | null;
@@ -7,11 +9,15 @@ type StoreContactItemProps = {
 };
 
 export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
+    const cleanPhone = removeSpaces(phone ?? '');
+    const { t } = useTranslation();
+
     return (
         <div className="inline-flex flex-col gap-2">
             {email && (
                 <a
-                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
+                    aria-label={t('Mail to {{email}}', { email })}
+                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline"
                     href={'mailto:' + email}
                     tabIndex={0}
                 >
@@ -21,8 +27,9 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
             )}
             {phone && (
                 <a
-                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline focus-visible:ring-2"
-                    href={'tel:' + phone}
+                    aria-label={t('Call to {{phone}}', { phone })}
+                    className="text-text-default inline-flex items-center rounded-md text-sm font-semibold no-underline"
+                    href={'tel:' + cleanPhone}
                     tabIndex={0}
                 >
                     <PhoneIcon className="size-5" />

@@ -3,7 +3,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
@@ -17,8 +16,6 @@ type BlogArticlesListProps = {
 };
 
 export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLoadingMoreBlogCategoryArticles }) => {
-    const { defaultLocale } = useDomainConfig();
-
     return (
         <ul className="flex w-full flex-col gap-y-5">
             {blogArticles.map((blogArticle) => (
@@ -44,9 +41,10 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         </div>
 
                         <div className="flex flex-1 flex-col gap-y-3">
-                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
                                 <ArticleDate
-                                    date={new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
+                                    className="mr-3.5"
+                                    date={blogArticle.publishDate}
                                     tid={TIDs.blog_article_publication_date}
                                 />
 
@@ -54,11 +52,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                     {blogArticle.blogCategories.map((blogArticleCategory) => (
                                         <>
                                             {blogArticleCategory.parent && (
-                                                <Flag
-                                                    key={blogArticleCategory.uuid}
-                                                    href={blogArticleCategory.link}
-                                                    type="blog"
-                                                >
+                                                <Flag key={blogArticleCategory.uuid} type="blog">
                                                     {blogArticleCategory.name}
                                                 </Flag>
                                             )}

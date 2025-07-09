@@ -11,7 +11,7 @@ export const UserNavigation: FC = () => {
     return (
         <aside>
             <div className="min-w-[275px]">
-                <UserMenu className="hidden lg:flex" />
+                <UserMenu hideFocusTrap className="hidden lg:flex" />
             </div>
 
             <Button className="w-full lg:hidden" variant="secondary" onClick={() => setIsUserMenuOpen(true)}>

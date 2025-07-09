@@ -98,6 +98,7 @@ const NewComplaintPage: FC = () => {
                     title={t('New complaint')}
                 >
                     <SearchInput
+                        ariaLabelForSearchButton={t('Search for a product you want to complain about')}
                         className="border-input-border-default w-full border"
                         label={t('Search for a product you want to complain about')}
                         shouldShowSpinnerInInput={searchOrderedItemsDataFetching}

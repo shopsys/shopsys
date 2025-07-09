@@ -5,8 +5,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type SideProps = {
     articles: TypeListedBlogArticleFragment[];
@@ -14,28 +14,26 @@ type SideProps = {
 };
 
 export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false }) => {
-    const { formatDate } = useFormatDate();
+    const { t } = useTranslation();
 
     return (
         <div className="flex flex-col gap-6">
             {articles.map((article) => (
-                <ArticleLink
-                    key={article.uuid}
-                    className="vl:flex-row focus-visible:bg-background-more/10 flex max-w-[410px] min-w-96 snap-start flex-col gap-5 rounded-xl no-underline hover:no-underline focus-visible:ring-0 focus-visible:ring-offset-0"
-                    href={article.link}
-                >
-                    <Image
-                        alt={article.mainImage?.name || article.name}
-                        className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
-                        height={220}
-                        sizes="(max-width: 1023px) 0px, 144px"
-                        src={article.mainImage?.url}
-                        tid={TIDs.blog_preview_image}
-                        width={320}
-                    />
+                <div key={article.uuid} className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5">
+                    <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
+                        <Image
+                            alt={article.mainImage?.name || article.name}
+                            className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
+                            height={220}
+                            sizes="(max-width: 1023px) 0px, 144px"
+                            src={article.mainImage?.url}
+                            tid={TIDs.blog_preview_image}
+                            width={320}
+                        />
+                    </ArticleLink>
 
                     <div className="flex flex-col items-start gap-2">
-                        <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
+                        <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 whitespace-nowrap">
                             {isPlaceholder ? (
                                 <>
                                     <Skeleton className="mr-6 h-5 w-20" />
@@ -44,8 +42,8 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <ArticleDate
-                                        className="mr-4"
-                                        date={formatDate(article.publishDate, 'l')}
+                                        className="mr-3.5"
+                                        date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
                                     />
 
@@ -55,11 +53,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                                         }
 
                                         return (
-                                            <Flag
-                                                key={blogPreviewCategory.uuid}
-                                                href={blogPreviewCategory.link}
-                                                type="blog"
-                                            >
+                                            <Flag key={blogPreviewCategory.uuid} type="blog">
                                                 {blogPreviewCategory.name}
                                             </Flag>
                                         );
@@ -68,13 +62,20 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h5 className="text-text-inverted">{article.name}</h5>
+                        <ArticleLink
+                            ariaLabel={t('Go to article page of {{ articleName }}', { articleName: article.name })}
+                            className="h5 text-text-inverted"
+                            href={article.link}
+                            title={t('Blog article')}
+                        >
+                            {article.name}
+                        </ArticleLink>
 
                         <p className={twJoin('text-text-inverted font-normal', !isPlaceholder && 'hidden')}>
                             {article.perex}
                         </p>
                     </div>
-                </ArticleLink>
+                </div>
             ))}
         </div>
     );

@@ -12,7 +12,6 @@ import {
 } from 'types/friendlyUrl';
 import { UrlObject } from 'url';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
-import { twMergeCustom } from 'utils/twMerge';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
 export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
@@ -31,12 +30,22 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     type,
     skeletonType,
     className,
+    tid,
     ...props
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const { url } = useDomainConfig();
 
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
+    const urlHref = isDynamic
+        ? {
+              pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
+              query: {
+                  [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
+                  ...queryParams,
+              },
+          }
+        : href;
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
@@ -64,20 +73,11 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     return (
         <NextLink
             as={isDynamic ? href : as}
-            className={twMergeCustom('focus-visible:ring-2', className)}
+            className={className}
+            data-tid={tid}
+            href={urlHref}
             prefetch={false}
             tabIndex={0}
-            href={
-                isDynamic
-                    ? {
-                          pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
-                          query: {
-                              [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
-                              ...queryParams,
-                          },
-                      }
-                    : href
-            }
             onClick={handleOnClick}
             {...props}
         >

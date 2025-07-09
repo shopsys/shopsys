@@ -27,12 +27,9 @@ export const CategoryDetailProductsWrapperPlaceholder: FC<CategoryDetailProducts
             {products.map((product) => (
                 <ProductListItemPlaceholder key={product.uuid} product={product} />
             ))}
-            <Adverts
-                isSingle
-                className="col-span-full row-start-2 mx-auto justify-center pl-2"
-                currentCategory={category}
-                positionName="productListSecondRow"
-            />
+            <li className="col-span-full row-start-2 mx-auto justify-center">
+                <Adverts isSingle currentCategory={category} positionName="productListSecondRow" />
+            </li>
         </ul>
     );
 };

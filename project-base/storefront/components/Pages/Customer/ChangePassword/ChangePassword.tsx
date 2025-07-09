@@ -70,55 +70,69 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
     };
 
     return (
-        <FormProvider {...formProviderMethods}>
-            <Form onSubmit={formProviderMethods.handleSubmit(onSubmitChangePasswordFormHandler)}>
-                <FormContentWrapper>
-                    <FormBlockWrapper className="border-b-0">
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.oldPassword.name}
-                            passwordInputProps={{
-                                label: formMeta.fields.oldPassword.label,
-                                autoComplete: 'current-password',
-                            }}
-                            render={(passwordInput) => (
-                                <FormColumn>
-                                    <FormLine bottomGap>{passwordInput}</FormLine>
-                                </FormColumn>
-                            )}
-                        />
+        <>
+            <p className="sr-only" id="change-password-form-description">
+                {t(
+                    'Change password form for changing your password. Please fill in your current password and your new password.',
+                )}
+            </p>
 
-                        <FormColumn>
+            <FormProvider {...formProviderMethods}>
+                <Form onSubmit={formProviderMethods.handleSubmit(onSubmitChangePasswordFormHandler)}>
+                    <FormContentWrapper>
+                        <FormBlockWrapper className="border-b-0">
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
-                                name={formMeta.fields.newPassword.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                name={formMeta.fields.oldPassword.name}
                                 passwordInputProps={{
-                                    label: formMeta.fields.newPassword.label,
-                                    autoComplete: 'new-password',
+                                    label: formMeta.fields.oldPassword.label,
+                                    autoComplete: 'current-password',
+                                    'aria-labelledby': 'change-password-form-description',
                                 }}
+                                render={(passwordInput) => (
+                                    <FormColumn>
+                                        <FormLine bottomGap>{passwordInput}</FormLine>
+                                    </FormColumn>
+                                )}
                             />
 
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPasswordConfirm.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPasswordConfirm.label,
-                                    autoComplete: 'new-password-confirm',
-                                }}
-                            />
-                        </FormColumn>
-                    </FormBlockWrapper>
+                            <FormColumn>
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.newPassword.name}
+                                    render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.newPassword.label,
+                                        autoComplete: 'new-password',
+                                    }}
+                                />
 
-                    <FormButtonWrapper className="mt-0 pb-6">
-                        <SubmitButton isDisabled={isSubmitting}>{t('Change password')}</SubmitButton>
-                    </FormButtonWrapper>
-                </FormContentWrapper>
-            </Form>
-        </FormProvider>
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.newPasswordConfirm.name}
+                                    render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.newPasswordConfirm.label,
+                                        autoComplete: 'new-password-confirm',
+                                    }}
+                                />
+                            </FormColumn>
+                        </FormBlockWrapper>
+
+                        <FormButtonWrapper className="mt-0 pb-6">
+                            <SubmitButton
+                                aria-label={t('Submit form to change your password')}
+                                isDisabled={isSubmitting}
+                            >
+                                {t('Change password')}
+                            </SubmitButton>
+                        </FormButtonWrapper>
+                    </FormContentWrapper>
+                </Form>
+            </FormProvider>
+        </>
     );
 };

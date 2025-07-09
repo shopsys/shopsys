@@ -11,7 +11,7 @@ export const InformationCard: FC<InformationCardProps> = ({ children, icon, head
         <div className={twMergeCustom('flex flex-col gap-3', className)}>
             <div className="flex items-center gap-3">
                 {icon}
-                <h5>{heading}</h5>
+                <span className="h5">{heading}</span>
             </div>
 
             <div className="flex flex-col text-sm">{children}</div>

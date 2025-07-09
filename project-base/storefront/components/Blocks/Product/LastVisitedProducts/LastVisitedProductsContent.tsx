@@ -28,6 +28,7 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
         <>
             {lastVisitedProducts && !areProductsFetching ? (
                 <ProductsSlider
+                    ariaAnchorName="product-slider-last-visited"
                     gtmProductListName={GtmProductListNameType.last_visited_products}
                     productItemProps={productItemStyleProps}
                     products={lastVisitedProducts}

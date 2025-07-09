@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -60,6 +61,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel={t('Filter by parameter') + ' ' + title}
                 isActive={isActive}
                 isOpen={!isGroupCollapsed}
                 title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}
@@ -68,7 +70,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
             <AnimatePresence initial={false}>
                 {!isGroupCollapsed && (
-                    <FilterGroupContent>
+                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
                         {isCheckboxType && (
                             <>
                                 {defaultOptions.map((parameterValueOption, index) => {

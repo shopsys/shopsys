@@ -88,11 +88,15 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
         <div className="bg-background-more flex flex-col rounded-xl p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
+            <p className="sr-only" id="registration-after-order-password-label">
+                {t('Finish registration to loyalty program by entering your password')}
+            </p>
+
             <ul className="flex flex-col gap-2 py-5">
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
                         <ThumbUp className="text-text-accent size-6" />
-                        <h5 className="text-text-accent">{text}</h5>
+                        <span className="h5 text-text-accent">{text}</span>
                     </li>
                 ))}
             </ul>
@@ -102,44 +106,52 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     className="flex flex-col gap-4"
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
-                    <h4>{t('Choose a password')}</h4>
+                    <fieldset>
+                        <legend className="h4 mb-4">{t('Choose a password')}</legend>
 
-                    <FormColumn className="gap-3">
-                        <PasswordInputControlled
+                        <FormColumn className="gap-3">
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.password.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.password.label,
+                                    autoComplete: 'new-password',
+                                    'aria-labelledby': 'registration-after-order-password-label',
+                                }}
+                            />
+
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.passwordConfirm.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.passwordConfirm.label,
+                                    autoComplete: 'new-password-confirm',
+                                }}
+                            />
+                        </FormColumn>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend className="sr-only">{t('Privacy policy')}</legend>
+
+                        <CheckboxControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
-                            name={formMeta.fields.password.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.password.label,
-                                autoComplete: 'new-password',
+                            name={formMeta.fields.privacyPolicy.name}
+                            render={(checkbox) => <FormLine>{checkbox}</FormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.privacyPolicy.label,
+                                required: true,
                             }}
                         />
-
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.passwordConfirm.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.passwordConfirm.label,
-                                autoComplete: 'new-password-confirm',
-                            }}
-                        />
-                    </FormColumn>
-
-                    <CheckboxControlled
-                        control={formProviderMethods.control}
-                        formName={formMeta.formName}
-                        name={formMeta.fields.privacyPolicy.name}
-                        render={(checkbox) => <FormLine>{checkbox}</FormLine>}
-                        checkboxProps={{
-                            label: formMeta.fields.privacyPolicy.label,
-                            required: true,
-                        }}
-                    />
+                    </fieldset>
 
                     <SubmitButton
+                        aria-label={t('Submit form to create your new account')}
                         className="self-start"
                         isDisabled={isInvalidRegistrationRef.current}
                         isWithDisabledLook={!formProviderMethods.formState.isValid}

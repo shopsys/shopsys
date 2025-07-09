@@ -18,7 +18,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
 
     return (
         <div className="flex flex-col gap-2">
-            <h4>{t('Your order')}</h4>
+            <span className="h4">{t('Your order')}</span>
 
             {items.map((item) => {
                 if (item.type === TypeOrderItemTypeEnum.Product && item.product) {
@@ -26,6 +26,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                         <OrderItemProductCard
                             key={item.uuid}
                             availability={item.product.availability}
+                            categoryName={item.product.categories[0]?.name}
                             fullName={item.name}
                             mainImage={item.product.mainImage}
                             price={item.product.price}

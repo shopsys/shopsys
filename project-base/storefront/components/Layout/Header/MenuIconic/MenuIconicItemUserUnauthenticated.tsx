@@ -21,12 +21,14 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
     return (
         <>
             <div
-                tid={TIDs.my_account_link}
-                title={t('Login')}
+                aria-expanded={isActive}
+                aria-haspopup="menu"
+                aria-label={t('Show registration and login popup')}
+                data-tid={TIDs.my_account_link}
+                role="button"
+                tabIndex={0}
                 className={twMergeCustom(
-                    'group lg:relative lg:flex',
-                    'min-size-12',
-                    'focus-visible:outline-background rounded-md focus-visible:outline-1',
+                    'group min-size-12 rounded-md outline-none lg:relative lg:flex',
                     isActive && 'z-aboveOverlay',
                 )}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
@@ -42,9 +44,10 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                 }}
             >
                 <MenuIconicItemLink
-                    className="cursor-pointer lg:w-[72px]"
+                    className="group-focus-visible:text-text-default cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 lg:w-[72px]"
+                    tabIndex={-1}
                     tid={TIDs.layout_header_menuiconic_login_link_popup}
-                    title={t('Login')}
+                    title={t('Login form')}
                     onClick={() => !isDesktop && setIsActive(!isActive)}
                     onTouchEnd={(e) => {
                         e.preventDefault();

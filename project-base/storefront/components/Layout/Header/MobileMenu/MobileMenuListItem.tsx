@@ -17,7 +17,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
     return (
         <div key={navigationItem.link + navigationItem.name} className="flex">
             <ExtendedNextLink
-                className="text-text-default focus-visible:ring-border-brand focus-visible:text-text-accent flex-1 py-4 font-bold no-underline focus-visible:underline"
+                className="text-text-default flex-1 py-4 font-bold no-underline"
                 href={navigationItem.link}
                 skeletonType={DEFAULT_SKELETON_TYPE}
                 onClick={onNavigate}

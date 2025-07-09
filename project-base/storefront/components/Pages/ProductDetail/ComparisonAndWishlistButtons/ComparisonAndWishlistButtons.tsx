@@ -17,11 +17,13 @@ export const ComparisonAndWishlistButtons: FC<ComparisonAndWishlistButtonsProps>
             <ProductCompareButton
                 isWithText
                 isProductInComparison={isProductInComparison(product.uuid)}
+                productName={product.fullName}
                 toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
             />
             <ProductWishlistButton
                 isWithText
                 isProductInWishlist={isProductInWishlist(product.uuid)}
+                productName={product.fullName}
                 toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
             />
         </div>

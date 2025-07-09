@@ -28,6 +28,8 @@ export const HomePageContent: FC = () => {
 
             <CommonLayout>
                 <VerticalStack gap="lg">
+                    <h1 className="sr-only">{t('Shopsys.com')}</h1>
+
                     <Banners />
 
                     <UpsList />
@@ -38,9 +40,8 @@ export const HomePageContent: FC = () => {
                         <DeferredRecommendedProducts
                             recommendationType={TypeRecommendationType.Personalized}
                             render={(recommendedProductsContent) => (
-                                <section>
-                                    <h3 className="mb-3">{t('Recommended for you')}</h3>
-
+                                <section aria-label={t('Recommended products')}>
+                                    <h2 className="h3 mb-3">{t('Recommended for you')}</h2>
                                     {recommendedProductsContent}
                                 </section>
                             )}

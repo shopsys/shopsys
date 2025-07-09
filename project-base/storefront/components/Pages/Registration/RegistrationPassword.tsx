@@ -1,4 +1,4 @@
-import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
+import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -14,29 +14,32 @@ export const RegistrationPassword: FC = () => {
 
     return (
         <FormBlockWrapper>
-            <FormHeading>{t('Password')}</FormHeading>
-            <FormColumn className="gap-3">
-                <PasswordInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.password.name}
-                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                    passwordInputProps={{
-                        label: formMeta.fields.password.label,
-                        autoComplete: 'new-password',
-                    }}
-                />
-                <PasswordInputControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.passwordConfirm.name}
-                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                    passwordInputProps={{
-                        label: formMeta.fields.passwordConfirm.label,
-                        autoComplete: 'new-password-confirm',
-                    }}
-                />
-            </FormColumn>
+            <fieldset>
+                <legend className="h4 mb-4">{t('Password')}</legend>
+
+                <FormColumn className="gap-3">
+                    <PasswordInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.password.name}
+                        render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                        passwordInputProps={{
+                            label: formMeta.fields.password.label,
+                            autoComplete: 'new-password',
+                        }}
+                    />
+
+                    <PasswordInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.passwordConfirm.name}
+                        render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                        passwordInputProps={{
+                            label: formMeta.fields.passwordConfirm.label,
+                        }}
+                    />
+                </FormColumn>
+            </fieldset>
         </FormBlockWrapper>
     );
 };

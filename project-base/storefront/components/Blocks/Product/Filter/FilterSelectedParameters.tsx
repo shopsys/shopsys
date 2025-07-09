@@ -54,13 +54,16 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
                 <AnimateCollapseDiv className="vl:mb-5 vl:mt-0 mt-5 !block" keyName="selected-parameters">
-                    <h6 className="vl:mb-2 mb-5">{t('Selected filters')}</h6>
+                    <p className="h6 vl:mb-2 mb-5">{t('Selected filters')}</p>
 
                     <div className="flex flex-wrap items-center gap-y-2">
                         {!!currentFilter?.onlyInStock && (
                             <SelectedParametersList keyName="filter-only-in-stock">
                                 <SelectedParametersName>{t('Availability')}</SelectedParametersName>
-                                <SelectedParametersListItem onClick={() => updateFilterInStockQuery(false)}>
+                                <SelectedParametersListItem
+                                    ariaLabel={t('Remove filter Availability only goods in stock')}
+                                    onClick={() => updateFilterInStockQuery(false)}
+                                >
                                     {t('Only goods in stock')}
                                     <SelectedParametersIcon />
                                 </SelectedParametersListItem>
@@ -71,6 +74,10 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                             <SelectedParametersList keyName="filter-minmax-price">
                                 <SelectedParametersName>{t('Price')}</SelectedParametersName>
                                 <SelectedParametersListItem
+                                    ariaLabel={t('Remove filter Price from {{ minimalPrice }} to {{ maximalPrice }}', {
+                                        minimalPrice: formatPrice(currentFilter.minimalPrice ?? 0),
+                                        maximalPrice: formatPrice(currentFilter.maximalPrice ?? 0),
+                                    })}
                                     onClick={() => {
                                         updateFilterPricesQuery({
                                             maximalPrice: undefined,
@@ -104,6 +111,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                         !!checkedBrand && (
                                             <SelectedParametersListItem
                                                 key={checkedBrand.brand.uuid}
+                                                ariaLabel={t('Remove filter Brand {{ filterName }}', {
+                                                    filterName: checkedBrand.brand.name,
+                                                })}
                                                 onClick={() => updateFilterBrandsQuery(checkedBrand.brand.uuid)}
                                             >
                                                 {checkedBrand.brand.name}
@@ -120,6 +130,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                 {checkedFlags.map((checkedFlag) => (
                                     <SelectedParametersListItem
                                         key={checkedFlag.flag.uuid}
+                                        ariaLabel={t('Remove filter Flag {{ filterName }}', {
+                                            filterName: checkedFlag.flag.name,
+                                        })}
                                         onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
                                     >
                                         <Flag className="py-0.5" rgbBgColor={checkedFlag.flag.rgbColor}>
@@ -176,6 +189,18 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     {isSliderParameter && (
                                         <SelectedParametersListItem
                                             key={selectedParameterOptions.uuid}
+                                            ariaLabel={t(
+                                                'Remove parameter range from {{ minValue }} to {{ maxValue }} from group {{ groupName }}',
+                                                {
+                                                    minValue:
+                                                        selectedParameter.minimalValue ||
+                                                        selectedParameterOptions.minimalValue,
+                                                    maxValue:
+                                                        selectedParameter.maximalValue ||
+                                                        selectedParameterOptions.maximalValue,
+                                                    groupName: selectedParameterOptions.name,
+                                                },
+                                            )}
                                             onClick={() =>
                                                 updateFilterParametersQuery(selectedParameterOptions.uuid, undefined)
                                             }
@@ -195,6 +220,13 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                         selectedParameterValues.map((selectedValue) => (
                                             <SelectedParametersListItem
                                                 key={selectedValue.uuid}
+                                                ariaLabel={t(
+                                                    'Remove parameter {{ value }} from group {{ groupName }}',
+                                                    {
+                                                        value: selectedValue.text,
+                                                        groupName: selectedParameterOptions.name,
+                                                    },
+                                                )}
                                                 onClick={() =>
                                                     updateFilterParametersQuery(
                                                         selectedParameter.parameter,
@@ -217,7 +249,8 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         })}
 
                         <button
-                            className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
+                            aria-label={t('Clear all active filters')}
+                            className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
                             tabIndex={0}
                             type="button"
                             onClick={resetAllFilterQueries}

@@ -26,7 +26,7 @@ class Version20231101182132 extends AbstractMigration implements ContainerAwareI
                 t('
                 <p>
                     Payment for order number {number} has been successful. <br /><br />
-                    <a href="{order_detail_url}">Track</a> the status of your order. <br />
+                    <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
                     {transport_instructions}
                 </p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getDomainLocale($domainId)),
                 $domainId,

@@ -9,6 +9,7 @@ export type ProductDetailRelatedProductsTabProps = {
 export const ProductDetailRelatedProductsTab: FC<ProductDetailRelatedProductsTabProps> = ({ relatedProducts }) => (
     <div className="mt-10">
         <ProductsSlider
+            ariaAnchorName="product-slider-related"
             gtmProductListName={GtmProductListNameType.product_detail_related_products}
             products={relatedProducts}
         />

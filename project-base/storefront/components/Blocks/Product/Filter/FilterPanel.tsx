@@ -2,6 +2,7 @@ import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
+import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
@@ -43,17 +44,26 @@ export const FilterPanel: FC<FilterPanelProps> = ({
         !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     return (
-        <div className="z-aboveOverlay bg-background-default vl:z-above flex h-full flex-col pb-1">
+        <div
+            aria-label={t('Product filters')}
+            className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1"
+            id="filter-panel"
+            role="region"
+        >
+            <AccessibleLink className="vl:block hidden rounded-md" href="#product-list" title={t('Skip filters')} />
+
             <div className="vl:hidden flex items-center justify-between p-5">
-                <h5>{t('Product filter')}</h5>
+                <h2 className="h5">{t('Product filter')}</h2>
+
                 <button
-                    className="inline-flex size-4 cursor-pointer"
+                    aria-label={t('Close filter panel')}
+                    className="text-icon-less hover:text-icon-accent flex cursor-pointer items-center justify-center"
                     tabIndex={0}
                     title={t('Close filter panel')}
                     type="button"
                     onClick={() => setIsFilterPanelOpen(false)}
                 >
-                    <RemoveIcon className="text-input-placeholder-default hover:text-input-placeholder-hovered w-6" />
+                    <RemoveIcon className="size-6" />
                 </button>
             </div>
 
@@ -63,6 +73,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <div className="divide-border-less divide-y">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
+                            ariaLabel={t('Filter by price')}
                             initialMaxPrice={filterOptions.maximalPrice}
                             initialMinPrice={filterOptions.minimalPrice}
                             isActive={activePriceFilter}
@@ -72,6 +83,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                     {!!filterOptions.flags?.length && (
                         <FilterGroupGeneric
+                            ariaLabel={t('Filter by flags')}
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_FLAGS}
                             filterField="flags"
                             isActive={activeFlagFilter}
@@ -82,6 +94,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                     {!!filterOptions.brands?.length && (
                         <FilterGroupGeneric
+                            ariaLabel={t('Filter by brands')}
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_BRANDS}
                             filterField="brands"
                             isActive={activeBrandFilter}
@@ -113,8 +126,14 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <Button className="ml:auto" size="large" onClick={() => setIsFilterPanelOpen(false)}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
+
                 {currentFilter !== null && (
-                    <Button size="large" variant="inverted" onClick={resetAllFilterQueries}>
+                    <Button
+                        aria-label={t('Clear all active filters')}
+                        size="large"
+                        variant="inverted"
+                        onClick={resetAllFilterQueries}
+                    >
                         {t('Clear all')}
                     </Button>
                 )}

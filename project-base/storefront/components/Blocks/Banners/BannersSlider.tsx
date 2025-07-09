@@ -76,10 +76,10 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     );
 
     return (
-        <div className="flex flex-col" tid={TIDs.banners_slider}>
+        <div className="flex flex-col" data-tid={TIDs.banners_slider}>
             <div {...handlers}>
                 <ExtendedNextLink
-                    className="block rounded-t-xl rounded-b-none !no-underline select-text"
+                    className="group block rounded-t-xl rounded-b-none !no-underline select-text"
                     draggable={false}
                     href={sliderItems[bannerSliderState.sliderPosition].link}
                     title={sliderItems[bannerSliderState.sliderPosition].name}
@@ -95,7 +95,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 'flex',
                                 sliderItems.length > 1 &&
                                     (!bannerSliderState.isSliding
-                                        ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                        ? `transform transition-transform motion-safe:translate-x-[calc(-100%)] duration-${SLIDER_SLIDE_DURATION} ease-in-out`
                                         : bannerSliderState.slideDirection === 'PREV'
                                           ? 'translate-x-[calc(2*(-100%))] transform'
                                           : 'translate-x-0 transform'),

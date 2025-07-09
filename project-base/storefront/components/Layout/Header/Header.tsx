@@ -16,7 +16,10 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     return (
         <Webline>
-            <div className="flex flex-wrap items-center gap-y-3 pt-3 pb-4 lg:gap-x-7 lg:pt-6 lg:pb-1" tid={TIDs.header}>
+            <div
+                className="flex flex-wrap items-center gap-y-3 pt-3 pb-4 lg:gap-x-7 lg:pt-6 lg:pb-1"
+                data-tid={TIDs.header}
+            >
                 <Logo />
 
                 {simpleHeader ? (

@@ -32,8 +32,8 @@ export const Button: FC<ButtonProps> = forwardRef(
         return (
             <button
                 className={twMergeCustom(getButtonClassName(variant, size, isDisabled, isWithDisabledLook), className)}
+                data-tid={tid}
                 tabIndex={0}
-                tid={tid}
                 type={type}
                 {...props}
             >
@@ -52,7 +52,6 @@ export const getButtonClassName = (
     return twJoin(
         'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-button text-center font-bold font-secondary transition-all hover:no-underline',
         'outline-2 outline-offset-[-2px]',
-        'focus-visible:ring-2 focus-visible:ring-offset-2',
         size === 'small' && 'px-3 py-2.5 text-xs',
         size === 'medium' && 'px-3 py-2.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
         size === 'large' && 'px-4 py-2 text-sm sm:py-2.5',
@@ -65,7 +64,6 @@ export const getButtonClassName = (
                 'active:outline-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
             isDisabled &&
                 'outline-button-primary-border-disabled bg-button-primary-bg-disabled text-button-primary-text-disabled',
-            'focus-visible:ring-button-primary-bg-active',
         ],
         variant === 'secondary' && [
             'outline-button-secondary-border-default bg-button-secondary-bg-default text-button-secondary-text-default',
@@ -75,7 +73,6 @@ export const getButtonClassName = (
                 'active:outline-button-secondary-border-active active:bg-button-secondary-bg-active active:text-button-secondary-text-active',
             isDisabled &&
                 'outline-button-secondary-border-disabled bg-button-secondary-bg-disabled text-button-secondary-text-disabled',
-            'focus-visible:ring-button-secondary-bg-active',
         ],
         variant === 'inverted' && [
             'outline-button-inverted-border-default bg-button-inverted-bg-default text-button-inverted-text-default',
@@ -85,17 +82,15 @@ export const getButtonClassName = (
                 'active:outline-button-inverted-border-active active:bg-button-inverted-bg-active active:text-button-inverted-text-active',
             isDisabled &&
                 'outline-button-inverted-border-disabled bg-button-inverted-bg-disabled text-button-inverted-text-disabled',
-            'focus-visible:ring-button-inverted-border-default',
         ],
         variant === 'transparent' && [
-            'outline-1 outline-offset-[-1px] outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
+            'outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
             !isDisabled &&
                 'hover:outline-button-transparent-border-disabled hover:bg-button-transparent-bg-hovered hover:text-button-transparent-text-hovered',
             !isDisabled &&
                 'active:outline-button-transparent-border-active active:bg-button-transparent-bg-active active:text-button-transparent-text-active',
             isDisabled &&
                 'outline-button-transparent-border-disabled bg-button-transparent-bg-disabled text-button-transparent-text-disabled',
-            'focus-visible:ring-button-transparent-bg-active',
         ],
         (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
     );

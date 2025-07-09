@@ -73,7 +73,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
 
             <div
                 className={twMergeCustom('text-text-default flex flex-col gap-1 self-baseline text-xs', className)}
-                tid={TIDs.opening_hours}
+                data-tid={TIDs.opening_hours}
             >
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
@@ -87,11 +87,11 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
-                            <h6 className="w-44" tid={TIDs.opening_hours_day_of_week_with_date}>
+                            <span className="h6 w-44">
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
-                            </h6>
+                            </span>
 
-                            <span tid={TIDs.opening_hours_ranges}>
+                            <span>
                                 {isClosedWholeDay ? (
                                     <>{t('Closed')}</>
                                 ) : (
@@ -104,11 +104,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                             </span>
 
                             {isToday && (
-                                <OpeningStatus
-                                    className="self-baseline sm:self-auto"
-                                    status={openingHours.status}
-                                    tid={TIDs.opening_hours_status}
-                                />
+                                <OpeningStatus className="self-baseline sm:self-auto" status={openingHours.status} />
                             )}
                         </div>
                     );

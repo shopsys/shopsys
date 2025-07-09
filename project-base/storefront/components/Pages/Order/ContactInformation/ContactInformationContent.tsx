@@ -28,6 +28,8 @@ export const ContactInformationWrapper: FC = () => {
 
     return (
         <OrderContentWrapper activeStep={3}>
+            <h1 className="sr-only">{t('Contact information')}</h1>
+
             <FormProvider {...formProviderMethods}>
                 <Form tid={TIDs.contact_information_form} onSubmit={formProviderMethods.handleSubmit(createOrder)}>
                     <FormContentWrapper>

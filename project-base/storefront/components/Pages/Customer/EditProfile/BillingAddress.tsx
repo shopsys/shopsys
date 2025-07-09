@@ -90,6 +90,7 @@ export const BillingAddress: FC = () => {
                         <>
                             <Select
                                 isRequired
+                                ariaLabel={t('Select country')}
                                 isDisabled={!canManageCompanyData}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}

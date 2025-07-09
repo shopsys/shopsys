@@ -14,6 +14,8 @@ import {
     Tabs as TabsReact,
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
+import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
 /**
@@ -42,13 +44,13 @@ export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
     <TabList className="z-above hidden flex-row lg:flex lg:gap-5">{children}</TabList>
 );
 
-export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, tabIndex, ...props }) => (
+export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
     <Tab
         selectedClassName="isActive"
-        tabIndex={tabIndex}
-        className={twJoin(
+        tabIndex="0"
+        className={twMergeCustom(
             'bg-background-more hover:bg-background-most font-secondary outline-border-success [&.isActive]:bg-background-default cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
-            'focus-visible:outline-2 focus-visible:outline-offset-2',
+            'focus-visible:text-text-default! focus-visible:bg-orange-500! focus-visible:outline-none!',
             className,
         )}
         {...props}
@@ -68,6 +70,12 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
     const mobileTab = () => setIsActiveOnMobile(!isActiveOnMobile);
     const isLg = useMediaMin('lg');
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            mobileTab();
+        }
+    };
+
     return (
         <TabPanel
             forceRender
@@ -75,31 +83,34 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             selectedClassName="isActive"
             {...props}
         >
-            <button
-                aria-controls={`tabs-content-${headingTextMobile}`}
+            <div
+                aria-controls={createAriaParameter('tabs-content', headingTextMobile)}
                 aria-expanded={isActiveOnMobile}
                 className="bg-background-more font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
+                role="button"
                 tabIndex={0}
-                type="button"
                 onClick={mobileTab}
+                onKeyDown={handleKeyDown}
             >
                 {headingTextMobile}
                 <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
                     <ArrowIcon className={twJoin('text-text-default size-4 rotate-0 transition')} />
                 </AnimateRotateDiv>
-            </button>
+            </div>
 
-            <AnimatePresence initial={false}>
-                {(isActiveOnMobile || (isActive && isLg)) && (
-                    <AnimateCollapseDiv
-                        className="relative mt-3 !block w-full lg:mt-0"
-                        initial={skipInitialAnimation ? 'open' : 'closed'}
-                        keyName={`tabs-content-${headingTextMobile}`}
-                    >
-                        {children}
-                    </AnimateCollapseDiv>
-                )}
-            </AnimatePresence>
+            <div className="relative mt-3 w-full lg:mt-0" id={createAriaParameter('tabs-content', headingTextMobile)}>
+                <AnimatePresence initial={false}>
+                    {(isActiveOnMobile || (isActive && isLg)) && (
+                        <AnimateCollapseDiv
+                            className="!block"
+                            initial={skipInitialAnimation ? 'open' : 'closed'}
+                            keyName={`tabs-content-${headingTextMobile}`}
+                        >
+                            {children}
+                        </AnimateCollapseDiv>
+                    )}
+                </AnimatePresence>
+            </div>
         </TabPanel>
     );
 };

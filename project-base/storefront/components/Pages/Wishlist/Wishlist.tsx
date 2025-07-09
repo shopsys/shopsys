@@ -27,12 +27,13 @@ export const Wishlist: FC = () => {
                     <>
                         <div className="flex w-full flex-col items-center justify-between pb-2 lg:flex-row">
                             <Button
+                                aria-label={t('Remove all product from wishlist')}
                                 variant="inverted"
                                 onClick={() => {
                                     handleRemoveWishlist();
                                 }}
                             >
-                                {t('Delete all from wishlist')}
+                                {t('Remove all from wishlist')}
                                 <RemoveIcon className="size-3" />
                             </Button>
                         </div>

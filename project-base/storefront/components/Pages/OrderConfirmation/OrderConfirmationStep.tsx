@@ -21,14 +21,14 @@ export const OrderConfirmationStep: FC<OrderConfirmationStepProps> = ({ step: { 
                     <Icon className="size-4 sm:size-6" />
                 </div>
 
-                <h5
+                <span
                     className={twJoin(
-                        'text-center text-xs sm:text-sm lg:text-base',
+                        'h5 text-center text-xs sm:text-sm lg:text-base',
                         state === FlowTypeStateEnum.Error && 'text-text-error',
                     )}
                 >
                     {label}
-                </h5>
+                </span>
             </div>
         </li>
     );

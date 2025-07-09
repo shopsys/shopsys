@@ -7,10 +7,11 @@ import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { RefObject, createRef, useEffect, useState } from 'react';
+import { RefObject, createRef, forwardRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
+import { useFocusTrap } from 'utils/useFocusTrap';
 import { useKeypress } from 'utils/useKeyPress';
 
 type ModalGalleryProps = {
@@ -22,7 +23,8 @@ type ModalGalleryProps = {
 
 export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galleryName, onCloseModal }) => {
     const { t } = useTranslation();
-    const modalRef = createRef<HTMLButtonElement>();
+    const modalRef = createRef<HTMLDivElement>();
+    const nextButtonRef = createRef<HTMLButtonElement>();
 
     const [selectedIndex, setSelectedIndex] = useState(initialIndex);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
@@ -65,6 +67,11 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
         }
     }, [selectedIndex, itemsRefs, isCarouselDisplayed]);
 
+    useEffect(() => {
+        // Focus on next button when modal opens
+        nextButtonRef.current?.focus();
+    }, []);
+
     useKeypress('Escape', onCloseModal);
     useKeypress('ArrowRight', selectNextItem);
     useKeypress('ArrowLeft', selectPreviousItem);
@@ -75,19 +82,15 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
         trackMouse: true,
     });
 
-    useEffect(() => {
-        modalRef.current?.focus();
-    }, []);
+    useFocusTrap(modalRef);
 
     return (
-        <button
+        <div
             aria-label={t('Gallery')}
             aria-modal="true"
             className="z-maximum bg-background-default focus-visible:outline-background-accent fixed inset-0 flex flex-col p-2 select-none focus-visible:outline-4 focus-visible:outline-offset-[-2px]"
             ref={modalRef}
             role="dialog"
-            tabIndex={0}
-            onClick={onCloseModal}
         >
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div
@@ -170,7 +173,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     role="toolbar"
                 >
                     <ButtonArrow position="left" title={t('Previous')} onClick={selectPreviousItem} />
-                    <ButtonArrow position="right" title={t('Next')} onClick={selectNextItem} />
+                    <ButtonArrow position="right" ref={nextButtonRef} title={t('Next')} onClick={selectNextItem} />
                 </div>
 
                 <div
@@ -191,7 +194,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
                 <ButtonClose title={t('Close')} onClick={onCloseModal} />
             </div>
-        </button>
+        </div>
     );
 };
 
@@ -202,49 +205,58 @@ type FloatingButtonProps = {
     children?: React.ReactNode;
 };
 
-const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick, ...buttonProps }) => (
-    <button
-        tabIndex={0}
-        type="button"
-        className={twMergeCustom(
-            'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
-            'focus-visible:ring-offset-background focus-visible:ring-background-accent focus-visible:ring-2 focus-visible:outline-none',
-            className,
-        )}
-        onClick={(e) => {
-            e.stopPropagation();
-            onClick();
-        }}
-        {...buttonProps}
-    >
-        {children}
-    </button>
+const FloatingButton = forwardRef<HTMLButtonElement, FloatingButtonProps>(
+    ({ className, children, onClick, ...buttonProps }, ref) => (
+        <button
+            ref={ref}
+            tabIndex={0}
+            type="button"
+            className={twMergeCustom(
+                'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
+                className,
+            )}
+            onClick={(e) => {
+                e.stopPropagation();
+                onClick();
+            }}
+            {...buttonProps}
+        >
+            {children}
+        </button>
+    ),
 );
 
-const ButtonArrow: FC<FloatingButtonProps & { position: 'left' | 'right' }> = ({
-    position,
-    title,
-    ...floatingButtonProps
-}) => {
-    const isLeft = position === 'left';
+FloatingButton.displayName = 'FloatingButton';
 
-    return (
-        <FloatingButton className={twJoin('', isLeft ? 'left-2' : 'right-2')} {...floatingButtonProps} title={title}>
-            <svg
-                aria-hidden="true"
-                className={twJoin('h-8 w-8', isLeft && 'rotate-180')}
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+const ButtonArrow = forwardRef<HTMLButtonElement, FloatingButtonProps & { position: 'left' | 'right' }>(
+    ({ position, title, ...floatingButtonProps }, ref) => {
+        const isLeft = position === 'left';
+
+        return (
+            <FloatingButton
+                className={twJoin('', isLeft ? 'left-2' : 'right-2')}
+                ref={ref}
+                title={title}
+                {...floatingButtonProps}
             >
-                <polyline points="9 18 15 12 9 6" />
-            </svg>
-        </FloatingButton>
-    );
-};
+                <svg
+                    aria-hidden="true"
+                    className={twJoin('h-8 w-8', isLeft && 'rotate-180')}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                >
+                    <polyline points="9 18 15 12 9 6" />
+                </svg>
+            </FloatingButton>
+        );
+    },
+);
+
+ButtonArrow.displayName = 'ButtonArrow';
 
 const ButtonClose: FC<FloatingButtonProps> = ({ title, ...floatingButtonProps }) => (
     <FloatingButton className="absolute top-2 right-2" {...floatingButtonProps} title={title}>

@@ -30,11 +30,11 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                         className,
                     )}
                 >
-                    <div className="flex flex-row justify-between">
+                    <div className="mb-5 flex flex-row justify-between">
                         <span className="w-full text-center text-base">{title}</span>
 
                         <button
-                            className="text-icon-less focus-visible:ring-primary flex cursor-pointer items-center justify-center p-1 focus-visible:ring-2 focus-visible:outline-none"
+                            className="text-icon-less flex cursor-pointer items-center justify-center p-1"
                             tabIndex={0}
                             title={t('Close')}
                             onClick={() => setIsActive(false)}
@@ -42,6 +42,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                             <RemoveIcon className="size-4" />
                         </button>
                     </div>
+
                     {children}
                 </m.div>
             )}

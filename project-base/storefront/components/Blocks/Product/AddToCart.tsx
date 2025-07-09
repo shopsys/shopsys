@@ -10,6 +10,8 @@ import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>
@@ -26,6 +28,10 @@ type AddToCartProps = {
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonVariant?: 'primary' | 'inverted';
     showResponsiveCartIcon?: boolean;
+    tabIndex?: number;
+    ariaProductName: string;
+    ariaPrice: string;
+    ariaUnit: string;
 };
 
 export const AddToCart: FC<AddToCartProps> = ({
@@ -39,11 +45,16 @@ export const AddToCart: FC<AddToCartProps> = ({
     buttonSize = 'medium',
     buttonVariant = 'primary',
     showResponsiveCartIcon = false,
+    tabIndex = 0,
+    ariaProductName,
+    ariaPrice,
+    ariaUnit,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
     const { addToCart, isAddingToCart } = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const formatPrice = useFormatPrice();
 
     const onAddToCartHandler = async () => {
         if (isWithSpinbox && spinboxRef.current === null) {
@@ -67,6 +78,14 @@ export const AddToCart: FC<AddToCartProps> = ({
         }
     };
 
+    const quantity = isWithSpinbox ? spinboxRef.current?.valueAsNumber : 1;
+    const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
+        productName: ariaProductName,
+        quantity,
+        unit: ariaUnit,
+        price: quantity ? formatPrice(quantity * mapPriceForCalculations(ariaPrice)) : undefined,
+    });
+
     return (
         <div className={twMergeCustom('flex items-center justify-between gap-2', className)}>
             {isWithSpinbox && (
@@ -87,11 +106,12 @@ export const AddToCart: FC<AddToCartProps> = ({
 
                 <Button
                     aria-haspopup="dialog"
+                    aria-label={ariaLabel}
                     isDisabled={isAddingToCart}
                     name="add-to-cart"
                     size={buttonSize}
+                    tabIndex={tabIndex}
                     tid={TIDs.blocks_product_addtocart}
-                    title={t('Add to cart')}
                     variant={buttonVariant}
                     onClick={onAddToCartHandler}
                 >

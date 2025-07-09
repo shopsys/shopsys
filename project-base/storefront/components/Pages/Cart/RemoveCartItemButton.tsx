@@ -1,21 +1,26 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
 
 type RemoveCartItemButtonProps = {
+    title: string;
+    ariaLabel: string;
     onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onRemoveFromCart, className }) => {
-    const { t } = useTranslation();
-
+export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({
+    onRemoveFromCart,
+    className,
+    title,
+    ariaLabel,
+}) => {
     return (
         <button
+            aria-label={ariaLabel}
             className={className}
+            data-tid={TIDs.pages_cart_removecartitembutton}
             tabIndex={0}
-            tid={TIDs.pages_cart_removecartitembutton}
-            title={t('Remove from cart')}
+            title={title}
             onClick={onRemoveFromCart}
         >
             <RemoveIcon className="size-6" />

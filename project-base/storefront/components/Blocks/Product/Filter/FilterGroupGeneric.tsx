@@ -12,6 +12,7 @@ import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -25,6 +26,7 @@ type FilterGroupGenericProps = {
     options: MappedFilterOption[];
     defaultNumberOfShownItems: number;
     isActive: boolean;
+    ariaLabel: string;
 };
 
 export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
@@ -33,6 +35,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     defaultNumberOfShownItems,
     filterField,
     isActive,
+    ariaLabel,
 }) => {
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
@@ -62,6 +65,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel={ariaLabel}
                 isActive={isActive}
                 isOpen={isGroupOpen}
                 title={title}
@@ -69,7 +73,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             />
             <AnimatePresence initial={false}>
                 {isGroupOpen && (
-                    <FilterGroupContent>
+                    <FilterGroupContent id={createAriaParameter('filter-group', title)}>
                         {defaultOptions && (
                             <AnimatePresence initial={false}>
                                 {defaultOptions.map((option, index) => {

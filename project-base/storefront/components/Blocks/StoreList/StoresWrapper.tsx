@@ -56,6 +56,7 @@ export const StoresWrapper: FC = () => {
             <div className="flex flex-col-reverse gap-5 lg:flex-row">
                 <div className="basis-1/2">
                     <SearchInput
+                        ariaLabelForSearchButton={t('Search for a store')}
                         label={t('City or postcode')}
                         shouldShowSpinnerInInput={isFetching}
                         value={searchTextValue}
@@ -64,7 +65,7 @@ export const StoresWrapper: FC = () => {
                     />
                     <StoreList selectedStoreUuid={selectedStore} stores={mappedStores} />
                 </div>
-                <div className="basis-1/2" tid={TIDs.stores_map}>
+                <div className="basis-1/2" data-tid={TIDs.stores_map}>
                     <div className="bg-background-more flex aspect-square rounded-xl p-5 lg:sticky lg:top-5">
                         <GoogleMap
                             activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}

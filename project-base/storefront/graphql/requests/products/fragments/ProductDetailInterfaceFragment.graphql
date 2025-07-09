@@ -13,6 +13,9 @@ fragment ProductDetailInterfaceFragment on Product {
     catalogNumber
     ean
     description
+    unit {
+        name
+    }
     images {
         ...ImageFragment
     }

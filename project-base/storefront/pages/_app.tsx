@@ -1,7 +1,7 @@
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
-import { LazyMotion } from 'framer-motion';
+import { LazyMotion, MotionConfig } from 'framer-motion';
 import { GtmProvider } from 'gtm/context/GtmProvider';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
@@ -65,9 +65,11 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
                         <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
                             <GtmProvider>
-                                <LazyMotion features={framerMotionPlugins}>
-                                    <AppPageContent Component={Component} pageProps={pageProps} />
-                                </LazyMotion>
+                                <MotionConfig reducedMotion="user">
+                                    <LazyMotion features={framerMotionPlugins}>
+                                        <AppPageContent Component={Component} pageProps={pageProps} />
+                                    </LazyMotion>
+                                </MotionConfig>
                             </GtmProvider>
                         </AuthorizationProvider>
                     </DomainConfigProvider>

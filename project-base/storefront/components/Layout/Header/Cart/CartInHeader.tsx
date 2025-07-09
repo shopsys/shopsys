@@ -44,13 +44,33 @@ export const CartInHeader: FC = ({ className }) => {
 
     const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
 
+    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter') {
+            setIsActive(true);
+        }
+
+        if (e.key === 'Escape') {
+            setIsActive(false);
+        }
+    };
+
     return (
         <>
             <div
-                className={twMergeCustom('vl:flex group relative', isActive && 'z-aboveOverlay', className)}
-                tid={TIDs.header_cart}
+                aria-expanded={isActive}
+                aria-haspopup="menu"
+                aria-label={t('Show cart popup')}
+                data-tid={TIDs.header_cart}
+                role="button"
+                tabIndex={!cart?.items.length ? -1 : 0}
                 title={t('Cart')}
+                className={twMergeCustom(
+                    'vl:flex group relative outline-none',
+                    isActive && 'z-aboveOverlay',
+                    className,
+                )}
                 onClick={() => !isDesktop && setIsActive(!isActive)}
+                onKeyDown={(e) => handleOnKeyDown(e)}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={() => isDesktop && setIsActive(false)}
                 onTouchEnd={(e) => {
@@ -72,9 +92,11 @@ export const CartInHeader: FC = ({ className }) => {
                 <ExtendedNextLink
                     href={cartUrl}
                     skeletonType="cart"
+                    tabIndex={-1}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-2 rounded-lg border px-3 no-underline transition-all group-hover:shadow-lg hover:no-underline',
+                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all group-hover:shadow-lg hover:no-underline',
+                        'group-focus-visible:text-text-default group-focus-visible:bg-orange-500',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
@@ -98,14 +120,27 @@ export const CartInHeader: FC = ({ className }) => {
                 </ExtendedNextLink>
 
                 <div
+                    aria-controls="cart-popup"
+                    aria-expanded={isActive}
+                    aria-haspopup="menu"
+                    aria-label={t('Show cart popup')}
+                    role="button"
+                    tabIndex={-1}
+                    title={t('Cart')}
                     className={twJoin(
                         'vl:hidden flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
                         'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
                         isActiveDelayed &&
                             'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
                         'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
+                        'group-focus-visible:text-text-default group-focus-visible:bg-orange-500',
                     )}
                     onClick={() => setIsActive(!isActive)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            setIsActive(!isActive);
+                        }
+                    }}
                 >
                     <CartIcon className="size-6" />
                     <CartCount>{cart?.items.length ?? 0}</CartCount>

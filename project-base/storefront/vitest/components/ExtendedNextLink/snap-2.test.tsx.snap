@@ -3,7 +3,6 @@
   "baseElement": <body>
     <div>
       <a
-        class="focus-visible:ring-2"
         href="/nice-test-href"
         tabindex="0"
       >
@@ -17,7 +16,6 @@
   </body>,
   "container": <div>
     <a
-      class="focus-visible:ring-2"
       href="/nice-test-href"
       tabindex="0"
     >

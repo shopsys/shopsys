@@ -226,15 +226,3 @@ export const removePaymentSelectionUsingButton = () => {
 export const removeTransportSelectionUsingButton = () => {
     cy.getByTID([TIDs.reset_transport_button]).click();
 };
-
-export const changeOpeningHoursDayOfWeekWithDateToStaticString = (dayOfWeekWithDate: string) => {
-    changeElementText(TIDs.opening_hours_day_of_week_with_date, dayOfWeekWithDate, false);
-};
-
-export const changeOpeningHoursRangesToStaticString = (range: string) => {
-    changeElementText(TIDs.opening_hours_ranges, range, false);
-};
-
-export const changeOpeningHoursStatusToEmptyString = () => {
-    changeElementText(TIDs.opening_hours_status, '', false);
-};

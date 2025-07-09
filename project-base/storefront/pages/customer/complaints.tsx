@@ -59,6 +59,7 @@ const ComplaintsPage: FC = () => {
                 {canCreateComplaint && (
                     <div className="flex gap-y-2">
                         <LinkButton
+                            aria-label={t('Go to new complaint page')}
                             size="small"
                             type="complaintNew"
                             href={{
@@ -77,6 +78,7 @@ const ComplaintsPage: FC = () => {
                     </div>
                 )}
                 <SearchInput
+                    ariaLabelForSearchButton={t('Search for a product you complained about')}
                     className="border-input-border-default w-full border"
                     label={t('Search for a product you complained about')}
                     shouldShowSpinnerInInput={complaintsDataFetching}

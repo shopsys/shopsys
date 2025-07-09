@@ -59,7 +59,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
             $transportData->enabled[$domainConfig->getId()] = true;
             $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}" tabindex="0">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->description[$locale] = t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
@@ -76,7 +76,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
             $transportData->enabled[$domainConfig->getId()] = true;
             $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}" tabindex="0">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));

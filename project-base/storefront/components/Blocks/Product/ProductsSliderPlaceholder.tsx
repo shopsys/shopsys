@@ -41,10 +41,12 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
                             visibleItemsConfig={visibleItemsConfig}
                         />
                     ) : (
-                        <ExtendedNextLink key={product.uuid} href={product.slug}>
-                            {product.fullName}
-                            <ProductPrice productPrice={product.price} />
-                        </ExtendedNextLink>
+                        <li key={product.uuid} className="mx-1.5">
+                            <ExtendedNextLink href={product.slug}>
+                                {product.fullName}
+                                <ProductPrice productPrice={product.price} />
+                            </ExtendedNextLink>
+                        </li>
                     ),
                 )}
             </ul>

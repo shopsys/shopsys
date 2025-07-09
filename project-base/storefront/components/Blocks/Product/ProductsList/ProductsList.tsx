@@ -8,6 +8,7 @@ import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragment
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
@@ -40,6 +41,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     gtmMessageOrigin = GtmMessageOriginType.other,
     productItemProps,
 }) => {
+    const { t } = useTranslation();
     const currentLoadMore = useCurrentLoadMoreQuery();
 
     if (!products?.length && !areProductsFetching) {
@@ -49,6 +51,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     if (!!products?.length && !areProductsFetching) {
         return (
             <>
+                <h2 className="sr-only">{t('Product list')}</h2>
                 <ProductsListContent
                     className={productListTwClass}
                     gtmMessageOrigin={gtmMessageOrigin}

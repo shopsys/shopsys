@@ -16,7 +16,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
 
     return (
         <VerticalStack gap="sm">
-            <h1 tid={TIDs.order_detail_number_heading}>{orderHeading}</h1>
+            <h1 data-tid={TIDs.order_detail_number_heading}>{orderHeading}</h1>
 
             <OrderDetailBasicInfo order={order} />
 

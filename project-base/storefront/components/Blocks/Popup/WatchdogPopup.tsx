@@ -2,7 +2,7 @@ import { useWatchdogFormMeta } from 'components/Blocks/Product/Watchdog/watchdog
 import { useWatchdogForm } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -63,14 +63,18 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
-        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5">
+        <Popup
+            className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5"
+            title={t('Watchdog')}
+            ariaDescription={t(
+                'This product is on watchdog. Please fill in your email below to be notified when the product becomes available.',
+            )}
+        >
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormHeading>{t('Watchdog')}</FormHeading>
-
-                            <FormColumn className="mt-4">
+                            <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -97,7 +101,9 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                             />
 
                             <FormButtonWrapper>
-                                <SubmitButton>{t('Send')}</SubmitButton>
+                                <SubmitButton aria-label={t('Submit form to send your watchdog')}>
+                                    {t('Send')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

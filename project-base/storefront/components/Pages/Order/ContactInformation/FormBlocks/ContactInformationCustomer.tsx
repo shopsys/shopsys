@@ -20,34 +20,39 @@ export const ContactInformationCustomer: FC = () => {
     return (
         <FormBlockWrapper className={isCompanyUser ? 'hidden' : ''}>
             <FormHeading>{formMeta.fields.customer.label}</FormHeading>
-            <FormColumn className="vl:gap-0 gap-2">
-                <RadiobuttonGroup
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.customer.name}
-                    render={(radiobutton, key) => <FormLine key={key}>{radiobutton}</FormLine>}
-                    radiobuttons={[
-                        {
-                            label: t('Private person'),
-                            value: CustomerTypeEnum.CommonCustomer,
-                            disabled: formMeta.fields.customer.disabled,
-                        },
-                        {
-                            label: t('Company'),
-                            value: CustomerTypeEnum.CompanyCustomer,
-                            disabled: formMeta.fields.customer.disabled,
-                        },
-                    ]}
-                    onChange={(event) =>
-                        updateContactInformation({
-                            customer:
-                                event.currentTarget.value === CustomerTypeEnum.CommonCustomer
-                                    ? CustomerTypeEnum.CommonCustomer
-                                    : CustomerTypeEnum.CompanyCustomer,
-                        })
-                    }
-                />
-            </FormColumn>
+
+            <fieldset>
+                <legend className="sr-only">{t('Customer type')}</legend>
+
+                <FormColumn className="vl:gap-0 gap-2">
+                    <RadiobuttonGroup
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.customer.name}
+                        render={(radiobutton, key) => <FormLine key={key}>{radiobutton}</FormLine>}
+                        radiobuttons={[
+                            {
+                                label: t('Private person'),
+                                value: CustomerTypeEnum.CommonCustomer,
+                                disabled: formMeta.fields.customer.disabled,
+                            },
+                            {
+                                label: t('Company'),
+                                value: CustomerTypeEnum.CompanyCustomer,
+                                disabled: formMeta.fields.customer.disabled,
+                            },
+                        ]}
+                        onChange={(event) =>
+                            updateContactInformation({
+                                customer:
+                                    event.currentTarget.value === CustomerTypeEnum.CommonCustomer
+                                        ? CustomerTypeEnum.CommonCustomer
+                                        : CustomerTypeEnum.CompanyCustomer,
+                            })
+                        }
+                    />
+                </FormColumn>
+            </fieldset>
         </FormBlockWrapper>
     );
 };

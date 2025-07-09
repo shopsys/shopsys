@@ -77,11 +77,14 @@ export const AutocompleteSearch: FC = () => {
     return (
         <>
             <div
+                aria-label={t('Site search section')}
                 className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}
+                role="search"
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
                     aria-haspopup="listbox"
+                    ariaLabelForSearchButton={t('Go to search page')}
                     className="w-full"
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}

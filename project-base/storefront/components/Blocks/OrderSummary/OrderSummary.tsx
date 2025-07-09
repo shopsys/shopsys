@@ -23,12 +23,13 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
 
     return (
         <div className="vl:col-span-1 flex flex-col gap-2">
-            <h4>{t('Your order')}</h4>
+            <span className="h4">{t('Your order')}</span>
 
             {cart.items.map((item) => (
                 <OrderItemProductCard
                     key={item.uuid}
                     availability={item.product.availability}
+                    categoryName={item.product.categories[0]?.name}
                     fullName={item.product.fullName}
                     mainImage={item.product.mainImage}
                     price={item.product.price}

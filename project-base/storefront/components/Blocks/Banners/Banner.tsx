@@ -1,6 +1,7 @@
 import { BannerImage } from './BannerImage';
 import { CarouselState, getBannerOrderCSSProperty } from './bannersUtils';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { getRGBColorString, getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';
@@ -22,14 +23,14 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
             backgroundColor: getRGBColorString(banner.rgbBackgroundColor, banner.opacity),
         }}
     >
-        <h1
+        <span
             className={twJoin(
-                'vl:mb-5 mb-2.5 line-clamp-5 wrap-anywhere',
+                'h1 vl:mb-5 group-focus-visible:text-text-inverted mb-2.5 line-clamp-5 rounded-sm wrap-anywhere group-focus-visible:bg-orange-500',
                 getYIQContrastTextColor(banner.rgbBackgroundColor),
             )}
         >
             {banner.name}
-        </h1>
+        </span>
         {banner.description && (
             <p className={twJoin('line-clamp-10 wrap-anywhere', getYIQContrastTextColor(banner.rgbBackgroundColor))}>
                 {banner.description}
@@ -39,6 +40,8 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
 );
 
 export const Banner: FC<BannerProps> = ({ banner, bannerSliderState, index, numItems }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             key={banner.link}
@@ -48,10 +51,10 @@ export const Banner: FC<BannerProps> = ({ banner, bannerSliderState, index, numI
             }}
         >
             <BannerImage
-                desktopAlt={banner.webMainImage.name || banner.name}
+                desktopAlt={`${t('Promotional banner')} - ${banner.webMainImage.name || banner.name} - ${banner.description?.slice(0, 50)}`}
                 desktopSrc={banner.webMainImage.url}
                 isFirst={index === 0}
-                mobileAlt={banner.mobileMainImage.name || banner.name}
+                mobileAlt={`${t('Promotional banner')} - ${banner.mobileMainImage.name || banner.name} - ${banner.description?.slice(0, 50)}`}
                 mobileSrc={banner.mobileMainImage.url}
             >
                 {banner.description && <BannerContent banner={banner} className="hidden lg:flex" />}

@@ -12,9 +12,9 @@ const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => {
         >
             <GoogleMapMarkerIcon className={twJoin('h-[30px] w-6')} />
 
-            <div className="text-text-inverted absolute inset-0 flex justify-center pt-1 text-xs font-bold">
+            <span className="text-text-inverted absolute inset-0 flex justify-center pt-1 text-xs font-bold">
                 {children}
-            </div>
+            </span>
         </button>
     );
 };

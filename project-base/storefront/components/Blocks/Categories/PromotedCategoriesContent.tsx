@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { getLinkType } from 'components/Blocks/SimpleNavigation/simpleNavigationUtils';
 import { TIDs } from 'cypress/tids';
 import { TypePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
@@ -11,6 +12,7 @@ type PromotedCategoriesContentProps = {
     promotedCategoriesData: TypePromotedCategoriesQuery;
 };
 export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ promotedCategoriesData }) => {
+    const { t } = useTranslation();
     const categoriesLength = promotedCategoriesData.promotedCategories.length;
 
     return (
@@ -34,6 +36,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                         className={twJoin(index === 0 && categoriesLength > 4 && 'vl:col-span-2 vl:row-span-2')}
                     >
                         <ExtendedNextLink
+                            aria-label={t('Go to category {{ categoryName }}', { categoryName: category.name })}
                             href={href}
                             type={linkType}
                             className={twMergeCustom(
@@ -47,7 +50,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                         >
                             {itemImage && (
                                 <div
-                                    tid={TIDs.simple_navigation_image}
+                                    data-tid={TIDs.simple_navigation_image}
                                     className={twJoin(
                                         'relative flex items-center justify-center',
                                         'vl:size-full size-[60px] lg:size-[100px]',
@@ -70,7 +73,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                 </div>
                             )}
 
-                            <h4 className="vl:line-clamp-1 line-clamp-2">{category.name}</h4>
+                            <h3 className="h4 vl:line-clamp-1 line-clamp-2">{category.name}</h3>
                         </ExtendedNextLink>
                     </li>
                 );

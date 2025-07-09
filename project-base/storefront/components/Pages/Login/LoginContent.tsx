@@ -7,6 +7,8 @@ export const LoginContent: FC = () => {
 
     return (
         <Webline width="lg">
+            <h1 className="sr-only">{t('Log in')}</h1>
+
             <LoginForm formHeading={t('Log in')} />
         </Webline>
     );

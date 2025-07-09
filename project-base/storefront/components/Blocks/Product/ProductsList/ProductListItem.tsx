@@ -43,6 +43,7 @@ export type ProductItemProps = {
     onClick?: (product: TypeListedProductFragment, index: number) => void;
     textSize?: 'xs' | 'sm';
     textSizePrice?: 'base' | 'lg';
+    allowKeyboardFocus?: boolean;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -62,6 +63,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             textSize = 'sm',
             textSizePrice = 'lg',
             onClick,
+            allowKeyboardFocus = true,
         },
         ref,
     ) => {
@@ -71,8 +73,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
         return (
             <li
+                data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 ref={ref}
-                tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
                     'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border pb-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
@@ -81,9 +83,12 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 <ExtendedNextLink
+                    aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                     className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
+                    tabIndex={allowKeyboardFocus ? 0 : -1}
+                    title={t('Go to product page')}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onMouseUp={() => {
                         onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
@@ -93,14 +98,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     <div className="flex w-full flex-col gap-2.5 px-2.5 pt-5 sm:px-5">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                        <div
+                        <h3
                             className={twJoin(
                                 'font-secondary group-hover:text-link-default grow overflow-hidden font-semibold break-words group-hover:underline',
-                                textSize === 'xs' ? 'text-xs' : 'text-sm',
+                                textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                             )}
                         >
                             {product.fullName}
-                        </div>
+                        </h3>
 
                         {product.__typename === 'MainVariant' && (
                             <div className="bg-background-default font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
@@ -124,7 +129,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                                 availableStoresCount={product.availableStoresCount}
                                 className="xs:min-h-[60px] min-h-10 sm:min-h-10"
                                 isInquiryType={product.isInquiryType}
-                                tabIndex={-1}
                             />
                         )}
                     </div>
@@ -138,6 +142,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}
                             product={product}
+                            skipKeyboardNavigation={!allowKeyboardFocus}
                         />
                     )}
 
@@ -145,10 +150,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         <>
                             <ProductCompareButton
                                 isProductInComparison={isProductInComparison}
+                                productName={product.fullName}
+                                tabIndex={allowKeyboardFocus ? 0 : -1}
                                 toggleProductInComparison={toggleProductInComparison}
                             />
                             <ProductWishlistButton
                                 isProductInWishlist={isProductInWishlist}
+                                productName={product.fullName}
+                                tabIndex={allowKeyboardFocus ? 0 : -1}
                                 toggleProductInWishlist={toggleProductInWishlist}
                             />
                         </>

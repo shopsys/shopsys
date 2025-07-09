@@ -91,6 +91,13 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
             <Webline width="lg">
                 <VerticalStack gap="sm">
                     <h1>{t('Set new password')}</h1>
+
+                    <p className="sr-only" id="new-password-form-description">
+                        {t(
+                            'Set new password form for setting your new password. Please fill in your new password and confirm it.',
+                        )}
+                    </p>
+
                     <Trans
                         defaultTrans="An error occurred while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
                         i18nKey="ResendRecoveryLink"
@@ -109,6 +116,12 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
             <VerticalStack gap="sm">
                 <h1>{t('Set new password')}</h1>
 
+                <p className="sr-only" id="new-password-form-description">
+                    {t(
+                        'Set new password form for setting your new password. Please fill in your new password and confirm it.',
+                    )}
+                </p>
+
                 <FormProvider {...formProviderMethods}>
                     <Form
                         className="flex w-full justify-center"
@@ -123,6 +136,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                     render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPassword.label,
+                                        'aria-labelledby': 'new-password-form-description',
                                     }}
                                 />
                                 <PasswordInputControlled
@@ -136,6 +150,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                 />
                                 <FormButtonWrapper>
                                     <SubmitButton
+                                        aria-label={t('Submit form to set your new password')}
                                         isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
                                     >
                                         {t('Set new password')}

@@ -7,7 +7,6 @@ type ProductAvailabilityProps = {
     availableStoresCount: number | null;
     isInquiryType: boolean;
     onClick?: () => void;
-    tabIndex?: number;
 };
 
 export const ProductAvailability: FC<ProductAvailabilityProps> = ({
@@ -16,22 +15,34 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
     className,
     isInquiryType,
     onClick,
-    tabIndex,
 }) => {
     const { t } = useTranslation();
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            onClick?.();
+        }
+    };
+
+    const isInteractive = onClick !== undefined && availability.status === TypeAvailabilityStatusEnum.InStock;
+
     return (
-        <button
-            aria-haspopup="dialog"
-            tabIndex={tabIndex}
-            title={t('Show stores availability')}
+        <div
+            {...(isInteractive && {
+                'aria-haspopup': 'dialog',
+                'aria-label': t('Open stores availability popup'),
+                role: 'button',
+                tabIndex: 0,
+                title: t('Show stores availability'),
+                onClick: onClick,
+                onKeyDown: handleKeyDown,
+            })}
             className={twJoin(
                 className,
                 'flex text-left text-sm',
                 availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availability-in-stock',
                 availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
             )}
-            onClick={onClick}
         >
             {!isInquiryType &&
                 `${availability.name}${
@@ -39,6 +50,6 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                         ? `, ${t('ready to ship immediately')} ${availableStoresCount !== 0 ? t('or at {{ count }} stores', { count: availableStoresCount }) : ''}`
                         : ''
                 }`}
-        </button>
+        </div>
     );
 };

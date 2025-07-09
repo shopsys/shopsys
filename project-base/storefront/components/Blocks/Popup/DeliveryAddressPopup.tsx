@@ -1,5 +1,5 @@
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -111,13 +111,12 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
-        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto">
+        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={t('Delivery address')}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormHeading>{t('Delivery address')}</FormHeading>
-                            <FormColumn className="mt-4">
+                            <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -216,6 +215,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                         <>
                                             <Select
                                                 isRequired
+                                                ariaLabel={t('Select country')}
                                                 label={formMeta.fields.country.label}
                                                 options={countriesAsSelectOptions}
                                                 tid={formMeta.formName + '-' + formMeta.fields.country.name}
@@ -230,7 +230,9 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 />
                             </FormLine>
                             <FormButtonWrapper>
-                                <SubmitButton>{t('Save')}</SubmitButton>
+                                <SubmitButton aria-label={t('Submit form to save delivery address')}>
+                                    {t('Save')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

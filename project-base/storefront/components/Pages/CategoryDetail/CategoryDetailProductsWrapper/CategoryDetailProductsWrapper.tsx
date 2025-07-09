@@ -5,6 +5,7 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 
 export type CategoryDetailProductsWrapperProps = {
@@ -22,6 +23,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
     isLoadingMoreProducts,
     hasNextPage,
 }) => {
+    const { t } = useTranslation();
     const gtmProductListName = useMemo(
         () => getCategoryOrSeoCategoryGtmProductListName(category.originalCategorySlug),
         [category],
@@ -30,6 +32,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
 
     return (
         <>
+            <h2 className="sr-only">{t('Products')}</h2>
             <ProductsList
                 areProductsFetching={areProductsFetching}
                 category={category}

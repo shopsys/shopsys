@@ -3,7 +3,6 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
@@ -12,6 +11,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import useClickClosePopup from 'utils/ui/useClickClosePopup';
 
 export type SelectProps<T = string> = {
+    ariaLabel: string;
     label?: string | ReactNode;
     placeholder?: string;
     selectClassName?: string;
@@ -36,6 +36,7 @@ export type SelectProps<T = string> = {
 } & SelectListProps<T>;
 
 export const Select = <T extends string | number | undefined | Record<any, any> | null | boolean = string>({
+    ariaLabel,
     label,
     options,
     onSelectOption,
@@ -56,7 +57,6 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
     externalSetIsSelectOpen,
     listClassName,
 }: SelectProps<T> & FunctionComponentProps) => {
-    const { t } = useTranslation();
     const wrapperRef = useRef(null);
     const additionalItemRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -94,12 +94,12 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     {comboBoxConfig ? (
                         <>
                             <input
+                                data-tid={tid}
                                 id={tid}
                                 placeholder={placeholder}
-                                tid={tid}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
-                                    'h-full w-full bg-transparent px-3 !text-base focus-visible:outline-hidden',
+                                    'h-full w-full bg-transparent px-3 !text-base outline-hidden',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
@@ -115,15 +115,15 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         </>
                     ) : (
                         <button
-                            className="w-full cursor-pointer px-3 pt-5 text-left focus-visible:outline-hidden"
+                            className="w-full cursor-pointer px-3 pt-5 text-left outline-hidden"
+                            data-tid={tid}
                             disabled={isDisabled}
                             id={tid}
                             tabIndex={-1}
-                            tid={tid}
                             type="button"
                             onClick={() => onSelectToggleOpenHandler(!isOpen)}
                         >
-                            <div
+                            <span
                                 className={twJoin(
                                     'font-secondary text-input-placeholder-default group-hover:text-input-placeholder-hovered absolute transition-all',
                                     isOpen || activeOption
@@ -134,12 +134,12 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 {label}
 
                                 {isRequired && <span className="text-text-error ml-1">*</span>}
-                            </div>
+                            </span>
 
                             {activeOption?.label && (
-                                <div className="font-secondary text-input-text-default font-semibold">
+                                <span className="font-secondary text-input-text-default font-semibold">
                                     {activeOption.label}
-                                </div>
+                                </span>
                             )}
                         </button>
                     )}
@@ -157,10 +157,10 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     <button
-                        className="focus-visible:ring-input-border-active rounded-md pr-3 focus-visible:ring-2 focus-visible:outline-hidden"
+                        className="rounded-sm px-3"
                         disabled={isDisabled}
                         tabIndex={0}
-                        title={t('Open select')}
+                        title={ariaLabel}
                         type="button"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}
                     >

@@ -13,9 +13,9 @@ export const AnimateCollapseDiv: FC<HTMLMotionProps<'div'> & { tid?: TIDs; keyNa
         key={keyName}
         animate="open"
         className={className}
+        data-tid={tid}
         exit="closed"
         initial="closed"
-        tid={tid}
         variants={collapseExpandAnimation}
         {...props}
     >

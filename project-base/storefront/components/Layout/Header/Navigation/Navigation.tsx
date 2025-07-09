@@ -1,5 +1,6 @@
 import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { useState, useRef, useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
@@ -10,6 +11,7 @@ export type NavigationProps = {
 };
 
 export const Navigation: FC<NavigationProps> = ({ navigation }) => {
+    const { t } = useTranslation();
     const [isFirstHover, setIsFirstHover] = useState(false);
     const [isAnimationDisabled, setIsAnimationDisabled] = useState(false);
     const showNavigationShadow = useSessionStore((s) => s.showNavigationShadow);
@@ -48,7 +50,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     };
 
     return (
-        <nav className="relative">
+        <nav aria-label={t('Main navigation')} className="relative" id="main-navigation">
             <ul
                 ref={navigationRef}
                 className={twJoin(

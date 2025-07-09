@@ -14,21 +14,25 @@ import useWindowDimensions from 'utils/useWindowDimensions';
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type PopupProps = {
+    title: string;
+    ariaDescription?: string;
     hideCloseButton?: boolean;
     contentClassName?: string;
     key?: string;
-    ariaLabelledBy?: string;
-    ariaDescribedBy?: string;
+    children?: React.ReactNode;
+    className?: string;
+    role?: 'dialog' | 'alertdialog';
 };
 
-export const Popup: FC<PopupProps> = ({
+export const Popup: React.FC<PopupProps> = ({
+    title,
+    ariaDescription,
     children,
     hideCloseButton,
     className,
     contentClassName,
     key,
-    ariaLabelledBy,
-    ariaDescribedBy,
+    role = 'dialog',
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -37,6 +41,9 @@ export const Popup: FC<PopupProps> = ({
     const popupRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
     const previousFocusRef = useRef<HTMLElement | null>(null);
+    const ariaLabel = ariaDescription ? `${title}. ${ariaDescription}` : title;
+
+    useKeypress('Escape', () => updatePortalContent(null));
 
     // Store the element that had focus before popup opened
     useEffect(() => {
@@ -50,7 +57,12 @@ export const Popup: FC<PopupProps> = ({
         };
     }, []);
 
-    useKeypress('Escape', () => updatePortalContent(null));
+    // Focus on popup when it appears
+    useEffect(() => {
+        if (popupRef.current) {
+            popupRef.current.focus();
+        }
+    }, [popupRef]);
 
     useLayoutEffect(() => {
         if (popupRef.current) {
@@ -61,47 +73,27 @@ export const Popup: FC<PopupProps> = ({
         }
     }, [windowDimensions, children]);
 
-    // Focus management when popup appears
-    useEffect(() => {
-        if (popupRef.current) {
-            let focusTarget: HTMLElement;
-
-            if (!hideCloseButton && closeButtonRef.current) {
-                // Focus close button if available
-                focusTarget = closeButtonRef.current;
-            } else {
-                // Find first focusable element in content
-                const focusableElements = popupRef.current.querySelectorAll(
-                    'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-                );
-                focusTarget = focusableElements.length > 0 ? (focusableElements[0] as HTMLElement) : popupRef.current;
-            }
-
-            focusTarget.focus();
-        }
-    }, [hideCloseButton]);
-
     useFocusTrap(popupRef);
 
     return (
         <div key={key}>
             <RemoveScroll>
                 <Overlay isActive onClick={() => updatePortalContent(null)} />
+
                 <AnimatePresence>
                     <m.div
                         key="popup"
                         animate={{ opacity: 1, scale: 1 }}
-                        aria-describedby={ariaDescribedBy}
-                        aria-labelledby={ariaLabelledBy}
+                        aria-label={ariaLabel}
                         aria-modal="true"
+                        data-tid={TIDs.layout_popup}
                         exit={{ opacity: 0, scale: 0.8 }}
                         ref={popupRef}
-                        role="dialog"
+                        role={role}
                         tabIndex={-1}
-                        tid={TIDs.layout_popup}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'z-aboveOverlay bg-background-default fixed flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-sm p-1 shadow-2xl',
+                            'z-aboveOverlay bg-background-default fixed flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md p-5 shadow-2xl',
                             className,
                         )}
                         initial={{
@@ -119,18 +111,25 @@ export const Popup: FC<PopupProps> = ({
                             event.stopPropagation();
                         }}
                     >
-                        {!hideCloseButton && (
-                            <button
-                                className="text-icon-less hover:text-icon-accent focus-visible:outline-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm focus-visible:outline-2"
-                                ref={closeButtonRef}
-                                tabIndex={0}
-                                title={t('Close dialog')}
-                                onClick={() => updatePortalContent(null)}
-                            >
-                                <RemoveIcon className="size-6" />
-                            </button>
-                        )}
-                        <div className={twMergeCustom('p-4', contentClassName)}>{children}</div>
+                        <div className="mb-3 flex justify-between">
+                            <span className="h3 outline-none" tabIndex={-1}>
+                                {title}
+                            </span>
+
+                            {!hideCloseButton && (
+                                <button
+                                    aria-label={t('Close popup')}
+                                    className="text-icon-less hover:text-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
+                                    ref={closeButtonRef}
+                                    tabIndex={0}
+                                    onClick={() => updatePortalContent(null)}
+                                >
+                                    <RemoveIcon className="size-6" />
+                                </button>
+                            )}
+                        </div>
+
+                        <div className={twMergeCustom(contentClassName)}>{children}</div>
                     </m.div>
                 </AnimatePresence>
             </RemoveScroll>

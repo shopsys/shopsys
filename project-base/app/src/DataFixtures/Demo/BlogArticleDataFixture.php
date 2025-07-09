@@ -318,12 +318,12 @@ EOT));
 <h2>Praesent dapibus</h2>
 Aliquam ante. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Ut enim ad minim veniam, <strong>quis nostrud exercitation</strong> ullamco laboris nisi ut aliquip ex ea commodo consequat. In enim a arcu imperdiet malesuada. Fusce nibh. Integer lacinia. Fusce <strong>aliquam vestibulum</strong> ipsum. Fusce consectetuer risus a nunc. Donec iaculis gravida nulla. Phasellus enim erat, vestibulum vel, aliquam a, <strong>posuere eu</strong>, velit. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, et sollicitudin sem purus in lacus.<br />
 <br />
-<strong>TIP:</strong><a href="{$firstDomainUrl}" id="ieevs4">Mauris suscipit, ligula sit amet pharetra semper</a>
+<strong>TIP:</strong><a href="{$firstDomainUrl}" id="ieevs4" tabindex="0">Mauris suscipit, ligula sit amet pharetra semper</a>
 
 <h2>Donec vitae arcu</h2>
 Aenean fermentum risus id tortor. Vivamus ac leo pretium faucibus. Duis risus. Mauris elementum <strong>mauris vitae</strong> tortor. Nulla quis diam. In rutrum. In enim a arcu imperdiet malesuada. Fusce wisi. Integer imperdiet lectus quis justo. Pellentesque ipsum. Aliquam erat volutpat. Etiam <strong>dictum tincidunt</strong> diam.<br />
 <br />
-<strong>TIP:</strong><a href="{$firstDomainUrl}" id="iauj76">Mauris tincidunt sem sed arcu</a>
+<strong>TIP:</strong><a href="{$firstDomainUrl}" id="iauj76" tabindex="0">Mauris tincidunt sem sed arcu</a>
 
 <h2>Morbi scelerisque luctus velit</h2>
 Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus faucibus molestie nisl. Nullam faucibus mi quis velit. Integer imperdiet lectus quis justo. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo.<br />

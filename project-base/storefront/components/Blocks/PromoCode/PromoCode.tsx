@@ -32,8 +32,10 @@ export const PromoCode: FC = () => {
 
     return (
         <div className="flex flex-col gap-2.5">
-            <div tid={TIDs.blocks_promocode_add_button}>
+            <div data-tid={TIDs.blocks_promocode_add_button}>
                 <Checkbox
+                    aria-expanded={isContentVisible}
+                    aria-label={t('Toggle promo code')}
                     id="promo-code"
                     label={t('I have a discount coupon')}
                     value={isContentVisible}
@@ -69,6 +71,7 @@ export const PromoCode: FC = () => {
                             </div>
 
                             <SubmitButton
+                                aria-label={t('Submit form to apply promo code')}
                                 className="self-start"
                                 isWithDisabledLook={!formProviderMethods.formState.isValid}
                                 size="xlarge"

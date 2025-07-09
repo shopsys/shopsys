@@ -1,6 +1,7 @@
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { Footer } from 'components/Layout/Footer/Footer';
+import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -23,13 +24,19 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
             <SeoMeta defaultTitle={t('Order')} />
 
             <div className="flex h-full min-h-screen flex-col">
+                <AccessibilityNavigation simpleHeader />
+
                 <NotificationBars />
 
                 <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb lg:pb-6">
                     <Header simpleHeader />
                 </header>
 
-                <main className="mt-4 mb-10 flex flex-col">
+                <main
+                    aria-label={t('Order process main content')}
+                    className="mt-4 mb-10 flex flex-col"
+                    id="main-content"
+                >
                     <SkeletonManager
                         isFetchingData={!canContentBeDisplayed || isFetchingData}
                         isPageLoading={isPageLoading}
@@ -39,7 +46,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer className="mt-auto h-fit">
+                <footer aria-label={t('Site information')} className="mt-auto h-fit">
                     <Webline wrapperClassName="bg-background-accent-less">
                         <Footer simpleFooter />
                     </Webline>

@@ -70,23 +70,13 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 }}
             >
                 <TabsList>
-                    <TabsListItem tabIndex={selectedTab === 0 ? '-1' : '0'}>{t('Overview')}</TabsListItem>
+                    <TabsListItem>{t('Overview')}</TabsListItem>
 
-                    {!!parameters.length && (
-                        <TabsListItem tabIndex={selectedTab === parametersTabIndex ? '-1' : '0'}>
-                            {t('Parameters')}
-                        </TabsListItem>
-                    )}
+                    {!!parameters.length && <TabsListItem>{t('Parameters')}</TabsListItem>}
 
-                    {!!relatedProducts.length && (
-                        <TabsListItem tabIndex={selectedTab === relatedProductsTabIndex ? '-1' : '0'}>
-                            {t('Related Products')}
-                        </TabsListItem>
-                    )}
+                    {!!relatedProducts.length && <TabsListItem>{t('Related Products')}</TabsListItem>}
 
-                    {!!files.length && (
-                        <TabsListItem tabIndex={selectedTab === filesTabIndex ? '-1' : '0'}>{t('Files')}</TabsListItem>
-                    )}
+                    {!!files.length && <TabsListItem>{t('Files')}</TabsListItem>}
                 </TabsList>
 
                 <TabsContent
@@ -102,7 +92,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                         <div className="mx-auto max-w-[700px]">
                             {sortedGroupParameters.map(({ groupName, groupParameters }) => (
                                 <Fragment key={groupName}>
-                                    <h4 className="py-5">{groupName}</h4>
+                                    <p className="h4 py-5">{groupName}</p>
 
                                     <Table>
                                         {groupParameters.map((parameter) => (
@@ -111,11 +101,11 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                 className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
                                             >
                                                 <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
-                                                    <h6 className="leading-5">{parameter.name}</h6>
+                                                    <span className="h6 leading-5">{parameter.name}</span>
                                                 </Cell>
 
                                                 <Cell className="px-5 py-2.5 text-sm">
-                                                    <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
+                                                    <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
                                                     {parameter.values.map((value, index) =>
                                                         formatParameterValue(
@@ -134,7 +124,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             {sortedIndividualParameters.length > 0 && (
                                 <Fragment key="other-parameters">
                                     {!!sortedGroupParameters.length && (
-                                        <h4 className="py-5">{t('Other parameters')}</h4>
+                                        <p className="h4 py-5">{t('Other parameters')}</p>
                                     )}
 
                                     <Table>
@@ -145,11 +135,11 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                     className="bg-table-bg-default odd:bg-table-bg-contrast border-none"
                                                 >
                                                     <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
-                                                        <h6 className="leading-5">{parameter.name}</h6>
+                                                        <span className="h6 leading-5">{parameter.name}</span>
                                                     </Cell>
 
                                                     <Cell className="px-5 py-2.5 text-sm">
-                                                        <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
+                                                        <span className="h6 leading-5 lg:hidden">{parameter.name}</span>
 
                                                         {parameter.values.map((value, index) =>
                                                             formatParameterValue(
@@ -186,12 +176,13 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             {files.map((file) => (
                                 <li key={file.url} className="">
                                     <a
+                                        aria-label={t('Download {{file}}', { file: file.anchorText })}
                                         className="bg-background-more flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
                                         href={file.url}
                                     >
                                         <DownloadIcon className="size-6" />
 
-                                        <h4>{file.anchorText}</h4>
+                                        <span className="h4">{file.anchorText}</span>
                                     </a>
                                 </li>
                             ))}

@@ -20,7 +20,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                     <ExtendedNextLink href={contactUrl}>{t('Write to us')}</ExtendedNextLink>
                     {footerArticles?.map((item) => (
                         <div key={item.title}>
-                            <h3>{item.title}</h3>
+                            <span className="h3">{item.title}</span>
                             <ul>
                                 {item.items.map((item) => (
                                     <li key={item.uuid}>
@@ -38,7 +38,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                     ))}
                 </>
             )}
-            <div tid={TIDs.footer_copyright}>{t('footerCopyright', { currentYear })}</div>
+            <div data-tid={TIDs.footer_copyright}>{t('footerCopyright', { currentYear })}</div>
             {t('Customized E-shop by')}
             <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                 <Image alt="footer logo" src={imageLogo} />

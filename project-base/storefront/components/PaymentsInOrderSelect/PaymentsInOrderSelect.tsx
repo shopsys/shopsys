@@ -8,6 +8,7 @@ import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/S
 import { TypePaymentTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 
 type PaymentsInOrderSelectProps = {
@@ -81,11 +82,11 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
     return (
         <div className={twMergeCustom('flex w-full flex-col items-center gap-6', className)}>
             <div className="flex w-full flex-col gap-4">
-                <h3 className={!currentOrderPayment ? 'text-text-error' : ''}>
+                <span className={twJoin('h3', !currentOrderPayment ? 'text-text-error' : '')}>
                     {currentOrderPayment !== null
                         ? t('Repeat payment or change your payment method')
                         : t('Change order payment')}
-                </h3>
+                </span>
                 <div className="flex w-full flex-col overflow-hidden rounded-md">
                     <ul className="w-full">
                         {currentOrderPayment && (

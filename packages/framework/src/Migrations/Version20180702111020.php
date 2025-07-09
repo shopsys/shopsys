@@ -89,7 +89,7 @@ class Version20180702111020 extends AbstractMigration implements ContainerAwareI
                 <p>
                     Order number {number} has been sent, thank you for your purchase.
                     We will contact you about next order status. <br /><br />
-                    <a href="{order_detail_url}">Track</a> the status of your order. <br />
+                    <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
                     {transport_instructions} <br />
                     {payment_instructions} <br />
                 </p>

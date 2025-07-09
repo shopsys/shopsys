@@ -51,6 +51,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
     return (
         <div className={twMergeCustom('my-4', products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-9' : '')}>
             <ProductsSlider
+                ariaAnchorName="product-slider-grapesjs"
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.other}
                 products={products}

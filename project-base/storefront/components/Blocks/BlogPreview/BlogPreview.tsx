@@ -29,15 +29,16 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     return (
         <Webline className="z-above relative">
             <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-text-inverted">{t('Magazine')}</h3>
+                <h2 className="h3 text-text-inverted">{t('Magazine')}</h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
+                        aria-label={t('Go to all articles page')}
                         className="font-secondary text-text-inverted hover:text-text-inverted text-sm font-semibold tracking-wide no-underline hover:underline"
                         href={blogUrl}
                         type="blogCategory"
                     >
-                        <>{t('All articles')}</>
+                        {t('All articles')}
                     </ExtendedNextLink>
                 )}
             </div>

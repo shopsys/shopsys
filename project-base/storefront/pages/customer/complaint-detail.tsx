@@ -53,7 +53,7 @@ const ComplaintDetailPage: FC = () => {
                 >
                     {!!complaintData?.complaint && (
                         <>
-                            <h1 tid={TIDs.complaint_detail_number_heading}>
+                            <h1 data-tid={TIDs.complaint_detail_number_heading}>
                                 {t('Your complaint')} {complaintData.complaint.number}
                             </h1>
 

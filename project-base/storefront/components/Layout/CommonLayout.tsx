@@ -1,6 +1,7 @@
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 import { DeferredFooter } from './Footer/DeferredFooter';
 import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';
+import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
 import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
 import { NotificationBars } from './NotificationBars/NotificationBars';
@@ -10,6 +11,7 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
+import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
@@ -42,6 +44,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     ogType,
     ogImageUrlDefault,
 }) => {
+    const { t } = useTranslation();
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
     return (
@@ -56,6 +59,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             />
 
             <div className="flex h-full min-h-screen flex-col">
+                <AccessibilityNavigation />
+
                 <NotificationBars />
 
                 <header className="from-background-brand to-background-brand-less bg-linear-to-tr/srgb">
@@ -63,11 +68,17 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     <DeferredNavigation />
                 </header>
 
-                <main className="mt-4 mb-10 flex flex-col">
+                <main
+                    aria-label={title ? t('Main content: {{pageTitle}}', { pageTitle: title }) : t('Main content')}
+                    className="mt-4 mb-10 flex flex-col"
+                    id="main-content"
+                >
                     <Adverts withWebline className="mb-4" positionName="header" />
+
                     {!!breadcrumbs && !isPageLoading && !isFetchingData && (
                         <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
                     )}
+
                     <SkeletonManager
                         isFetchingData={isFetchingData}
                         isPageLoading={isPageLoading}
@@ -79,7 +90,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     <Adverts withWebline className="mt-10" positionName="footer" />
                 </main>
 
-                <footer className="mt-auto h-fit">
+                <footer aria-label={t('Site information and navigation')} className="mt-auto h-fit">
                     <Webline wrapperClassName="bg-background-accent-less">
                         <DeferredNewsletterForm />
                         <DeferredFooter />

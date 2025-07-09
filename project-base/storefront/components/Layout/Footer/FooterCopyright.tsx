@@ -11,7 +11,7 @@ export const FooterCopyright: FC = () => {
         <>
             <div
                 className="text-text-disabled flex items-center justify-center text-center text-sm"
-                tid={TIDs.footer_copyright}
+                data-tid={TIDs.footer_copyright}
             >
                 {t('footerCopyright', { currentYear })}
             </div>
@@ -19,11 +19,13 @@ export const FooterCopyright: FC = () => {
                 {t('Customized E-shop by')}
 
                 <a
-                    className="ml-2 flex h-6 w-20 rounded-md focus-visible:ring-2 focus-visible:ring-offset-1"
+                    aria-label={t('Visit Shopsys.com')}
+                    className="ml-2 flex h-6 w-20 rounded-md"
                     href="https://www.shopsys.com"
                     rel="noreferrer"
                     tabIndex={0}
                     target="_blank"
+                    title="Shopsys.com"
                 >
                     <Image alt="footer logo" src={imageLogo} />
                 </a>

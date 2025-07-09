@@ -33,15 +33,21 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                 />
 
                 <div className="flex flex-col gap-1">
-                    <h5>
+                    <span className="h5">
                         {complaintItem.items[0].product?.isVisible ? (
-                            <ExtendedNextLink href={complaintItem.items[0].product.slug} type="product">
+                            <ExtendedNextLink
+                                href={complaintItem.items[0].product.slug}
+                                type="product"
+                                aria-label={t('Go to product {{productName}}', {
+                                    productName: complaintItem.items[0].productName,
+                                })}
+                            >
                                 {complaintItem.items[0].productName}
                             </ExtendedNextLink>
                         ) : (
                             complaintItem.items[0].productName
                         )}
-                    </h5>
+                    </span>
 
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <ComplaintItemColumnInfo
@@ -49,6 +55,9 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                             value={
                                 <ExtendedNextLink
                                     type="complaintDetail"
+                                    aria-label={t('Go to complaint number {{complaintNumber}}', {
+                                        complaintNumber: complaintItem.number,
+                                    })}
                                     href={{
                                         pathname: customerComplaintDetailUrl,
                                         query: { complaintNumber: complaintItem.number },
@@ -76,6 +85,9 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                     className="w-full whitespace-nowrap md:ml-auto md:w-auto"
                     size="small"
                     type="complaintDetail"
+                    aria-label={t('Go to complaint number {{complaintNumber}}', {
+                        complaintNumber: complaintItem.number,
+                    })}
                     href={{
                         pathname: customerComplaintDetailUrl,
                         query: { complaintNumber: complaintItem.number },

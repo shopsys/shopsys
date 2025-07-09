@@ -33,7 +33,9 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
 
                 return (
                     <li key={index} ref={itemsRefs[index]}>
-                        <button
+                        <div
+                            aria-label={t('Select image from gallery')}
+                            role="button"
                             tabIndex={0}
                             title={t('Select image')}
                             className={twJoin(
@@ -43,6 +45,12 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onSelectItem(index);
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.stopPropagation();
+                                    onSelectItem(index);
+                                }
                             }}
                         >
                             {isImage && (
@@ -82,7 +90,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                     width={80}
                                 />
                             )}
-                        </button>
+                        </div>
                     </li>
                 );
             })}

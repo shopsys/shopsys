@@ -1,5 +1,6 @@
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
+import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -31,6 +32,7 @@ export type ProductsSliderProps = {
     visibleSliderItems?: number;
     variant?: ProductsSliderVariant;
     isLuigisEnabled?: boolean;
+    ariaAnchorName: string;
 };
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
@@ -44,6 +46,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     visibleSliderItems = VISIBLE_SLIDER_ITEMS,
     variant = 'default',
     isLuigisEnabled,
+    ariaAnchorName,
 }) => {
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -57,6 +60,11 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             ? visibleSliderItems - 1
             : visibleSliderItems;
     const isWithControls = products.length > currentVisibleItems && isWithArrows;
+
+    const keyboardFocusableProductIndices = Array.from(
+        { length: Math.min(currentVisibleItems, products.length - activeIndex) },
+        (_, i) => activeIndex + i,
+    );
 
     useEffect(() => {
         setProductElementRefs(
@@ -141,44 +149,68 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
-        <div className="relative" tid={tid}>
-            {isWithControls && (
-                <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
-                    <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
-                    <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
-                </div>
-            )}
+        <>
+            <div className="relative" data-tid={tid}>
+                <AccessibleLink className="w-auto" href={`#${ariaAnchorName}`} title={t('Skip product slider')} />
 
-            <div ref={sliderRef} tabIndex={-1}>
-                <ProductsListContent
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    gtmProductListName={gtmProductListName}
-                    productRefs={productElementRefs}
-                    products={products}
-                    swipeHandlers={handlers}
-                    className={twMergeCustom([
-                        "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-                        productSliderTwClass(variant),
-                        wrapperClassName,
-                    ])}
-                    productItemProps={{
-                        className: twMergeCustom(
-                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
-                            productItemProps?.className,
-                        ),
-                        ...productItemProps,
-                    }}
-                />
+                {isWithControls && (
+                    <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
+                        <SliderButton
+                            ariaLabel={t('Show previous products in slider')}
+                            title={t('Previous products')}
+                            type="prev"
+                            onClick={handlePrevious}
+                        />
+                        <SliderButton
+                            ariaLabel={t('Show next products in slider')}
+                            title={t('Next products')}
+                            type="next"
+                            onClick={handleNext}
+                        />
+                    </div>
+                )}
+
+                <div ref={sliderRef} tabIndex={-1}>
+                    <ProductsListContent
+                        gtmMessageOrigin={gtmMessageOrigin}
+                        gtmProductListName={gtmProductListName}
+                        keyboardFocusableProductIndices={keyboardFocusableProductIndices}
+                        productRefs={productElementRefs}
+                        products={products}
+                        swipeHandlers={handlers}
+                        className={twMergeCustom([
+                            "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+                            productSliderTwClass(variant),
+                            wrapperClassName,
+                        ])}
+                        productItemProps={{
+                            className: twMergeCustom(
+                                'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
+                                productItemProps?.className,
+                            ),
+                            ...productItemProps,
+                        }}
+                    />
+                </div>
             </div>
-        </div>
+
+            <div className="sr-only" id={ariaAnchorName} />
+        </>
     );
 };
 
-type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabled?: boolean; title: string };
+type SliderButtonProps = {
+    type?: 'prev' | 'next';
+    onClick: () => void;
+    isDisabled?: boolean;
+    title: string;
+    ariaLabel: string;
+};
 
-const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
+const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title, ariaLabel }) => (
     <button
-        className="text-icon hover:text-icon-accent disabled:text-text-disabled focus-visible:ring-offset-background-default focus-visible:ring-icon-accent cursor-pointer rounded-sm border-none p-1 outline-hidden transition focus-visible:ring-2 disabled:cursor-auto"
+        aria-label={ariaLabel}
+        className="text-icon hover:text-icon-accent disabled:text-text-disabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto"
         disabled={isDisabled}
         tabIndex={0}
         title={title}

@@ -46,6 +46,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
             <VerticalStack gap="md">
                 <Webline className="vl:flex-row flex flex-col gap-6">
                     <ProductDetailGallery
+                        categoryName={product.categories[0]?.name}
                         flags={product.flags}
                         images={product.images}
                         percentageDiscount={product.price.percentageDiscount}
@@ -80,6 +81,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 className="self-start"
                                 isInquiryType={product.isInquiryType}
                                 productIsSellingDenied={product.isSellingDenied}
+                                productName={product.name}
                                 productUuid={product.uuid}
                             />
 
@@ -103,7 +105,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (
                             <section>
-                                <h5 className="mb-3">{t('Recommended for you')}</h5>
+                                <h2 className="h5 mb-3">{t('Recommended for you')}</h2>
                                 {recommendedProductsContent}
                             </section>
                         )}

@@ -11,7 +11,7 @@ export const StyleguidePopups: FC = () => {
             <Button
                 onClick={() => {
                     updatePortalContent(
-                        <Popup>
+                        <Popup title="Example popup">
                             <div className="p-12">Example popup</div>
                         </Popup>,
                     );

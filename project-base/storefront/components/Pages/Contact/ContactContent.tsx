@@ -56,7 +56,10 @@ export const ContactContent: FC = () => {
                 <h1>{t('Write to us')}</h1>
 
                 {settingsData?.settings?.contactFormMainText && (
-                    <div dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }} />
+                    <div
+                        dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }}
+                        id="contact-form-description"
+                    />
                 )}
 
                 <FormProvider {...formProviderMethods}>
@@ -73,6 +76,7 @@ export const ContactContent: FC = () => {
                                         required: true,
                                         type: 'text',
                                         autoComplete: 'name',
+                                        'aria-labelledby': 'contact-form-description',
                                     }}
                                 />
                                 <TextInputControlled
@@ -109,7 +113,10 @@ export const ContactContent: FC = () => {
                                     }}
                                 />
                                 <FormButtonWrapper>
-                                    <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
+                                    <SubmitButton
+                                        aria-label={t('Submit form to send your message')}
+                                        isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                    >
                                         {t('Send message')}
                                     </SubmitButton>
                                 </FormButtonWrapper>

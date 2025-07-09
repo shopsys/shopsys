@@ -34,9 +34,9 @@ Cypress.Commands.add(
         for (const selector of selectors) {
             if (Array.isArray(selector)) {
                 const [selectorPrefix, index] = selector;
-                selectorString += `[tid=${selectorPrefix}${index}] `;
+                selectorString += `[data-tid=${selectorPrefix}${index}] `;
             } else {
-                selectorString += `[tid=${selector}] `;
+                selectorString += `[data-tid=${selector}] `;
             }
         }
 
@@ -265,7 +265,7 @@ const removePointerEventsBeforeScreenshot = (removePointerEvents: (TIDs | string
 
         const selectors = removePointerEvents.map((selector) => {
             if (Object.values<any>(TIDs).includes(selector)) {
-                return `[tid='${selector}']`;
+                return `[data-tid='${selector}']`;
             }
             return selector;
         });

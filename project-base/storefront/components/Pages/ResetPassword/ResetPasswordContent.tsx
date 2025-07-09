@@ -49,6 +49,10 @@ export const ResetPasswordContent: FC = () => {
             <VerticalStack gap="sm">
                 <h1>{t('Forgotten password')}</h1>
 
+                <p className="sr-only" id="reset-password-form-description">
+                    {t('Reset password form for resetting your password. Please fill in your email address.')}
+                </p>
+
                 <FormProvider {...formProviderMethods}>
                     <Form
                         className="flex w-full justify-center"
@@ -66,10 +70,14 @@ export const ResetPasswordContent: FC = () => {
                                         required: true,
                                         type: 'email',
                                         autoComplete: 'email',
+                                        'aria-labelledby': 'reset-password-form-description',
                                     }}
                                 />
                                 <FormButtonWrapper>
-                                    <SubmitButton isWithDisabledLook={invalid || value.length === 0}>
+                                    <SubmitButton
+                                        aria-label={t('Submit form to reset your password')}
+                                        isWithDisabledLook={invalid || value.length === 0}
+                                    >
                                         {t('Reset password')}
                                     </SubmitButton>
                                 </FormButtonWrapper>

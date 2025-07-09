@@ -99,14 +99,21 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
 
                     return (
                         <li key={index}>
-                            <button
+                            <div
+                                aria-label={t('View complaint images in gallery')}
+                                role="button"
                                 tabIndex={0}
-                                title={t('View product image')}
+                                title={t('Open gallery')}
                                 className={twJoin(
                                     'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
                                     isWithAdditionalImages && 'relative',
                                 )}
                                 onClick={() => setSelectedGalleryItemIndex(imagePosition)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        setSelectedGalleryItemIndex(imagePosition);
+                                    }
+                                }}
                             >
                                 <div className="bg-background-more size-full rounded-md p-1">
                                     <Image
@@ -124,7 +131,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                         +{galleryAdditionalItemsCount}
                                     </div>
                                 )}
-                            </button>
+                            </div>
                         </li>
                     );
                 })}

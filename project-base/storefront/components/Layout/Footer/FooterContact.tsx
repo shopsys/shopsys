@@ -14,34 +14,40 @@ export const FooterContact: FC = () => {
 
             <div
                 className="border-border-default flex h-24 w-full max-w-xs overflow-hidden rounded-sm border-2"
-                tid={TIDs.footer_social_links}
+                data-tid={TIDs.footer_social_links}
             >
-                <FooterContactSocialsItem href="#" title="Instagram">
+                <FooterContactSocialsItem ariaLabel={t('Go to Instagram')} href="#" title="Instagram">
                     <InstagramIcon className="text-text-default w-8" />
                 </FooterContactSocialsItem>
-                <FooterContactSocialsItem href="#" title="Facebook">
+                <FooterContactSocialsItem ariaLabel={t('Go to Facebook')} href="#" title="Facebook">
                     <FacebookIcon className="w-11 text-[#1877f2]" />
                 </FooterContactSocialsItem>
-                <FooterContactSocialsItem href="#" title="Youtube">
+                <FooterContactSocialsItem ariaLabel={t('Go to Youtube')} href="#" title="Youtube">
                     <YoutubeIcon className="w-11 text-[#d93738]" />
                 </FooterContactSocialsItem>
             </div>
 
             <div className="mt-4 flex flex-wrap justify-center gap-5">
-                <FooterContactLangsItem href="#" text={t('Czechia')}>
-                    <IconImage alt={t('Czechia flag')} height={16} icon="cz" width={24} />
+                <FooterContactLangsItem ariaLabel={t('Change language to Czechia')} href="#" text={t('Czechia')}>
+                    <IconImage alt={t('Czechia flag')} height={16} icon="cz" tabIndex={-1} width={24} />
                 </FooterContactLangsItem>
-                <FooterContactLangsItem href="#" text={t('Slovakia')}>
-                    <IconImage alt={t('Slovakia flag')} height={16} icon="sk" width={24} />
+                <FooterContactLangsItem ariaLabel={t('Change language to Slovakia')} href="#" text={t('Slovakia')}>
+                    <IconImage alt={t('Slovakia flag')} height={16} icon="sk" tabIndex={-1} width={24} />
                 </FooterContactLangsItem>
             </div>
         </>
     );
 };
 
-const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ children, title, href }) => (
+const FooterContactSocialsItem: FC<{ href: string; title: string; ariaLabel: string }> = ({
+    children,
+    title,
+    href,
+    ariaLabel,
+}) => (
     <a
-        className="focus-visible:bg-link-default flex h-full w-1/3 items-center justify-center first:border-none"
+        aria-label={ariaLabel}
+        className="flex h-full w-1/3 items-center justify-center first:border-none"
         href={href}
         tabIndex={0}
         title={title}
@@ -50,11 +56,18 @@ const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ childre
     </a>
 );
 
-const FooterContactLangsItem: FC<{ href: string; text: string }> = ({ children, href, text }) => (
+const FooterContactLangsItem: FC<{ href: string; text: string; ariaLabel: string }> = ({
+    children,
+    href,
+    text,
+    ariaLabel,
+}) => (
     <a
-        className="focus-visible:ring-link-default text-link-default hover:text-link-hovered flex items-center rounded-sm hover:no-underline focus-visible:ring-2"
+        aria-label={ariaLabel}
+        className="text-link-default hover:text-link-hovered flex items-center rounded-sm hover:no-underline"
         href={href}
         tabIndex={0}
+        title={text}
     >
         {children}
         <span className="ml-2 text-sm">{text}</span>

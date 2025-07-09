@@ -12,6 +12,8 @@ import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 const AddToCartPopup = dynamic(
     () => import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
@@ -38,6 +40,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     );
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canCreateOrder } = useAuthorization();
+    const formatPrice = useFormatPrice();
 
     const onAddToCartHandler = async () => {
         if (!spinboxRef.current) {
@@ -68,7 +71,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         };
 
         return (
-            <Button aria-haspopup="dialog" className="w-fit" size="large" onClick={openInquiryPopup}>
+            <Button
+                aria-haspopup="dialog"
+                aria-label={t('Open inquiry popup')}
+                className="w-fit"
+                size="large"
+                title={t('Inquire popup')}
+                onClick={openInquiryPopup}
+            >
                 {t('Inquire')}
             </Button>
         );
@@ -82,6 +92,15 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
         product.isSellingDenied;
 
+    const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
+        productName: product.name,
+        quantity: spinboxRef.current?.valueAsNumber,
+        unit: product.unit.name,
+        price: formatPrice(
+            (spinboxRef.current?.valueAsNumber ?? 1) * mapPriceForCalculations(product.price.priceWithVat),
+        ),
+    });
+
     return (
         <div className="flex items-center gap-2">
             <Spinbox defaultValue={1} id={product.uuid} min={1} ref={spinboxRef} size="xlarge" step={1} />
@@ -93,10 +112,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
                 <Button
                     aria-haspopup="dialog"
+                    aria-label={ariaLabel}
                     className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
                     size="xlarge"
                     tid={TIDs.pages_productdetail_addtocart_button}
+                    title={t('Add to cart')}
                     variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
                     onClick={onAddToCartHandler}
                 >
