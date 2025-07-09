@@ -22,15 +22,16 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     return (
         <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
-                <Image
-                    priority
-                    alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
-                    className="size-20 max-h-full object-contain mix-blend-multiply"
-                    height={80}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    src={complaintItem.items[0].product?.mainImage?.url}
-                    width={80}
-                />
+                <div className="flex size-20 shrink-0">
+                    <Image
+                        priority
+                        alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
+                        className="size-20 object-contain mix-blend-multiply"
+                        height={48}
+                        src={complaintItem.items[0].product?.mainImage?.url}
+                        width={72}
+                    />
+                </div>
 
                 <div className="flex flex-col gap-1">
                     <span className="h5">
