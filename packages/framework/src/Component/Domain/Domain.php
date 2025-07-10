@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -326,5 +327,22 @@ class Domain implements DomainIdsProviderInterface
     public function getBaseUrl(): string
     {
         return $this->getCurrentDomainConfig()->getBaseUrl();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
+     * @return int
+     */
+    public function getFirstDomainIdMatchingAdminSelectedLocale(Administrator $administrator): int
+    {
+        $adminLocale = $administrator->getSelectedLocale();
+
+        foreach ($this->getAll() as $domainConfig) {
+            if ($domainConfig->getLocale() === $adminLocale) {
+                return $domainConfig->getId();
+            }
+        }
+
+        return static::FIRST_DOMAIN_ID;
     }
 }
