@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Component\GqlContext;
 
 use Overblog\GraphQLBundle\Event\Events;
 use Overblog\GraphQLBundle\Event\ExecutorArgumentsEvent;
+use Override;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,6 +16,7 @@ class GqlContextInitializer implements EventSubscriberInterface
     /**
      * @return string[][][]
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

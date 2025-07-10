@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
@@ -52,6 +53,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $identifier
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
+    #[Override]
     public function loadUserByIdentifier(string $identifier): CustomerUser
     {
         return $this->loadUserByUsername($identifier);
@@ -61,6 +63,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
+    #[Override]
     public function refreshUser(UserInterface $userInterface): UserInterface
     {
         $class = get_class($userInterface);
@@ -101,6 +104,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
+    #[Override]
     public function supportsClass(string $class): bool
     {
         return $class === CustomerUser::class || is_subclass_of($class, CustomerUser::class);

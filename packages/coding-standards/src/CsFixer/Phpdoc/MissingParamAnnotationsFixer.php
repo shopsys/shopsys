@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
 use Nette\Utils\Strings;
+use Override;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
@@ -19,6 +20,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
     /**
      * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
      */
+    #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -32,6 +34,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
      * @param int $index
      * @param \PhpCsFixer\Tokenizer\Token|null $docToken
      */
+    #[Override]
     protected function processFunctionToken(Tokens $tokens, int $index, ?Token $docToken): void
     {
         $argumentAnalyses = $this->functionsAnalyzer->getFunctionArguments($tokens, $index);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Voter;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
@@ -32,6 +33,7 @@ class CustomerUserVoter extends AbstractB2bVoter
      * @param array $subject
      * @return bool
      */
+    #[Override]
     protected function supports(string $attribute, $subject): bool
     {
         return $attribute === 'can_manage_customer_user_voter';
@@ -43,6 +45,7 @@ class CustomerUserVoter extends AbstractB2bVoter
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return bool
      */
+    #[Override]
     protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool
     {
         if ($argument === null) {

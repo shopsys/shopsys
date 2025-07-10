@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\User;
 
 use Lcobucci\JWT\UnencryptedToken;
+use Override;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -42,6 +43,7 @@ class FrontendApiUserProvider implements UserProviderInterface
      * @param string $identifier
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
+    #[Override]
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
         throw new NotImplementedException(
@@ -53,6 +55,7 @@ class FrontendApiUserProvider implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
+    #[Override]
     public function refreshUser(UserInterface $user): UserInterface
     {
         throw new NotImplementedException('Method "refreshUser" is not implement.');
@@ -62,6 +65,7 @@ class FrontendApiUserProvider implements UserProviderInterface
      * @param mixed $frontendApiUser
      * @return bool
      */
+    #[Override]
     public function supportsClass($frontendApiUser): bool
     {
         return $frontendApiUser instanceof FrontendApiUser;

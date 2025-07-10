@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -24,6 +25,7 @@ final class ForbiddenSuperGlobalSniff implements Sniff
     /**
      * @return int[]
      */
+    #[Override]
     public function register(): array
     {
         return [T_VARIABLE];
@@ -33,6 +35,7 @@ final class ForbiddenSuperGlobalSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
+    #[Override]
     public function process(File $file, $position): void
     {
         $currentToken = $file->getTokens()[$position];

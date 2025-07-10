@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -14,6 +15,7 @@ class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null $value
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
      */
+    #[Override]
     public function transform($value): ?OrderItemData
     {
         if ($value === null) {
@@ -45,6 +47,7 @@ class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null $value
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
      */
+    #[Override]
     public function reverseTransform($value): ?OrderItemData
     {
         return $this->transform($value);

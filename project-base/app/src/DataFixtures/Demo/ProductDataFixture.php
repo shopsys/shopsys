@@ -4144,6 +4144,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

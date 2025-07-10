@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\GoogleBundle\Form;
 
+use Override;
 use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData;
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactory;
@@ -27,6 +28,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormTypeClass()
     {
         return GoogleProductFormType::class;
@@ -35,6 +37,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormLabel()
     {
         return $this->translator->trans('Google Shopping product feed');
@@ -44,6 +47,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @return array
      */
+    #[Override]
     public function getData($productId)
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
@@ -63,6 +67,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @param array $data
      */
+    #[Override]
     public function saveData($productId, $data)
     {
         $googleProductDomainsDataIndexedByDomainId = [];
@@ -111,6 +116,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $productId
      */
+    #[Override]
     public function removeData($productId)
     {
         $this->googleProductDomainFacade->delete($productId);

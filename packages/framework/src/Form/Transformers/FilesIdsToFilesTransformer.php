@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -22,6 +23,7 @@ class FilesIdsToFilesTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $files
      * @return int[]
      */
+    #[Override]
     public function transform($files): array
     {
         $fileIds = [];
@@ -39,6 +41,7 @@ class FilesIdsToFilesTransformer implements DataTransformerInterface
      * @param int[] $fileIds
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
+    #[Override]
     public function reverseTransform($fileIds): array
     {
         $files = [];

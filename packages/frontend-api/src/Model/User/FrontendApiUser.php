@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\User;
 
+use Override;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class FrontendApiUser implements UserInterface
@@ -37,6 +38,7 @@ class FrontendApiUser implements UserInterface
     /**
      * @return array
      */
+    #[Override]
     public function getRoles(): array
     {
         return $this->roles;
@@ -69,11 +71,13 @@ class FrontendApiUser implements UserInterface
     /**
      * @return string
      */
+    #[Override]
     public function getUserIdentifier(): string
     {
         return $this->email;
     }
 
+    #[Override]
     public function eraseCredentials(): void
     {
     }

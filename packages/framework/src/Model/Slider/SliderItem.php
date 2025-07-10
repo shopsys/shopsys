@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
@@ -161,6 +162,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param int $position
      */
+    #[Override]
     public function setPosition($position)
     {
         $this->position = $position;

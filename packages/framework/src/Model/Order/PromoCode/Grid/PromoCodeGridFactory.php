@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -39,6 +40,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
+    #[Override]
     public function create(?string $editRole, bool $withEditButton = true, ?string $search = null): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();

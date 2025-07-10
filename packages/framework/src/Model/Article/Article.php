@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
@@ -234,6 +235,7 @@ class Article implements OrderableEntityInterface
     /**
      * @param int $position
      */
+    #[Override]
     public function setPosition($position)
     {
         $this->position = $position;

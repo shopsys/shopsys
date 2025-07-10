@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Category\AutomatedFilter;
 
 use DateTimeImmutable;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 
 class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
@@ -15,6 +16,7 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLabel(): string
     {
         return t('Display new products only');
@@ -23,6 +25,7 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDatabaseValue(): string
     {
         return self::DATABASE_VALUE;
@@ -31,6 +34,7 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function applyFilter(FilterQuery $filterQuery): FilterQuery
     {
         return $filterQuery->filterBySellingFrom(new DateTimeImmutable('-' . self::MAX_PRODUCT_AGE_IN_DAYS . ' days'));
@@ -39,6 +43,7 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getNote(): ?string
     {
         return t('Only products with "Selling start date" not older than %count% days are displayed', ['%count%' => self::MAX_PRODUCT_AGE_IN_DAYS]);

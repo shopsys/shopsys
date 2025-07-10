@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 use Knp\Menu\Factory\ExtensionInterface;
 use Knp\Menu\ItemInterface;
+use Override;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -32,6 +33,7 @@ class RoutingExtension implements ExtensionInterface
      * {@inheritdoc}
      * Inspired by @see \Knp\Menu\Integration\Symfony\RoutingExtension::buildOptions()
      */
+    #[Override]
     public function buildOptions(array $options = []): array
     {
         if (!empty($options['route'])) {
@@ -56,6 +58,7 @@ class RoutingExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildItem(ItemInterface $item, array $options): void
     {
         if (array_key_exists('route', $options)) {

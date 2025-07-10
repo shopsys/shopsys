@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter;
 
+use Override;
+
 class ComplaintDeliveryCityFilter extends AbstractComplaintContainsFilter
 {
     public const string NAME = 'deliveryCity';
@@ -11,6 +13,7 @@ class ComplaintDeliveryCityFilter extends AbstractComplaintContainsFilter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -19,6 +22,7 @@ class ComplaintDeliveryCityFilter extends AbstractComplaintContainsFilter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getFieldName(): string
     {
         return 'deliveryCity';

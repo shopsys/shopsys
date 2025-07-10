@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
@@ -245,6 +246,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return int
      */
+    #[Override]
     public function getId()
     {
         return $this->id;
@@ -261,6 +263,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getUserIdentifier(): string
     {
         return $this->username;
@@ -277,6 +280,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getEmail()
     {
         return $this->email;
@@ -285,6 +289,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getPassword(): string
     {
         return $this->password;
@@ -293,6 +298,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getLoginToken()
     {
         return $this->loginToken;
@@ -301,6 +307,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return \DateTime
      */
+    #[Override]
     public function getLastActivity()
     {
         return $this->lastActivity;
@@ -378,6 +385,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $loginToken
      */
+    #[Override]
     public function setLoginToken($loginToken)
     {
         $this->loginToken = $loginToken;
@@ -386,6 +394,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param \DateTime $lastActivity
      */
+    #[Override]
     public function setLastActivity($lastActivity)
     {
         $this->lastActivity = $lastActivity;
@@ -437,6 +446,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function eraseCredentials(): void
     {
     }
@@ -444,6 +454,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRoles(): array
     {
         if ($this->roleGroup !== null) {
@@ -473,6 +484,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isMultidomainLogin()
     {
         return $this->multidomainLogin;
@@ -481,6 +493,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setMultidomainLogin($multidomainLogin)
     {
         $this->multidomainLogin = $multidomainLogin;
@@ -545,6 +558,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return bool
      */
+    #[Override]
     public function isEmailAuthEnabled(): bool
     {
         return $this->twoFactorAuthenticationType === self::TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL;
@@ -553,6 +567,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getEmailAuthRecipient(): string
     {
         return $this->getEmail();
@@ -561,6 +576,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string|null
      */
+    #[Override]
     public function getEmailAuthCode(): ?string
     {
         return $this->emailAuthenticationCode;
@@ -569,6 +585,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $authCode
      */
+    #[Override]
     public function setEmailAuthCode(string $authCode): void
     {
         $this->emailAuthenticationCode = $authCode;
@@ -577,6 +594,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return bool
      */
+    #[Override]
     public function isGoogleAuthenticatorEnabled(): bool
     {
         return $this->twoFactorAuthenticationType === self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH;
@@ -585,6 +603,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getGoogleAuthenticatorUsername(): string
     {
         return $this->getUsername();
@@ -593,6 +612,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[Override]
     public function getGoogleAuthenticatorSecret(): string
     {
         if ($this->googleAuthenticatorSecret === null) {
@@ -688,6 +708,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string|null
      */
+    #[Override]
     public function getResetPasswordHash()
     {
         return $this->resetPasswordHash;
@@ -697,6 +718,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @param string|null $hash
      * @return bool
      */
+    #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
         if ($hash === null || $this->resetPasswordHash !== $hash) {

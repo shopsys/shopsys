@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
@@ -21,11 +22,13 @@ class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
+    #[Override]
     public function run(): void
     {
         $count = $this->fileUpload->deleteOldUploadedFiles();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,6 +15,7 @@ class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         $feedRegistryDefinition = $container->findDefinition(FeedRegistry::class);

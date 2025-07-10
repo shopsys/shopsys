@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -33,6 +34,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -41,6 +43,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [
@@ -52,6 +55,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
@@ -60,6 +64,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [
@@ -79,6 +84,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         $isCategory = [];

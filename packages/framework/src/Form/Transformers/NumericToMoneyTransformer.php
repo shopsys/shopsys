@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -22,6 +23,7 @@ class NumericToMoneyTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $value
      * @return string|null
      */
+    #[Override]
     public function transform($value): ?string
     {
         if ($value === null) {
@@ -39,6 +41,7 @@ class NumericToMoneyTransformer implements DataTransformerInterface
      * @param string|float|int|null $value
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
+    #[Override]
     public function reverseTransform($value): ?Money
     {
         if ($value === null) {

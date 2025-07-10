@@ -73,6 +73,7 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

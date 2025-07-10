@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult as PaginationResult;
@@ -33,6 +34,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
+    #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,
@@ -58,6 +60,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param int|string $rowId
      * @return array
      */
+    #[Override]
     public function getOneRow(int|string $rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
@@ -69,6 +72,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return int
      */
+    #[Override]
     public function getTotalRowsCount(): int
     {
         if ($this->totalCount === null) {
@@ -114,6 +118,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return string
      */
+    #[Override]
     public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;

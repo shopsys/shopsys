@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\ConstantHelper;
@@ -19,6 +20,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function register(): array
     {
         return [T_CLASS];
@@ -27,6 +29,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function process(File $file, $classPosition)
     {
         $protectedConstants = $this->getAllProtectedConstantsInClass($file);

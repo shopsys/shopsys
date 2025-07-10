@@ -8,6 +8,7 @@ use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
@@ -31,6 +32,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     ) {
     }
 
+    #[Override]
     public function run(): void
     {
         $now = new DateTime();
@@ -97,6 +99,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;

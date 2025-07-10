@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException;
 
 class UploadedFileConfig implements UploadedFileConfigInterface
@@ -19,6 +20,7 @@ class UploadedFileConfig implements UploadedFileConfigInterface
      * @param object $entity
      * @return string
      */
+    #[Override]
     public function getEntityName(object $entity): string
     {
         return $this->getUploadedFileEntityConfig($entity)->getEntityName();
@@ -28,6 +30,7 @@ class UploadedFileConfig implements UploadedFileConfigInterface
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
+    #[Override]
     public function getUploadedFileEntityConfig(object $entity): UploadedFileEntityConfig
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
@@ -43,6 +46,7 @@ class UploadedFileConfig implements UploadedFileConfigInterface
      * @param object $entity
      * @return bool
      */
+    #[Override]
     public function hasUploadedFileEntityConfig(object $entity): bool
     {
         foreach (array_keys($this->uploadedFileEntityConfigsByClass) as $className) {
@@ -57,6 +61,7 @@ class UploadedFileConfig implements UploadedFileConfigInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
      */
+    #[Override]
     public function getAllUploadedFileEntityConfigs(): array
     {
         return $this->uploadedFileEntityConfigsByClass;
@@ -66,6 +71,7 @@ class UploadedFileConfig implements UploadedFileConfigInterface
      * @param string $entityClass
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
+    #[Override]
     public function getUploadedFileEntityConfigByClass(string $entityClass): UploadedFileEntityConfig
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {

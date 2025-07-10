@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
@@ -31,6 +32,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
      * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
+    #[Override]
     public function create(?string $editRole): Grid
     {
         $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();

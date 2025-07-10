@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\DataFixtures;
 
+use Override;
 use Shopsys\Plugin\PluginDataFixtureInterface;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
@@ -30,6 +31,7 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
     ) {
     }
 
+    #[Override]
     public function load()
     {
         $heurekaCategoriesData = [];

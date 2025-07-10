@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -20,6 +21,7 @@ class CategoriesTypeTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[]|null $categories
      * @return bool[]
      */
+    #[Override]
     public function transform($categories): array
     {
         $categories = $categories ?? [];
@@ -39,6 +41,7 @@ class CategoriesTypeTransformer implements DataTransformerInterface
      * @param bool[]|null $isCheckedIndexedByCategoryId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
+    #[Override]
     public function reverseTransform($isCheckedIndexedByCategoryId): array
     {
         $categories = [];

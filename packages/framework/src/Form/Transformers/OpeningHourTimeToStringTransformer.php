@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use DateTimeImmutable;
+use Override;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -22,6 +23,7 @@ class OpeningHourTimeToStringTransformer implements DataTransformerInterface
      * @param string|null $time
      * @return \DateTimeImmutable|null
      */
+    #[Override]
     public function transform($time): ?DateTimeImmutable
     {
         if ($time === null) {
@@ -35,6 +37,7 @@ class OpeningHourTimeToStringTransformer implements DataTransformerInterface
      * @param \DateTimeImmutable|null $dateTime
      * @return string|null
      */
+    #[Override]
     public function reverseTransform($dateTime): ?string
     {
         return $dateTime?->format('H:i');

@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Article\Search;
 
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade;
 
@@ -25,6 +26,7 @@ class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInte
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|array
      */
+    #[Override]
     public function getArticlesSearchResults(
         Argument $argument,
     ): Promise|array {
@@ -39,6 +41,7 @@ class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInte
      * @param int $domainId
      * @return bool
      */
+    #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {
         return true;

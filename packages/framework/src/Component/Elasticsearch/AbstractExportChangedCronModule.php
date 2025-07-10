@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Component\Console\Output\NullOutput;
@@ -31,10 +32,12 @@ abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterf
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger)
     {
     }
 
+    #[Override]
     public function run()
     {
         foreach ($this->domain->getAllIds() as $domainId) {

@@ -53,6 +53,7 @@ class EntityMaker extends BaseMaker
      * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
      * @param \Symfony\Bundle\MakerBundle\Generator $generator
      */
+    #[Override]
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $this->createEntityClass($generator);

@@ -7,12 +7,14 @@ namespace Shopsys\FrameworkBundle\Component\Filesystem;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use Override;
 
 class LocalFilesystemFactory implements FilesystemFactoryInterface
 {
     /**
      * @return \League\Flysystem\FilesystemOperator
      */
+    #[Override]
     public function create(): FilesystemOperator
     {
         $adapter = new LocalFilesystemAdapter('/');

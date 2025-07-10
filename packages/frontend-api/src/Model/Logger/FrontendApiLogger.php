@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Logger;
 
 use Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException;
+use Override;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -24,6 +25,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function log($level, $message, array $context = []): void
     {
         if (isset($context['exception'])) {
@@ -51,6 +53,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function emergency($message, array $context = []): void
     {
         $this->logger->emergency($message, $context);
@@ -59,6 +62,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function alert($message, array $context = []): void
     {
         $this->logger->alert($message, $context);
@@ -67,6 +71,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function critical($message, array $context = []): void
     {
         $this->logger->critical($message, $context);
@@ -75,6 +80,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function error($message, array $context = []): void
     {
         $this->logger->error($message, $context);
@@ -83,6 +89,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function warning($message, array $context = []): void
     {
         $this->logger->warning($message, $context);
@@ -91,6 +98,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function notice($message, array $context = []): void
     {
         $this->logger->notice($message, $context);
@@ -99,6 +107,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function info($message, array $context = []): void
     {
         $this->logger->info($message, $context);
@@ -107,6 +116,7 @@ class FrontendApiLogger implements LoggerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function debug($message, array $context = []): void
     {
         $this->logger->debug($message, $context);

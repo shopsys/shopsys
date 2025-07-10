@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Mail;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Security\NewPasswordUrlProvider;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -33,6 +34,7 @@ class ResetPasswordMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface $administrator
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
+    #[Override]
     public function createMessage(MailTemplate $template, $administrator)
     {
         $domainId = $template->getDomainId();

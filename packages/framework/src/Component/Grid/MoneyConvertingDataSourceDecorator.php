@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
@@ -26,6 +27,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
+    #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,
@@ -57,6 +59,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
      * @param int|string $rowId
      * @return array
      */
+    #[Override]
     public function getOneRow(int|string $rowId): array
     {
         $row = $this->innerDataSource->getOneRow($rowId);
@@ -67,6 +70,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     /**
      * @return int
      */
+    #[Override]
     public function getTotalRowsCount(): int
     {
         return $this->innerDataSource->getTotalRowsCount();
@@ -75,6 +79,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     /**
      * @return string
      */
+    #[Override]
     public function getRowIdSourceColumnName(): string
     {
         return $this->innerDataSource->getRowIdSourceColumnName();

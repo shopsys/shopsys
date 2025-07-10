@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search;
 
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
@@ -25,6 +26,7 @@ class BrandSearchResultsProvider implements BrandSearchResultsProviderInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|array
      */
+    #[Override]
     public function getBrandSearchResults(
         Argument $argument,
     ): Promise|array {
@@ -37,6 +39,7 @@ class BrandSearchResultsProvider implements BrandSearchResultsProviderInterface
      * @param int $domainId
      * @return bool
      */
+    #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {
         return true;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -19,6 +20,7 @@ class WysiwygCdnDataTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function transform($value): mixed
     {
         return $value;
@@ -28,6 +30,7 @@ class WysiwygCdnDataTransformer implements DataTransformerInterface
      * @param mixed $value
      * @return string|null
      */
+    #[Override]
     public function reverseTransform($value): ?string
     {
         return $this->cdnFacade->replaceUrlsByCdnForAssets($value);

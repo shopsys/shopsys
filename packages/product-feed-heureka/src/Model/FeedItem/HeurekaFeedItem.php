@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -45,6 +46,7 @@ class HeurekaFeedItem implements FeedItemInterface
     /**
      * @return int
      */
+    #[Override]
     public function getSeekId(): int
     {
         return $this->id;

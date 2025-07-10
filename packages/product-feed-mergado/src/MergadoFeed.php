@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\MergadoBundle;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInterface;
@@ -24,6 +25,7 @@ class MergadoFeed implements FeedInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface
      */
+    #[Override]
     public function getInfo(): FeedInfoInterface
     {
         return $this->mergadoFeedInfo;
@@ -32,6 +34,7 @@ class MergadoFeed implements FeedInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTemplateFilepath(): string
     {
         return '@ShopsysProductFeedMergado/feed.xml.twig';
@@ -43,6 +46,7 @@ class MergadoFeed implements FeedInterface
      * @param int $maxResults
      * @return iterable
      */
+    #[Override]
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         return $this->mergadoFeedItemFacade->getItems($domainConfig, $lastSeekId, $maxResults);

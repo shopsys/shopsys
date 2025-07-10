@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\BrandFeed\LuigisBoxBundle\Model;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class LuigisBoxBrandFeedItem implements FeedItemInterface
@@ -27,6 +28,7 @@ class LuigisBoxBrandFeedItem implements FeedItemInterface
     /**
      * @return int
      */
+    #[Override]
     public function getSeekId(): int
     {
         return $this->id;

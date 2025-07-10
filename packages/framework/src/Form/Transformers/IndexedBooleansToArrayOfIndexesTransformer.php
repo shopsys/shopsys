@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInterface
@@ -11,6 +12,7 @@ class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function transform($value): ?array
     {
         if (!is_array($value)) {
@@ -23,6 +25,7 @@ class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function reverseTransform($value): ?array
     {
         if (!is_array($value)) {

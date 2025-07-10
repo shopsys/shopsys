@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Phpstan;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
@@ -19,6 +20,7 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
     /**
      * @return string
      */
+    #[Override]
     public function getNodeType(): string
     {
         return ClassMethod::class;
@@ -29,6 +31,7 @@ class OrmPropertyGetterAndSetterHasNoTypehintRule implements Rule
      * @param \PHPStan\Analyser\Scope $scope
      * @return array
      */
+    #[Override]
     public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof ClassMethod) {

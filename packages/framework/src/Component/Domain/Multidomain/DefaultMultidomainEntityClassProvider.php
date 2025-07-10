@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain;
 
+use Override;
+
 /**
  * The class ensures proper functionality after the component is separated into standalone package independent of framework.
  *
@@ -17,6 +19,7 @@ class DefaultMultidomainEntityClassProvider implements MultidomainEntityClassPro
     /**
      * @return string[]
      */
+    #[Override]
     public function getIgnoredMultidomainEntitiesNames(): array
     {
         return [];
@@ -25,6 +28,7 @@ class DefaultMultidomainEntityClassProvider implements MultidomainEntityClassPro
     /**
      * @return string[]
      */
+    #[Override]
     public function getManualMultidomainEntitiesNames(): array
     {
         return [];

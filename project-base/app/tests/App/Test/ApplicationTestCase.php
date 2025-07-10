@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use Override;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -19,6 +20,7 @@ abstract class ApplicationTestCase extends WebTestCase
 
     protected static ?Client $client = null;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -31,6 +33,7 @@ abstract class ApplicationTestCase extends WebTestCase
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
+    #[Override]
     protected static function getContainer(): ContainerInterface
     {
         return self::getCurrentClient()->getContainer()->get('test.service_container');
@@ -41,6 +44,7 @@ abstract class ApplicationTestCase extends WebTestCase
      *
      * @return \Psr\Container\ContainerInterface
      */
+    #[Override]
     final public function createContainer(): PsrContainerInterface
     {
         return self::getContainer();
@@ -141,6 +145,7 @@ abstract class ApplicationTestCase extends WebTestCase
         return $clientServerParameters;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->em->rollback();

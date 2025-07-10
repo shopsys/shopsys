@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base;
 
+use Override;
+
 abstract class AbstractChainedTestClass implements TestInterface, SecondInterface
 {
     /**
      * @return string
      */
+    #[Override]
     public function getName(): string
     {
         return 'name';

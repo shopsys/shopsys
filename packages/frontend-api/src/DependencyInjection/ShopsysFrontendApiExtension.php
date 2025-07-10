@@ -17,6 +17,7 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function prepend(ContainerBuilder $container): void
     {
         $config = [

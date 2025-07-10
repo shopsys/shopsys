@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use ReflectionClass;
@@ -18,6 +19,7 @@ class RequireOverrideAttributeSniff implements Sniff
     /**
      * @return array<int>
      */
+    #[Override]
     public function register(): array
     {
         return [T_CLASS];
@@ -28,6 +30,7 @@ class RequireOverrideAttributeSniff implements Sniff
      * @param mixed $stackPtr
      * @throws \ReflectionException
      */
+    #[Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();

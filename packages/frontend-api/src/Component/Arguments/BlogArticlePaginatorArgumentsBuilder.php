@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Arguments;
 
+use Override;
+
 class BlogArticlePaginatorArgumentsBuilder extends AbstractPaginatorArgumentsBuilder
 {
     /**
      * @param array $config
      * @return array
      */
+    #[Override]
     public function toMappingDefinition(array $config): array
     {
         $mappingDefinition = parent::toMappingDefinition($config);

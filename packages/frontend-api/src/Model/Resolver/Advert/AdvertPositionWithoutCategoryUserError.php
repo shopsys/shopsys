@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Advert;
 
 use Overblog\GraphQLBundle\Error\UserError;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class AdvertPositionWithoutCategoryUserError extends UserError implements UserErrorWithCodeInterface
@@ -14,6 +15,7 @@ class AdvertPositionWithoutCategoryUserError extends UserError implements UserEr
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserErrorCode(): string
     {
         return static::CODE;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer;
 
+use Override;
 use PhpCsFixer\Fixer\ClassNotation\FinalClassFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
@@ -20,6 +21,7 @@ class FinalFormTypeFixer implements FixerInterface
     /**
      * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
      */
+    #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -32,6 +34,7 @@ class FinalFormTypeFixer implements FixerInterface
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @return bool
      */
+    #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_EXTENDS);
@@ -40,6 +43,7 @@ class FinalFormTypeFixer implements FixerInterface
     /**
      * @return bool
      */
+    #[Override]
     public function isRisky(): bool
     {
         return false;
@@ -49,6 +53,7 @@ class FinalFormTypeFixer implements FixerInterface
      * @param \SplFileInfo $file
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      */
+    #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         $namespacesAnalyzer = new NamespacesAnalyzer();
@@ -118,6 +123,7 @@ class FinalFormTypeFixer implements FixerInterface
     /**
      * @return string
      */
+    #[Override]
     public function getName(): string
     {
         return 'Shopsys/final_form_type';
@@ -126,6 +132,7 @@ class FinalFormTypeFixer implements FixerInterface
     /**
      * @return int
      */
+    #[Override]
     public function getPriority(): int
     {
         // Before native FinalClassFixer
@@ -136,6 +143,7 @@ class FinalFormTypeFixer implements FixerInterface
      * @param \SplFileInfo $file
      * @return bool
      */
+    #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return true;

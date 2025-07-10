@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Customer\Mock;
 
 use InvalidArgumentException;
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -41,6 +42,7 @@ class TokenMock implements TokenInterface
     /**
      * @return array
      */
+    #[Override]
     public function getRoleNames(): array
     {
         return [];
@@ -53,6 +55,7 @@ class TokenMock implements TokenInterface
     /**
      * @return \Symfony\Component\Security\Core\User\UserInterface|null
      */
+    #[Override]
     public function getUser(): ?UserInterface
     {
         return $this->customerUser;
@@ -61,6 +64,7 @@ class TokenMock implements TokenInterface
     /**
      * @param mixed $user
      */
+    #[Override]
     public function setUser($user): void
     {
     }
@@ -77,6 +81,7 @@ class TokenMock implements TokenInterface
     {
     }
 
+    #[Override]
     public function eraseCredentials(): void
     {
     }
@@ -84,6 +89,7 @@ class TokenMock implements TokenInterface
     /**
      * @return array
      */
+    #[Override]
     public function getAttributes(): array
     {
         return [];
@@ -92,6 +98,7 @@ class TokenMock implements TokenInterface
     /**
      * @param array $attributes
      */
+    #[Override]
     public function setAttributes(array $attributes): void
     {
     }
@@ -100,6 +107,7 @@ class TokenMock implements TokenInterface
      * @param string $name
      * @return bool
      */
+    #[Override]
     public function hasAttribute(string $name): bool
     {
         return true;
@@ -109,6 +117,7 @@ class TokenMock implements TokenInterface
      * @param string $name
      * @return mixed
      */
+    #[Override]
     public function getAttribute(string $name): mixed
     {
         throw new InvalidArgumentException();
@@ -118,6 +127,7 @@ class TokenMock implements TokenInterface
      * @param string $name
      * @param mixed $value
      */
+    #[Override]
     public function setAttribute(string $name, $value): void
     {
     }
@@ -145,6 +155,7 @@ class TokenMock implements TokenInterface
     /**
      * @return string
      */
+    #[Override]
     public function getUserIdentifier(): string
     {
         return $this->customerUser->getEmail();

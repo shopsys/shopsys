@@ -81,6 +81,7 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @return string[]
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [StoreDataFixture::class];

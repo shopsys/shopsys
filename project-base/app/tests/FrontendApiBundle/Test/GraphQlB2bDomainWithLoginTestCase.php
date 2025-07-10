@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CompanyDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
 use LogicException;
+use Override;
 
 abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginTestCase
 {
@@ -18,6 +19,7 @@ abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginT
      */
     protected CustomerUserFacade $customerUserFacade;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

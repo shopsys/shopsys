@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
@@ -48,6 +49,7 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
+    #[Override]
     public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {
         return $this->getCustomerUploadedFileRepository()->findBy(
@@ -67,6 +69,7 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
      * @param int $uploadedFileId
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
      */
+    #[Override]
     public function getById(int $uploadedFileId): UploadedFileInterface
     {
         $customerUploadedFile = $this->getCustomerUploadedFileRepository()->find($uploadedFileId);

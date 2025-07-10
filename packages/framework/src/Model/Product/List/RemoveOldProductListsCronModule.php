@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\List;
 
 use DateTimeImmutable;
 use Monolog\Logger;
+use Override;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class RemoveOldProductListsCronModule implements SimpleCronModuleInterface
@@ -21,10 +22,12 @@ class RemoveOldProductListsCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
     }
 
+    #[Override]
     public function run(): void
     {
         $this->productListFacade->removeOldAnonymousProductLists(new DateTimeImmutable('-31day'));

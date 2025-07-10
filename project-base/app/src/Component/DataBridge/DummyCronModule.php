@@ -6,6 +6,7 @@ namespace App\Component\DataBridge;
 
 use App\Component\DataBridge\Transfer\DummyImportTransferFacade;
 use Monolog\Logger;
+use Override;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class DummyCronModule implements SimpleCronModuleInterface
@@ -21,10 +22,12 @@ class DummyCronModule implements SimpleCronModuleInterface
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
     }
 
+    #[Override]
     public function run(): void
     {
         $this->dummyImportTransfer->runTransfer();

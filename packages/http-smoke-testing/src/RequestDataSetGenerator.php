@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting;
 
+use Override;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 
@@ -91,6 +92,7 @@ class RequestDataSetGenerator implements RouteConfig
      * @param string|null $debugNote
      * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
      */
+    #[Override]
     public function skipRoute($debugNote = null)
     {
         $this->defaultRequestDataSet->skip();
@@ -106,6 +108,7 @@ class RequestDataSetGenerator implements RouteConfig
      * @param string|null $debugNote
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet
      */
+    #[Override]
     public function changeDefaultRequestDataSet($debugNote = null)
     {
         $requestDataSet = $this->defaultRequestDataSet;
@@ -121,6 +124,7 @@ class RequestDataSetGenerator implements RouteConfig
      * @param string|null $debugNote
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet
      */
+    #[Override]
     public function addExtraRequestDataSet($debugNote = null)
     {
         $requestDataSet = new RequestDataSet($this->routeInfo->getRouteName());

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,6 +18,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->indexFacade->exportChanged(
@@ -29,6 +31,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getActionStartedMessage(): string
     {
         return 'Exporting changed data';
@@ -37,6 +40,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getActionFinishedMessage(): string
     {
         return 'Changed data was exported successfully!';

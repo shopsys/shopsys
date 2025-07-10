@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 
 class FeedConfig implements CronTimeInterface
@@ -33,6 +34,7 @@ class FeedConfig implements CronTimeInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTimeMinutes(): string
     {
         return $this->minutes;
@@ -41,6 +43,7 @@ class FeedConfig implements CronTimeInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTimeHours(): string
     {
         return $this->hours;

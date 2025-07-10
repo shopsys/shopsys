@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\Mail;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -36,6 +37,7 @@ class RegistrationMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
+    #[Override]
     public function createMessage(MailTemplate $mailTemplate, $customerUser)
     {
         return new MessageData(

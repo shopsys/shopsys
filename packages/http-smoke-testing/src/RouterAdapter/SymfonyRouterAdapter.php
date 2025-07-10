@@ -6,6 +6,7 @@ namespace Shopsys\HttpSmokeTesting\RouterAdapter;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Override;
 use ReflectionException;
 use ReflectionMethod;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
@@ -32,6 +33,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     /**
      * @return \Shopsys\HttpSmokeTesting\RouteInfo[]
      */
+    #[Override]
     public function getAllRouteInfo(): array
     {
         $allRouteInfo = [];
@@ -92,6 +94,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return string|null
      */
+    #[Override]
     public function generateUri(RequestDataSet $requestDataSet): ?string
     {
         return $this->router->generate($requestDataSet->getRouteName(), $requestDataSet->getParameters());

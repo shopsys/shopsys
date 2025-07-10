@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
+use Override;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -36,6 +37,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
         if ($file->getExtension() === 'yaml' || $file->getExtension() === 'yml') {
@@ -83,6 +85,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
     }
@@ -90,6 +93,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast): void
     {
     }

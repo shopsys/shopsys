@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Error;
 
+use Override;
 use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -29,6 +30,7 @@ final class BlueScreenErrorRenderer implements ErrorRendererInterface
      * @param \Throwable $exception
      * @return \Symfony\Component\ErrorHandler\Exception\FlattenException
      */
+    #[Override]
     public function render(Throwable $exception): FlattenException
     {
         if ($this->isDebug() === false) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException;
 use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Component\Translation\IdentityTranslator;
@@ -45,6 +46,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
      * Passes trans() call to original translator for logging purposes.
      * {@inheritdoc}
      */
+    #[Override]
     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         $normalizedId = $this->messageIdNormalizer->normalizeMessageId($id);
@@ -97,6 +99,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLocale(): string
     {
         return $this->originalTranslator->getLocale();
@@ -105,6 +108,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLocale(string $locale): void
     {
         $this->originalTranslator->setLocale($locale);
@@ -114,6 +118,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getCatalogue($locale = null): MessageCatalogueInterface
     {
         return $this->originalTranslatorBag->getCatalogue($locale);
@@ -150,6 +155,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getCatalogues(): array
     {
         if ($this->originalTranslator instanceof DataCollectorTranslator) {

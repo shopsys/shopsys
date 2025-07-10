@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\BrandFeed\LuigisBoxBundle;
 
+use Override;
 use Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItemFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
@@ -24,6 +25,7 @@ class LuigisBoxBrandFeed implements FeedInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getInfo(): FeedInfoInterface
     {
         return $this->luigisBoxBrandFeedInfo;
@@ -32,6 +34,7 @@ class LuigisBoxBrandFeed implements FeedInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getTemplateFilepath(): string
     {
         return '@ShopsysBrandFeedLuigisBox/feed.xml.twig';
@@ -40,6 +43,7 @@ class LuigisBoxBrandFeed implements FeedInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         yield from $this->luigisBoxBrandFeedItemFacade->getItems($domainConfig, $lastSeekId, $maxResults);

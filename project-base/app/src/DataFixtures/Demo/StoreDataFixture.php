@@ -356,6 +356,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @return array
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

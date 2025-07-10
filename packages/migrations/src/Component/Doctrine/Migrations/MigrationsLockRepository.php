@@ -14,6 +14,7 @@ use Doctrine\Migrations\Metadata\AvailableMigrationsSet;
 use Doctrine\Migrations\MigrationsRepository;
 use Doctrine\Migrations\Version\MigrationFactory;
 use Doctrine\Migrations\Version\Version;
+use Override;
 
 /**
  * This class heavily inspired by @see \Doctrine\Migrations\FilesystemMigrationsRepository
@@ -109,6 +110,7 @@ class MigrationsLockRepository implements MigrationsRepository
      * @param string $version
      * @return bool
      */
+    #[Override]
     public function hasMigration(string $version): bool
     {
         $this->loadMigrationsFromDirectories();
@@ -120,6 +122,7 @@ class MigrationsLockRepository implements MigrationsRepository
      * @param \Doctrine\Migrations\Version\Version $version
      * @return \Doctrine\Migrations\Metadata\AvailableMigration
      */
+    #[Override]
     public function getMigration(Version $version): AvailableMigration
     {
         $this->loadMigrationsFromDirectories();
@@ -134,6 +137,7 @@ class MigrationsLockRepository implements MigrationsRepository
     /**
      * @return \Doctrine\Migrations\Metadata\AvailableMigrationsSet
      */
+    #[Override]
     public function getMigrations(): AvailableMigrationsSet
     {
         $this->loadMigrationsFromDirectories();

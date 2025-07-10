@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -33,6 +34,7 @@ class MailTemplateGridFactory implements GridFactoryInterface
      * @param string|null $editRole
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
+    #[Override]
     public function create(?string $editRole): Grid
     {
         $grid = $this->gridFactory->create('MailTemplateList', $this->createDataSource(), $editRole);

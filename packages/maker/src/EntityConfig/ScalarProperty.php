@@ -7,6 +7,7 @@ namespace Shopsys\MakerBundle\EntityConfig;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 /**
@@ -43,6 +44,7 @@ class ScalarProperty extends Property
     /**
      * @return string[]
      */
+    #[Override]
     public function getAnnotationLines(): array
     {
         $options = [];
@@ -93,6 +95,7 @@ class ScalarProperty extends Property
      * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
      * @return string
      */
+    #[Override]
     public function getTypeHint(
         CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
     ): string {
@@ -121,6 +124,7 @@ class ScalarProperty extends Property
     /**
      * @return string
      */
+    #[Override]
     public function getGetterName(): string
     {
         $prefix = $this->type === 'boolean' ? 'is' : 'get';
@@ -131,6 +135,7 @@ class ScalarProperty extends Property
     /**
      * @return bool
      */
+    #[Override]
     public function isCollection(): bool
     {
         return false;

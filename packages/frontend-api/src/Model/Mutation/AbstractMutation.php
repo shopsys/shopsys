@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Override;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -16,6 +17,7 @@ abstract class AbstractMutation implements MutationInterface, AliasedInterface
     /**
      * @return array
      */
+    #[Override]
     public static function getAliases(): array
     {
         $reflectionClass = new ReflectionClass(static::class);

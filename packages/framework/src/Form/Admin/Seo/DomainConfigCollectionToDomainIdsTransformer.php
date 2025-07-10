@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Seo;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -22,6 +23,7 @@ class DomainConfigCollectionToDomainIdsTransformer implements DataTransformerInt
      * @param int[][] $value
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[][]
      */
+    #[Override]
     public function transform($value): array
     {
         return array_map(
@@ -37,6 +39,7 @@ class DomainConfigCollectionToDomainIdsTransformer implements DataTransformerInt
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[][] $value
      * @return int[][]
      */
+    #[Override]
     public function reverseTransform($value): array
     {
         return array_map(

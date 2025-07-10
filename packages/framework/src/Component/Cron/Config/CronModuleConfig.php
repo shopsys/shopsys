@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron\Config;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
@@ -58,6 +59,7 @@ class CronModuleConfig implements CronTimeInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTimeMinutes(): string
     {
         return $this->timeMinutes;
@@ -66,6 +68,7 @@ class CronModuleConfig implements CronTimeInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTimeHours(): string
     {
         return $this->timeHours;

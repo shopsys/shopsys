@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Arguments;
 
+use Override;
 use Shopsys\FrontendApiBundle\Component\Arguments\Exception\MandatoryArgumentMissingException;
 
 class AbstractProductPaginatorArgumentsBuilder extends AbstractPaginatorArgumentsBuilder
@@ -14,6 +15,7 @@ class AbstractProductPaginatorArgumentsBuilder extends AbstractPaginatorArgument
      * @param array $config
      * @return array
      */
+    #[Override]
     public function toMappingDefinition(array $config): array
     {
         $this->checkMandatoryFields($config);

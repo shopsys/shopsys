@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
@@ -22,10 +23,12 @@ class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
     }
 
+    #[Override]
     public function run(): void
     {
         $this->cronModuleFacade->deleteOldCronModuleRuns(static::DELETE_OLD_CRON_MODULE_RUNS_AFTER_DAYS);

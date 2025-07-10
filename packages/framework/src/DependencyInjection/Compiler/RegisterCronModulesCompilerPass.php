@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -15,6 +16,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         $cronConfigDefinition = $container->findDefinition(CronConfig::class);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Mail;
 
+use Override;
 use Scheb\TwoFactorBundle\Mailer\AuthCodeMailerInterface;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -30,6 +31,7 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
+    #[Override]
     public function sendAuthCode(TwoFactorInterface $administrator): void
     {
         $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(

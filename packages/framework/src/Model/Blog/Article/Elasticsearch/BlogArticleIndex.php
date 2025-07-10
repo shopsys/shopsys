@@ -92,6 +92,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param int $domainId
      * @return int
      */
+    #[Override]
     public function getChangedCount(int $domainId): int
     {
         return $this->blogArticleExportQueueFacade->getCount($domainId);
@@ -103,6 +104,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param int $batchSize
      * @return int[]
      */
+    #[Override]
     public function getChangedIdsForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
         return $this->blogArticleExportQueueFacade->getIds($domainId, $batchSize);

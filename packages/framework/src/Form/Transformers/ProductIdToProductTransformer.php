@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -23,6 +24,7 @@ class ProductIdToProductTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return int|null
      */
+    #[Override]
     public function transform($product): ?int
     {
         if ($product instanceof Product) {
@@ -36,6 +38,7 @@ class ProductIdToProductTransformer implements DataTransformerInterface
      * @param int $productId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
+    #[Override]
     public function reverseTransform($productId): ?Product
     {
         if ((int)$productId === 0) {

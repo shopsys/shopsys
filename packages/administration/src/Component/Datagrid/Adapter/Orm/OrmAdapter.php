@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 
 use Closure;
 use Doctrine\Persistence\ManagerRegistry;
+use Override;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
@@ -39,6 +40,7 @@ final class OrmAdapter implements AdapterInterface
      * @param array<\Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor> $fields
      * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
      */
+    #[Override]
     public function getDatasource(string $identificationName, array $fields): DataSourceInterface
     {
         $this->proxyQuery->addSelect($identificationName);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\Plugin\PluginCrudExtensionInterface;
@@ -26,6 +27,7 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getFormTypeClass(): string
     {
         return HeurekaFeedSettingFormType::class;
@@ -34,6 +36,7 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getFormLabel(): string
     {
         return t('Heureka XML feed settings');
@@ -42,6 +45,7 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getData($id): array
     {
         $data = [];
@@ -56,6 +60,7 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function saveData($id, $data): void
     {
         foreach ($data as $name => $value) {
@@ -66,6 +71,7 @@ class HeurekaFeedSettingCrudExtension implements PluginCrudExtensionInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function removeData($id): void
     {
         foreach ($this->heurekaFeedSettingEnum->getAllCases() as $settingName) {

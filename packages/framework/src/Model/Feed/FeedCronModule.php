@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
@@ -39,6 +40,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
@@ -47,6 +49,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function iterate(): bool
     {
         if ($this->areFeedsScheduled === false) {
@@ -124,6 +127,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function sleep(): void
     {
         $lastSeekId = $this->currentFeedExport !== null ? $this->currentFeedExport->getLastSeekId() : null;
@@ -150,6 +154,7 @@ class FeedCronModule implements IteratedCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function wakeUp(): void
     {
         $feedNameToContinue = $this->setting->get(Setting::FEED_NAME_TO_CONTINUE);

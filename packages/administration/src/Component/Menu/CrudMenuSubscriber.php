@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Menu;
 
 use Knp\Menu\ItemInterface;
+use Override;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
@@ -29,6 +30,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

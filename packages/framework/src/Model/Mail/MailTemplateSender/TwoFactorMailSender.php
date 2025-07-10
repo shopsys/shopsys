@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMailFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -21,6 +22,7 @@ class TwoFactorMailSender implements MailTemplateSenderInterface
     /**
      * @return string|null
      */
+    #[Override]
     public function getFormLabelForEntityIdentifier(): ?string
     {
         return null;
@@ -30,6 +32,7 @@ class TwoFactorMailSender implements MailTemplateSenderInterface
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return bool
      */
+    #[Override]
     public function supports(MailTemplate $mailTemplate): bool
     {
         return $mailTemplate->getName() === TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE;
@@ -40,6 +43,7 @@ class TwoFactorMailSender implements MailTemplateSenderInterface
      * @param string $mailTo
      * @param int|null $entityId
      */
+    #[Override]
     public function sendTemplate(MailTemplate $mailTemplate, string $mailTo, ?int $entityId): void
     {
         $this->twoFactorAuthenticationMailFacade->sendMail($mailTemplate, new DummyTwoFactorUser($mailTo));

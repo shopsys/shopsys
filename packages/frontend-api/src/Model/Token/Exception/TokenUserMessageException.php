@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token\Exception;
 
 use GraphQL\Error\ClientAware;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
@@ -15,6 +16,7 @@ class TokenUserMessageException extends CustomUserMessageAuthenticationException
     /**
      * @return bool
      */
+    #[Override]
     public function isClientSafe(): bool
     {
         return true;
@@ -31,6 +33,7 @@ class TokenUserMessageException extends CustomUserMessageAuthenticationException
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserErrorCode(): string
     {
         return static::CODE;

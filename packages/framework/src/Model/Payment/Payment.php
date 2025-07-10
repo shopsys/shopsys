@@ -335,6 +335,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @param int $position
      */
+    #[Override]
     public function setPosition($position)
     {
         $this->position = $position;

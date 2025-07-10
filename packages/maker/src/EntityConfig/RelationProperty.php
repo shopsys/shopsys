@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\MakerBundle\EntityConfig;
 
 use Doctrine\Common\Collections\Collection;
+use Override;
 use Shopsys\MakerBundle\Utils\NamingHelper;
 
 /**
@@ -37,6 +38,7 @@ class RelationProperty extends Property
     /**
      * @return string[]
      */
+    #[Override]
     public function getAnnotationLines(): array
     {
         $options = [];
@@ -72,6 +74,7 @@ class RelationProperty extends Property
      * @param \Shopsys\MakerBundle\EntityConfig\CollectionTypeHintTypeEnum $collectionTypeHintType
      * @return string
      */
+    #[Override]
     public function getTypeHint(
         CollectionTypeHintTypeEnum $collectionTypeHintType = CollectionTypeHintTypeEnum::COLLECTION,
     ): string {
@@ -93,6 +96,7 @@ class RelationProperty extends Property
     /**
      * @return bool
      */
+    #[Override]
     public function isCollection(): bool
     {
         return $this->relationType === EntityRelationTypeEnum::ONE_TO_MANY || $this->relationType === EntityRelationTypeEnum::MANY_TO_MANY;
@@ -101,6 +105,7 @@ class RelationProperty extends Property
     /**
      * @return string
      */
+    #[Override]
     public function getGetterName(): string
     {
         return 'get' . ucfirst($this->propertyName);
@@ -118,6 +123,7 @@ class RelationProperty extends Property
     /**
      * @return string|null
      */
+    #[Override]
     public function getAdditionalInformation(): ?string
     {
         if ($this->inverseProperty === null) {

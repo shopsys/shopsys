@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayWithPaginationDataSource extends ArrayDataSource
@@ -11,6 +12,7 @@ class ArrayWithPaginationDataSource extends ArrayDataSource
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,

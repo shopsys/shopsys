@@ -7,6 +7,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Brand;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
@@ -33,6 +34,7 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|array
      */
+    #[Override]
     public function getBrandSearchResults(
         Argument $argument,
     ): Promise|array {

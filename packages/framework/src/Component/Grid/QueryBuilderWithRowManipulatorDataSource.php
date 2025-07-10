@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Closure;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
@@ -30,6 +31,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
      * @param int|string $rowId
      * @return array
      */
+    #[Override]
     public function getOneRow(int|string $rowId): array
     {
         $row = parent::getOneRow($rowId);
@@ -44,6 +46,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
+    #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,

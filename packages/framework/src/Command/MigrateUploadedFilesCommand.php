@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToDeleteFile;
+use Override;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -33,6 +34,7 @@ class MigrateUploadedFilesCommand extends CheckMigrateUploadedFilesCommand
         parent::__construct($uploadedFilesDirectory, $filesystem);
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this->addOption(
@@ -46,6 +48,7 @@ class MigrateUploadedFilesCommand extends CheckMigrateUploadedFilesCommand
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $style = new SymfonyStyle($input, $output);

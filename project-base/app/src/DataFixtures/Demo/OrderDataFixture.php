@@ -842,6 +842,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

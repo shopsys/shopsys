@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
 use DateTime;
+use Override;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
@@ -54,6 +55,7 @@ class AdministratorUserProvider implements UserProviderInterface
      * @param string $identifier
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
+    #[Override]
     public function loadUserByIdentifier(string $identifier): Administrator
     {
         return $this->loadUserByUsername($identifier);
@@ -63,6 +65,7 @@ class AdministratorUserProvider implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
+    #[Override]
     public function refreshUser(UserInterface $userInterface): UserInterface
     {
         $class = get_class($userInterface);
@@ -116,6 +119,7 @@ class AdministratorUserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
+    #[Override]
     public function supportsClass(string $class): bool
     {
         return $class === Administrator::class || is_subclass_of($class, Administrator::class);

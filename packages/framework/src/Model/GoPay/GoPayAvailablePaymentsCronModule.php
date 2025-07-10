@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\GoPay;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotConfiguredException;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainException;
@@ -33,6 +34,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
@@ -41,6 +43,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function run(): void
     {
         try {

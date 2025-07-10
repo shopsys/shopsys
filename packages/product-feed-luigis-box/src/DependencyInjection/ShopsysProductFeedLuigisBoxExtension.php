@@ -26,6 +26,7 @@ class ShopsysProductFeedLuigisBoxExtension extends Extension implements PrependE
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('doctrine_migrations', [

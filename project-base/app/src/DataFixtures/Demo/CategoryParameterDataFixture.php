@@ -82,6 +82,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

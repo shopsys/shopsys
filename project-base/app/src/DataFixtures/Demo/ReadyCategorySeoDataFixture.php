@@ -332,6 +332,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

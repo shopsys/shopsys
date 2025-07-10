@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Action;
 
 use InvalidArgumentException;
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface;
 
 /**
@@ -65,6 +66,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
      * @param string|null $icon
      * @return self
      */
+    #[Override]
     public static function create(string $name, string $label, ?string $icon = null): self
     {
         if ($icon === null) {
@@ -80,6 +82,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
      * @param mixed $data
      * @return bool
      */
+    #[Override]
     public function validate(mixed $data): bool
     {
         if ($this->actionRoute === null) {
@@ -92,6 +95,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     /**
      * @return string
      */
+    #[Override]
     protected function getTemplate(): string
     {
         return '@ShopsysAdministration/datagrid/row_action.html.twig';
@@ -100,6 +104,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     /**
      * @return array
      */
+    #[Override]
     protected function getTemplateParameters(): array
     {
         $this->prepareRoutableAttributes();
@@ -136,6 +141,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     /**
      * @return array<string, string|null>
      */
+    #[Override]
     protected function getForbiddenAttributes(): array
     {
         return [

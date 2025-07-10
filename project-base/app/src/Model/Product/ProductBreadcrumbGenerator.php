@@ -31,6 +31,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getBreadcrumbItemsOnDomain(
         int $domainId,
         string $routeName,

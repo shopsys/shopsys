@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
@@ -24,6 +25,7 @@ class OrderMailTemplateSender implements MailTemplateSenderInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormLabelForEntityIdentifier(): string
     {
         return t('Order ID');
@@ -33,6 +35,7 @@ class OrderMailTemplateSender implements MailTemplateSenderInterface
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return bool
      */
+    #[Override]
     public function supports(MailTemplate $mailTemplate): bool
     {
         return str_contains($mailTemplate->getName(), OrderMail::MAIL_TEMPLATE_NAME_PREFIX);
@@ -43,6 +46,7 @@ class OrderMailTemplateSender implements MailTemplateSenderInterface
      * @param string $mailTo
      * @param int|null $entityId
      */
+    #[Override]
     public function sendTemplate(MailTemplate $mailTemplate, string $mailTo, ?int $entityId): void
     {
         $order = $this->orderFacade->getById($entityId);

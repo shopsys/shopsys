@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\DependencyInjection\Compiler;
 
+use Override;
 use ReflectionClass;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
@@ -17,6 +18,7 @@ class InitializeControllersCompilerPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function process(ContainerBuilder $container)
     {
         $services = $container->findTaggedServiceIds('controller.service_arguments');

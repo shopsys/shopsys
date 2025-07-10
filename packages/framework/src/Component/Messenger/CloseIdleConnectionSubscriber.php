@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Messenger;
 
 use Doctrine\Persistence\ManagerRegistry;
+use Override;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Event\WorkerRunningEvent;
@@ -24,6 +25,7 @@ class CloseIdleConnectionSubscriber implements EventSubscriberInterface
     /**
      * @return iterable
      */
+    #[Override]
     public static function getSubscribedEvents(): iterable
     {
         yield WorkerRunningEvent::class => 'onWorkerRunning';

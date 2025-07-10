@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transfer;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssue;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueDataFactory;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
@@ -30,6 +31,7 @@ class TransferLogger implements TransferLoggerInterface
     ) {
     }
 
+    #[Override]
     public function persistAllLoggedTransferIssues(): void
     {
         $transferIssuesCount = count($this->transferIssueDataList);
@@ -47,6 +49,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function debug(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = $this->transferIssueDataFactory->create($message, TransferIssue::SEVERITY_ERROR);
@@ -58,6 +61,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function info(string $message, array $context = []): void
     {
         $this->logger->info($message, $context);
@@ -67,6 +71,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function notice(string $message, array $context = []): void
     {
         $this->logger->notice($message, $context);
@@ -76,6 +81,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function warning(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = $this->transferIssueDataFactory->create($message, TransferIssue::SEVERITY_WARNING);
@@ -87,6 +93,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function error(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = $this->transferIssueDataFactory->create($message, TransferIssue::SEVERITY_ERROR);
@@ -98,6 +105,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function critical(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = $this->transferIssueDataFactory->create($message, TransferIssue::SEVERITY_CRITICAL);
@@ -109,6 +117,7 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function alert(string $message, array $context = []): void
     {
         $this->logger->alert($message, $context);
@@ -118,16 +127,19 @@ class TransferLogger implements TransferLoggerInterface
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function emergency(string $message, array $context = []): void
     {
         $this->logger->emergency($message, $context);
     }
 
+    #[Override]
     public function close(): void
     {
         $this->logger->close();
     }
 
+    #[Override]
     public function reset(): void
     {
         $this->logger->reset();

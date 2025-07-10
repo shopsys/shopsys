@@ -8,6 +8,7 @@ use Google\Cloud\Storage\StorageClient;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter;
+use Override;
 use Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface;
 
 class FilesystemFactoryDecorator implements FilesystemFactoryInterface
@@ -27,6 +28,7 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     /**
      * @return \League\Flysystem\FilesystemOperator
      */
+    #[Override]
     public function create(): FilesystemOperator
     {
         if ($this->googleCloudStorageBucketName !== '') {

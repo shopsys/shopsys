@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Performance\Page;
 
 use Doctrine\DBAL\Logging\SQLLogger;
+use Override;
 
 class PerformanceTestSampleQueryCounter implements SQLLogger
 {
@@ -13,6 +14,7 @@ class PerformanceTestSampleQueryCounter implements SQLLogger
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function startQuery($sql, ?array $params = null, ?array $types = null)
     {
         $this->queryCount++;
@@ -21,6 +23,7 @@ class PerformanceTestSampleQueryCounter implements SQLLogger
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function stopQuery()
     {
     }

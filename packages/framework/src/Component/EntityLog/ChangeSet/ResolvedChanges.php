@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet;
 
 use JsonSerializable;
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class ResolvedChanges implements JsonSerializable
@@ -40,6 +41,7 @@ class ResolvedChanges implements JsonSerializable
     /**
      * @return array
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -13,6 +14,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
         if (in_array($routeName, $this->getPersonalDataRouteNames(), true)) {
@@ -27,6 +29,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRouteNames()
     {
         return [

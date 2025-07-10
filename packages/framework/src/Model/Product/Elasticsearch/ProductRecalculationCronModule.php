@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
@@ -23,11 +24,13 @@ class ProductRecalculationCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
+    #[Override]
     public function run(): void
     {
         $this->productRecalculationDispatcher->dispatchAllProducts();

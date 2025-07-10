@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Localization;
 
 use DateTime;
 use IntlDateFormatter;
+use Override;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
@@ -26,6 +27,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param string|null $locale
      * @return string|bool
      */
+    #[Override]
     public function format(DateTime $value, $dateType, $timeType, $locale)
     {
         $intlDateFormatter = new IntlDateFormatter(

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
@@ -48,6 +49,7 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
+    #[Override]
     public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -72,6 +74,7 @@ class UploadedFileRepository implements UploadedFileRepositoryInterface
      * @param int $uploadedFileId
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
+    #[Override]
     public function getById(int $uploadedFileId): UploadedFile
     {
         $uploadedFile = $this->getUploadedFileRepository()->find($uploadedFileId);

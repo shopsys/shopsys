@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
+use Override;
+
 class TransportTypeEnum extends AbstractTransportTypeEnum
 {
     public const string TYPE_COMMON = 'common';
@@ -13,6 +15,7 @@ class TransportTypeEnum extends AbstractTransportTypeEnum
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function getAllIndexedByTranslations(): array
     {
         return [

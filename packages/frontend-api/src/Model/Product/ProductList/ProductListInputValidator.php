@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\ProductList;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\InvalidFindCriteriaForProductListUserError;
 
@@ -20,6 +21,7 @@ abstract class ProductListInputValidator implements ProductListInputValidatorInt
     /**
      * @param array $input
      */
+    #[Override]
     public function validateInput(array $input): void
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();

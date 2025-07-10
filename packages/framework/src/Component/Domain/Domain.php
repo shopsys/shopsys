@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use DateTimeZone;
+use Override;
 use Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
@@ -102,6 +103,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return int[]
      */
+    #[Override]
     public function getAllIds()
     {
         $ids = [];
@@ -231,6 +233,7 @@ class Domain implements DomainIdsProviderInterface
      * @param int[] $limitDomainsByIds
      * @return int[]
      */
+    #[Override]
     public function getAdminEnabledDomainIds(array $limitDomainsByIds = []): array
     {
         $selectedDomainIds = $this->administratorFacade->getCurrentlyLoggedAdministrator()->getDisplayOnlyDomainIds();

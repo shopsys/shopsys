@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use Override;
 use Twig\Environment;
 use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Node;
@@ -26,6 +27,7 @@ class CustomTransFiltersVisitor implements NodeVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function enterNode(Node $node, Environment $env): Node
     {
         if ($node instanceof FilterExpression) {
@@ -59,6 +61,7 @@ class CustomTransFiltersVisitor implements NodeVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function leaveNode(Node $node, Environment $env): ?Node
     {
         return $node;
@@ -67,6 +70,7 @@ class CustomTransFiltersVisitor implements NodeVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPriority(): int
     {
         return static::PRIORITY;

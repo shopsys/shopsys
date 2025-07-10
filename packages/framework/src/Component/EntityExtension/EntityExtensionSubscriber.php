@@ -10,6 +10,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use LogicException;
+use Override;
 use ReflectionClass;
 use Webmozart\Assert\Assert;
 
@@ -53,6 +54,7 @@ class EntityExtensionSubscriber implements EventSubscriber
     /**
      * @return string[]
      */
+    #[Override]
     public function getSubscribedEvents(): array
     {
         return [Events::loadClassMetadata];

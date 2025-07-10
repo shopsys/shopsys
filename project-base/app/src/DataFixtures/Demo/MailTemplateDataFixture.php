@@ -94,6 +94,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @return string[]
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting\Auth;
 
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 
 class BasicHttpAuth implements AuthInterface
@@ -25,6 +26,7 @@ class BasicHttpAuth implements AuthInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Override]
     public function authenticateRequest(Request $request)
     {
         $request->server->set('PHP_AUTH_USER', $this->username);

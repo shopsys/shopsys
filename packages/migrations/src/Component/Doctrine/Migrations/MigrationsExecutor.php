@@ -17,6 +17,7 @@ use Doctrine\Migrations\Tools\BytesFormatter;
 use Doctrine\Migrations\Version\ExecutionResult;
 use Doctrine\Migrations\Version\Executor;
 use Doctrine\Migrations\Version\State;
+use Override;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -54,6 +55,7 @@ class MigrationsExecutor implements Executor
     /**
      * @param \Doctrine\Migrations\Query\Query $sqlQuery
      */
+    #[Override]
     public function addSql(Query $sqlQuery): void
     {
         $this->sqlQueries[] = $sqlQuery;
@@ -64,6 +66,7 @@ class MigrationsExecutor implements Executor
      * @param \Doctrine\Migrations\MigratorConfiguration $migratorConfiguration
      * @return \Doctrine\Migrations\Version\ExecutionResult
      */
+    #[Override]
     public function execute(MigrationPlan $plan, MigratorConfiguration $migratorConfiguration): ExecutionResult
     {
         $this->dispatcher->dispatchVersionEvent(

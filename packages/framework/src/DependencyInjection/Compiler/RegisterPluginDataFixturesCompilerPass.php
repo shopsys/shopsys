@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,6 +16,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         $pluginDataFixtureRegistryDefinition = $container->findDefinition(
