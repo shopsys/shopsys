@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff;
+
+use Override;
+use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\SecondInterface;
+use Tests\CodingStandards\Unit\Sniffs\RequireOverrideAttributeSniff\Base\TestInterface;
+
+class ClassWithInterface implements TestInterface, SecondInterface
+{
+    /**
+     * @return string
+     */
+    #[Override]
+    public function getName(): string
+    {
+        return 'name';
+    }
+
+    #[Override]
+    public function process(): void
+    {
+    }
+
+    /**
+     * @return string
+     */
+    public function uniqueMethod(): string
+    {
+        return '';
+    }
+
+    private function doSomething(): void
+    {
+    }
+}
