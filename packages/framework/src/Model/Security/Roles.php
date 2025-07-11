@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
-use Shopsys\FrameworkBundle\Component\Context\AdminContext;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleIdentifierHelper;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
-use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
-
 class Roles
 {
     public const string ROLE_ADMIN = 'ROLE_ADMIN';
@@ -183,40 +178,4 @@ class Roles
 
     public const string ROLE_CLOSED_DAYS_FULL = 'ROLE_CLOSED_DAYS_FULL';
     public const string ROLE_CLOSED_DAYS_VIEW = 'ROLE_CLOSED_DAYS_VIEW';
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
-     */
-    public function __construct(
-        protected readonly RoleRegistryInterface $roleRegistry,
-    ) {
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    public function getAvailableAdministratorRolesChoices(): array
-    {
-        /** @var array<string, string> $choices */
-        $choices = [];
-
-        // Add ROLE_ALL choices first
-        $choices['All - full'] = SystemRole::ALL;
-        $choices['All - view'] = SystemRole::ALL_VIEW;
-
-        // Add individual role choices from registry
-        foreach ($this->roleRegistry->getRoles(AdminContext::class) as $role) {
-            if (in_array($role->getConstant(), [SystemRole::ADMIN, SystemRole::SUPER_ADMIN], true)) {
-                continue;
-            }
-
-            foreach ($role->getAvailablePermissions() as $permission) {
-                $identifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
-                $label = sprintf('%s - %s', $role->getName(), $permission->getName());
-                $choices[$label] = $identifier;
-            }
-        }
-
-        return $choices;
-    }
 }
