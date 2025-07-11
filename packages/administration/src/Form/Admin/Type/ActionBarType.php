@@ -1,0 +1,93 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\AdministrationBundle\Form\Admin\Type;
+
+use Override;
+use Shopsys\FormTypesBundle\ActionBarType as BaseActionBarType;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\RouterInterface;
+
+final class ActionBarType extends AbstractTypeExtension
+{
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     */
+    public function __construct(
+        private readonly RouteAccessCheckerInterface $routeAccessChecker,
+        private readonly RequestStack $requestStack,
+        private readonly RouterInterface $router,
+    ) {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public static function getExtendedTypes(): iterable
+    {
+        return [BaseActionBarType::class];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        // Check if we should disable save button based on permissions
+        if ($builder->has('save')) {
+            $formConfig = $builder->getFormConfig();
+            $formAction = $formConfig->getAction();
+            $formMethod = $formConfig->getMethod();
+            $submitRouteName = $this->extractRouteFromAction($formAction);
+
+            if ($submitRouteName !== null && !$this->routeAccessChecker->hasAccess($submitRouteName, $formMethod)) {
+                $builder->remove('save');
+            }
+        }
+    }
+
+    /**
+     * Extract route name from form action URL
+     *
+     * This method handles different scenarios:
+     * 1. Empty action - form submits to current URL
+     * 2. Relative URL (e.g., "/admin/product/edit/123") - match with router
+     * 3. Absolute URL - extract path and match with router
+     *
+     * @param string $formAction The form action URL
+     * @return string|null The route name if found
+     */
+    private function extractRouteFromAction(string $formAction): ?string
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        // If action is empty, form submits to current URL
+        if ($formAction === '') {
+            return $request?->attributes->get('_route');
+        }
+
+        // Parse the action URL to get the path
+        $parsedUrl = parse_url($formAction);
+        $path = $parsedUrl['path'] ?? $formAction;
+
+        try {
+            // Try to match the path to a route
+            $routeInfo = $this->router->match($path);
+
+            return $routeInfo['_route'] ?? null;
+        } catch (ResourceNotFoundException) {
+            // If no route matches, fall back to current route
+            // This handles cases where form action might be a query string or fragment
+            return $request?->attributes->get('_route');
+        }
+    }
+}
