@@ -7,11 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group\Grid;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -19,7 +18,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupGridFactory $pricingGroupGridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
@@ -27,13 +26,13 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         PricingGroupGridFactory $pricingGroupGridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly PricingGroupDataFactory $pricingGroupDataFactory,
     ) {
-        parent::__construct($pricingGroupGridFactory, $security);
+        parent::__construct($pricingGroupGridFactory, $accessChecker);
     }
 
     /**
@@ -83,8 +82,8 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_PRICING_GROUP_FULL;
+        return 'ROLE_PRICING_GROUP';
     }
 }

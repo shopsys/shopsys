@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -49,7 +49,7 @@ class AdministratorFrontSecurityFacade
             return false;
         }
 
-        return $this->accessDecisionManager->decide($token, [Roles::ROLE_ADMIN]);
+        return $this->accessDecisionManager->decide($token, [SystemRole::ADMIN]);
     }
 
     /**

@@ -28,15 +28,15 @@ class ParameterGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getCurrentLocaleForTranslatableEntities();
-        $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource(), $editRole);
+        $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource(), $roleConstant);
 
         if (count($locales) > 1) {
             $grid->addColumn(
@@ -74,7 +74,7 @@ class ParameterGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
-            ?->setConfirmMessage(t(
+            ->setConfirmMessage(t(
                 'Do you really want to remove this parameter?'
                 . ' Deleting the parameter will remove this parameter from the products and parameters'
                 . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',

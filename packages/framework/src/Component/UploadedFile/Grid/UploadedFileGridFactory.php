@@ -45,7 +45,7 @@ class UploadedFileGridFactory extends AbstractUploadedFileGridFactory
 
         $grid->addEditActionColumn('admin_uploadedfile_edit', ['id' => 'u.id']);
         $grid->addDeleteActionColumn('admin_uploadedfile_delete', ['id' => 'u.id'])
-            ?->setConfirmMessage(t('Do you really want to delete this file? It will be permanently deleted and unassigned from related records.'));
+            ->setConfirmMessage(t('Do you really want to delete this file? It will be permanently deleted and unassigned from related records.'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/UploadedFile/listGrid.html.twig');
 

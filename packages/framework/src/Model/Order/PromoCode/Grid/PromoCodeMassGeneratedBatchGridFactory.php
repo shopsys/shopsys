@@ -36,7 +36,7 @@ class PromoCodeMassGeneratedBatchGridFactory
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
 
-        $grid = $this->gridFactory->create('promoCodeList', $dataSource);
+        $grid = $this->gridFactory->create('promoCodeList', $dataSource, 'ROLE_PROMO_CODE');
         $grid->setDefaultOrder('batchId');
         $grid->addColumn('code', 'batchId', t('Batch ID'), true);
         $grid->addColumn('prefix', 'pc.prefix', t('Promo code prefix'), true);

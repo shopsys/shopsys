@@ -71,7 +71,7 @@ class StoreController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_store_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_store_delete', ['id' => 's.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this store? This step is irreversible!'));
+            ->setConfirmMessage(t('Do you really want to remove this store? This step is irreversible!'));
         $grid->enableDragAndDrop(Store::class);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Store/listGrid.html.twig');

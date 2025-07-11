@@ -28,11 +28,11 @@ class FlagGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -42,7 +42,7 @@ class FlagGridFactory implements GridFactoryInterface
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'f.id');
 
-        $grid = $this->gridFactory->create('flagList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('flagList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'ft.name', t('Name'), true);
@@ -52,7 +52,7 @@ class FlagGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_flag_edit', ['id' => 'f.id']);
         $grid->addDeleteActionColumn('admin_flag_deleteconfirm', ['id' => 'f.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Flag/listGrid.html.twig');
 

@@ -295,7 +295,7 @@ class StockController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
+            ->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 

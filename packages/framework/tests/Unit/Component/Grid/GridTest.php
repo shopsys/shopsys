@@ -10,8 +10,8 @@ use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
@@ -39,17 +39,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
 
         $this->assertSame('gridId', $grid->getId());
@@ -69,17 +69,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
         $grid->addColumn('columnId1', 'sourceColumnName1', 'title1', true)->setClassAttribute('classAttribute');
         $grid->addColumn('columnId2', 'sourceColumnName2', 'title2', false);
@@ -113,17 +113,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
         $grid->addColumn('columnId1', 'sourceColumnName1', 'title1');
 
@@ -141,17 +141,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
         $grid->enablePaging();
         $this->assertTrue($grid->isEnabledPaging());
@@ -167,17 +167,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
         $this->assertFalse($grid->isEnabledPaging());
     }
@@ -192,17 +192,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
 
         $grid->setDefaultOrder('columnId1', DataSourceInterface::ORDER_DESC);
@@ -230,17 +230,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
 
         $grid->setDefaultOrder('default', DataSourceInterface::ORDER_ASC);
@@ -260,17 +260,17 @@ class GridTest extends TestCase
         $dataSourceMock->expects($this->never())->method('getTotalRowsCount');
         $dataSourceMock->expects($this->once())->method('getPaginatedRows')
             ->willReturn(new PaginationResult(1, 1, 0, []));
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
         $grid->createView();
     }
@@ -288,17 +288,17 @@ class GridTest extends TestCase
         $dataSourceMock->expects($this->once())->method('getTotalRowsCount')->willReturn(0);
         $dataSourceMock->expects($this->once())->method('getPaginatedRows')
             ->willReturn(new PaginationResult(1, 1, 0, []));
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
         $grid->enablePaging();
         $grid->createView();
@@ -316,17 +316,20 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
+        $accessCheckerMock
+            ->method('canEdit')
+            ->willReturn(true);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
 
         $this->assertFalse($grid->isDragAndDrop());
@@ -344,17 +347,17 @@ class GridTest extends TestCase
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
-        $securityMock = $this->createMock(Security::class);
+        $accessCheckerMock = $this->createMock(AccessCheckerInterface::class);
 
         $grid = new Grid(
             'gridId',
-            Roles::ROLE_ALL,
+            SystemRole::ALL,
             $dataSourceMock,
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
             $twigMock,
-            $securityMock,
+            $accessCheckerMock,
         );
 
         $column1 = $grid->addColumn('columnId1', 'sourceColumnName1', 'title1');

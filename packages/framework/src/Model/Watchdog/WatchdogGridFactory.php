@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class WatchdogGridFactory
 {
@@ -36,7 +35,7 @@ class WatchdogGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'productId');
 
-        $grid = $this->gridFactory->create('watchdogList', $dataSource, Roles::ROLE_WATCHDOG_FULL);
+        $grid = $this->gridFactory->create('watchdogList', $dataSource, 'ROLE_WATCHDOG');
 
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt', DataSourceInterface::ORDER_DESC);
@@ -64,7 +63,7 @@ class WatchdogGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'w.id');
 
-        $grid = $this->gridFactory->create('watchdogList', $dataSource, Roles::ROLE_WATCHDOG_FULL);
+        $grid = $this->gridFactory->create('watchdogList', $dataSource, 'ROLE_WATCHDOG');
 
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt', DataSourceInterface::ORDER_DESC);

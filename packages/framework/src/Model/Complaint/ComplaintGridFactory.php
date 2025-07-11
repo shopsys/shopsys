@@ -38,7 +38,7 @@ class ComplaintGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmp.id');
 
-        $grid = $this->gridFactory->create('complaintList', $dataSource);
+        $grid = $this->gridFactory->create('complaintList', $dataSource, 'ROLE_COMPLAINT');
 
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);

@@ -35,7 +35,7 @@ class InquiryGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'i.id');
 
-        $grid = $this->gridFactory->create('inquiryList', $dataSource);
+        $grid = $this->gridFactory->create('inquiryList', $dataSource, 'ROLE_INQUIRY');
 
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt', DataSourceInterface::ORDER_DESC);

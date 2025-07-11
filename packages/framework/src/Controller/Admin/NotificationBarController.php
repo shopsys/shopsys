@@ -58,7 +58,7 @@ class NotificationBarController extends AdminBaseController
         $grid->addColumn('validityTo', 'nb.validityTo', t('Valid to'), true);
         $grid->addEditActionColumn('admin_notificationbar_edit', ['id' => 'nb.id']);
         $grid->addDeleteActionColumn('admin_notificationbar_delete', ['id' => 'nb.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this notification bar?'));
+            ->setConfirmMessage(t('Do you really want to remove this notification bar?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/NotificationBar/listGrid.html.twig');
 

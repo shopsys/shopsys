@@ -1,5 +1,9 @@
-<a href="{{ action_url(actionRoute, row) }}"
+{% set url = action_url(actionRoute, row) %}
+
+{% if url is not null %}
+    <a href="{{ url }}"
         {{ attributes|raw }}
->
-    {{ ux_icon(icon) }}
-</a>
+    >
+        {{ ux_icon(icon) }}
+    </a>
+{% endif %}

@@ -29,16 +29,16 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'sr.id');
 
-        $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('firstName', 'sr.firstName', t('First name'), true);
@@ -49,7 +49,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_salesrepresentative_edit', ['id' => 'sr.id']);
         $grid->addDeleteActionColumn('admin_salesrepresentative_deleteconfirm', ['id' => 'sr.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         return $grid;
     }

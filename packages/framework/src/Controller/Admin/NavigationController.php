@@ -187,7 +187,7 @@ class NavigationController extends AdminBaseController
 
         $grid->addEditActionColumn('admin_navigation_edit', ['id' => 'ni.id']);
         $grid->addDeleteActionColumn('admin_navigation_delete', ['id' => 'ni.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this navigation item?'));
+            ->setConfirmMessage(t('Do you really want to remove this navigation item?'));
 
         $grid->enableDragAndDrop(NavigationItem::class);
 

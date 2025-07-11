@@ -58,7 +58,7 @@ class ParameterValueController extends AdminBaseController
         $queryBuilder = $this->parameterRepository->getQueryBuilderParameterValuesUsedByProductsByLocaleAndType($domainConfig->getLocale(), Parameter::PARAMETER_TYPE_COLOR);
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pv.id');
 
-        $grid = $this->gridFactory->create('parameterValues', $dataSource);
+        $grid = $this->gridFactory->create('parameterValues', $dataSource, 'ROLE_PARAMETER_VALUE');
 
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));

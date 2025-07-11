@@ -73,7 +73,7 @@ class TransferIssueController extends AdminBaseController
         $grid->addColumn('message', 'ti.message', t('Message text'));
         $grid->addColumn('createdAt', 'ti.createdAt', t('Date and time'));
         $grid->addDeleteActionColumn('admin_transferissue_delete', ['id' => 'ti.id'])
-            ?->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
+            ->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 

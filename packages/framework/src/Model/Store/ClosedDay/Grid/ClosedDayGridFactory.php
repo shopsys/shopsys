@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -57,7 +56,7 @@ class ClosedDayGridFactory
                     return $row;
                 },
             ),
-            Roles::ROLE_CLOSED_DAYS_FULL,
+            'ROLE_CLOSED_DAYS',
         );
         $grid->enablePaging();
         $grid->setDefaultOrder('date');
@@ -66,7 +65,7 @@ class ClosedDayGridFactory
         $grid->addColumn('excludedStores', 'cd.excludedStores', t('Excluded stores'));
         $grid->addEditActionColumn('admin_closedday_edit', ['id' => 'cd.id']);
         $grid->addDeleteActionColumn('admin_closedday_delete', ['id' => 'cd.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this holiday / internal day?'));
+            ->setConfirmMessage(t('Do you really want to remove this holiday / internal day?'));
         $grid->setTheme('@ShopsysFramework/Admin/Content/ClosedDay/listGrid.html.twig', [
             'domainId' => $domainId,
         ]);

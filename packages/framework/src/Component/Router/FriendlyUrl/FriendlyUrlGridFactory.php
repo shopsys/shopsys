@@ -87,11 +87,11 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->friendlyUrlFacade->getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
@@ -109,7 +109,7 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
             },
         );
 
-        $grid = $this->gridFactory->create('notUsedFriendlyUrls', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('notUsedFriendlyUrls', $dataSource, $roleConstant);
         $grid->enablePaging();
         $grid->setDefaultOrder('fu.slug');
         $grid->addColumn('slug', 'fu.slug', t('Slug'), true);
@@ -122,7 +122,7 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
             'domainId' => 'fu.domainId',
             'slug' => 'fu.slug',
         ])
-            ?->setConfirmMessage(t('Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance.'));
+            ->setConfirmMessage(t('Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance.'));
 
         return $grid;
     }

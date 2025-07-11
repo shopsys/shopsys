@@ -88,7 +88,7 @@ class AdministratorController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this administrator?'));
+            ->setConfirmMessage(t('Do you really want to remove this administrator?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Administrator/listGrid.html.twig');
 

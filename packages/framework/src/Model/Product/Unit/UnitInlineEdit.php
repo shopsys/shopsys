@@ -8,9 +8,8 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -18,7 +17,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory $unitGridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
@@ -26,13 +25,13 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         UnitGridFactory $unitGridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly UnitFacade $unitFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly UnitDataFactory $unitDataFactory,
         protected readonly Domain $domain,
     ) {
-        parent::__construct($unitGridFactory, $security);
+        parent::__construct($unitGridFactory, $accessChecker);
     }
 
     /**
@@ -84,8 +83,8 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_UNIT_FULL;
+        return 'ROLE_UNIT';
     }
 }

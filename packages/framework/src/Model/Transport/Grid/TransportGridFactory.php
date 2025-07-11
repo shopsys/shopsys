@@ -35,11 +35,11 @@ class TransportGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->transportRepository->getQueryBuilderForAll()
             ->addSelect('tt.name')
@@ -57,7 +57,7 @@ class TransportGridFactory implements GridFactoryInterface
             },
         );
 
-        $grid = $this->gridFactory->create('transportList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('transportList', $dataSource, $roleConstant);
         $grid->enableDragAndDrop(Transport::class);
 
         $grid->addColumn('name', 'tt.name', t('Name'));
@@ -66,7 +66,7 @@ class TransportGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_transport_edit', ['id' => 't.id']);
         $grid->addDeleteActionColumn('admin_transport_delete', ['id' => 't.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this shipping?'));
+            ->setConfirmMessage(t('Do you really want to remove this shipping?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Transport/listGrid.html.twig');
 

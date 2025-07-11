@@ -69,7 +69,7 @@ class SliderController extends AdminBaseController
         $grid->addColumn('link', 's.link', t('Link'));
         $grid->addEditActionColumn('admin_slider_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_slider_delete', ['id' => 's.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this page?'));
+            ->setConfirmMessage(t('Do you really want to remove this page?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Slider/listGrid.html.twig');
 

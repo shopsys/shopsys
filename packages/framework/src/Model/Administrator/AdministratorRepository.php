@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRepository
 {
@@ -117,7 +117,7 @@ class AdministratorRepository
             ->leftJoin('a.roles', 'ar')
             ->where('ar.role = :role')
             ->orWhere('a.roleGroup is not NULL')
-            ->setParameter('role', Roles::ROLE_ADMIN);
+            ->setParameter('role', SystemRole::ADMIN);
     }
 
     /**

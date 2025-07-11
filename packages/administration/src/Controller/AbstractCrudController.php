@@ -16,6 +16,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactor
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -77,6 +78,7 @@ abstract class AbstractCrudController extends AbstractController
         $datagrid = $this->datagridFactory->create($adapter, [
             'crudConfig' => $this->getConfig(),
             'name' => $this->getConfig()->getEntityName(),
+            'roleConstant' => SystemRole::ADMIN,
         ]);
         $this->configureDatagrid($datagrid);
 

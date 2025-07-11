@@ -142,7 +142,7 @@ class FeedController extends AdminBaseController
 
         $dataSource = new ArrayDataSource($feedsData, 'label');
 
-        $grid = $this->gridFactory->create('feedsList', $dataSource);
+        $grid = $this->gridFactory->create('feedsList', $dataSource, 'ROLE_FEED');
 
         $grid->addColumn('label', 'feedLabel', t('Feed'));
         $grid->addColumn('created', 'created', t('Generated'));

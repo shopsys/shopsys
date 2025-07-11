@@ -225,7 +225,7 @@ class CustomerController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_customer_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_customer_delete', ['id' => 'id'])
-            ?->setConfirmMessage(t('Do you really want to remove this customer?'));
+            ->setConfirmMessage(t('Do you really want to remove this customer?'));
         $grid->addActionColumn(ActionColumn::TYPE_RESET_PASSWORD, t('Send reset password'), 'admin_customer_send_reset_password', ['id' => 'cu.id'])
             ->setConfirmMessage(t('This will send an email to customer user for resetting password. Do you really want to send it ?'));
 
@@ -406,7 +406,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/send-reset-password/{id}', name: 'admin_customer_send_reset_password', requirements: ['id' => '\d+'])]
-    #[CanView]
+    #[CanEdit]
     public function sendResetPasswordAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);

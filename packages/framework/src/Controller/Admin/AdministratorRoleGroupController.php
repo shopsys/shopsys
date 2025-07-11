@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -52,7 +51,7 @@ class AdministratorRoleGroupController extends AdminBaseController
         $queryBuilder = $this->administratorRoleGroupFacade->getAllQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'arg.id');
 
-        $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, Roles::ROLE_ADMINISTRATOR_FULL);
+        $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, 'ROLE_ADMINISTRATOR');
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'arg.name', t('Role name'), true);

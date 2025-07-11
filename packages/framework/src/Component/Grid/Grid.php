@@ -6,11 +6,11 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException;
-use Shopsys\FrameworkBundle\Component\Grid\Exception\GridEditRoleNotSetException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
-use Symfony\Bundle\SecurityBundle\Security;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -88,24 +88,24 @@ class Grid
 
     /**
      * @param string $id
-     * @param string|null $editRole
+     * @param string $roleConstant
      * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      * @param \Twig\Environment $twig
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      */
     public function __construct(
         protected readonly string $id,
-        protected readonly ?string $editRole,
+        protected readonly string $roleConstant,
         protected readonly DataSourceInterface $dataSource,
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
         protected readonly Environment $twig,
-        protected readonly Security $security,
+        protected readonly AccessCheckerInterface $accessChecker,
     ) {
         if ($id === '') {
             $message = 'Grid id cannot be empty.';
@@ -170,7 +170,10 @@ class Grid
             $additionalRouteParams,
             $this,
         );
-        $this->actionColumns[] = $actionColumn;
+
+        if ($this->accessChecker->hasAccessToRoute($route, HttpMethod::GET)) {
+            $this->actionColumns[] = $actionColumn;
+        }
 
         return $actionColumn;
     }
@@ -199,24 +202,20 @@ class Grid
      * @param string $route
      * @param array $bindingRouteParams
      * @param array $additionalRouteParams
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn|null
+     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addDeleteActionColumn(
         string $route,
         array $bindingRouteParams = [],
         array $additionalRouteParams = [],
-    ): ?ActionColumn {
-        if ($this->canEdit()) {
-            return $this->addActionColumn(
-                ActionColumn::TYPE_DELETE,
-                t('Delete'),
-                $route,
-                $bindingRouteParams,
-                $additionalRouteParams,
-            );
-        }
-
-        return null;
+    ): ActionColumn {
+        return $this->addActionColumn(
+            ActionColumn::TYPE_DELETE,
+            t('Delete'),
+            $route,
+            $bindingRouteParams,
+            $additionalRouteParams,
+        );
     }
 
     /**
@@ -235,9 +234,11 @@ class Grid
      */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService): void
     {
-        if ($this->canEdit()) {
-            $this->inlineEditService = $inlineEditService;
+        if ($inlineEditService->canAddNewRow() === false && $this->accessChecker->canEdit($this->roleConstant) === false) {
+            return;
         }
+
+        $this->inlineEditService = $inlineEditService;
     }
 
     /**
@@ -413,7 +414,7 @@ class Grid
      */
     public function isEnabledSelecting(): bool
     {
-        return $this->enableSelecting;
+        return $this->enableSelecting && $this->accessChecker->canEdit($this->roleConstant);
     }
 
     /**
@@ -735,7 +736,7 @@ class Grid
      */
     public function isDragAndDrop(): bool
     {
-        return $this->orderingEntityClass !== null;
+        return $this->orderingEntityClass !== null && $this->accessChecker->canEdit($this->roleConstant);
     }
 
     /**
@@ -751,7 +752,7 @@ class Grid
      */
     public function isMultipleDragAndDrop(): bool
     {
-        return $this->multipleDragAndDrop;
+        return $this->multipleDragAndDrop && $this->accessChecker->canEdit($this->roleConstant);
     }
 
     /**
@@ -766,17 +767,5 @@ class Grid
         }
 
         $this->columnsById = [...$orderedColumns, ...$this->columnsById];
-    }
-
-    /**
-     * @return bool
-     */
-    protected function canEdit(): bool
-    {
-        if ($this->editRole === null) {
-            throw new GridEditRoleNotSetException();
-        }
-
-        return $this->security->isGranted($this->editRole);
     }
 }

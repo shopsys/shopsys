@@ -252,7 +252,7 @@ class OrderController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_order_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_order_delete', ['id' => 'id'])
-            ?->setConfirmMessage(t('Do you really want to remove the order?'));
+            ->setConfirmMessage(t('Do you really want to remove the order?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Order/listGrid.html.twig');
 

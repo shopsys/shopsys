@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 
 class EntityLogGridFactory
 {
@@ -46,7 +47,7 @@ class EntityLogGridFactory
             },
         );
 
-        $grid = $this->gridFactory->create('entityLogList', $dataSource);
+        $grid = $this->gridFactory->create('entityLogList', $dataSource, SystemRole::ADMIN);
 
         $grid->addColumn('userIdentifier', 'el.userIdentifier', t('User'));
         $grid->addColumn('action', 'el.action', t('Action'));

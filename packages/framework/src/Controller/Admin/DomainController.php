@@ -82,7 +82,7 @@ class DomainController extends AdminBaseController
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');
 
-        $grid = $this->gridFactory->create('domainsList', $dataSource);
+        $grid = $this->gridFactory->create('domainsList', $dataSource, SystemRole::ADMIN);
 
         $grid->addColumn('name', 'name', t('Domain name'));
         $grid->addColumn('locale', 'locale', t('Language'));

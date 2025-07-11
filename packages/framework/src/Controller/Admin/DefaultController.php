@@ -209,7 +209,7 @@ class DefaultController extends AdminBaseController
 
         $dataSource = new ArrayDataSource($data);
 
-        $cronListGrid = $this->gridFactory->create('cronList', $dataSource);
+        $cronListGrid = $this->gridFactory->create('cronList', $dataSource, SystemRole::ADMIN);
 
         $cronListGrid->addColumn('name', 'name', t('Name'), false);
         $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'), false);
@@ -321,7 +321,7 @@ class DefaultController extends AdminBaseController
         $queryBuilder = $this->cronModuleFacade->getRunsByCronModuleQueryBuilder($cronModule);
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmr.id');
 
-        $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource);
+        $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource, SystemRole::ADMIN);
 
         $cronRunsListGrid->addColumn('startedAt', 'cmr.startedAt', t('Started at'), false);
         $cronRunsListGrid->addColumn('finishedAt', 'cmr.finishedAt', t('Finished at'), false);
