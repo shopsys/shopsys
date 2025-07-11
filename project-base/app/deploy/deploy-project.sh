@@ -102,6 +102,9 @@ function deploy() {
         ["cron-watchdog"]='*/10 * * * *'
     )
 
+    # You can define whitelisted IPs here when using HTTP authentication, see https://github.com/shopsys/deployment#whitelist-ip-addresses
+    # WHITELIST_IPS=""
+
     VARS=(
         TAG
         STOREFRONT_TAG

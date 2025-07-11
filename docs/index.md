@@ -34,6 +34,8 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Documentation for demo frontend client.
 * [Extensibility](./extensibility/index.md)
     * How to customize the behavior of Shopsys Platform to suit your needs.
+* [Integration](./integration/index.md)
+    * Information about integrating third-party applications and services.
 * [Asynchronous processing](./asynchronous-processing/index.md)
     * How to use and implement asynchronous processing in Shopsys Platform.
 * [Automated Testing](./automated-testing/index.md)
