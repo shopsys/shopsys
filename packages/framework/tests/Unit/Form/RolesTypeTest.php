@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleSection;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\DataTransformer\RolesGridDataTransformer;
 use Shopsys\FrameworkBundle\Form\RolesType;
@@ -31,7 +32,7 @@ class RolesTypeTest extends TestCase
     protected function setUp(): void
     {
         $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
-        $this->formType = new RolesType($this->roleRegistry, false);
+        $this->formType = new RolesType($this->roleRegistry, false, RoleSection::class);
     }
 
     public function testConfigureOptions(): void
@@ -91,7 +92,7 @@ class RolesTypeTest extends TestCase
             ->method('addModelTransformer')
             ->with($this->isInstanceOf(RolesGridDataTransformer::class));
 
-        $roleBuilder->expects($this->exactly(4)) // 2 permissions × 2 roles
+        $roleBuilder->expects($this->exactly(6)) // 3 permissions × 2 roles (VIEW, EDIT, FULL for each role)
             ->method('add')
             ->with(
                 $this->logicalOr('VIEW', 'EDIT', 'FULL'),
@@ -127,7 +128,7 @@ class RolesTypeTest extends TestCase
         $builder->method('add');
         $builder->method('addModelTransformer');
 
-        $roleBuilder->expects($this->exactly(2)) // Only VIEW and FULL permissions
+        $roleBuilder->expects($this->exactly(3)) // VIEW, FULL from simple permissions + FULL from shouldIncludeFullPermission
             ->method('add')
             ->with(
                 $this->logicalOr('VIEW', 'FULL'),
@@ -196,8 +197,10 @@ class RolesTypeTest extends TestCase
         $this->assertArrayHasKey('permission_dependencies', $view->vars);
 
         $this->assertSame(['VIEW', 'CREATE', 'EDIT', 'DELETE', 'FULL'], $view->vars['permissions']);
-        $this->assertArrayHasKey('ROLE_ORDER', $view->vars['grid_structure']);
-        $this->assertSame('Orders', $view->vars['grid_structure']['ROLE_ORDER']['name']);
+        $this->assertArrayHasKey('sections', $view->vars['grid_structure']);
+        // Role should be in OTHER section since we didn't override the mock
+        $this->assertArrayHasKey(RoleSection::OTHER, $view->vars['grid_structure']['sections']);
+        $this->assertContains($role, $view->vars['grid_structure']['sections'][RoleSection::OTHER]['roles']);
     }
 
     public function testBuildViewWithSimplePermissions(): void
@@ -319,7 +322,7 @@ class RolesTypeTest extends TestCase
             'simple_permissions' => false,
         ]);
 
-        $this->assertSame([], $view->vars['grid_structure']);
+        $this->assertSame(['sections' => []], $view->vars['grid_structure']);
         $this->assertSame(['VIEW', 'CREATE', 'EDIT', 'DELETE', 'FULL'], $view->vars['permissions']);
     }
 
@@ -342,9 +345,11 @@ class RolesTypeTest extends TestCase
         ]);
 
         $gridStructure = $view->vars['grid_structure'];
-        $this->assertArrayHasKey('ROLE_ORDER', $gridStructure);
-        $this->assertSame('Orders', $gridStructure['ROLE_ORDER']['name']);
-        $this->assertSame('ROLE_ORDER', $gridStructure['ROLE_ORDER']['constant']);
+        $this->assertArrayHasKey('sections', $gridStructure);
+        $this->assertArrayHasKey(RoleSection::OTHER, $gridStructure['sections']);
+        $section = $gridStructure['sections'][RoleSection::OTHER];
+        $this->assertContains($role, $section['roles']);
+        $this->assertEquals(t('Other'), $section['name']);
     }
 
     public function testRoleSortingAlphabetically(): void
@@ -368,16 +373,21 @@ class RolesTypeTest extends TestCase
         ]);
 
         $gridStructure = $view->vars['grid_structure'];
-        $roleNames = array_keys($gridStructure);
+        $this->assertArrayHasKey('sections', $gridStructure);
+        $this->assertArrayHasKey(RoleSection::OTHER, $gridStructure['sections']);
+        $roles = $gridStructure['sections'][RoleSection::OTHER]['roles'];
 
         // Should be sorted alphabetically by role name, not constant
-        $this->assertSame(['ROLE_APPLE', 'ROLE_BANANA', 'ROLE_ZEBRA'], $roleNames);
+        $this->assertSame($role2, $roles[0]); // Apple
+        $this->assertSame($role3, $roles[1]); // Banana
+        $this->assertSame($role1, $roles[2]); // Zebra
     }
 
     public function testCustomContext(): void
     {
         $customContext = 'CustomContext';
         $role = $this->createMockRole('ROLE_CUSTOM', 'Custom Role', [Permission::VIEW]);
+        $role->method('getRoleSection')->willReturn(RoleSection::OTHER);
 
         $this->roleRegistry->expects($this->once())
             ->method('getRoles')
@@ -393,7 +403,9 @@ class RolesTypeTest extends TestCase
             'simple_permissions' => false,
         ]);
 
-        $this->assertArrayHasKey('ROLE_CUSTOM', $view->vars['grid_structure']);
+        $this->assertArrayHasKey('sections', $view->vars['grid_structure']);
+        $this->assertArrayHasKey(RoleSection::OTHER, $view->vars['grid_structure']['sections']);
+        $this->assertContains($role, $view->vars['grid_structure']['sections'][RoleSection::OTHER]['roles']);
     }
 
     public function testGetPermissionDependenciesWithSimplePermissions(): void
@@ -442,6 +454,8 @@ class RolesTypeTest extends TestCase
         $role->method('getConstant')->willReturn($constant);
         $role->method('getName')->willReturn($name);
         $role->method('getAvailablePermissions')->willReturn($availablePermissions);
+        $role->method('getRoleSection')->willReturn(RoleSection::OTHER);
+        $role->method('shouldIncludeFullPermission')->willReturn(true);
 
         return $role;
     }

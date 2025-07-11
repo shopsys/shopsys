@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleSection;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\DataTransformer\RolesGridDataTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -17,17 +18,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 final class RolesType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
      * @param bool $useSimplePermissions
+     * @param class-string<\Shopsys\FrameworkBundle\Component\Security\Role\RoleSection> $roleSectionClass
      */
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,
         private readonly bool $useSimplePermissions,
+        private readonly string $roleSectionClass,
     ) {
+        Assert::classExists($roleSectionClass, 'Role section class "%s" does not exist.');
+        Assert::isAOf($roleSectionClass, RoleSection::class, 'Role section class "%s" must extend "%s".');
     }
 
     /**
@@ -190,13 +196,35 @@ final class RolesType extends AbstractType
      */
     private function buildGridStructure(array $roles): array
     {
-        $gridStructure = [];
+        $gridStructure = [
+            'sections' => [],
+        ];
+
+        // Group roles by section
+        $rolesBySection = [];
 
         foreach ($roles as $role) {
-            $gridStructure[$role->getConstant()] = [
-                'name' => $role->getName(),
-                'constant' => $role->getConstant(),
-            ];
+            $section = $role->getRoleSection();
+
+            if ($section === null) {
+                $section = RoleSection::OTHER;
+            }
+
+            $rolesBySection[$section][] = $role;
+        }
+
+        // Build sections with metadata
+        $sections = $this->roleSectionClass::getAllSectionsSorted();
+
+        foreach ($sections as $sectionKey => $metadata) {
+            if (isset($rolesBySection[$sectionKey])) {
+                $gridStructure['sections'][$sectionKey] = [
+                    'key' => $sectionKey,
+                    'name' => $metadata['name'],
+                    'icon' => $metadata['icon'],
+                    'roles' => $rolesBySection[$sectionKey],
+                ];
+            }
         }
 
         return $gridStructure;

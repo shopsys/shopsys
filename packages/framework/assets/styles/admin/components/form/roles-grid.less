@@ -1,4 +1,4 @@
-@roles-grid-max-width: 700px;
+@roles-grid-max-width: 860px;
 @roles-grid-cell-padding: 0.75rem;
 @roles-grid-border-color: @color-grey-light;
 @roles-grid-header-bg: @color-f;
@@ -9,25 +9,30 @@
 @roles-grid-checkbox-scale: 1.2;
 
 .roles-grid {
-    display: table;
-    width: auto;
+    display: block;
+    width: 100%;
     max-width: @roles-grid-max-width;
-    border-collapse: separate;
-    border-spacing: 0;
     margin: 1rem 0;
     border: 2px solid @roles-grid-border-color;
     border-radius: 4px;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
 
     &__header,
     &__row {
-        display: table-row;
+        display: grid;
+        grid-template-columns: @roles-grid-role-name-width repeat(var(--permissions-count, 2), minmax(100px, 1fr));
+        min-width: max-content;
+        width: 100%;
+    }
+    
+    &__section-header {
+        display: contents;
     }
 
     &__header {
         background-color: @roles-grid-header-bg;
         font-weight: bold;
-        border-bottom: 3px solid @roles-grid-border-color;
         
         .roles-grid__cell {
             padding: @roles-grid-cell-padding;
@@ -39,27 +44,55 @@
         }
     }
 
+    &__row {
+        &:nth-child(even) {
+            background-color: @roles-grid-row-stripe-bg;
+            
+            .roles-grid__cell--role-name {
+                background-color: @roles-grid-row-stripe-bg;
+            }
+        }
+
+        &:nth-child(odd) {
+            background-color: @color-f;
+            
+            .roles-grid__cell--role-name {
+                background-color: @color-f;
+            }
+        }
+
+        &:hover {
+            background-color: @roles-grid-row-hover-bg;
+            
+            .roles-grid__cell--role-name {
+                background-color: @roles-grid-row-hover-bg;
+            }
+        }
+    }
+
+    &__section {
+        width: fit-content;
+        min-width: 100%;
+    }
+
     &__cell {
-        display: table-cell;
         padding: @roles-grid-cell-padding;
         border: 1px solid @roles-grid-border-color;
-        vertical-align: middle;
+        display: flex;
+        align-items: center;
 
         &--role-name {
-            width: @roles-grid-role-name-width;
-            max-width: @roles-grid-role-name-width;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             font-weight: 500;
+            padding-right: 1rem;
         }
 
         &--permission {
+            justify-content: center;
             text-align: center;
-            width: @roles-grid-permission-width;
-            min-width: @roles-grid-permission-width;
             padding: @roles-grid-cell-padding 0.5rem;
-            vertical-align: middle;
         }
 
         &--empty {
@@ -74,7 +107,6 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        min-height: 40px;
     }
 
     &__permission-label {
@@ -113,29 +145,26 @@
         }
     }
 
-    &__row {
-        &:nth-child(even) {
-            background-color: @roles-grid-row-stripe-bg;
-            
-            .roles-grid__cell--role-name {
-                background-color: @roles-grid-row-stripe-bg;
-            }
-        }
 
-        &:nth-child(odd) {
-            background-color: @color-f;
-            
-            .roles-grid__cell--role-name {
-                background-color: @color-f;
-            }
-        }
 
-        &:hover {
-            background-color: @roles-grid-row-hover-bg;
-            
-            .roles-grid__cell--role-name {
-                background-color: @roles-grid-row-hover-bg;
-            }
-        }
+    &__section-title {
+        grid-column: 1 / -1;
+        padding: 0.5rem 0.75rem;
+        font-weight: 500;
+        font-size: 0.9em;
+        border-top: 1px solid #d4d4d4;
+        border-bottom: 1px solid #d4d4d4;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        background-color: #f3f3f3;
+    }
+
+    &__section-icon {
+        display: inline-block;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+        font-size: 0.85em;
+        opacity: 0.7;
     }
 }

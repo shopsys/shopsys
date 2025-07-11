@@ -48,19 +48,22 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
         $roleCollection->add(new Role(SystemRole::ALL_VIEW, t('Full access (view only)'), allowOverwrite: false));
         $roleCollection->add(new Role(SystemRole::PUBLIC_ACCESS, t('Public access'), allowOverwrite: false));
 
-        $coreRoles = array_merge(
-            $this->getOrdersAndCustomersRoles(),
-            $this->getProductsAndCatalogRoles(),
-            $this->getMarketingAndPromotionsRoles(),
-            $this->getContentManagementRoles(),
-            $this->getSettingsAndConfigurationRoles(),
-            $this->getLegalAndComplianceRoles(),
-            $this->getSeoAndMarketingToolsRoles(),
-            $this->getSystemToolsRoles(),
-        );
+        $coreRoles = [
+            AdminRoleSectionsProvider::ORDERS_CUSTOMERS => $this->getOrdersAndCustomersRoles(),
+            AdminRoleSectionsProvider::PRODUCTS_CATALOG => $this->getProductsAndCatalogRoles(),
+            AdminRoleSectionsProvider::MARKETING_PROMOTIONS => $this->getMarketingAndPromotionsRoles(),
+            AdminRoleSectionsProvider::CONTENT_MANAGEMENT => $this->getContentManagementRoles(),
+            AdminRoleSectionsProvider::SETTINGS_CONFIGURATION => $this->getSettingsAndConfigurationRoles(),
+            AdminRoleSectionsProvider::LEGAL_COMPLIANCE => $this->getLegalAndComplianceRoles(),
+            AdminRoleSectionsProvider::SEO_MARKETING_TOOLS => $this->getSeoAndMarketingToolsRoles(),
+            AdminRoleSectionsProvider::SYSTEM_TOOLS => $this->getSystemToolsRoles(),
+        ];
 
-        foreach ($coreRoles as $role) {
-            $roleCollection->add($role);
+        foreach ($coreRoles as $section => $roles) {
+            foreach ($roles as $role) {
+                $role->setRoleSection($section);
+                $roleCollection->add($role);
+            }
         }
     }
 

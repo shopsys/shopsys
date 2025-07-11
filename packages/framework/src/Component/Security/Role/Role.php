@@ -16,6 +16,8 @@ class Role
      */
     protected array $highestLevelPermissions;
 
+    protected ?string $roleSection = null;
+
     /**
      * @param string $constant
      * @param string $name Human-readable name
@@ -137,6 +139,22 @@ class Role
 
         $this->availablePermissions[] = $permission;
         $this->highestLevelPermissions = Permission::getHighestLevelPermissions($this->availablePermissions);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRoleSection(): ?string
+    {
+        return $this->roleSection;
+    }
+
+    /**
+     * @param string $roleSection
+     */
+    public function setRoleSection(string $roleSection): void
+    {
+        $this->roleSection = $roleSection;
     }
 
     /**
