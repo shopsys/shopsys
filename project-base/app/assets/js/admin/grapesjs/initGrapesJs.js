@@ -120,7 +120,8 @@ export default class InitGrapesJs {
                         language: Translator.locale,
                         allowedContent: true,
                         extraAllowedContent: '*(*)',
-                        removePlugins: 'exportpdf',
+                        removePlugins: 'exportpdf,magicline',
+                        format_tags: 'p;h2;h3;h4;h5;h6;pre;address;div',
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
                             { name: 'clipboard', items: ['PasteText', 'PasteFromWord'] },
@@ -252,6 +253,7 @@ export default class InitGrapesJs {
                         enterMode: 2,
                         versionCheck: false,
                         language: Translator.locale,
+                        format_tags: 'p;h2;h3;h4;h5;h6;pre;address;div',
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
                             { name: 'format', items: ['Format'] },
@@ -274,7 +276,7 @@ export default class InitGrapesJs {
                             { name: 'insert', items: ['SpecialChar', 'strinsert'] },
                         ],
                         extraPlugins: 'strinsert',
-                        removePlugins: 'exportpdf',
+                        removePlugins: 'exportpdf,magicline',
                         strinsert_button_label: Translator.trans('Insert variable'),
                         strinsert_strings: [
                             { name: Translator.trans('Mandatory variables') },
