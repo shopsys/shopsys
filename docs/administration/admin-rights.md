@@ -1,31 +1,33 @@
-# Admin Rights and Role-Based Access Control
+# Admin Rights and Access Control
 
-The administration uses a flexible role-based access control (RBAC) system built on top of Symfony's security component. This system provides fine-grained permissions for different administrative functions using intuitive PHP attributes.
+The administration interface uses PHP attributes to protect routes and integrate with the platform's role-based access control system. This provides intuitive, declaration-based security that's easy to read and maintain.
 
-## Overview
+!!! info "Global RBAC System"
 
-The access control system consists of several key components:
+    This page focuses on administration-specific implementation. For a comprehensive overview of the role-based access control system used across the platform, see [Role-Based Access Control](../introduction/role-based-access-control.md).
 
-1. **Roles** - Define what a user can do (e.g., `ROLE_PRODUCT`, `ROLE_ORDER`)
-2. **Permissions** - Define the level of access (VIEW, EDIT, CREATE, DELETE, FULL)
-3. **Security Attributes** - Connect routes to required roles using clear, intention-revealing attributes
-4. **Role Hierarchy** - Automatically grants subordinate permissions
+## How Access Control Works
 
-## Permission System
+The administration interface uses an automatic access control system that secures all admin routes based on PHP attributes. The system scans your controllers and automatically enforces security rules without requiring manual configuration for each route.
 
-Each role can have different permission levels defined in the `Permission` enum:
+### Automatic Route Scanning
 
-```php
-use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+The system automatically discovers and secures admin routes by:
 
-Permission::VIEW    // Read-only access
-Permission::EDIT    // Modify existing entities
-Permission::CREATE  // Create new entities
-Permission::DELETE  // Delete entities
-Permission::FULL    // All permissions (includes VIEW, EDIT, CREATE, DELETE)
-```
+- **Route Discovery**: All routes with names starting with `admin_` or paths starting with `/admin/` are automatically identified as admin routes
+- **Attribute Scanning**: Each admin controller class and method is scanned for security attributes (like `#[CanView]`, `#[RequireRole]`, etc.)
+- **Rule Generation**: Security attributes are converted into access control rules and cached for performance
+- **Automatic Enforcement**: Every admin request is automatically checked against these rules before controller execution
 
-## Available Security Attributes
+This means that simply adding security attributes to your controller methods automatically secures them - no additional configuration is needed.
+
+!!! info "Access Control coverage"
+
+    The access control coverage of all the controller actions is checked automatically by the `access-control-rules-check` [phing](../introduction/console-commands-for-application-management-phing-targets.md) target (it is a part of `standards` check)
+
+    All routes must be covered by at least one security attribute; otherwise, the target will fail. You can exclude specific routes from the check by adding them to the `shopsys_administration.access_control.additional_excluded_route_names` configuration parameter in `config/packages/shopsys_administration.yaml`.
+
+## Security Attributes
 
 The system provides multiple types of security attributes for different use cases:
 
@@ -107,13 +109,13 @@ use Symfony\Component\Routing\Attribute\Route;
 // With ForRole at class level
 #[Route(path: '/product/edit/{id}')]
 #[CanView(methods: [HttpMethod::GET])]    // Show form
-#[CanEdit(methods: ['POST'])]   // Process form (you can also use string instead of HttpMethod enum)
+#[CanEdit(methods: [HttpMethod::POST])]   // Process form
 public function editAction(Request $request, int $id): Response { }
 
 // Explicit approach
 #[Route(path: '/product/edit/{id}')]
 #[CanView('ROLE_PRODUCT', [HttpMethod::GET])]    // Show form
-#[CanEdit('ROLE_PRODUCT', ['POST'])]   // Process form
+#[CanEdit('ROLE_PRODUCT', [HttpMethod::POST])]   // Process form
 public function editAction(Request $request, int $id): Response { }
 ```
 
@@ -164,6 +166,10 @@ public function crossSystemReportAction(): Response { }
 ## Attribute Priority System
 
 When multiple security attributes are applied to the same method, they follow a specific priority order:
+
+!!! note
+
+    Use `php bin/console shopsys:admin:access-control` to validate your access control coverage. Add `--check` option for CI/CD pipeline validation. Supports filtering with wildcards like `"admin_product_*"` (use quotes for wildcards).
 
 ### 1. Class-Level vs Method-Level
 
@@ -244,118 +250,61 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 #[Route('/product/edit/{id}')]
 #[CanView(methods: [HttpMethod::GET])]     // GET requires VIEW
 #[CanEdit(methods: [HttpMethod::POST])]    // POST requires EDIT
-#[SuperAdminOnly(methods: ['DELETE'])] // DELETE requires super admin
+#[SuperAdminOnly(methods: [HttpMethod::DELETE])] // DELETE requires super admin
 public function editAction(Request $request): Response { }
 ```
 
-## Role Hierarchy
+## Programmatic Access Control
 
-The system automatically manages role inheritance:
+### AccessChecker Service
 
-1. **FULL permission** includes VIEW, EDIT, CREATE, and DELETE
-2. **ROLE_SUPER_ADMIN** has access to everything
-3. **ROLE_ADMIN** has basic administrative access
-4. **ROLE_ALL** combines all FULL permissions
-5. **ROLE_ALL_VIEW** combines all VIEW permissions
-
-The role hierarchy follows the pattern `ROLE_BASENAME_PERMISSION`:
-
-```
-ROLE_SUPER_ADMIN
-    └── ROLE_ADMIN
-        └── ROLE_ALL (all FULL permissions)
-            ├── ROLE_PRODUCT_FULL
-            │   ├── ROLE_PRODUCT_VIEW
-            │   ├── ROLE_PRODUCT_EDIT
-            │   ├── ROLE_PRODUCT_CREATE
-            │   └── ROLE_PRODUCT_DELETE
-            └── ROLE_ORDER_FULL
-                ├── ROLE_ORDER_VIEW
-                ├── ROLE_ORDER_EDIT
-                ├── ROLE_ORDER_CREATE
-                └── ROLE_ORDER_DELETE
-```
-
-## Role Provider System
-
-The platform uses a role provider system to organize and manage roles. Each provider can define related roles, and the system automatically validates for duplicates.
-
-### Default Roles
-
-Default platform roles are provided by `CoreAdminRoleProvider` and include standard entities:
-
-- `ROLE_PRODUCT` - Product management
-- `ROLE_ORDER` - Order management
-- `ROLE_CUSTOMER` - Customer management
-- `ROLE_ADMINISTRATOR` - Administrator management
-- And many more...
-
-### Creating Custom Roles
-
-To add new roles to your project, you have two options:
-
-#### Option 1: Use the Prepared AppRoleProvider
-
-The project comes with a ready-to-use `AppRoleProvider` class at `src/Model/Security/AppRoleProvider.php`. Simply add your roles there:
+The `AccessChecker` service provides the main API for programmatic access control throughout the application:
 
 ```php
-namespace App\Model\Security;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessChecker;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 
-use Shopsys\FrameworkBundle\Component\Security\Role\Role;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface;
-use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+// In controllers, services, etc.
+if ($this->accessChecker->canView('ROLE_PRODUCT')) {
+    // User can view products
+}
 
-class AppRoleProvider implements RoleProviderInterface
-{
-    public function getRoles(): array
-    {
-        return [
-            new Role('ROLE_MARKETING', t('Marketing'), [Permission::FULL]),
-            new Role('ROLE_WAREHOUSE', t('Warehouse'), [Permission::VIEW, Permission::EDIT]),
-            new Role('ROLE_REPORT', t('Reports')), // If Permissions are not specified, role is considered as System role and this role is hidden from USER
-        ];
-    }
+// Enforce access (throws exception if denied)
+$this->accessChecker->denyUnlessCanEdit('ROLE_ORDER');
+
+// Check route access
+if ($this->accessChecker->hasAccessToRoute('admin_product_edit', HttpMethod::POST)) {
+    // User can access the route with POST method
 }
 ```
 
-#### Option 2: Create a New Role Provider
+### Twig Template Integration
 
-If you want to organize roles separately (e.g., by module), create a new provider:
+The `AccessCheckerExtension` provides Twig functions for conditional rendering in templates:
 
-```php
-namespace App\Model\Security;
+```twig
+{# Check permissions #}
+{% if can_view('ROLE_PRODUCT') %}
+    <a href="{{ path('admin_product_list') }}">Products</a>
+{% endif %}
 
-use Shopsys\FrameworkBundle\Component\Security\Role\Role;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleProviderInterface;
-use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+{% if can_edit('ROLE_ORDER') %}
+    <button type="submit">Save Order</button>
+{% endif %}
 
-class MarketingRoleProvider implements RoleProviderInterface
-{
-    public function getRoles(): array
-    {
-        return [
-            new Role('ROLE_CAMPAIGN', t('Campaigns'), [Permission::FULL]),
-            new Role('ROLE_ANALYTICS', t('Analytics'), [Permission::VIEW]),
-        ];
-    }
-}
+{# Check route access with HTTP method #}
+{% if has_access_to_route('admin_product_edit', 'POST') %}
+    <form method="post">...</form>
+{% endif %}
 ```
 
-#### Using Custom Roles in Controllers
+**Available Twig Functions:**
 
-```php
-use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
-use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
-use Symfony\Component\Routing\Attribute\Route;
-
-#[ForRole('ROLE_MARKETING')]
-class MarketingController extends AdminBaseController
-{
-    #[Route(path: '/marketing/campaigns')]
-    #[CanView]
-    public function campaignsAction(): Response { }
-}
-```
+- `can_view(roleConstant)` - Check VIEW permission
+- `can_edit(roleConstant)` - Check EDIT permission
+- `can_create(roleConstant)` - Check CREATE permission
+- `can_delete(roleConstant)` - Check DELETE permission
+- `has_access_to_route(route, method)` - Check route access with HTTP method
 
 ## Menu Integration
 
@@ -379,12 +328,14 @@ shopsys_administration:
         simple_permissions: true
 ```
 
-**Note**: In simple permissions mode, only VIEW and FULL columns are displayed in the roles grid. The backend functionality remains unchanged. When FULL is checked: if the role supports FULL permission, it saves FULL; if the role doesn't support FULL, it saves all available permissions for that role instead.
+!!! info
+
+    In simple permissions mode, only VIEW and FULL columns are displayed in the roles grid. The backend functionality remains unchanged. When FULL is checked: if the role supports FULL permission, it saves FULL; if the role doesn't support FULL, it saves all available permissions for that role instead.
 
 ## Best Practices
 
 1. **Use intention-revealing attributes** - `#[CanView('ROLE_PRODUCT')]` is clearer than complex configurations
 2. **Use appropriate permissions** - Don't grant EDIT when only VIEW is needed
-3. **Test thoroughly** - Use the console command to verify coverage
+3. **Test thoroughly** - Validate access control coverage regularly
 4. **Document custom roles** - Keep track of any project-specific roles
 5. **Follow naming conventions** - Use `ROLE_` prefix for all roles

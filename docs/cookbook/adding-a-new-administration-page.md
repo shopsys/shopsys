@@ -117,7 +117,7 @@ The event subscriber should be auto-discovered by Symfony, reconfiguring the men
 ## Access control
 
 When adding a new administrator page, you need to decide which [administrator roles](../administration/admin-rights.md) should have access to it.
-For the new page, you will probably need to create a new role. See the [Creating Custom Roles](../administration/admin-rights.md#creating-custom-roles) section for details on how to add new roles using the `AppRoleProvider` or creating a new role provider.
+For the new page, you will probably need to create a new role. See the [Creating Custom Roles](../introduction/role-based-access-control.md#creating-custom-roles) section for details on how to add new roles using the `AdminRoleProvider` or creating a new role provider.
 
 After that, you need to cover your new route with the access control rules. Let's say that the administrator needs to have full rights to perform POST requests and view rights for GET requests:
 

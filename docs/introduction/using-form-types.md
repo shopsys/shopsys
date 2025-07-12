@@ -316,6 +316,45 @@ Boolean option that defines if main variants can be picked.
 
 Boolean option that defines if variants can be picked.
 
+### [RolesType]({{github.link}}/packages/framework/src/Form/RolesType.php)
+
+Displays a grid of roles with permission checkboxes for managing user permissions in administration.
+The form type renders roles organized by sections (when grouped) with columns for different permission levels (VIEW, CREATE, EDIT, DELETE, or simplified VIEW/FULL).
+
+#### context
+
+Required option that defines which context roles should be displayed from.
+Must be a class-string of a context (e.g., `AdminContext::class`).
+For more information about contexts, see [Context System](context-system.md).
+
+#### excluded_roles
+
+Defaults to all system roles (`SystemRole::getAll()`).  
+Array of role constants that should be excluded from the display.
+Typically used to exclude system roles like `ROLE_ALL`, `ROLE_ALL_VIEW`, etc.
+
+#### simple_permissions
+
+When `true`, only displays VIEW and FULL permissions.
+When `false`, displays all granular permissions (VIEW, CREATE, EDIT, DELETE).
+
+#### grouped
+
+Defaults to `true`.  
+When `true`, roles are organized into sections (e.g., "Orders & Customers", "Products & Catalog").
+When `false`, all roles are displayed in a single ungrouped list.
+
+#### Example Usage
+
+```php
+$builder->add('roles', RolesType::class, [
+    'context' => AdminContext::class,
+    'excluded_roles' => [SystemRole::ALL, SystemRole::ALL_VIEW],
+    'simple_permissions' => true,
+    'grouped' => true,
+]);
+```
+
 ### [SingleCheckboxChoiceType]({{github.link}}/packages/framework/src/Form/SingleCheckboxChoiceType.php)
 
 Displays a list of choices shown as checkboxes.
