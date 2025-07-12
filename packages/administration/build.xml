@@ -8,6 +8,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:admin:access-control"/>
             <arg value="--verbose"/>
+            <arg value="--check"/>
             <arg value="--ansi" />
         </exec>
     </target>
