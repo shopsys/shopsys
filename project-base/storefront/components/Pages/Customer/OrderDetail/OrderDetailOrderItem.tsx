@@ -67,11 +67,11 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                 )}
             >
                 <div className="vl:w-auto flex w-full items-center gap-2.5">
-                    <div className="flex h-20 w-20 shrink-0 items-center">
+                    <div className="flex size-20 shrink-0">
                         <Image
                             alt={orderItem.name}
-                            className="max-h-20 max-w-20 object-contain mix-blend-multiply"
-                            height={48}
+                            className="size-20 object-contain mix-blend-multiply"
+                            height={80}
                             src={orderItem.product?.mainImage?.url}
                             width={80}
                         />
