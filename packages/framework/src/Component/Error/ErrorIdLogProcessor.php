@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Error;
 
 use Monolog\LogRecord;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Contracts\Service\ResetInterface;
@@ -39,6 +40,7 @@ final class ErrorIdLogProcessor implements EventSubscriberInterface, ResetInterf
         $this->errorId = $this->errorIdProvider->getErrorId();
     }
 
+    #[Override]
     public function reset(): void
     {
         $this->errorId = null;
@@ -47,6 +49,7 @@ final class ErrorIdLogProcessor implements EventSubscriberInterface, ResetInterf
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

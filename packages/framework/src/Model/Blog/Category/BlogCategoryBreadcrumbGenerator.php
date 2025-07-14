@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -21,6 +22,7 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $blogCategory = $this->blogCategoryRepository->getById($routeParameters['id']);
@@ -52,6 +54,7 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRouteNames(): array
     {
         return ['front_blogcategory_detail'];

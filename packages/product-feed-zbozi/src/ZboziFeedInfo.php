@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\ZboziBundle;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 
 class ZboziFeedInfo implements FeedInfoInterface
@@ -11,6 +12,7 @@ class ZboziFeedInfo implements FeedInfoInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLabel(): string
     {
         return 'Zboží.cz';
@@ -19,6 +21,7 @@ class ZboziFeedInfo implements FeedInfoInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'zbozi';
@@ -27,6 +30,7 @@ class ZboziFeedInfo implements FeedInfoInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAdditionalInformation(): ?string
     {
         return null;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Messenger;
 
 use Doctrine\ORM\Exception\EntityManagerClosed;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Event\WorkerMessageFailedEvent;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
@@ -33,6 +34,7 @@ class ResetWorkerOnClosedEntityManagerSubscriber implements EventSubscriberInter
     /**
      * @return array
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

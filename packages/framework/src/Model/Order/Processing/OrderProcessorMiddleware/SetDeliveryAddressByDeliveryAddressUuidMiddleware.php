@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
@@ -27,6 +28,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddleware implements OrderProcesso
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
      * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
      */
+    #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender;
 
+use Override;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 
 class DummyTwoFactorUser implements TwoFactorInterface
@@ -20,6 +21,7 @@ class DummyTwoFactorUser implements TwoFactorInterface
     /**
      * @return bool
      */
+    #[Override]
     public function isEmailAuthEnabled(): bool
     {
         return true;
@@ -28,6 +30,7 @@ class DummyTwoFactorUser implements TwoFactorInterface
     /**
      * @return string
      */
+    #[Override]
     public function getEmailAuthRecipient(): string
     {
         return $this->email;
@@ -36,6 +39,7 @@ class DummyTwoFactorUser implements TwoFactorInterface
     /**
      * @return string|null
      */
+    #[Override]
     public function getEmailAuthCode(): ?string
     {
         return static::DUMMY_EMAIL_AUTH_CODE;
@@ -44,6 +48,7 @@ class DummyTwoFactorUser implements TwoFactorInterface
     /**
      * @param string $authCode
      */
+    #[Override]
     public function setEmailAuthCode(string $authCode): void
     {
     }

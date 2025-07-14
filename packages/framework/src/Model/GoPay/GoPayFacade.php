@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\GoPay;
 use DateTime;
 use GoPay\Definition\Response\PaymentStatus;
 use Nette\Utils\Arrays;
+use Override;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -70,6 +71,7 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData $paymentSetupCreationData
      */
+    #[Override]
     public function createTransaction(
         PaymentTransactionData $paymentTransactionData,
         PaymentSetupCreationData $paymentSetupCreationData,
@@ -91,6 +93,7 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      * @return bool
      */
+    #[Override]
     public function updateTransaction(PaymentTransactionData $paymentTransactionData): bool
     {
         $domainConfig = $this->domain->getDomainConfigById($paymentTransactionData->order->getDomainId());
@@ -117,6 +120,7 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $refundAmount
      * @return bool
      */
+    #[Override]
     public function refundTransaction(PaymentTransactionData $paymentTransactionData, Money $refundAmount): bool
     {
         $domainConfig = $this->domain->getDomainConfigById($paymentTransactionData->order->getDomainId());

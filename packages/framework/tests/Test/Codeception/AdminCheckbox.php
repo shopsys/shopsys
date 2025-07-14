@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test\Codeception;
 
+use Override;
+
 /**
  * Representation of a graphical checkbox that is used in administration
  * Allows to manipulate checkboxes and read their state
@@ -26,6 +28,7 @@ class AdminCheckbox extends AbstractCheckbox
      *
      * @return string
      */
+    #[Override]
     protected function getImageElementClass(): string
     {
         $imageElementClass = 'js-checkbox-image-' . random_int(0, getrandmax());

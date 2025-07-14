@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 use Knp\Menu\ItemInterface;
+use Override;
 use Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -29,6 +30,7 @@ class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
     /**
      * @return array
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

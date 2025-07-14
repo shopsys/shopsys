@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Dumper\DumperInterface;
+use Override;
 
 class PoDumper implements DumperInterface
 {
@@ -15,6 +16,7 @@ class PoDumper implements DumperInterface
      * @param string $domain
      * @return string
      */
+    #[Override]
     public function dump(MessageCatalogue $catalogue, $domain = Translator::DEFAULT_TRANSLATION_DOMAIN)
     {
         $output = 'msgid ""' . "\n";

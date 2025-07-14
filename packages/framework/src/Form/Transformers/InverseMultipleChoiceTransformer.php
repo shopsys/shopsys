@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class InverseMultipleChoiceTransformer implements DataTransformerInterface
@@ -18,6 +19,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function transform($value): ?array
     {
         if (!is_array($value)) {
@@ -30,6 +32,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function reverseTransform($value): ?array
     {
         if (!is_array($value)) {

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Stock;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Stock\Exception\StockDomainNotFoundException;
 
@@ -171,6 +172,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @param int $position
      */
+    #[Override]
     public function setPosition($position): void
     {
         $this->position = $position;

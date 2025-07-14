@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting;
 
+use Override;
 use Shopsys\HttpSmokeTesting\Auth\AuthInterface;
 use Shopsys\HttpSmokeTesting\Auth\NoAuth;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -130,6 +131,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */
+    #[Override]
     public function setAuth(AuthInterface $auth)
     {
         $this->auth = $auth;
@@ -141,6 +143,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param int $code
      * @return $this
      */
+    #[Override]
     public function setExpectedStatusCode($code)
     {
         $this->expectedStatusCode = $code;
@@ -153,6 +156,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param mixed $value
      * @return $this
      */
+    #[Override]
     public function setParameter($name, $value)
     {
         $this->parameters[$name] = $value;
@@ -164,6 +168,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param string $debugNote
      * @return $this
      */
+    #[Override]
     public function addDebugNote($debugNote)
     {
         $this->debugNotes[] = $debugNote;
@@ -179,6 +184,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param callable $callback
      * @return $this
      */
+    #[Override]
     public function addCallDuringTestExecution($callback)
     {
         $this->callsDuringTestExecution[] = $callback;

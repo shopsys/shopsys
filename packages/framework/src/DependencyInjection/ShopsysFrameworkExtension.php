@@ -106,6 +106,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('doctrine_migrations', [

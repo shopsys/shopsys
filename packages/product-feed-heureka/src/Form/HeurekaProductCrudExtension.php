@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
+use Override;
 use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade;
@@ -26,6 +27,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormTypeClass()
     {
         return HeurekaProductFormType::class;
@@ -34,6 +36,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormLabel()
     {
         return $this->translator->trans('Heureka.cz product feed');
@@ -43,6 +46,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @return array
      */
+    #[Override]
     public function getData($productId)
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
@@ -62,6 +66,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @param array $data
      */
+    #[Override]
     public function saveData($productId, $data)
     {
         $heurekaProductDomainsData = [];
@@ -84,6 +89,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $productId
      */
+    #[Override]
     public function removeData($productId)
     {
         $this->heurekaProductDomainFacade->delete($productId);

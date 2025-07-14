@@ -18,13 +18,7 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
     #[DataProvider('getFixableFiles')]
     public function testFixableFiles(string $fixedFileName, string $inputFileName): void
     {
-        $file = $this->doRunSniff($inputFileName);
-
-        self::assertGreaterThan(0, $file->getErrorCount(), $inputFileName . ' should raise error');
-
-        $file->fixer->fixFile();
-
-        self::assertStringEqualsFile($fixedFileName, $file->fixer->getContents());
+        $this->runFixableFilesTest($fixedFileName, $inputFileName);
     }
 
     /**

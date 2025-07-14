@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use Shopsys\CodingStandards\Helper\Naming;
@@ -14,6 +15,7 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     /**
      * @return int[]
      */
+    #[Override]
     public function register(): array
     {
         return [T_NEW];
@@ -23,6 +25,7 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
+    #[Override]
     public function process(File $file, $position): void
     {
         $endPosition = $file->findEndOfStatement($position);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Grid\InlineEdit;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
@@ -29,6 +30,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      * @param int|string|null $rowId
      * @return int|string
      */
+    #[Override]
     public function saveForm(Request $request, int|string|null $rowId): int|string
     {
         $this->checkAdministratorHasEditRole();
@@ -61,6 +63,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
+    #[Override]
     public function getGrid(): Grid
     {
         $grid = $this->gridFactory->create($this->getEditRole());
@@ -75,6 +78,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * @return bool
      */
+    #[Override]
     public function canAddNewRow(): bool
     {
         return $this->canEdit();
@@ -86,6 +90,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      *
      * @return string
      */
+    #[Override]
     public function getServiceName(): string
     {
         return static::class;
@@ -95,6 +100,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     abstract public function getForm(int|string|null $rowId): FormInterface;
 
     /**

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
+use Override;
+
 abstract class GraphQlB2bDomainTestCase extends GraphQlTestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

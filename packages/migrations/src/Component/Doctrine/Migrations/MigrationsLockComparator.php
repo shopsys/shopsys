@@ -6,6 +6,7 @@ namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\Migrations\Version\Comparator;
 use Doctrine\Migrations\Version\Version;
+use Override;
 
 class MigrationsLockComparator implements Comparator
 {
@@ -21,6 +22,7 @@ class MigrationsLockComparator implements Comparator
      * @param \Doctrine\Migrations\Version\Version $b
      * @return int
      */
+    #[Override]
     public function compare(Version $a, Version $b): int
     {
         $installedMigrationsAccordingToLock = $this->migrationsLock->getOrderedInstalledMigrationClasses();

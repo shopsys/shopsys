@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Packetery;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
@@ -24,6 +25,7 @@ class PacketeryCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
     }
@@ -31,6 +33,7 @@ class PacketeryCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function run(): void
     {
         $orders = $this->orderFacade->getAllWithoutTrackingNumberByTransportType(TransportTypeEnum::TYPE_PACKETERY);

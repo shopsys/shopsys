@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error;
 
 use Overblog\GraphQLBundle\Error\UserError;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 use Throwable;
 
@@ -28,6 +29,7 @@ class CustomerUserAccessDeniedUserError extends UserError implements UserErrorWi
     /**
      * @return string
      */
+    #[Override]
     public function getUserErrorCode(): string
     {
         return static::CODE;

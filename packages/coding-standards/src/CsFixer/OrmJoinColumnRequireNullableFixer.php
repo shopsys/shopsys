@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer;
 
+use Override;
 use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\FixerInterface;
@@ -19,6 +20,7 @@ final class OrmJoinColumnRequireNullableFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -46,6 +48,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
@@ -54,6 +57,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isRisky(): bool
     {
         return true;
@@ -62,6 +66,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         /** @var \PhpCsFixer\Tokenizer\Token $token */
@@ -80,6 +85,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'Shopsys/orm_join_column_require_nullable';
@@ -88,6 +94,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPriority(): int
     {
         return 0;
@@ -96,6 +103,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return preg_match('/\.php$/ui', $file->getFilename()) === 1;

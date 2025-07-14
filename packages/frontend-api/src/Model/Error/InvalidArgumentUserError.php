@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Error;
 
 use GraphQL\Error\UserError;
+use Override;
 
 class InvalidArgumentUserError extends UserError implements UserErrorWithCodeInterface
 {
@@ -13,6 +14,7 @@ class InvalidArgumentUserError extends UserError implements UserErrorWithCodeInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserErrorCode(): string
     {
         return static::CODE;

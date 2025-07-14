@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode\Transformer;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -21,6 +22,7 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit|null $promoCodeLimit
      * @return array|null
      */
+    #[Override]
     public function transform($promoCodeLimit): ?array
     {
         if ($promoCodeLimit instanceof PromoCodeLimit) {
@@ -37,6 +39,7 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
      * @param mixed $value
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit
      */
+    #[Override]
     public function reverseTransform($value): PromoCodeLimit
     {
         if (is_array($value) === false || $value['fromPrice'] === null || $value['discount'] === null) {

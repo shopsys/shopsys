@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\DataFixtures;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\Plugin\PluginDataFixtureInterface;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory;
@@ -29,6 +30,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
     ) {
     }
 
+    #[Override]
     public function load()
     {
         $firstProductHeurekaDomainData = [];

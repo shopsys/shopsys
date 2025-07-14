@@ -153,6 +153,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

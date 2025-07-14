@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Action;
 
 use Closure;
+use Override;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
@@ -92,6 +93,7 @@ abstract class AbstractRoutableAction extends AbstractAction
      *
      * @return array<string, string|null>
      */
+    #[Override]
     protected function getForbiddenAttributes(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Packetery;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Packetery\Packet\PacketAttributes;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -172,6 +173,7 @@ class PacketeryClient implements TransferIdentificationInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTransferName(): string
     {
         return 'Send packet data to packetery';
@@ -180,6 +182,7 @@ class PacketeryClient implements TransferIdentificationInterface
     /**
      * @return string
      */
+    #[Override]
     public function getTransferIdentifier(): string
     {
         return 'packetsExport';
@@ -188,6 +191,7 @@ class PacketeryClient implements TransferIdentificationInterface
     /**
      * @return string
      */
+    #[Override]
     public function getServiceIdentifier(): string
     {
         return 'Packetery';

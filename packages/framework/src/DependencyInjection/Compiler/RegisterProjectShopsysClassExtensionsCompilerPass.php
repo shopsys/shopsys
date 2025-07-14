@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
+use Override;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Roave\BetterReflection\Reflector\Exception\IdentifierNotFound;
@@ -19,6 +20,7 @@ class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassI
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         $classExtensionRegistryDefinition = $container->findDefinition(ClassExtensionRegistry::class);

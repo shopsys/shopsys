@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\DependencyInjection;
 
+use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver;
@@ -17,6 +18,7 @@ class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterfac
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         foreach ($this->getSearchResultsProviderResolversIndexedByTag() as $serviceTag => $resolverServiceId) {

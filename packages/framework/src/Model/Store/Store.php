@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Store;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
@@ -345,6 +346,7 @@ class Store implements OrderableEntityInterface
     /**
      * @param int $position
      */
+    #[Override]
     public function setPosition($position): void
     {
         $this->position = $position;

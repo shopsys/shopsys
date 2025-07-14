@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 use League\Flysystem\FilesystemOperator;
+use Override;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 
 abstract class AbstractUploadedFileLocator implements UploadedFileLocatorInterface
@@ -63,6 +64,7 @@ abstract class AbstractUploadedFileLocator implements UploadedFileLocatorInterfa
      * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
      * @return string
      */
+    #[Override]
     public function getAbsoluteUploadedFileFilepath(UploadedFileInterface $uploadedFile): string
     {
         return $this->getAbsoluteFilePath($this->getFilePath($uploadedFile));

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor as OriginalTwigFileExtractor;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
+use Override;
 use ReflectionObject;
 use SplFileInfo;
 use Twig\Node\Node;
@@ -39,6 +40,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         $this->originalTwigFileExtractor->visitFile($file, $catalogue);
@@ -47,6 +49,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
         $this->originalTwigFileExtractor->visitPhpFile($file, $catalogue, $ast);
@@ -55,6 +58,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
     {
         $this->originalTwigFileExtractor->visitTwigFile($file, $catalogue, $ast);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer;
 
+use Override;
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
@@ -30,6 +31,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configure(?array $configuration = null): void
     {
         if ($configuration !== null) {
@@ -40,6 +42,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     /**
      * @return \PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface
      */
+    #[Override]
     public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver(
@@ -73,6 +76,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -104,6 +108,7 @@ private function method()
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return !$this->isFinalClass($tokens) && $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE]) && $this->checkNamespace($tokens);
@@ -183,6 +188,7 @@ private function method()
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         foreach (array_keys($tokens->findGivenKind(T_PRIVATE)) as $index) {
@@ -197,6 +203,7 @@ private function method()
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isRisky(): bool
     {
         return true;
@@ -205,6 +212,7 @@ private function method()
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'Shopsys/forbidden_private_visibility';
@@ -213,6 +221,7 @@ private function method()
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPriority(): int
     {
         return 0;
@@ -221,6 +230,7 @@ private function method()
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return true;

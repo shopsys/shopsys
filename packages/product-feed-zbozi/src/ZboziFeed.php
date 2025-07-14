@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\ZboziBundle;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInterface;
@@ -24,6 +25,7 @@ class ZboziFeed implements FeedInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getInfo(): FeedInfoInterface
     {
         return $this->feedInfo;
@@ -32,6 +34,7 @@ class ZboziFeed implements FeedInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getTemplateFilepath(): string
     {
         return '@ShopsysProductFeedZbozi/feed.xml.twig';
@@ -40,6 +43,7 @@ class ZboziFeed implements FeedInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         yield from $this->feedItemFacade->getItems($domainConfig, $lastSeekId, $maxResults);

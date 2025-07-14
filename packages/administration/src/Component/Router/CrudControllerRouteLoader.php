@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Router;
 
+use Override;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
@@ -30,6 +31,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function load($resource, ?string $type = null)
     {
         if ($this->loaded === true) {
@@ -51,6 +53,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function supports($resource, ?string $type = null)
     {
         return $type === 'crud_controller';
@@ -59,6 +62,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getResolver()
     {
         /* @phpstan-ignore-next-line */
@@ -68,6 +72,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setResolver(LoaderResolverInterface $resolver)
     {
         // No implementation needed

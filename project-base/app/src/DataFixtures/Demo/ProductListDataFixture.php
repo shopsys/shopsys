@@ -75,6 +75,7 @@ class ProductListDataFixture extends AbstractReferenceFixture implements Depende
     /**
      * @return string[]
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

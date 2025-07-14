@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
@@ -44,6 +45,7 @@ class LogoutListener implements EventSubscriberInterface
     /**
      * @return array[]
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

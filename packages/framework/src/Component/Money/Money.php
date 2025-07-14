@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use JsonSerializable;
 use Litipk\BigNumbers\Decimal;
 use Litipk\BigNumbers\Errors\BigNumbersError;
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
 use Shopsys\FrameworkBundle\Component\Money\Exception\UnsupportedTypeException;
 use function substr;
@@ -69,6 +70,7 @@ class Money implements JsonSerializable
     /**
      * @return string[]
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

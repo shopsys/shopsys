@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlRouteNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -38,6 +39,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getContext(): RequestContext
     {
         return $this->context;
@@ -46,6 +48,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setContext(RequestContext $context): void
     {
         $this->context = $context;
@@ -54,6 +57,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRouteCollection(): RouteCollection
     {
         if ($this->collection === null) {
@@ -66,6 +70,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function generate(
         string $routeName,
         array $parameters = [],
@@ -113,6 +118,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function match(string $pathinfo): array
     {
         return $this->friendlyUrlMatcher->match($pathinfo, $this->getRouteCollection(), $this->domainConfig);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
@@ -34,6 +35,7 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
      */
+    #[Override]
     public function getProductsSearchResults(
         Argument $argument,
     ): ProductConnection {
@@ -64,6 +66,7 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
      * @param int $domainId
      * @return bool
      */
+    #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {
         return true;

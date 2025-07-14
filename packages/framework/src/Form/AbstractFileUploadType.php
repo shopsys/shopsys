@@ -54,6 +54,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
      * @param array $value
      * @return string
      */
+    #[Override]
     public function reverseTransform($value): string
     {
         return $value['uploadedFiles'];
@@ -63,6 +64,7 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
      * @param string $value
      * @return array
      */
+    #[Override]
     public function transform($value): array
     {
         return ['uploadedFiles' => (array)$value];

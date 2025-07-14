@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker;
 
+use Override;
 use PharIo\Version\Version;
 
 abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysReleaseWorker
@@ -12,6 +13,7 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,

@@ -152,6 +152,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
@@ -72,6 +73,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @return string
      */
+    #[Override]
     public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
@@ -81,6 +83,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
      * @param string $key
      * @param string $originalFilename
      */
+    #[Override]
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key !== $this::getUploadKey()) {
@@ -93,6 +96,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @param string $key
      */
+    #[Override]
     public function setFileKeyAsUploaded(string $key): void
     {
         if ($key !== $this::getUploadKey()) {
@@ -105,6 +109,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @param string $name
      */
+    #[Override]
     public function setName($name): void
     {
         $this->name = $name;
@@ -129,6 +134,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @return int|null
      */
+    #[Override]
     public function getId()
     {
         return $this->id;
@@ -137,6 +143,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @param string $slug
      */
+    #[Override]
     public function setSlug($slug): void
     {
         $this->slug = $slug;
@@ -179,6 +186,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
+    #[Override]
     public function getTemporaryFilesForUpload(): array
     {
         $files = [];

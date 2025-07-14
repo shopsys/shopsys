@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer;
 
+use Override;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -28,6 +29,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         foreach ($this->fixers as $fixer) {
@@ -42,6 +44,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isRisky(): bool
     {
         foreach ($this->fixers as $fixer) {
@@ -56,6 +59,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($this->fixers as $fixer) {
@@ -66,6 +70,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'chained';
@@ -74,6 +79,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPriority(): int
     {
         return 0;
@@ -82,6 +88,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function supports(SplFileInfo $file): bool
     {
         foreach ($this->fixers as $fixer) {
@@ -96,6 +103,7 @@ class ChainedFixer implements FixerInterface
     /**
      * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
      */
+    #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition('Chained fixer', []);

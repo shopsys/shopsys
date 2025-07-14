@@ -26,6 +26,7 @@ class ShopsysProductFeedGoogleExtension extends Extension implements PrependExte
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('doctrine_migrations', [

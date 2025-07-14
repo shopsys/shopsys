@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category\AutomatedFilter;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 
@@ -22,6 +23,7 @@ class SpecialPricesCategoryAutomatedFilter implements CategoryAutomatedFilterInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLabel(): string
     {
         return t('Display products with special prices only');
@@ -30,6 +32,7 @@ class SpecialPricesCategoryAutomatedFilter implements CategoryAutomatedFilterInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getNote(): ?string
     {
         return t('Only products with active special price from a price list be displayed');
@@ -38,6 +41,7 @@ class SpecialPricesCategoryAutomatedFilter implements CategoryAutomatedFilterInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDatabaseValue(): string
     {
         return self::DATABASE_VALUE;
@@ -46,6 +50,7 @@ class SpecialPricesCategoryAutomatedFilter implements CategoryAutomatedFilterInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function applyFilter(FilterQuery $filterQuery): FilterQuery
     {
         return $filterQuery->filterWithActiveSpecialPriceOnly($this->currentCustomerUser->getPricingGroup());

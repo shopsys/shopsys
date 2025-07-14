@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cache;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Cache\Exception\NamespaceCacheKeyNotFoundException;
 use Shopsys\FrameworkBundle\Component\Cache\Exception\ValueCacheKeyNotFoundException;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -98,6 +99,7 @@ class InMemoryCache implements ResettableInterface
         return $this->namespacesCache->hasItem($namespace);
     }
 
+    #[Override]
     public function reset(): void
     {
         $this->namespacesCache->reset();

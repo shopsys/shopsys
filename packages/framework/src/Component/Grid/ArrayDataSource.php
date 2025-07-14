@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\OrderingNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\PaginationNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\RowNotFoundInGridByIdException;
@@ -24,6 +25,7 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return string
      */
+    #[Override]
     public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;
@@ -33,6 +35,7 @@ class ArrayDataSource implements DataSourceInterface
      * @param int|string $rowId
      * @return array
      */
+    #[Override]
     public function getOneRow(int|string $rowId): array
     {
         if ($this->rowIdSourceColumnName === null) {
@@ -55,6 +58,7 @@ class ArrayDataSource implements DataSourceInterface
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
+    #[Override]
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,
@@ -79,6 +83,7 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return int
      */
+    #[Override]
     public function getTotalRowsCount(): int
     {
         return count($this->data);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
 use Nette\Utils\Strings;
+use Override;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
@@ -44,6 +45,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
      * @param \SplFileInfo $file
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      */
+    #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         $limit = $tokens->count() - 1;
@@ -80,6 +82,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @return bool
      */
+    #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_FUNCTION);
@@ -88,6 +91,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     /**
      * @return bool
      */
+    #[Override]
     public function isRisky(): bool
     {
         return false;
@@ -96,6 +100,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return static::class;
@@ -104,6 +109,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPriority(): int
     {
         return 0;
@@ -113,6 +119,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
      * @param \SplFileInfo $file
      * @return bool
      */
+    #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return (bool)Strings::match($file->getFilename(), '#\.php$#ui');

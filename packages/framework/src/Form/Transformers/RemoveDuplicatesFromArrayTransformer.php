@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
@@ -12,6 +13,7 @@ class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
      * @param mixed $values
      * @return mixed
      */
+    #[Override]
     public function transform($values): mixed
     {
         return $values;
@@ -21,6 +23,7 @@ class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
      * @param array|null $array
      * @return array|null
      */
+    #[Override]
     public function reverseTransform($array): ?array
     {
         if (is_array($array)) {

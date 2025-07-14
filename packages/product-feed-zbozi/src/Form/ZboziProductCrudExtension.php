@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\ZboziBundle\Form;
 
+use Override;
 use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory;
@@ -27,6 +28,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormTypeClass()
     {
         return ZboziProductFormType::class;
@@ -35,6 +37,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormLabel()
     {
         return $this->translator->trans('Zbozi.cz product feed');
@@ -44,6 +47,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @return array
      */
+    #[Override]
     public function getData($productId)
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
@@ -59,6 +63,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @param array $data
      */
+    #[Override]
     public function saveData($productId, $data)
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
@@ -136,6 +141,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $productId
      */
+    #[Override]
     public function removeData($productId)
     {
         $this->zboziProductDomainFacade->delete($productId);

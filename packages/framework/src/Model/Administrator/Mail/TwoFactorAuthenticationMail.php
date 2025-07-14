@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Mail;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -31,6 +32,7 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
      * @param \Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface $administrator
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
+    #[Override]
     public function createMessage(MailTemplate $template, $administrator)
     {
         $domainId = $this->domain->getId();

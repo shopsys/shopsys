@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
@@ -26,6 +27,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -34,6 +36,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [
@@ -45,6 +48,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return TextType::class;
@@ -53,6 +57,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [];
@@ -61,6 +66,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {

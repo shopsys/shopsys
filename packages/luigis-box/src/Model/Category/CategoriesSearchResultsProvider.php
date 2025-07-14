@@ -9,6 +9,7 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
@@ -34,6 +35,7 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
+    #[Override]
     public function getCategoriesSearchResults(
         Argument $argument,
     ): Promise|ConnectionInterface {

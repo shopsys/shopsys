@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 
@@ -19,6 +20,7 @@ class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
         $article = $this->articleRepository->getById($routeParameters['id']);
@@ -31,6 +33,7 @@ class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getBreadcrumbItemsOnDomain(
         int $domainId,
         string $routeName,
@@ -43,6 +46,7 @@ class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRouteNames()
     {
         return ['front_article_detail'];

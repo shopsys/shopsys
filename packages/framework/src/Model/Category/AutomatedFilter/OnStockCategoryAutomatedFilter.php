@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category\AutomatedFilter;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 
 class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
@@ -13,6 +14,7 @@ class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getLabel(): string
     {
         return t('Display on stock products only');
@@ -21,6 +23,7 @@ class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDatabaseValue(): string
     {
         return self::DATABASE_VALUE;
@@ -29,6 +32,7 @@ class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function applyFilter(FilterQuery $filterQuery): FilterQuery
     {
         return $filterQuery->filterOnlyInStock();
@@ -37,6 +41,7 @@ class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getNote(): ?string
     {
         return null;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\ZboziBundle\DataFixtures;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\Plugin\PluginDataFixtureInterface;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory;
@@ -29,6 +30,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     ) {
     }
 
+    #[Override]
     public function load()
     {
         $firstProductZboziDomainData = [];

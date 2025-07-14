@@ -8,6 +8,7 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
+use Override;
 use SplFileInfo;
 use Twig\Node\Node;
 
@@ -19,6 +20,7 @@ class JsFileExtractor implements FileVisitorInterface
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      */
+    #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         if ($this->isFileTranslationDump($file) === false) {
@@ -61,6 +63,7 @@ class JsFileExtractor implements FileVisitorInterface
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param array $ast
      */
+    #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
     }
@@ -68,6 +71,7 @@ class JsFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
     {
     }

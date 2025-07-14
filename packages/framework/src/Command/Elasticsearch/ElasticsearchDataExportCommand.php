@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
@@ -39,6 +40,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
         parent::__construct($indexRegistry, $indexFacade, $indexDefinitionLoader, $domain);
     }
 
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -54,6 +56,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function executeForIndex(OutputInterface $output, AbstractIndex $index, ?int $domainId = null): void
     {
         parent::executeForIndex($output, $index, $domainId);
@@ -69,6 +72,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->indexFacade->export(
@@ -81,6 +85,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getArgumentNameDescription(): string
     {
         return sprintf(
@@ -92,6 +97,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getActionStartedMessage(): string
     {
         return 'Exporting data';
@@ -100,6 +106,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getActionFinishedMessage(): string
     {
         return 'Data was exported successfully!';

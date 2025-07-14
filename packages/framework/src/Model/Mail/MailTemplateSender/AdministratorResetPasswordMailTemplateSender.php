@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMailFacade;
@@ -24,6 +25,7 @@ class AdministratorResetPasswordMailTemplateSender implements MailTemplateSender
     /**
      * @return string
      */
+    #[Override]
     public function getFormLabelForEntityIdentifier(): string
     {
         return t('Administrator ID');
@@ -33,6 +35,7 @@ class AdministratorResetPasswordMailTemplateSender implements MailTemplateSender
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return bool
      */
+    #[Override]
     public function supports(MailTemplate $mailTemplate): bool
     {
         return $mailTemplate->getName() === ResetPasswordMail::MAIL_TEMPLATE_NAME;
@@ -43,6 +46,7 @@ class AdministratorResetPasswordMailTemplateSender implements MailTemplateSender
      * @param string $mailTo
      * @param int|null $entityId
      */
+    #[Override]
     public function sendTemplate(MailTemplate $mailTemplate, string $mailTo, ?int $entityId): void
     {
         $administrator = $this->administratorFacade->getById($entityId);

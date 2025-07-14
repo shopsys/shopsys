@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
@@ -29,6 +30,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
     /**
      * @return string
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -37,6 +39,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
     /**
      * @return string[]
      */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [
@@ -48,6 +51,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
     /**
      * @return string
      */
+    #[Override]
     public function getValueFormType(): string
     {
         return NumberType::class;
@@ -56,6 +60,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
     /**
      * @return array
      */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [];
@@ -65,6 +70,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         $customerIds = [];

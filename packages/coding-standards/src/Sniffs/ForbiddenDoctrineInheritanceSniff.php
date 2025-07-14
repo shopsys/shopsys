@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -12,6 +13,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     /**
      * @return int[]
      */
+    #[Override]
     public function register()
     {
         return [T_CLASS];
@@ -21,6 +23,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
+    #[Override]
     public function process(File $file, $classPosition)
     {
         $phpDocStartPosition = $file->findPrevious(T_DOC_COMMENT_OPEN_TAG, $classPosition);

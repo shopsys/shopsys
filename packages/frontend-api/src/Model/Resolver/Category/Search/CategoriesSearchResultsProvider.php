@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 
@@ -27,6 +28,7 @@ class CategoriesSearchResultsProvider implements CategoriesSearchResultsProvider
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
+    #[Override]
     public function getCategoriesSearchResults(
         Argument $argument,
     ): Promise|ConnectionInterface {
@@ -56,6 +58,7 @@ class CategoriesSearchResultsProvider implements CategoriesSearchResultsProvider
      * @param int $domainId
      * @return bool
      */
+    #[Override]
     public function isEnabledOnDomain(int $domainId): bool
     {
         return true;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Voter;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -31,6 +32,7 @@ class CompanyOwnerVoter extends AbstractB2bVoter
      * @param mixed $subject
      * @return bool
      */
+    #[Override]
     protected function supports(string $attribute, $subject): bool
     {
         return $attribute === 'is_company_owner_voter';
@@ -42,6 +44,7 @@ class CompanyOwnerVoter extends AbstractB2bVoter
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return bool
      */
+    #[Override]
     protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token)
     {
         if ($this->security->isGranted('ROLE_API_ALL')) {

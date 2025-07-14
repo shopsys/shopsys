@@ -90,6 +90,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     /**
      * @return \Psr\Container\ContainerInterface
      */
+    #[Override]
     abstract public function createContainer(): ContainerInterface;
 
     /**

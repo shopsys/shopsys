@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use Nette\Utils\Strings;
+use Override;
 use PharIo\Version\Version;
 use RuntimeException;
 use Shopsys\Releaser\Command\SymfonyStyleFactory;
@@ -203,6 +204,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
      * @param string $stage
      * @return bool
      */
+    #[Override]
     public function belongToStage(string $stage): bool
     {
         return in_array($stage, $this->getAllowedStages(), true);

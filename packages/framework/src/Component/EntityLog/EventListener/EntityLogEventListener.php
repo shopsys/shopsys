@@ -10,6 +10,7 @@ use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\PersistentCollection;
+use Override;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
@@ -169,6 +170,7 @@ class EntityLogEventListener implements ResetInterface
         return $resolvedChangeSet;
     }
 
+    #[Override]
     public function reset(): void
     {
         $this->logs = [];

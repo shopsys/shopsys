@@ -7,6 +7,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Article;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
@@ -32,6 +33,7 @@ class ArticlesSearchResultsProvider extends SearchResultsProvider implements Art
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|array
      */
+    #[Override]
     public function getArticlesSearchResults(
         Argument $argument,
     ): Promise|array {

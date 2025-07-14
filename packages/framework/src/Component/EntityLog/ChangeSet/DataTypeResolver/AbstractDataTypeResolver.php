@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver;
 
+use Override;
+
 abstract class AbstractDataTypeResolver implements DataTypeResolverInterface
 {
     /**
      * @param array $changes
      * @return bool
      */
+    #[Override]
     public function isResolvedDataTypeByChanges(array $changes): bool
     {
         if ($changes[0] !== null) {

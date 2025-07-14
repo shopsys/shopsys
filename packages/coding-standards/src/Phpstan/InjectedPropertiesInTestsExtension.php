@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Phpstan;
 
+use Override;
 use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Rules\Properties\ReadWritePropertiesExtension;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
@@ -16,6 +17,7 @@ class InjectedPropertiesInTestsExtension implements ReadWritePropertiesExtension
      * @param string $propertyName
      * @return bool
      */
+    #[Override]
     public function isAlwaysRead(PropertyReflection $property, string $propertyName): bool
     {
         return false;
@@ -26,6 +28,7 @@ class InjectedPropertiesInTestsExtension implements ReadWritePropertiesExtension
      * @param string $propertyName
      * @return bool
      */
+    #[Override]
     public function isAlwaysWritten(PropertyReflection $property, string $propertyName): bool
     {
         $declaringClass = $property->getDeclaringClass();
@@ -42,6 +45,7 @@ class InjectedPropertiesInTestsExtension implements ReadWritePropertiesExtension
      * @param string $propertyName
      * @return bool
      */
+    #[Override]
     public function isInitialized(PropertyReflection $property, string $propertyName): bool
     {
         return str_contains($property->getDocComment() ?? '', '@inject');

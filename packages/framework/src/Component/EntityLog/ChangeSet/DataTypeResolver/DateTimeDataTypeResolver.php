@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver
 
 use DateTime;
 use DateTimeImmutable;
+use Override;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 
@@ -25,6 +26,7 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
      * @param mixed $value
      * @return bool
      */
+    #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {
         return $value instanceof DateTime || $value instanceof DateTimeImmutable;
@@ -34,6 +36,7 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
      * @param array{0: \DateTimeInterface|null, 1: \DateTimeInterface|null} $changes
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges
      */
+    #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
     {
         $oldDateTime = $changes[0];
@@ -51,6 +54,7 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
     /**
      * @return int
      */
+    #[Override]
     public function getPriority(): int
     {
         return 1;

@@ -38,6 +38,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormTypeInterface;
@@ -16,6 +17,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -24,6 +26,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [
@@ -35,6 +38,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return HiddenType::class;
@@ -43,6 +47,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [];
@@ -51,6 +56,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {

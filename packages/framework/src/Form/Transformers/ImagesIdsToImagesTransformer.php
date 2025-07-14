@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -25,6 +26,7 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[]|null $images
      * @return int[]
      */
+    #[Override]
     public function transform($images): array
     {
         $imagesIds = [];
@@ -42,6 +44,7 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
      * @param int[] $imagesIds
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
+    #[Override]
     public function reverseTransform($imagesIds): array
     {
         $images = [];

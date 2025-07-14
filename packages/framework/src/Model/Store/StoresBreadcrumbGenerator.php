@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -24,6 +25,7 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * @param array $routeParameters
      * @return array|\Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
+    #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $breadcrumbItems[] = new BreadcrumbItem(
@@ -45,6 +47,7 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @return string[]
      */
+    #[Override]
     public function getRouteNames(): array
     {
         return ['front_stores_detail', 'front_stores'];

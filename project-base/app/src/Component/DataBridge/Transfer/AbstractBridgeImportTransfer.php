@@ -11,6 +11,7 @@ use App\Component\DataBridge\Transfer\Exception\TransferInvalidDataAdministrator
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Generator;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferIdentificationInterface;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface;
@@ -166,6 +167,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
     /**
      * @return string
      */
+    #[Override]
     public function getServiceIdentifier(): string
     {
         return 'DataBridge';

@@ -8,6 +8,7 @@ use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
@@ -33,6 +34,7 @@ class QueryPaginator implements PaginatorInterface
      * @param int|null $totalCount
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
+    #[Override]
     public function getResult(
         int $page = 1,
         ?int $pageSize = null,
@@ -94,6 +96,7 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @return int
      */
+    #[Override]
     public function getTotalCount(): int
     {
         $totalNativeQuery = $this->getTotalNativeQuery($this->queryBuilder);

@@ -9,6 +9,7 @@ use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\Visibility;
+use Override;
 use Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface;
 
 class FilesystemFactoryDecorator implements FilesystemFactoryInterface
@@ -26,6 +27,7 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     /**
      * @return \League\Flysystem\FilesystemOperator
      */
+    #[Override]
     public function create(): FilesystemOperator
     {
         if ($this->s3Configuration->isConfigured()) {

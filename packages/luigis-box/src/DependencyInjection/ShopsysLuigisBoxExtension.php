@@ -16,6 +16,7 @@ class ShopsysLuigisBoxExtension extends Extension implements PrependExtensionInt
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function prepend(ContainerBuilder $container): void
     {
         $config = [

@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Override;
 use ReflectionClass;
 use ReflectionMethod;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
@@ -31,6 +32,7 @@ abstract class AbstractQuery implements AliasedInterface, QueryInterface
     /**
      * @return array<string, string>
      */
+    #[Override]
     public static function getAliases(): array
     {
         $reflectionClass = new ReflectionClass(static::class);

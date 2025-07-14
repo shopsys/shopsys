@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Error;
 use Exception;
 use Overblog\GraphQLBundle\Event\ErrorFormattingEvent;
 use Overblog\GraphQLBundle\Event\Events;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ErrorCodeSubscriber implements EventSubscriberInterface
@@ -57,6 +58,7 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

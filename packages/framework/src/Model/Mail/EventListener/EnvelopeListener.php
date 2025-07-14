@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail\EventListener;
 
 use InvalidArgumentException;
+use Override;
 use Shopsys\FrameworkBundle\Model\Mail\Email;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -94,6 +95,7 @@ class EnvelopeListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

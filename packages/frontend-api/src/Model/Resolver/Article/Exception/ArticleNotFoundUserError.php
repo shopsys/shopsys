@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception;
 
+use Override;
 use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
@@ -23,6 +24,7 @@ class ArticleNotFoundUserError extends EntityNotFoundUserError implements UserEr
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserErrorCode(): string
     {
         return $this->articleIdentifier !== null ? static::CODE . '-' . $this->articleIdentifier : static::CODE;

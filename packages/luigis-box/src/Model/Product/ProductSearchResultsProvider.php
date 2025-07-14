@@ -7,6 +7,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Product;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper;
@@ -52,6 +53,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise
      */
+    #[Override]
     public function getProductsSearchResults(
         Argument $argument,
     ): Promise {

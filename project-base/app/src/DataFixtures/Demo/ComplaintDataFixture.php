@@ -75,6 +75,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
@@ -24,6 +25,7 @@ class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
      * @param mixed $value
      * @return bool
      */
+    #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {
         return is_object($value) && method_exists($value, 'getId');
@@ -33,6 +35,7 @@ class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
      * @param array $changes
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges
      */
+    #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
     {
         $oldValue = $changes[0];
@@ -76,6 +79,7 @@ class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
     /**
      * @return int
      */
+    #[Override]
     public function getPriority(): int
     {
         return 1;

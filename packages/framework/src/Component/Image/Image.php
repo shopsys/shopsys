@@ -151,6 +151,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
+    #[Override]
     public function getTemporaryFilesForUpload(): array
     {
         $files = [];
@@ -172,6 +173,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
      * @param string $key
      * @param string $originalFilename
      */
+    #[Override]
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key !== static::UPLOAD_KEY) {
@@ -184,6 +186,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @param string $key
      */
+    #[Override]
     public function setFileKeyAsUploaded(string $key): void
     {
         if ($key !== static::UPLOAD_KEY) {
@@ -230,6 +233,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return int|null
      */
+    #[Override]
     public function getId()
     {
         return $this->id;

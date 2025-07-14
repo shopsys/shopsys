@@ -8,6 +8,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\Attribute\RemoveColumn;
 
 class RemoveEntityColumnSubscriber implements EventSubscriber
@@ -15,6 +16,7 @@ class RemoveEntityColumnSubscriber implements EventSubscriber
     /**
      * @return string[]
      */
+    #[Override]
     public function getSubscribedEvents(): array
     {
         return [

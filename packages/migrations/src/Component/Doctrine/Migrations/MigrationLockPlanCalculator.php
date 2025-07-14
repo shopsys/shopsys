@@ -13,6 +13,7 @@ use Doctrine\Migrations\Metadata\Storage\MetadataStorage;
 use Doctrine\Migrations\Version\Direction;
 use Doctrine\Migrations\Version\MigrationPlanCalculator;
 use Doctrine\Migrations\Version\Version;
+use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\PartialMigrationNotAllowedException;
 
@@ -38,6 +39,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
      * @param string $direction
      * @return \Doctrine\Migrations\Metadata\MigrationPlanList
      */
+    #[Override]
     public function getPlanForVersions(array $versions, string $direction): MigrationPlanList
     {
         throw new MethodIsNotAllowedException(sprintf('Method "%s" is not supported, use "getPlanUntilVersion"', __METHOD__));
@@ -47,6 +49,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
      * @param \Doctrine\Migrations\Version\Version $to
      * @return \Doctrine\Migrations\Metadata\MigrationPlanList
      */
+    #[Override]
     public function getPlanUntilVersion(Version $to): MigrationPlanList
     {
         $migrationsToExecute = [];
@@ -69,6 +72,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
     /**
      * @return \Doctrine\Migrations\Metadata\AvailableMigrationsList
      */
+    #[Override]
     public function getMigrations(): AvailableMigrationsList
     {
         $availableMigrations = $this->migrationsLockRepository->getMigrations()->getItems();

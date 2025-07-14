@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 
 abstract class TransactionFunctionalTestCase extends FunctionalTestCase
@@ -13,6 +14,7 @@ abstract class TransactionFunctionalTestCase extends FunctionalTestCase
      */
     protected EntityManagerDecorator $em;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,6 +23,7 @@ abstract class TransactionFunctionalTestCase extends FunctionalTestCase
         $this->em->getConnection()->setAutoCommit(false);
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->em->rollback();

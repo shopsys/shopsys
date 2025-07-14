@@ -26,6 +26,7 @@ class ShopsysProductFeedMergadoExtension extends Extension implements PrependExt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function prepend(ContainerBuilder $container)
     {
         $container->prependExtensionConfig('doctrine_migrations', [

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory;
@@ -29,6 +30,7 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
+    #[Override]
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -61,6 +63,7 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
     /**
      * @return string
      */
+    #[Override]
     public function getRouteName(): string
     {
         return static::ROUTE_NAME;

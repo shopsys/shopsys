@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class HeurekaDeliveryFeedItem implements FeedItemInterface
@@ -19,6 +20,7 @@ class HeurekaDeliveryFeedItem implements FeedItemInterface
     /**
      * @return int
      */
+    #[Override]
     public function getSeekId(): int
     {
         return $this->id;

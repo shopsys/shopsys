@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Complaint\Mail;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -48,6 +49,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
+    #[Override]
     public function createMessage(MailTemplate $mailTemplate, $complaint): MessageData
     {
         $complaintDomainId = $complaint->getDomainId();

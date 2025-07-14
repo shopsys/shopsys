@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\CKEditor;
 
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
+use Override;
 
 class CKEditorRendererDecorator implements CKEditorRendererInterface
 {
@@ -20,6 +21,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param string $basePath
      * @return string
      */
+    #[Override]
     public function renderBasePath(string $basePath): string
     {
         return $this->baseCkEditorRenderer->renderBasePath($basePath);
@@ -29,6 +31,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param string $jsPath
      * @return string
      */
+    #[Override]
     public function renderJsPath(string $jsPath): string
     {
         return $this->baseCkEditorRenderer->renderJsPath($jsPath);
@@ -40,6 +43,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param array $options
      * @return string
      */
+    #[Override]
     public function renderWidget(string $id, array $config, array $options = []): string
     {
         return sprintf(
@@ -71,6 +75,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param string $id
      * @return string
      */
+    #[Override]
     public function renderDestroy(string $id): string
     {
         return $this->baseCkEditorRenderer->renderDestroy($id);
@@ -81,6 +86,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param array $plugin
      * @return string
      */
+    #[Override]
     public function renderPlugin(string $name, array $plugin): string
     {
         return $this->baseCkEditorRenderer->renderPlugin($name, $plugin);
@@ -91,6 +97,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param array $stylesSet
      * @return string
      */
+    #[Override]
     public function renderStylesSet(string $name, array $stylesSet): string
     {
         return $this->baseCkEditorRenderer->renderStylesSet($name, $stylesSet);
@@ -101,6 +108,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      * @param array $template
      * @return string
      */
+    #[Override]
     public function renderTemplate(string $name, array $template): string
     {
         return $this->baseCkEditorRenderer->renderTemplate($name, $template);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,6 +35,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
+    #[Override]
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {
         $referer = $request->headers->get('referer');
@@ -55,6 +57,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Override]
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         if ($request->isXmlHttpRequest()) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
+use Override;
 use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
@@ -24,6 +25,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormTypeClass()
     {
         return CategoryFormType::class;
@@ -32,6 +34,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
+    #[Override]
     public function getFormLabel()
     {
         return $this->translator->trans('Heureka.cz product feed');
@@ -41,6 +44,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      * @param int $categoryId
      * @return array
      */
+    #[Override]
     public function getData($categoryId)
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
@@ -58,6 +62,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      * @param int $categoryId
      * @param array $data
      */
+    #[Override]
     public function saveData($categoryId, $data)
     {
         if (isset($data['heureka_category']) && $data['heureka_category'] instanceof HeurekaCategory) {
@@ -70,6 +75,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $categoryId
      */
+    #[Override]
     public function removeData($categoryId)
     {
         $this->heurekaCategoryFacade->removeHeurekaCategoryForCategoryId($categoryId);

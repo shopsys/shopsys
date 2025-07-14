@@ -54,6 +54,7 @@ class ParameterColorValueDataFixture extends AbstractReferenceFixture implements
     /**
      * @return string[]
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

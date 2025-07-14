@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Override;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class EmptyWysiwygTransformer implements DataTransformerInterface
@@ -12,6 +13,7 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
      * @param mixed $value
      * @return mixed
      */
+    #[Override]
     public function reverseTransform($value): mixed
     {
         return $value;
@@ -21,6 +23,7 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
      * @param mixed $value
      * @return mixed
      */
+    #[Override]
     public function transform($value): mixed
     {
         if ($value === null) {

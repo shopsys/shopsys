@@ -9,6 +9,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Id\AssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Override;
 
 class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscriber
 {
@@ -22,6 +23,7 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
     /**
      * @return string[]
      */
+    #[Override]
     public function getSubscribedEvents(): array
     {
         return [Events::loadClassMetadata];

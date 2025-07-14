@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 
+use Override;
 use Psr\Log\LoggerInterface;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
 
@@ -14,12 +15,14 @@ abstract class AbstractMigrationLockTestCase extends AbstractMigrationTestCase
 
     protected MigrationsLock $migrationsLock;
 
+    #[Override]
     protected function setUp(): void
     {
         copy(static::MIGRATION_LOCK_TEMPLATE, static::MIGRATION_LOCK);
         $this->migrationsLock = $this->createNewMigrationsLock();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         unlink(static::MIGRATION_LOCK);

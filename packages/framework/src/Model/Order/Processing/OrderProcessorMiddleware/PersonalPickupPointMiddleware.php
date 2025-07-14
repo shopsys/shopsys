@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
@@ -29,6 +30,7 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
      * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
      */
+    #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,

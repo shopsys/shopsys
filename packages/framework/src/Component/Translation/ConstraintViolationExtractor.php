@@ -8,6 +8,7 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\Variable;
@@ -62,6 +63,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
         $this->file = $file;
@@ -72,6 +74,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function enterNode(Node $node): int|Node|null
     {
         if ($node instanceof ClassMethod) {
@@ -146,6 +149,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function beforeTraverse(array $nodes): ?array
     {
         return null;
@@ -154,6 +158,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function leaveNode(Node $node): int|Node|null
     {
         if ($node instanceof ClassMethod) {
@@ -166,6 +171,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function afterTraverse(array $nodes): ?array
     {
         return null;
@@ -174,6 +180,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         return null;
@@ -182,6 +189,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {
         return null;

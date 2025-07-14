@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transfer\Issue;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
@@ -22,6 +23,7 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
@@ -30,6 +32,7 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function run(): void
     {
         $this->logger->info('Start clear transfer issue table');

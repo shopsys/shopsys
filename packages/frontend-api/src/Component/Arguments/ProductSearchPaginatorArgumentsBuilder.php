@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Arguments;
 
+use Override;
+
 class ProductSearchPaginatorArgumentsBuilder extends AbstractProductPaginatorArgumentsBuilder
 {
     /**
      * @param array $config
      * @return array
      */
+    #[Override]
     public function toMappingDefinition(array $config): array
     {
         $this->checkMandatoryFields($config);

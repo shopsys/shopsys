@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 
 class DummyResetPasswordUser implements ResetPasswordInterface
@@ -17,6 +18,7 @@ class DummyResetPasswordUser implements ResetPasswordInterface
     {
     }
 
+    #[Override]
     public function getId()
     {
         return 1;
@@ -26,16 +28,19 @@ class DummyResetPasswordUser implements ResetPasswordInterface
      * @param string|null $hash
      * @return bool
      */
+    #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
         return true;
     }
 
+    #[Override]
     public function getResetPasswordHash()
     {
         return static::DUMMY_RESET_PASSWORD_HASH;
     }
 
+    #[Override]
     public function getEmail()
     {
         return $this->email;

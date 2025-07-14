@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use Nette\Utils\Json;
+use Override;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class MailWhitelistTransformer implements DataTransformerInterface
@@ -12,6 +13,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function transform($value): mixed
     {
         $value['mailWhitelist'] = $this->doTransformMailWhitelist($value['mailWhitelist'] ?? null);
@@ -22,6 +24,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function reverseTransform($value): mixed
     {
         $value['mailWhitelist'] = $this->doReverseTransformMailWhitelist($value['mailWhitelist'] ?? []);

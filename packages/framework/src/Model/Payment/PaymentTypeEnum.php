@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
+use Override;
+
 class PaymentTypeEnum extends AbstractPaymentTypeEnum
 {
     public const string TYPE_BASIC = 'basic';
@@ -12,6 +14,7 @@ class PaymentTypeEnum extends AbstractPaymentTypeEnum
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function getAllIndexedByTranslations(): array
     {
         return [

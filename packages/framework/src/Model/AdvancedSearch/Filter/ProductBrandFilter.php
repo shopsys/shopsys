@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -26,6 +27,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [
@@ -38,6 +40,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -46,6 +49,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [
@@ -60,6 +64,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
@@ -68,6 +73,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         $isNotBrand = [];

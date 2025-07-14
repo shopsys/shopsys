@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValue;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
@@ -23,6 +24,7 @@ class MultidomainEntityClassProvider implements MultidomainEntityClassProviderIn
     /**
      * @return string[]
      */
+    #[Override]
     public function getIgnoredMultidomainEntitiesNames(): array
     {
         return [
@@ -34,6 +36,7 @@ class MultidomainEntityClassProvider implements MultidomainEntityClassProviderIn
     /**
      * @return string[]
      */
+    #[Override]
     public function getManualMultidomainEntitiesNames(): array
     {
         return [

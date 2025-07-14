@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
@@ -209,6 +210,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return int
      */
+    #[Override]
     public function getId()
     {
         return $this->id;
@@ -225,6 +227,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return \DateTime
      */
+    #[Override]
     public function getLastActivity()
     {
         return $this->lastActivity;
@@ -233,6 +236,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @param \DateTime $lastActivity
      */
+    #[Override]
     public function setLastActivity($lastActivity)
     {
         $this->lastActivity = $lastActivity;
@@ -273,6 +277,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return string
      */
+    #[Override]
     public function getEmail()
     {
         return $this->email;
@@ -289,6 +294,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return string
      */
+    #[Override]
     public function getUserIdentifier(): string
     {
         return $this->email;
@@ -297,6 +303,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return string
      */
+    #[Override]
     public function getPassword(): string
     {
         return $this->password ?? '';
@@ -349,6 +356,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return string|null
      */
+    #[Override]
     public function getResetPasswordHash()
     {
         return $this->resetPasswordHash;
@@ -384,6 +392,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function eraseCredentials(): void
     {
     }
@@ -391,6 +400,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRoles(): array
     {
         return $this->roleGroup->getRoles();
@@ -425,6 +435,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @param string|null $hash
      * @return bool
      */
+    #[Override]
     public function isResetPasswordHashValid(?string $hash): bool
     {
         if ($hash === null || $this->resetPasswordHash !== $hash) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\TokenHelper;
@@ -15,6 +16,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
     /**
      * @return array
      */
+    #[Override]
     public function register(): array
     {
         return [T_CLASS];
@@ -24,6 +26,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
+    #[Override]
     public function process(File $file, $classPosition): void
     {
         $tokens = $file->getTokens();

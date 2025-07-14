@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker;
 
+use Override;
 use PharIo\Version\Version;
 use RuntimeException;
 use Shopsys\Releaser\Stage;
@@ -15,6 +16,7 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -25,6 +27,7 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return Stage::getAllStages();
@@ -34,6 +37,7 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,

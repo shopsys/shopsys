@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\DependencyInjection\Compiler;
 
+use Override;
 use ReflectionClass;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
@@ -17,6 +18,7 @@ class LoadControllersExtensionCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         $services = $container->findTaggedServiceIds('shopsys.admin.crud_controller_extension');

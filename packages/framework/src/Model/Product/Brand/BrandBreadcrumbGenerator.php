@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -22,6 +23,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
+    #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
         $isBrandDetail = $routeName === 'front_brand_detail';
@@ -44,6 +46,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRouteNames()
     {
         return ['front_brand_detail'];

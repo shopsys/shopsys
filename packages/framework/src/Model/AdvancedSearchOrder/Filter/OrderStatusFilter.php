@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
@@ -25,6 +26,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return self::NAME;
@@ -33,6 +35,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAllowedOperators(): array
     {
         return [
@@ -44,6 +47,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
@@ -52,6 +56,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValueFormOptions(): array
     {
         return [
@@ -66,6 +71,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {

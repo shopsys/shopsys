@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
+use Override;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\Fixer\FixerInterface;
@@ -19,6 +20,7 @@ final class InheritDocFormatFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -37,6 +39,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isCandidate(Tokens $tokens): bool
     {
         return true;
@@ -45,6 +48,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function isRisky(): bool
     {
         return false;
@@ -53,6 +57,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         /** @var \PhpCsFixer\Tokenizer\Token $token */
@@ -72,6 +77,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'Shopsys/inherit_doc_format';
@@ -80,6 +86,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPriority(): int
     {
         return 0;
@@ -88,6 +95,7 @@ SAMPLE,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function supports(SplFileInfo $file): bool
     {
         return preg_match('/\.php$/ui', $file->getFilename()) === 1;

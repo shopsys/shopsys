@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router\Security;
 
 use Doctrine\Common\Annotations\Reader;
+use Override;
 use ReflectionMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -32,6 +33,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
     /**
      * @return string[]
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

@@ -359,6 +359,7 @@ EOT));
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

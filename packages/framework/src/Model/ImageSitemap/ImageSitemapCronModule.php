@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ImageSitemap;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class ImageSitemapCronModule implements SimpleCronModuleInterface
@@ -20,10 +21,12 @@ class ImageSitemapCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setLogger(Logger $logger)
     {
     }
 
+    #[Override]
     public function run()
     {
         $this->imageSitemapFacade->generateForAllDomains();

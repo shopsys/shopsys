@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class MaxTransactionCountReachedUserError extends UserError implements UserErrorWithCodeInterface
@@ -14,6 +15,7 @@ class MaxTransactionCountReachedUserError extends UserError implements UserError
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserErrorCode(): string
     {
         return static::CODE;

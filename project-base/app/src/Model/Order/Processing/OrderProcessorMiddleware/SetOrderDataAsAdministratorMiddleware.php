@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
@@ -24,6 +25,7 @@ class SetOrderDataAsAdministratorMiddleware implements OrderProcessorMiddlewareI
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
      * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
      */
+    #[Override]
     public function handle(
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component;
 
 use App\Environment;
+use Override;
 use RedisException;
 use Sentry\State\Scope;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -69,6 +70,7 @@ class AddSentryContextSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

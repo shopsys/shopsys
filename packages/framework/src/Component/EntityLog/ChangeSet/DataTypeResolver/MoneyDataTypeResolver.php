@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -21,6 +22,7 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function isResolvedDataType(mixed $value): bool
     {
         return $value instanceof Money;
@@ -30,6 +32,7 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
      * @param array{0: \Shopsys\FrameworkBundle\Component\Money\Money|null, 1: \Shopsys\FrameworkBundle\Component\Money\Money|null} $changes
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges
      */
+    #[Override]
     public function getResolvedChanges(array $changes): ResolvedChanges
     {
         [$oldMoney, $newMoney] = $changes;
@@ -46,6 +49,7 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
     /**
      * @return int
      */
+    #[Override]
     public function getPriority(): int
     {
         return 1;

@@ -28,6 +28,22 @@ abstract class AbstractSniffTestCase extends TestCase
     }
 
     /**
+     * @param string $expectedInputFileName
+     * @param string|null $inputFileName
+     */
+    public function runFixableFilesTest(string $expectedInputFileName, ?string $inputFileName = null): void
+    {
+        if ($inputFileName === null) {
+            $inputFileName = $expectedInputFileName;
+        }
+
+        $file = $this->doRunSniff($inputFileName);
+        $file->fixer->fixFile();
+
+        self::assertStringEqualsFile($expectedInputFileName, $file->fixer->getContents());
+    }
+
+    /**
      * @param string $fileToTest
      */
     public function runCorrectFilesTest(string $fileToTest): void

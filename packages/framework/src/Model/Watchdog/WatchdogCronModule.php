@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
 use Monolog\Logger;
+use Override;
 use Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMailFacade;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 
@@ -25,15 +26,18 @@ class WatchdogCronModule implements IteratedCronModuleInterface
     /**
      * @param \Monolog\Logger $logger
      */
+    #[Override]
     public function setLogger(Logger $logger)
     {
         $this->logger = $logger;
     }
 
+    #[Override]
     public function wakeUp()
     {
     }
 
+    #[Override]
     public function iterate()
     {
         $watchdog = $this->watchdogFacade->findNextWatchdogToSend();
@@ -54,6 +58,7 @@ class WatchdogCronModule implements IteratedCronModuleInterface
         return true;
     }
 
+    #[Override]
     public function sleep()
     {
     }
