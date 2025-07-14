@@ -147,6 +147,10 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         prefetchQueries.map((queryObject) => currentClient.query(queryObject.query, queryObject.variables).toPromise()),
     );
 
+    resolvedQueries.forEach((query) => {
+        console.log("🚀 -> initServerSideProps.ts -> query:", JSON.stringify(query.data, null, 2))
+    })
+
     const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
     const parsedSlug = slugResult?.data.slug.slug;
 
