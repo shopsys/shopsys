@@ -8,10 +8,15 @@ on:
 name: Manually cancel review
 jobs:
     cancel-review:
-        if:  ${{ inputs.branch_name }} != ${{ github.event.repository.default_branch }}
+        if:  ${{ inputs.branch_name != github.event.repository.default_branch }}
         name: Cancel review
         runs-on: [self-hosted, linux, review-stage]
         steps:
+            -   name: Debug - Show input parameters
+                run: |
+                    echo "Branch name input: '${{ inputs.branch_name }}'"
+                    echo "Default branch: '${{ github.event.repository.default_branch }}'"
+                    echo "Workflow ref: '${{ github.ref }}'"
             -   name: GIT checkout branch - ${{ github.event.repository.default_branch }}
                 uses: actions/checkout@v4
                 with:
@@ -20,4 +25,5 @@ jobs:
             -   name: Cancel review
                 working-directory: manually-cancel-review
                 run: |
+                    echo "Executing cancel script with branch: '${{ inputs.branch_name }}'"
                     /bin/bash ./.github/cancel-review.sh "${{ inputs.branch_name }}"
