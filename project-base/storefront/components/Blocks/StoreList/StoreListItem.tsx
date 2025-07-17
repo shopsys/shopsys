@@ -3,13 +3,13 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
+import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
-import { getTodayOpeningHours } from 'utils/openingHours/openingHoursHelper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -71,14 +71,16 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                 setIsExpanded((isExpanded) => !isExpanded);
             }}
         >
-            <div className="flex items-center justify-between gap-3.5">
+            <div aria-label={t('Store info')} className="flex items-center justify-between gap-3.5">
                 <div className="w-full items-center justify-between xl:flex">
                     <div className="max-xl:mb-2.5 xl:w-[215px]">
                         <span className="h5">{store.name}</span>
-                        <p className="mt-1.5 text-xs">
+
+                        <p aria-label={t('Address')} className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
                     </div>
+
                     {store.distance && (
                         <p className="text-input-placeholder-default text-xs max-xl:hidden">
                             {t('{{ distance }} km from you', {
@@ -86,16 +88,20 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             })}
                         </p>
                     )}
-                    <div className="flex w-44 items-center xl:block xl:text-right" data-tid={TIDs.store_opening_status}>
+                    <div
+                        className="flex items-center xl:block xl:w-44 xl:text-right"
+                        data-tid={TIDs.store_opening_status}
+                    >
                         <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
-                        <p className="ml-2.5 text-xs" data-tid={TIDs.store_opening_hours}>
-                            {getTodayOpeningHours(store.openingHours)}
-                        </p>
+
+                        <OpeningHoursToday openingHours={store.openingHours} />
                     </div>
                 </div>
-                <div>
-                    <ArrowIcon className={`size-5 motion-safe:transform ${isExpanded ? 'rotate-180' : ''}`} />
-                </div>
+
+                <ArrowIcon
+                    aria-hidden="true"
+                    className={`size-5 motion-safe:transform ${isExpanded ? 'rotate-180' : ''}`}
+                />
             </div>
 
             <div id={storeInfoId}>

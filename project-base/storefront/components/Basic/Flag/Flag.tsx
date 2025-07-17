@@ -6,9 +6,10 @@ type FlagProps = {
     href?: string;
     type?: 'blog' | 'discount';
     rgbBgColor?: string;
+    ariaLabel?: string;
 };
 
-export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColor }) => {
+export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColor, ariaLabel }) => {
     const router = useRouter();
 
     const textColor = rgbBgColor && getYIQContrastTextColor(rgbBgColor);
@@ -40,6 +41,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
     if (href) {
         return (
             <button
+                aria-label={ariaLabel}
                 className={flagTwClass}
                 style={{ backgroundColor: rgbBgColor }}
                 tabIndex={0}
@@ -52,7 +54,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
     }
 
     return (
-        <div className={flagTwClass} style={{ backgroundColor: rgbBgColor }}>
+        <div aria-label={ariaLabel} className={flagTwClass} style={{ backgroundColor: rgbBgColor }}>
             {children}
         </div>
     );
