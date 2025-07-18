@@ -90,18 +90,19 @@ class PromotedCategoryRepository
                 }
                 
                 // === SCHEMA AND SEARCH PATH ANALYSIS ===
-                error_log("🔍 [PROMOTED_DIAG] === SCHEMA ANALYSIS ===");
-                try {
-                    $schemaResult = $connection->executeQuery("SELECT current_schema()");
-                    $currentSchema = $schemaResult->fetchOne();
-                    error_log("🔍 [PROMOTED_DIAG] Current schema: " . $currentSchema);
-                    
-                    $searchPathResult = $connection->executeQuery("SHOW search_path");
-                    $searchPath = $searchPathResult->fetchOne();
-                    error_log("🔍 [PROMOTED_DIAG] Search path: " . $searchPath);
-                } catch (\Exception $e) {
-                    error_log("🔍 [PROMOTED_DIAG] Schema check failed: " . $e->getMessage());
-                }
+                // COMMENTED OUT - Testing if schema queries cause connection warming
+                // error_log("🔍 [PROMOTED_DIAG] === SCHEMA ANALYSIS ===");
+                // try {
+                //     $schemaResult = $connection->executeQuery("SELECT current_schema()");
+                //     $currentSchema = $schemaResult->fetchOne();
+                //     error_log("🔍 [PROMOTED_DIAG] Current schema: " . $currentSchema);
+                //     
+                //     $searchPathResult = $connection->executeQuery("SHOW search_path");
+                //     $searchPath = $searchPathResult->fetchOne();
+                //     error_log("🔍 [PROMOTED_DIAG] Search path: " . $searchPath);
+                // } catch (\Exception $e) {
+                //     error_log("🔍 [PROMOTED_DIAG] Schema check failed: " . $e->getMessage());
+                // }
                 
                 // === ENTITY MANAGER STATE ANALYSIS ===
                 error_log("🔍 [PROMOTED_DIAG] === ENTITY MANAGER STATE ===");

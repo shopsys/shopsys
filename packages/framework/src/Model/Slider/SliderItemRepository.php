@@ -142,18 +142,19 @@ class SliderItemRepository
                 }
                 
                 // === SCHEMA AND SEARCH PATH ANALYSIS ===
-                error_log("🔍 [SLIDER_DIAG] === SCHEMA ANALYSIS ===");
-                try {
-                    $schemaResult = $connection->executeQuery("SELECT current_schema()");
-                    $currentSchema = $schemaResult->fetchOne();
-                    error_log("🔍 [SLIDER_DIAG] Current schema: " . $currentSchema);
-                    
-                    $searchPathResult = $connection->executeQuery("SHOW search_path");
-                    $searchPath = $searchPathResult->fetchOne();
-                    error_log("🔍 [SLIDER_DIAG] Search path: " . $searchPath);
-                } catch (\Exception $e) {
-                    error_log("🔍 [SLIDER_DIAG] Schema check failed: " . $e->getMessage());
-                }
+                // COMMENTED OUT - Testing if schema queries cause connection warming
+                // error_log("🔍 [SLIDER_DIAG] === SCHEMA ANALYSIS ===");
+                // try {
+                //     $schemaResult = $connection->executeQuery("SELECT current_schema()");
+                //     $currentSchema = $schemaResult->fetchOne();
+                //     error_log("🔍 [SLIDER_DIAG] Current schema: " . $currentSchema);
+                //     
+                //     $searchPathResult = $connection->executeQuery("SHOW search_path");
+                //     $searchPath = $searchPathResult->fetchOne();
+                //     error_log("🔍 [SLIDER_DIAG] Search path: " . $searchPath);
+                // } catch (\Exception $e) {
+                //     error_log("🔍 [SLIDER_DIAG] Schema check failed: " . $e->getMessage());
+                // }
                 
                 // === ENTITY MANAGER STATE ANALYSIS ===
                 error_log("🔍 [SLIDER_DIAG] === ENTITY MANAGER STATE ===");
