@@ -148,7 +148,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     );
 
     resolvedQueries.forEach((query) => {
-        console.log("🚀 -> initServerSideProps.ts -> query:", JSON.stringify(query.data, null, 2))
+        console.log("🚀 -> initServerSideProps.ts -> queryyyy:", JSON.stringify(query.data, null, 2))
     })
 
     const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
