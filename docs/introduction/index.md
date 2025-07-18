@@ -5,6 +5,7 @@
 - [Basic and Demo Data During Application Installation](./basic-and-demo-data-during-application-installation.md)
 - [Database Migrations](./database-migrations.md)
 - [Components](./components.md)
+- [Context System](./context-system.md)
 - [Generating code with Symfony makers](./generating-code-with-symfony-makers.md)
 - [Abstract Filesystem](./abstract-filesystem.md)
 - [Order Processing](./order-processing.md)

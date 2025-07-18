@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Localization;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,15 +18,15 @@ class LocalizationListener implements EventSubscriberInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly AdministrationFacade $administrationFacade,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
         protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
+        protected readonly ContextResolverInterface $contextResolver,
     ) {
     }
 
@@ -37,7 +38,7 @@ class LocalizationListener implements EventSubscriberInterface
         if ($event->isMainRequest()) {
             $request = $event->getRequest();
 
-            if ($this->administrationFacade->isInAdmin()) {
+            if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
                 $request->setLocale($this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault());
             } else {
                 $request->setLocale($this->domain->getLocale());
