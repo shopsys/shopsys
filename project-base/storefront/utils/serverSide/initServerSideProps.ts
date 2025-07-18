@@ -37,6 +37,7 @@ import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
+import { initServerSidePropsDebug } from 'utils/debug/logger';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -148,7 +149,11 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     );
 
     resolvedQueries.forEach((query) => {
-        console.log("🚀 -> initServerSideProps.ts -> queryyyy:", JSON.stringify(query.data, null, 2))
+        const firstValue = query.data ? Object.values(query.data)[0] : null;
+        const typename = Array.isArray(firstValue) && firstValue[0]?.__typename
+            ? firstValue[0].__typename
+            : (firstValue as any)?.__typename || 'Unknown';
+        initServerSidePropsDebug.log("🚀 -> initServerSideProps.ts -> query typename:", typename);
     })
 
     const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
