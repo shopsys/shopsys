@@ -205,22 +205,23 @@ class SliderItemRepository
                 error_log("🔍 [SLIDER_DIAG] Raw SQL count (string params): " . $rawCountString);
                 
                 // === TABLE EXISTENCE AND PERMISSION CHECK ===
-                error_log("🔍 [SLIDER_DIAG] === TABLE VERIFICATION ===");
-                try {
-                    $tableCheckSql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'slider_items'";
-                    $tableResult = $connection->executeQuery($tableCheckSql);
-                    $tableExists = $tableResult->fetchOne();
-                    error_log("🔍 [SLIDER_DIAG] slider_items table exists: " . ($tableExists > 0 ? 'YES' : 'NO'));
-                    
-                    if ($tableExists > 0) {
-                        $totalRowsSql = "SELECT COUNT(*) FROM slider_items";
-                        $totalResult = $connection->executeQuery($totalRowsSql);
-                        $totalRows = $totalResult->fetchOne();
-                        error_log("🔍 [SLIDER_DIAG] Total rows in slider_items: " . $totalRows);
-                    }
-                } catch (\Exception $e) {
-                    error_log("🔍 [SLIDER_DIAG] Table verification failed: " . $e->getMessage());
-                }
+                // COMMENTED OUT - Testing if table verification queries cause connection warming
+                // error_log("🔍 [SLIDER_DIAG] === TABLE VERIFICATION ===");
+                // try {
+                //     $tableCheckSql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'slider_items'";
+                //     $tableResult = $connection->executeQuery($tableCheckSql);
+                //     $tableExists = $tableResult->fetchOne();
+                //     error_log("🔍 [SLIDER_DIAG] slider_items table exists: " . ($tableExists > 0 ? 'YES' : 'NO'));
+                //     
+                //     if ($tableExists > 0) {
+                //         $totalRowsSql = "SELECT COUNT(*) FROM slider_items";
+                //         $totalResult = $connection->executeQuery($totalRowsSql);
+                //         $totalRows = $totalResult->fetchOne();
+                //         error_log("🔍 [SLIDER_DIAG] Total rows in slider_items: " . $totalRows);
+                //     }
+                // } catch (\Exception $e) {
+                //     error_log("🔍 [SLIDER_DIAG] Table verification failed: " . $e->getMessage());
+                // }
                 
                 // === CRITICAL ANALYSIS ===
                 if ($rawCount > 0 || $rawCountString > 0) {

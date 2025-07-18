@@ -139,22 +139,23 @@ class PromotedCategoryRepository
                 error_log("🔍 [PROMOTED_DIAG] Domain ID used: " . $domainConfig->getId());
                 
                 // === TABLE EXISTENCE AND PERMISSION CHECK ===
-                error_log("🔍 [PROMOTED_DIAG] === TABLE VERIFICATION ===");
-                try {
-                    $tableCheckSql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'categories_top'";
-                    $tableResult = $connection->executeQuery($tableCheckSql);
-                    $tableExists = $tableResult->fetchOne();
-                    error_log("🔍 [PROMOTED_DIAG] categories_top table exists: " . ($tableExists > 0 ? 'YES' : 'NO'));
-                    
-                    if ($tableExists > 0) {
-                        $totalRowsSql = "SELECT COUNT(*) FROM categories_top WHERE domain_id = :domainId";
-                        $totalResult = $connection->executeQuery($totalRowsSql, ['domainId' => $domainConfig->getId()]);
-                        $totalRows = $totalResult->fetchOne();
-                        error_log("🔍 [PROMOTED_DIAG] Total rows in categories_top for domain: " . $totalRows);
-                    }
-                } catch (\Exception $e) {
-                    error_log("🔍 [PROMOTED_DIAG] Table verification failed: " . $e->getMessage());
-                }
+                // COMMENTED OUT - Testing if table verification queries cause connection warming
+                // error_log("🔍 [PROMOTED_DIAG] === TABLE VERIFICATION ===");
+                // try {
+                //     $tableCheckSql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'categories_top'";
+                //     $tableResult = $connection->executeQuery($tableCheckSql);
+                //     $tableExists = $tableResult->fetchOne();
+                //     error_log("🔍 [PROMOTED_DIAG] categories_top table exists: " . ($tableExists > 0 ? 'YES' : 'NO'));
+                //     
+                //     if ($tableExists > 0) {
+                //         $totalRowsSql = "SELECT COUNT(*) FROM categories_top WHERE domain_id = :domainId";
+                //         $totalResult = $connection->executeQuery($totalRowsSql, ['domainId' => $domainConfig->getId()]);
+                //         $totalRows = $totalResult->fetchOne();
+                //         error_log("🔍 [PROMOTED_DIAG] Total rows in categories_top for domain: " . $totalRows);
+                //     }
+                // } catch (\Exception $e) {
+                //     error_log("🔍 [PROMOTED_DIAG] Table verification failed: " . $e->getMessage());
+                // }
                 
                 // === CRITICAL ANALYSIS ===
                 if (count($rawRows) > 0) {
