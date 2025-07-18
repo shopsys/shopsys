@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Security\Role;
 
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
 use Shopsys\FrameworkBundle\Component\Security\Role\Exception\RoleCannotBeOverwrittenException;
 use Webmozart\Assert\Assert;
 
 class Role
 {
-    protected bool $allowOverwrite = true;
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Security\Role\Permission[]
+     */
+    protected array $expandedPermissions;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Security\Role\Permission[]
@@ -27,11 +31,10 @@ class Role
     public function __construct(
         protected readonly string $constant,
         protected string $name,
-        protected array $availablePermissions = [],
-        bool $allowOverwrite = true,
+        array $availablePermissions = [],
+        protected bool $allowOverwrite = true,
     ) {
-        $this->highestLevelPermissions = Permission::getHighestLevelPermissions($this->availablePermissions);
-        $this->setOverwritable($allowOverwrite);
+        $this->calculatePermissions($availablePermissions);
     }
 
     /**
@@ -55,19 +58,7 @@ class Role
      */
     public function getAvailablePermissions(): array
     {
-        $availablePermissions = [];
-
-        foreach ($this->getHighestLevelPermissions() as $permission) {
-            $availablePermissions[] = $permission;
-
-            foreach ($permission->getSubordinatePermissions() as $subordinatePermission) {
-                if (!in_array($subordinatePermission, $availablePermissions, true)) {
-                    $availablePermissions[] = $subordinatePermission;
-                }
-            }
-        }
-
-        return $availablePermissions;
+        return $this->expandedPermissions;
     }
 
     /**
@@ -76,13 +67,7 @@ class Role
      */
     public function hasPermission(Permission $permission): bool
     {
-        foreach ($this->getHighestLevelPermissions() as $highestLevelPermission) {
-            if ($highestLevelPermission->includes($permission)) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($permission, $this->getAvailablePermissions(), true);
     }
 
     /**
@@ -118,10 +103,7 @@ class Role
             throw new RoleCannotBeOverwrittenException($this);
         }
 
-        Assert::allIsInstanceOf($availablePermissions, Permission::class);
-
-        $this->availablePermissions = $availablePermissions;
-        $this->highestLevelPermissions = Permission::getHighestLevelPermissions($availablePermissions);
+        $this->calculatePermissions($availablePermissions);
     }
 
     /**
@@ -133,12 +115,11 @@ class Role
             throw new RoleCannotBeOverwrittenException($this);
         }
 
-        if (in_array($permission, $this->availablePermissions, true)) {
-            return;
+        if ($this->hasPermission($permission)) {
+            return; // Permission already exists, no need to add it again
         }
 
-        $this->availablePermissions[] = $permission;
-        $this->highestLevelPermissions = Permission::getHighestLevelPermissions($this->availablePermissions);
+        $this->setAvailablePermissions(array_merge($this->highestLevelPermissions, [$permission]));
     }
 
     /**
@@ -154,6 +135,10 @@ class Role
      */
     public function setRoleSection(string $roleSection): void
     {
+        if ($this->isOverwritable() === false) {
+            throw new RoleCannotBeOverwrittenException($this);
+        }
+
         $this->roleSection = $roleSection;
     }
 
@@ -181,7 +166,9 @@ class Role
         }
 
         // If the role has only VIEW permission, it should not include FULL
-        return !(count($this->getHighestLevelPermissions()) === 1 && in_array(Permission::VIEW, $this->getHighestLevelPermissions(), true));
+        $highest = $this->getHighestLevelPermissions();
+
+        return !(count($highest) === 1 && $highest[0] === Permission::VIEW);
     }
 
     /**
@@ -189,7 +176,7 @@ class Role
      */
     public function isSingleRole(): bool
     {
-        return count($this->availablePermissions) === 0;
+        return count($this->getAvailablePermissions()) === 0;
     }
 
     /**
@@ -201,18 +188,20 @@ class Role
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission[] $permissions
+     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission[] $inputPermissions
      * @return \Shopsys\FrameworkBundle\Component\Security\Role\Permission[]
      */
-    public function calculateHighestValidPermissions(array $permissions): array
+    public function calculateHighestValidPermissions(array $inputPermissions): array
     {
-        $validPermissions = [];
-
-        foreach ($permissions as $permission) {
-            if ($this->hasPermission($permission)) {
-                $validPermissions[] = $permission;
-            }
+        if ($this->isSingleRole()) {
+            return [];
         }
+
+        if (($this->shouldIncludeFullPermission() || $this->hasFullPermission()) && in_array(Permission::FULL, $inputPermissions, true)) {
+            return $this->getHighestLevelPermissions();
+        }
+
+        $validPermissions = array_filter($inputPermissions, fn (Permission $p) => $this->hasPermission($p));
 
         if (count($validPermissions) === 0) {
             return [];
@@ -222,17 +211,13 @@ class Role
 
         if ($this->hasFullPermission() && !in_array(Permission::FULL, $highestPermissions, true)) {
             $subordinatePermissionsForFull = Permission::FULL->getSubordinatePermissions(true);
-            $canTransformToFullPermission = true;
 
-            foreach ($subordinatePermissionsForFull as $subordinatePermission) {
-                if (!in_array($subordinatePermission, $highestPermissions, true)) {
-                    $canTransformToFullPermission = false;
-
-                    break;
-                }
-            }
-
-            if ($canTransformToFullPermission) {
+            if (
+                ArrayHelper::haveArraysDifferentValues(
+                    Permission::toValues(...$subordinatePermissionsForFull),
+                    Permission::toValues(...$highestPermissions),
+                ) === false
+            ) {
                 return [Permission::FULL];
             }
         }
@@ -245,7 +230,7 @@ class Role
      */
     protected function hasFullPermission(): bool
     {
-        return in_array(Permission::FULL, $this->getHighestLevelPermissions(), true);
+        return $this->hasPermission(Permission::FULL);
     }
 
     /**
@@ -257,5 +242,16 @@ class Role
     public function getHighestLevelPermissions(): array
     {
         return $this->highestLevelPermissions;
+    }
+
+    /**
+     * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $availablePermissions
+     */
+    protected function calculatePermissions(array $availablePermissions): void
+    {
+        Assert::allIsInstanceOf($availablePermissions, Permission::class);
+
+        $this->expandedPermissions = Permission::expand($availablePermissions);
+        $this->highestLevelPermissions = Permission::getHighestLevelPermissions($availablePermissions);
     }
 }

@@ -1,0 +1,59 @@
+{% block role_row_widget %}
+
+    {% import '@ShopsysFramework/Admin/Form/_rolesMacros.html.twig' as rolesMacros %}
+    {% import _self as rowMacros %}
+
+    {% set role = form.vars.role %}
+    {% set roleConstant = role.getConstant() %}
+    {% set isSingleGrid = form.vars.available_permissions|length == 0 %}
+
+    <div class="roles-grid__row{{ role.isSingleRole() ? ' roles-grid__row--single' }} js-roles-row" data-scope="{{ roleConstant }}">
+        <div class="roles-grid__cell roles-grid__cell--role-name">
+            <strong>{{ role.getName()|trans }}</strong>
+            {% if not form.vars.disabled and not isSingleGrid %}
+                <div class="roles-grid__row-actions">
+                    {{ rolesMacros.render_actions(roleConstant, false, 'roles-grid__row-action', 'Deselect all permissions for this role'|trans, 'Select all permissions for this role'|trans, 'bottom') }}
+                </div>
+            {% endif %}
+        </div>
+
+        {% if role.isSingleRole() %}
+            <div class="roles-grid__cell roles-grid__cell--permission">
+                {{ rowMacros.render_permission_cell(form[roleConstant], roleConstant) }}
+            </div>
+        {% else %}
+            {% for permission in form.vars.available_permissions %}
+                {% set permissionValue = permission.value %}
+                <div class="roles-grid__cell roles-grid__cell--permission">
+                    {% if form[permissionValue] is defined %}
+                        {{ rowMacros.render_permission_cell(form[permissionValue], roleConstant, permissionValue) }}
+                    {% else %}
+                        <div class="roles-grid__cell--empty">&nbsp;</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock role_row_widget %}
+
+{% macro render_permission_cell(formField, roleConstant, permissionValue = null) %}
+    {% if formField.vars.disabled %}
+        <div class="roles-grid__display-icon">
+            {{ ux_icon(formField.vars.checked ? 'checked-circle' : 'minus', {
+                'title': (formField.vars.checked ? 'Granted'|trans : 'Not granted'|trans)
+            }) }}
+        </div>
+    {% else %}
+        <div class="roles-grid__checkbox">
+            {% set widgetAttrs = {
+                'class': 'roles-grid__permission-checkbox js-roles-permission-checkbox',
+                'data-role': roleConstant
+            } %}
+            {% if permissionValue %}
+                {% set widgetAttrs = widgetAttrs|merge({'data-permission': permissionValue}) %}
+            {% endif %}
+            {{ form_widget(formField, {'attr': widgetAttrs}) }}
+            {{ form_label(formField, '', {label_attr: {class: 'sr-only'}}) }}
+        </div>
+    {% endif %}
+{% endmacro %}

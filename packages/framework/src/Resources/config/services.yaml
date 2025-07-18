@@ -547,7 +547,6 @@ services:
     Shopsys\FrameworkBundle\Form\RolesType:
         arguments:
             $useSimplePermissions: '%shopsys.administration.roles.simple_permissions%'
-            $roleSectionClass: '%shopsys.administration.roles.section_class%'
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 

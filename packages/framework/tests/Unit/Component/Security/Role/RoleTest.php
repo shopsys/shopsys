@@ -72,7 +72,7 @@ class RoleTest extends TestCase
         $role = new Role('ROLE_TEST', 'Test Role', [Permission::EDIT]);
 
         $this->assertTrue($role->hasPermission(Permission::EDIT));
-        $this->assertTrue($role->hasPermission(Permission::VIEW)); // Subordinate permission
+        $this->assertTrue($role->hasPermission(Permission::VIEW));
         $this->assertFalse($role->hasPermission(Permission::DELETE));
         $this->assertFalse($role->hasPermission(Permission::CREATE));
     }
@@ -112,7 +112,7 @@ class RoleTest extends TestCase
     {
         $role = new Role('ROLE_TEST', 'Test Role');
 
-        $this->assertTrue($role->isOverwritable()); // Default is true
+        $this->assertTrue($role->isOverwritable());
 
         $role->setOverwritable(false);
 
@@ -138,7 +138,7 @@ class RoleTest extends TestCase
         $permissions = $role->getAvailablePermissions();
         $this->assertContains(Permission::EDIT, $permissions);
         $this->assertContains(Permission::DELETE, $permissions);
-        $this->assertContains(Permission::VIEW, $permissions); // Subordinate
+        $this->assertContains(Permission::VIEW, $permissions);
     }
 
     public function testSetAvailablePermissionsThrowsExceptionWhenNotOverwritable(): void
@@ -168,7 +168,6 @@ class RoleTest extends TestCase
 
         $role->addPermission(Permission::VIEW);
 
-        // Should still have only one VIEW permission
         $permissions = array_filter($role->getAvailablePermissions(), fn ($p) => $p === Permission::VIEW);
         $this->assertCount(1, $permissions);
     }
@@ -185,7 +184,7 @@ class RoleTest extends TestCase
 
     public function testShouldIncludeFullPermissionReturnsFalseForSingleRole(): void
     {
-        $role = new Role('ROLE_TEST', 'Test Role'); // No permissions = single role
+        $role = new Role('ROLE_TEST', 'Test Role');
 
         $this->assertFalse($role->shouldIncludeFullPermission());
     }
@@ -243,7 +242,6 @@ class RoleTest extends TestCase
 
         $highestPermissions = $role->getHighestLevelPermissions();
 
-        // EDIT and CREATE are highest level, VIEW is subordinate to both
         $this->assertCount(2, $highestPermissions);
         $this->assertContains(Permission::EDIT, $highestPermissions);
         $this->assertContains(Permission::CREATE, $highestPermissions);
@@ -256,7 +254,6 @@ class RoleTest extends TestCase
 
         $highestPermissions = $role->getHighestLevelPermissions();
 
-        // FULL is the highest level permission
         $this->assertCount(1, $highestPermissions);
         $this->assertContains(Permission::FULL, $highestPermissions);
 
@@ -278,7 +275,6 @@ class RoleTest extends TestCase
 
         $highestPermissions = $role->getHighestLevelPermissions();
 
-        // DELETE includes VIEW, so only DELETE is highest
         $this->assertCount(1, $highestPermissions);
         $this->assertContains(Permission::DELETE, $highestPermissions);
         $this->assertNotContains(Permission::VIEW, $highestPermissions);

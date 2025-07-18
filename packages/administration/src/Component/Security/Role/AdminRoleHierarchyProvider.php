@@ -62,6 +62,12 @@ final class AdminRoleHierarchyProvider extends AbstractRoleHierarchyProvider
         $viewRoles = [];
 
         foreach ($regularRoles as $role) {
+            if ($role->isSingleRole()) {
+                $fullRoles[] = $role->getConstant();
+
+                continue;
+            }
+
             foreach ($role->getHighestLevelPermissions() as $permission) {
                 $fullRoles[] = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
             }

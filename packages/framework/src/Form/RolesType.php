@@ -5,35 +5,38 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleSection;
+use Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider;
+use Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\DataTransformer\RolesGridDataTransformer;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Webmozart\Assert\Assert;
 
 final class RolesType extends AbstractType
 {
     /**
+     * @var array<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>,\Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider>
+     */
+    private array $roleSectionsProvidersByContext;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry
      * @param bool $useSimplePermissions
-     * @param class-string<\Shopsys\FrameworkBundle\Component\Security\Role\RoleSection> $roleSectionClass
+     * @param iterable<class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext>,\Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider> $roleSectionsProviders
      */
     public function __construct(
         private readonly RoleRegistryInterface $roleRegistry,
         private readonly bool $useSimplePermissions,
-        private readonly string $roleSectionClass,
+        #[TaggedIterator('shopsys.role_section_provider', defaultIndexMethod: 'getTargetContext')]
+        iterable $roleSectionsProviders = [],
     ) {
-        Assert::classExists($roleSectionClass, 'Role section class "%s" does not exist.');
-        Assert::isAOf($roleSectionClass, RoleSection::class, 'Role section class "%s" must extend "%s".');
+        $this->roleSectionsProvidersByContext = iterator_to_array($roleSectionsProviders);
     }
 
     /**
@@ -44,37 +47,28 @@ final class RolesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $allowedRoles = $this->getAllowedRoles($options);
-        $permissionsToShow = $this->getPermissionsToShow($options);
+        $availablePermissions = $this->getPermissionsToShow($options, $allowedRoles);
 
-        // Build nested form structure: [role][permission] = checkbox
-        foreach ($allowedRoles as $role) {
-            $roleBuilder = $builder->create($role->getConstant(), FormType::class, [
-                'label' => false,
-                'required' => false,
+        $builder->setAttribute('available_permissions', $availablePermissions);
+
+        $sections = $this->buildGridSections($options['context'], $allowedRoles, $options['grouped']);
+        $shouldGroupBySections = count($sections) > 1;
+
+        foreach ($sections as $sectionKey => $roles) {
+            $builder->add($sectionKey, RoleSectionType::class, [
+                'roles' => $roles,
+                'section' => $this->getRoleSection($sectionKey, $options['context']),
+                'available_permissions' => $availablePermissions,
+                'context' => $options['context'],
+                'show_header' => $shouldGroupBySections,
             ]);
-
-            $availablePermissions = $this->getFilteredPermissionsForRole($role, $permissionsToShow);
-
-            foreach ($availablePermissions as $permission) {
-                $roleBuilder->add($permission->value, CheckboxType::class, [
-                    'label' => false,
-                    'required' => false,
-                    'attr' => [
-                        'data-role' => $role->getConstant(),
-                        'data-permission' => $permission->value,
-                        'data-role-name' => $role->getName(),
-                    ],
-                ]);
-            }
-
-            $builder->add($roleBuilder);
         }
 
         $builder->addModelTransformer(new RolesGridDataTransformer(
             $this->roleRegistry,
             $options['context'],
             $options['excluded_roles'],
-            $this->getPermissionsToShow($options),
+            $shouldGroupBySections,
         ));
     }
 
@@ -86,15 +80,11 @@ final class RolesType extends AbstractType
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $allowedRoles = $this->getAllowedRoles($options);
-        $permissionsToShow = $this->getPermissionsToShow($options);
+        /** @var array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $availablePermissions */
+        $availablePermissions = $form->getConfig()->getAttribute('available_permissions');
 
-        $view->vars['grid_structure'] = $this->buildGridStructure($allowedRoles);
-        $view->vars['permissions'] = array_map(
-            fn (Permission $permission) => $permission->value,
-            $permissionsToShow,
-        );
-        $view->vars['permission_dependencies'] = $this->getPermissionDependencies($permissionsToShow);
+        $view->vars['permissions'] = $availablePermissions;
+        $view->vars['permission_dependencies'] = $this->getPermissionDependencies($availablePermissions);
     }
 
     /**
@@ -104,19 +94,21 @@ final class RolesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'context' => AdminContext::class,
             'label' => false,
             'excluded_roles' => SystemRole::getAll(),
             'simple_permissions' => $this->useSimplePermissions,
+            'grouped' => true,
             'js_validation' => false,
             'attr' => [
                 'novalidate' => 'novalidate',
             ],
         ]);
 
+        $resolver->setRequired('context');
         $resolver->setAllowedTypes('context', 'string');
         $resolver->setAllowedTypes('excluded_roles', 'array');
         $resolver->setAllowedTypes('simple_permissions', 'bool');
+        $resolver->setAllowedTypes('grouped', 'bool');
     }
 
     /**
@@ -127,27 +119,34 @@ final class RolesType extends AbstractType
     {
         $roles = $this->roleRegistry->getRoles($options['context']);
 
-        $allowedRoles = array_filter(
+        return array_filter(
             $roles,
             fn ($role) => !in_array($role->getConstant(), $options['excluded_roles'], true),
         );
-
-        usort($allowedRoles, fn ($a, $b) => strcasecmp($a->getName(), $b->getName()));
-
-        return $allowedRoles;
     }
 
     /**
      * @param array<string, mixed> $options
+     * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $allowedRoles
      * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
      */
-    private function getPermissionsToShow(array $options): array
+    private function getPermissionsToShow(array $options, array $allowedRoles): array
     {
-        if ($options['simple_permissions']) {
-            return [Permission::VIEW, Permission::FULL];
+        $reachablePermissions = [];
+
+        foreach ($allowedRoles as $role) {
+            $reachablePermissions = array_merge($reachablePermissions, Permission::toValues(...$role->getAvailablePermissions()));
         }
 
-        return Permission::cases();
+        $reachablePermissions = array_unique($reachablePermissions);
+
+        if ($options['simple_permissions']) {
+            $enabledPermissions = [Permission::VIEW->value, Permission::FULL->value];
+        } else {
+            $enabledPermissions = Permission::toValues(...array_filter(Permission::cases(), fn (Permission $permission) => $permission !== Permission::FULL));
+        }
+
+        return Permission::fromValues(...array_intersect($enabledPermissions, $reachablePermissions));
     }
 
     /**
@@ -189,63 +188,43 @@ final class RolesType extends AbstractType
     }
 
     /**
-     * Build grid structure for template rendering
+     * Build final grid structure based on settings and role count
      *
+     * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
-     * @return array<string, array<string, mixed>>
+     * @param bool $renderSections
+     * @return array<string, array<\Shopsys\FrameworkBundle\Component\Security\Role\Role>>
      */
-    private function buildGridStructure(array $roles): array
+    private function buildGridSections(string $context, array $roles, bool $renderSections): array
     {
-        $gridStructure = [
-            'sections' => [],
-        ];
+        if ($renderSections === false) {
+            return [AbstractRoleSectionProvider::OTHER => $roles];
+        }
 
-        // Group roles by section
-        $rolesBySection = [];
+        $roleSections = isset($this->roleSectionsProvidersByContext[$context]) ? $this->roleSectionsProvidersByContext[$context]->getAll() : [];
+        $rolesBySection = array_fill_keys(array_keys($roleSections), []);
 
         foreach ($roles as $role) {
-            $section = $role->getRoleSection();
-
-            if ($section === null) {
-                $section = RoleSection::OTHER;
-            }
-
+            $section = $role->getRoleSection() ?? AbstractRoleSectionProvider::OTHER;
             $rolesBySection[$section][] = $role;
         }
 
-        // Build sections with metadata
-        $sections = $this->roleSectionClass::getAllSectionsSorted();
-
-        foreach ($sections as $sectionKey => $metadata) {
-            if (isset($rolesBySection[$sectionKey])) {
-                $gridStructure['sections'][$sectionKey] = [
-                    'key' => $sectionKey,
-                    'name' => $metadata['name'],
-                    'icon' => $metadata['icon'],
-                    'roles' => $rolesBySection[$sectionKey],
-                ];
-            }
-        }
-
-        return $gridStructure;
+        return array_filter($rolesBySection, fn (array $rolesInSection) => count($rolesInSection) > 0);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
-     * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $permissionsToShow
-     * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
+     * @param string $sectionIdentifier
+     * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
+     * @return \Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection
      */
-    private function getFilteredPermissionsForRole($role, array $permissionsToShow): array
-    {
-        $rolePermissions = $role->getAvailablePermissions();
-
-        if ($role->shouldIncludeFullPermission()) {
-            $rolePermissions[] = Permission::FULL;
+    private function getRoleSection(
+        string $sectionIdentifier,
+        string $context,
+    ): RoleSection {
+        if (isset($this->roleSectionsProvidersByContext[$context]) === false) {
+            return AbstractRoleSectionProvider::getDefaultSection();
         }
 
-        return array_filter(
-            $rolePermissions,
-            fn (Permission $permission) => in_array($permission, $permissionsToShow, true),
-        );
+        return $this->roleSectionsProvidersByContext[$context]->getById($sectionIdentifier);
     }
 }

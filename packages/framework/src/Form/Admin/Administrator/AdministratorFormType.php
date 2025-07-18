@@ -149,6 +149,9 @@ final class AdministratorFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-role-group-custom',
                 ],
+                'row_attr' => [
+                    'class' => $adminToEdit !== null && $adminToEdit->getRoleGroup() !== null ? ' display-none' : '',
+                ],
             ]);
         }
 

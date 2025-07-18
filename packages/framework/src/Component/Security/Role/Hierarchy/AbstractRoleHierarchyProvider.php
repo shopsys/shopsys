@@ -43,24 +43,20 @@ abstract class AbstractRoleHierarchyProvider
     }
 
     /**
+     * @param array<string, string[]> $hierarchy
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\Role $role
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission $permission
-     * @return string[]
      */
-    protected function buildSubordinateRoleIdentifiers(Role $role, Permission $permission): array
+    protected function appendPermissionHierarchy(array &$hierarchy, Role $role, Permission $permission): void
     {
-        /** @var string[] $subordinateRoleIdentifiers */
-        $subordinateRoleIdentifiers = [];
-
-        $permissionIdentifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
+        $parentIdentifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
 
         foreach ($permission->getSubordinatePermissions(true) as $subordinatePermission) {
-            $subordinateRoleIdentifiers[$permissionIdentifier][] = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $subordinatePermission);
+            $childIdentifier = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $subordinatePermission);
+            $hierarchy[$parentIdentifier][] = $childIdentifier;
 
-            $subordinateRoleIdentifiers = array_merge($subordinateRoleIdentifiers, $this->buildSubordinateRoleIdentifiers($role, $subordinatePermission));
+            $this->appendPermissionHierarchy($hierarchy, $role, $subordinatePermission);
         }
-
-        return $subordinateRoleIdentifiers;
     }
 
     /**
@@ -73,11 +69,8 @@ abstract class AbstractRoleHierarchyProvider
         $hierarchy = [];
 
         foreach ($regularRoles as $role) {
-            foreach ($role->getHighestLevelPermissions() as $highestLevelPermission) {
-                $hierarchy = array_merge(
-                    $hierarchy,
-                    $this->buildSubordinateRoleIdentifiers($role, $highestLevelPermission),
-                );
+            foreach ($role->getHighestLevelPermissions() as $permission) {
+                $this->appendPermissionHierarchy($hierarchy, $role, $permission);
             }
         }
 

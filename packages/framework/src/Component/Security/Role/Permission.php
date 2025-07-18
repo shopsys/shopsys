@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Security\Role;
 
+use Webmozart\Assert\Assert;
+
 enum Permission: string
 {
     case VIEW = 'VIEW';
@@ -27,27 +29,6 @@ enum Permission: string
     }
 
     /**
-     * @param self|string ...$values
-     * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
-     */
-    public static function createFromValues(Permission|string ...$values): array
-    {
-        $permissions = [];
-
-        foreach ($values as $value) {
-            if ($value instanceof self) {
-                // If it's already a Permission instance, use it directly
-                $permissions[] = $value;
-
-                continue;
-            }
-            $permissions[] = self::from($value);
-        }
-
-        return $permissions;
-    }
-
-    /**
      * Get subordinate permissions that are included by this permission
      *
      * Permission hierarchy:
@@ -64,32 +45,15 @@ enum Permission: string
     {
         $directSubordinates = match ($this) {
             self::FULL => [self::EDIT, self::CREATE, self::DELETE],
-            self::CREATE => [self::VIEW],
-            self::EDIT => [self::VIEW],
-            self::DELETE => [self::VIEW],
+            self::CREATE, self::EDIT, self::DELETE => [self::VIEW],
             default => [],
         };
 
-        if ($onlyDirect === true) {
+        if ($onlyDirect) {
             return $directSubordinates;
         }
 
-        $subordinatePermissions = [];
-
-        foreach ($directSubordinates as $subordinate) {
-            $subordinatePermissions[] = $subordinate;
-
-            $nextLevelSubordinates = $subordinate->getSubordinatePermissions();
-
-            $subordinatePermissions = array_merge(
-                $subordinatePermissions,
-                array_filter($nextLevelSubordinates, function ($nextLevelSubordinate) use ($subordinatePermissions) {
-                    return !in_array($nextLevelSubordinate, $subordinatePermissions, true);
-                }),
-            );
-        }
-
-        return $subordinatePermissions;
+        return self::traversePermissionHierarchy($directSubordinates, fn ($p) => $p->getSubordinatePermissions(true));
     }
 
     /**
@@ -107,13 +71,13 @@ enum Permission: string
      */
     public function includes(self $permission): bool
     {
-        // FULL permission includes everything
-        if ($this === self::FULL) {
+        // A permission always includes itself
+        if ($this === $permission) {
             return true;
         }
 
-        // A permission always includes itself
-        if ($this === $permission) {
+        // FULL permission includes everything
+        if ($this === self::FULL) {
             return true;
         }
 
@@ -127,6 +91,22 @@ enum Permission: string
     }
 
     /**
+     * Expand a list of permissions to include all subordinate permissions
+     *
+     * This method takes a list of permissions and expands it to include all subordinate permissions
+     * for each permission in the list. It returns a flat array of unique permissions.
+     *
+     * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission> $permissions
+     * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
+     */
+    public static function expand(array $permissions): array
+    {
+        Assert::allIsInstanceOf($permissions, self::class);
+
+        return self::traversePermissionHierarchy($permissions, fn ($p) => $p->getSubordinatePermissions(true));
+    }
+
+    /**
      * Get the highest-level permissions for a given set of permissions
      *
      * For a role with permissions [VIEW, EDIT, CREATE], this returns [EDIT, CREATE]
@@ -137,18 +117,18 @@ enum Permission: string
      */
     public static function getHighestLevelPermissions(array $permissions): array
     {
-        $highestPermissions = [];
+        Assert::allIsInstanceOf($permissions, self::class);
 
-        $permissions = self::createFromValues(...$permissions);
+        $result = [];
+
+        // FULL is always the highest permission
+        if (in_array(self::FULL, $permissions, true)) {
+            return [self::FULL];
+        }
 
         foreach ($permissions as $permission) {
-            if ($permission === self::FULL) {
-                return [$permission]; // FULL is always the highest permission
-            }
-
             $isHighest = true;
 
-            // Check if this permission is subordinate to any other permission in the role
             foreach ($permissions as $otherPermission) {
                 if ($otherPermission !== $permission && $otherPermission->includes($permission)) {
                     $isHighest = false;
@@ -158,10 +138,68 @@ enum Permission: string
             }
 
             if ($isHighest) {
-                $highestPermissions[] = $permission;
+                $result[$permission->value] = $permission;
             }
         }
 
-        return $highestPermissions;
+        return array_values($result);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Security\Role\Permission|string ...$permissions
+     * @return string[]
+     */
+    public static function toValues(Permission|string ...$permissions): array
+    {
+        return array_map(
+            fn (Permission|string $permission) => $permission instanceof self ? $permission->value : $permission,
+            $permissions,
+        );
+    }
+
+    /**
+     * @param self|string ...$values
+     * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Permission>
+     */
+    public static function fromValues(Permission|string ...$values): array
+    {
+        $permissions = [];
+
+        foreach ($values as $value) {
+            $permissions[] = $value instanceof self ? $value : self::from($value);
+        }
+
+        return $permissions;
+    }
+
+    /**
+     * Generic method to traverse permission hierarchy using stack-based approach
+     *
+     * @param array<self> $startingPermissions
+     * @param callable(self): array<self> $getChildrenCallback
+     * @return array<self>
+     */
+    protected static function traversePermissionHierarchy(
+        array $startingPermissions,
+        callable $getChildrenCallback,
+    ): array {
+        $visited = [];
+        $stack = $startingPermissions;
+
+        while ($stack !== []) {
+            $permission = array_pop($stack);
+
+            if (isset($visited[$permission->value])) {
+                continue;
+            }
+
+            $visited[$permission->value] = $permission;
+
+            foreach ($getChildrenCallback($permission) as $child) {
+                $stack[] = $child;
+            }
+        }
+
+        return array_values($visited);
     }
 }

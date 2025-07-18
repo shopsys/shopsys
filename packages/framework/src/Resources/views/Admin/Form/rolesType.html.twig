@@ -1,73 +1,44 @@
 {% block roles_widget -%}
-<div {{ block('widget_container_attributes') }} class="form-line__side">
-    <div class="roles-grid js-roles-grid" data-dependencies="{{ form.vars.permission_dependencies|json_encode|e('html_attr') }}" style="--permissions-count: {{ form.vars.permissions|length }}">
-        {# Header row with permission columns #}
-        <div class="roles-grid__header">
-            <div class="roles-grid__cell roles-grid__cell--role-name">{{ 'Role'|trans }}</div>
-            {% for permission in form.vars.permissions %}
-                <div class="roles-grid__cell roles-grid__cell--permission">
-                    <div class="roles-grid__header-content">
-                        <div class="roles-grid__permission-label">{{ permission|lower|trans }}</div>
-                        {% if not form.vars.disabled and (permission == 'VIEW' or permission == 'FULL') %}
-                            <div class="roles-grid__header-checkbox">
-                                <input type="checkbox" id="select-all-{{ permission|lower }}" data-permission="{{ permission }}" class="css-checkbox roles-grid__select-all js-roles-select-all">
-                                <label for="select-all-{{ permission|lower }}" class="roles-grid__select-all-label css-checkbox__image"></label>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+    {% import '@ShopsysFramework/Admin/Form/_rolesMacros.html.twig' as rolesMacros %}
 
-        {# Data rows with roles and their checkboxes #}
-        {% for sectionKey, section in form.vars.grid_structure.sections %}
-            <div class="roles-grid__section">
-                <div class="roles-grid__section-header">
-                    <div class="roles-grid__section-title">
-                        {% if section.icon %}
-                            {{ ux_icon(section.icon, {'class': 'roles-grid__section-icon'}) }}
-                        {% endif %}
-                        {{ section.name }}
+    {% set attr = attr|merge({
+        class: (
+        (attr.class|default('')) ~
+        ' form-line__item'
+        )|trim
+    }) %}
+
+    {% set isSingleGrid = form.vars.permissions|length == 0 %}
+
+    {% with { attr: attr } %}
+        <div {{ block('widget_container_attributes') }}>
+            <div class="roles-grid js-roles-grid {{ isSingleGrid ? 'roles-grid--single' : '' }}" data-dependencies="{{ form.vars.permission_dependencies|json_encode|e('html_attr') }}" style="--permissions-count: {{ form.vars.permissions|length }}">
+                {# Header row #}
+                <div class="roles-grid__header-wrapper">
+                    <div class="roles-grid__header">
+                        <div class="roles-grid__cell roles-grid__cell--role-name">
+                            <span>{{ 'Role'|trans }}</span>
+                            {% if not form.vars.disabled and not isSingleGrid %}
+                                <div class="roles-grid__actions roles-grid__actions--header">
+                                    {{ rolesMacros.render_actions(null, false, 'roles-grid__action', 'Deselect all permissions'|trans, 'Select all permissions'|trans, 'bottom') }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% for permission in form.vars.permissions %}
+                            <div class="roles-grid__cell roles-grid__cell--permission">
+                                <div class="roles-grid__permission-label">{{ permission.getName() }}</div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
-                    {% for role in section.roles %}
-                        <div class="roles-grid__row">
-                            <div class="roles-grid__cell roles-grid__cell--role-name">
-                                <strong>{{ role.getName()|trans }}</strong>
-                            </div>
-                            
-                            {% for permission in form.vars.permissions %}
-                                <div class="roles-grid__cell roles-grid__cell--permission">
-                                    {% if form[role.getConstant()] is defined and form[role.getConstant()][permission] is defined %}
-                                        {% if form[role.getConstant()][permission].vars.disabled %}
-                                            <div class="roles-grid__display-icon">
-                                                {% if form[role.getConstant()][permission].vars.checked %}
-                                                    {{ ux_icon('checked-circle', {'title': 'Granted'|trans}) }}
-                                                {% else %}
-                                                    {{ ux_icon('minus', {'title': 'Not granted'|trans}) }}
-                                                {% endif %}
-                                            </div>
-                                        {% else %}
-                                            <div class="roles-grid__checkbox">
-                                                {{ form_widget(form[role.getConstant()][permission], {
-                                                    'attr': {
-                                                        'class': 'roles-grid__permission-checkbox js-roles-permission-checkbox',
-                                                        'data-permission': permission,
-                                                        'data-role': role.getConstant()
-                                                    }
-                                                }) }}
-                                                {{ form_label(form[role.getConstant()][permission], '', {label_attr: {class: 'sr-only'}}) }}
-                                            </div>
-                                        {% endif %}
-                                    {% else %}
-                                        <div class="roles-grid__cell--empty">&nbsp;</div>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
+
+                {# Data content #}
+                <div class="roles-grid__content">
+                    {% for child in form %}
+                        {{ form_widget(child) }}
                     {% endfor %}
                 </div>
-            {% endfor %}
-    </div>
-</div>
+            </div>
+        </div>
+    {% endwith %}
 {%- endblock roles_widget %}
