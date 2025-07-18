@@ -21,14 +21,16 @@ status: "Active Investigation"
 
 ## 🔄 Iterative Debugging Workflow
 
-### Workflow Overview
+### Enhanced Workflow Overview
 1. **Claude implements debugging code** with comprehensive logging
-2. **User deploys as new PR** (takes ~30 minutes)
-3. **User visits initial load** immediately after build completion
-4. **User notifies Claude** that logs are ready
-5. **Claude analyzes logs** via tmux SSH automation on ODIN server
-6. **Claude reports findings** and plans next iteration
-7. **Repeat until root cause found**
+2. **🧪 LOCAL TESTING VALIDATION** - Test logging format on localhost first
+3. **User deploys as new PR** (takes ~30 minutes)
+4. **User visits initial load** immediately after build completion
+5. **User notifies Claude** that logs are ready
+6. **Claude analyzes logs** via tmux SSH automation on ODIN server
+7. **Claude reports findings** and plans next iteration
+8. **🔄 SESSION CONTINUITY** - Update master documentation for agent handoffs
+9. **Repeat until root cause found**
 
 ### Current Iteration: #1 - Comprehensive Domain & Query Logging
 
@@ -38,6 +40,14 @@ Add logging to capture:
 - Database query execution and results
 - Query timing and parameters
 - Service initialization state
+
+#### 🧪 Local Testing Validation (Step 2)
+**Before deployment, validate logging format on localhost:**
+1. **User visits local website**: User navigates to local development site and triggers the GraphQL queries
+2. **Check PHP logs**: `docker compose logs php-fpm | grep -E "(PromotedCategories|SliderItems)"`
+3. **Verify log format**: Ensure logs show expected emojis and structure
+4. **Validate completeness**: Confirm all 4 files generate expected logging output
+5. **Fix any issues**: Adjust logging code if format is incorrect before deployment
 
 #### Files to Modify for Iteration #1
 
