@@ -1,5 +1,18 @@
 # GraphQL Empty Results Investigation Session
 
+## Original User Report
+
+**Initial Prompt (2025-07-18):**
+> I have a big new issue now. I want you to analyze this properly. Consult heavily with Gemini 2.5 Pro. The issue is in our GitHub preview branches that are built when we push into a branch and make a pull request. There appears a new preview branch and the problem is when anyone visits the URL of the branch website, somehow the homepage is missing some parts. We have deeply debugged some storefront Next.js code and I will provide you this debug logs and I will also provide you with the debug code that is behind these logs. From the logs is visible that some two of the GraphQL queries don't return proper data. So the component that relies on the result of these queries does evaluate that there are no data so it will not display it. The component is I think sliders and homepage categories. So far we see that these queries return no data and also they don't return null results but they return empty results. So there is no error. So there is no error. It just doesn't display anything because empty data. And now comes a part where we need to find out why the backend in PHP or maybe Redis or maybe Postgres. But Postgres is called by PHP logic. And I think the Redis is called directly by storefront thatcher. Because every query can have a directive. I am not sure if these two failing queries do have this Redis directive. But I think from the logs is visible that the Redis cache is missed. So yeah, I am now realizing the Redis is maybe not the problem. But I am not 100% sure. It can be even Redis miss and somehow the Redis check could somehow result in these empty results. We don't know. We have to debug. But I would aim more firstly for a PHP backend logic that is returning these GraphQL queries. You should analyze where these codes, PHP codes for these queries are in and propose debug logging that we will see in the PHP container logs. And we could find out more about this case. Bring up any ideas. Consult with Gemini 2.5 Pro Zen MCP. Ultra thing. And now prepare a plan. How to analyze this issue. Analyze all the codes necessary. Prepare a comprehensive plan. And persist this plan. In a .cloud folder. In a new file.
+
+**User's Key Findings:**
+- **Failing Queries**: PromotedCategoriesQuery and SliderItemsQuery return empty arrays `[]`
+- **Pattern**: Works after reload, fails on first load  
+- **No Errors**: Status 200, structurally valid responses, just empty data
+- **Environment**: GitHub preview branches on ODIN server
+- **Cache Behavior**: Logs show "Cache miss, fetching fresh data"
+- **Impact**: Homepage missing sliders and promoted categories components
+
 ## Current Status: Active Investigation
 **Date**: 2025-07-18
 **Issue**: PromotedCategoriesQuery and SliderItemsQuery return empty results on first load
@@ -96,7 +109,7 @@ The GitHub preview branches likely have **missing or incomplete domain-specific 
 - No `SliderItem` records for the preview branch domain
 - Data seeding issues during branch initialization
 
-## Final Investigation Summary
+## Current Investigation Status: ACTIVE
 
 ### ✅ What We Discovered
 1. **Cache logic is working correctly** - "cache miss" logs are accurate
@@ -104,19 +117,24 @@ The GitHub preview branches likely have **missing or incomplete domain-specific 
 3. **Both failing queries have domain-specific dependencies**:
    - PromotedCategoriesQuery requires TopCategory records
    - SliderItemsQuery requires SliderItem records for the domain
-4. **Root cause is likely missing domain data** in preview branches
 
-### ✅ What We Ruled Out
-- ❌ Cache key collisions (impossible due to query name in key)
-- ❌ Misleading cache miss logs (logging is accurate)
-- ❌ Redis caching bugs (cache logic is correct)
-- ❌ GraphQL resolver bugs (resolvers work correctly when data exists)
+### ⚠️ What We Have NOT Ruled Out
+- We have **hypotheses, not certainties**
+- Domain data might exist but be filtered out by query conditions
+- Timing issues could cause queries to run before data is ready
+- Domain configuration might be incorrect
+- Service initialization race conditions remain possible
+
+### 🔄 Current Approach: Iterative Debugging
+1. **Iteration #1**: Comprehensive domain & query logging (ready for deployment)
+2. **Deploy → Test → Analyze → Plan next iteration**
+3. **Repeat until root cause is definitively identified**
 
 ### ✅ Next Steps
-1. **Verify hypothesis**: Execute database queries to check domain data
-2. **Add debug logging**: Monitor domain ID and query results
-3. **Check data seeding**: Verify demo data is properly loaded
-4. **Implement solution**: Re-seed data if missing or fix seeding process
+1. **Deploy debugging code** as new PR
+2. **Perform initial load** immediately after build
+3. **Analyze logs** via tmux SSH automation
+4. **Plan next iteration** based on findings
 
 ### 📁 Created Files
 - `/Users/neon/shopsys/shopsys/.claude/session-investigation-findings.md` - This summary

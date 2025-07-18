@@ -1,66 +1,58 @@
 ---
-description: "Root Cause Debugging Plan - Domain-Specific Data Missing"
+description: "Iterative Debugging Workflow - GraphQL Empty Results Investigation"
 date: "2025-07-18"
-status: "Ready for Implementation"
+status: "Active Investigation"
 ---
 
-# Root Cause Debugging Plan: Domain-Specific Data Missing
+# Iterative Debugging Workflow: GraphQL Empty Results Investigation
 
-## Identified Root Cause Hypothesis
-**The issue is missing domain-specific data** in the GitHub preview branches, causing `PromotedCategoriesQuery` and `SliderItemsQuery` to return empty results.
+## ⚠️ Important: We Have Only Hypotheses
+**Nothing is 100% certain yet.** We have theories to test, not confirmed root causes. Each iteration will help us gather more evidence.
 
-## Verification Strategy
+## Primary Hypothesis to Test
+**Hypothesis**: Missing domain-specific data in GitHub preview branches causes `PromotedCategoriesQuery` and `SliderItemsQuery` to return empty results.
 
-### Phase 1: Database Data Verification
-Execute these queries in the PostgreSQL database to confirm the hypothesis:
+## Alternative Hypotheses to Consider
+1. **Domain configuration issues**: Wrong domain ID being used
+2. **Query timing issues**: Race conditions in service initialization
+3. **Data filtering problems**: Incorrect date/time or visibility filters
+4. **Database connection issues**: Connection problems during first load
+5. **Cache warming problems**: Cache dependencies not ready during first load
 
-#### Check Domain Configuration
-```sql
--- Check what domains exist
-SELECT id, name, url, locale FROM domains;
+## 🔄 Iterative Debugging Workflow
 
--- Check current domain ID being used
-SELECT id, name, url FROM domains WHERE url LIKE '%jm-after-build-bug-fix-ssp-3495%';
-```
+### Workflow Overview
+1. **Claude implements debugging code** with comprehensive logging
+2. **User deploys as new PR** (takes ~30 minutes)
+3. **User visits initial load** immediately after build completion
+4. **User notifies Claude** that logs are ready
+5. **Claude analyzes logs** via tmux SSH automation on ODIN server
+6. **Claude reports findings** and plans next iteration
+7. **Repeat until root cause found**
 
-#### Check TopCategory Data (PromotedCategoriesQuery)
-```sql
--- Check if TopCategory records exist for the domain
-SELECT tc.id, tc.domain_id, tc.position, c.id as category_id, ct.name 
-FROM categories_top tc 
-JOIN categories c ON tc.category_id = c.id 
-JOIN category_translations ct ON c.id = ct.translatable_id 
-WHERE tc.domain_id = [DOMAIN_ID];
+### Current Iteration: #1 - Comprehensive Domain & Query Logging
 
--- Check total TopCategory count per domain
-SELECT domain_id, COUNT(*) as count FROM categories_top GROUP BY domain_id;
-```
+#### Hypothesis Testing Strategy
+Add logging to capture:
+- Domain information and configuration
+- Database query execution and results
+- Query timing and parameters
+- Service initialization state
 
-#### Check SliderItem Data (SliderItemsQuery)
-```sql
--- Check if SliderItem records exist for the domain
-SELECT id, domain_id, name, hidden, position, 
-       datetime_visible_from, datetime_visible_to
-FROM slider_items 
-WHERE domain_id = [DOMAIN_ID];
+#### Files to Modify for Iteration #1
 
--- Check total SliderItem count per domain
-SELECT domain_id, COUNT(*) as count FROM slider_items GROUP BY domain_id;
-```
-
-### Phase 2: PHP Debug Logging Implementation
-Add comprehensive logging to the resolvers to capture domain and query information:
-
-#### PromotedCategoriesQuery Logging
-**File**: `project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php`
-
+**File 1**: `project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php`
 ```php
 public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig): array
 {
     error_log("🔍 [PromotedCategories] Domain: {$domainConfig->getName()} (ID: {$domainConfig->getId()})");
     error_log("🔍 [PromotedCategories] Locale: {$domainConfig->getLocale()}");
+    error_log("🔍 [PromotedCategories] URL: {$domainConfig->getUrl()}");
     
     $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
+    
+    // Log the base query builder state
+    error_log("🔍 [PromotedCategories] Base query builder created");
     
     $result = $queryBuilder
         ->addSelect('ct, cd')
@@ -71,14 +63,17 @@ public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig)
         ->getQuery()->getResult();
     
     error_log("🔍 [PromotedCategories] Query result count: " . count($result));
+    error_log("🔍 [PromotedCategories] Query parameters: domainId={$domainConfig->getId()}, locale={$domainConfig->getLocale()}");
+    
+    if (empty($result)) {
+        error_log("⚠️ [PromotedCategories] EMPTY RESULT - This is the issue!");
+    }
     
     return $result;
 }
 ```
 
-#### SliderItemsQuery Logging
-**File**: `packages/framework/src/Model/Slider/SliderItemRepository.php`
-
+**File 2**: `packages/framework/src/Model/Slider/SliderItemRepository.php`
 ```php
 public function getAllVisibleByDomainId(int $domainId): array
 {
@@ -88,6 +83,7 @@ public function getAllVisibleByDomainId(int $domainId): array
     $dateToday = $dateToday->format('Y-m-d 00:00:00');
     
     error_log("🔍 [SliderItems] Date filter: {$dateToday}");
+    error_log("🔍 [SliderItems] Current time: " . (new DateTime())->format('Y-m-d H:i:s'));
     
     $queryBuilder = $this->getSliderItemQueryBuilder()
         ->where('si.domainId = :domainId')
@@ -103,58 +99,134 @@ public function getAllVisibleByDomainId(int $domainId): array
         'now' => $dateToday,
     ]);
 
+    error_log("🔍 [SliderItems] Query parameters: domainId={$domainId}, hidden=false, now={$dateToday}");
+
     $result = $queryBuilder->getQuery()->execute();
     error_log("🔍 [SliderItems] Query result count: " . count($result));
+    
+    if (empty($result)) {
+        error_log("⚠️ [SliderItems] EMPTY RESULT - This is the issue!");
+    }
     
     return $result;
 }
 ```
 
-### Phase 3: Container Log Analysis
-Monitor PHP-FPM container logs to see the debug output:
+**File 3**: `project-base/app/src/FrontendApi/Resolver/Category/PromotedCategoriesQuery.php`
+```php
+public function promotedCategoriesQuery(): array
+{
+    error_log("🔍 [PromotedCategoriesQuery] Starting query execution");
+    $domainConfig = $this->domain->getCurrentDomainConfig();
+    error_log("🔍 [PromotedCategoriesQuery] Current domain config retrieved");
+    
+    $result = $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($domainConfig);
+    
+    error_log("🔍 [PromotedCategoriesQuery] Final result count: " . count($result));
+    return $result;
+}
+```
 
+**File 4**: `project-base/app/src/FrontendApi/Resolver/SliderItem/SliderItemsQuery.php`
+```php
+public function sliderItemsQuery(): array
+{
+    error_log("🔍 [SliderItemsQuery] Starting query execution");
+    
+    $result = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
+    
+    error_log("🔍 [SliderItemsQuery] Final result count: " . count($result));
+    return $result;
+}
+```
+
+### Post-Deployment Log Analysis Protocol
+
+#### Step 1: User Notification
+When the user says **"logs are ready"**, I will immediately begin log analysis via tmux SSH automation.
+
+#### Step 2: Automated Log Collection via tmux SSH
+I will use the **tmux SSH automation framework** documented in:
+- `.claude/tmux-ssh-automation-framework.md` - Universal tmux automation patterns
+- `.claude/odin-github-cicd-automation.md` - ODIN server-specific commands
+
+**Automation Protocol:**
+1. Connect to ODIN server via existing tmux pane (%14)
+2. Execute commands using marker-based automation
+3. Capture and analyze results systematically
+
+**Commands to execute:**
 ```bash
-# On ODIN server
+# Navigate to branch directory
 cd ~/actions-runner/_work/shopsys/shopsys/jm-after-build-bug-fix-ssp-3495
-docker compose logs -f php-fpm | grep -E "(PromotedCategories|SliderItems)"
+
+# Collect PHP-FPM logs for the queries
+docker compose logs php-fpm | grep -E "(PromotedCategories|SliderItems)" -A2 -B2
+
+# Collect storefront logs
+docker compose logs storefront | grep -E "(PromotedCategories|SliderItems)" -A2 -B2
+
+# Check for any critical errors
+docker compose logs php-fpm | grep -i error | tail -20
+
+# Check container status
+docker compose ps
+
+# Check branch-specific container logs
+docker logs --tail 50 jm-after-build-bug-fix-ssp-3495-webserver-1
+docker logs --tail 50 jm-after-build-bug-fix-ssp-3495-php-fpm-1
 ```
 
-### Phase 4: Data Seeding Verification
-Check if demo data is properly seeded for the preview branch:
-
+**tmux Automation Pattern:**
 ```bash
-# Check demo data seeding status
-docker compose exec php-fpm php phing demo-data-status
+marker="TMUX_MARKER_$(date +%s%N)"
+tmux send-keys -t %14 "echo '=== $marker START ==='" Enter
+sleep 0.5
+tmux send-keys -t %14 "cd ~/actions-runner/_work/shopsys/shopsys/jm-after-build-bug-fix-ssp-3495 && docker compose logs php-fpm | grep -E '(PromotedCategories|SliderItems)' -A2 -B2" Enter
+sleep 5
+tmux send-keys -t %14 "echo '=== $marker END ==='" Enter
+sleep 0.5
+tmux capture-pane -t %14 -p -S -5000 | sed -n "/=== $marker START ===/,/=== $marker END ===/p" | sed '1d;$d'
 ```
 
-## Expected Outcomes
+#### Step 3: Evidence Analysis
+I will analyze the logs to determine:
+- Which domain ID is being used
+- What query parameters are being passed
+- Whether queries return 0 results or crash
+- Any error messages or warnings
 
-### If Root Cause is Confirmed:
-- Database queries will show **0 records** for TopCategory and/or SliderItem for the preview branch domain
-- PHP logs will show domain information and **0 result counts**
-- Demo data seeding may be incomplete or failed
+#### Step 4: Next Iteration Planning
+Based on findings, I will:
+- **If hypothesis confirmed**: Plan implementation/fix
+- **If hypothesis disproven**: Plan next debugging iteration
+- **If unclear**: Add more specific logging for next iteration
 
-### If Root Cause is Different:
-- Database queries will show **existing records** for the domain
-- PHP logs will show **non-zero result counts** but queries still return empty
-- Need to investigate deeper into query logic or filtering conditions
+### Iteration History Tracking
 
-## Next Steps After Verification
+#### Iteration #1 (Current)
+- **Status**: Ready for deployment
+- **Hypothesis**: Missing domain-specific data
+- **Logging Focus**: Domain configuration, query parameters, result counts
+- **Files Modified**: 4 PHP files with comprehensive logging
 
-### If Data is Missing:
-1. **Re-run demo data seeding**: `docker compose exec php-fpm php phing demo-data`
-2. **Check domain configuration**: Verify domain setup for preview branches
-3. **Investigate build process**: Check if demo data is properly seeded during branch builds
+#### Future Iterations (Planned)
+- **Iteration #2**: Database-level logging (if needed)
+- **Iteration #3**: Service timing/initialization logging (if needed)
+- **Iteration #4**: Cache/Redis timing analysis (if needed)
 
-### If Data Exists:
-1. **Investigate query filters**: Check if domain ID or other filters are incorrect
-2. **Verify date/time conditions**: Check if slider items are outside visible date range
-3. **Debug JOIN conditions**: Verify TopCategory relationships are correct
+### Success Criteria
+**Investigation Complete When**:
+- We have clear evidence of the root cause
+- We can reproduce the issue predictably
+- We have a specific fix to implement
 
-## Implementation Priority
-1. **High**: Execute database verification queries
-2. **High**: Add PHP debug logging 
-3. **Medium**: Monitor container logs during first load
-4. **Low**: Investigate data seeding process if data is missing
+### Failure Criteria
+**Investigation Failed If**:
+- Logs show no useful information
+- Issue disappears (heisenbug)
+- We can't reproduce the problem consistently
 
-This plan will definitively identify whether the issue is missing domain-specific data or a deeper query logic problem.
+## 🚀 Ready for Deployment
+
+The debugging code is ready for Iteration #1. Please deploy this as a new PR and notify me when the logs are ready for analysis.
