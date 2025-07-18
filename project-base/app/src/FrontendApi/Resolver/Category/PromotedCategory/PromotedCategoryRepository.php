@@ -24,14 +24,30 @@ class PromotedCategoryRepository
      */
     public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig): array
     {
+        error_log("🔍 [PromotedCategories] Domain: {$domainConfig->getName()} (ID: {$domainConfig->getId()})");
+        error_log("🔍 [PromotedCategories] Locale: {$domainConfig->getLocale()}");
+        error_log("🔍 [PromotedCategories] URL: {$domainConfig->getUrl()}");
+        
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
-
-        return $queryBuilder
+        
+        // Log the base query builder state
+        error_log("🔍 [PromotedCategories] Base query builder created");
+        
+        $result = $queryBuilder
             ->addSelect('ct, cd')
             ->join(TopCategory::class, 'tc', Join::WITH, 'tc.category = c AND tc.domainId = :domainId')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
             ->orderBy('tc.position')
             ->getQuery()->getResult();
+        
+        error_log("🔍 [PromotedCategories] Query result count: " . count($result));
+        error_log("🔍 [PromotedCategories] Query parameters: domainId={$domainConfig->getId()}, locale={$domainConfig->getLocale()}");
+        
+        if (empty($result)) {
+            error_log("⚠️ [PromotedCategories] EMPTY RESULT - This is the issue!");
+        }
+        
+        return $result;
     }
 }

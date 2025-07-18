@@ -21,6 +21,11 @@ class SliderItemsQuery extends AbstractQuery
      */
     public function sliderItemsQuery(): array
     {
-        return $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
+        error_log("🔍 [SliderItemsQuery] Starting query execution");
+        
+        $result = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
+        
+        error_log("🔍 [SliderItemsQuery] Final result count: " . count($result));
+        return $result;
     }
 }

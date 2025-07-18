@@ -70,9 +70,14 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId(int $domainId): array
     {
+        error_log("🔍 [SliderItems] Domain ID: {$domainId}");
+        
         $dateToday = new DateTime();
         $dateToday = $dateToday->format('Y-m-d 00:00:00');
-
+        
+        error_log("🔍 [SliderItems] Date filter: {$dateToday}");
+        error_log("🔍 [SliderItems] Current time: " . (new DateTime())->format('Y-m-d H:i:s'));
+        
         $queryBuilder = $this->getSliderItemQueryBuilder()
             ->where('si.domainId = :domainId')
             ->andWhere('si.hidden = :hidden')
@@ -87,7 +92,16 @@ class SliderItemRepository
             'now' => $dateToday,
         ]);
 
-        return $queryBuilder->getQuery()->execute();
+        error_log("🔍 [SliderItems] Query parameters: domainId={$domainId}, hidden=false, now={$dateToday}");
+
+        $result = $queryBuilder->getQuery()->execute();
+        error_log("🔍 [SliderItems] Query result count: " . count($result));
+        
+        if (empty($result)) {
+            error_log("⚠️ [SliderItems] EMPTY RESULT - This is the issue!");
+        }
+        
+        return $result;
     }
 
     /**
