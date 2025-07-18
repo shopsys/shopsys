@@ -24,7 +24,18 @@ class PromotedCategoryRepository
      */
     public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig): array
     {
-        // === SIMPLIFIED LOGGING FOR NOW ===
+        // === DATABASE CONNECTION STATUS LOGGING ===
+        $connection = $this->categoryRepository->em->getConnection();
+        
+        error_log("🔍 [PROMOTED_CONN] Connection established: " . ($connection->isConnected() ? 'YES' : 'NO'));
+        
+        try {
+            $pingResult = $connection->executeQuery("SELECT 1");
+            error_log("🔍 [PROMOTED_PING] Connection test successful: YES");
+        } catch (\Exception $e) {
+            error_log("🔍 [PROMOTED_PING] Connection test failed: " . $e->getMessage());
+        }
+        
         error_log("🔍 [PROMOTED] Domain: {$domainConfig->getName()} (ID: {$domainConfig->getId()})");
         error_log("🔍 [PROMOTED] Locale: {$domainConfig->getLocale()}");
         error_log("🔍 [PROMOTED] URL: {$domainConfig->getUrl()}");
@@ -42,8 +53,9 @@ class PromotedCategoryRepository
         
         $query = $finalQueryBuilder->getQuery();
         
-        error_log("🔍 [PROMOTED] Generated SQL: " . $query->getSQL());
-        error_log("🔍 [PROMOTED] Parameters: " . json_encode($query->getParameters()));
+        // === ORM SQL GENERATION LOGGING ===
+        error_log("🔍 [PROMOTED_SQL] Generated SQL: " . $query->getSQL());
+        error_log("🔍 [PROMOTED_SQL] Parameters: " . json_encode($query->getParameters()->toArray()));
         
         $startTime = microtime(true);
         
@@ -51,20 +63,47 @@ class PromotedCategoryRepository
             $result = $query->getResult();
             $executionTime = (microtime(true) - $startTime) * 1000;
             
-            error_log("🔍 [PROMOTED] Query execution time: {$executionTime}ms");
-            error_log("🔍 [PROMOTED] Query returned: " . count($result) . " records");
+            error_log("🔍 [PROMOTED_TIMING] Query execution time: {$executionTime}ms");
+            error_log("🔍 [PROMOTED_RESULT] Query returned: " . count($result) . " records");
             
             if (empty($result)) {
-                error_log("⚠️ [PROMOTED] EMPTY RESULT - This is the issue!");
+                error_log("⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!");
+                
+                // === RAW SQL DIAGNOSTIC COMPARISON ===
+                error_log("🔍 [PROMOTED_DIAG] Testing raw SQL equivalent...");
+                
+                $rawSql = "SELECT tc.id as top_category_id, c.id as category_id 
+                          FROM top_categories tc 
+                          JOIN categories c ON tc.category_id = c.id 
+                          JOIN category_domains cd ON c.id = cd.category_id 
+                          WHERE tc.domain_id = :domainId 
+                          AND cd.domain_id = :domainId 
+                          AND cd.visible = true 
+                          AND c.parent_id IS NOT NULL 
+                          ORDER BY tc.position";
+                
+                $rawResult = $connection->executeQuery($rawSql, [
+                    'domainId' => $domainConfig->getId(),
+                ]);
+                $rawRows = $rawResult->fetchAllAssociative();
+                
+                error_log("🔍 [PROMOTED_DIAG] Raw SQL returned: " . count($rawRows) . " records");
+                
+                if (count($rawRows) > 0) {
+                    error_log("🚨 [PROMOTED_CRITICAL] Raw SQL has data but ORM returns empty!");
+                    error_log("🔍 [PROMOTED_DIAG] First raw record: " . json_encode($rawRows[0]));
+                } else {
+                    error_log("🔍 [PROMOTED_DIAG] Raw SQL also returns empty - no data exists");
+                }
             }
             
             return $result;
             
         } catch (\Exception $e) {
             $executionTime = (microtime(true) - $startTime) * 1000;
-            error_log("🔍 [PROMOTED] Query execution time (failed): {$executionTime}ms");
-            error_log("🚨 [PROMOTED] Query failed: " . $e->getMessage());
-            error_log("🚨 [PROMOTED] Stack trace: " . $e->getTraceAsString());
+            error_log("🔍 [PROMOTED_TIMING] Query execution time (failed): {$executionTime}ms");
+            error_log("🚨 [PROMOTED_ERROR] Query failed: " . $e->getMessage());
+            error_log("🚨 [PROMOTED_ERROR] Stack trace: " . $e->getTraceAsString());
             
             return [];
         }
