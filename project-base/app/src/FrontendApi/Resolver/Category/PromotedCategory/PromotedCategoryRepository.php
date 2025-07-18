@@ -70,11 +70,11 @@ class PromotedCategoryRepository
             if (empty($result)) {
                 error_log("⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!");
 
-                // === CONNECTION INITIALIZATION FIX ===
-                // Force connection context establishment to fix ORM state issue
-                $connection->getDatabase();
-                $connection->getHost();
-                error_log("🔍 [PROMOTED_DIAG] Connection context established");
+                // === CONNECTION INITIALIZATION FIX - DISABLED FOR DOCKER HEALTH CHECK TEST ===
+                // Temporary workaround replaced with Docker Compose health check solution
+                // $connection->getDatabase();
+                // $connection->getHost();
+                error_log("🔍 [PROMOTED_DIAG] Testing Docker health check solution - workaround disabled");
 
                 // === TRANSACTION STATE ANALYSIS ===
                 error_log("🔍 [PROMOTED_DIAG] === TRANSACTION STATE ===");
