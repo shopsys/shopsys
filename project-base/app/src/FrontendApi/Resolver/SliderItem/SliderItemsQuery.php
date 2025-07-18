@@ -21,11 +21,29 @@ class SliderItemsQuery extends AbstractQuery
      */
     public function sliderItemsQuery(): array
     {
-        error_log("🔍 [SliderItemsQuery] Starting query execution");
+        // === SERVICE INITIALIZATION LOGGING ===
+        error_log("🔍 [SLIDER_SERVICE] Starting query execution");
+        error_log("🔍 [SLIDER_SERVICE] SliderItemFacade available: " . ($this->sliderItemFacade ? 'YES' : 'NO'));
         
-        $result = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
+        // === TIMING MEASUREMENT ===
+        $startTime = microtime(true);
         
-        error_log("🔍 [SliderItemsQuery] Final result count: " . count($result));
-        return $result;
+        try {
+            $result = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
+            $queryExecutionTime = (microtime(true) - $startTime) * 1000;
+            
+            error_log("🔍 [SLIDER_TIMING] Facade query execution: {$queryExecutionTime}ms");
+            error_log("🔍 [SLIDER_RESULT] Final result count: " . count($result));
+            
+            return $result;
+            
+        } catch (\Exception $e) {
+            $totalTime = (microtime(true) - $startTime) * 1000;
+            error_log("🔍 [SLIDER_TIMING] Total execution time (failed): {$totalTime}ms");
+            error_log("🚨 [SLIDER_ERROR] Query failed: " . $e->getMessage());
+            error_log("🚨 [SLIDER_ERROR] Stack trace: " . $e->getTraceAsString());
+            
+            return [];
+        }
     }
 }

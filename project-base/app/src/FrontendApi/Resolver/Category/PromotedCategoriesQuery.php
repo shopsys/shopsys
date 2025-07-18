@@ -25,13 +25,38 @@ class PromotedCategoriesQuery extends AbstractQuery
      */
     public function promotedCategoriesQuery(): array
     {
-        error_log("🔍 [PromotedCategoriesQuery] Starting query execution");
-        $domainConfig = $this->domain->getCurrentDomainConfig();
-        error_log("🔍 [PromotedCategoriesQuery] Current domain config retrieved");
+        // === SERVICE INITIALIZATION LOGGING ===
+        error_log("🔍 [SERVICE] Starting query execution");
+        error_log("🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!");
+        error_log("🔍 [SERVICE] EntityManager available: " . ($this->promotedCategoryFacade ? 'YES' : 'NO'));
+        error_log("🔍 [SERVICE] Domain service available: " . ($this->domain ? 'YES' : 'NO'));
         
-        $result = $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($domainConfig);
+        // === TIMING MEASUREMENT ===
+        $startTime = microtime(true);
         
-        error_log("🔍 [PromotedCategoriesQuery] Final result count: " . count($result));
-        return $result;
+        try {
+            $domainConfig = $this->domain->getCurrentDomainConfig();
+            $domainRetrievalTime = (microtime(true) - $startTime) * 1000;
+            
+            error_log("🔍 [TIMING] Domain config retrieval: {$domainRetrievalTime}ms");
+            error_log("🔍 [SERVICE] Domain config retrieved successfully");
+            
+            $queryStartTime = microtime(true);
+            $result = $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($domainConfig);
+            $queryExecutionTime = (microtime(true) - $queryStartTime) * 1000;
+            
+            error_log("🔍 [TIMING] Facade query execution: {$queryExecutionTime}ms");
+            error_log("🔍 [PROMOTED_FINAL] Final result count: " . count($result));
+            
+            return $result;
+            
+        } catch (\Exception $e) {
+            $totalTime = (microtime(true) - $startTime) * 1000;
+            error_log("🔍 [TIMING] Total execution time (failed): {$totalTime}ms");
+            error_log("🚨 [ERROR] Query failed: " . $e->getMessage());
+            error_log("🚨 [ERROR] Stack trace: " . $e->getTraceAsString());
+            
+            return [];
+        }
     }
 }
