@@ -71,11 +71,12 @@ class PromotedCategoryRepository
                 error_log("⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!");
                 
                 // === COMPREHENSIVE CONNECTION DIAGNOSTICS ===
-                error_log("🔍 [PROMOTED_DIAG] === CONNECTION ANALYSIS ===");
-                error_log("🔍 [PROMOTED_DIAG] Database name: " . $connection->getDatabase());
-                error_log("🔍 [PROMOTED_DIAG] Host: " . $connection->getHost());
-                error_log("🔍 [PROMOTED_DIAG] Port: " . $connection->getPort());
-                error_log("🔍 [PROMOTED_DIAG] Username: " . $connection->getUsername());
+                // COMMENTED OUT - Testing if connection metadata access causes connection warming
+                // error_log("🔍 [PROMOTED_DIAG] === CONNECTION ANALYSIS ===");
+                // error_log("🔍 [PROMOTED_DIAG] Database name: " . $connection->getDatabase());
+                // error_log("🔍 [PROMOTED_DIAG] Host: " . $connection->getHost());
+                // error_log("🔍 [PROMOTED_DIAG] Port: " . $connection->getPort());
+                // error_log("🔍 [PROMOTED_DIAG] Username: " . $connection->getUsername());
                 
                 // === TRANSACTION STATE ANALYSIS ===
                 error_log("🔍 [PROMOTED_DIAG] === TRANSACTION STATE ===");
