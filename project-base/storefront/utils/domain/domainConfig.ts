@@ -27,38 +27,12 @@ export type DomainConfigType = {
 export function getDomainConfig(domainUrl: string): DomainConfigType {
     const replacedDomain = domainUrl.replace(':3000', ':8000');
 
-    // Debug the input
-    console.log('🔍 getDomainConfig called with:', { domainUrl, replacedDomain });
-    console.log('🔍 domainsConfig:', domainsConfig);
-    console.log('🔍 cdnDomain:', cdnDomain);
-
     for (const domain of domainsConfig) {
-        // Debug each domain before URL creation
-        console.log('🔍 Processing domain:', domain);
-        console.log('🔍 domain.url value:', domain.url, 'type:', typeof domain.url);
-
-        // Add safety check to prevent empty URL
-        if (!domain.url || domain.url.trim() === '') {
-            console.warn('⚠️ Skipping domain with empty URL:', domain);
-            continue;
-        }
-
-        const publicDomainUrl = new URL(domain.url).host;
-        console.log('🔍 publicDomainUrl:', publicDomainUrl);
+        const publicDomainUrl = new URL(domain.url || '').host;
 
         if (publicDomainUrl === replacedDomain) {
-            console.log('✅ Match found, returning domain:', domain);
             return domain;
         }
-    }
-
-    console.log("🚀 -> domainConfig.ts -> getDomainConfig -> replacedDomain:", replacedDomain)
-
-    // Debug CDN domain before URL creation
-    console.log('🔍 Checking CDN domain:', cdnDomain);
-    if (!cdnDomain || cdnDomain.trim() === '') {
-        console.error('❌ CDN domain is empty or undefined');
-        throw new Error('CDN domain is not configured properly');
     }
 
     // Return first domain for CDN domain to properly render error page
