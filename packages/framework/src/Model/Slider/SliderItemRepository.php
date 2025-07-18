@@ -122,13 +122,11 @@ class SliderItemRepository
             if (empty($result)) {
                 error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!");
                 
-                // === COMPREHENSIVE CONNECTION DIAGNOSTICS ===
-                // COMMENTED OUT - Testing if connection metadata access causes connection warming
-                // error_log("🔍 [SLIDER_DIAG] === CONNECTION ANALYSIS ===");
-                // error_log("🔍 [SLIDER_DIAG] Database name: " . $connection->getDatabase());
-                // error_log("🔍 [SLIDER_DIAG] Host: " . $connection->getHost());
-                // error_log("🔍 [SLIDER_DIAG] Port: " . $connection->getPort());
-                // error_log("🔍 [SLIDER_DIAG] Username: " . $connection->getUsername());
+                // === CONNECTION INITIALIZATION FIX ===
+                // Force connection context establishment to fix ORM state issue
+                $connection->getDatabase();
+                $connection->getHost();
+                error_log("🔍 [SLIDER_DIAG] Connection context established");
                 
                 // === TRANSACTION STATE ANALYSIS ===
                 error_log("🔍 [SLIDER_DIAG] === TRANSACTION STATE ===");
