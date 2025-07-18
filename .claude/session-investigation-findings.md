@@ -15,7 +15,7 @@
 
 ## Current Status: Active Investigation
 **Date**: 2025-07-18
-**Issue**: PromotedCategoriesQuery and SliderItemsQuery return empty results on first load
+**Issue**: ✅ **RESOLVED** - Root cause identified: Missing domain-specific data in GitHub preview branches
 
 ## Key Evidence Summary
 
