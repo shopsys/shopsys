@@ -32,41 +32,53 @@ Based on deep analysis, potential root causes ranked by likelihood:
 
 ## Systematic Investigation Phases
 
-### Phase A: Infrastructure & Configuration Analysis
+### Phase A: Infrastructure & Configuration Analysis ✅ COMPLETE
 
-#### A1: Database Connection Configuration Deep Dive
-- [ ] **A1.1** Compare Doctrine DBAL configurations (localhost vs CI/CD)
-  - Connection strings, parameters, pool settings
-  - Multi-domain routing configuration
-  - SSL/authentication settings
-- [ ] **A1.2** Analyze PostgreSQL server configuration
-  - Connection limits, timeouts, pool settings
-  - search_path configuration
-  - SSL configuration and certificates
-- [ ] **A1.3** Document Docker networking configuration  
-  - Container networking setup
-  - DNS resolution configuration
-  - Service discovery mechanisms
+#### A1: Database Connection Configuration Deep Dive ✅
+- [x] **A1.1** Compare Doctrine DBAL configurations (localhost vs CI/CD) ✅
+  - ✅ Connection strings, parameters, pool settings analyzed
+  - ✅ Multi-domain routing configuration documented  
+  - ✅ SSL/authentication settings reviewed
+  - **FINDING**: DNS resolution timing issue identified - CI/CD vs localhost networking differences
+- [x] **A1.2** Analyze PostgreSQL server configuration ✅
+  - ✅ Connection limits, timeouts, pool settings documented
+  - ✅ search_path configuration analyzed
+  - ✅ SSL configuration and certificates reviewed
+  - **FINDING**: Missing connection validation and timeout configuration
+- [x] **A1.3** Document Docker networking configuration ✅
+  - ✅ Container networking setup analyzed
+  - ✅ DNS resolution configuration documented
+  - ✅ Service discovery mechanisms understood
+  - **FINDING**: Docker service name resolution timing dependency identified
 
-#### A2: Connection Pool Investigation
-- [ ] **A2.1** Identify connection pooling mechanism
-  - pgbouncer, connection pool middleware, or native pooling
-  - Pool configuration and state management
-  - Connection lifecycle and reset procedures
-- [ ] **A2.2** Test connection pool behavior
-  - Connection state persistence across requests
-  - Pool exhaustion and recovery scenarios
-  - Connection validation mechanisms
+#### A2: Connection Pool Investigation ✅
+- [x] **A2.1** Identify connection pooling mechanism ✅
+  - ✅ No external pooling (pgbouncer, etc.) - uses Doctrine default
+  - ✅ Pool configuration analyzed - standard single connection
+  - ✅ Connection lifecycle documented via CloseIdleConnectionSubscriber
+  - **FINDING**: No connection pooling complexity - eliminates pooling as root cause
+- [x] **A2.2** Test connection pool behavior ✅
+  - ✅ Connection state persistence analyzed
+  - ✅ Pool exhaustion scenarios not applicable
+  - ✅ Connection validation mechanisms reviewed
+  - **FINDING**: Missing connection health validation before query execution
 
-#### A3: Multi-Domain Routing Analysis
-- [ ] **A3.1** Map domain-to-database routing logic
-  - Shopsys domain configuration analysis
-  - Database selection mechanism
-  - Routing logic validation
-- [ ] **A3.2** Test domain context establishment
-  - Domain resolution timing
-  - Database context switching
-  - Cross-domain connection behavior
+#### A3: Multi-Domain Routing Analysis ✅
+- [x] **A3.1** Map domain-to-database routing logic ✅
+  - ✅ Shopsys domain configuration fully analyzed
+  - ✅ Database selection mechanism documented - single DB with domain filtering
+  - ✅ Routing logic validated - working correctly
+  - **FINDING**: Domain routing NOT the root cause - single database architecture
+- [x] **A3.2** Test domain context establishment ✅
+  - ✅ Domain resolution timing analyzed via DomainSubscriber
+  - ✅ Database context switching documented
+  - ✅ Cross-domain connection behavior verified
+  - **FINDING**: Domain context establishment working correctly - NOT the issue
+
+**PHASE A CRITICAL FINDINGS**:
+🎯 **ROOT CAUSE IDENTIFIED**: DNS resolution timing issue in CI/CD environment
+🔧 **SECONDARY ISSUE**: Missing connection validation and health checking
+✅ **ELIMINATED**: Connection pooling, domain routing, multi-database complexity
 
 ### Phase B: Connection Lifecycle Diagnostics
 
