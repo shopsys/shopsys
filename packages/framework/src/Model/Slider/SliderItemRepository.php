@@ -105,15 +105,15 @@ class SliderItemRepository
 
         $query = $queryBuilder->getQuery();
         
-        // === ACTUAL SQL LOGGING ===
+        // === ORM SQL GENERATION LOGGING ===
         error_log("🔍 [SLIDER_SQL] Generated SQL: " . $query->getSQL());
-        error_log("🔍 [SLIDER_SQL] Parameters: " . json_encode($query->getParameters()));
+        error_log("🔍 [SLIDER_SQL] Parameters: " . json_encode($query->getParameters()->toArray()));
         
         // === QUERY EXECUTION TIMING ===
         $startTime = microtime(true);
         
         try {
-            $result = $query->execute();
+            $result = $query->getResult();
             $executionTime = (microtime(true) - $startTime) * 1000;
             
             error_log("🔍 [SLIDER_TIMING] Query execution time: {$executionTime}ms");
