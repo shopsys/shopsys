@@ -24,30 +24,49 @@ class PromotedCategoryRepository
      */
     public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig): array
     {
-        error_log("🔍 [PromotedCategories] Domain: {$domainConfig->getName()} (ID: {$domainConfig->getId()})");
-        error_log("🔍 [PromotedCategories] Locale: {$domainConfig->getLocale()}");
-        error_log("🔍 [PromotedCategories] URL: {$domainConfig->getUrl()}");
+        // === SIMPLIFIED LOGGING FOR NOW ===
+        error_log("🔍 [PROMOTED] Domain: {$domainConfig->getName()} (ID: {$domainConfig->getId()})");
+        error_log("🔍 [PROMOTED] Locale: {$domainConfig->getLocale()}");
+        error_log("🔍 [PROMOTED] URL: {$domainConfig->getUrl()}");
         
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
         
-        // Log the base query builder state
-        error_log("🔍 [PromotedCategories] Base query builder created");
+        error_log("🔍 [PROMOTED] Base query builder created");
         
-        $result = $queryBuilder
+        $finalQueryBuilder = $queryBuilder
             ->addSelect('ct, cd')
             ->join(TopCategory::class, 'tc', Join::WITH, 'tc.category = c AND tc.domainId = :domainId')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
-            ->orderBy('tc.position')
-            ->getQuery()->getResult();
+            ->orderBy('tc.position');
         
-        error_log("🔍 [PromotedCategories] Query result count: " . count($result));
-        error_log("🔍 [PromotedCategories] Query parameters: domainId={$domainConfig->getId()}, locale={$domainConfig->getLocale()}");
+        $query = $finalQueryBuilder->getQuery();
         
-        if (empty($result)) {
-            error_log("⚠️ [PromotedCategories] EMPTY RESULT - This is the issue!");
+        error_log("🔍 [PROMOTED] Generated SQL: " . $query->getSQL());
+        error_log("🔍 [PROMOTED] Parameters: " . json_encode($query->getParameters()));
+        
+        $startTime = microtime(true);
+        
+        try {
+            $result = $query->getResult();
+            $executionTime = (microtime(true) - $startTime) * 1000;
+            
+            error_log("🔍 [PROMOTED] Query execution time: {$executionTime}ms");
+            error_log("🔍 [PROMOTED] Query returned: " . count($result) . " records");
+            
+            if (empty($result)) {
+                error_log("⚠️ [PROMOTED] EMPTY RESULT - This is the issue!");
+            }
+            
+            return $result;
+            
+        } catch (\Exception $e) {
+            $executionTime = (microtime(true) - $startTime) * 1000;
+            error_log("🔍 [PROMOTED] Query execution time (failed): {$executionTime}ms");
+            error_log("🚨 [PROMOTED] Query failed: " . $e->getMessage());
+            error_log("🚨 [PROMOTED] Stack trace: " . $e->getTraceAsString());
+            
+            return [];
         }
-        
-        return $result;
     }
 }
