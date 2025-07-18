@@ -70,13 +70,24 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId(int $domainId): array
     {
-        error_log("🔍 [SliderItems] Domain ID: {$domainId}");
+        // === CONNECTION STATUS LOGGING ===
+        $connection = $this->em->getConnection();
+        error_log("🔍 [SLIDER_CONN] Connection established: " . ($connection->isConnected() ? 'YES' : 'NO'));
+        
+        try {
+            $connection->executeQuery("SELECT 1");
+            error_log("🔍 [SLIDER_PING] Connection test successful: YES");
+        } catch (\Exception $e) {
+            error_log("🔍 [SLIDER_PING] Connection test failed: " . $e->getMessage());
+        }
+        
+        error_log("🔍 [SLIDER] Domain ID: {$domainId}");
         
         $dateToday = new DateTime();
         $dateToday = $dateToday->format('Y-m-d 00:00:00');
         
-        error_log("🔍 [SliderItems] Date filter: {$dateToday}");
-        error_log("🔍 [SliderItems] Current time: " . (new DateTime())->format('Y-m-d H:i:s'));
+        error_log("🔍 [SLIDER] Date filter: {$dateToday}");
+        error_log("🔍 [SLIDER] Current time: " . (new DateTime())->format('Y-m-d H:i:s'));
         
         $queryBuilder = $this->getSliderItemQueryBuilder()
             ->where('si.domainId = :domainId')
@@ -92,16 +103,58 @@ class SliderItemRepository
             'now' => $dateToday,
         ]);
 
-        error_log("🔍 [SliderItems] Query parameters: domainId={$domainId}, hidden=false, now={$dateToday}");
-
-        $result = $queryBuilder->getQuery()->execute();
-        error_log("🔍 [SliderItems] Query result count: " . count($result));
+        $query = $queryBuilder->getQuery();
         
-        if (empty($result)) {
-            error_log("⚠️ [SliderItems] EMPTY RESULT - This is the issue!");
+        // === ACTUAL SQL LOGGING ===
+        error_log("🔍 [SLIDER_SQL] Generated SQL: " . $query->getSQL());
+        error_log("🔍 [SLIDER_SQL] Parameters: " . json_encode($query->getParameters()));
+        
+        // === QUERY EXECUTION TIMING ===
+        $startTime = microtime(true);
+        
+        try {
+            $result = $query->execute();
+            $executionTime = (microtime(true) - $startTime) * 1000;
+            
+            error_log("🔍 [SLIDER_TIMING] Query execution time: {$executionTime}ms");
+            error_log("🔍 [SLIDER_RESULT] Query returned: " . count($result) . " records");
+            
+            if (empty($result)) {
+                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!");
+                
+                // === ADDITIONAL DIAGNOSTICS FOR EMPTY RESULTS ===
+                error_log("🔍 [SLIDER_DIAG] Testing raw SQL equivalent...");
+                
+                $rawSql = "SELECT COUNT(*) FROM slider_items si 
+                          WHERE si.domain_id = :domainId 
+                          AND si.hidden = :hidden 
+                          AND (si.datetime_visible_from IS NULL OR si.datetime_visible_from <= :now) 
+                          AND (si.datetime_visible_to IS NULL OR si.datetime_visible_to >= :now)";
+                
+                $rawResult = $connection->executeQuery($rawSql, [
+                    'domainId' => $domainId,
+                    'hidden' => false,
+                    'now' => $dateToday,
+                ]);
+                $rawCount = $rawResult->fetchOne();
+                
+                error_log("🔍 [SLIDER_DIAG] Raw SQL count: " . $rawCount);
+                
+                if ($rawCount > 0) {
+                    error_log("🚨 [SLIDER_CRITICAL] Raw SQL has data but ORM returns empty!");
+                }
+            }
+            
+            return $result;
+            
+        } catch (\Exception $e) {
+            $executionTime = (microtime(true) - $startTime) * 1000;
+            error_log("🔍 [SLIDER_TIMING] Query execution time (failed): {$executionTime}ms");
+            error_log("🚨 [SLIDER_ERROR] Query failed: " . $e->getMessage());
+            error_log("🚨 [SLIDER_ERROR] Stack trace: " . $e->getTraceAsString());
+            
+            return [];
         }
-        
-        return $result;
     }
 
     /**
