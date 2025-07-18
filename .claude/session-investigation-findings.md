@@ -13,9 +13,9 @@
 - **Cache Behavior**: Logs show "Cache miss, fetching fresh data"
 - **Impact**: Homepage missing sliders and promoted categories components
 
-## Current Status: Active Investigation
+## Current Status: CRITICAL BREAKTHROUGH
 **Date**: 2025-07-18
-**Issue**: ✅ **RESOLVED** - Root cause identified: Missing domain-specific data in GitHub preview branches
+**Issue**: 🔍 **ACTIVE** - Major discovery: Data exists but ORM queries return 0 results
 
 ## Key Evidence Summary
 
@@ -103,39 +103,120 @@ Both failing queries have **domain-specific data requirements** that explain why
 - Requires items to be visible (not hidden, within date range)
 - If no slider items exist for the domain → empty result
 
-### 🎯 Hypothesis: Missing Domain Data
-The GitHub preview branches likely have **missing or incomplete domain-specific data**:
-- No `TopCategory` records for the preview branch domain
-- No `SliderItem` records for the preview branch domain
-- Data seeding issues during branch initialization
+### 🎯 ❌ DISPROVEN HYPOTHESIS: Missing Domain Data
+~~The GitHub preview branches likely have **missing or incomplete domain-specific data**~~
+- ~~No `TopCategory` records for the preview branch domain~~
+- ~~No `SliderItem` records for the preview branch domain~~
+- ~~Data seeding issues during branch initialization~~
 
-## Current Investigation Status: ACTIVE
+**BREAKTHROUGH**: Database contains all expected data!
 
-### ✅ What We Discovered
-1. **Cache logic is working correctly** - "cache miss" logs are accurate
-2. **PHP backend is being called** - Redis genuinely returns null (cache miss)
-3. **Both failing queries have domain-specific dependencies**:
-   - PromotedCategoriesQuery requires TopCategory records
-   - SliderItemsQuery requires SliderItem records for the domain
+## Phase 3 Results: Database Direct Access Investigation
+
+### 🔍 BREAKTHROUGH: Database Contains All Expected Data
+
+**Database Query Method**: Using `docker compose exec php-fpm php bin/console doctrine:query:sql`
+
+#### ✅ Raw Database Evidence
+**categories_top table**:
+```sql
+SELECT domain_id, COUNT(*) as count FROM categories_top GROUP BY domain_id ORDER BY domain_id;
+```
+- **Domain 1**: 9 records ✅
+- **Domain 2**: 9 records ✅
+
+**slider_items table**:
+```sql
+SELECT domain_id, COUNT(*) as count FROM slider_items GROUP BY domain_id ORDER BY domain_id;
+```
+- **Domain 1**: 3 records ✅
+- **Domain 2**: 3 records ✅
+
+#### ✅ Filtered Query Testing
+**SliderItems with complete filters**:
+```sql
+SELECT COUNT(*) FROM slider_items si 
+WHERE si.domain_id = 1 
+AND si.hidden = false 
+AND (si.datetime_visible_from IS NULL OR si.datetime_visible_from <= '2025-07-18 00:00:00') 
+AND (si.datetime_visible_to IS NULL OR si.datetime_visible_to >= '2025-07-18 00:00:00');
+```
+- **Result**: 3 records ✅
+
+**TopCategories with INNER JOIN**:
+```sql
+SELECT COUNT(*) FROM categories_top ct 
+INNER JOIN categories c ON ct.category_id = c.id 
+WHERE ct.domain_id = 1;
+```
+- **Result**: 9 records ✅
+
+### 🚨 CRITICAL DISCOVERY: ORM vs Raw SQL Mismatch
+
+**Production PHP ORM Queries**: Return 0 results
+**Raw SQL Queries**: Return expected results (3 slider items, 9 top categories)
+
+**This indicates a fundamental issue with PHP ORM/Doctrine query generation or execution context.**
+
+### 📋 How to Query Database in ODIN Environment
+
+#### Method 1: Symfony Console (Recommended)
+```bash
+# Navigate to branch directory
+cd ~/actions-runner/_work/shopsys/shopsys/jm-after-build-bug-fix-ssp-3495-f1
+
+# Execute SQL query through Doctrine
+docker compose exec php-fpm php bin/console doctrine:query:sql "SELECT * FROM table_name;"
+```
+
+#### Method 2: Check Available Database Commands
+```bash
+# List all database-related commands
+docker compose exec php-fpm php bin/console list | grep -i -E '(doctrine|dbal|db)'
+```
+
+#### Method 3: Connection Details
+```bash
+# Check database configuration
+docker compose exec php-fpm cat /var/www/html/project-base/app/.env | grep -i -E '(database|postgres|db_)'
+```
+
+**Database Configuration**:
+- **Host**: `postgres`
+- **Port**: `5432`
+- **Database**: `shopsys`
+- **User**: `root`
+- **Password**: `root`
+
+### 🔍 Root Cause Analysis
+
+**What We Know**:
+1. ✅ **Database contains all required data**
+2. ✅ **Raw SQL queries return expected results**
+3. ❌ **PHP ORM queries return 0 results**
+4. ✅ **Cache logic is working correctly**
+5. ✅ **PHP backend is being called (cache miss is accurate)**
+
+**Possible Root Causes**:
+1. **ORM Query Generation Issue** - Doctrine builds incorrect SQL
+2. **Connection/Transaction Issue** - ORM connects to different database state
+3. **Entity Mapping Issue** - ORM entities mapped to wrong tables/columns
+4. **Query Execution Context** - ORM queries execute in different context
+5. **Database Connection Pool** - Different connections see different data states
 
 ### ⚠️ What We Have NOT Ruled Out
-- We have **hypotheses, not certainties**
-- Domain data might exist but be filtered out by query conditions
-- Timing issues could cause queries to run before data is ready
-- Domain configuration might be incorrect
-- Service initialization race conditions remain possible
+- ORM entity mapping issues
+- Database connection/transaction isolation problems
+- Query execution context differences
+- Doctrine query builder generating incorrect SQL
+- Database connection pool issues
 
-### 🔄 Current Approach: Iterative Debugging
-1. **Iteration #1**: Comprehensive domain & query logging (ready for deployment)
-2. **Deploy → Test → Analyze → Plan next iteration**
-3. **Repeat until root cause is definitively identified**
-
-### ✅ Next Steps
-1. **🧪 Local Testing Validation** - Test logging format on localhost first
-2. **Deploy debugging code** as new PR (after local validation)
-3. **Perform initial load** immediately after build
-4. **Analyze logs** via tmux SSH automation
-5. **Plan next iteration** based on findings
+### 🔄 Next Investigation Steps
+1. **Generate actual SQL from ORM queries** - Use Doctrine query logging to see generated SQL
+2. **Compare ORM SQL vs working raw SQL** - Identify differences in query generation
+3. **Check entity mapping configuration** - Verify ORM entities map to correct tables
+4. **Test ORM queries in isolation** - Execute ORM queries with SQL logging enabled
+5. **Investigate transaction/connection context** - Check if ORM queries execute in different context
 
 ### 🔄 Session Continuity
 **Multi-Agent Framework**: See `.claude/session-continuity-framework.md` for complete handoff protocol
