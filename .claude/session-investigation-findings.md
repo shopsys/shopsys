@@ -131,10 +131,23 @@ The GitHub preview branches likely have **missing or incomplete domain-specific 
 3. **Repeat until root cause is definitively identified**
 
 ### ✅ Next Steps
-1. **Deploy debugging code** as new PR
-2. **Perform initial load** immediately after build
-3. **Analyze logs** via tmux SSH automation
-4. **Plan next iteration** based on findings
+1. **🧪 Local Testing Validation** - Test logging format on localhost first
+2. **Deploy debugging code** as new PR (after local validation)
+3. **Perform initial load** immediately after build
+4. **Analyze logs** via tmux SSH automation
+5. **Plan next iteration** based on findings
+
+### 🔄 Session Continuity
+**Multi-Agent Framework**: See `.claude/session-continuity-framework.md` for complete handoff protocol
+**Current Session**: #1 - Investigation Setup & Initial Implementation
+**Next Agent Instructions**: Start with local testing validation, then deployment
+
+### 📊 Iteration Tracking
+**Current Iteration**: #1 - Comprehensive Domain & Query Logging
+**Status**: Implementation Complete, Ready for Local Testing
+**Files Modified**: 4 PHP files with comprehensive debugging logging
+**Local Testing**: ⏳ Pending validation
+**Deployment**: ⏳ Awaiting local testing approval
 
 ### 📁 Created Files
 - `/Users/neon/shopsys/shopsys/.claude/session-investigation-findings.md` - This summary
