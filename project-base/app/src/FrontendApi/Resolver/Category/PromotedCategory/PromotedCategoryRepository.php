@@ -73,8 +73,8 @@ class PromotedCategoryRepository
                 // === RAW SQL DIAGNOSTIC COMPARISON ===
                 error_log("🔍 [PROMOTED_DIAG] Testing raw SQL equivalent...");
                 
-                $rawSql = "SELECT tc.id as top_category_id, c.id as category_id 
-                          FROM top_categories tc 
+                $rawSql = "SELECT tc.category_id as top_category_id, c.id as category_id 
+                          FROM categories_top tc 
                           JOIN categories c ON tc.category_id = c.id 
                           JOIN category_domains cd ON c.id = cd.category_id 
                           WHERE tc.domain_id = :domainId 
