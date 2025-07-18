@@ -25,6 +25,13 @@ class PromotedCategoriesQuery extends AbstractQuery
      */
     public function promotedCategoriesQuery(): array
     {
-        return $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($this->domain->getCurrentDomainConfig());
+        error_log("🔍 [PromotedCategoriesQuery] Starting query execution");
+        $domainConfig = $this->domain->getCurrentDomainConfig();
+        error_log("🔍 [PromotedCategoriesQuery] Current domain config retrieved");
+        
+        $result = $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($domainConfig);
+        
+        error_log("🔍 [PromotedCategoriesQuery] Final result count: " . count($result));
+        return $result;
     }
 }
