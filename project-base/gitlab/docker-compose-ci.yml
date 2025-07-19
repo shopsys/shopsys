@@ -14,6 +14,12 @@ services:
             - postgres
             - -c
             - config_file=/var/lib/postgresql/data/postgresql.conf
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U root -d shopsys"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
 
     webserver:
         image: nginx:1.27-alpine
@@ -36,6 +42,13 @@ services:
     php-fpm:
         image: ${TAG}
         container_name: shopsys-framework-php-fpm
+        depends_on:
+            postgres:
+                condition: service_healthy
+            redis:
+                condition: service_started
+            elasticsearch:
+                condition: service_started
         volumes:
             - web-volume:/var/www/html/web
         ports:

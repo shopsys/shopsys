@@ -70,20 +70,21 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId(int $domainId): array
     {
-        // === CONNECTION INITIALIZATION THEORY TEST ===
+        // === DOCKER HEALTH CHECK STANDALONE TEST ===
         $connection = $this->em->getConnection();
         error_log("🔍 [SLIDER_CONN] Connection established: " . ($connection->isConnected() ? 'YES' : 'NO'));
 
-        // TEST: Force connection initialization BEFORE query
-        error_log("🔍 [SLIDER_INIT] === FORCING CONNECTION INITIALIZATION ===");
-        try {
-            $dbName = $connection->getDatabase();
-            $host = $connection->getHost();
-            error_log("🔍 [SLIDER_INIT] Database metadata accessed: {$dbName} @ {$host}");
-            error_log("🔍 [SLIDER_INIT] Connection should now be fully initialized");
-        } catch (\Exception $e) {
-            error_log("🔍 [SLIDER_INIT] Connection initialization failed: " . $e->getMessage());
-        }
+        // CONNECTION INITIALIZATION DISABLED - Testing Docker health check solution only
+        // error_log("🔍 [SLIDER_INIT] === FORCING CONNECTION INITIALIZATION ===");
+        // try {
+        //     $dbName = $connection->getDatabase();
+        //     $host = $connection->getHost();
+        //     error_log("🔍 [SLIDER_INIT] Database metadata accessed: {$dbName} @ {$host}");
+        //     error_log("🔍 [SLIDER_INIT] Connection should now be fully initialized");
+        // } catch (\Exception $e) {
+        //     error_log("🔍 [SLIDER_INIT] Connection initialization failed: " . $e->getMessage());
+        // }
+        error_log("🔍 [SLIDER_DOCKER] Testing Docker health check solution - connection init disabled");
 
         try {
             $connection->executeQuery("SELECT 1");
@@ -131,10 +132,10 @@ class SliderItemRepository
             error_log("🔍 [SLIDER_RESULT] Query returned: " . count($result) . " records");
 
             if (empty($result)) {
-                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - Connection initialization should have prevented this!");
-                error_log("🔍 [SLIDER_THEORY] If we still get empty results, the theory needs refinement");
+                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - Docker health check should have prevented this!");
+                error_log("🔍 [SLIDER_DOCKER] If we still get empty results, Docker health check is insufficient");
             } else {
-                error_log("✅ [SLIDER_SUCCESS] Connection initialization theory CONFIRMED - query returned results!");
+                error_log("✅ [SLIDER_SUCCESS] Docker health check solution CONFIRMED - query returned results!");
             }
 
             return $result;
