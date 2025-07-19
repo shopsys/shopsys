@@ -20,11 +20,6 @@ services:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
-    # Parameter binding diagnostic event subscriber for GitLab CI debugging
-    Shopsys\FrameworkBundle\Doctrine\EventSubscriber\ParameterDiagnosticSubscriber:
-        tags:
-            - { name: 'doctrine.event_subscriber', connection: 'default' }
-
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
