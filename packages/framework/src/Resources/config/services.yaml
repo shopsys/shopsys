@@ -20,6 +20,11 @@ services:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
+    # Doctrine connection initialization for GitLab CI environment compatibility
+    Shopsys\FrameworkBundle\Doctrine\EventSubscriber\ConnectionInitializationSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber', connection: 'default' }
+
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
