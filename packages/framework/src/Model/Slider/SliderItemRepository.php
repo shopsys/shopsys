@@ -125,8 +125,9 @@ class SliderItemRepository
                 // === CONNECTION INITIALIZATION FIX ===
                 // Force connection context establishment to fix ORM state issue
                 $connection->getDatabase();
-                $connection->getHost();
-                error_log("🔍 [SLIDER_DIAG] Connection context established");
+                // Use connection params instead of getHost() (not available in this DBAL version)
+                $params = $connection->getParams();
+                error_log("🔍 [SLIDER_DIAG] Connection context established - DB: " . $connection->getDatabase() . ", Host: " . ($params['host'] ?? 'unknown'));
 
                 // === TRANSACTION STATE ANALYSIS ===
                 error_log("🔍 [SLIDER_DIAG] === TRANSACTION STATE ===");

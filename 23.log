@@ -1,0 +1,663 @@
+php-fpm-1  | [19-Jul-2025 07:08:32] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+php-fpm-1  | [19-Jul-2025 07:08:32] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+php-fpm-1  | [19-Jul-2025 07:08:32] NOTICE: fpm is running, pid 1
+php-fpm-1  | [19-Jul-2025 07:08:32] NOTICE: ready to handle connections
+php-fpm-1  | {"message":"Migrating up to Shopsys\\FrameworkBundle\\Migrations\\Version20250612072749","context":{"direction":"up","to":"Shopsys\\FrameworkBundle\\Migrations\\Version20250612072749"},"level":250,"level_name":"NOTICE","channel":"app","datetime":"2025-07-19T07:08:48.689044+00:00","extra":{}}
+php-fpm-1  | {"message":"finished in 1634.4ms, used 52.5M memory, 361 migrations executed, 343376 sql queries","context":{"duration":1634.4,"memory":"52.5M","migrations_count":361,"queries_count":343376},"level":250,"level_name":"NOTICE","channel":"app","datetime":"2025-07-19T07:08:50.326156+00:00","extra":{}}
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015974044799805ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 10.243892669678ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:54
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.065990447998ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.022172927856445ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:54
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.3199062347412ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 11.619091033936ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:54.255191+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:54.382567+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:54.814664+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:54.822374+00:00","extra":{}}
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.010013580322266ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 5.2099227905273ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:55
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 3.046989440918ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.014066696166992ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 10.358095169067ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:55
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.3878555297852ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:55
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 3.6520957946777ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.014066696166992ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 10.400056838989ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:55.115079+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:55.124559+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:55.375882+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:55.430898+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:55.734968+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:55.783754+00:00","extra":{}}
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015020370483398ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 10.587215423584ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:56
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 3.8819313049316ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.010967254638672ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | [19-Jul-2025 07:08:56] WARNING: [pool www] seems busy (you may need to increase pm.start_servers, or pm.min/max_spare_servers), spawning 8 children, there are 0 idle, and 4 total children
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:56
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.0490627288818ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 11.595964431763ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:56
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 3.1299591064453ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015974044799805ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 8.1629753112793ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:56.292996+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:56.334495+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:56.693957+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:56.697290+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:56.790910+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:56.829305+00:00","extra":{}}
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.010967254638672ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 5.8860778808594ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 3.4711360931396ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015020370483398ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 10.761022567749ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.953145980835ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 2.593994140625ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015974044799805ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 18.66888999939ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.0090599060058594ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 2.730131149292ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 7.7059268951416ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015974044799805ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 8.5690021514893ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 2.6898384094238ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 2.9618740081787ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.015974044799805ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 9.627103805542ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | [19-Jul-2025 07:08:57] WARNING: [pool www] seems busy (you may need to increase pm.start_servers, or pm.min/max_spare_servers), spawning 16 children, there are 0 idle, and 5 total children
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.014066696166992ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 5.2611827850342ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 2.5768280029297ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.017166137695312ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:08:57
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 5.1860809326172ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 16.549110412598ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.033802+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.078688+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.103532+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.115807+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.235868+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.270197+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.367444+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.375784+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.494165+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.516835+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.614178+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.646068+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.756631+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.831303+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.928599+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:08:57.929850+00:00","extra":{}}
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.012874603271484ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 9.7460746765137ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:09:03
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.4281482696533ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.011205673217773ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:09:03
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 2.4909973144531ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 7.2031021118164ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 0 records
+php-fpm-1  | NOTICE: PHP message: ⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:09:03.503041+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:09:03.574660+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php line 128.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/packages/framework/src/Model/Slider/SliderItemRepository.php:128"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:09:03.660947+00:00","extra":{}}
+php-fpm-1  | {"message":"[GraphQL] Error: Call to undefined method Doctrine\\DBAL\\Connection::getHost()[0] (caught throwable) at /var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php line 76.","context":{"exception":{"class":"Error","message":"Call to undefined method Doctrine\\DBAL\\Connection::getHost()","code":0,"file":"/var/www/html/project-base/app/src/FrontendApi/Resolver/Category/PromotedCategory/PromotedCategoryRepository.php:76"}},"level":500,"level_name":"CRITICAL","channel":"app","datetime":"2025-07-19T07:09:03.663022+00:00","extra":{}}
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.011920928955078ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: 2.shopsys (ID: 2)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: cs
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://cz.jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 7.436990737915ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 9 records
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Facade query execution: 9.3979835510254ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_FINAL] Final result count: 9
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 2
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:10:06
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 6.0040950775146ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 3 records
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Facade query execution: 8.5599422454834ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Final result count: 3
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.014066696166992ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 11.257886886597ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 9 records
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Facade query execution: 13.411045074463ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_FINAL] Final result count: 9
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:10:08
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 7.5118541717529ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 3 records
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Facade query execution: 12.832164764404ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Final result count: 3
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [TEST] PromotedCategoriesQuery::promotedCategoriesQuery() was called!
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] EntityManager available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain service available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Domain config retrieval: 0.016927719116211ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SERVICE] Domain config retrieved successfully
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Domain: shopsys (ID: 1)
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Locale: en
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] URL: https://jm-after-build-bug-fix-ssp-3495-f23.odin.shopsys.cloud
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED] Base query builder created
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Generated SQL: SELECT c0_.id AS id_0, c0_.uuid AS uuid_1, c0_.level AS level_2, c0_.lft AS lft_3, c0_.rgt AS rgt_4, c0_.automated_filters AS automated_filters_5, c1_.id AS id_6, c1_.domain_id AS domain_id_7, c1_.seo_title AS seo_title_8, c1_.seo_meta_description AS seo_meta_description_9, c1_.seo_h1 AS seo_h1_10, c1_.enabled AS enabled_11, c1_.visible AS visible_12, c1_.description AS description_13, c2_.name AS name_14, c2_.id AS id_15, c2_.locale AS locale_16, c0_.parent_id AS parent_id_17, c1_.category_id AS category_id_18, c2_.translatable_id AS translatable_id_19 FROM categories c0_ INNER JOIN category_domains c1_ ON c0_.id = c1_.category_id AND (c1_.domain_id = ? AND c1_.visible = true) INNER JOIN categories_top c3_ ON (c3_.category_id = c0_.id AND c3_.domain_id = ?) INNER JOIN category_translations c2_ ON c0_.id = c2_.translatable_id AND (c2_.locale = ?) WHERE c0_.parent_id IS NOT NULL ORDER BY c3_.position ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_SQL] Parameters: [{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_TIMING] Query execution time: 8.249044418335ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_RESULT] Query returned: 9 records
+php-fpm-1  | NOTICE: PHP message: 🔍 [TIMING] Facade query execution: 10.072946548462ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [PROMOTED_FINAL] Final result count: 9
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] Starting query execution
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SERVICE] SliderItemFacade available: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_CONN] Connection established: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_PING] Connection test successful: YES
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Domain ID: 1
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Date filter: 2025-07-19 00:00:00
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER] Current time: 2025-07-19 07:10:08
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Generated SQL: SELECT s0_.gtm_id AS gtm_id_0, s0_.gtm_creative AS gtm_creative_1, s0_.uuid AS uuid_2, s0_.id AS id_3, s0_.name AS name_4, s0_.link AS link_5, s0_.domain_id AS domain_id_6, s0_.position AS position_7, s0_.hidden AS hidden_8, s0_.description AS description_9, s0_.rgb_background_color AS rgb_background_color_10, s0_.opacity AS opacity_11, s0_.datetime_visible_from AS datetime_visible_from_12, s0_.datetime_visible_to AS datetime_visible_to_13 FROM slider_items s0_ WHERE s0_.domain_id = ? AND s0_.hidden = ? AND (s0_.datetime_visible_from IS NULL OR s0_.datetime_visible_from <= ?) AND (s0_.datetime_visible_to IS NULL OR s0_.datetime_visible_to >= ?) ORDER BY s0_.position ASC, s0_.id ASC
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_SQL] Parameters: [{},{},{}]
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Query execution time: 4.0678977966309ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Query returned: 3 records
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_TIMING] Facade query execution: 5.7430267333984ms
+php-fpm-1  | NOTICE: PHP message: 🔍 [SLIDER_RESULT] Final result count: 3
+php-fpm-1  | [19-Jul-2025 07:10:10] WARNING: [pool www] seems busy (you may need to increase pm.start_servers, or pm.min/max_spare_servers), spawning 8 children, there are 0 idle, and 5 total children
+php-fpm-1  | {"message":"Uncaught PHP Exception Symfony\\Component\\ErrorHandler\\Error\\ClassNotFoundError: \"Attempted to load class \"QueryType\" from namespace \"Overblog\\GraphQLBundle\\__DEFINITIONS__\".\nDid you forget a \"use\" statement for \"Overblog\\GraphQLBundle\\__DEFINITIONS__\\QueryType\"?\" at TypeFactory.php line 24","context":{"exception":{"class":"Symfony\\Component\\ErrorHandler\\Error\\ClassNotFoundError","message":"Attempted to load class \"QueryType\" from namespace \"Overblog\\GraphQLBundle\\__DEFINITIONS__\".\nDid you forget a \"use\" statement for \"Overblog\\GraphQLBundle\\__DEFINITIONS__\\QueryType\"?","code":0,"file":"/var/www/html/vendor/overblog/graphql-bundle/src/Definition/Builder/TypeFactory.php:24"}},"level":500,"level_name":"CRITICAL","channel":"request","datetime":"2025-07-19T07:10:10.175256+00:00","extra":{"errorId":"x7qThIAu7C"}}
+php-fpm-1  | {"message":"Uncaught PHP Exception Symfony\\Component\\ErrorHandler\\Error\\ClassNotFoundError: \"Attempted to load class \"QueryType\" from namespace \"Overblog\\GraphQLBundle\\__DEFINITIONS__\".\nDid you forget a \"use\" statement for \"Overblog\\GraphQLBundle\\__DEFINITIONS__\\QueryType\"?\" at TypeFactory.php line 24","context":{"exception":{"class":"Symfony\\Component\\ErrorHandler\\Error\\ClassNotFoundError","message":"Attempted to load class \"QueryType\" from namespace \"Overblog\\GraphQLBundle\\__DEFINITIONS__\".\nDid you forget a \"use\" statement for \"Overblog\\GraphQLBundle\\__DEFINITIONS__\\QueryType\"?","code":0,"file":"/var/www/html/vendor/overblog/graphql-bundle/src/Definition/Builder/TypeFactory.php:24"}},"level":500,"level_name":"CRITICAL","channel":"request","datetime":"2025-07-19T07:10:10.191543+00:00","extra":{"errorId":"toKZPnN5vo"}}
+github-runner@odin:~/actions-runner/_work/shopsys/shopsys/jm-after-build-bug-fix-ssp-3495-f23$
