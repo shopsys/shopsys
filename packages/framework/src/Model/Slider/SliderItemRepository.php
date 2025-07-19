@@ -70,9 +70,20 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId(int $domainId): array
     {
-        // === CONNECTION STATUS LOGGING ===
+        // === CONNECTION INITIALIZATION THEORY TEST ===
         $connection = $this->em->getConnection();
         error_log("🔍 [SLIDER_CONN] Connection established: " . ($connection->isConnected() ? 'YES' : 'NO'));
+
+        // TEST: Force connection initialization BEFORE query
+        error_log("🔍 [SLIDER_INIT] === FORCING CONNECTION INITIALIZATION ===");
+        try {
+            $dbName = $connection->getDatabase();
+            $host = $connection->getHost();
+            error_log("🔍 [SLIDER_INIT] Database metadata accessed: {$dbName} @ {$host}");
+            error_log("🔍 [SLIDER_INIT] Connection should now be fully initialized");
+        } catch (\Exception $e) {
+            error_log("🔍 [SLIDER_INIT] Connection initialization failed: " . $e->getMessage());
+        }
 
         try {
             $connection->executeQuery("SELECT 1");
@@ -120,116 +131,10 @@ class SliderItemRepository
             error_log("🔍 [SLIDER_RESULT] Query returned: " . count($result) . " records");
 
             if (empty($result)) {
-                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - This is the issue!");
-
-                // === CONNECTION INITIALIZATION FIX - DISABLED FOR DOCKER HEALTH CHECK TEST ===
-                // Temporary workaround replaced with Docker Compose health check solution
-                // $connection->getDatabase();
-                // $connection->getHost();
-                error_log("🔍 [SLIDER_DIAG] Testing Docker health check solution - workaround disabled");
-
-                // === TRANSACTION STATE ANALYSIS ===
-                error_log("🔍 [SLIDER_DIAG] === TRANSACTION STATE ===");
-                try {
-                    $transactionLevel = $connection->getTransactionNestingLevel();
-                    error_log("🔍 [SLIDER_DIAG] Transaction nesting level: " . $transactionLevel);
-
-                    $inTransaction = $connection->isTransactionActive();
-                    error_log("🔍 [SLIDER_DIAG] In active transaction: " . ($inTransaction ? 'YES' : 'NO'));
-                } catch (\Exception $e) {
-                    error_log("🔍 [SLIDER_DIAG] Transaction state check failed: " . $e->getMessage());
-                }
-
-                // === SCHEMA AND SEARCH PATH ANALYSIS ===
-                // COMMENTED OUT - Testing if schema queries cause connection warming
-                // error_log("🔍 [SLIDER_DIAG] === SCHEMA ANALYSIS ===");
-                // try {
-                //     $schemaResult = $connection->executeQuery("SELECT current_schema()");
-                //     $currentSchema = $schemaResult->fetchOne();
-                //     error_log("🔍 [SLIDER_DIAG] Current schema: " . $currentSchema);
-                //
-                //     $searchPathResult = $connection->executeQuery("SHOW search_path");
-                //     $searchPath = $searchPathResult->fetchOne();
-                //     error_log("🔍 [SLIDER_DIAG] Search path: " . $searchPath);
-                // } catch (\Exception $e) {
-                //     error_log("🔍 [SLIDER_DIAG] Schema check failed: " . $e->getMessage());
-                // }
-
-                // === ENTITY MANAGER STATE ANALYSIS ===
-                error_log("🔍 [SLIDER_DIAG] === ENTITY MANAGER STATE ===");
-                try {
-                    $uow = $this->em->getUnitOfWork();
-                    $identityMapSize = count($uow->getIdentityMap());
-                    error_log("🔍 [SLIDER_DIAG] Identity map size: " . $identityMapSize);
-
-                    $isOpen = $this->em->isOpen();
-                    error_log("🔍 [SLIDER_DIAG] Entity manager open: " . ($isOpen ? 'YES' : 'NO'));
-                } catch (\Exception $e) {
-                    error_log("🔍 [SLIDER_DIAG] Entity manager state check failed: " . $e->getMessage());
-                }
-
-                // === ENHANCED RAW SQL COMPARISON WITH EXACT PARAMETERS ===
-                error_log("🔍 [SLIDER_DIAG] === RAW SQL COMPARISON ===");
-
-                // Use EXACT same parameters as ORM (boolean false, not string)
-                $rawSql = "SELECT COUNT(*) FROM slider_items si 
-                          WHERE si.domain_id = :domainId 
-                          AND si.hidden = :hidden 
-                          AND (si.datetime_visible_from IS NULL OR si.datetime_visible_from <= :now) 
-                          AND (si.datetime_visible_to IS NULL OR si.datetime_visible_to >= :now)";
-
-                $rawResult = $connection->executeQuery($rawSql, [
-                    'domainId' => $domainId,
-                    'hidden' => false, // Use boolean like ORM, not string
-                    'now' => $dateToday,
-                ]);
-                $rawCount = $rawResult->fetchOne();
-
-                error_log("🔍 [SLIDER_DIAG] Raw SQL count (exact ORM params): " . $rawCount);
-
-                // === ADDITIONAL RAW SQL WITH DIFFERENT PARAMETER TYPES ===
-                $rawSqlString = "SELECT COUNT(*) FROM slider_items si 
-                               WHERE si.domain_id = :domainId 
-                               AND si.hidden = :hidden 
-                               AND (si.datetime_visible_from IS NULL OR si.datetime_visible_from <= :now) 
-                               AND (si.datetime_visible_to IS NULL OR si.datetime_visible_to >= :now)";
-
-                $rawResultString = $connection->executeQuery($rawSqlString, [
-                    'domainId' => $domainId,
-                    'hidden' => 'false', // Use string
-                    'now' => $dateToday,
-                ]);
-                $rawCountString = $rawResultString->fetchOne();
-
-                error_log("🔍 [SLIDER_DIAG] Raw SQL count (string params): " . $rawCountString);
-
-                // === TABLE EXISTENCE AND PERMISSION CHECK ===
-                // COMMENTED OUT - Testing if table verification queries cause connection warming
-                // error_log("🔍 [SLIDER_DIAG] === TABLE VERIFICATION ===");
-                // try {
-                //     $tableCheckSql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'slider_items'";
-                //     $tableResult = $connection->executeQuery($tableCheckSql);
-                //     $tableExists = $tableResult->fetchOne();
-                //     error_log("🔍 [SLIDER_DIAG] slider_items table exists: " . ($tableExists > 0 ? 'YES' : 'NO'));
-                //
-                //     if ($tableExists > 0) {
-                //         $totalRowsSql = "SELECT COUNT(*) FROM slider_items";
-                //         $totalResult = $connection->executeQuery($totalRowsSql);
-                //         $totalRows = $totalResult->fetchOne();
-                //         error_log("🔍 [SLIDER_DIAG] Total rows in slider_items: " . $totalRows);
-                //     }
-                // } catch (\Exception $e) {
-                //     error_log("🔍 [SLIDER_DIAG] Table verification failed: " . $e->getMessage());
-                // }
-
-                // === CRITICAL ANALYSIS ===
-                if ($rawCount > 0 || $rawCountString > 0) {
-                    error_log("🚨 [SLIDER_CRITICAL] Raw SQL has data but ORM returns empty!");
-                    error_log("🚨 [SLIDER_CRITICAL] This confirms ORM connection/state issue!");
-                    error_log("🚨 [SLIDER_CRITICAL] Boolean params: $rawCount, String params: $rawCountString");
-                } else {
-                    error_log("🔍 [SLIDER_DIAG] Both raw SQL and ORM return empty - data issue confirmed");
-                }
+                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - Connection initialization should have prevented this!");
+                error_log("🔍 [SLIDER_THEORY] If we still get empty results, the theory needs refinement");
+            } else {
+                error_log("✅ [SLIDER_SUCCESS] Connection initialization theory CONFIRMED - query returned results!");
             }
 
             return $result;
