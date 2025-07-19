@@ -73,6 +73,7 @@ class PromotedCategoryRepository
                 // === CONNECTION INITIALIZATION FIX ===
                 // Force connection context establishment to fix ORM state issue
                 $connection->getDatabase();
+                $connection->getHost();
                 // Use connection params instead of getHost() (not available in this DBAL version)
                 $params = $connection->getParams();
                 error_log("🔍 [PROMOTED_DIAG] Connection context established - DB: " . $connection->getDatabase() . ", Host: " . ($params['host'] ?? 'unknown'));
