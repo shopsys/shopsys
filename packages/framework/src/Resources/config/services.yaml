@@ -20,8 +20,8 @@ services:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
-    # Doctrine connection initialization for GitLab CI environment compatibility
-    Shopsys\FrameworkBundle\Doctrine\EventSubscriber\ConnectionInitializationSubscriber:
+    # Parameter binding diagnostic event subscriber for GitLab CI debugging
+    Shopsys\FrameworkBundle\Doctrine\EventSubscriber\ParameterDiagnosticSubscriber:
         tags:
             - { name: 'doctrine.event_subscriber', connection: 'default' }
 
