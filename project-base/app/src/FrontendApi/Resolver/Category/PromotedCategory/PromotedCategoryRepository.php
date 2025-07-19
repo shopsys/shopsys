@@ -24,23 +24,24 @@ class PromotedCategoryRepository
      */
     public function getVisiblePromotedCategoriesOnDomain(DomainConfig $domainConfig): array
     {
-        // === DOCKER HEALTH CHECK STANDALONE TEST ===
+        // === CONNECTION INITIALIZATION SOLUTION ===
         $baseQueryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
         $connection = $baseQueryBuilder->getEntityManager()->getConnection();
 
         error_log("🔍 [PROMOTED_CONN] Connection established: " . ($connection->isConnected() ? 'YES' : 'NO'));
 
-        // CONNECTION INITIALIZATION DISABLED - Testing Docker health check solution only
-        // error_log("🔍 [PROMOTED_INIT] === FORCING CONNECTION INITIALIZATION ===");
-        // try {
-        //     $dbName = $connection->getDatabase();
-        //     $host = $connection->getHost();
-        //     error_log("🔍 [PROMOTED_INIT] Database metadata accessed: {$dbName} @ {$host}");
-        //     error_log("🔍 [PROMOTED_INIT] Connection should now be fully initialized");
-        // } catch (\Exception $e) {
-        //     error_log("🔍 [PROMOTED_INIT] Connection initialization failed: " . $e->getMessage());
-        // }
-        error_log("🔍 [PROMOTED_DOCKER] Testing Docker health check solution - connection init disabled");
+        // CONNECTION INITIALIZATION - Force full Doctrine DBAL initialization
+        error_log("🔍 [PROMOTED_INIT] === FORCING CONNECTION INITIALIZATION ===");
+        try {
+            $dbName = $connection->getDatabase();
+            $params = $connection->getParams();
+            $host = $params['host'] ?? 'unknown';
+            error_log("🔍 [PROMOTED_INIT] Database metadata accessed: {$dbName} @ {$host}");
+            error_log("🔍 [PROMOTED_INIT] Connection should now be fully initialized");
+        } catch (\Exception $e) {
+            error_log("🔍 [PROMOTED_INIT] Connection initialization failed: " . $e->getMessage());
+        }
+        error_log("🔍 [PROMOTED_TEST] Testing connection initialization solution");
 
         try {
             $pingResult = $connection->executeQuery("SELECT 1");
@@ -80,10 +81,10 @@ class PromotedCategoryRepository
             error_log("🔍 [PROMOTED_RESULT] Query returned: " . count($result) . " records");
 
             if (empty($result)) {
-                error_log("⚠️ [PROMOTED_ISSUE] EMPTY RESULT - Docker health check should have prevented this!");
-                error_log("🔍 [PROMOTED_DOCKER] If we still get empty results, Docker health check is insufficient");
+                error_log("⚠️ [PROMOTED_ISSUE] EMPTY RESULT - Connection initialization should have prevented this!");
+                error_log("🔍 [PROMOTED_TEST] If we still get empty results, deeper investigation needed");
             } else {
-                error_log("✅ [PROMOTED_SUCCESS] Docker health check solution CONFIRMED - query returned results!");
+                error_log("✅ [PROMOTED_SUCCESS] Connection initialization solution CONFIRMED - query returned results!");
             }
 
             return $result;

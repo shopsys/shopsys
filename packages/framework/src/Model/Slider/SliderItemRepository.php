@@ -70,21 +70,22 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId(int $domainId): array
     {
-        // === DOCKER HEALTH CHECK STANDALONE TEST ===
+        // === CONNECTION INITIALIZATION SOLUTION ===
         $connection = $this->em->getConnection();
         error_log("🔍 [SLIDER_CONN] Connection established: " . ($connection->isConnected() ? 'YES' : 'NO'));
 
-        // CONNECTION INITIALIZATION DISABLED - Testing Docker health check solution only
-        // error_log("🔍 [SLIDER_INIT] === FORCING CONNECTION INITIALIZATION ===");
-        // try {
-        //     $dbName = $connection->getDatabase();
-        //     $host = $connection->getHost();
-        //     error_log("🔍 [SLIDER_INIT] Database metadata accessed: {$dbName} @ {$host}");
-        //     error_log("🔍 [SLIDER_INIT] Connection should now be fully initialized");
-        // } catch (\Exception $e) {
-        //     error_log("🔍 [SLIDER_INIT] Connection initialization failed: " . $e->getMessage());
-        // }
-        error_log("🔍 [SLIDER_DOCKER] Testing Docker health check solution - connection init disabled");
+        // CONNECTION INITIALIZATION - Force full Doctrine DBAL initialization
+        error_log("🔍 [SLIDER_INIT] === FORCING CONNECTION INITIALIZATION ===");
+        try {
+            $dbName = $connection->getDatabase();
+            $params = $connection->getParams();
+            $host = $params['host'] ?? 'unknown';
+            error_log("🔍 [SLIDER_INIT] Database metadata accessed: {$dbName} @ {$host}");
+            error_log("🔍 [SLIDER_INIT] Connection should now be fully initialized");
+        } catch (\Exception $e) {
+            error_log("🔍 [SLIDER_INIT] Connection initialization failed: " . $e->getMessage());
+        }
+        error_log("🔍 [SLIDER_TEST] Testing connection initialization solution");
 
         try {
             $connection->executeQuery("SELECT 1");
@@ -132,10 +133,10 @@ class SliderItemRepository
             error_log("🔍 [SLIDER_RESULT] Query returned: " . count($result) . " records");
 
             if (empty($result)) {
-                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - Docker health check should have prevented this!");
-                error_log("🔍 [SLIDER_DOCKER] If we still get empty results, Docker health check is insufficient");
+                error_log("⚠️ [SLIDER_ISSUE] EMPTY RESULT - Connection initialization should have prevented this!");
+                error_log("🔍 [SLIDER_TEST] If we still get empty results, deeper investigation needed");
             } else {
-                error_log("✅ [SLIDER_SUCCESS] Docker health check solution CONFIRMED - query returned results!");
+                error_log("✅ [SLIDER_SUCCESS] Connection initialization solution CONFIRMED - query returned results!");
             }
 
             return $result;
