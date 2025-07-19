@@ -70,13 +70,29 @@ class PromotedCategoryRepository
             if (empty($result)) {
                 error_log("⚠️ [PROMOTED_ISSUE] EMPTY RESULT - This is the issue!");
 
-                // === CONNECTION INITIALIZATION FIX ===
-                // Force connection context establishment to fix ORM state issue
-                $connection->getDatabase();
-                $connection->getHost();
-                // Use connection params instead of getHost() (not available in this DBAL version)
-                $params = $connection->getParams();
-                error_log("🔍 [PROMOTED_DIAG] Connection context established - DB: " . $connection->getDatabase() . ", Host: " . ($params['host'] ?? 'unknown'));
+                // === PHASE 1 VERIFICATION: MANUAL CONNECTION RESET TEST ===
+                // Test theory: Manual connection reset should replicate the "fix"
+                
+                // Check PostgreSQL search_path BEFORE reset
+                try {
+                    $initialPath = $connection->executeQuery('SHOW search_path;')->fetchOne();
+                    error_log("🔍 [PROMOTED_PHASE1] Initial search_path: " . $initialPath);
+                } catch (\Exception $e) {
+                    error_log("🔍 [PROMOTED_PHASE1] Could not check initial search_path: " . $e->getMessage());
+                }
+                
+                // Manual connection reset (replaces getHost() exception)
+                $connection->getDatabase(); // Ensure connection exists
+                $connection->close();       // Manual reset - this should trigger the "fix"
+                error_log("🔍 [PROMOTED_PHASE1] Connection manually reset - testing if this replicates the fix");
+                
+                // Check PostgreSQL search_path AFTER reset
+                try {
+                    $newPath = $connection->executeQuery('SHOW search_path;')->fetchOne();
+                    error_log("🔍 [PROMOTED_PHASE1] New search_path after reset: " . $newPath);
+                } catch (\Exception $e) {
+                    error_log("🔍 [PROMOTED_PHASE1] Could not check new search_path: " . $e->getMessage());
+                }
 
                 // === TRANSACTION STATE ANALYSIS ===
                 error_log("🔍 [PROMOTED_DIAG] === TRANSACTION STATE ===");
