@@ -252,12 +252,23 @@ You can run your tests both using the CLI (usually run as `cypress run`) and usi
 
 ### How to run tests using the CLI (`cypress run`)?
 
-There are four commands provided for you:
+There are six commands provided for you:
 
 - `run-acceptance-tests-base`: This command runs the tests and allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
 - `run-acceptance-tests-actual`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
 - `selected-acceptance-tests-base`: This is the same as `run-acceptance-tests-base`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
 - `selected-acceptance-tests-actual`: This is the same as `run-acceptance-tests-actual`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
+- `run-specific-test-actual`: This is the same as `run-acceptance-tests-actual`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select a test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+
+```bash
+make run-specific-test-actual SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
+```
+
+- `run-specific-test-base`: This is the same as `run-acceptance-tests-base`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+
+```bash
+make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
+```
 
 ### How to run tests using the cypress interactive GUI (`cypress open`) on Mac?
 
@@ -479,3 +490,81 @@ When a smoke test fails, the error message will indicate:
 - The specific assertion that failed
 
 By analyzing these details, you can quickly identify and fix the issue.
+
+## Filter and Sorting E2E Test Coverage
+
+The storefront includes dedicated E2E tests for filter and sorting functionality that focus on integration scenarios that cannot be fully tested in unit tests.
+
+### Test Strategy
+
+The E2E tests follow a **minimal critical coverage** approach that focuses on integration points that unit tests cannot detect:
+
+- **Integration Focus**: Tests multi-component state management and URL synchronization
+- **Speed Optimized**: Fast execution for maximum critical coverage
+- **Avoid Duplication**: Does not replicate edge cases already covered by comprehensive unit tests
+- **Real Browser Behavior**: Tests actual user interactions in a browser environment
+
+### Test Scenarios
+
+#### 1. Price Filter + URL Persistence
+
+Tests the complete price filtering workflow with URL synchronization
+
+#### 2. Multi-Filter Workflow
+
+Tests complex filter combinations and their interactions
+
+#### 3. Sort + Filter Integration
+
+Tests sorting behavior with active filters
+
+#### 4. Filter Reset Workflow
+
+Tests complete state reset across all filter types
+
+### Custom Commands for Filter Testing
+
+The E2E tests use custom commands to ensure consistent and reliable testing:
+
+```typescript
+// Custom command for price filter application
+Cypress.Commands.add('applyPriceFilter', (minPrice: number, maxPrice: number) => {
+    cy.getByTID([TIDs.filter_group_price_range_input_min]).clear().type(minPrice.toString());
+    cy.getByTID([TIDs.filter_group_price_range_input_max]).clear().type(maxPrice.toString());
+    cy.getByTID([TIDs.filter_group_price_apply_button]).click();
+});
+
+// Custom command for waiting for filter application
+Cypress.Commands.add('waitForFilterApplication', () => {
+    cy.waitForStableAndInteractiveDOM();
+    cy.getByTID([TIDs.product_list_loading_indicator]).should('not.exist');
+});
+```
+
+### Test Data and Setup
+
+The E2E tests use:
+
+- **Semantic Selectors**: Tests use TIDs (test IDs) for reliable element selection
+- **Visual Regression**: Screenshots validate UI state after filter operations
+- **URL Validation**: Ensures proper parameter synchronization
+- **Performance Monitoring**: Tests include assertions for filter operations
+
+### Integration with Unit Tests
+
+The E2E tests complement the comprehensive unit test suite by:
+
+- **Testing Real Integration**: Validates component interaction in real browser environment
+- **URL Synchronization**: Tests query parameter handling that unit tests cannot fully validate
+- **GraphQL Integration**: Tests actual API calls and data flow
+- **Multi-Component State**: Validates state management across multiple filter components
+
+### Best Practices for Filter E2E Tests
+
+1. **Focus on Integration**: Test scenarios that unit tests cannot cover
+2. **Use Semantic Selectors**: Prefer TIDs over CSS selectors for reliability
+3. **Validate State Persistence**: Test URL parameters and page reload behavior
+4. **Keep Tests Fast**: Focus on critical workflows to maintain CI performance
+5. **Avoid Edge Case Duplication**: Let unit tests handle detailed edge cases
+6. **Use Visual Regression**: Validate UI state with screenshots
+7. **Test Real User Workflows**: Simulate actual user behavior patterns

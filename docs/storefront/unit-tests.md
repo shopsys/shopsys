@@ -430,3 +430,334 @@ describe('createClient test', () => {
     ...
     test( ...
 ```
+
+## Advanced Testing Patterns for Complex Components
+
+This section provides comprehensive guidance for implementing and maintaining test suites for complex interactive components like filters, sorting, and other user interface elements.
+
+### The Minimal Mocking Philosophy
+
+Our testing approach prioritizes **real component integration** over heavy mocking to ensure authentic user experience testing and catch integration issues that traditional mocking might miss.
+
+#### Core Principles
+
+**What to Mock (Essential Only):**
+
+- **State Management**: Core state hooks that would require complex setup
+- **External Dependencies**: Third-party libraries and APIs
+- **Animation Libraries**: Performance-heavy animations (using `vi.importActual` pattern)
+- **Browser APIs**: When testing in isolation from browser environment
+
+**What NOT to Mock (Use Real Components):**
+
+- **UI Components**: Buttons, inputs, dropdowns, checkboxes, sliders
+- **Utility Functions**: Internal helpers and custom hooks
+- **Icon Components**: SVG icons and visual elements
+- **Native Browser APIs**: Focus management, keyboard events, form interactions
+
+#### Implementation Patterns
+
+```tsx
+// ✅ Essential mocks only - state management
+vi.mock('utils/queryParams/useUpdateFilterQuery', () => ({
+    useUpdateFilterQuery: () => ({ updateFilterQuery: mockUpdateFunction }),
+}));
+
+// ✅ Partial mocking with vi.importActual
+vi.mock('framer-motion', async () => {
+    const actual = await vi.importActual('framer-motion');
+    return {
+        ...actual,
+        AnimatePresence: ({ children }) => <>{children}</>,
+        motion: {
+            div: ({ children, ...props }) => <div {...props}>{children}</div>,
+        },
+    };
+});
+
+// ✅ Provider setup for real component testing
+const TestWrapper = ({ children }) => (
+    <DomainConfigProvider domainConfig={mockDomainConfig}>
+        <AuthorizationProvider>{children}</AuthorizationProvider>
+    </DomainConfigProvider>
+);
+
+// ✅ Test with real component selectors
+const checkboxes = screen.getAllByRole('checkbox'); // Real DOM elements
+const buttons = screen.getAllByRole('button'); // Actual component structure
+```
+
+### Testing Utilities Architecture
+
+Our testing utilities are organized into three specialized modules for maximum reusability and maintainability:
+
+#### Keyboard Navigation Utilities (`keyboard-navigation.ts`)
+
+Essential functions for testing keyboard accessibility and navigation patterns:
+
+```tsx
+// Basic navigation actions
+await navigateWithTab(targetElement);
+await navigateWithArrows(elementArray, 'ArrowDown');
+await pressEnterKey();
+await pressSpaceKey();
+await pressEscapeKey();
+
+// Advanced navigation helpers
+const element = await navigateToElement('button', 'Submit');
+const input = await navigateToElementByLabel('Email Address');
+await typeAndNavigate(input, 'test@example.com', 'Tab');
+
+// Validation functions
+assertElementHasFocus(element);
+await testTabNavigation(expectedElements);
+await testFormKeyboardNavigation(formElements);
+```
+
+#### Filter Testing Utilities (`filter-testing.ts`)
+
+Specialized functions for testing filtering and search functionality:
+
+```tsx
+// Basic filter operations
+await applyPriceFilter(minValue, maxValue);
+await applyMultipleFilters({ price: { min: 100, max: 500 }, brands: ['Apple'] });
+await resetAllFilters();
+
+// Advanced filter testing
+await applyPriceFilterWithSlider(200, 800);
+await testSliderEdgeCases(minBoundary, maxBoundary);
+await waitForFilterApplication();
+
+// Performance and error testing
+const duration = await measureFilterPerformance(filterAction);
+await simulateFilterError('network');
+```
+
+#### Accessibility Testing Utilities (`a11y-testing.ts`)
+
+Comprehensive accessibility validation functions:
+
+```tsx
+// Core accessibility tests
+await testKeyboardNavigation(container);
+testAriaLabels(container);
+await testFocusManagement(triggerElement, expectedFocusElement);
+testColorContrast(element);
+
+// Advanced accessibility validation
+await testTabOrder(expectedTabSequence);
+testFormAccessibility(formElement);
+await testModalAccessibility(openButton, modalElement);
+await testDropdownAccessibility(trigger, menuItems);
+
+// Complete test suite runner
+const results = await runAccessibilityTestSuite(component);
+```
+
+### Comprehensive Accessibility Testing Patterns
+
+Every interactive component should include thorough accessibility testing covering all interaction methods:
+
+#### Keyboard Navigation Requirements
+
+```tsx
+describe('Component accessibility', () => {
+    test('should support complete keyboard navigation', async () => {
+        renderComponent();
+
+        // Tab navigation
+        const focusableElements = getFocusableElements();
+        for (const element of focusableElements) {
+            await navigateWithTab(element);
+            expect(element).toHaveFocus();
+        }
+
+        // Arrow key navigation (for grouped elements)
+        const checkboxes = screen.getAllByRole('checkbox');
+        await navigateWithArrows(checkboxes, 'ArrowDown');
+
+        // Action keys
+        await pressSpaceKey(); // Toggle selection
+        await pressEnterKey(); // Activate buttons
+        await pressEscapeKey(); // Cancel/close operations
+    });
+});
+```
+
+#### ARIA and Screen Reader Support
+
+```tsx
+test('should provide proper ARIA labels and announcements', () => {
+    renderComponent();
+
+    // Validate ARIA attributes
+    testAriaLabels();
+
+    // Check specific accessibility attributes
+    const filterGroup = screen.getByRole('group');
+    expect(filterGroup).toHaveAttribute('aria-label');
+
+    const checkboxes = screen.getAllByRole('checkbox');
+    checkboxes.forEach((checkbox) => {
+        expect(checkbox).toHaveAccessibleName();
+    });
+});
+```
+
+#### Focus Management Validation
+
+```tsx
+test('should manage focus properly during interactions', async () => {
+    renderComponent();
+
+    const trigger = screen.getByRole('button', { name: 'Open Filter' });
+    const firstOption = screen.getByRole('checkbox', { name: 'First Option' });
+
+    // Test focus movement
+    await testFocusManagement(trigger, firstOption);
+
+    // Test focus restoration
+    await pressEscapeKey();
+    expect(trigger).toHaveFocus();
+});
+```
+
+### Component-Specific Testing Patterns
+
+#### Filter Component Testing
+
+```tsx
+describe('FilterGroupGeneric', () => {
+    test('should handle checkbox selection workflow', async () => {
+        renderComponent();
+
+        const checkboxes = screen.getAllByRole('checkbox');
+
+        // Multi-selection scenario
+        await pressSpaceKey(checkboxes[0]);
+        await pressSpaceKey(checkboxes[1]);
+
+        expect(checkboxes[0]).toBeChecked();
+        expect(checkboxes[1]).toBeChecked();
+
+        // Show more/less functionality
+        const showMoreButton = screen.getByRole('button', { name: /show more/i });
+        await pressEnterKey(showMoreButton);
+
+        expect(screen.getAllByRole('checkbox')).toHaveLength(
+            expect.any(Number), // Validate expanded list
+        );
+    });
+});
+```
+
+#### Slider Component Testing
+
+```tsx
+describe('RangeSlider', () => {
+    test('should support keyboard value adjustment', async () => {
+        renderComponent();
+
+        const minInput = screen.getByLabelText('Minimum value');
+        const maxInput = screen.getByLabelText('Maximum value');
+
+        // Type and navigate workflow
+        await typeAndNavigate(minInput, '100', 'Tab');
+        await typeAndNavigate(maxInput, '500', 'Enter');
+
+        expect(minInput).toHaveValue(100);
+        expect(maxInput).toHaveValue(500);
+    });
+});
+```
+
+#### Dropdown Component Testing
+
+```tsx
+describe('SortingBar', () => {
+    test('should provide complete keyboard dropdown navigation', async () => {
+        renderComponent();
+
+        const trigger = screen.getByRole('button');
+
+        // Open dropdown
+        await pressEnterKey(trigger);
+
+        const options = screen.getAllByRole('link');
+
+        // Navigate options
+        await navigateWithArrows(options, 'ArrowDown');
+        expect(options[1]).toHaveFocus();
+
+        // Select option
+        await pressEnterKey();
+
+        expect(mockUpdateSortQuery).toHaveBeenCalled();
+    });
+});
+```
+
+### Testing Best Practices and Standards
+
+#### Selector Strategy
+
+- **Prefer semantic selectors**: `screen.getByRole('button')`, `screen.getByLabelText()`
+- **Avoid test IDs**: Use `data-testid` only when semantic selectors are insufficient
+- **User-centric approach**: Test how users interact with components, not implementation details
+
+#### Test Organization
+
+```tsx
+describe('ComponentName', () => {
+    // Setup and cleanup
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    afterEach(() => {
+        cleanup();
+    });
+
+    describe('Basic functionality', () => {
+        // Core feature tests
+    });
+
+    describe('Accessibility', () => {
+        // Keyboard navigation and ARIA tests
+    });
+
+    describe('Performance', () => {
+        // Large dataset and performance tests
+    });
+
+    describe('Integration', () => {
+        // Cross-component and state tests
+    });
+
+    describe('Edge cases', () => {
+        // Error conditions and boundary tests
+    });
+});
+```
+
+#### Mock Data Strategy
+
+Create realistic, reusable mock data that reflects production scenarios:
+
+```tsx
+const mockFilterData = {
+    brands: [
+        { uuid: 'brand-1', name: 'Apple', count: 25 },
+        { uuid: 'brand-2', name: 'Samsung', count: 18 },
+        // ... realistic dataset
+    ],
+    parameters: [
+        { uuid: 'param-1', name: 'Color', type: 'color', values: [...] },
+        { uuid: 'param-2', name: 'Size', type: 'checkbox', values: [...] },
+        // ... various parameter types
+    ],
+};
+```
+
+This comprehensive testing approach ensures robust, accessible, and maintainable components while providing clear patterns for implementing new test suites efficiently.
