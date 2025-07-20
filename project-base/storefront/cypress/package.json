@@ -9,6 +9,8 @@
         "open-actual": "cypress open --env type=actual",
         "base": "cypress run --env type=base",
         "actual": "cypress run --env type=actual",
+        "specific-base": "cypress run --env type=base --spec",
+        "specific-actual": "cypress run --env type=actual --spec",
         "selected-actual": "./runSelectedTests.js type=actual",
         "selected-base": "./runSelectedTests.js type=base",
         "generate-snapshots-table": "./generateSnapshotsInfoTable.js",

@@ -1,27 +1,39 @@
 #!/bin/sh
 echo "TYPE variable is set to: $TYPE"
 echo "COMMAND variable is set to: $COMMAND"
+echo "SPEC variable is set to: $SPEC"
 
-if [ "$COMMAND" = "generate" ]; then
-    echo "Generating snapshots lookup table"
+if [ -n "$SPEC" ]; then
+    echo "🎯 Running specific test: $SPEC"
+    if [ "$TYPE" = "actual" ]; then
+        echo "🔍 Running npm run specific-actual $SPEC"
+        npm run specific-actual "$SPEC"
+    else
+        echo "🔍 Running npm run specific-base $SPEC"
+        npm run specific-base "$SPEC"
+    fi
+elif [ "$COMMAND" = "generate" ]; then
+    echo "📊 Generating snapshots lookup table"
     npm run generate-snapshots-table
 elif [ "$COMMAND" = "smoke" ]; then
-    echo "Running smoke tests"
+    echo "💨 Running smoke tests"
     npm run smoke
 elif [ "$COMMAND" = "open" ]; then
-    echo "DISPLAY variable is set to: $DISPLAY"
+    echo "🖥️  DISPLAY variable is set to: $DISPLAY"
     if [ "$TYPE" = "actual" ]; then
         npm run open-actual
     else
         npm run open-base
     fi
 elif [ "$COMMAND" = "selected" ]; then
+    echo "📋 Running selected tests"
     if [ "$TYPE" = "actual" ]; then
         npm run selected-actual
     else
         npm run selected-base
     fi
 else
+    echo "🚀 Running default tests"
     if [ "$TYPE" = "actual" ]; then
         npm run actual
     else
