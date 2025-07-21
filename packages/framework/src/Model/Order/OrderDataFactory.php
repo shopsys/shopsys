@@ -89,10 +89,27 @@ class OrderDataFactory
         }
         $orderData->note = $order->getNote();
 
+        foreach ($order->getProductItems() as $orderItem) {
+            $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
+
+            foreach ($orderItem->getRelatedItems() as $relatedItem) {
+                $relatedOrderItemData = $this->orderItemDataFactory->createFromOrderItem($relatedItem);
+                $orderData->items[$relatedItem->getId()] = $relatedOrderItemData;
+                $orderItemData->relatedOrderItemsData[] = $relatedOrderItemData;
+            }
+
+            $orderData->items[$orderItem->getId()] = $orderItemData;
+        }
+
         foreach ($order->getItems() as $orderItem) {
+            if (array_key_exists($orderItem->getId(), $orderData->items)) {
+                continue;
+            }
+
             $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
             $orderData->items[$orderItem->getId()] = $orderItemData;
         }
+
         $orderData->createdAt = $order->getCreatedAt();
         $orderData->domainId = $order->getDomainId();
         $orderData->currency = $order->getCurrency();
