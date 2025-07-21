@@ -1,6 +1,4 @@
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
+import Sortable from 'sortablejs';
 import Register from '../../common/utils/Register';
 import { deselect, getSelectedValues, select } from './choiceControl';
 import formChangeInfo from './FormChangeInfo';
@@ -42,9 +40,12 @@ export default class FileUploadPreview {
     }
 
     static initSort() {
-        $('.js-file-upload').sortable({
-            handle: '.js-file-upload-file-handle',
-            update: formChangeInfo.showInfo,
+        document.querySelectorAll('.js-file-upload').forEach(element => {
+            Sortable.create(element, {
+                handle: '.js-file-upload-file-handle',
+                animation: 150,
+                onUpdate: formChangeInfo.showInfo,
+            });
         });
     }
 

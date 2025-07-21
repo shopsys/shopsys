@@ -1,5 +1,3 @@
-import 'jquery-ui-touch-punch';
-import 'jquery-ui/ui/widgets/mouse';
 import 'magnific-popup';
 import Translator from 'bazinga-translator';
 import { formatPrice } from '../../common/utils/priceFormatter';
