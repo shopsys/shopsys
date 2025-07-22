@@ -185,6 +185,7 @@ class SideMenuBuilder
     public const string LIST_FEED = 'feeds';
     public const string SECTION_HEUREKA = 'heureka';
     public const string HEUREKA_SETTINGS = 'settings';
+    public const string MAIL_ALLOWED_RECIPIENTS = 'mail_whitelist_overview';
 
     /**
      * @param \Knp\Menu\FactoryInterface $menuFactory
@@ -206,6 +207,7 @@ class SideMenuBuilder
         $menu = $this->menuFactory->createItem(static::ROOT);
 
         $menu->addChild($this->createDashboardMenu());
+        $menu->addChild($this->createMailAllowedRecipientsMenu());
         $menu->addChild($this->createOrdersMenu());
         $menu->addChild($this->createInquiriesMenu());
         $menu->addChild($this->createCustomersMenu());
@@ -250,6 +252,21 @@ class SideMenuBuilder
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_DASHBOARD, $menu);
 
         return $menu;
+    }
+
+    /**
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function createMailAllowedRecipientsMenu(): ItemInterface
+    {
+        return $this->menuFactory->createItem(
+            static::MAIL_ALLOWED_RECIPIENTS,
+            [
+                'route' => 'admin_mailallowedrecipient_list',
+                'label' => t('Email allowed recipients'),
+                'display' => false,
+            ],
+        );
     }
 
     /**
