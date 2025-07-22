@@ -19,6 +19,10 @@
     z-index: 10000;
 }
 
+.gjs-highlighter {
+    outline: none !important;
+}
+
 .gjs-one-bg {
     background-color: #fff;
 }
@@ -162,6 +166,10 @@
     color: #000;
 }
 
+.gjs-clm-tag-close svg {
+    font-size: 10px;
+}
+
 .grapes-js-editor-opened {
     overflow: hidden;
     height: 100%;
@@ -196,25 +204,50 @@
     color: #000;
 }
 
-.image-position-left {
-    display: block;
-    margin-left: 0;
-    margin-right: auto;
-    text-align: left;
+// /* grapesjs editor control settings */
+.gjs-pn-buttons .gjs-pn-btn {
+    margin: 0 10px;
 }
 
-.image-position-center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.gjs-pn-buttons svg {
+    max-height: 22px;
 }
 
-.image-position-right {
-    display: block;
-    margin-left: auto;
-    margin-right: 0;
-    text-align: right;
+.gjs-pn-devices-c .gjs-pn-btn:nth-child(n + 4) {
+    display: none;
+}
+
+/* change order for control icons */
+.gjs-pn-options .gjs-pn-buttons .gjs-pn-btn {
+    &:nth-child(1) {
+        // components
+        order: 5;
+    }
+
+    &:nth-child(2) {
+        // preview
+        order: 5;
+    }
+
+    &:nth-child(3) {
+        // undo
+        order: 2;
+    }
+
+    &:nth-child(4) {
+        // redo
+        order: 2;
+    }
+
+    &:nth-child(5) {
+        // save
+        order: 1;
+    }
+
+    &:nth-child(6) {
+        // close
+        order: 99;
+    }
 }
 
 .gjs-clm-tags #gjs-clm-close {

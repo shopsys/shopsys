@@ -88,7 +88,7 @@ export default grapesjs.plugins.add('products', editor => {
                 <div style="position: relative; max-width: 100%;">
                     <div class="gjs-products-product-card-name">
                         ${productName.substring(0, 55)}
-                        <br><br>
+                        <br>
                         ${productCatnum}
                     </div>
                     <img src="${window.location.origin}/public/admin/images/${templateName}.png" alt="${dataProductName}" style="max-width: 100%;"/>
@@ -190,9 +190,10 @@ export default grapesjs.plugins.add('products', editor => {
                     class: 'gjs-products',
                 },
                 styles: `
-                    .gjs-products { text-align: center; }
+                    .gjs-products { text-align: center; margin-block: 40px; }
                     .gjs-products .gjs-product { display: inline-block; width: 20%; margin: 1em; }
-                    .gjs-products-product-card-name {text-align: center; position: absolute; width: 100%; font-size: min(0.8em, 1vw); padding: 0 10%; top: 63%;}
+                    .gjs-products .gjs-product img { margin: 0; }
+                    .gjs-products-product-card-name {text-align: center; position: absolute; width: 100%; font-size: 12px; padding: 0 10%; top: 63%;}
                 `,
                 traits: [
                     {

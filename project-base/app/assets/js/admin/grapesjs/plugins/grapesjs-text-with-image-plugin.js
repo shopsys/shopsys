@@ -2,22 +2,16 @@ import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 const IMAGE_POSITION_DATA_ATTRIBUTE = 'data-image-position';
-const IMAGE_TYPE_DATA_ATTRIBUTE = 'data-image-type';
 
 const TEXT_WITH_IMAGE_TYPE = 'text-with-image';
 
 const IMAGE_CLASS = 'gjs-text-with-image';
-const IMAGE_CLASS_INNER = 'gjs-text-with-image-inner';
-const IMAGE_CLASS_TYPE = 'gjs-text-with-image-type';
 const IMAGE_CLASS_FLOAT = 'gjs-text-with-image-float';
 
 const IMAGE_POSITION_LEFT = 'left';
 const IMAGE_POSITION_RIGHT = 'right';
 
-const IMAGE_FLOAT_INSIDE = 'inside-layout';
-const IMAGE_FLOAT_OUTSIDE = 'outside-layout';
-
-export default grapesjs.plugins.add('text-with-image', editor => {
+export default grapesjs.plugins.add('text-with-image', (editor) => {
     editor.Blocks.add('textWithImage', {
         id: 'text-with-image',
         category: 'basic-objects',
@@ -28,50 +22,52 @@ export default grapesjs.plugins.add('text-with-image', editor => {
     });
 
     editor.DomComponents.addType(TEXT_WITH_IMAGE_TYPE, {
-        isComponent: element => element.classList?.contains(IMAGE_CLASS),
-        model: {
-            defaults: {
-                attributes: {
-                    class: [IMAGE_CLASS],
-                },
-                droppable: true,
-                components: `
-                    <div class="${IMAGE_CLASS_INNER} ${IMAGE_CLASS_FLOAT}-left ${IMAGE_CLASS_TYPE}-outside-layout">
-                        <img class="image" data-gjs-type="image">
-                        <div class="gjs-text-ckeditor text">${Translator.trans('Insert your text here')}</div>
-                    </div>
-                `,
-            },
-        },
-    });
-
-    editor.DomComponents.addType('text-with-image-inner', {
-        isComponent: element => element.classList?.contains(IMAGE_CLASS_INNER),
+        isComponent: (element) => element.classList?.contains(IMAGE_CLASS),
         model: {
             init() {
-                this.on(`change:attributes:${IMAGE_POSITION_DATA_ATTRIBUTE}`, this.handleTypeChange);
-                this.on(`change:attributes:${IMAGE_TYPE_DATA_ATTRIBUTE}`, this.handleTypeChange);
+                this.on(`change:attributes:${IMAGE_POSITION_DATA_ATTRIBUTE}`, this.handlePositionChange);
             },
 
-            handleTypeChange(element) {
+            handlePositionChange(element) {
                 element.setClass([
-                    IMAGE_CLASS_INNER,
+                    IMAGE_CLASS,
                     `${IMAGE_CLASS_FLOAT}-${this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE]}`,
-                    `${IMAGE_CLASS_TYPE}-${this.getAttributes()[IMAGE_TYPE_DATA_ATTRIBUTE]}`,
                 ]);
             },
+
             defaults: {
-                removable: false,
-                draggable: false,
-                copyable: false,
-                droppable: false,
+                removable: true,
+                draggable: true,
+                copyable: true,
+                droppable: true,
                 resizable: false,
-                propagate: ['removable', 'draggable', 'copyable', 'droppable'],
                 attributes: {
                     [IMAGE_POSITION_DATA_ATTRIBUTE]: IMAGE_POSITION_LEFT,
-                    [IMAGE_TYPE_DATA_ATTRIBUTE]: IMAGE_FLOAT_OUTSIDE,
-                    class: [IMAGE_CLASS_INNER],
+                    class: [IMAGE_CLASS, `${IMAGE_CLASS_FLOAT}-left`],
                 },
+                components: [
+                    {
+                        tagName: 'img',
+                        type: 'image',
+                        classes: ['image'],
+                        attributes: {
+                            'data-gjs-type': 'image',
+                        },
+                        editable: true,
+                        selectable: true,
+                        removable: false,
+                    },
+                    {
+                        tagName: 'div',
+                        type: 'text',
+                        classes: ['gjs-text-ckeditor', 'text'],
+                        content: Translator.trans('Insert your text here'),
+                        attributes: {
+                            'data-gjs-type': 'text',
+                        },
+                        removable: false,
+                    },
+                ],
                 traits: [
                     {
                         type: 'select',
@@ -82,18 +78,6 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                             },
                             {
                                 id: IMAGE_POSITION_RIGHT,
-                            },
-                        ],
-                    },
-                    {
-                        type: 'select',
-                        name: IMAGE_TYPE_DATA_ATTRIBUTE,
-                        options: [
-                            {
-                                id: IMAGE_FLOAT_OUTSIDE,
-                            },
-                            {
-                                id: IMAGE_FLOAT_INSIDE,
                             },
                         ],
                     },

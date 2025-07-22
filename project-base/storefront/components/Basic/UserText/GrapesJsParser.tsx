@@ -18,7 +18,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, visibleSlid
     const dividedParts = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
 
     return (
-        <>
+        <div className="[&>*:last-child_*:last-child]:mb-0">
             {dividedParts.map((part, index) => {
                 if (part.match(/\[gjc-comp-(.*?)\]/g)) {
                     return (
@@ -34,7 +34,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, visibleSlid
 
                 return <UserText key={index} isGrapesJs htmlContent={part} />;
             })}
-        </>
+        </div>
     );
 });
 

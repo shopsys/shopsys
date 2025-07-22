@@ -2,20 +2,17 @@ import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export const linkPositionDataAttribute = 'data-link-position';
-export default grapesjs.plugins.add('custom-link', editor => {
+export default grapesjs.plugins.add('custom-link', (editor) => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
-        category: 'basic-objects',
-        content:
-            `
-          <a data-gjs-type="link-block" class="gjs-link-block">` +
-            Translator.trans('Insert your text here') +
-            `</a>`,
+        category: Translator.trans('Basic objects'),
+        content: `
+          <a data-gjs-type="link-block" class="gjs-link-block"></a>`,
         attributes: { class: 'fa fa-link' },
     });
 
     editor.DomComponents.addType('link-block', {
-        isComponent: element => element.tagName === 'A',
+        isComponent: (element) => element.tagName === 'A',
         model: {
             init() {
                 this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);

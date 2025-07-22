@@ -46,18 +46,18 @@ const Index: FC = () => {
                 </Webline>
             </header>
 
-            <main className="mt-4 mb-10 flex flex-col">
+            <main className="mt-4 mb-10">
                 <VerticalStack gap="sm">
-                    <Webline>
+                    <Webline className="gjs-template-article-webline" width="md">
                         <h1>Blog or Article title</h1>
                     </Webline>
 
-                    <Webline>
+                    <Webline className="gjs-template-article-webline" width="md">
                         <ArticleDate date={new Date().toISOString()} />
                     </Webline>
 
-                    <Webline>
-                        <GrapesJs className="gjs-editable py-4" />
+                    <Webline className="gjs-template-article-webline" width="md">
+                        <GrapesJs className="gjs-editable min-h-6" />
                     </Webline>
                 </VerticalStack>
             </main>

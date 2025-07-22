@@ -7,10 +7,10 @@ import './grapesjs-non-editable-page';
 import './plugins/grapesjs-custom-buttons-plugin';
 import './plugins/grapesjs-products-plugin';
 import './plugins/grapesjs-text-with-image-plugin';
-import './plugins/grapesjs-custom-blocks-plugin';
+import './plugins/grapesjs-custom-ckeditor-plugin.js';
 import './plugins/grapesjs-mail-template-plugin';
 import './plugins/grapesjs-custom-image-plugin';
-import './plugins/grapesjs-custom-link-plugin';
+import './plugins/grapesjs-custom-link-plugin.js';
 import './plugins/grapesjs-custom-image-file-plugin';
 import './plugins/grapesjs-custom-iframe-plugin';
 import './plugins/grapesjs-table-custom-plugin';
@@ -18,6 +18,12 @@ import './plugins/grapesjs-mail-custom-image-with-variable-plugin';
 import './plugins/grapesjs-mail-custom-image-plugin';
 import './plugins/grapesjs-custom-button-link-plugin';
 import './plugins/grapesjs-mail-custom-button-link-plugin';
+import './plugins/grapesjs-custom-column1-plugin';
+import './plugins/grapesjs-custom-column2-plugin';
+import './plugins/grapesjs-custom-column3-plugin';
+import './plugins/grapesjs-custom-video-plugin';
+import './plugins/grapesjs-custom-map-plugin';
+import './plugins/grapesjs-custom-text-plugin';
 import 'magnific-popup';
 import Translator from 'bazinga-translator';
 import { Buffer } from 'buffer';
@@ -30,7 +36,7 @@ export default class InitGrapesJs {
     static init($container) {
         let isAnyButtonOnPage = false;
         $container.filterAllNodes('.js-grapesjs-button').each((_index, element) => {
-            $(element).on('click', event => {
+            $(element).on('click', (event) => {
                 const frontendUrl = $(element).data('template-url');
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
@@ -42,7 +48,7 @@ export default class InitGrapesJs {
         });
 
         $container.filterAllNodes('.js-grapesjs-mail-button').each((_index, element) => {
-            $(element).on('click', event => {
+            $(element).on('click', (event) => {
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
                 const templateHtml = $(element).data('template');
@@ -80,11 +86,17 @@ export default class InitGrapesJs {
             ckeditorPlugin,
             'nonEditablePage',
             'customButtons',
-            'text-with-image',
-            'custom-blocks',
-            'table-custom',
-            'custom-image',
+            'ckeditor',
+            'text',
             'custom-link',
+            'text-with-image',
+            'custom-image',
+            'column1',
+            'column2',
+            'column3',
+            'table-custom',
+            'video',
+            'map',
             'custom-image-file',
             'custom-iframe',
             'custom-button-link',
@@ -106,6 +118,9 @@ export default class InitGrapesJs {
             forceClass: false,
             nativeDnD: true,
             plugins: plugins,
+            canvas: {
+                styles: ['/public/admin/styles/tailwind-for-admin.css'],
+            },
             i18n: {
                 locale: Translator.locale,
                 detectLocale: false,
@@ -118,7 +133,6 @@ export default class InitGrapesJs {
                 [ckeditorPlugin]: {
                     ckeditor: '',
                     options: {
-                        enterMode: 2,
                         versionCheck: false,
                         language: Translator.locale,
                         allowedContent: true,
@@ -206,6 +220,7 @@ export default class InitGrapesJs {
 
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
+            editor.Panels.removeButton('views', 'open-sm');
 
             const editableContent = $(`#${textareaId}`).val();
             editor.getWrapper().find('.gjs-editable')[0].append(editableContent);
@@ -238,6 +253,9 @@ export default class InitGrapesJs {
             avoidInlineStyle: false,
             forceClass: false,
             plugins: defaultPlugins.concat(customPlugins),
+            canvas: {
+                styles: ['/public/admin/styles/tailwind-for-admin.css'],
+            },
             i18n: {
                 locale: Translator.locale,
                 detectLocale: false,
@@ -285,14 +303,14 @@ export default class InitGrapesJs {
                         strinsert_strings: [
                             { name: Translator.trans('Mandatory variables') },
                             ...variables
-                                .filter(variable => variable.isRequired === true)
-                                .map(variable => {
+                                .filter((variable) => variable.isRequired === true)
+                                .map((variable) => {
                                     return { name: variable.label, value: variable.placeholder };
                                 }),
                             { name: Translator.trans('Optional variables') },
                             ...variables
-                                .filter(variable => variable.isRequired === false)
-                                .map(variable => {
+                                .filter((variable) => variable.isRequired === false)
+                                .map((variable) => {
                                     return { name: variable.label, value: variable.placeholder };
                                 }),
                         ],
@@ -350,8 +368,6 @@ export default class InitGrapesJs {
                 $gjsEditable.append(editableContent);
             }
         });
-
-        editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
 
         // Remove useless blocks
         editor.BlockManager.remove('sect30');

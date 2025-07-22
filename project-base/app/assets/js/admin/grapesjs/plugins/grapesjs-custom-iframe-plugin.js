@@ -19,6 +19,7 @@ export default grapesjs.plugins.add('custom-iframe', editor => {
             },
             defaults: {
                 type: 'iframe',
+                resizable: false,
                 traits: [
                     {
                         type: 'text',

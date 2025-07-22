@@ -220,8 +220,41 @@ generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
 	@echo "✅ Snapshots info table generation finished."
 	$(call _cypress-cleanup)
 
+# ------------------------------------------------------------------------------
+# 📦 Checking dependencies licenses
+# ------------------------------------------------------------------------------
+
 check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & storefront)
 	@echo "🔍 Checking dependency licenses..."
 	@docker compose exec -T php-fpm bash -lc "project-base/scripts/check-licenses.sh" && \
 	 docker compose exec -T storefront sh -lc "sh scripts/check-licenses.sh" && \
 	 echo "✅ All license checks passed"
+	$(call cypress-cleanup)
+
+# ------------------------------------------------------------------------------
+# 🔧 Compiling Tailwind CSS for admin
+# ------------------------------------------------------------------------------
+
+generate-tailwind-for-admin:
+	@echo "🚀 Compiling Tailwind CSS for admin..."
+	@echo "🗑️  Cleaning up existing files..."
+	rm -f project-base/app/web/public/admin/styles/tailwind-for-admin.css
+	mutagen-compose exec storefront pnpm compile-tailwind-for-admin
+	@echo "⏳ Waiting for file sync..."
+	@for i in 1 2 3 4 5; do \
+		if [ -f project-base/storefront/public/tailwind-for-admin.css ]; then \
+			break; \
+		fi; \
+		sleep 1; \
+	done
+	@if [ ! -f project-base/storefront/public/tailwind-for-admin.css ]; then \
+		echo "❌ Error: Compiled file not found after waiting. Check compilation."; \
+		exit 1; \
+	fi
+	mkdir -p project-base/app/web/public/admin/styles
+	cp project-base/storefront/public/tailwind-for-admin.css project-base/app/web/public/admin/styles/tailwind-for-admin.css
+	rm project-base/storefront/public/tailwind-for-admin.css
+	@echo "✅ Tailwind CSS compiled and moved to: project-base/app/web/public/admin/styles/tailwind-for-admin.css"
+	@echo "🔧 Rebuilding backend admin assets..."
+	mutagen-compose exec php-fpm php phing npm-dev
+	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."

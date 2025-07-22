@@ -1,9 +1,34 @@
+/* grapesjs template styles for admin editor */
+
 @layer components {
+    /* header background */
     .gjs-template-header-bg {
         @apply from-background-brand to-background-brand-less bg-linear-to-tr/srgb;
     }
 
+    /* header search button */
     .gjs-template-header-search-button {
         @apply top-1/2 left-3 -translate-y-1/2;
+    }
+
+    /* article width */
+    .gjs-template-article-webline {
+        @apply vl:max-w-[840px] vl:mx-auto;
+    }
+
+    /* selected element */
+    .gjs-selected:not(.user-text) {
+        outline: none !important;
+        @apply bg-sky-100/60;
+    }
+
+    /* hovered element */
+    .gjs-hovered:not(.user-text) {
+        @apply bg-sky-100/40;
+    }
+
+    /* empty image placeholder */
+    .gjs-plh-image {
+        @apply !h-52 !w-full !outline-none;
     }
 }

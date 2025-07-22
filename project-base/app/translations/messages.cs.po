@@ -25,6 +25,9 @@ msgstr "Vložit proměnnou"
 msgid "Insert your text here"
 msgstr "Zde vložte text"
 
+msgid "Left"
+msgstr "Vlevo"
+
 msgid "Link"
 msgstr "Odkaz"
 
@@ -37,6 +40,18 @@ msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastave
 msgid "Optional variables"
 msgstr "Volitelné proměnné"
 
+msgid "Path to file"
+msgstr "Cesta k souboru"
+
+msgid "Position of image"
+msgstr "Pozice obrázku"
+
+msgid "Position of link"
+msgstr "Zarovnání odkazu"
+
+msgid "Product image"
+msgstr "Obrázek produktu"
+
 msgid "Related products"
 msgstr "Související produkty"
 
@@ -48,6 +63,15 @@ msgstr "TOP"
 
 msgid "Terms-and-conditions.html"
 msgstr "Obchodni-podminky.html"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Text with image"
+msgstr "Text s obrázkem"
+
+msgid "Title"
+msgstr "Title"
 
 msgid "Unsupported file type"
 msgstr "Nepodporovaný typ souboru"
