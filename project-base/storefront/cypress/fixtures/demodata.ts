@@ -126,11 +126,11 @@ export const transport = {
         uuid: 'b7461a55-b6e6-5b4f-a3c9-92f35366fe41',
         name: 'Personal collection',
         storeOstrava: {
-            uuid: '67ac2c38-7bdd-59fa-b762-0704cee8323e',
+            uuid: '4bade3e5-3b8c-5e71-93a5-ae1d84564575',
             name: 'Ostrava',
         },
         storePardubice: {
-            uuid: 'c0b38c80-9755-5030-930b-fa971e03c4bd',
+            uuid: '415ee258-8641-5ad5-bfa4-31eb2a75588a',
             name: 'Pardubice',
         },
     },

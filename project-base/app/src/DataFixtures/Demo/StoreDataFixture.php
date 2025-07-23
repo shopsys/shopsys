@@ -315,8 +315,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_LOCATION_LONGITUDE => '21.249161',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
             ];
-
-            break;
         }
 
         return $stores;
@@ -328,9 +326,10 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function initStoreData(array $demoRow): StoreData
     {
-        $storeData = $this->storeDataFactory->createForDomain($demoRow[self::ATTR_DOMAIN_ID]);
+        $domainId = $demoRow[self::ATTR_DOMAIN_ID];
+        $storeData = $this->storeDataFactory->createForDomain($domainId);
 
-        $storeData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $demoRow[self::ATTR_NAME])->toString();
+        $storeData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $demoRow[self::ATTR_NAME] . $domainId)->toString();
 
         $storeData->name = $demoRow[self::ATTR_NAME];
         $storeData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
