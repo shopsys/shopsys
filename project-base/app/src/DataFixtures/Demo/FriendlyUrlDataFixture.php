@@ -7,7 +7,6 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class FriendlyUrlDataFixture extends AbstractReferenceFixture
@@ -26,11 +25,13 @@ class FriendlyUrlDataFixture extends AbstractReferenceFixture
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-            'front_product_detail',
-            9999,
-            'Unused friendly URL',
-            Domain::FIRST_DOMAIN_ID,
-        );
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_product_detail',
+                9999,
+                'Unused friendly URL',
+                $domainId,
+            );
+        }
     }
 }
