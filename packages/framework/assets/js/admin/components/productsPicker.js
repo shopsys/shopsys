@@ -1,7 +1,5 @@
 import 'magnific-popup';
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
+import Sortable from 'sortablejs';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
 
@@ -24,10 +22,13 @@ export default class ProductsPicker {
         this.$itemsContainer.find('.js-products-picker-item').each(function () {
             _this.initItem($(this));
         });
-        this.$itemsContainer.sortable({
-            items: '.js-products-picker-item',
-            handle: '.js-products-picker-item-handle',
-            update: () => this.updateOrdering(),
+        this.$itemsContainer.each((_index, element) => {
+            Sortable.create(element, {
+                handle: '.js-products-picker-item-handle',
+                draggable: '.js-products-picker-item',
+                animation: 150,
+                onUpdate: () => this.updateOrdering(),
+            });
         });
     }
 

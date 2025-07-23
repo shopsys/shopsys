@@ -1,7 +1,4 @@
 import 'magnific-popup';
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
 import MultiplePicker from './MultiplePicker';

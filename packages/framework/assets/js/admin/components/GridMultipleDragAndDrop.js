@@ -1,7 +1,5 @@
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import Translator from 'bazinga-translator';
+import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 import Window from '../utils/Window';
@@ -9,15 +7,18 @@ import Window from '../utils/Window';
 export default class GridMultipleDragAndDrop {
     constructor($content) {
         this.toggleRowHolders($content);
+
+        const _this = this;
         $content.find('.js-multiple-grids-save-all-button').click(event => this.saveOrdering($content, event));
-        $content.find('.js-multiple-grids-rows-unified').sortable({
-            cursor: 'move',
-            handle: '.cursor-move',
-            items: '.js-grid-row, .js-grid-row-holder',
-            placeholder: 'in-drop-place',
-            revert: 200,
-            change: () => this.onUpdate($content),
-            update: () => this.onUpdate($content),
+        $content.find('.js-inline-edit-rows').each(function () {
+            Sortable.create(this, {
+                group: 'multiple-grids',
+                handle: '.js-move-handle',
+                draggable: '.js-grid-row',
+                animation: 150,
+                onChange: () => _this.onUpdate($content),
+                onEnd: () => _this.onUpdate($content),
+            });
         });
     }
 

@@ -1,6 +1,3 @@
-import 'jquery-ui/sortable';
-import 'jquery-ui/ui/widgets/mouse';
-import 'jquery-ui-touch-punch';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import { KeyCodes } from '../../common/utils/KeyCodes';
@@ -44,7 +41,6 @@ export default class GridInlineEdit {
 
         $grid.off('click', '.js-inline-edit-save').on('click', '.js-inline-edit-save', event => {
             _this.saveRow($(event.target).closest('.js-grid-editing-row'), $grid);
-            $grid.find('.js-drag-and-drop-grid-rows').sortable('enable');
             return false;
         });
 
@@ -140,7 +136,6 @@ export default class GridInlineEdit {
                 new Register().registerNewContent($formRow);
                 $grid.find('.js-inline-edit-rows').prepend($formRow);
                 $formRow.find('input[type=text]:first').focus();
-                $grid.find('.js-drag-and-drop-grid-rows').sortable('disable');
             },
         });
     }
