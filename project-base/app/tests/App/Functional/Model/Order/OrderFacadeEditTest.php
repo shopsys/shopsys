@@ -14,7 +14,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -121,7 +120,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $orderItemData->vatPercent = '50.00';
         $orderItemData->unitPriceWithVat = Money::create(100);
         $orderItemData->unitPriceWithoutVat = Money::create('66.67');
-        $orderData->items[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
+        $orderData->addItem($orderItemData);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
@@ -155,7 +154,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $orderItemData->unitPriceWithoutVat = Money::create(50);
         $orderItemData->totalPriceWithVat = Money::create(950);
         $orderItemData->totalPriceWithoutVat = Money::create(400);
-        $orderData->items[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
+        $orderData->addItem($orderItemData);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
