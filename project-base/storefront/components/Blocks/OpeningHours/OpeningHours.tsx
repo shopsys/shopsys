@@ -4,6 +4,7 @@ import { TypeOpeningHours } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { formatAccessibleTime } from 'utils/accessibility/formatAccessibleTime';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
@@ -12,7 +13,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
     openingHours,
     className,
 }) => {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
     const { formatDate } = useFormatDate();
 
     const getDayName = (currentDayOfWeek: number, requestedDayOfWeek: number): string => {
@@ -72,34 +73,55 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                 })}
 
             <div
+                aria-label={t('Opening hours')}
                 className={twMergeCustom('text-text-default flex flex-col gap-1 self-baseline text-xs', className)}
                 data-tid={TIDs.opening_hours}
+                role="list"
             >
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
                     const isClosedWholeDay = openingHoursRanges.length === 0;
 
+                    const ariaClosedText = `${getDayName(openingHours.dayOfWeek, dayOfWeek)} ${formatDate(date)}, ${t('Closed')}`;
+                    const ariaOpenText = `${getDayName(openingHours.dayOfWeek, dayOfWeek)} ${formatDate(date)}, ${t('Open')} ${openingHoursRanges
+                        .map(({ openingTime, closingTime }) => {
+                            const openingFormatted = formatAccessibleTime(openingTime, lang);
+                            const closingFormatted = formatAccessibleTime(closingTime, lang);
+
+                            return `${openingFormatted} ${t('to')} ${closingFormatted}`;
+                        })
+                        .join(', ')}`;
+
+                    const dayAriaText = isClosedWholeDay ? ariaClosedText : ariaOpenText;
+
                     return (
                         <div
                             key={dayOfWeek}
+                            aria-current={isToday ? 'date' : undefined}
+                            aria-label={dayAriaText}
                             className={twJoin(
                                 'flex flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
-                            <span className="h6 w-44">
+                            <span aria-hidden="true" className="h6 w-44">
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} <span>{formatDate(date)}</span>
                             </span>
 
-                            <span>
+                            <span aria-hidden="true">
                                 {isClosedWholeDay ? (
                                     <>{t('Closed')}</>
                                 ) : (
-                                    openingHoursRanges.map(({ openingTime, closingTime }, index) => (
-                                        <Fragment key={index}>
-                                            {index > 0 && ','} {openingTime}&nbsp;&#8209;&nbsp;{closingTime}
-                                        </Fragment>
-                                    ))
+                                    openingHoursRanges.map(({ openingTime, closingTime }, index) => {
+                                        const openingFormatted = formatAccessibleTime(openingTime, lang);
+                                        const closingFormatted = formatAccessibleTime(closingTime, lang);
+
+                                        return (
+                                            <Fragment key={index}>
+                                                {index > 0 && ','} {openingFormatted} - {closingFormatted}
+                                            </Fragment>
+                                        );
+                                    })
                                 )}
                             </span>
 
