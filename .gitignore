@@ -6,8 +6,6 @@
 /.phpcs-cache
 /.docker-sync
 .DS_Store
-/.claude/settings.local.json
-CLAUDE.local.md
 /composer.lock
 /docker-compose.yml
 /docker-sync.yml
@@ -24,4 +22,6 @@ CLAUDE.local.md
 /phing.phar
 /node_modules
 /package-lock.json
+
+/.claude/**/*.local.*
 CLAUDE.local.md
