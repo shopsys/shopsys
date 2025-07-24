@@ -66,7 +66,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                     {order.city}, {order.postcode}
                 </span>
 
-                <span>{order.deliveryCountry?.name}</span>
+                <span>{order.country.name}</span>
 
                 <span>{order.companyNumber && `${t('Company number')}: ${order.companyNumber}`}</span>
 
