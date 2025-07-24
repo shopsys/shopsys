@@ -157,11 +157,8 @@ msgstr "<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>"
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
 msgstr "<b>Zvolili jste platbu kreditní kartou. Prosím proveďte ji do dvou pracovních dnů.</b>"
 
-msgid "<div class=\"gjs-text-ckeditor\"> description - Lorem ipsum dolor sit amet, </div> %productsFirstRow% <div class=\"gjs-text-ckeditor\"> consectetur </div> %productsSecondRow% <div class=\"gjs-text-ckeditor\">adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu. \\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue. </div>"
-msgstr "<div class=\"gjs-text-ckeditor\"> description - Lorem ipsum dolor sit amet, </div> %productsFirstRow% <div class=\"gjs-text-ckeditor\"> consectetur </div> %productsSecondRow% <div class=\"gjs-text-ckeditor\">adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu. \\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue. </div>"
-
-msgid "<div class=\"gjs-text-ckeditor\">Article text for search testing, the search phrase is &#34;Dina&#34;.</div>"
-msgstr "<div class=\"gjs-text-ckeditor\">Text článku pro testování vyhledávání, vyhledávací fráze je &#34;Dina&#34;.</div>"
+msgid "<div class=\"gjs-text-ckeditor\"><p>Blog article text for search testing, the search phrase is &#34;Dina&#34;.</p></div>"
+msgstr ""
 
 msgid "<h1>Your order has been cancelled</h1> Dear customer,<br/> <br/> your order has been cancelled.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
 msgstr "<h1>Vaše objednávka byla zrušena</h1> Vážený zákazníku,<br/> <br/> vaše objednávka byla zrušena.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Datum a čas vytvoření: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena včetně DPH: <span style=\"white-space : nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
@@ -1009,6 +1006,9 @@ msgstr "Lokalizace"
 msgid "Logitech S120 black"
 msgstr "Logitech S120 black"
 
+msgid "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium"
+msgstr ""
+
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr "JURA Impressa J9 TFT Carbon Automatický kávovar/espresso,barevný LCD"
 
@@ -1819,6 +1819,9 @@ msgstr "Video"
 msgid "Viewfinder type"
 msgstr "Typ hledáčku"
 
+msgid "Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum."
+msgstr ""
+
 msgid "W"
 msgstr ""
 
@@ -2055,9 +2058,6 @@ msgstr "papír"
 
 msgid "pcs"
 msgstr "ks"
-
-msgid "perex"
-msgstr ""
 
 msgid "plasma"
 msgstr "plazmová"
