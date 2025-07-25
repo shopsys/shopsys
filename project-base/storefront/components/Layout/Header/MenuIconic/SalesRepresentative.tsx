@@ -34,7 +34,7 @@ export const SalesRepresentative: FC = () => {
                         width={100}
                     />
                 )}
-                <div>
+                <div className="flex flex-col">
                     {fullName && <span className="h5">{fullName}</span>}
                     <span className="h6 text-text-less">{t('Your sales representative')}</span>
                 </div>
