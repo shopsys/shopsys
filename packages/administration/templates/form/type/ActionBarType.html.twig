@@ -1,11 +1,9 @@
 {% block action_bar_row %}
     {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
         {% block fixed_bar_content %}
-            <div class="btn-list justify-content-end">
-                {% for child in form %}
-                    {{- form_widget(child) -}}
-                {% endfor %}
-            </div>
+            {% for child in form %}
+                {{- form_widget(child) -}}
+            {% endfor %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

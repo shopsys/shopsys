@@ -10,7 +10,7 @@ export default class FormChangeInfo {
 
     initContent($container) {
         $container
-            .filterAllNodes('.web__content form:has(button[type="submit"])')
+            .filterAllNodes('.page-body form:has(button[type="submit"])')
             .change(() => FormChangeInfo.showInfo())
             .each(function () {
                 if ($(this).find('.form-input-error:first, .js-validation-errors-list li:first').length > 0) {
@@ -20,7 +20,7 @@ export default class FormChangeInfo {
     }
 
     initDocument() {
-        $(document).on('submit', '.web__content form', event => {
+        $(document).on('submit', '.page-body form', event => {
             if (event.isDefaultPrevented() === false) {
                 FormChangeInfo.isFormSubmitted = true;
             }
@@ -47,18 +47,16 @@ export default class FormChangeInfo {
 
     static showInfo() {
         const textToShow = Translator.trans("You have made changes, don't forget to save them!");
-        const $fixedBarIn = $('.web__content .window-fixed-bar .window-fixed-bar__in');
+        const $fixedBarIn = $('[data-js-fixed-bar]');
         const $infoDiv = $fixedBarIn.find('#js-form-change-info');
         if (!FormChangeInfo.isInfoShown) {
             $fixedBarIn.prepend(
-                '<div class="window-fixed-bar__item">' +
-                    '<div id="js-form-change-info" class="window-fixed-bar__item__cell">' +
-                    '<strong>' +
-                    InfoCircle +
-                    textToShow +
-                    '</strong>' +
-                    '</div>' +
-                    '</div>',
+                `<div class="col-md-auto">
+                    <div id="js-form-change-info" class="d-flex align-items-center h-100 gap-2">
+                        <span class="icon-wrapper">${InfoCircle}</span>
+                        <span class="small">${textToShow}</span>
+                    </div>
+                </div>`,
             );
         } else {
             $infoDiv.text = textToShow;
