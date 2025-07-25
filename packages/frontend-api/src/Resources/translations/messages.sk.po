@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Access to all the complaints created under the user's company"
+msgstr "Prístup ku všetkým sťažnostiam vytvoreným v rámci spoločnosti používateľa"
+
+msgid "Access to all the orders created under the user's company"
+msgstr "Prístup ku všetkým objednávkam vytvoreným v rámci spoločnosti používateľa"
+
+msgid "B2B data and user management"
+msgstr "Správa údajov a používateľov B2B"
+
+msgid "Cart manipulation and order creation"
+msgstr "Manipulácia s košíkom a vytváranie objednávok"
+
+msgid "Complaint creation"
+msgstr "Vytvorenie reklamácie"
+
+msgid "Customer not found."
+msgstr "Zákazník nenájdený."
+
+msgid "Customer sees prices"
+msgstr "Zákazník vidí ceny"
+
+msgid "Customer self manage"
+msgstr "Samospráva zákazníka"
+
+msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."
+msgstr "{0}Zákazník sa ešte neprihlásil.|[1,Inf[ Zákazník používa prihlásenie cez %loginTypes%."
+

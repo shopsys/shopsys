@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Maximum price per click"
+msgstr "Maximálna cena za klik"
+
+msgid "Maximum price per click in offers"
+msgstr "Maximálna cena za klik v ponukách"
+
+msgid "Offer in feed"
+msgstr "Ponuka vo feede"
+
+msgid "Zbozi.cz product feed"
+msgstr "Feed produktov pre Zbozi.cz"
+

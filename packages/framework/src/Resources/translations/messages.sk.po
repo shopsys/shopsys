@@ -1,0 +1,4869 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid ""
+msgstr ""
+
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr "\"Platí do\" musí byť väčšie ako \"Platí od\""
+
+msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
+msgstr "%count% položka z CSV súboru bola úspešne importovaná.|%count% položky z CSV súboru boli úspešne importované.|%count% položiek z CSV súboru bolo úspešne importovaných."
+
+msgid "%defaultCurrency% per 1 %currentCurrency%"
+msgstr "%defaultCurrency% za 1 %currentCurrency%"
+
+msgid "%defaultCurrency% per unit"
+msgstr "%defaultCurrency% za jednotku"
+
+msgid "%name% agrees with privacy policy."
+msgstr "%name% súhlasí so zásadami ochrany osobných údajov."
+
+msgid "-- Choose area --"
+msgstr "-- Vyberte oblasť --"
+
+msgid "-- Choose article --"
+msgstr "-- Vyberte článok --"
+
+msgid "-- Choose article position --"
+msgstr "-- Vyberte pozíciu článku --"
+
+msgid "-- Choose brand --"
+msgstr "-- Vyberte značku --"
+
+msgid "-- Choose group --"
+msgstr "-- Vyberte skupinu --"
+
+msgid "-- Choose unit --"
+msgstr "-- Vyberte jednotku --"
+
+msgid "-- Create new price list --"
+msgstr "-- Vytvoriť nový cenník --"
+
+msgid "-- Select name of the transfer --"
+msgstr "-- Vyberte názov prevodu --"
+
+msgid "---"
+msgstr "---"
+
+msgid "0"
+msgstr ""
+
+msgid "301 (Permanent redirect)"
+msgstr "301 (Trvalé presmerovanie)"
+
+msgid "302 (Temporary redirect)"
+msgstr "302 (Dočasné presmerovanie)"
+
+msgid "<a href=\"%url%\">Default unit is not set.</a>"
+msgstr "<a href=\"%url%\">Predvolená jednotka nie je nastavená.</a>"
+
+msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Článok zásad ochrany osobných údajov pre doménu %domainName% nie je nastavený.</a>"
+
+msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
+msgstr "<a href=\"%url%\">Niektoré povinné emailové šablóny nie sú úplne nastavené.</a>"
+
+msgid "<a href=\"%url%\">Term and conditions article for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Článok obchodných podmienok pre doménu %domainName% nie je nastavený.</a>"
+
+msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
+msgstr "<a href=\"%url%\">Nie súkrajiny, musíte nejaké vytvoriť.</a>"
+
+msgid "<a href=\"%url%\">There are no units, you need to create some.</a>"
+msgstr "<a href=\"%url%\">Nie sú jednotky, musíte nejaké vytvoriť.</a>"
+
+msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
+msgstr "<a href=\"%url%\">Nie sú sklady, musíte nejaké vytvoriť.</a>"
+
+msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Článok súhlasu používateľa pre doménu %domainName% nie je nastavený.</a>"
+
+msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
+msgstr "<strong><a href=\"{{ url }}\">Panel upozornení</a></strong> bol úspešne aktualizovaný"
+
+msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
+msgstr "<strong><a href=\"{{ url }}\">SEO kategória</a></strong> bola uložená"
+
+msgid "Accessories"
+msgstr "Príslušenstvo"
+
+msgid "Accessories in purchase confirmation box"
+msgstr "Príslušenstvo v poli potvrdenia nákupu"
+
+msgid "Account"
+msgstr "Účet"
+
+msgid "Action"
+msgstr "Akcia"
+
+msgid "Active"
+msgstr "Aktívny"
+
+msgid "Add"
+msgstr "Pridať"
+
+msgid "Add URL"
+msgstr "Pridať URL"
+
+msgid "Add another flag"
+msgstr "Pridať ďalšiu značku"
+
+msgid "Add another limit"
+msgstr "Pridať ďalší limit"
+
+msgid "Add another mail whitelist pattern"
+msgstr "Pridať ďalší vzor bieleho zoznamu emailov"
+
+msgid "Add another parameter"
+msgstr "Pridať ďalší parameter"
+
+msgid "Add another price with weight limit"
+msgstr "Pridať ďalšiu cenu s hmotnostným limitom"
+
+msgid "Add another video"
+msgstr "Pridať ďalšie video"
+
+msgid "Add country"
+msgstr "Pridať krajinu"
+
+msgid "Add customer user"
+msgstr "Pridať zákazníka"
+
+msgid "Add files"
+msgstr "Pridať súbory"
+
+msgid "Add item"
+msgstr "Pridať položku"
+
+msgid "Add language combination"
+msgstr "Pridať kombináciu jazykov"
+
+msgid "Add limit"
+msgstr "Pridať limit"
+
+msgid "Add new customer user"
+msgstr "Pridať nového zákazníka"
+
+msgid "Add new customer user to %companyName%"
+msgstr "Pridať nového zákazníka do %companyName%"
+
+msgid "Add opening hours"
+msgstr "Pridať otváracie hodiny"
+
+msgid "Add product"
+msgstr "Pridať produkt"
+
+msgid "Add requirement"
+msgstr "Pridať požiadavku"
+
+msgid "Add some alternate language combinations"
+msgstr "Pridať niektoré alternatívne kombinácie jazykov"
+
+msgid "Add some flag"
+msgstr "Pridať niektoré značky"
+
+msgid "Add some mail whitelist patterns"
+msgstr "Pridať niektoré vzory bieleho zoznamu emailov"
+
+msgid "Add some parameters"
+msgstr "Pridať niektoré parametre"
+
+msgid "Add to products"
+msgstr "Pridať k produktom"
+
+msgid "Add variant"
+msgstr "Pridať variant"
+
+msgid "Added"
+msgstr "Pridané"
+
+msgid "Additional information"
+msgstr "Dodatočné informácie"
+
+msgid "Additional login info"
+msgstr "Dodatočné prihlasovací informácie"
+
+msgid "Address"
+msgstr "Adresa"
+
+msgid "Admin inquiry detail URL"
+msgstr "URL detailu adminského dopytu"
+
+msgid "Administration"
+msgstr "Administrácia"
+
+msgid "Administration localization was changed to \"%locale%\""
+msgstr "Lokalizácia administrácie bola zmenená na \"%locale%\""
+
+msgid "Administrator"
+msgstr "Administrátor"
+
+msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
+msgstr "Administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený. Odkaz na nastavenie hesla bol poslaný na jeho email."
+
+msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Administrator <strong>{{ name }}</strong> deleted."
+msgstr "Administrátor <strong>{{ name }}</strong> zmazaný."
+
+msgid "Administrator <strong>{{ name }}</strong> is the only one and can't be deleted."
+msgstr "Administrátor <strong>{{ name }}</strong> je jediný a nemôže byť zmazaný."
+
+msgid "Administrator ID"
+msgstr "ID administrátora"
+
+msgid "Administrator activities history"
+msgstr "História aktivit administrátora"
+
+msgid "Administrator role group"
+msgstr "Skupina rolí administrátora"
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr "Skupina rolí administrátora <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr "Skupina rolí administrátora <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Administrator role group <strong>{{ name }}</strong> deleted."
+msgstr "Skupina rolí administrátora <strong>{{ name }}</strong> zmazaná."
+
+msgid "Administrator role groups"
+msgstr "Skupiny rolí administrátora"
+
+msgid "Administrators"
+msgstr "Administrátori"
+
+msgid "Administrators overview"
+msgstr "Prehľad administrátorov"
+
+msgid "Advanced search"
+msgstr "Pokročilé vyhľadávanie"
+
+msgid "Advertising"
+msgstr "Reklama"
+
+msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
+msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> vytvorená"
+
+msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
+msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> upravená"
+
+msgid "Advertising <strong>{{ name }}</strong> deleted"
+msgstr "Reklama <strong>{{ name }}</strong> zmazaná"
+
+msgid "Advertising system"
+msgstr "Reklamáčný systém"
+
+msgid "All"
+msgstr "Všetko"
+
+msgid "All domains"
+msgstr "Všetky domény"
+
+msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
+msgstr "Všetky ceny musia byť spracované manuálne ak je zaškrtnuté, inak bude jednotková cena bez DPH a celkové ceny pre túto položku prepóčítané automaticky."
+
+msgid "All search results"
+msgstr "Všetky výsledky vyhľadávania"
+
+msgid "Allow negative stock"
+msgstr "Povoliť záporný stav skladu"
+
+msgid "Alternate language domains"
+msgstr "Alternatívne jazykové domény"
+
+msgid "Alternate language settings"
+msgstr "Nastavenia alternatívnych jazykov"
+
+msgid "Alternate language settings modified"
+msgstr "Nastavenia alternatívnych jazykov upravené"
+
+msgid "Amount"
+msgstr "Suma"
+
+msgid "An authentication exception occurred."
+msgstr "Vyskytla sa výnimka overenia."
+
+msgid "An email with 6 digit code was sent to your email address."
+msgstr "E-mail so 6-cif. kódom bol odoslaný na vašu e-mailovú adresu."
+
+msgid "Ancestor category"
+msgstr "Rodičovská kategória"
+
+msgid "Applicable variables"
+msgstr "Použiteľné premenné"
+
+msgid "Applicable variables for Content"
+msgstr "Použiteľné premenné pre obsah"
+
+msgid "Applicable variables for Subject"
+msgstr "Použiteľné premenné pre predmet"
+
+msgid "Apply"
+msgstr "Použiť"
+
+msgid "Apply according to customer"
+msgstr "Použiť podľa zákazníka"
+
+msgid "Apply according to date and time limit"
+msgstr "Použiť podľa dátumového a časového limitu"
+
+msgid "Apply according to product flags"
+msgstr "Použiť podľa značiek produktu"
+
+msgid "Apply according to the total price of the order"
+msgstr "Použiť podľa celkovej ceny objednávky"
+
+msgid "Apply to selected brands"
+msgstr "Použiť na vybrané značky"
+
+msgid "Apply to selected categories"
+msgstr "Použiť na vybrané kategórie"
+
+msgid "Apply to selected products"
+msgstr "Použiť na vybrané produkty"
+
+msgid "Approved with zero amount"
+msgstr "Schválené s nulovou sumou"
+
+msgid "Area"
+msgstr "Oblasť"
+
+msgid "Article"
+msgstr "Článok"
+
+msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
+msgstr "Článok \"%name%\" nastavený na zobrazenie právnych podmienok. Toto nastavenie bude stratené. Naozaj ho chcete zmazať?"
+
+msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
+msgstr "Článok \"%name%\" nastavený na zobrazenie informácií o zásadách súhlasu používateľa. Toto nastavenie bude stratené. Naozaj ho chcete zmazať?"
+
+msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Článok <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
+
+msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Článok <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Article <strong>{{ name }}</strong> deleted"
+msgstr "Článok <strong>{{ name }}</strong> zmazaný"
+
+msgid "Article data"
+msgstr "Údaje článku"
+
+msgid "Articles in footer"
+msgstr "Články v päte"
+
+msgid "Articles overview"
+msgstr "Prehľad článkov"
+
+msgid "Articles without positioning"
+msgstr "Články bez umiestnenia"
+
+msgid "Assign to category"
+msgstr "Priradiť ku kategórii"
+
+msgid "Attribute %attribute% was changed %changes%"
+msgstr "Atribút %attribute% bol zmenený %changes%"
+
+msgid "Authentication code"
+msgstr "Overovací kód"
+
+msgid "Automated filters"
+msgstr "Automatizované filtre"
+
+msgid "Available"
+msgstr "Dostupné"
+
+msgid "Available payment methods"
+msgstr "Dostupné spôsoby platby"
+
+msgid "Available shipping methods"
+msgstr "Dostupné spôsoby doručenia"
+
+msgid "Average duration from all runs in last seven days"
+msgstr "Priemerné trvanie zo všetkých spustení za posledných sejď dní"
+
+msgid "Avg duration (mm:ss)"
+msgstr "Priem. trvanie (mm:ss)"
+
+msgid "Back to category selection"
+msgstr "Späť na výber kategórie"
+
+msgid "Back to customer {{ name }}"
+msgstr "Späť k zákazníkovi {{ name }}"
+
+msgid "Back to dashboard"
+msgstr "Späť na nástennú dosku"
+
+msgid "Back to overview"
+msgstr "Späť na prehľad"
+
+msgid "Back to overview of available combinations"
+msgstr "Späť na prehľad dostupných kombinácií"
+
+msgid "Back to parameter selection"
+msgstr "Späť na výber parametrov"
+
+msgid "Background color"
+msgstr "Farba pozadia"
+
+msgid "Bank account number"
+msgstr "Číslo bankového účtu"
+
+msgid "Bank account payment declined"
+msgstr "Platba bankovým účtom zamietnutá"
+
+msgid "Bank payment confirmed by advice"
+msgstr "Banková platba potvrdená avizom"
+
+msgid "Bank payment confirmed by statement"
+msgstr "Banková platba potvrdená výpisom"
+
+msgid "Bank transfer not completed"
+msgstr "Bankový prevod nedokončený"
+
+msgid "Banner"
+msgstr "Banner"
+
+msgid "Banners"
+msgstr "Bannery"
+
+msgid "Basic"
+msgstr "Základné"
+
+msgid "Basic frontend currency %domainName%"
+msgstr "Základná frontend mena %domainName%"
+
+msgid "Basic information"
+msgstr "Základné informácie"
+
+msgid "Basic price"
+msgstr "Základná cena"
+
+msgid "Batch ID"
+msgstr "ID dávky"
+
+msgid "Because status \"%name%\" is used with other complaints also, you have to choose a new status which will replace the existing one. Which status you want to set to these complaints? When changing this, there won't be emails sent to customers."
+msgstr "Pretože stav \"%name%\" sa používa aj s inými stážnosťami, musíte si vybrať nový stav, ktorý nahradi existujúci. Aký stav chcete nastaviť týmto stážnostiam? Pri zmene sa nepošlú e-maily zákazníkom."
+
+msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
+msgstr "Pretože stav \"%name%\" sa používa aj s inými objednávkami, musíte si vybrať nový stav, ktorý nahradi existujúci. Aký stav chcete nastaviť týmto objednávkam? Pri zmene sa nepošlú e-maily zákazníkom."
+
+msgid "Best-selling products of category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> set."
+msgstr "Najpredávanejšie produkty kategórie <strong><a href=\"{{ url }}\">{{ name }}</a></strong> nastavené."
+
+msgid "Bestsellers"
+msgstr "Najpredávanejšie"
+
+msgid "Bestsellers of the category"
+msgstr "Najpredávanejšie z kategórie"
+
+msgid "Billing address"
+msgstr "Fúktúračná adresa"
+
+msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Fúktúračná adresa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
+
+msgid "Billing and delivery address"
+msgstr "Fúktúračná a doručovací adresa"
+
+msgid "Billing data"
+msgstr "Fúktúračné údaje"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Blog article"
+msgstr "Blogový článok"
+
+msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr "Blogový článok <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený"
+
+msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
+msgstr "Blogový článok <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol aktualizovaný"
+
+msgid "Blog article <strong>{{ name }}</strong> has been removed"
+msgstr "Blogový článok <strong>{{ name }}</strong> bol odstránený"
+
+msgid "Blog articles"
+msgstr "Blogové články"
+
+msgid "Blog categories"
+msgstr "Blogové kategórie"
+
+msgid "Blog category"
+msgstr "Blogová kategória"
+
+msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr "Blogová kategória <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
+msgstr "Blogová kategória <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola aktualizovaná"
+
+msgid "Blog category <strong>{{ name }}</strong> has been removed"
+msgstr "Blogová kategória <strong>{{ name }}</strong> bola odstránená"
+
+msgid "Brand"
+msgstr "Značka"
+
+msgid "Brand <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Značka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
+
+msgid "Brand <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Značka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
+
+msgid "Brand <strong>{{ name }}</strong> deleted"
+msgstr "Značka <strong>{{ name }}</strong> zmazaná"
+
+msgid "Brand overview"
+msgstr "Prehľad značiek"
+
+msgid "Brands"
+msgstr "Značky"
+
+msgid "Browse files"
+msgstr "Prechádzať súbory"
+
+msgid "Bulk coupons with prefix"
+msgstr "Hromadné kupóny s prefixom"
+
+msgid "Bulk creation of promo codes"
+msgstr "Hromadné vytváranie promo kódov"
+
+msgid "Bulk edit"
+msgstr "Hromadné upravovanie"
+
+msgid "Bulk editing done"
+msgstr "Hromadné upravovanie dokončené"
+
+msgid "Bulk promo code generation"
+msgstr "Hromadné generovanie promo kódov"
+
+msgid "By flag"
+msgstr "Podľa značky"
+
+msgid "CMS"
+msgstr "CMS"
+
+msgid "CSS documentation"
+msgstr "CSS dokumentácia"
+
+msgid "CSV file"
+msgstr "CSV súbor"
+
+msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
+msgstr "CSV súbor musí byť v UTF-8 kódovaní so stĺpcami \"{{ columns }}\". Čiarka sa odporúča ako oddeľovač stĺpcov a bodka (.) ako desatinný oddeľovač."
+
+msgid "Calculated price excluding VAT"
+msgstr "Vypočítaná cena bez DPH"
+
+msgid "Calculated price including VAT"
+msgstr "Vypočítaná cena s DPH"
+
+msgid "Cancel"
+msgstr "Zrušiť"
+
+msgid "Canceled"
+msgstr "Zrušené"
+
+msgid "Cannot read file."
+msgstr "Nedá sa čítať súbor."
+
+msgid "Canonical URL"
+msgstr "Kanonická URL"
+
+msgid "Cardholder canceled the payment"
+msgstr "Držiteľ karty zrušil platbu"
+
+msgid "Catalog number"
+msgstr "Katalógové číslo"
+
+msgid "Categories"
+msgstr "Kategórie"
+
+msgid "Categories order saved."
+msgstr "Poradie kategórií uložené."
+
+msgid "Category"
+msgstr "Kategória"
+
+msgid "Category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Kategória <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
+
+msgid "Category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modified"
+msgstr "Kategória <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Category <strong>{{ name }}</strong> deleted"
+msgstr "Kategória <strong>{{ name }}</strong> zmazaná"
+
+msgid "Category description"
+msgstr "Popis kategórie"
+
+msgid "Category is hidden on all domains"
+msgstr "Kategória je skrytá na všetkých doménach"
+
+msgid "Category is visible on all domains"
+msgstr "Kategória je viditeľná na všetkých doménach"
+
+msgid "Category is visible on some domains"
+msgstr "Kategória je viditeľná na niektorých doménach"
+
+msgid "Category name"
+msgstr "Názov kategórie"
+
+msgid "Category with prefilled filters"
+msgstr "Kategória s predvyplnénými filtrami"
+
+msgid "Catnum"
+msgstr "Kat.č."
+
+msgid "Change for"
+msgstr "Zmeniť za"
+
+msgid "Changes"
+msgstr "Zmeny"
+
+msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
+msgstr "Zmena domény spôsobí stratu neuložených zmien. Chcete pokračovať?"
+
+msgid "Choose"
+msgstr "Vybrať"
+
+msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
+msgstr "Vyberte článok, ktorý bude slúžiť ako zásady ochrany osobných údajov, s ktorými musí zákazník súhlasiť pri vytváraní objednávky alebo registrácii používateľa."
+
+msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
+msgstr "Vyberte článok, ktorý bude slúžiť ako obchodné podmienky, s ktorými musí zákazník súhlasiť pri vytváraní objednávky."
+
+msgid "Choose new value first"
+msgstr "Najprv vyberte novú hodnotu"
+
+msgid "Choose product"
+msgstr "Vybrať produkt"
+
+msgid "Choose replacement"
+msgstr "Vybrať náhradu"
+
+msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgstr "Vyberte článok, ktorý poskytuje informácie o tom, ako sa na tejto doméne získava, spravuje a odvoláva súhlas používateľa."
+
+msgid "Choose this category and continue"
+msgstr "Vybrať túto kategóriu a pokračovať"
+
+msgid "Choose type of redirect"
+msgstr "Vybrať typ presmerovania"
+
+msgid "Chosen payment information (image, name, price)"
+msgstr "Informácie o vybranej platbe (obrázok, názov, cena)"
+
+msgid "Chosen payment name"
+msgstr "Názov vybranej platby"
+
+msgid "Chosen shipping information (image, name, price)"
+msgstr "Informácie o vybranej doprave (obrázok, názov, cena)"
+
+msgid "Chosen shipping name"
+msgstr "Názov vybranej dopravy"
+
+msgid "City"
+msgstr "Mesto"
+
+msgid "Clean Storefront Cache"
+msgstr "Vymazať cache obchodu"
+
+msgid "Clean Storefront Query Cache"
+msgstr "Vymazať cache dotazov obchodu"
+
+msgid "Click to go to product section"
+msgstr "Kliknite pre prechod do sekcie produktov"
+
+msgid "Close"
+msgstr "Zavrieť"
+
+msgid "Close (Esc)"
+msgstr "Zavrieť (Esc)"
+
+msgid "Closing time"
+msgstr "Čas zatvorenia"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Code of service Heureka - Verified by Customer"
+msgstr "Kód služby Heureka - Overené zákazníkmi"
+
+msgid "Collapse"
+msgstr "Zabaliť"
+
+msgid "Collapse menu"
+msgstr "Zabaliť menu"
+
+msgid "Collection %collectionAttribute% was changed:<br> %changes%"
+msgstr "Kolekcia %collectionAttribute% bola zmenená:<br> %changes%"
+
+msgid "Color"
+msgstr "Farba"
+
+msgid "Combination of parameters and their values"
+msgstr "Kombinácia parametrov a ich hodnôt"
+
+msgid "Communication with customer"
+msgstr "Komunikácia so zákazníkom"
+
+msgid "Company"
+msgstr "Spoločnosť"
+
+msgid "Company (Company number)"
+msgstr "Spoločnosť (IČO)"
+
+msgid "Company Tax number"
+msgstr "DIČ spoločnosti"
+
+msgid "Company data"
+msgstr "Údaje spoločnosti"
+
+msgid "Company detail"
+msgstr "Detail spoločnosti"
+
+msgid "Company name"
+msgstr "Názov spoločnosti"
+
+msgid "Company number"
+msgstr "IČO"
+
+msgid "Complaint"
+msgstr "Reklamácia"
+
+msgid "Complaint ID"
+msgstr "ID reklamácie"
+
+msgid "Complaint Nr."
+msgstr "Č. reklamácie"
+
+msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr "Reklamácia č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> upravená"
+
+msgid "Complaint detail URL"
+msgstr "URL detailu reklamácie"
+
+msgid "Complaint items"
+msgstr "Položky reklamácie"
+
+msgid "Complaint number"
+msgstr "Číslo reklamácie"
+
+msgid "Complaint status"
+msgstr "Stav reklamácie"
+
+msgid "Complaint statuses overview"
+msgstr "Prehľad stavov reklamácií"
+
+msgid "Complaint was created manually without link to a particular order"
+msgstr "Reklamácia bola vytvorená manuálne bez prepojenia na konkrétnu objednávku"
+
+msgid "Complaints"
+msgstr "Reklamácie"
+
+msgid "Complaints overview"
+msgstr "Prehľad reklamácií"
+
+msgid "Complement to title"
+msgstr "Doplnok k titulku"
+
+msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
+msgstr "Doplnok k titulku bude nastavený ako prípona ku všetkým titulkom, napr. ak je doplnok nastavený na “ | Môj obchod“ a názov produktu je “iPhone 7“, výsledný titulok pre stránku tohto produktu bude “iPhone 7 | Môj obchod“."
+
+msgid "Confirm code and disable two-factor authentication"
+msgstr "Potvrdiť kód a vypnúť dvojfaktorové overovanie"
+
+msgid "Confirm code and enable two-factor authentication"
+msgstr "Potvrdiť kód a zapnúť dvojfaktorové overovanie"
+
+msgid "Confirm one-time passcode"
+msgstr "Potvrdiť jednorazový kód"
+
+msgid "Contact form"
+msgstr "Kontaktný formulár"
+
+msgid "Contact form settings"
+msgstr "Nastavenia kontaktného formulára"
+
+msgid "Contact form settings modified"
+msgstr "Nastavenia kontaktného formulára upravené"
+
+msgid "Contact us"
+msgstr "Kontaktujte nás"
+
+msgid "Content"
+msgstr "Obsah"
+
+msgid "Content-Security-Policy header"
+msgstr "Content-Security-Policy hlavička"
+
+msgid "Content-Security-Policy header has been set."
+msgstr "Content-Security-Policy hlavička bola nastavená."
+
+msgid "Content-Security-Policy header setting"
+msgstr "Nastavenie Content-Security-Policy hlavičky"
+
+msgid "Convert values associated with parameter - %name%"
+msgstr "Konvertovať hodnoty priradené k parametru - %name%"
+
+msgid "Copied to clipboard!"
+msgstr "Skopírované do schránky!"
+
+msgid "Copy administrator role group"
+msgstr "Kopírovať skupinu rolí administrátora"
+
+msgid "Could not reach authorization centre"
+msgstr "Nedalo sa dosahovať autorizačné centrum"
+
+msgid "Countries"
+msgstr "Krajiny"
+
+msgid "Countries overview"
+msgstr "Prehľad krajin"
+
+msgid "Country"
+msgstr "Krajina"
+
+msgid "Country <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Krajina <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
+
+msgid "Country <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Krajina <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
+
+msgid "Country code"
+msgstr "Kód krajiny"
+
+msgid "Country code in ISO 3166-1 alpha-2"
+msgstr "Kód krajiny v ISO 3166-1 alpha-2"
+
+msgid "Create"
+msgstr "Vytvoriť"
+
+msgid "Create SEO page"
+msgstr "Vytvoriť SEO stránku"
+
+msgid "Create VAT rate"
+msgstr "Vytvoriť sadzbu DPH"
+
+msgid "Create and download CSV"
+msgstr "Vytvoriť a stiahnuť CSV"
+
+msgid "Create bulk promo codes"
+msgstr "Vytvoriť hromadné promo kódy"
+
+msgid "Create currency"
+msgstr "Vytvoriť menu"
+
+msgid "Create flag"
+msgstr "Vytvoriť značku"
+
+msgid "Create new administrator"
+msgstr "Vytvoriť nového administrátora"
+
+msgid "Create new administrator role group"
+msgstr "Vytvoriť novú skupinu rolí administrátora"
+
+msgid "Create new advertising"
+msgstr "Vytvoriť novú reklamu"
+
+msgid "Create new article"
+msgstr "Vytvoriť nový článok"
+
+msgid "Create new banner"
+msgstr "Vytvoriť nový banner"
+
+msgid "Create new blog article"
+msgstr "Vytvoriť nový blogový článok"
+
+msgid "Create new blog category"
+msgstr "Vytvoriť novú blogovú kategóriu"
+
+msgid "Create new brand"
+msgstr "Vytvoriť novú značku"
+
+msgid "Create new category"
+msgstr "Vytvoriť novú kategóriu"
+
+msgid "Create new complaint status"
+msgstr "Vytvoriť nový stav reklamácie"
+
+msgid "Create new country"
+msgstr "Vytvoriť novú krajinu"
+
+msgid "Create new customer"
+msgstr "Vytvoriť nového zákazníka"
+
+msgid "Create new customer user role group"
+msgstr "Vytvoriť novú skupinu rolí zákazníka"
+
+msgid "Create new delivery address"
+msgstr "Vytvoriť novú dodaciu adresu"
+
+msgid "Create new holiday or internal day"
+msgstr "Vytvoriť nový sviatok alebo interný deň"
+
+msgid "Create new item"
+msgstr "Vytvoriť novú položku"
+
+msgid "Create new order status"
+msgstr "Vytvoriť nový stav objednávky"
+
+msgid "Create new parameter"
+msgstr "Vytvoriť nový parameter"
+
+msgid "Create new parameter group"
+msgstr "Vytvoriť novú skupinu parametrov"
+
+msgid "Create new price list"
+msgstr "Vytvoriť nový cenník"
+
+msgid "Create new product"
+msgstr "Vytvoriť nový produkt"
+
+msgid "Create new sales representative"
+msgstr "Vytvoriť nového obchodného zástupcu"
+
+msgid "Create new store"
+msgstr "Vytvoriť novú predajňu"
+
+msgid "Create new warehouse"
+msgstr "Vytvoriť nový sklad"
+
+msgid "Create notification bar"
+msgstr "Vytvoriť notifikačný panel"
+
+msgid "Create payment"
+msgstr "Vytvoriť platobné údaje"
+
+msgid "Create pricing group"
+msgstr "Vytvoriť cenovú skupinu"
+
+msgid "Create promo code"
+msgstr "Vytvoriť promo kód"
+
+msgid "Create record"
+msgstr "Vytvoriť záznam"
+
+msgid "Create shipping"
+msgstr "Vytvoriť dopravu"
+
+msgid "Create unit"
+msgstr "Vytvoriť jednotku"
+
+msgid "Create variant"
+msgstr "Vytvoriť variant"
+
+msgid "Created"
+msgstr "Vytvorené"
+
+msgid "Created %dataType%: \"%readableValue%\""
+msgstr "Vytvorené %dataType%: \"%readableValue%\""
+
+msgid "Created at"
+msgstr "Vytvorené"
+
+msgid "Created by administrator"
+msgstr "Vytvorené administrátorom"
+
+msgid "Created on"
+msgstr "Vytvorené v"
+
+msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr "Vytvorenie záznamu vyžaduje, aby boli povolené všetky domény, pretože polá špecifické pre doménu nemôžu byť prázdne. Ak chcete pokračovať, vyberte najskôr všetky domény vo filtri Domén v hlavičke."
+
+msgid "Creation date"
+msgstr "Dátum vytvorenia"
+
+msgid "Cron detail"
+msgstr "Detail cronu"
+
+msgid "Cron detail - %name%"
+msgstr "Detail cronu - %name%"
+
+msgid "Cron overview"
+msgstr "Prehľad cronov"
+
+msgid "Cron runs"
+msgstr "Spustenia cronov"
+
+msgid "Cron with serviceID `%serviceId%` was disabled"
+msgstr "Cron so serviceID `%serviceId%` bol zakázaný"
+
+msgid "Cron with serviceID `%serviceId%` was enabled"
+msgstr "Cron so serviceID `%serviceId%` bol povolený"
+
+msgid "Cron with serviceID `%serviceId%` was scheduled"
+msgstr "Cron so serviceID `%serviceId%` bol naplánovaný"
+
+msgid "Currencies and rounding"
+msgstr "Meny a zaokrúhľovanie"
+
+msgid "Currency <strong>{{ name }}</strong> deleted"
+msgstr "Mena <strong>{{ name }}</strong> vymazaná"
+
+msgid "Currency settings modified"
+msgstr "Nastavenia mien upravené"
+
+msgid "Custom"
+msgstr "Vlastné"
+
+msgid "Customer"
+msgstr "Zákazník"
+
+msgid "Customer <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Zákazník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
+
+msgid "Customer <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Zákazník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Customer <strong>{{ name }}</strong> deleted"
+msgstr "Zákazník <strong>{{ name }}</strong> vymazaný"
+
+msgid "Customer ID"
+msgstr "ID zákazníka"
+
+msgid "Customer activation"
+msgstr "Aktivácia zákazníka"
+
+msgid "Customer city"
+msgstr "Mesto zákazníka"
+
+msgid "Customer delivery addresses"
+msgstr "Dodacie adresy zákazníka"
+
+msgid "Customer detail"
+msgstr "Detail zákazníka"
+
+msgid "Customer email address"
+msgstr "E-mailová adresa zákazníka"
+
+msgid "Customer has no customer users."
+msgstr "Zákazník nemá žiadnych používateľov."
+
+msgid "Customer has no delivery addresses."
+msgstr "Zákazník nemá žiadne dodacie adresy."
+
+msgid "Customer has no orders so far."
+msgstr "Zákazník zatíĺ nemá žiadne objednávky."
+
+msgid "Customer has not given PSD2 consent"
+msgstr "Zákazník neudelil PSD2 súhlas"
+
+msgid "Customer last name"
+msgstr "Priezvisko zákazníka"
+
+msgid "Customer name"
+msgstr "Meno zákazníka"
+
+msgid "Customer phone number"
+msgstr "Telefónne číslo zákazníka"
+
+msgid "Customer street"
+msgstr "Ulica zákazníka"
+
+msgid "Customer user role group"
+msgstr "Skupina rolí používateľa zákazníka"
+
+msgid "Customer user role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr "Skupina rolí zákaznického používateľa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "Customer user role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr "Skupina rolí zákaznického používateľa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Customer user role group <strong>{{ name }}</strong> deleted."
+msgstr "Skupina rolí zákaznického používateľa <strong>{{ name }}</strong> bola odstránená."
+
+msgid "Customer user role groups"
+msgstr "Skupiny rolí zákaznických používateľov"
+
+msgid "Customer users"
+msgstr "Zákaznícki používatelia"
+
+msgid "Customer with ID %customerId% not found."
+msgstr "Zákazník s ID %customerId% nebol nájdený."
+
+msgid "Customers"
+msgstr "Zákazníci"
+
+msgid "Customers overview"
+msgstr "Prehľad zákazníkov"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Date and time"
+msgstr "Dátum a čas"
+
+msgid "Date and time of order creation"
+msgstr "Dátum a čas vytvorenia objednávky"
+
+msgid "Date of creation"
+msgstr "Dátum vytvorenia"
+
+msgid "Date of creation and privacy policy agreement"
+msgstr "Dátum vytvorenia a súhlas so zásadami ochrany súkromia"
+
+msgid "Date of publication"
+msgstr "Dátum publikácie"
+
+msgid "Date of registration and privacy policy agreement"
+msgstr "Dátum registrácie a súhlas so zásadami ochrany súkromia"
+
+msgid "Day"
+msgstr "Deň"
+
+msgid "Days for transfer between warehouses"
+msgstr "Dni na presun medzi skladmi"
+
+msgid "Days until delivery"
+msgstr "Dni do doručenia"
+
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
+msgstr "Vážený zákazník, <br /><br />Vaša sťažnosť č. {complaint_number} z objednávky č. {order_number} vytvorená {date} s preferovaným riešením {complaint_resolution} bola dokončená. Pre viac informácií navštívte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail sťažnosti</a>.<br /><br />Potrebujete ešte niečo? Navštívte náš <a href=\"{url}\" tabindex=\"0\">web</a>."
+
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
+msgstr "Vážený zákazník, <br /><br />Vaša sťažnosť č. {complaint_number} z objednávky č. {order_number} vytvorená {date} s preferovaným riešením {complaint_resolution} sa spracováva. Pre viac informácií navštívte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail sťažnosti</a>.<br /><br />Potrebujete ešte niečo? Navštívte náš <a href=\"{url}\" tabindex=\"0\">web</a>."
+
+msgid "Declined by issuer - account error"
+msgstr "Zamietnuté bankou - chyba účtu"
+
+msgid "Declined by issuer - card blocked"
+msgstr "Zamietnuté bankou - karta je blokovaná"
+
+msgid "Declined by issuer - card expired"
+msgstr "Zamietnuté bankou - karta je expirovná"
+
+msgid "Declined by issuer - insufficient funds"
+msgstr "Zamietnuté bankou - nedostatočné prostriedky"
+
+msgid "Declined by issuer - invalid CVV"
+msgstr "Zamietnuté bankou - neplatný CVV"
+
+msgid "Declined by issuer - limit reached"
+msgstr "Zamietnuté bankou - dosiahnutý limit"
+
+msgid "Declined by issuer - payment card error"
+msgstr "Zamietnuté bankou - chyba platobnej karty"
+
+msgid "Declined by issuer - payment not allowed"
+msgstr "Zamietnuté bankou - platba nie je povolená"
+
+msgid "Declined by issuer - problem at issuer's side"
+msgstr "Zamietnuté bankou - problém na strane banky"
+
+msgid "Declined by issuer - technical issues"
+msgstr "Zamietnuté bankou - technické problémy"
+
+msgid "Declined by issuer - wrong card number"
+msgstr "Zamietnuté bankou - nesprávne číslo karty"
+
+msgid "Declined in the 3DS server"
+msgstr "Zamietnuté na 3DS serveri"
+
+msgid "Default VAT rate"
+msgstr "Predvolená sadzba DPH"
+
+msgid "Default administration currency"
+msgstr "Predvolená mena administrácie"
+
+msgid "Default pricing group"
+msgstr "Predvolená cenová skupina"
+
+msgid "Default pricing group settings modified"
+msgstr "Nastavenia predvolenej cenovej skupiny upravené"
+
+msgid "Default store"
+msgstr "Predvolená predajňa"
+
+msgid "Default store cannot be removed"
+msgstr "Predvolená predajňa sa nedá odstrániť"
+
+msgid "Default unit"
+msgstr "Predvolená jednotka"
+
+msgid "Default unit settings modified"
+msgstr "Nastavenia predvolenej jednotky upravené"
+
+msgid "Default unit will be used when creating new product"
+msgstr "Predvolená jednotka sa použije pri vytváraní nového produktu"
+
+msgid "Default warehouse"
+msgstr "Predvolený sklad"
+
+msgid "Default warehouse cannot be removed"
+msgstr "Predvolený sklad sa nedá odstrániť"
+
+msgid "Delete"
+msgstr "Odstrániť"
+
+msgid "Delete and set"
+msgstr "Odstrániť a nastaviť"
+
+msgid "Delete category with SEO mix"
+msgstr "Odstrániť kategóriu so SEO mix"
+
+msgid "Delete file"
+msgstr "Odstrániť súbor"
+
+msgid "Delivery address"
+msgstr "Dodacia adresa"
+
+msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Dodacia adresa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Dodacia adresa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Delivery address <strong>{{ deliveryAddressFullAddress }}</strong> deleted"
+msgstr "Dodacia adresa <strong>{{ deliveryAddressFullAddress }}</strong> bola odstránená"
+
+msgid "Delivery address detail"
+msgstr "Detail dodacej adresy"
+
+msgid "Delivery address is the same as billing address"
+msgstr "Dodacia adresa je rovnaká ako fakturačná adresa"
+
+msgid "Delivery city"
+msgstr "Dodacie mesto"
+
+msgid "Delivery last name"
+msgstr "Dodacie priezvisko"
+
+msgid "Delivery phone number"
+msgstr "Dodacie telefónne číslo"
+
+msgid "Delivery street"
+msgstr "Dodacia ulica"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "Description background color"
+msgstr "Farba pozadia popisu"
+
+msgid "Description can be set on product detail of the main product."
+msgstr "Popis možno nastaviť v detaile produktu hlavného produktu."
+
+msgid "Description opacity"
+msgstr "Priehladnoť popisu"
+
+msgid "Deselect All"
+msgstr "Zrušiť výber všetkých"
+
+msgid "Deselect all permissions"
+msgstr "Zrušiť výber všetkých povolení"
+
+msgid "Deselect all permissions for this role"
+msgstr "Zrušiť výber všetkých oprávnení pre túto rolu"
+
+msgid "Deselect all permissions in section"
+msgstr "Zrušiť výber všetkých povolení v sekcii"
+
+msgid "Disable"
+msgstr "Zakázať"
+
+msgid "Disable two factor authentication"
+msgstr "Zakázať dvojfaktorové overenie"
+
+msgid "Disabled"
+msgstr "Zakázané"
+
+msgid "Discard changes"
+msgstr "Zahodiť zmeny"
+
+msgid "Discount"
+msgstr "Zľava"
+
+msgid "Discount (%)"
+msgstr "Zľava (%)"
+
+msgid "Discount against basic price"
+msgstr "Zľava voprči základnej cene"
+
+msgid "Discount type"
+msgstr "Typ zľavy"
+
+msgid "Display"
+msgstr "Zobrazenie"
+
+msgid "Display and availability"
+msgstr "Zobrazenie a dostupnosť"
+
+msgid "Display date FROM"
+msgstr "Dátum zobrazenia OD"
+
+msgid "Display date TO"
+msgstr "Dátum zobrazenia DO"
+
+msgid "Display new products only"
+msgstr "Zobraziť len nové produkty"
+
+msgid "Display on"
+msgstr "Zobraziť na"
+
+msgid "Display on stock products only"
+msgstr "Zobraziť len produkty na sklade"
+
+msgid "Display personal information settings"
+msgstr "Zobraziť nastavenia osobných údajov"
+
+msgid "Display products with special prices only"
+msgstr "Zobraziť len produkty so špeciálnymi cenami"
+
+msgid "Displaying"
+msgstr "Zobrazuje sa"
+
+msgid "Do you really want to %action% %count% product?"
+msgstr "Naozaj chcete %action% %count% produkt?"
+
+msgid "Do you really want to delete this category?"
+msgstr "Naozaj chcete odstrániť túto kategóriu?"
+
+msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
+msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpojný od príbuzných záznamov."
+
+msgid "Do you really want to discard all changes?"
+msgstr "Naozaj chcete zahoidiť všetky zmeny?"
+
+msgid "Do you really want to mark this issue as resolved?"
+msgstr "Naozaj chcete označiť tento problém ako vyriešený?"
+
+msgid "Do you really want to remove currency \"%name%\" permanently?"
+msgstr "Naozaj chcete trvalo odstrániť menu \"%name%\"?"
+
+msgid "Do you really want to remove item \"<i>%itemName%</i>\" from the order?"
+msgstr "Naozaj chcete odstrániť položku \"<i>%itemName%</i>\" z objednávky?"
+
+msgid "Do you really want to remove pricing group \"%name%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete trvalo odstrániť cenovú skupinu \"%name%\"? Nie je používaná nikde."
+
+msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete trvalo odstrániť sadzbu \"%name%\"? Nie je používaná nikde."
+
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete trvalo odstrániť obchodného zástupcu \"%label%\"? Nie je používaný nikde."
+
+msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete trvalo odstrániť stav reklamace \"%name%\"? Nie je používaný nikde."
+
+msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete trvalo odstrániť stav objednávok \"%name%\"? Nie je používaný nikde."
+
+msgid "Do you really want to remove the order?"
+msgstr "Naozaj chcete odstrániť objednávku?"
+
+msgid "Do you really want to remove this SEO page?"
+msgstr "Naozaj chcete odstrániť túto SEO stránku?"
+
+msgid "Do you really want to remove this administrator role group?"
+msgstr "Naozaj chcete odstrániť túto skupinu rolí administrátora?"
+
+msgid "Do you really want to remove this administrator?"
+msgstr "Naozaj chcete odstrániť tohto administrátora?"
+
+msgid "Do you really want to remove this advert?"
+msgstr "Naozaj chcete odstrániť túto reklamu?"
+
+msgid "Do you really want to remove this article?"
+msgstr "Naozaj chcete odstrániť tento článok?"
+
+msgid "Do you really want to remove this blog article?"
+msgstr "Naozaj chcete odstrániť tento blogu článok?"
+
+msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
+msgstr "Naozaj chcete odstrániť túto značku? Ak sa používa niekde, bude zrušené."
+
+msgid "Do you really want to remove this category even with their SEO mixes?"
+msgstr "Naozaj chcete odstrániť túto kategóriu aj s ich SEO mixami?"
+
+msgid "Do you really want to remove this customer user role group?"
+msgstr "Naozaj chcete odstrániť túto skupinu rolí zákazníka?"
+
+msgid "Do you really want to remove this customer?"
+msgstr "Naozaj chcete odstrániť tohto zákazníka?"
+
+msgid "Do you really want to remove this delivery address?"
+msgstr "Naozaj chcete odstrániť túto dodaciu adresu?"
+
+msgid "Do you really want to remove this flag?"
+msgstr "Naozaj chcete odstrániť túto značku?"
+
+msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
+msgstr "Naozaj chcete odstrániť túto používateľsky prívetivú URL? Odstránenie používateľsky prívetivej URL môže mať negatívny vplyv na SEO výkonnosť."
+
+msgid "Do you really want to remove this holiday / internal day?"
+msgstr "Naozaj chcete odstrániť tento sviatok / interný deň?"
+
+msgid "Do you really want to remove this language constant translation?"
+msgstr "Naozaj chcete odstrániť tento preklad jazykovej konštanty?"
+
+msgid "Do you really want to remove this navigation item?"
+msgstr "Naozaj chcete odstrániť túto položku navigácie?"
+
+msgid "Do you really want to remove this notification bar?"
+msgstr "Naozaj chcete odstrániť tento panel upozornení?"
+
+msgid "Do you really want to remove this page?"
+msgstr "Naozaj chcete odstrániť túto stránku?"
+
+msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
+msgstr "Naozaj chcete odstrániť túto skupinu parametrov? Odstránením tejto skupiny parametrov zrušíte všetky skupiny pre priradené parametre. Tento krok je nezvratný!"
+
+msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and parameters of the extended SEO category where the parameter is assigned. This step is irreversible!"
+msgstr "Naozaj chcete odstrániť tento parameter? Odstránenie parametra odstráni tento parameter z produktov a parametrov rozšírenej SEO kategórie, kde je parameter priradený. Tento krok je nezvratný!"
+
+msgid "Do you really want to remove this payment?"
+msgstr "Naozaj chcete odstrániť túto platbu?"
+
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
+msgstr "Naozaj chcete odstrániť tento zoznam produktov? Špeciálne ceny pre produkty v tomto zozname budú odstránené."
+
+msgid "Do you really want to remove this product?"
+msgstr "Naozaj chcete odstrániť tento produkt?"
+
+msgid "Do you really want to remove this promo code?"
+msgstr "Naozaj chcete odstrániť tento promo kód?"
+
+msgid "Do you really want to remove this shipping?"
+msgstr "Naozaj chcete odstrániť túto dopravu?"
+
+msgid "Do you really want to remove this store? This step is irreversible!"
+msgstr "Naozaj chcete odstrániť tento obchod? Tento krok je nezvratný!"
+
+msgid "Do you really want to remove this subscriber?"
+msgstr "Naozaj chcete odstrániť tohto odoberatená?"
+
+msgid "Do you really want to remove this warehouse? By deleting this warehouse you will remove all stock quantities from products and association to stores. This step is irreversible!"
+msgstr "Naozaj chcete odstrániť tento sklad? Odstránením tohto skladu odstránite všetky skladové množstvá z produktov a priradené obchody. Tento krok je nezvratný!"
+
+msgid "Do you really want to remove unit \"%name%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete natrvalo odstrániť jednotku \"%name%\"? Nepoužíva sa nikde."
+
+msgid "Domain"
+msgstr "Doména"
+
+msgid "Domain %domainName%"
+msgstr "Doména %domainName%"
+
+msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can't see the new icon."
+msgstr "Doména <strong>{{ name }}</strong> upravená. Ak nevidíte novú ikonu, skúste vymazať cache prehliadača (CTRL+F5)."
+
+msgid "Domain filter"
+msgstr "Filter domén"
+
+msgid "Domain name"
+msgstr "Názov domény"
+
+msgid "Done"
+msgstr "Hotovo"
+
+msgid "Download"
+msgstr "Stiahnuť"
+
+msgid "Download file"
+msgstr "Stiahnuť súbor"
+
+msgid "Drag your file here"
+msgstr "Pretiahnite sem váš súbor"
+
+msgid "Drag your files here"
+msgstr "Pretiahnite sem vaše súbory"
+
+msgid "Duplicate"
+msgstr "Duplikát"
+
+msgid "Duplicate transaction"
+msgstr "Duplikát transakcie"
+
+msgid "Duplicate transaction reversal"
+msgstr "Storno duplikátu transakcie"
+
+msgid "Duration (mm:ss)"
+msgstr "Trvánie (mm:ss)"
+
+msgid "Duration (seconds)"
+msgstr "Trvánie (sekundy)"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "E-mail addresses whitelist"
+msgstr "Biely zoznam e-mailových adries"
+
+msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
+msgstr "Biely zoznam e-mailov je momentálne vynútený premennou prostredia MAILER_FORCE_WHITELIST. Biely zoznam je vždy aktívny."
+
+msgid "E-mail whitelist settings"
+msgstr "Nastavenia bieleho zoznamu e-mailov"
+
+msgid "E-mail whitelist settings modified"
+msgstr "Nastavenia bieleho zoznamu e-mailov upravené"
+
+msgid "E-mails are sent to addresses which comply with at least one regular expression. You can use <a href=\"https://regex101.com\">https://regex101.com</a> for validating regular expressions."
+msgstr "E-maily sa posielajú na adresy, ktoré vyhovujú aspoň jednemu regulárnemu výrazu. Môžete použiť <a href=\"https://regex101.com\">https://regex101.com</a> na overovanie regulárnych výrazov."
+
+msgid "E-shop URL address"
+msgstr "URL adresa e-shopu"
+
+msgid "E-shop domains"
+msgstr "Domény e-shopu"
+
+msgid "E-shop identification"
+msgstr "Identifikácia e-shopu"
+
+msgid "E-shop name"
+msgstr "Názov e-shopu"
+
+msgid "EAN"
+msgstr "EAN"
+
+msgid "Edit"
+msgstr "Upraviť"
+
+msgid "Edit domain icon"
+msgstr "Upraviť ikonu domény"
+
+msgid "Edit parameter"
+msgstr "Upraviť parameter"
+
+msgid "Edit parameter group"
+msgstr "Upraviť skupinu parametrov"
+
+msgid "Edit store"
+msgstr "Upraviť predajňu"
+
+msgid "Editing SEO page"
+msgstr "Upravovanie SEO stránky"
+
+msgid "Editing administrator"
+msgstr "Upravovanie administrátora"
+
+msgid "Editing administrator - %name%"
+msgstr "Upravovanie administrátora - %name%"
+
+msgid "Editing administrator role group"
+msgstr "Upravovanie skupiny rolí administrátora"
+
+msgid "Editing administrator role group - %name%"
+msgstr "Upravovanie skupiny rolí administrátora - %name%"
+
+msgid "Editing advertising"
+msgstr "Upravovanie reklamy"
+
+msgid "Editing advertising - %name%"
+msgstr "Upravovanie reklamy - %name%"
+
+msgid "Editing article"
+msgstr "Upravovanie článku"
+
+msgid "Editing article - %name%"
+msgstr "Upravovanie článku - %name%"
+
+msgid "Editing banner"
+msgstr "Upravovanie banneru"
+
+msgid "Editing bestseller"
+msgstr "Upravovanie bestselleru"
+
+msgid "Editing billing address - %name%"
+msgstr "Upravovanie fakturačnej adresy - %name%"
+
+msgid "Editing blog article"
+msgstr "Upravovanie blogu článku"
+
+msgid "Editing blog article - %name%"
+msgstr "Upravovanie blogu článku - %name%"
+
+msgid "Editing blog category"
+msgstr "Úprava kategórie blogu"
+
+msgid "Editing blog category - %name%"
+msgstr "Úprava kategórie blogu - %name%"
+
+msgid "Editing brand"
+msgstr "Úprava značky"
+
+msgid "Editing brand - %name%"
+msgstr "Úprava značky - %name%"
+
+msgid "Editing category"
+msgstr "Úprava kategórie"
+
+msgid "Editing category - %name%"
+msgstr "Úprava kategórie - %name%"
+
+msgid "Editing complaint"
+msgstr "Úprava reklamácie"
+
+msgid "Editing complaint - Nr. %number%"
+msgstr "Úprava reklamácie - Č. %number%"
+
+msgid "Editing country"
+msgstr "Úprava krajiny"
+
+msgid "Editing country - %name%"
+msgstr "Úprava krajiny - %name%"
+
+msgid "Editing customer"
+msgstr "Úprava zákazníka"
+
+msgid "Editing customer - %name%"
+msgstr "Úprava zákazníka - %name%"
+
+msgid "Editing customer user role group"
+msgstr "Úprava skupiny rolí zákazníckeho používateľa"
+
+msgid "Editing customer user role group - %name%"
+msgstr "Úprava skupiny rolí zákazníckeho používateľa - %name%"
+
+msgid "Editing delivery address"
+msgstr "Úprava dodacej adresy"
+
+msgid "Editing delivery address - %name%"
+msgstr "Úprava dodacej adresy - %name%"
+
+msgid "Editing domain"
+msgstr "Úprava domény"
+
+msgid "Editing email template"
+msgstr "Úprava emailovej šablóny"
+
+msgid "Editing email template - %name%"
+msgstr "Úprava emailovej šablóny - %name%"
+
+msgid "Editing file"
+msgstr "Úprava súboru"
+
+msgid "Editing flag"
+msgstr "Úprava značky"
+
+msgid "Editing flag - {{ name }}"
+msgstr "Úprava značky - {{ name }}"
+
+msgid "Editing holiday / internal day - {{ name }}"
+msgstr "Úprava sviatku / interného dňa - {{ name }}"
+
+msgid "Editing item"
+msgstr "Úprava položky"
+
+msgid "Editing navigation item"
+msgstr "Úprava položky navigácie"
+
+msgid "Editing notification bar"
+msgstr "Úprava panelu upozornení"
+
+msgid "Editing order"
+msgstr "Úprava objednávky"
+
+msgid "Editing order - Nr. %number%"
+msgstr "Úprava objednávky - č. %number%"
+
+msgid "Editing page"
+msgstr "Úprava stránky"
+
+msgid "Editing parameter"
+msgstr "Úprava parametra"
+
+msgid "Editing parameter group"
+msgstr "Úprava skupiny parametrov"
+
+msgid "Editing parameter of type color"
+msgstr "Úprava parametra typu farba"
+
+msgid "Editing parameter value of type color"
+msgstr "Úprava hodnoty parametra typu farba"
+
+msgid "Editing parameter value of type color - %name%"
+msgstr "Úprava hodnoty parametra typu farba - %name%"
+
+msgid "Editing payment"
+msgstr "Úprava platby"
+
+msgid "Editing payment - %name%"
+msgstr "Úprava platby - %name%"
+
+msgid "Editing price list"
+msgstr "Zoznam Editing price"
+
+msgid "Editing price list - %name%"
+msgstr "Upraviť cenník - %name%"
+
+msgid "Editing product"
+msgstr "Úprava produktu"
+
+msgid "Editing product - %name%"
+msgstr "Upraviť produkt - %name%"
+
+msgid "Editing promo code"
+msgstr "Upraviť promo kód"
+
+msgid "Editing promo code - %code%"
+msgstr "Upraviť promo kód - %code%"
+
+msgid "Editing sales representative"
+msgstr "Upraviť obchodného zástupcu"
+
+msgid "Editing sales representative - %label%"
+msgstr "Upraviť obchodného zástupcu - %label%"
+
+msgid "Editing shipping"
+msgstr "Úprava doručovania"
+
+msgid "Editing shipping - %name%"
+msgstr "Upraviť dopravu - %name%"
+
+msgid "Editing slider page - %name%"
+msgstr "Upraviť slider stránku - %name%"
+
+msgid "Editing warehouse"
+msgstr "Úprava skladu"
+
+msgid "Editing warehouse - %name%"
+msgstr "Upraviť sklad - %name%"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Email allowed recipients (whitelist)"
+msgstr "Povolení príjemcovia e-mailov (whitelist)"
+
+msgid "Email name"
+msgstr "Názov e-mailu"
+
+msgid "Email newsletter"
+msgstr "E-mailový newsletter"
+
+msgid "Email settings"
+msgstr "Nastavenia e-mailu"
+
+msgid "Email settings modified."
+msgstr "Nastavenia emailu boli upravené."
+
+msgid "Email template"
+msgstr "E-mailová šablóna"
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Šablóna e-mailu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Email templates"
+msgstr "E-mailové šablóny"
+
+msgid "Email templates settings"
+msgstr "Nastavenia Email templates"
+
+msgid "Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent."
+msgstr "Na niektorých doménach je povolený whitelist e-mailov. Odošlú sa iba e-maily zodpovedajúce zoznamu."
+
+msgid "Emails are sent normally on this domain"
+msgstr "E-maily sa na tejto doméne odosielajú normálne"
+
+msgid "Emails will be sent only to addresses matching at least one of these patterns:"
+msgstr "E-maily budú odoslané iba na adresy, ktoré zodpovedajú aspoň jednému z týchto vzorov:"
+
+msgid "Enable"
+msgstr "Povoliť"
+
+msgid "Enable two factor authentication by Google Authenticator"
+msgstr "Povoliť dvojfaktorovú autentifikáciu pomocou Google Authenticator"
+
+msgid "Enable two factor authentication by email"
+msgstr "Povoliť dvojfaktorovú autentifikáciu pomocou e-mailu"
+
+msgid "Enable two-factor authentication"
+msgstr "Povoliť dvojfaktorovú autentifikáciu"
+
+msgid "Enable whitelist"
+msgstr "Povoliť bielu listinu"
+
+msgid "Enabled"
+msgstr "Povolené"
+
+msgid "Enter 32-digit code which will be sent to server"
+msgstr "Zadajte 32-miestny kód, ktorý bude poslaný na server"
+
+msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
+msgstr "Zadajte 6-miestny autentifikačný kód z vášho e-mailu. Najprv si ho musíte vyžiadať tlačidlom nižšie."
+
+msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
+msgstr "Zadajte 6-miestny autentifikačný kód z vašej mobilnej aplikácie pre dvojfaktorovú autentifikáciu."
+
+msgid "Enter in the store local time"
+msgstr "Zadajte v miestnom čase obchodu"
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
+msgstr "Zadajte dátum a čas vo formáte dd.mm.rrrr hh:mm (napr. 31.12.2023 10:12:00)"
+
+msgid "Entered code is not valid"
+msgstr "Zadaný kód nie je platný"
+
+msgid "Entered customer not found, please check entered data."
+msgstr "Zadaný zákazník nebol nájdený, skôntrolujte zadané údaje."
+
+msgid "Entity"
+msgstr "Entita"
+
+msgid "Entity ID"
+msgstr "ID entity"
+
+msgid "Entity identifier"
+msgstr "Identifikátor entity"
+
+msgid "Entity log"
+msgstr "Log entity"
+
+msgid "Entry price type"
+msgstr "Typ vstupnej ceny"
+
+msgid "Error"
+msgstr "Chyba"
+
+msgid "Error occurred while sending email."
+msgstr "Nastala chyba pri odosielaní e-mailu."
+
+msgid "Error occurred while uploading file."
+msgstr "Nastala chyba pri nahrávaní súboru."
+
+msgid "Error occurred while uploading file: %message%"
+msgstr "Nastala chyba pri nahrávaní súboru: %message%"
+
+msgid "Error occurred, try again please."
+msgstr "Nastala chyba, skúste to prosím znovu."
+
+msgid "Error while importing CSV file."
+msgstr "Chyba pri importe CSV súboru."
+
+msgid "Every 5 minutes in %hour% hour"
+msgstr "{0}Každých 5 minút v 0 hodín|{1}Každých 5 minút v 1 hodine|[2,4]Každých 5 minút v %hour% hodinách|[5,Inf]Každých 5 minút v %hour% hodinách"
+
+msgid "Every hour"
+msgstr "Každú hodinu"
+
+msgid "Everyday at %hour%:%minutes%"
+msgstr "Každý deň o %hour%:%minutes%"
+
+msgid "Exchange"
+msgstr "Výmena"
+
+msgid "Exchange rate"
+msgstr "Výmenný kurz"
+
+msgid "Excl. VAT"
+msgstr "Bez DPH"
+
+msgid "Exclude from sale on domains"
+msgstr "Vyradiť z predaja na doménach"
+
+msgid "Exclude from sale on whole eshop"
+msgstr "Vyradiť z predaja na celom e-shope"
+
+msgid "Excluded from sale"
+msgstr "Vyradené z predaja"
+
+msgid "Excluded stores"
+msgstr "Vylúčené obchody"
+
+msgid "Excluded transports"
+msgstr "Vylúčené dopravy"
+
+msgid "Excluding VAT"
+msgstr "Bez DPH"
+
+msgid "Existing icon"
+msgstr "Existujúca ikona"
+
+msgid "Expand"
+msgstr "Rozbaliť"
+
+msgid "Expected maximum duration"
+msgstr "Očakávané maximálne trvanie"
+
+msgid "Expired"
+msgstr "Vyprsané"
+
+msgid "Export CSV"
+msgstr "Exportovať CSV"
+
+msgid "Export email list in CSV format"
+msgstr "Exportovať zoznam e-mailov vo formáte CSV"
+
+msgid "Ext."
+msgstr "Ext."
+
+msgid "Extended SEO categories"
+msgstr "Rozšérené SEO kategórie"
+
+msgid "Extended SEO category %categoryName% - combinations"
+msgstr "Rozšírená SEO kategória %categoryName% - kombinácie"
+
+msgid "Extended SEO category %categoryName% - filters"
+msgstr "Rozšírená SEO kategória %categoryName% - filtre"
+
+msgid "Extended SEO category - category selection"
+msgstr "Rozšírená SEO kategória - výber kategórie"
+
+msgid "Extended SEO category - combinations"
+msgstr "Rozšírená SEO kategória - kombinácie"
+
+msgid "Extended SEO category - editing the combination with SEO values"
+msgstr "Rozšírená SEO kategória - úprava kombinácie s SEO hodnotami"
+
+msgid "Extended SEO category - filters"
+msgstr "Rozšírená SEO kategória - filtre"
+
+msgid "Extended SEO category - set combinations with SEO values"
+msgstr "Rozšírená SEO kategória - kombinácie s nastavenými SEO hodnotami"
+
+msgid "External ID"
+msgstr "Externé ID"
+
+msgid "External bridge ID"
+msgstr "Externé bridge ID"
+
+msgid "External transaction ID"
+msgstr "Externé ID transakcie"
+
+msgid "External transaction status"
+msgstr "Externý stav transakcie"
+
+msgid "Facebook URL"
+msgstr "Facebook URL"
+
+msgid "Feed"
+msgstr "Feed"
+
+msgid "Feed \"{{ feedName }}\" not found."
+msgstr "Kanál \"{{ feedName }}\" nebol nájdený."
+
+msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} not found."
+msgstr "Kanál \"{{ feedName }}\" na doméne ID {{ domainId }} nebol nájdený."
+
+msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} successfully scheduled."
+msgstr "Feed \"{{ feedName }}\" na doméne s ID {{ domainId }} bol úspešne naplánovaný."
+
+msgid "Feed \"{{ feedName }}\" successfully generated."
+msgstr "Feed \"{{ feedName }}\" bol úspešne vygenerovaný."
+
+msgid "File"
+msgstr "Súbor"
+
+msgid "File <strong>{{ fileName }}</strong> deleted"
+msgstr "Súbor <strong>{{ fileName }}</strong> odstránený"
+
+msgid "File content"
+msgstr "Obsah súboru"
+
+msgid "File is in unsupported format"
+msgstr "Súbor je v nepodporovanom formáte"
+
+msgid "File is too big"
+msgstr "Súbor je príliš veľký"
+
+msgid "File type not supported."
+msgstr "Typ súboru nie je podporovaný."
+
+msgid "File upload failed"
+msgstr "Nahranie súboru zlyhalo"
+
+msgid "File upload failed, try again please."
+msgstr "Nahranie súboru zlyhalo, skúster to prosím znova."
+
+msgid "File will be removed from the record after saving."
+msgstr "Súbor bude po uložení odstránený zo záznamu."
+
+msgid "Filename"
+msgstr "Názov súboru"
+
+msgid "Files"
+msgstr "Súbory"
+
+msgid "Files overview"
+msgstr "Prehľad súborov"
+
+msgid "Files uploaded:"
+msgstr "Nahrané súbory:"
+
+msgid "Fill URL also for selected domain"
+msgstr "Vyplniť URL aj pre vybranú doménu"
+
+msgid "Fill URL only for selected domain"
+msgstr "Vyplniť URL iba pre vybranú doménu"
+
+msgid "Fill missing settings to enable creating products."
+msgstr "Vyplnte chýbajúce nastavenia na povolenie vytvárania produktov."
+
+msgid "Filter parameters"
+msgstr "Filtrovať parametre"
+
+msgid "Filter parameters closed by default"
+msgstr "Filtre parametrov predvolene zatvorené"
+
+msgid "Finish the assigning"
+msgstr "Dokončiť priradenie"
+
+msgid "Finished at"
+msgstr "Dokončené o"
+
+msgid "First column categories"
+msgstr "Kategórie prvého stĺpca"
+
+msgid "First name"
+msgstr "Krstné meno"
+
+msgid "Fix"
+msgstr "Opraviť"
+
+msgid "Flag"
+msgstr "Značka"
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Príznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený"
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Príznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol upravený"
+
+msgid "Flag <strong>{{ name }}</strong> deleted"
+msgstr "Značka <strong>{{ name }}</strong> odstránená"
+
+msgid "Flags"
+msgstr "Príznaky"
+
+msgid "Flags overview"
+msgstr "Prehľad značiek"
+
+msgid "Footer"
+msgstr "Pätička"
+
+msgid "Footer Text"
+msgstr "Text pätičky"
+
+msgid "For deleting rate \"%name%\" you have to choose other one to be set everywhere where the existing one is used. After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. Which unit you want to set instead?"
+msgstr "Pre odstránenie sadzby \"%name%\" musíte vybrať inú, ktorá sa nastaví všade tam, kde sa používa existujúca. Po zmene sadzby DPH sa prepočítajú ceny produktov - základná cena s DPH zostane rovnaká. Ktorú jednotku chcete nastaviť namiesto nej?"
+
+msgid "For deleting unit \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which unit you want to set instead?"
+msgstr "Pre odstránenie jednotky \"%name%\" musíte vybrať inú, ktorá sa nastaví všade tam, kde sa používa existujúca. Ktorú jednotku chcete nastaviť namiesto nej?"
+
+msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
+msgstr "Pre viac informácií o hreflang tagoch si pozrite <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google dokumentáciu</a>."
+
+msgid "For registered customers only"
+msgstr "Iba pre registrovaných zákazníkov"
+
+msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
+msgstr "Pre odstránenie cenovej skupiny \"%name%\" musíte vybrať inú, ktorá sa nastaví všade tam, kde sa používa existujúca. Ktorú cenovú skupinu chcete nastaviť namiesto nej?"
+
+msgid "Forgotten administrator password sending"
+msgstr "Zaslanie zabudnutého hesla administrátora"
+
+msgid "Forgotten password sending"
+msgstr "Zaslanie zabudnutého hesla"
+
+msgid "Fourth column categories"
+msgstr "Kategórie štvrtého stĺpca"
+
+msgid "Free from order value"
+msgstr "Zadarmo od hodnoty objednávky"
+
+msgid "Free shipping and payment"
+msgstr "Bezplatná doprava a platba"
+
+msgid "Free shipping and payment settings saved"
+msgstr "Nastavenia bezplatného doručovania a platby uložené"
+
+msgid "Free transport and payment"
+msgstr "Doprava a platba zadarmo"
+
+msgid "Frequency"
+msgstr "Frekvencia"
+
+msgid "Friday"
+msgstr "Piatok"
+
+msgid "Friendly URL \"%slug%\" was removed."
+msgstr "Priateľské URL \"%slug%\" bolo odstránené."
+
+msgid "From"
+msgstr "Od"
+
+msgid "Frontend"
+msgstr "Frontend"
+
+msgid "Full access"
+msgstr "Úplný prístup"
+
+msgid "Full access (view only)"
+msgstr "Úplný prístup (iba zobrazenie)"
+
+msgid "Full name"
+msgstr "Celé meno"
+
+msgid "Future"
+msgstr "Budúcnosť"
+
+msgid "Generate"
+msgstr "Generovať"
+
+msgid "Generated"
+msgstr "Generované"
+
+msgid "Generated batches"
+msgstr "Generované dávky"
+
+msgid "Go to Frontend"
+msgstr "Prejsť na Frontend"
+
+msgid "Go to associated customer user"
+msgstr "Prejsť na priradeného zákazníka"
+
+msgid "Go to page:"
+msgstr "Prejsť na stránku:"
+
+msgid "GoPay"
+msgstr "GoPay"
+
+msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
+msgstr "GoPay API vrátilo chybu - prejdite do GoPay admin a nájdite transakciu %paymentId% a skontrolujte, či je všetko v poriadku."
+
+msgid "GoPay payment method"
+msgstr "Platobná metóda GoPay"
+
+msgid "GoPay payment status"
+msgstr "Stav platby GoPay"
+
+msgid "Granted"
+msgstr "Udelené"
+
+msgid "Group"
+msgstr "Skupina"
+
+msgid "HTML code"
+msgstr "HTML kód"
+
+msgid "Heading (H1)"
+msgstr "Nadpis (H1)"
+
+msgid "Headline"
+msgstr "Nadpis"
+
+msgid "Heureka"
+msgstr "Heureka"
+
+msgid "Heureka - Verified by Customer"
+msgstr "Heureka - Overenené zákazníkmi"
+
+msgid "Heureka - Verified by Customer service does not support the language of this domain."
+msgstr "Služba Heureka - Overenené zákazníkmi nepodporuje jazyk tejto domény."
+
+msgid "Heureka Widget code"
+msgstr "Heureka Widget kód"
+
+msgid "Heureka agreement"
+msgstr "Heureka súhlas"
+
+msgid "Hidden"
+msgstr "Skryté"
+
+msgid "Hidden copy"
+msgstr "Skrytá kópia"
+
+msgid "Hidden in GoPay"
+msgstr "Skryté v GoPay"
+
+msgid "Hide"
+msgstr "Skryť"
+
+msgid "Hide advertisement"
+msgstr "Skryť reklamu"
+
+msgid "Hide on domain"
+msgstr "Skryť on domain"
+
+msgid "Hide product"
+msgstr "Skryť produkt"
+
+msgid "Hiding product"
+msgstr "Skrývanie produktu"
+
+msgid "Holiday / internal day"
+msgstr "Sviatok / interný deň"
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Sviatok / interný deň <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Sviatok / interný deň <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
+msgstr "Sviatok / interný deň <strong>{{ name }}</strong> odstránený"
+
+msgid "Holiday / internal day detail"
+msgstr "Detail sviatku / interného dňa"
+
+msgid "Holidays and internal days"
+msgstr "Sviatky a interné dni"
+
+msgid "Holidays and internal days overview"
+msgstr "Prehľad Holidays and internal days"
+
+msgid "Home page"
+msgstr "Domovská stránka"
+
+msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
+msgstr "Hreflang tagy pomáhajú vyhľadávačom pochopiť jazyk a región cielenia vášho obsahu. Výberom viacerých domén zabezpečíte, že hreflang tagy budú správne vykreslené v sitemap a na stránke. Vyhľadávače potom správne indexujú a zobrazujú správne verzie vášho obsahu používateľom v rôznych regiónoch."
+
+msgid "I buy on company behalf"
+msgstr "Nakúpujem v mene spoločnosti"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "ID %productId%"
+msgstr "ID %productId%"
+
+msgid "IP address"
+msgstr "IP adresa"
+
+msgid "Icon"
+msgstr "Ikona"
+
+msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
+msgstr "Ak povolíte záporný stav skladu, je možné objednať viac položiek, ako je momentálne na sklade."
+
+msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
+msgstr "Ak nemôžete nascánovať QR kód, môžete ručne zadať nasledujúci tajný kľúč:"
+
+msgid "If you change currency settings, prices of all products will be recalculated"
+msgstr "Ak zmeníte nastavenia meny, ceny všetkých produktov budú prepóčítané"
+
+msgid "If you want execute refund, you have to setup refund amount."
+msgstr "Ak chcete vykonať vrátenie, musíte nastaviť sumu vrátenia."
+
+msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
+msgstr "Ak chcete, aby sa tieto zmeny prejavili všade (na produkcii, devel, localhost atď.) povedzte programátorovi, aby potvrdil zmeny do GIT!"
+
+msgid "Image"
+msgstr "Obrázok"
+
+msgid "Image will be deleted after saving."
+msgstr "Obrázok bude odstránený po uložení."
+
+msgid "Image with link"
+msgstr "Obrázok s odkazom"
+
+msgid "Images"
+msgstr "Obrázky"
+
+msgid "Import"
+msgstr "Importovať"
+
+msgid "Import CSV"
+msgstr "Importovať CSV"
+
+msgid "Import price list"
+msgstr "Importovať cenník"
+
+msgid "In Progress"
+msgstr "Prebieha"
+
+msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
+msgstr "V konkrétnej záložke domény nie je možné upraviť poradie a zařadenie kategórií. Prosím, choďte do detailu kategórie alebo do prehľadu kategórií všetkých domén"
+
+msgid "In stock"
+msgstr "Na sklade"
+
+msgid "Inactive"
+msgstr "Neaktívny"
+
+msgid "Incl. VAT"
+msgstr "Vrát. DPH"
+
+msgid "Including VAT"
+msgstr "Vrátane DPH"
+
+msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
+msgstr "Nesprávne nastavenia môžu mať negatívny vplyv na správnu funkčnosť e-shopu."
+
+msgid "Information about order rounding item (empty if there is no rounding)"
+msgstr "Informácie o položke zaokrúľovania objednávky (prázdne ak nie je zaokrúľovanie)"
+
+msgid "Information for customers"
+msgstr "Informácie pre zákazníkov"
+
+msgid "Input price with VAT"
+msgstr "Vstupná cena s DPH"
+
+msgid "Input price without VAT"
+msgstr "Vstupná cena bez DPH"
+
+msgid "Inquired product"
+msgstr "Dopytovaný produkt"
+
+msgid "Inquiries"
+msgstr "Dopyt"
+
+msgid "Inquiries overview"
+msgstr "Prehľad dopytov"
+
+msgid "Inquiry ID"
+msgstr "ID dopytu"
+
+msgid "Inquiry by"
+msgstr "Dopyt od"
+
+msgid "Inquiry detail"
+msgstr "Detail dopytu"
+
+msgid "Inquiry info sent to administrator"
+msgstr "Informácie o dopyte poslané administrátorovi"
+
+msgid "Inquiry info sent to customer"
+msgstr "Informácie o dopyte poslané zákazníkovi"
+
+msgid "Instagram URL"
+msgstr "Instagram URL"
+
+msgid "Instructions"
+msgstr "Návod"
+
+msgid "Integrations"
+msgstr "Integrácie"
+
+msgid "Internal note"
+msgstr "Interná poznámka"
+
+msgid "Invalid reset password hash for administrator"
+msgstr "Neplatné reset password hash for administrator"
+
+msgid "Invalid two-factor authentication code."
+msgstr "Neplatné two-factor authentication code."
+
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
+msgstr "Dôrazne sa odporúča otestovať toto nastavenie na vývojovom alebo CI serveri pred tým, ako sa použije v produkčnom prostredí!"
+
+msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
+msgstr "Nie je možné aktualizovať poradie a odsadenie blog kategórií na konkrétnej záložke domény. Prosím, choďte do detailu kategórie alebo prehľadu blog kategórií pre všetky domény"
+
+msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol <different> and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
+msgstr "Je možné to použiť pri vytváraní odkazu: označte myšou text, z ktorého chcete vytvoriť odkaz a stlačte tlačidlo Odkaz (vpravo hore, ikona prepojených svoriek). V kontextovom menu vyberte protokol <different> a vložte text \"%orderDetailUrlConstant%\" do poľa URL (vrátane zátvoriek)"
+
+msgid "Item name"
+msgstr "Názov položky"
+
+msgid "Items per page:"
+msgstr "Položky na stránku:"
+
+msgid "Keep empty if you do not want to limit the price by products' weight"
+msgstr "Nechajte prázdne, ak nechcete obmedziť cenu podľa hmotnosti produktov"
+
+msgid "Key"
+msgstr "Kľúč"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "Language constant translation"
+msgstr "Preklad jazykovej konštanty"
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Preklad jazykovej konštanty <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr "Preklad jazykovej konštanty <strong>{{ name }}</strong> odstránený"
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr "Preklad jazykovej konštanty <strong>{{ name }}</strong> nebol nájdený"
+
+msgid "Language constants"
+msgstr "Jazykové konštanty"
+
+msgid "Last %limit% customer orders"
+msgstr "Posledných %limit% objednávok zákazníka"
+
+msgid "Last action time"
+msgstr "Čas poslednej akcie"
+
+msgid "Last duration (mm:ss)"
+msgstr "Posledné trvanie (mm:ss)"
+
+msgid "Last finished at"
+msgstr "Posledné dokončenie"
+
+msgid "Last login"
+msgstr "Posledné prihlásenie"
+
+msgid "Last modification"
+msgstr "Posledná úprava"
+
+msgid "Last name"
+msgstr "Priezvisko"
+
+msgid "Last order"
+msgstr "Posledná objednávka"
+
+msgid "Last started at"
+msgstr "Posledné spustenie"
+
+msgid "Last update"
+msgstr "Posledná aktualizácia"
+
+msgid "Legal conditions"
+msgstr "Právne podmienky"
+
+msgid "Legal conditions settings modified."
+msgstr "Nastavenia právnych podmienok upravené."
+
+msgid "Limits"
+msgstr "Limity"
+
+msgid "Line:"
+msgstr "Riadok:"
+
+msgid "Link"
+msgstr "Odkaz"
+
+msgid "Link URL"
+msgstr "Odkaz URL"
+
+msgid "Link [abbreviation]"
+msgstr "O"
+
+msgid "Link to complete the registration"
+msgstr "Odkaz na dokončenie registrácie"
+
+msgid "Link to the log in page"
+msgstr "Odkaz na prihlasovaciu stránku"
+
+msgid "Link to the overview of brands"
+msgstr "Odkaz na prehľad značiek"
+
+msgid "Link to the personal information export"
+msgstr "Odkaz na export osobných údajov"
+
+msgid "Link to the personal information overview"
+msgstr "Prehľad Link to the personal information"
+
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
+
+msgid "List of language constants"
+msgstr "Zoznam jazykových konštant"
+
+msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
+msgstr "Zoznam produktov v objednávke (obrázok, názov, množstvo, cena za jednotku vrátane DPH, celková cena za položku vrátane DPH)"
+
+msgid "Lists and nomenclatures"
+msgstr "Zoznamy a nomenkláty"
+
+msgid "Locale \"%locale%\" is not supported. You can choose only from the following locales: \"%supportedLocales%\"."
+msgstr "Lokalizácia \"%locale%\" nie je podporovaná. Môžete si vybrať iba z nasledujúcich lokalizácií: \"%supportedLocales%\"."
+
+msgid "Location"
+msgstr "Umiestnenie"
+
+msgid "Log in"
+msgstr "Prihlásiť sa"
+
+msgid "Log in as user"
+msgstr "Prihlásiť sa ako používateľ"
+
+msgid "Log in failed."
+msgstr "Prihlásenie zlyhalo."
+
+msgid "Log out"
+msgstr "Odhlásiť sa"
+
+msgid "Login"
+msgstr "Prihlásenie"
+
+msgid "Login failed."
+msgstr "Prihlásenie zlyhalo."
+
+msgid "Login name"
+msgstr "Prihlasovacie meno"
+
+msgid "Login time"
+msgstr "Čas prihlásenia"
+
+msgid "Main URL"
+msgstr "Hlavné URL"
+
+msgid "Main URL can't be deleted"
+msgstr "Hlavná URL nemôže byť odstránená"
+
+msgid "Main administrator email"
+msgstr "Hlavný administrátorský e-mail"
+
+msgid "Main category"
+msgstr "Hlavná kategória"
+
+msgid "Main image"
+msgstr "Hlavný obrázok"
+
+msgid "Main text"
+msgstr "Hlavný text"
+
+msgid "Main variant"
+msgstr "Hlavný variant"
+
+msgid "Main variant [abbreviation]"
+msgstr "H"
+
+msgid "Make modification"
+msgstr "Vykonať úpravu"
+
+msgid "Map coordinates in decimal format"
+msgstr "Mapové súradnice v decibelnom formáte"
+
+msgid "Max duration (mm:ss)"
+msgstr "Max. trvanie (mm:ss)"
+
+msgid "Maximal duration from all runs in last seven days"
+msgstr "Maximálne trvanie zo všetkých behov za posledných sedem dní"
+
+msgid "Maximum weight of products"
+msgstr "Maximálna hmotnosť produktov"
+
+msgid "Measurement units"
+msgstr "Merací jednotky"
+
+msgid "Measurement units overview"
+msgstr "Prehľad Measurement units"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Message"
+msgstr "Správa"
+
+msgid "Message text"
+msgstr "Text správy"
+
+msgid "Meta description"
+msgstr "Meta popis"
+
+msgid "Min duration (mm:ss)"
+msgstr "Min. trvanie (mm:ss)"
+
+msgid "Min fraction digits"
+msgstr "Min. desatinné miesta"
+
+msgid "Minimal duration from all runs in last seven days"
+msgstr "Minimálne trvanie zo všetkých behov za posledných sedem dní"
+
+msgid "Modifications"
+msgstr "Modifikácie"
+
+msgid "Module name"
+msgstr "Názov modulu"
+
+msgid "Modules"
+msgstr "Moduly"
+
+msgid "Modules configuration modified"
+msgstr "Konfigurácia modulov upravená"
+
+msgid "Monday"
+msgstr "Pondelok"
+
+msgid "Money return"
+msgstr "Vrátenie peňazí"
+
+msgid "Move"
+msgstr "Presunúť"
+
+msgid "My account"
+msgstr "Môj účet"
+
+msgid "Name"
+msgstr "Názov"
+
+msgid "Name %locale%"
+msgstr "Názov %locale%"
+
+msgid "Name in default language is not entered"
+msgstr "Názov v predvolenom jazyku nie je zadaný"
+
+msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
+msgstr "Názov v príslušnom jazyku musí byť vyplnený, aby sa súbor zobrazil v obchode"
+
+msgid "Name prefix"
+msgstr "Predpona názvu"
+
+msgid "Name serves only for internal use within the administration"
+msgstr "Názov slúži iba pre interné použitie v rámci administrácie"
+
+msgid "Name serves only for internal use within the administration."
+msgstr "Názov slúži iba pre interné použitie v rámci administrácie."
+
+msgid "Name suffix"
+msgstr "Prípona názvu"
+
+msgid "Names"
+msgstr "Názvy"
+
+msgid "Navigation"
+msgstr "Navigácia"
+
+msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr "Navigačná položka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
+msgstr "Navigačná položka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Navigation item <strong>{{ name }}</strong> has been removed"
+msgstr "Navigačná položka <strong>{{ name }}</strong> bola odstránená"
+
+msgid "New"
+msgstr "Nový"
+
+msgid "New SEO page"
+msgstr "Nová SEO stránka"
+
+msgid "New administrator"
+msgstr "Nový administrátor"
+
+msgid "New administrator role group"
+msgstr "Nová skupina rolí administrátora"
+
+msgid "New advertising"
+msgstr "Nová reklama"
+
+msgid "New article"
+msgstr "Nový článok"
+
+msgid "New banner"
+msgstr "Nový banner"
+
+msgid "New blog article"
+msgstr "Nový blogu článok"
+
+msgid "New blog category"
+msgstr "Nová kategória blogu"
+
+msgid "New brand"
+msgstr "Nová značka"
+
+msgid "New category"
+msgstr "Nová kategória"
+
+msgid "New closed day"
+msgstr "Nový zatvorť deň"
+
+msgid "New country"
+msgstr "Nová krajina"
+
+msgid "New customer"
+msgstr "Nový zákazník"
+
+msgid "New customer user role group"
+msgstr "Nová skupina rolí zákazníckeho používateľa"
+
+msgid "New delivery address"
+msgstr "Nová dodacia adresa"
+
+msgid "New flag"
+msgstr "Nová značka"
+
+msgid "New item"
+msgstr "Nová položka"
+
+msgid "New navigation item"
+msgstr "Nová navigačná položka"
+
+msgid "New notification bar"
+msgstr "Nový notifikačný panel"
+
+msgid "New orders"
+msgstr "Nové objednávky"
+
+msgid "New page"
+msgstr "Nová stránka"
+
+msgid "New parameter"
+msgstr "Nový parameter"
+
+msgid "New parameter group"
+msgstr "Nová skupina parametrov"
+
+msgid "New password settings URL address"
+msgstr "URL adresa nastavení nového hesla"
+
+msgid "New payment"
+msgstr "Nová platba"
+
+msgid "New price list"
+msgstr "Nový cenník"
+
+msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
+msgstr "Nový cenník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený."
+
+msgid "New product"
+msgstr "Nový produkt"
+
+msgid "New promo code"
+msgstr "Nový promo kód"
+
+msgid "New registered customers"
+msgstr "Novoregistrovaní zákazníci"
+
+msgid "New sales representative"
+msgstr "Nový obchodný zástupca"
+
+msgid "New shipping"
+msgstr "Nová doručovacia metóda"
+
+msgid "New store"
+msgstr "Nový obchod"
+
+msgid "New value"
+msgstr "Nová hodnota"
+
+msgid "New warehouse"
+msgstr "Nový sklad"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "No SEO pages found."
+msgstr "Neboli nájdené žiadne SEO stránky."
+
+msgid "No URLs so far."
+msgstr "Zatiaľ žiadne URL."
+
+msgid "No VAT rate found. You have to create some first."
+msgstr "Neboli nájdené žiadne DPH sadzby. Najskôr musíte nejaké vytvoriť."
+
+msgid "No advertising found. You have to create some first."
+msgstr "Neboli nájdené žiadne reklámy. Najskôr musíte nejaké vytvoriť."
+
+msgid "No articles found on this domain. You have to create some first."
+msgstr "Na tejto doméne neboli nájdené žiadne články. Najskôr musíte nejaké vytvoriť."
+
+msgid "No blog articles found."
+msgstr "Neboli nájdené žiadne články blogu."
+
+msgid "No brands found. You have to create some first."
+msgstr "Neboli nájdené žiadne značky. Najskôr musíte nejaké vytvoriť."
+
+msgid "No combinations of SEO categories found."
+msgstr "Neboli nájdené žiadne kombinácie SEO kategórií."
+
+msgid "No complaint statuses found."
+msgstr "Nenájdené žiadne stavy reklamacía."
+
+msgid "No complaints found."
+msgstr "Neboli nájdené žiadne reklámacie."
+
+msgid "No countries found. You have to create some first."
+msgstr "Neboli nájdené žiadne krajiny. Najskôr musíte nejaké vytvoriť."
+
+msgid "No cron runs found."
+msgstr "Neboli nájdené žiadne spustenia cronu."
+
+msgid "No crons found."
+msgstr "Žiadne crony nenájdené"
+
+msgid "No currencies found. You have to create some first."
+msgstr "Neboli nájdené žiadne meny. Najskôr musíte nejakú vytvoriť."
+
+msgid "No customers found."
+msgstr "Neboli nájdení žiadni zákazníci."
+
+msgid "No domains so far."
+msgstr "Zatiaľ nie sú žiadne domény."
+
+msgid "No email templates found. You have to create some first."
+msgstr "Neboli nájdené žiadne e-mailové šablóny. Najskôr musíte nejaké vytvoriť."
+
+msgid "No email whitelist is enabled, all emails will be sent."
+msgstr "Nie je povolený žiadny whitelist e-mailov, všetky e-maily budú odoslané."
+
+msgid "No email will be sent from this domain."
+msgstr "Z tejto domény nebudú odoslané žiadne e-maily."
+
+msgid "No files found."
+msgstr "Žiadne súbory neboli nájdené."
+
+msgid "No flags found. You have to create some first."
+msgstr "Neboli nájdené žiadne príznaky. Musíte najskôr nejaký vytvoriť."
+
+msgid "No group"
+msgstr "Nezaradené"
+
+msgid "No inquiries found."
+msgstr "Neboli nájdené žiadne poptávky."
+
+msgid "No logs created so far."
+msgstr "Žiadne protokoly nie sú zatiaľ vytvorené."
+
+msgid "No order found."
+msgstr "Nebola nájdená žiadna objednávka."
+
+msgid "No orders status found."
+msgstr "Nenájdený žiaden stav objednávky."
+
+msgid "No page found."
+msgstr "Nebola nájdená žiadna stránka."
+
+msgid "No parameters found. You have to create some first."
+msgstr "Neboli nájdené žiadne parametre. Najskôr musíte nejaké vytvoriť."
+
+msgid "No payments created so far."
+msgstr "Zatiaľ neboli vytvorené žiadne platby."
+
+msgid "No pricing groups found. You have to create some first."
+msgstr "Neboli nájdené žiadne cenové skupiny. Najskôr musíte nejakú vytvoriť."
+
+msgid "No product found."
+msgstr "Nebol nájdený žiadny produkt."
+
+msgid "No product list found."
+msgstr "Nebol nájdený žiadny cenník."
+
+msgid "No promo codes found. You have to create some first."
+msgstr "Neboli nájdené žiadne zlâavové kupóny. Najskôr musíte nejaký vytvoriť."
+
+msgid "No records found."
+msgstr "Neboli nájdené žiadne záznamy."
+
+msgid "No sales representatives found."
+msgstr "Neboli nájdení žiadni obchodní zástupcovia."
+
+msgid "No shipping created so far."
+msgstr "Zatíĺ nebola vytvorená žiadna doprava."
+
+msgid "No store is created. You have to create one first."
+msgstr "Nie je vytvorená žiadna predajňa. Najskôr musíte jednu vytvoriť."
+
+msgid "No subscribers found."
+msgstr "Neboli nájdení žiadni odoberatelia."
+
+msgid "No units found. You have to create some first."
+msgstr "Neboli nájdené žiadne jednotky. Najskôr musíte nejaké vytvoriť."
+
+msgid "No warehouse associated"
+msgstr "Žiadny sklad nie je priradený"
+
+msgid "No watchdog found."
+msgstr "Nebol nájdený žiadny watchdog."
+
+msgid "Nominal"
+msgstr "Nominálny"
+
+msgid "Not granted"
+msgstr "Neudelené"
+
+msgid "Not possible to assign product to itself"
+msgstr "Nie je možné priradiť produkt sám sebe"
+
+msgid "Not possible to assign to itself"
+msgstr "Nie je možné priradiť sám sebe"
+
+msgid "Not possible to create variations of products that are already variant or main variant."
+msgstr "Nie je možné vytvárať varianty z produktov, ktoré sú už variantom alebo hlavným variantom."
+
+msgid "Not refundable"
+msgstr "Nevráteľné"
+
+msgid "Note"
+msgstr "Poznámka"
+
+msgid "Nothing to choose from."
+msgstr "Nie je z čoho vyberať."
+
+msgid "Notification bar"
+msgstr "Notifikačný panel"
+
+msgid "Notification bar has been successfuly created"
+msgstr "Notifikačný panel bol úspešne vytvorený"
+
+msgid "Notification bar has been successfuly deleted"
+msgstr "Notifikačný panel bol úspešne vymazaný"
+
+msgid "Number of delivery days for out of stock products in XML feeds"
+msgstr "Počet dní doručenia pre produkty, ktoré nie sú na sklade v XML feedoch"
+
+msgid "Number of generated promo codes"
+msgstr "Počet vygenerovaných promo kódov"
+
+msgid "Number of orders"
+msgstr "Počet objednávok"
+
+msgid "Number of products in filter"
+msgstr "Počet produktov vo filtri"
+
+msgid "Number of selected products is not limited, however only %limit% will be displayed on frontend."
+msgstr "Počet vybraných produktov nie je obmedzený, avšak na frontende sa zobrazí iba %limit%."
+
+msgid "Number of watchdogs"
+msgstr "Počet hliadacov (watchdogs)"
+
+msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
+msgstr "Práve ste sa pokúsili prihlásiť pomocou predvolených údajov. To nepovoľujeme v produkčnom prostredí. Ak ste náhodný hacker, prosím choďte niekam inam. Ak ste oprávnený používateľ, prosím použite iný účet alebo kontaktujte vývojárov a zmeňte heslo počas deploy."
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Old value"
+msgstr "Stará hodnota"
+
+msgid "On each run (usually every 5 minutes)"
+msgstr "Pri každom spustení (obyčajne každých 5 minút)"
+
+msgid "One domain cannot be used in two groups"
+msgstr "Jedna doména nemôže byť použitá v dvoch skupinách"
+
+msgid "Only checked products"
+msgstr "Iba označené produkty"
+
+msgid "Only products with \"Selling start date\" not older than %count% days are displayed"
+msgstr "Zobrazujú sa iba produkty s dátumom začatia predaja nie starším ako %count% dní"
+
+msgid "Only products with active special price from a price list be displayed"
+msgstr "Budú zobrazené iba produkty s aktívnou špeciálnou cenou z cenníka"
+
+msgid "Open Graph description"
+msgstr "Open Graph popis"
+
+msgid "Open Graph title"
+msgstr "Open Graph názov"
+
+msgid "Open in a new tab"
+msgstr "Otvoriť v novej karte"
+
+msgid "Open in new window"
+msgstr "Otvoriť v novom okne"
+
+msgid "Opening hours"
+msgstr "Otváracie hodiny"
+
+msgid "Opening time"
+msgstr "Otvárací čas"
+
+msgid "Order"
+msgstr "Objednávka"
+
+msgid "Order ID"
+msgstr "ID objednávky"
+
+msgid "Order Nr."
+msgstr "Č. objednávky"
+
+msgid "Order Nr. %orderNumber%"
+msgstr "Č. objednávky %orderNumber%"
+
+msgid "Order Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr "Objednávka č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> upravená"
+
+msgid "Order Nr. <strong>{{ number }}</strong> deleted"
+msgstr "Objednávka č. <strong>{{ number }}</strong> odstránená"
+
+msgid "Order URL address"
+msgstr "URL adresa objednávky"
+
+msgid "Order confirmation page"
+msgstr "Stránka potvrdenia objednávky"
+
+msgid "Order confirmation page content modified"
+msgstr "Obsah stránky potvrdenia objednávky upravený"
+
+msgid "Order detail"
+msgstr "Detail objednávky"
+
+msgid "Order detail URL address"
+msgstr "URL adresa detailu objednávky"
+
+msgid "Order has not been sent to GoPay"
+msgstr "Objednávka nebola odoslaná do GoPay"
+
+msgid "Order in CZK round to whole crowns"
+msgstr "Objednávka v CZK zaokrúhlená na celé koruny"
+
+msgid "Order items"
+msgstr "Položky objednávky"
+
+msgid "Order must contain at least one item"
+msgstr "Objednávka musí obsahovať aspoň jednu položku"
+
+msgid "Order number"
+msgstr "Číslo objednávky"
+
+msgid "Order or document number"
+msgstr "Číslo objednávky alebo dokumentu"
+
+msgid "Order saved"
+msgstr "Objednávka uložená"
+
+msgid "Order saving failed"
+msgstr "Ukladanie objednávky zlyhalo"
+
+msgid "Order sent page content"
+msgstr "Obsah stránky odoslanej objednávky"
+
+msgid "Order status"
+msgstr "Stav objednávky"
+
+msgid "Order statuses overview"
+msgstr "Prehľad Order statuses"
+
+msgid "Ordering"
+msgstr "Objednávanie"
+
+msgid "Orders"
+msgstr "Objednávky"
+
+msgid "Orders overview"
+msgstr "Prehľad Orders"
+
+msgid "Orders value"
+msgstr "Hodnota objednávok"
+
+msgid "Origin"
+msgstr "Pôvod"
+
+msgid "Original translation"
+msgstr "Pôvodný preklad"
+
+msgid "Other"
+msgstr "Iné"
+
+msgid "Overwrite Price list"
+msgstr "Zoznam Overwrite Price"
+
+msgid "PSD2 payment declined"
+msgstr "PSD2 platba zamietnutá"
+
+msgid "PSD2 requested account not found"
+msgstr "PSD2 požadovaný účet nebol nájdený"
+
+msgid "Package tracking"
+msgstr "Sledovanie balíka"
+
+msgid "Packetery"
+msgstr "Packetery"
+
+msgid "Page <strong>{{ name }}</strong> deleted"
+msgstr "Stránka <strong>{{ name }}</strong> odstránená"
+
+msgid "Page name"
+msgstr "Názov stránky"
+
+msgid "Page slug"
+msgstr "Slug stránky"
+
+msgid "Page title"
+msgstr "Nadpis stránky"
+
+msgid "Paid amount"
+msgstr "Zaplatena suma"
+
+msgid "Parameter"
+msgstr "Parameter"
+
+msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
+
+msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Parameter <strong>{{ name }}</strong> deleted"
+msgstr "Parameter <strong>{{ name }}</strong> odstránený"
+
+msgid "Parameter group"
+msgstr "Skupina parametrov"
+
+msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Skupina parametrov <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
+
+msgid "Parameter groups"
+msgstr "Skupiny parametrov"
+
+msgid "Parameter groups overview"
+msgstr "Prehľad Parameter groups"
+
+msgid "Parameter value"
+msgstr "Hodnota parametra"
+
+msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
+msgstr "Hodnota parametra <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> bola upravená."
+
+msgid "Parameter value of type color"
+msgstr "Hodnota parametra typu farba"
+
+msgid "Parameter values"
+msgstr "Hodnoty parametra"
+
+msgid "Parameter values associated with parameter - <strong><a href=\"{{ url }}\">{{ parameterName }}</a></strong> modified."
+msgstr "Hodnoty parametra spojené s parametrom - <strong><a href=\"{{ url }}\">{{ parameterName }}</a></strong> boli upravené."
+
+msgid "Parameter values of type color"
+msgstr "Hodnoty parametra typu farba"
+
+msgid "Parameters"
+msgstr "Parametre"
+
+msgid "Parameters order in category"
+msgstr "Poradie parametrov v kategórii"
+
+msgid "Parameters overview"
+msgstr "Prehľad Parameters"
+
+msgid "Pararameter value of type color"
+msgstr "Hodnota parametra typu farba"
+
+msgid "Parent category"
+msgstr "Nadradená kategória"
+
+msgid "PartNo (serial number)"
+msgstr "PartNo (sériové číslo)"
+
+msgid "Password"
+msgstr "Heslo"
+
+msgid "Password again"
+msgstr "Heslo znova"
+
+msgid "Password has been successfully set."
+msgstr "Heslo bolo úspešne nastavené."
+
+msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
+msgstr "Heslo musí obsahovať veľké písmená, malé písmená, čísla a musí byť dlhšie ako 10 znakov."
+
+msgid "Payment"
+msgstr "Platba"
+
+msgid "Payment <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Platba <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "Payment <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Platba <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Payment <strong>{{ name }}</strong> deleted"
+msgstr "Platba <strong>{{ name }}</strong> odstránená"
+
+msgid "Payment authorized"
+msgstr "Platba autorizovaná"
+
+msgid "Payment canceled"
+msgstr "Platba zrušená"
+
+msgid "Payment canceled by customer"
+msgstr "Platba zrušená zákazníkom"
+
+msgid "Payment created"
+msgstr "Platba vytvorená"
+
+msgid "Payment failed page content"
+msgstr "Obsah stránky po neúspešnej platbe"
+
+msgid "Payment has expired"
+msgstr "Vypršala platnosť platby"
+
+msgid "Payment in process page content"
+msgstr "Obsah stránky pri platbe čakajúcej na potvrdenie"
+
+msgid "Payment instructions"
+msgstr "Pokyny k platbe"
+
+msgid "Payment is being processed in the Bitcoin network"
+msgstr "Platba sa spracúva v Bitcoin sieti"
+
+msgid "Payment made after expiration"
+msgstr "Platba realizovaná po vypršaní"
+
+msgid "Payment method chosen"
+msgstr "Vybraná platobná metóda"
+
+msgid "Payment method name"
+msgstr "Názov platobnej metódy"
+
+msgid "Payment not completed"
+msgstr "Platba nedokončená"
+
+msgid "Payment not completed - Customer is not authorized to perform transaction"
+msgstr "Platba nedokončená - Zákazník nie je autorizovaný na vykonanie transakcie"
+
+msgid "Payment not completed - Duplicate payment"
+msgstr "Platba nedokončená - Duplikát platby"
+
+msgid "Payment not completed - Reason was shown to customer"
+msgstr "Platba nedokončená - Dôvod bol zobrazený zákazníkovi"
+
+msgid "Payment not completed - Sum of credited amounts exceeded total amount"
+msgstr "Platba nedokončená - Súčet pripsaných súm prekročil celkovú sumu"
+
+msgid "Payment not completed - User not authorized"
+msgstr "Platba nebola dokončená - Používateľ nie je autorizovaný"
+
+msgid "Payment not completed yet"
+msgstr "Platba ešte nie je dokončená"
+
+msgid "Payment paid"
+msgstr "Platba zaplatena"
+
+msgid "Payment partially refunded"
+msgstr "Platba čiastočne vrátená"
+
+msgid "Payment refunded"
+msgstr "Platba vrátená"
+
+msgid "Payment successful page content"
+msgstr "Obsah stránky úspešnej platby"
+
+msgid "Payment transactions"
+msgstr "Platby transakcie"
+
+msgid "Payment type"
+msgstr "Typ platby"
+
+msgid "Payment was not paid in full"
+msgstr "Platba nebola zaplatena v plnej výške"
+
+msgid "Payments"
+msgstr "Platby"
+
+msgid "Percent"
+msgstr "Percento"
+
+msgid "Percents"
+msgstr "Percentá"
+
+msgid "Perex"
+msgstr "Perex"
+
+msgid "Personal data"
+msgstr "Osobné údaje"
+
+msgid "Personal data access"
+msgstr "Prístup k osobným údajom"
+
+msgid "Personal data site content updated successfully"
+msgstr "Obsah stránky osobných údajov úspešne aktualizovaný"
+
+msgid "Personal information export"
+msgstr "Export osobných informácií"
+
+msgid "Personal information overview"
+msgstr "Prehľad Personal information"
+
+msgid "Personal pickup"
+msgstr "Osobný odber"
+
+msgid "Phone"
+msgstr "Telefón"
+
+msgid "Please check following information:"
+msgstr "Prosím, skontrolujte nasledujúce informácie:"
+
+msgid "Please check the correctness of all data filled."
+msgstr "Prosím, skontrolujte správnosť všetkých vyplnených údajov."
+
+msgid "Please check the entered values.<br>"
+msgstr "Prosím, skontrolujte zadané hodnoty.<br>"
+
+msgid "Please fill all default values before creating a product"
+msgstr "Prosím, vyplňte všetky predvolené hodnoty pred vytvorením produktu"
+
+msgid "Please replace this text with your own content."
+msgstr "Prosím, nahradte tento text vlastným obsahom."
+
+msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
+msgstr "Prosím, naskenujte nižšie uvedený QR kód pomocou aplikácie pre generovanie jednorazových prístupových kódov (ako je Google Authenticator)."
+
+msgid "Please select at least one domain."
+msgstr "Prosím, vyberte at least one domain."
+
+msgid "Please use the button below to send the one-time passcode to your email address."
+msgstr "Použite prosím tlačidlo nižšie na odoslanie jednorazového prístupového kódu na vašu e-mailovú adresu."
+
+msgid "Please wait until all files are uploaded and try again."
+msgstr "Prosím, počkajte, kým sa nevynahrajú všetky súbory a skúste to znova."
+
+msgid "Postcode"
+msgstr "PSČ"
+
+msgid "Prefix"
+msgstr "Predpona"
+
+msgid "Prefix (e.g. \"SPRING_\")"
+msgstr "Prefix (napr. \"JARO_\")"
+
+msgid "Preview"
+msgstr "Náhľad"
+
+msgid "Price"
+msgstr "Cena"
+
+msgid "Price excluding VAT"
+msgstr "Cena excluding DPH"
+
+msgid "Price including VAT"
+msgstr "Cena including DPH"
+
+msgid "Price including VAT rounding"
+msgstr "Zaokrúhlenie ceny s DPH"
+
+msgid "Price list"
+msgstr "Zoznam Price"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Cenník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Cenník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol upravený"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
+msgstr "Cenník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol nahradený."
+
+msgid "Price list <strong>{{ name }}</strong> deleted"
+msgstr "Cenník <strong>{{ name }}</strong> odstránený"
+
+msgid "Price list name"
+msgstr "Názov cenníka"
+
+msgid "Price list overview"
+msgstr "Prehľad Price list"
+
+msgid "Price lists"
+msgstr "Cenníky"
+
+msgid "Prices"
+msgstr "Ceny"
+
+msgid "Pricing"
+msgstr "Cenové politiky"
+
+msgid "Pricing group"
+msgstr "Cenová skupina"
+
+msgid "Pricing group \"%name%\" set as default. For deleting it you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
+msgstr "Cenová skupina \"%name%\" je nastavená ako východzia. Pre jej odstránenie musíte zvoliť, ktorá sa má všade, kde je aktuálne používaná, nastaviť. Akú cenovú skupinu miesto nej chcete nastaviť?"
+
+msgid "Pricing group <strong>{{ name }}</strong> deleted"
+msgstr "Cenová skupina <strong>{{ name }}</strong> odstránená"
+
+msgid "Pricing group <strong>{{ name }}</strong> deleted and replaced by group <strong>{{ newName }}</strong>."
+msgstr "Cenová skupina <strong>{{ name }}</strong> bola zmazaná a bola nahradená skupinou <strong>{{ newName }}</strong>."
+
+msgid "Pricing groups"
+msgstr "Cenové skupiny"
+
+msgid "Pricing settings modified"
+msgstr "Nastavenia cenotvorby boli upravené"
+
+msgid "Priority"
+msgstr "Priorita"
+
+msgid "Privacy policy"
+msgstr "Zásady ochrany osobných údajov"
+
+msgid "Privacy policy settings"
+msgstr "Nastavenia Privacy policy"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> created"
+msgstr "Produkt <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> bol vytvorený"
+
+msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
+msgstr "Produkt <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> bol upravený"
+
+msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
+msgstr "Produkt <strong>{{ product|productDisplayName }}</strong> bol zmazaný"
+
+msgid "Product ID"
+msgstr "Produkt ID"
+
+msgid "Product associated with this inquiry is no longer available in the catalog."
+msgstr "Produkt spojený s týmto dopytom už nie je dostupný v katalógu."
+
+msgid "Product catnum"
+msgstr "Katalógové číslo produktu"
+
+msgid "Product detail URL"
+msgstr "Produkt detail URL"
+
+msgid "Product excluded from sale"
+msgstr "Produkt vylúčený z predaja"
+
+msgid "Product image URL"
+msgstr "Produkt image URL"
+
+msgid "Product in order"
+msgstr "Produkt v objednávke"
+
+msgid "Product is excluded from the sale"
+msgstr "Produkt je vylúčený z predaja"
+
+msgid "Product is main variant."
+msgstr "Produkt je hlavná varianta."
+
+msgid "Product is variant"
+msgstr "Produkt je varianta"
+
+msgid "Product name"
+msgstr "Názov produktu"
+
+msgid "Product name in default language is not entered"
+msgstr "Názov produktu v predvolenom jazyku nie je zadaný"
+
+msgid "Product not in e-shop."
+msgstr "Produkt nie je v e-shope."
+
+msgid "Product saved in order"
+msgstr "Produkt uložený v objednávke"
+
+msgid "Product settings on the main page successfully changed"
+msgstr "Nastavenia produktu na hlavnéj stránke úspešne zmenené"
+
+msgid "Product stock quantity"
+msgstr "Skladové množstvo produktu"
+
+msgid "Product type"
+msgstr "Typ produktu"
+
+msgid "Products"
+msgstr "Produkty"
+
+msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
+msgstr "Produkty vylúčené z predaja nemôžu byť zobrazené v zoznamoch a nemôžu byť vyhľadávané. Detail produktu je dostupný priamym prístupom z URL, ale nie je možné pridať produkt do košíka."
+
+msgid "Products overview"
+msgstr "Prehľad Products"
+
+msgid "Products parameters of selected category"
+msgstr "Parametre produktov vybratej kategórie"
+
+msgid "Products with this flag"
+msgstr "Produkty s touto značkou"
+
+msgid "Products without this flag"
+msgstr "Produkty bez tejto značky"
+
+msgid "Promo code"
+msgstr "Promo kód"
+
+msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
+msgstr "Promo kód <strong><a href=\"{{ url }}\">{{ code }}</a></strong> vytvorený"
+
+msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> was modified"
+msgstr "Promo kód <strong><a href=\"{{ url }}\">{{ code }}</a></strong> bol upravený"
+
+msgid "Promo code <strong>{{ code }}</strong> deleted."
+msgstr "Promo kód <strong>{{ code }}</strong> odstránený."
+
+msgid "Promo code prefix"
+msgstr "Predpona promo kódu"
+
+msgid "Promo codes"
+msgstr "Zľavové kupóny"
+
+msgid "Promo codes - generated batches"
+msgstr "Zľavové kupóny - vygenerované dávky"
+
+msgid "Promoted categories"
+msgstr "Propagované kategórie"
+
+msgid "Promoted products"
+msgstr "Propagované produkty"
+
+msgid "Quantity"
+msgstr "Množstvo"
+
+msgid "Quick product search"
+msgstr "Rýchle vyhľadávanie v produktoch"
+
+msgid "Quick search"
+msgstr "Rýchle hľadanie"
+
+msgid "RGB Hex"
+msgstr "RGB Hex"
+
+msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
+msgstr "Výšku sadzby nemôže byť upravená. Je potrebné vytvoriť novú sadzbu a starú odstrániť s nahradením za novú."
+
+msgid "Redirect target"
+msgstr "Cieľ presmerovvania"
+
+msgid "Redirect type"
+msgstr "Typ presmerovvania"
+
+msgid "Refund amount"
+msgstr "Refundovať čiastku"
+
+msgid "Refundable amount"
+msgstr "Refundovateľná čiastka"
+
+msgid "Refunded amount"
+msgstr "Refundovaná čiastka"
+
+msgid "Registration confirmation"
+msgstr "Potvrdenie registrácie"
+
+msgid "Remaining number of uses"
+msgstr "Zbývajúci počet použití"
+
+msgid "Remove"
+msgstr "Odstrániť"
+
+msgid "Removed %dataType%: \"%readableValue%\""
+msgstr "Zmazaný %dataType%: \"%readableValue%\""
+
+msgid "Replace file"
+msgstr "Nahradiť súbor"
+
+msgid "Request a one-time passcode by email"
+msgstr "Požiadať o jednorazový prístupový kód e-mailom"
+
+msgid "Reset administrator password"
+msgstr "Resetovať heslo administrátora"
+
+msgid "Reset filter"
+msgstr "Zrušiť filter"
+
+msgid "Reset password"
+msgstr "Resetovať heslo"
+
+msgid "Reset password request was sent to <strong>{{ email }}</strong>"
+msgstr "Žiadosť o resetovanie hesla bola odoslaná na adresu <strong>{{ email }}</strong>"
+
+msgid "Resolution"
+msgstr "Spôsob vyriešenia"
+
+msgid "Resolved"
+msgstr "Vyriezená"
+
+msgid "Results:"
+msgstr "Výsledky:"
+
+msgid "Return back"
+msgstr "Vrátiť späť"
+
+msgid "Robots.txt"
+msgstr "Robots.txt"
+
+msgid "Robots.txt settings"
+msgstr "Nastavenia Robots.txt"
+
+msgid "Robots.txt settings modified"
+msgstr "Nastavenia Robots.txt boli upravené"
+
+msgid "Role"
+msgstr "Rola"
+
+msgid "Role Group"
+msgstr "Skupina rolí"
+
+msgid "Role Groups"
+msgstr "Skupiny rolí"
+
+msgid "Role group <strong>{{ roleGroupName }}</strong> cannot be deleted, because some customer users are using it"
+msgstr "Skupina rolí <strong>{{ roleGroupName }}</strong> nemôže byť odstránená, pretože ju používajú niečí zákaznícki používatelia"
+
+msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
+msgstr "Skupina rolí nemôže byť odstránená, pretože ju používajú niečí administrátori: {{ names }}"
+
+msgid "Role group name"
+msgstr "Názov skupiny rolí"
+
+msgid "Role group name <strong>{{ name }}</strong> is already used"
+msgstr "Názov skupiny rolí <strong>{{ name }}</strong> sa už používa"
+
+msgid "Role name"
+msgstr "Názov roly"
+
+msgid "Roles"
+msgstr "Roly"
+
+msgid "Rounding"
+msgstr "Zaokrúhlenie"
+
+msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
+msgstr "Do objednávky bude pridaná zaokrúhlovacia položka s 0% DPH. Používa sa pre platbu v hotovosti."
+
+msgid "Rounding places of price without VAT and VAT amount"
+msgstr "Počet desatinných miest pre zaokrúhlovanie ceny bez DPH a čiastky DPH"
+
+msgid "Rounding type"
+msgstr "Typ zaokrúhlenia"
+
+msgid "Running"
+msgstr "Prebieha"
+
+msgid "SEO"
+msgstr "SEO"
+
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola vytvorená"
+
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "SEO Page <strong>{{ name }}</strong> removed"
+msgstr "SEO stránka <strong>{{ name }}</strong> odstránená"
+
+msgid "SEO attributes settings"
+msgstr "Nastavenia SEO attributes"
+
+msgid "SEO attributes settings modified"
+msgstr "Nastavenia SEO atribútov upravené"
+
+msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
+msgstr "SEO kombinácia kategórie s ID {{ ReadyCategorySeoMixId }} bola odstránená"
+
+msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
+msgstr "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was sa nenašli"
+
+msgid "SEO page"
+msgstr "SEO stránka"
+
+msgid "SEO pages"
+msgstr "SEO stránky"
+
+msgid "SMS was sent but not delivered yet"
+msgstr "SMS bola odoslaná, ale ešte nedoručená"
+
+msgid "Sales including/excluding VAT settings"
+msgstr "Nastavenia Sales including/excluding VAT"
+
+msgid "Sales overview (last 7 days)"
+msgstr "Prehľad predajov (posledných 7 dní)"
+
+msgid "Sales representative"
+msgstr "Obchodný zástupca"
+
+msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
+msgstr "Obchodný zástupca <strong><a href=\"{{ url }}\">{{ label }}</a></strong> bol vytvorený"
+
+msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was edited"
+msgstr "Obchodný zástupca <strong><a href=\"{{ url }}\">{{ label }}</a></strong> bol upravený"
+
+msgid "Sales representative <strong>{{ label }}</strong> deleted."
+msgstr "Obchodný zástupca <strong>{{ label }}</strong> odstránený."
+
+msgid "Sales representatives"
+msgstr "Obchodní zástupcovia"
+
+msgid "Saturday"
+msgstr "Sobota"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "Save changes"
+msgstr "Uložiť changes"
+
+msgid "Save changes in order"
+msgstr "Uložiť changes in order"
+
+msgid "Save warehouse settings"
+msgstr "Uložiť warehouse settings"
+
+msgid "Scaled promo code"
+msgstr "Stupnicový promo kód"
+
+msgid "Scan QR code"
+msgstr "Skenovas QR kód"
+
+msgid "Schedule"
+msgstr "Rozvrh"
+
+msgid "Scheduled"
+msgstr "Naplánované"
+
+msgid "Search [verb]"
+msgstr "Hľadať"
+
+msgid "Search by code..."
+msgstr "Hľadať podľa kódu..."
+
+msgid "Search by filename, extension or translated name..."
+msgstr "Hľadať podľa názvu súboru, prípony alebo preloženého názvu..."
+
+msgid "Search by name, catalog number, or product part number..."
+msgstr "Hľadať podľa názvu, katalógového čísla alebo čísla súčiastky produktu..."
+
+msgid "Search by name..."
+msgstr "Hľadať podľa názvu..."
+
+msgid "Search by section name…"
+msgstr "Hľadať podľa názvu sekcie…"
+
+msgid "Search by slug..."
+msgstr "Hľadať podľa slug..."
+
+msgid "Search in transfers"
+msgstr "Hľadať v prenosoch"
+
+msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
+msgstr "Hľadať v nahraných súboroch podľa názvu súboru, prípony alebo preloženého názvu. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching in all currencies"
+msgstr "Hľadanie vo všetkých menách"
+
+msgid "Searching searches in complaint number, complaint email, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v čísle reklámácie, e-maile reklámácie, čísle objednávky, priezvisku doručenia, názve spoločnosti doručenia, priezvisku z objednávky, e-maile z objednávky, priezvisku autora reklámácie, názve spoločnosti autora reklámácie. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in email. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v e-maile. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v priezvisku, názve spoločnosti, e-maile, telefóne. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v názve, katalógovom čísle alebo čísle súčiastky produktu. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in name. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v názve. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v čísle objednávky, e-maile registrovaného zákazníka, e-maile zákazníka v objednávke, priezvisku zákazníka a názve spoločnosti. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in product name and product catalog number. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v názve produktu a katalógovom čísle produktu. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in product name, product catalog number, company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v názve produktu, katalógovom čísle produktu, čísle spoločnosti, názve spoločnosti, priezvisku zákazníka a e-maile zákazníka. Je možné použiť zástupné znaky * a ?."
+
+msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
+msgstr "Vyhľadávanie vyhľadáva v slugoch. Je možné použiť zástupné znaky * a ?."
+
+msgid "Second column categories"
+msgstr "Kategórie druhého stĺpca"
+
+msgid "Select All"
+msgstr "Vybrať všetko"
+
+msgid "Select all permissions"
+msgstr "Vybrať všetky povolenia"
+
+msgid "Select all permissions for this role"
+msgstr "Vybrať všetky povolenia pre túto rolu"
+
+msgid "Select all permissions in section"
+msgstr "Vybrať všetky povolenia v sekcii"
+
+msgid "Select new value"
+msgstr "Vybrať novú hodnotu"
+
+msgid "Selected SEO page cannot be deleted"
+msgstr "Vybraná SEO stránka nemôže byť odstránená"
+
+msgid "Selected SEO page does not exist"
+msgstr "Vybraná SEO stránka neexistuje"
+
+msgid "Selected VAT doesn't exist"
+msgstr "Vybraná DPH neexistuje"
+
+msgid "Selected VAT doesn't exist."
+msgstr "Vybraná DPH neexistuje."
+
+msgid "Selected administrated doesn't exist."
+msgstr "Vybraný administrátor neexistuje."
+
+msgid "Selected administrator role group doesn't exist."
+msgstr "Vybraná skupina rolí administrátora neexistuje."
+
+msgid "Selected advertisement doesn't exist."
+msgstr "Vybraná reklama neexistuje."
+
+msgid "Selected article doesn't exist."
+msgstr "Vybraný článok neexistuje."
+
+msgid "Selected blog article does not exist."
+msgstr "Vybraný článok blogu neexistuje."
+
+msgid "Selected blog category does not exist."
+msgstr "Výber rubriky blogu neexistuje."
+
+msgid "Selected brand doesn't exist."
+msgstr "Vybraná značka neexistuje."
+
+msgid "Selected category doesn't exist."
+msgstr "Vybraná kategória neexistuje."
+
+msgid "Selected complaint status doesn't exist."
+msgstr "Vybraný stav reklamac­e neexistuje."
+
+msgid "Selected currency doesn't exist."
+msgstr "Zvolená mena neexistuje."
+
+msgid "Selected customer doesn't exist."
+msgstr "Zvolený zákazník neexistuje."
+
+msgid "Selected delivery address doesn't exist."
+msgstr "Vybraná dodacia adresa neexistuje."
+
+msgid "Selected file doesn't exist."
+msgstr "Vybraný súbor neexistuje."
+
+msgid "Selected flag doesn't exist."
+msgstr "Zvolený príznak neexistuje."
+
+msgid "Selected holiday / internal day doesn't exist."
+msgstr "Vybraný sviatok / interný deň neexistuje."
+
+msgid "Selected navigation item does not exist."
+msgstr "Vybraná navigačná položka neexistuje."
+
+msgid "Selected notification bar does not exist"
+msgstr "Vybraná notifikačná lišta neexistuje"
+
+msgid "Selected order doesn't exist."
+msgstr "Zvolená objednávka neexistuje."
+
+msgid "Selected order status doesn't exist."
+msgstr "Vybraný stav objednávky neexistuje."
+
+msgid "Selected page doesn't exist."
+msgstr "Zvolená stránka neexistuje."
+
+msgid "Selected parameter doesn't exist."
+msgstr "Zvolený parameter neexistuje."
+
+msgid "Selected payment doesn't exist."
+msgstr "Zvolená platba neexistuje."
+
+msgid "Selected price list does not exist."
+msgstr "Zvolený cenník neexistuje."
+
+msgid "Selected pricing group doesn't exist."
+msgstr "Zvolená cenová skupina neexistuje."
+
+msgid "Selected product doesn't exist."
+msgstr "Zvolený produkt neexistuje."
+
+msgid "Selected promo code doesn't exist."
+msgstr "Zvolený zľavový kupón neexistuje."
+
+msgid "Selected sales representative doesn't exist."
+msgstr "Zvolený obchodný zástupca neexistuje."
+
+msgid "Selected shipping doesn't exist."
+msgstr "Zvolená doprava neexistuje."
+
+msgid "Selected subscriber doesn't exist."
+msgstr "Zvolený odběrateľ newslettera neexistuje."
+
+msgid "Selected transfer issue was not found"
+msgstr "Selected transfer issue was sa nenašli"
+
+msgid "Selected unit doesn't exist"
+msgstr "Vybraná jednotka neexistuje"
+
+msgid "Selected unit doesn't exist."
+msgstr "Zvolená jednotka neexistuje."
+
+msgid "Selected warehouse does not exist."
+msgstr "Vybraný sklad neexistuje."
+
+msgid "Selected watchdog does not exist."
+msgstr "Vybraný hlídací pes neexistuje."
+
+msgid "Selling end date"
+msgstr "Dátum stáhnutia"
+
+msgid "Selling price type"
+msgstr "Typ predajnej ceny"
+
+msgid "Selling start date"
+msgstr "Dátum vloženia"
+
+msgid "Send"
+msgstr "Odoslať"
+
+msgid "Send confirmation email about registration to customer"
+msgstr "Odoslať e-mail s potvrdením registrácie zákazníkovi"
+
+msgid "Send email about change to this status"
+msgstr "Poslať e-mail o zmene na tento stav"
+
+msgid "Send mail to"
+msgstr "Odoslať email na adresu"
+
+msgid "Send me authentication code"
+msgstr "Pošlite mi overovací kód"
+
+msgid "Send refund and save order"
+msgstr "Odoslať refundáciu a uložiť objednávku"
+
+msgid "Send reset password"
+msgstr "Odoslať email pre reset hesla"
+
+msgid "Send reset password email"
+msgstr "Zaslať e-mail pre reset hesla"
+
+msgid "Send test mail"
+msgstr "Odoslať testovací email"
+
+msgid "Sending emails is turned off, no email will be sent from the app."
+msgstr "Odesílanie e-mailov je vypnuté, z aplikácie nebude odoslaný žiadny e-mail."
+
+msgid "Seo"
+msgstr "Seo"
+
+msgid "Set"
+msgstr "Nastaviť"
+
+msgid "Set as default"
+msgstr "Nastaviť ako východzie"
+
+msgid "Set prices manually"
+msgstr "Manuálne nastavené ceny"
+
+msgid "Setting for domain \"%domainName%\" was saved."
+msgstr "Nastavenie pre doménu \"%domainName%\" bolo uložené."
+
+msgid "Settings"
+msgstr "Nastavenia"
+
+msgid "Settings modified."
+msgstr "Nastavenia upravené."
+
+msgid "Several times a day (%hours%h and %minutes%m)"
+msgstr "Niekolˈkokrát denne (%hours%h a %minutes%m)"
+
+msgid "Shipping"
+msgstr "Doprava"
+
+msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Doprava <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
+
+msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modified"
+msgstr "Doprava <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola upravená"
+
+msgid "Shipping <strong>{{ name }}</strong> deleted"
+msgstr "Doprava <strong>{{ name }}</strong> odstránená"
+
+msgid "Shipping instructions"
+msgstr "Pokyny na dopravu"
+
+msgid "Shippings"
+msgstr "Doprava"
+
+msgid "Shippings and payments"
+msgstr "Doprava a platby"
+
+msgid "Short description"
+msgstr "Krátky popis"
+
+msgid "Short description %number%"
+msgstr "Krátky popis %number%"
+
+msgid "Short description USP"
+msgstr "Krátky popis USP"
+
+msgid "Short description can be set in the main variant."
+msgstr "Krátky popis môže byť nastavený v hlavnej variante."
+
+msgid "Short description of category"
+msgstr "Krátky popis kategórie"
+
+msgid "Show all customer orders"
+msgstr "Zobraziť all customer orders"
+
+msgid "Show combinations"
+msgstr "Zobraziť combinations"
+
+msgid "Show detail"
+msgstr "Zobraziť detail"
+
+msgid "Show in the category"
+msgstr "Zobraziť in the category"
+
+msgid "Site"
+msgstr "Stránka"
+
+msgid "Site [abbreviation]"
+msgstr "S"
+
+msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Stránka slidera <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorená"
+
+msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Stránka slidera <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
+
+msgid "Slug"
+msgstr "Slug"
+
+msgid "Some data may not be localized or serve the technical administrators of the e-shop."
+msgstr "Niektoré údaje nemusia byť lokalizované alebo slúžia technickým administrátorom e-shopu."
+
+msgid "Some items cannot be imported due to errors:"
+msgstr "Niečé položky nemôžu byť importované kvôli chybám:"
+
+msgid "Sorting priority"
+msgstr "Priorita triedenia"
+
+msgid "Special price"
+msgstr "Špeciálna cena"
+
+msgid "Standard"
+msgstr "Štandardný"
+
+msgid "Started at"
+msgstr "Začať o"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
+msgstr "Stav reklamac­e s číslom {complaint_number} z objednávky číslo {order_number} vytvorenej dňa {date} sa zmenil"
+
+msgid "Status of complaints"
+msgstr "Stav reklamacía"
+
+msgid "Status of complaints <strong>{{ name }}</strong> deleted"
+msgstr "Stav reklámácií <strong>{{ name }}</strong> odstránený"
+
+msgid "Status of complaints <strong>{{ name }}</strong> is reserved and can't be deleted"
+msgstr "Stav reklámácií <strong>{{ name }}</strong> je rezervovaný a nemôže byť odstránený"
+
+msgid "Status of complaints <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
+msgstr "Stav reklámácií <strong>{{ oldName }}</strong> nahradený stavom <strong>{{ newName }}</strong> a odstránený."
+
+msgid "Status of order"
+msgstr "Stav objednávky"
+
+msgid "Status of orders"
+msgstr "Stav objednávok"
+
+msgid "Status of orders <strong>{{ name }}</strong> deleted"
+msgstr "Stav objednávok <strong>{{ name }}</strong> odstránený"
+
+msgid "Status of orders <strong>{{ name }}</strong> reserved and can't be deleted"
+msgstr "Stav objednávok <strong>{{ name }}</strong> rezervovaný a nemôže byť odstránený"
+
+msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
+msgstr "Stav objednávok <strong>{{ oldName }}</strong> nahradený stavom <strong>{{ newName }}</strong> a odstránený."
+
+msgid "Stocking"
+msgstr "Skladovanie"
+
+msgid "Store"
+msgstr "Obchod"
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Obchod <strong><a href=\"{{ url }}\">{{ name }}</a></strong> vytvorený"
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Obchod <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravený"
+
+msgid "Store <strong>{{ name }}</strong> was deleted"
+msgstr "Obchod <strong>{{ name }}</strong> bol odstránený"
+
+msgid "Store <strong>{{ name }}</strong> was set as default."
+msgstr "Obchod <strong>{{ name }}</strong> bol nastavený ako predvolený."
+
+msgid "Store does not exist"
+msgstr "Obchod neexistuje"
+
+msgid "Store list"
+msgstr "Zoznam Store"
+
+msgid "Storefront queries cache has been cleaned."
+msgstr "Cache dopytov storefront bola vymotáná."
+
+msgid "Stores"
+msgstr "Obchody"
+
+msgid "Street"
+msgstr "Ulica"
+
+msgid "Subject"
+msgstr "Predmet"
+
+msgid "Subscribed at"
+msgstr "Dátum prihlásenia k odberu"
+
+msgid "Subscriber <strong>{{ email }}</strong> deleted"
+msgstr "Odberateľ newslettera <strong>{{ email }}</strong> bol zmazaný"
+
+msgid "Successfully uploaded"
+msgstr "Úspešne nahrané"
+
+msgid "Sunday"
+msgstr "Nedeľa"
+
+msgid "Superadmin"
+msgstr "Superadmin"
+
+msgid "Superadmin - Closing modules"
+msgstr "Superadmin - Zatváracie moduly"
+
+msgid "Superadmin - Sale including/excluding VAT settings"
+msgstr "Nastavenia Superadmin - Sale including/excluding VAT"
+
+msgid "Superadmin - URL addresses"
+msgstr "Superadmin - URL adresy"
+
+msgid "Switch locale"
+msgstr "Prepnúť jazyk"
+
+msgid "System data"
+msgstr "Systémové údaje"
+
+msgid "Tax number"
+msgstr "Daň=ové číslo"
+
+msgid "Technical error on issuer's side"
+msgstr "Technická chyba na strane vydavateľa"
+
+msgid "Telephone"
+msgstr "Telefón"
+
+msgid "Terms and conditions"
+msgstr "Obchodné podmienky"
+
+msgid "Terms and conditions settings"
+msgstr "Nastavenia Terms and conditions"
+
+msgid "Test email sent to %email%."
+msgstr "Testovací e-mail bol odoslaný na %email%."
+
+msgid "Text"
+msgstr "Text"
+
+msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
+msgstr "Aktuálny zoznam URL adries môže byť nájdený v repositári projektu v súbore \"storefront/config/staticRewritePaths.js\"."
+
+msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
+msgstr "Čím vyššia priorita, tým vyššie bude krajina zobrazená v zoznamoch. Krajiny s rovnakou prioritou budú zotriadené alfabeticky."
+
+msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
+msgstr "Optimálna veľkosť ikony je 46x26 px. Povolený je len PNG formát."
+
+msgid "The product has no specified name for the locale."
+msgstr "Produkt nemá stanovený názov pre daný jazyk."
+
+msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
+msgstr "Produkt už nie je v katalógu. Toto bolo katalógové číslo v čase dopytovánia."
+
+msgid "The selected flag cannot be deleted."
+msgstr "Vybraná značka nemôže byť odstránená."
+
+msgid "The stock quantities are set for the product variants separately."
+msgstr "Skladové množstvá sú nastavené pre varianty produktu osobne."
+
+msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul>"
+msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul>"
+
+msgid "There are no parameter values of type color yet."
+msgstr "Zatiaľ nie sú žiadne hodnoty parametrov typu farba."
+
+msgid "There is no parameter group yet."
+msgstr "Zatiaľ neexistuje žiadna skupina parametrov."
+
+msgid "There is no warehouse on this domain yet."
+msgstr "Na tejto doméne zatiaľ neexistuje žiadny sklad."
+
+msgid "There was an error while saving. The order isn't saved."
+msgstr "Pri uklade dšla chyba. Objednávka nie je uložená."
+
+msgid "Third column categories"
+msgstr "Kategórie tretieho stĺpca"
+
+msgid "This SEO page cannot be deleted."
+msgstr "Táto SEO stránka nemôže byť odstránená."
+
+msgid "This currency can't be deleted, it is set as default or is saved with order."
+msgstr "Táto mena nemôže byť odstránená, je nastavená ako predvolená alebo je uložená s objednávkou."
+
+msgid "This email was sent from the contact form located below the panel of categories."
+msgstr "Tento e-mail bol odoslaný z kontaktného formulára umiestneného pod panelom kategórií."
+
+msgid "This flag can not be deleted as it is used in definition of"
+msgstr "Táto značka nemôže byť odstránená, pretože sa používa v definícii"
+
+msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
+msgstr "Toto je posledný používateľ zákazníka. Odstráni to všetky súvisísie údaje. Naozaj to chcete odstrániť?"
+
+msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
+msgstr "Toto sa používa na zoradenie parametrov v detaile produktu a zoradenie parametrov na vyhladavacej stránke pri použití Luigi's Box. Pre zoradenie parametrov vo filtri použite nastavenia v kategórii."
+
+msgid "This item can be set in product detail of a specific variant"
+msgstr "Táto položka môže byť nastavená v detaile produktu špecifickej varianty"
+
+msgid "This payment method is hidden by GoPay on domains: %domains%"
+msgstr "Táto platobná metóda je skrytá GoPay na doménach: %domains%"
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
+msgstr "Tento stav nemôže byť odstránený, pretože je naň viakaná funkcionalita - identifikuje reklámacie, ktoré boli úspešne spracované."
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
+msgstr "Tento stav nemôže byť odstránený, pretože je naň viakaná funkcionalita - identifikuje objednávky, ktoré neboli úspešne spracované."
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
+msgstr "Tento stav nemôže byť odstránený, pretože je naň viakaná funkcionalita - identifikuje objednávky, ktoré boli úspešne spracované."
+
+msgid "This status can't be deleted. This is automatically assigned status to all new complaints."
+msgstr "Tento stav nemôže byť odstránený. Je automaticky priradený všetkým novým reklámáciám."
+
+msgid "This status can't be deleted. This is automatically assigned status to all new orders."
+msgstr "Tento stav nemôže byť odstránený. Je automaticky priradený všetkým novým objednávkam."
+
+msgid "This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?"
+msgstr "Toto odstráni všetky údaje súvisioäe so zákazníkom (používatelia, adresy atď.). Naozaj chcete odstrániť túto spoločnosť?"
+
+msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
+msgstr "Toto pošle e-mail používateľovi zákazníka na obnovu hesla. Naozaj to chcete poslať?"
+
+msgid "Thursday"
+msgstr "Štvrtok"
+
+msgid "TikTok URL"
+msgstr "TikTok URL"
+
+msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
+msgstr "Na odstránenie tejto hodnoty musí byť vybraná iná, ktorá sa použije namiesto existujúcej. Bohužiaľ nie je dostupná žiadna iná hodnota, musíte vytvoriť novú hodnotu pred odstránením tejto."
+
+msgid "To fifty hundredths (halfs)"
+msgstr "Na päťdesätiny (polovice)"
+
+msgid "To hundredths (cents)"
+msgstr "Na stotstiny (centy)"
+
+msgid "To whole numbers"
+msgstr "Na celé čísla"
+
+msgid "Too many login attempts. Please try again later."
+msgstr "Príliš veľa pokúsov o prihlásenie. Skúste to znovu neskôr."
+
+msgid "Total"
+msgstr "Celkom"
+
+msgid "Total excluding VAT"
+msgstr "Celkom excluding VAT"
+
+msgid "Total including VAT"
+msgstr "Celkom including VAT"
+
+msgid "Total order price (excluding VAT)"
+msgstr "Celkom order price (excluding VAT)"
+
+msgid "Total order price (including VAT)"
+msgstr "Celkom order price (including VAT)"
+
+msgid "Total price"
+msgstr "Celkom price"
+
+msgid "Total price including VAT"
+msgstr "Celkom price including VAT"
+
+msgid "Tracking URL"
+msgstr "Sledovacé URL"
+
+msgid "Tracking URL variables"
+msgstr "Premené sledovacieho URL"
+
+msgid "Tracking instructions"
+msgstr "Pokyny na sledovanie"
+
+msgid "Tracking instructions variables"
+msgstr "Premené pokynov na sledovanie"
+
+msgid "Tracking number"
+msgstr "Sledovacie číslo"
+
+msgid "Transfer"
+msgstr "Prenos"
+
+msgid "Transfer issues overview"
+msgstr "Prehľad Transfer issues"
+
+msgid "Transfer problem has been marked as resolved"
+msgstr "Problém prenosu bol označený ako vyřešený"
+
+msgid "Transfer type"
+msgstr "Typ prenosu"
+
+msgid "Transfers"
+msgstr "Prenosy"
+
+msgid "Transport type"
+msgstr "Typ dopravy"
+
+msgid "Tuesday"
+msgstr "Utorok"
+
+msgid "Two factor authentication"
+msgstr "Dvojfaktorové overovanie"
+
+msgid "Two factor authentication code"
+msgstr "Kód dvojfaktorového overovania"
+
+msgid "Two factor authentication is already enabled."
+msgstr "Dvojfaktorové overovanie je už povolené."
+
+msgid "Two factor authentication is not enabled."
+msgstr "Dvojfaktorové overovanie nie je povolené."
+
+msgid "Two factor authentication was disabled"
+msgstr "Dvojfaktorové overovanie bolo vypnuté"
+
+msgid "Two factor authentication was enabled"
+msgstr "Dvojfaktorové overovanie bolo zapnuté"
+
+msgid "Two selected domains cannot have the same language"
+msgstr "Dve vybrané domény nemôžu mať rovnaký jazyk"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "URL Settings"
+msgstr "Nastavenia URL"
+
+msgid "URL addresses"
+msgstr "URL adresy"
+
+msgid "URL settings"
+msgstr "Nastavenia URL"
+
+msgid "URL will be deleted after saving."
+msgstr "URL bude vymazané po uložení."
+
+msgid "Unable to add"
+msgstr "Nemožno pridať"
+
+msgid "Unable to add product"
+msgstr "Nemožno pridať produkt"
+
+msgid "Unable to deliver SMS"
+msgstr "Nemožno doručiť SMS"
+
+msgid "Unable to load list of language constants"
+msgstr "Nemožno načítať zoznam jazykových konštánt"
+
+msgid "Unexpected error occurred, file was not uploaded."
+msgstr "Nastala neočakávaná chyba, súbor nebol nahraný."
+
+msgid "Unit"
+msgstr "Jednotka"
+
+msgid "Unit \"%name%\" set as default. For deleting existing unit you have to choose new default unit. Which unit you want to set instead?"
+msgstr "Jednotka \"%name%\" nastavená ako predvolená. Pre odstránenie existujúcej jednotky musíte vybrať novú predvolenú jednotku. Ktorú jednotku chcete nastaviť namiesto nej?"
+
+msgid "Unit <strong>{{ name }}</strong> deleted"
+msgstr "Jednotka <strong>{{ name }}</strong> odstránená"
+
+msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
+msgstr "Jednotka <strong>{{ name }}</strong> odstránená a nahradená jednotkou <strong>{{ newName }}</strong>"
+
+msgid "Unit price excluding VAT"
+msgstr "Jednotková cena bez DPH"
+
+msgid "Unit price including VAT"
+msgstr "Jednotková cena s DPH"
+
+msgid "Unknown configuration"
+msgstr "Konfigurácia Unknown"
+
+msgid "Unlimited"
+msgstr "Neobmedzene"
+
+msgid "Unsupported payment card region"
+msgstr "Platobná karta je vydaná v regióne, v ktorom nie sú podporované platby kartou"
+
+msgid "Unsupported two factor authentication method"
+msgstr "Nepodporovaná metóda dvojfaktorového overenia"
+
+msgid "Unused friendly URL list"
+msgstr "Zoznam Unused friendly URL"
+
+msgid "Updated at"
+msgstr "Aktualizované dňa"
+
+msgid "Upload"
+msgstr "Nahrať"
+
+msgid "Upload attachment"
+msgstr "Nahrať prílohu"
+
+msgid "Upload files"
+msgstr "Nahrať súbory"
+
+msgid "Upload image"
+msgstr "Nahrať obrázok"
+
+msgid "Upload image for mobile devices"
+msgstr "Nahrať obrázok pre mobilné zariadenia"
+
+msgid "Upload new image"
+msgstr "Nahrať nový obrázok"
+
+msgid "Uploaded file <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Súbor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol upravený"
+
+msgid "Uploading..."
+msgstr "Nahrávam..."
+
+msgid "Upon inquiry"
+msgstr "Na dopovedanie"
+
+msgid "Upon inquiry [abbreviation]"
+msgstr "?"
+
+msgid "Url address"
+msgstr "URL adresa"
+
+msgid "Use"
+msgstr "Používať"
+
+msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
+msgstr "Využité: %currentLength% znakov. Odporúčané max. %recommendedLength%"
+
+msgid "User"
+msgstr "Používateľ"
+
+msgid "User consent policy"
+msgstr "Správa osobných údajov"
+
+msgid "User consent policy article"
+msgstr "Článok o správe osobných údajov"
+
+msgid "User consent policy settings"
+msgstr "Nastavenia User consent policy"
+
+msgid "User consent policy settings modified."
+msgstr "Nastavenie správy osobných údajov bolo uložené"
+
+msgid "User translation"
+msgstr "Užívateľský preklad"
+
+msgid "Username"
+msgstr "Používateľské meno"
+
+msgid "Using price calculation has been disabled, don't forget to edit all prices."
+msgstr "Prepočítavanie cín bolo zakázané, nezabudnite upravovať všetky ceny."
+
+msgid "VAT"
+msgstr "DPH"
+
+msgid "VAT <strong>{{ name }}</strong> deleted"
+msgstr "DPH <strong>{{ name }}</strong> bolo zmazané"
+
+msgid "VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>."
+msgstr "DPH <strong>{{ name }}</strong> bolo zmazané a bolo nahradené <strong>{{ newName }}</strong>."
+
+msgid "VAT rate (%)"
+msgstr "Výška DPH (%)"
+
+msgid "VAT rate can't be removed because it is being currently used for conversion to this VAT rate"
+msgstr "Sadzba DPH nemôže byť odstránená, pretože práve prebieha prepočet na túto sadzbu DPH."
+
+msgid "VAT rate is marked for deleting and will be soon automatically removed. Conversion rate is several hundreds of products in 5 minutes."
+msgstr "Sadzba DPH je označená pre zmazanie a čoskoro bude automaticky odstránená. Prepočet prebieha rýchlosťou niekoľko stô produktov za 5 minút."
+
+msgid "VAT rates"
+msgstr "sadzby DPH"
+
+msgid "VAT settings modified"
+msgstr "Nastavenie DPH bolo upravené"
+
+msgid "Valid from"
+msgstr "Planosť od"
+
+msgid "Valid to"
+msgstr "Planosť do"
+
+msgid "Valid until"
+msgstr "Planosť do"
+
+msgid "Value"
+msgstr "Hodnota"
+
+msgid "Value of bought products after application of all discounts and promo codes without price of shipping and payment"
+msgstr "Hodnota nákupených produktov po aplikácii všetkých zľav a promo kódov bez ceny dopravy a platby"
+
+msgid "Variant"
+msgstr "Variant"
+
+msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
+msgstr "Varianta <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> bola úspešne vytvorená."
+
+msgid "Variant [abbreviation]"
+msgstr "V"
+
+msgid "Variant alias"
+msgstr "Alias varianty"
+
+msgid "Variants"
+msgstr "Varianty"
+
+msgid "Videos"
+msgstr "Videá"
+
+msgid "View allowed recipients."
+msgstr "Zobraziť povolených príjemcov."
+
+msgid "Visibility"
+msgstr "Viditeľnosť"
+
+msgid "Visibility for unlogged customers"
+msgstr "Viditeľnosť pre neprihlásených zákazníkov"
+
+msgid "Visible on homepage"
+msgstr "Viditelný na domovskej stránke"
+
+msgid "Waiting for an offline transfer to be finished"
+msgstr "Čakáme na vykonanie offline platby"
+
+msgid "Waiting for an online bank transfer to be completed"
+msgstr "Čakáme na vykonanie online platby"
+
+msgid "Warehouse"
+msgstr "Sklad"
+
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený"
+
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol upravený"
+
+msgid "Warehouse <strong>{{ name }}</strong> deleted"
+msgstr "Sklad <strong>{{ name }}</strong> bol zmazaný"
+
+msgid "Warehouse <strong>{{ name }}</strong> was set as default."
+msgstr "Sklad <strong>{{ name }}</strong> bol nastavený ako predvolený."
+
+msgid "Warehouse detail"
+msgstr "Detail skladu"
+
+msgid "Warehouse overview"
+msgstr "Prehľad Warehouse"
+
+msgid "Warehouse settings"
+msgstr "Nastavenia Warehouse"
+
+msgid "Warehouses"
+msgstr "Sklady"
+
+msgid "Watchdog"
+msgstr "Watchdog"
+
+msgid "Watchdog -"
+msgstr "Watchdog -"
+
+msgid "Watchdog - %name%"
+msgstr "Watchdog - %name%"
+
+msgid "Watchdog detail"
+msgstr "Detail watchdog"
+
+msgid "Watchdog for email <strong>{{ email }}</strong> has been removed"
+msgstr "Watchdog pre e-mail <strong>{{ email }}</strong> bol odstránený"
+
+msgid "Watchdogs"
+msgstr "Watchdogy"
+
+msgid "Watchdogs overview"
+msgstr "Prehľad Watchdogs"
+
+msgid "Wednesday"
+msgstr "Streda"
+
+msgid "Weight (g)"
+msgstr "Hmotnosť (g)"
+
+msgid "When changing the default currency there is no recalculation of prices"
+msgstr "Pri zmene predvolenej meny nedôjde k prepôčtu cien"
+
+msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
+msgstr "Pri vytváraní novej cenovej skupiny budťte trpezliví. Aplikácia musí prepôčítať cenu pre každý produkt na e-shope. Produkty bez prepôčítanej ceny nebudú zobrazené na e-shope. Naprie. trvanie prepôčítania 2000 produktov trvanie a jedna hodina."
+
+msgid "XML Feeds"
+msgstr "XML Feedy"
+
+msgid "XML availability feeds"
+msgstr "XML feedy dostupnosti"
+
+msgid "XML feeds settings"
+msgstr "Nastavenia XML feeds"
+
+msgid "Yes"
+msgstr "Áno"
+
+msgid "You are allowed to disable two factor authentication only to yourself."
+msgstr "Môžete vypnúť dvojfaktorové overovanie iba sebe."
+
+msgid "You are allowed to set up two factor authentication only to yourself."
+msgstr "Môžete nastaviť dvojfaktorové overovanie iba sebe."
+
+msgid "You can change the settings <a href=\"%linkUrl%\">here</a>."
+msgstr "Nastavenia môžete zmeniť <a href=\"%linkUrl%\">tu</a>."
+
+msgid "You can drag additional content here."
+msgstr "Môžete sem potiahnungsť dodatočný obsah."
+
+msgid "You can drag articles here."
+msgstr "Môžete sem potiahnugsť články."
+
+msgid "You can refund only %refundableAmount%."
+msgstr "Môžete vrátiť iba %refundableAmount%."
+
+msgid "You can set the categories on product detail of the main variant"
+msgstr "Kategórie môžete nastaviť na detaile produktu hlavnej varianty"
+
+msgid "You can set the prices on product detail of specific variant."
+msgstr "Ceny môžete nastaviť na detaile konkrétnej varianty."
+
+msgid "You can upload following formats: PNG, JPG"
+msgstr "Môžete nahrávať formáty: PNG, JPG"
+
+msgid "You can upload following formats: PNG, JPG, GIF"
+msgstr "Môžete nahrávať formáty: PNG, JPG, GIF"
+
+msgid "You can't delete yourself."
+msgstr "Nemôžete odstrániť seba."
+
+msgid "You cannot choose product that is main variant"
+msgstr "Nemôžete vybrať produkt, ktorý je hlavnou variantou"
+
+msgid "You cannot choose product that is variant"
+msgstr "Nemôžete vybrať produkt, ktorý je variantou"
+
+msgid "You don't have permission to perform this action."
+msgstr "Nemáte oprávnenie na vykonanie tejto akcie."
+
+msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
+msgstr "Zmenili ste typ parametra, čo vyžaduje konverziu jeho hodnôt na %type%. Tu je zoznam hodnôt, ktoré treba skontrolovať."
+
+msgid "You have made changes, don't forget to save them!"
+msgstr "Urobili ste zmeny, nezabudnite ich uložiť!"
+
+msgid "You have to create some payment first."
+msgstr "Musíte najskôr vytvoriť platobnú metódu."
+
+msgid "You have to create some shipping first."
+msgstr "Musíte najskôr vytvoriť dopravu."
+
+msgid "You have to set redirect code for redirect."
+msgstr "Pre nastavenie presmerovánia musíte zadat kód presmerovánia."
+
+msgid "You have unsaved changes!"
+msgstr "Máte neuložené zmeny!"
+
+msgid "You have unsaved changes, save them first, please."
+msgstr "Máte neuložené zmeny. Najskôr ich prosím uložte."
+
+msgid "Youtube ID"
+msgstr "YouTube ID"
+
+msgid "Youtube URL"
+msgstr "YouTube URL"
+
+msgid "above footer"
+msgstr "nad patičkou"
+
+msgid "above order summary in cart"
+msgstr "nad súhrnom objednávky v košíku"
+
+msgid "administrators"
+msgstr "administrátorov"
+
+msgid "advertisings"
+msgstr "reklám"
+
+msgid "after"
+msgstr "po"
+
+msgid "articles"
+msgstr "článkov"
+
+msgid "before"
+msgstr "pred"
+
+msgid "blog articles"
+msgstr "článkov blogu"
+
+msgid "brands"
+msgstr "značiek"
+
+msgid "complaint statuses"
+msgstr "stavy reklamacía"
+
+msgid "complaints"
+msgstr "reklámacíe"
+
+msgid "countries"
+msgstr "štáty"
+
+msgid "create"
+msgstr "vytvoriť"
+
+msgid "currencies"
+msgstr "meny"
+
+msgid "customers"
+msgstr "zákazníkov"
+
+msgid "delete"
+msgstr "odstrániť"
+
+msgid "discount"
+msgstr "zľava"
+
+msgid "doesn't include"
+msgstr "neobsahuje"
+
+msgid "edit"
+msgstr "upraviť"
+
+msgid "empty value"
+msgstr "prázdna hodnota"
+
+msgid "files"
+msgstr "súbory"
+
+msgid "flags"
+msgstr "príznakov"
+
+msgid "from"
+msgstr "z"
+
+msgid "from \"oldReadableValue\" to \"newReadableValue\""
+msgstr "z \"oldReadableValue\" na \"newReadableValue\""
+
+msgid "full"
+msgstr "plný"
+
+msgid "g"
+msgstr "g"
+
+msgid "higher or equal"
+msgstr "väčšie alebo rovné"
+
+msgid "higher than"
+msgstr "väčšie ako"
+
+msgid "in category (between first and second row of products)"
+msgstr "v kategórii (medzi prvým a druhým radom produktov)"
+
+msgid "include"
+msgstr "obsahuje"
+
+msgid "inquiries"
+msgstr "dopyty"
+
+msgid "is"
+msgstr "je"
+
+msgid "lower or equal"
+msgstr "menšie alebo rovné"
+
+msgid "lower than"
+msgstr "menšie ako"
+
+msgid "never"
+msgstr "nikdy"
+
+msgid "new customers"
+msgstr "noví zákazníci"
+
+msgid "not"
+msgstr "nie"
+
+msgid "not entered"
+msgstr "nezadané"
+
+msgid "not registered customer"
+msgstr "neregistrovaný zákazník"
+
+msgid "numbers"
+msgstr "čísla"
+
+msgid "or"
+msgstr "alebo"
+
+msgid "order statuses"
+msgstr "stavy objednávok"
+
+msgid "orders"
+msgstr "objednávky"
+
+msgid "orders sold"
+msgstr "predané objednávky"
+
+msgid "parameter values"
+msgstr "hodnoty parametrov"
+
+msgid "parameters"
+msgstr "parametre"
+
+msgid "product lists"
+msgstr "zoznamy produktov"
+
+msgid "products"
+msgstr "produkty"
+
+msgid "promo codes"
+msgstr "promo kódy"
+
+msgid "ready category seo mixes"
+msgstr "pripravené seo kombinácie kategórií"
+
+msgid "records"
+msgstr "záznamy"
+
+msgid "sales representatives"
+msgstr "obchodní zástupcovia"
+
+msgid "subscribers"
+msgstr "odberateľia"
+
+msgid "turnover in"
+msgstr "obrat v"
+
+msgid "under heading"
+msgstr "pod nadpisom"
+
+msgid "units"
+msgstr "jednotky"
+
+msgid "unregistered customer"
+msgstr "neregistrovaný zákazník"
+
+msgid "use key tab or shift+tab"
+msgstr "použite kláves tab alebo shift+tab"
+
+msgid "view"
+msgstr "zobraziť"
+
+msgid "watchdogs"
+msgstr "watchdogy"
+
+msgid "with VAT"
+msgstr "s DPH"
+
+msgid "without VAT"
+msgstr "bez DPH"
+
+msgid "without positioning"
+msgstr "bez pozície"
+
+msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
+msgstr "{1} Je jeden parameter posuvník, ktorý nemá vyplnené svoje číselné hodnoty.|[2,Inf] Sú %count% parametre posuvníky, ktoré nemajú vyplnené svoje číselné hodnoty."
+
+msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
+msgstr "{1} Musíte počkať 1 sekundu pred odoslaním formulára. |[2,Inf] Musíte počkať %seconds% sekúnd pred odoslaním formulára."
+
+msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
+msgstr "{1}<strong>%count%</strong> promo kód bol vytvorený|[2,Inf]<strong>%count%</strong> promo kódy boli vytvorené"
+
+msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
+msgstr "{1}Obchodný zástupca \"%label%\" je priradený %count% zákazníkovi a bude odstránený ak budete pokračovať.<br><br> Zákazník:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[2,10]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[11,Inf]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br> +%extraCount% viac<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo?"
+

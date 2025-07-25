@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Back to overview"
+msgstr "Späť na prehľad"
+
+msgid "Create"
+msgstr "Vytvoriť"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Save changes"
+msgstr "Uložiť zmeny"
+
+msgid "Yes"
+msgstr "Áno"
+

@@ -1,0 +1,252 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "%entity_name% Overview"
+msgstr "Prehľad %entity_name%"
+
+msgid "Administrator"
+msgstr "Administrátor"
+
+msgid "Administrators"
+msgstr "Administrátori"
+
+msgid "Adverts"
+msgstr "Reklamy"
+
+msgid "Alternate language settings"
+msgstr "Nastavenia alternatívnych jazykov"
+
+msgid "Articles"
+msgstr "Články"
+
+msgid "Back to overview"
+msgstr "Späť na prehľad"
+
+msgid "Bestselling products"
+msgstr "Najpredávanejšie produkty"
+
+msgid "Blog article"
+msgstr "Blogový článok"
+
+msgid "Blog category"
+msgstr "Blogová kategória"
+
+msgid "Brands"
+msgstr "Značky"
+
+msgid "Categories"
+msgstr "Kategórie"
+
+msgid "Categories extended SEO"
+msgstr "Rozšírené SEO kategórií"
+
+msgid "Closed days"
+msgstr "Zatvorené dni"
+
+msgid "Color parameter values"
+msgstr "Hodnoty farebných parametrov"
+
+msgid "Complaint statuses"
+msgstr "Stavy reklamacíí"
+
+msgid "Complaints"
+msgstr "Reklamácie"
+
+msgid "Contact form"
+msgstr "Kontaktný formulár"
+
+msgid "Content Management"
+msgstr "Správa obsahu"
+
+msgid "Countries"
+msgstr "Krajiny"
+
+msgid "Creating new %entity_name%"
+msgstr "Vytváranie nového %entity_name%"
+
+msgid "Customers"
+msgstr "Zákazníci"
+
+msgid "Delete"
+msgstr "Odstrániť"
+
+msgid "Do you really want to delete this item?"
+msgstr "Naozaj chcete odstrániť túto položku?"
+
+msgid "E-shop identification"
+msgstr "Identifikácia e-shopu"
+
+msgid "Edit"
+msgstr "Upraviť"
+
+msgid "Editing %entity_name%"
+msgstr "Úprava %entity_name%"
+
+msgid "Feeds"
+msgstr "Feedy"
+
+msgid "Files"
+msgstr "Súbory"
+
+msgid "Flags"
+msgstr "Príznaky"
+
+msgid "Free transport and payment"
+msgstr "Doprava a platba zadarmo"
+
+msgid "Full access"
+msgstr "Úplný prístup"
+
+msgid "Full access (view only)"
+msgstr "Úplný prístup (iba zobrazenie)"
+
+msgid "Heureka setting"
+msgstr "Nastavenie Heureky"
+
+msgid "Inquiries"
+msgstr "Dopyty"
+
+msgid "Language constants"
+msgstr "Jazykové konštanty"
+
+msgid "Legal & Compliance"
+msgstr "Právne predpisy"
+
+msgid "Legal conditions article setting"
+msgstr "Nastavenie článku o právnych podmienkach"
+
+msgid "Mail setting"
+msgstr "Nastavenie mailov"
+
+msgid "Mail templates"
+msgstr "Šablóny e-mailov"
+
+msgid "Marketing & Promotions"
+msgstr "Marketing a propagácia"
+
+msgid "Measurement units"
+msgstr "Merné jednotky"
+
+msgid "Navigation"
+msgstr "Navigácia"
+
+msgid "New"
+msgstr "Nový"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Notification bar"
+msgstr "Panel s upozorneniami"
+
+msgid "Order statuses"
+msgstr "Stavy objednávok"
+
+msgid "Order submitted page setting"
+msgstr "Nastavenie stránky odoslanej objednávky"
+
+msgid "Orders"
+msgstr "Objednávky"
+
+msgid "Orders & Customers"
+msgstr "Objednávky a zákazníci"
+
+msgid "Parameter groups"
+msgstr "Skupiny parametrov"
+
+msgid "Parameters"
+msgstr "Parametre"
+
+msgid "Personal data access pages setting"
+msgstr "Nastavenie stránok pre prístup k osobným údajom"
+
+msgid "Price lists"
+msgstr "Cenníky"
+
+msgid "Pricing groups"
+msgstr "Cenové skupiny"
+
+msgid "Privacy policy article setting"
+msgstr "Nastavenie článku o zásadách ochrany osobných údajov"
+
+msgid "Products"
+msgstr "Produkty"
+
+msgid "Products & Catalog"
+msgstr "Produkty a katalóg"
+
+msgid "Promo codes"
+msgstr "Promo kódy"
+
+msgid "Public access"
+msgstr "Verejný prístup"
+
+msgid "Robots.txt settings"
+msgstr "Nastavenia súboru Robots.txt"
+
+msgid "SEO"
+msgstr "SEO"
+
+msgid "SEO & Marketing Tools"
+msgstr "SEO a marketingové nástroje"
+
+msgid "SEO pages"
+msgstr "SEO stránky"
+
+msgid "Sales representatives"
+msgstr "Obchodní zástupcovia"
+
+msgid "Settings & Configuration"
+msgstr "Nastavenia a konfigurácia"
+
+msgid "Slider items"
+msgstr "Bannery"
+
+msgid "Stores"
+msgstr "Obchody"
+
+msgid "Super Administrator"
+msgstr "Super Administrator"
+
+msgid "System"
+msgstr "Systém"
+
+msgid "System Tools"
+msgstr "Systémové nástroje"
+
+msgid "Top categories"
+msgstr "Top kategórie"
+
+msgid "Top products"
+msgstr "Top produkty"
+
+msgid "Transfers"
+msgstr "Transfery"
+
+msgid "Transports and payments"
+msgstr "Prepravy a platby"
+
+msgid "Unused friendly URLs"
+msgstr "Zoznam nepoužívaných pekných URL"
+
+msgid "User consent policy article setting"
+msgstr "Nastavenie článku o zásadách súhlasu používateľa"
+
+msgid "Vats"
+msgstr "DPH"
+
+msgid "Viewing %entity_name%"
+msgstr "Zobrazenie %entity_name%"
+
+msgid "Warehouses"
+msgstr "Sklady"
+
+msgid "Watchdogs"
+msgstr "Strážne psy"
+
+msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
+msgstr "Nemáte povolený prístup k požadovanej stránke. Požiadajte, prosím, svojho administrátora o udelenie prístupu k požadovanej stránke."
+

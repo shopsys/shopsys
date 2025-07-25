@@ -1,0 +1,15 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Luigi's Box rank"
+msgstr "Luigi's Box poradie"
+
+msgid "Luigi's Box settings"
+msgstr "Nastavenia Luigi's Box"
+
+msgid "The value is used for availability_rank setting in Luigi's Box feed. See <a href=\"https://docs.luigisbox.com/indexing/feeds.html\">the docs</a> for more information."
+msgstr "Táto hodnota sa používa pre nastavenie availability_rank v Luigi's Box feede. Pre viac informácií pozrite <a href=\"https://docs.luigisbox.com/indexing/feeds.html\">dokumentáciu</a>."
+

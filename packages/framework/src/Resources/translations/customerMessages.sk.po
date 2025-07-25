@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Amount"
+msgstr "Množstvo"
+
+msgid "Available immediately"
+msgstr "Dostupné ihneď"
+
+msgid "Billing address"
+msgstr "Fakturačná adresa"
+
+msgid "Brand overview"
+msgstr "Prehľad značiek"
+
+msgid "Catalog number"
+msgstr "Katalógové číslo"
+
+msgid "Delivery address"
+msgstr "Doručovacia adresa"
+
+msgid "Department stores"
+msgstr "Obchodné domy"
+
+msgid "Exchange"
+msgstr "Výmena"
+
+msgid "Fix"
+msgstr "Oprava"
+
+msgid "Free"
+msgstr "Zdarma"
+
+msgid "In stock"
+msgstr "Na sklade"
+
+msgid "Instructions"
+msgstr "Pokyny"
+
+msgid "Money return"
+msgstr "Vrátenie penáz"
+
+msgid "Note"
+msgstr "Poznámka"
+
+msgid "Order items"
+msgstr "Položky objednávky"
+
+msgid "Out of stock"
+msgstr "Nie je na sklade"
+
+msgid "Payment"
+msgstr "Platba"
+
+msgid "Personal information export"
+msgstr "Export osobných údajov"
+
+msgid "Personal information overview"
+msgstr "Prehľad osobných údajov"
+
+msgid "Transport"
+msgstr "Doprava"
+
+msgid "Unavailable"
+msgstr "Nedostupné"
+
+msgid "Unit price"
+msgstr "Jednotková cena"
+
+msgid "ex VAT"
+msgstr "bez DPH"
+
+msgid "inc VAT"
+msgstr "s DPH"
+
+msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
+msgstr "{0,1} Dostupné za jeden týždeň|[2,4] Dostupné za %count% týždne|[5,Inf] Dostupné za %count% týždňov"
+

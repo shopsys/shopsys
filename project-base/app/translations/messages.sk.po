@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Close"
+msgstr "Zavrieť"
+
+msgid "File not found in main filesystem. Please try again later."
+msgstr "Súbor nebol nájdený v hlavnom súborovom systéme. Prosím, skúste to neskôr."
+
+msgid "GTM ID"
+msgstr "GTM ID"
+
+msgid "GTM creative"
+msgstr "GTM kreativa"
+
+msgid "Insert variable"
+msgstr "Vložiť premennú"
+
+msgid "Insert your text here"
+msgstr "Sem vložte váš text"
+
+msgid "Mandatory variables"
+msgstr "Povinné premenné"
+
+msgid "No products are set. Please add some in the component settings."
+msgstr "Žiadne produkty nie sú nastavené. Prosím, pridajte niektoré v nastaveniach komponentu."
+
+msgid "Optional variables"
+msgstr "Volitelné premenné"
+
+msgid "Related products"
+msgstr "Súvisiace produkty"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "TOP"
+msgstr "TOP"
+
+msgid "Terms-and-conditions.html"
+msgstr "Obchodne-podmienky.html"
+
+msgid "Unsupported file type"
+msgstr "Nepodporovaný typ súboru"
+
+msgid "Unsupported order"
+msgstr "Nepodporované poradie"
+
+msgid "Upload image"
+msgstr "Nahrať obrázok"
+
+msgid "Upload image for mobile devices"
+msgstr "Nahrať obrázok pre mobilné zariadenia"
+
+msgid "You can upload following formats: PNG, JPG"
+msgstr "Môžete nahrať nasledujúce formáty: PNG, JPG"
+
+msgid "e.g. Sale-04-20-2020"
+msgstr "napr. Vypredaj-04-20-2020"
+
+msgid "e.g. red-1035x340-jpg-carousel"
+msgstr "napr. cerveny-1035x340-jpg-carousel"
+
+msgid "from most expensive"
+msgstr "od najdrahších"
+
+msgid "from the cheapest"
+msgstr "od najlacnejších"
+
+msgid "unknown catalog number (product will not be displayed)"
+msgstr "neznáme katalógové číslo (produkt nebude zobrazený)"
+
