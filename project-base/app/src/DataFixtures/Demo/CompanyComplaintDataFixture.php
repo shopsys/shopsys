@@ -52,7 +52,7 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
     private function importCompanyComplaints(int $domainId): void
     {
         $this->createComplaint(
-            $this->getReference(CompanyOrderDataFixture::COMPANY_ORDER_1, Order::class),
+            $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $domainId, Order::class),
             $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL, $domainId, CustomerUser::class),
             [$this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/404.jpg')],
             self::COMPANY_OWNER_COMPLAINT,
@@ -60,7 +60,7 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
         );
 
         $this->createComplaint(
-            $this->getReference(CompanyOrderDataFixture::COMPANY_ORDER_2, Order::class),
+            $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 4, $domainId, Order::class),
             $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_USER_EMAIL, $domainId, CustomerUser::class),
             [$this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/405.jpg')],
             self::COMPANY_USER_COMPLAINT,
