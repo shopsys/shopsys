@@ -5,6 +5,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
@@ -41,19 +42,19 @@ export const NewsletterForm: FC = () => {
     );
 
     return (
-        <div className="relative flex flex-col pt-8 pb-7 lg:flex-row lg:items-center">
-            <div className="mb-3 text-lg font-bold break-words lg:mb-0 lg:pr-5 lg:text-2xl">
-                {t('Sign up for our newsletter and get 35% discount on running apparel')}
-            </div>
+        <FooterContainer className="bg-background-accent-less">
+            <div className="vl:gap-44 grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
+                <div className="font-secondary text-lg font-semibold text-balance lg:text-center">
+                    {t('Sign up for our newsletter and get 35% discount on running apparel')}
+                </div>
 
-            <div className="lg:basis-5/12">
-                <FormProvider {...formProviderMethods}>
-                    <Form
-                        className="mt-15 sm:mt-0"
-                        onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
-                    >
-                        <div className="mb-2 flex flex-col lg:mb-3 lg:flex-row">
-                            <div className="flex flex-col gap-2 lg:gap-3">
+                <div>
+                    <FormProvider {...formProviderMethods}>
+                        <Form
+                            className="grid grid-cols-3 grid-rows-2 gap-2 lg:gap-3"
+                            onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
+                        >
+                            <div className="col-span-2">
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -68,7 +69,9 @@ export const NewsletterForm: FC = () => {
                                         autoComplete: 'email',
                                     }}
                                 />
+                            </div>
 
+                            <div className="col-span-3 col-start-1 row-start-2">
                                 <CheckboxControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -81,19 +84,21 @@ export const NewsletterForm: FC = () => {
                                 />
                             </div>
 
-                            <SubmitButton
-                                aria-label={t('Submit form to sign up for newsletter')}
-                                className="h-12 py-0 max-lg:mt-3 lg:ml-3"
-                                isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                title={t('Sign up')}
-                                variant="inverted"
-                            >
-                                {t('Send')}
-                            </SubmitButton>
-                        </div>
-                    </Form>
-                </FormProvider>
+                            <div className="col-start-3 row-start-1">
+                                <SubmitButton
+                                    aria-label={t('Submit form to sign up for newsletter')}
+                                    className="h-12 w-full py-0 sm:w-auto"
+                                    isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                    title={t('Sign up')}
+                                    variant="inverted"
+                                >
+                                    {t('Send')}
+                                </SubmitButton>
+                            </div>
+                        </Form>
+                    </FormProvider>
+                </div>
             </div>
-        </div>
+        </FooterContainer>
     );
 };

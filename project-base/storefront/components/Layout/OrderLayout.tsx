@@ -46,10 +46,8 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer aria-label={t('Site information')} className="mt-auto h-fit">
-                    <Webline wrapperClassName="bg-background-accent-less">
-                        <Footer simpleFooter />
-                    </Webline>
+                <footer aria-label={t('Site information')} className="bg-background-accent-less mt-auto h-fit">
+                    <Footer simpleFooter />
                 </footer>
             </div>
         </>

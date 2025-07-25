@@ -2,16 +2,12 @@ import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { removeSpaces } from 'utils/removeSpaces';
-
-// TODO PRG
-const dummyData = {
-    phone: '+420 111 222 333',
-    opening: 'Po - Út, 10 - 16 hod',
-};
+import { useContacts } from 'utils/useContacts';
 
 export const HeaderContact: FC = () => {
     const { t } = useTranslation();
-    const cleanPhone = removeSpaces(dummyData.phone);
+    const { phone, openingHours } = useContacts();
+    const cleanPhone = removeSpaces(phone);
 
     return (
         <div className="order-2 ml-auto flex">
@@ -21,14 +17,14 @@ export const HeaderContact: FC = () => {
 
                     <a
                         aria-label={t('Call us')}
-                        className="text-text-inverted hover:text-text-inverted rounded-sm font-bold no-underline"
-                        data-tid={TIDs.simple_header_contact}
+                        className="text-text-inverted hover:text-text-inverted rounded-md font-bold no-underline focus-visible:ring-1"
                         href={'tel:' + cleanPhone}
+                        tid={TIDs.simple_header_contact}
                     >
-                        {dummyData.phone}
+                        {phone}
                     </a>
 
-                    <p className="text-text-inverted hidden text-sm lg:block"> {dummyData.opening}</p>
+                    <p className="text-text-inverted hidden text-sm lg:block"> {openingHours}</p>
                 </div>
             </div>
         </div>

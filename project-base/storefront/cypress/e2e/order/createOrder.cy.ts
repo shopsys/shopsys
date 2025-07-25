@@ -203,7 +203,11 @@ describe('Create Order Tests', () => {
 
             goToEditProfileFromHeader();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'customer edit page', {
-                blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
+                blackout: [
+                    { tid: TIDs.footer_social_links },
+                    { tid: TIDs.footer_payment_images },
+                    { tid: TIDs.footer_copyright },
+                ],
             });
         },
     );

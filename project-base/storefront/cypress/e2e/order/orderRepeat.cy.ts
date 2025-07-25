@@ -35,6 +35,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -59,6 +60,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -83,6 +85,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -113,6 +116,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -140,6 +144,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });
@@ -167,6 +172,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });

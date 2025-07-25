@@ -62,11 +62,9 @@ const Index: FC = () => {
                 </VerticalStack>
             </main>
 
-            <footer className="mt-auto h-fit">
-                <Webline wrapperClassName="bg-background-accent-less">
-                    <NewsletterForm />
-                    <Footer footerArticles={footerArticles} />
-                </Webline>
+            <footer className="bg-background-accent-less mt-auto h-fit">
+                <NewsletterForm />
+                <Footer footerArticles={footerArticles} />
             </footer>
         </div>
     );

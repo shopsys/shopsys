@@ -1,0 +1,8 @@
+query TransportsImage {
+    transports {
+        mainImage {
+            name
+            url
+        }
+    }
+}

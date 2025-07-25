@@ -169,6 +169,7 @@ describe('Transport Select Tests', () => {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
             ],
         });

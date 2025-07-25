@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import { OrderLayout } from 'components/Layout/OrderLayout';
 import { ContactInformationWrapper } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     AdvertsQueryDocument,

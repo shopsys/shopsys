@@ -25,6 +25,7 @@ describe('Matrix Test for blank others group visit tests with screenshots', () =
                 { tid: TIDs.banners_slider },
                 { tid: TIDs.simple_navigation_image },
                 { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_payment_images },
                 { tid: TIDs.footer_copyright },
                 { tid: TIDs.blog_preview_image },
             ],

@@ -6,7 +6,7 @@ import {
 } from './transportAndPaymentUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
-import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import { OrderLayout } from 'components/Layout/OrderLayout';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
