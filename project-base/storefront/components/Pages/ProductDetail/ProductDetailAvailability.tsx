@@ -41,7 +41,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
             onClick={() =>
                 availability.status === TypeAvailabilityStatusEnum.InStock &&
                 updatePortalContent(
-                    <Popup contentClassName="overflow-scroll" title={t('Availability in stores')}>
+                    <Popup contentClassName="overflow-auto" title={t('Availability in stores')}>
                         <ProductDetailAvailabilityList storeAvailabilities={storeAvailabilities} />
                     </Popup>,
                 )
