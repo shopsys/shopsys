@@ -2,7 +2,7 @@ import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export const linkPositionDataAttribute = 'data-link-position';
-export default grapesjs.plugins.add('custom-link', (editor) => {
+export default grapesjs.plugins.add('link', (editor) => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
         category: Translator.trans('Basic objects'),

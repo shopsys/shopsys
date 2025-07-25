@@ -13,7 +13,7 @@ const resetBody = editor => {
     editor.destroy();
 };
 
-export default grapesjs.plugins.add('customButtons', (editor, options) => {
+export default grapesjs.plugins.add('buttons', (editor, options) => {
     const panels = editor.Panels;
     const textareaId = options.textareaId;
     const commands = editor.Commands;

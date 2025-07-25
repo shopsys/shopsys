@@ -1,5 +1,5 @@
 import grapesjs from 'grapesjs';
-import { linkPositionDataAttribute } from './grapesjs-custom-link-plugin';
+import { linkPositionDataAttribute } from '../web/link';
 
 export default grapesjs.plugins.add('mail-custom-image', editor => {
     const imagePositionDataAttribute = 'data-image-position';
@@ -74,6 +74,13 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
             },
         },
     });
+
+    // Modify default image block for mail
+    const mailImageBlock = editor.BlockManager.get('image');
+    if (mailImageBlock) {
+        mailImageBlock.attributes.content.style = { ...mailImageBlock.attributes.content.style, 'max-width': '100%' };
+        editor.Blocks.remove('image');
+    }
 
     editor.addStyle(`
         .image-position-center {

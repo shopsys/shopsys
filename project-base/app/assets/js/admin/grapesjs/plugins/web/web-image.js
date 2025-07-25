@@ -1,5 +1,5 @@
 import grapesjs from 'grapesjs';
-import { linkPositionDataAttribute } from './grapesjs-custom-link-plugin';
+import { linkPositionDataAttribute } from './link';
 
 export default grapesjs.plugins.add('custom-image', editor => {
     const imagePositionDataAttribute = 'data-image-position';

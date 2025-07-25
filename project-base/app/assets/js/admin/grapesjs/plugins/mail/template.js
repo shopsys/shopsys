@@ -1,7 +1,6 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
-export default grapesjs.plugins.add('mail-template', editor => {
+export default grapesjs.plugins.add('mail-template', (editor) => {
     editor.DomComponents.addType('wrapper', {
         model: {
             defaults: {
@@ -23,7 +22,7 @@ export default grapesjs.plugins.add('mail-template', editor => {
     });
 
     editor.DomComponents.addType('editable', {
-        isComponent: element => element.classList?.contains('gjs-editable'),
+        isComponent: (element) => element.classList?.contains('gjs-editable'),
         model: {
             defaults: {
                 removable: false,
@@ -40,7 +39,7 @@ export default grapesjs.plugins.add('mail-template', editor => {
     });
 
     editor.Components.addType('text-ckeditor', {
-        isComponent: element => element.classList?.contains('gjs-text-ckeditor'),
+        isComponent: (element) => element.classList?.contains('gjs-text-ckeditor'),
         extend: 'text',
         model: {
             defaults: {
