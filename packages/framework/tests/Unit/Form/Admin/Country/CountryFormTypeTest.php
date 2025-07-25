@@ -11,6 +11,7 @@ use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Country\CountryFormType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
+use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
@@ -36,6 +37,8 @@ class CountryFormTypeTest extends TypeTestCase
     private CountryFacade $countryFacade;
 
     private UrlGeneratorInterface $urlGenerator;
+
+    private FormTypeLayout $formTypeLayout;
 
     /**
      * @return array
@@ -165,6 +168,8 @@ class CountryFormTypeTest extends TypeTestCase
         $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $this->urlGenerator->method('generate')->willReturn(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL);
 
+        $this->formTypeLayout = new FormTypeLayout();
+
         parent::setUp();
     }
 
@@ -179,9 +184,9 @@ class CountryFormTypeTest extends TypeTestCase
             new PreloadedExtension(
                 [
                     new CountryFormType($this->countryFacade),
-                    new LocalizedType($this->localization),
+                    new LocalizedType($this->localization, $this->formTypeLayout),
                     new DomainsType($this->domain),
-                    new MultidomainType($this->domain),
+                    new MultidomainType($this->domain, $this->formTypeLayout),
                     new ActionBarType($this->urlGenerator),
                 ],
                 [],

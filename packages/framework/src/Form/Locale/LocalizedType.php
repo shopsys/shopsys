@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Locale;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,14 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalizedType extends AbstractType
 {
-    public const string LAYOUT_BLOCK = 'block';
-    public const string LAYOUT_INLINE = 'inline';
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Form\FormTypeLayout $formTypeLayout
      */
     public function __construct(
         private readonly Localization $localization,
+        private readonly FormTypeLayout $formTypeLayout,
     ) {
     }
 
@@ -75,7 +75,7 @@ class LocalizedType extends AbstractType
             'entry_type' => TextType::class,
             'entry_options' => [],
             'main_constraints' => [],
-            'layout' => self::LAYOUT_INLINE,
+            'layout' => null,
         ]);
     }
 
@@ -85,6 +85,10 @@ class LocalizedType extends AbstractType
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
+        if ($options['layout'] === null) {
+            $options['layout'] = $this->formTypeLayout->resolveLayoutType($options['entry_type']);
+        }
+
         $view->vars['layout'] = $options['layout'];
     }
 }

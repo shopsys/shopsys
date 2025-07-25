@@ -5,7 +5,7 @@
 
         {{ form_help(form) }}
 
-        {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\Locale\\LocalizedType::LAYOUT_INLINE') %}
+        {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\FormTypeLayout::LAYOUT_INLINE') %}
             <fieldset>
                 {% for child in form %}
                     <div class="mb-3">

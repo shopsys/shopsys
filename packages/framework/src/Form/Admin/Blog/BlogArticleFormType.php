@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
+use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
@@ -218,7 +219,7 @@ final class BlogArticleFormType extends AbstractType
 
         $builderDescriptionGroup
             ->add('descriptions', LocalizedType::class, [
-                'layout' => LocalizedType::LAYOUT_BLOCK,
+                'layout' => FormTypeLayout::LAYOUT_BLOCK,
                 'entry_type' => GrapesJsType::class,
                 'entry_options' => [
                     'allow_products' => true,
