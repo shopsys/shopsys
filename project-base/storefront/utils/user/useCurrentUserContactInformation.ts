@@ -50,6 +50,11 @@ const mergeContactInformation = (
             continue;
         }
 
+        const isCountryField = key === 'country' || key === 'deliveryCountry';
+        if (isCountryField && !isUndefined && !isEmptyString) {
+            continue;
+        }
+
         const isFilledFromStorefront = !!contactInformationFromStore[key as keyof ContactInformation];
 
         if (((isUndefined || isEmptyString) && key in contactInformationFromApi) || isFilledFromStorefront) {
@@ -78,12 +83,17 @@ const assertCustomer = (contactInformation: ContactInformation) => {
 
 const assertCountries = (contactInformation: ContactInformation, countriesAsSelectOptions: SelectOptionType[]) => {
     if (countriesAsSelectOptions.length > 0) {
-        contactInformation.country =
-            contactInformation.country.value.length > 0 ? contactInformation.country : countriesAsSelectOptions[0];
-        contactInformation.deliveryCountry =
-            contactInformation.deliveryCountry.value.length > 0
-                ? contactInformation.deliveryCountry
-                : countriesAsSelectOptions[0];
+        const currentCountryExists = countriesAsSelectOptions.some(
+            (option) => option.value === contactInformation.country.value,
+        );
+        contactInformation.country = currentCountryExists ? contactInformation.country : countriesAsSelectOptions[0];
+
+        const currentDeliveryCountryExists = countriesAsSelectOptions.some(
+            (option) => option.value === contactInformation.deliveryCountry.value,
+        );
+        contactInformation.deliveryCountry = currentDeliveryCountryExists
+            ? contactInformation.deliveryCountry
+            : countriesAsSelectOptions[0];
     }
 };
 
