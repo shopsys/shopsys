@@ -1,4 +1,3 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('custom-blocks', (editor, _options) => {
@@ -16,8 +15,7 @@ export default grapesjs.plugins.add('custom-blocks', (editor, _options) => {
     });
 
     editor.Blocks.add('column1', {
-        label: Translator.trans('Column 1'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-b1' },
         content: `
             <div class="row" data-gjs-droppable=".column">
@@ -27,8 +25,7 @@ export default grapesjs.plugins.add('custom-blocks', (editor, _options) => {
     });
 
     editor.Blocks.add('column2', {
-        label: Translator.trans('Column 2'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-b2' },
         content: `
             <div class="row" data-gjs-droppable=".column">
@@ -39,8 +36,7 @@ export default grapesjs.plugins.add('custom-blocks', (editor, _options) => {
     });
 
     editor.Blocks.add('column3', {
-        label: Translator.trans('Column 3'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-b3' },
         content: `
             <div class="row" data-gjs-droppable=".column">
@@ -52,15 +48,13 @@ export default grapesjs.plugins.add('custom-blocks', (editor, _options) => {
     });
 
     editor.Blocks.add('text-ckeditor', {
-        label: Translator.trans('Text'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-text' },
         content: { type: 'text-ckeditor', content: 'Insert your text here', activeOnRender: 1 },
     });
 
     editor.Blocks.add('video', {
-        label: Translator.trans('Video'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'fa fa-youtube-play' },
         content: {
             type: 'video',
@@ -69,8 +63,7 @@ export default grapesjs.plugins.add('custom-blocks', (editor, _options) => {
 
     editor.Blocks.add('map', {
         select: true,
-        label: Translator.trans('Map'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'fa fa-map-o' },
         content: {
             type: 'map',

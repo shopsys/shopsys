@@ -1,4 +1,3 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 import { linkPositionDataAttribute } from './grapesjs-custom-link-plugin';
 
@@ -8,8 +7,7 @@ export default grapesjs.plugins.add('custom-image', editor => {
     editor.Blocks.add('image', {
         select: true,
         activate: true,
-        label: Translator.trans('Image'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-image' },
         content: {
             type: 'image',
@@ -46,26 +44,21 @@ export default grapesjs.plugins.add('custom-image', editor => {
                     {
                         type: 'select',
                         name: imagePositionDataAttribute,
-                        label: Translator.trans('Position of image'),
                         options: [
                             {
                                 id: 'left',
-                                label: Translator.trans('Left'),
                             },
                             {
                                 id: 'center',
-                                label: Translator.trans('Center'),
                             },
                             {
                                 id: 'right',
-                                label: Translator.trans('Right'),
                             },
                         ],
                     },
                     {
                         type: 'input',
                         name: 'alt',
-                        label: Translator.trans('Alt'),
                     },
                 ],
             },

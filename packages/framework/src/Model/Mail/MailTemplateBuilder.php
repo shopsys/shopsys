@@ -160,12 +160,11 @@ class MailTemplateBuilder
                         font-family: Arial, Helvetica, sans-serif !important;
                         line-height: 1.3 !important;
                         mso-line-height-rule: exactly;
-                        margin: 0 !important;
                     }
                     
                     a {
-                        color: #000000 !important;
-                        text-decoration: underline !important;
+                        color: #000000;
+                        text-decoration: underline;
                     }
                     
                     /* Layout */

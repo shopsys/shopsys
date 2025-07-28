@@ -4,37 +4,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Alt"
-msgstr ""
-
 msgid "Basic objects"
 msgstr ""
 
-msgid "Catalog numbers"
-msgstr ""
-
-msgid "Center"
-msgstr ""
-
 msgid "Close"
-msgstr ""
-
-msgid "Column 1"
-msgstr ""
-
-msgid "Column 2"
-msgstr ""
-
-msgid "Column 3"
-msgstr ""
-
-msgid "Columns"
-msgstr ""
-
-msgid "Default"
-msgstr ""
-
-msgid "File"
 msgstr ""
 
 msgid "File not found in main filesystem. Please try again later."
@@ -46,103 +19,34 @@ msgstr ""
 msgid "GTM creative"
 msgstr ""
 
-msgid "Height"
-msgstr ""
-
-msgid "Href"
-msgstr ""
-
-msgid "Image"
-msgstr ""
-
 msgid "Insert variable"
 msgstr ""
 
 msgid "Insert your text here"
 msgstr ""
 
-msgid "Inside layout"
-msgstr ""
-
-msgid "Left"
-msgstr ""
-
 msgid "Link"
-msgstr ""
-
-msgid "Link Block"
-msgstr ""
-
-msgid "List of products"
 msgstr ""
 
 msgid "Mandatory variables"
 msgstr ""
 
-msgid "Map"
-msgstr ""
-
 msgid "No products are set. Please add some in the component settings."
-msgstr ""
-
-msgid "Open in new window"
 msgstr ""
 
 msgid "Optional variables"
 msgstr ""
 
-msgid "Outside layout"
-msgstr ""
-
-msgid "Path to file"
-msgstr ""
-
-msgid "Position of image"
-msgstr ""
-
-msgid "Position of link"
-msgstr ""
-
-msgid "Product image"
-msgstr ""
-
 msgid "Related products"
-msgstr ""
-
-msgid "Right"
-msgstr ""
-
-msgid "Rows"
 msgstr ""
 
 msgid "Save"
 msgstr ""
 
-msgid "Secondary"
-msgstr ""
-
-msgid "Src"
-msgstr ""
-
 msgid "TOP"
 msgstr ""
 
-msgid "Table"
-msgstr ""
-
 msgid "Terms-and-conditions.html"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Text with image"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Type of image"
 msgstr ""
 
 msgid "Unsupported file type"
@@ -155,15 +59,6 @@ msgid "Upload image"
 msgstr ""
 
 msgid "Upload image for mobile devices"
-msgstr ""
-
-msgid "Variant"
-msgstr ""
-
-msgid "Video"
-msgstr ""
-
-msgid "Width"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"

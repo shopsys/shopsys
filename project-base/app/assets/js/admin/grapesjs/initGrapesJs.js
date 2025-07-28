@@ -16,6 +16,8 @@ import './plugins/grapesjs-custom-iframe-plugin';
 import './plugins/grapesjs-table-custom-plugin';
 import './plugins/grapesjs-mail-custom-image-with-variable-plugin';
 import './plugins/grapesjs-mail-custom-image-plugin';
+import './plugins/grapesjs-custom-button-link-plugin';
+import './plugins/grapesjs-mail-custom-button-link-plugin';
 import 'magnific-popup';
 import Translator from 'bazinga-translator';
 import { Buffer } from 'buffer';
@@ -85,6 +87,7 @@ export default class InitGrapesJs {
             'custom-link',
             'custom-image-file',
             'custom-iframe',
+            'custom-button-link',
         ];
 
         if (allowProducts) {
@@ -221,6 +224,7 @@ export default class InitGrapesJs {
             'customButtons',
             'mail-template',
             'mail-custom-image',
+            'mail-custom-button-link',
         ];
 
         const editor = grapesjs.init({

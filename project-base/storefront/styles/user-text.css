@@ -57,6 +57,12 @@
             overflow-x: auto;
         }
 
+        .gjs-button-link {
+            @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-lg border-2 text-center leading-[18px] font-medium no-underline transition-all outline-none hover:no-underline;
+            @apply border-button-primary-border-default bg-button-primary-bg-default !text-button-primary-text-default [&>div]:!text-button-primary-text-default px-3 py-[7px];
+            @apply hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered;
+        }
+
         table {
             @apply w-full;
 
@@ -95,11 +101,13 @@
             }
         }
 
-        .image-position-right {
+        .image-position-right,
+        .button-link-position-right {
             @apply ml-auto;
         }
 
-        .image-position-center {
+        .image-position-center,
+        .button-link-position-center {
             @apply mx-auto;
         }
 

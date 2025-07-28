@@ -5,8 +5,7 @@ export const linkPositionDataAttribute = 'data-link-position';
 export default grapesjs.plugins.add('custom-link', editor => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
-        label: Translator.trans('Link Block'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         content:
             `
           <a data-gjs-type="link-block" class="gjs-link-block">` +
@@ -38,36 +37,29 @@ export default grapesjs.plugins.add('custom-link', editor => {
                     {
                         type: 'input',
                         name: 'href',
-                        label: Translator.trans('Href'),
                     },
                     {
                         type: 'input',
                         name: 'title',
-                        label: Translator.trans('Title'),
                     },
                     {
                         type: 'checkbox',
                         name: 'target',
-                        label: Translator.trans('Open in new window'),
                         valueTrue: '_blank',
                         valueFalse: '',
                     },
                     {
                         type: 'select',
                         name: linkPositionDataAttribute,
-                        label: Translator.trans('Position of link'),
                         options: [
                             {
                                 id: 'left',
-                                label: Translator.trans('Left'),
                             },
                             {
                                 id: 'center',
-                                label: Translator.trans('Center'),
                             },
                             {
                                 id: 'right',
-                                label: Translator.trans('Right'),
                             },
                         ],
                     },
