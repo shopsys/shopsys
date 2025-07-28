@@ -18,6 +18,7 @@ NC="\e[0m"
 #   "replace", "autoload", and "autoload-dev" sections in monorepo's composer.json
 get_all_packages() {
     echo "administration \
+        biome-config \
         framework \
         frontend-api \
         google-cloud-bundle \

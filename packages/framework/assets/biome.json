@@ -1,7 +1,6 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.1.0/schema.json",
+    "extends": ["@shopsys/biome-config"],
     "files": {
-        "ignoreUnknown": false,
         "includes": [
             "js/**",
             "!js/admin/bootstrap/**",
@@ -9,45 +8,5 @@
             "!js/common/bootstrap/tooltip.js",
             "!js/common/plugins/jquery.fix.clone.js"
         ]
-    },
-    "formatter": {
-        "enabled": true,
-        "indentStyle": "space",
-        "indentWidth": 4,
-        "lineWidth": 120,
-        "lineEnding": "lf"
-    },
-    "linter": {
-        "enabled": true,
-        "rules": {
-            "recommended": true,
-            "style": {
-                "noParameterAssign": "off",
-                "useConst": "error",
-                "useTemplate": "error"
-            },
-            "complexity": {
-                "noForEach": "off",
-                "noStaticOnlyClass": "off",
-                "noThisInStatic": "off"
-            },
-            "suspicious": {
-                "noExplicitAny": "off"
-            },
-            "correctness": {
-                "noConstructorReturn": "off"
-            }
-        }
-    },
-    "javascript": {
-        "formatter": {
-            "quoteStyle": "single",
-            "semicolons": "always",
-            "trailingCommas": "all",
-            "arrowParentheses": "asNeeded",
-            "bracketSpacing": true,
-            "bracketSameLine": false,
-            "quoteProperties": "asNeeded"
-        }
     }
 }

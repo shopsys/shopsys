@@ -22,6 +22,7 @@ There is a list of all the repositories maintained by the monorepo:
 - [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
 - [shopsys/product-feed-luigis-box](https://github.com/shopsys/product-feed-luigis-box)
 - [shopsys/article-feed-luigis-box](https://github.com/shopsys/article-feed-luigis-box)
+- [shopsys/biome-config](https://github.com/shopsys/biome-config)
 - [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
 - [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 - [shopsys/frontend-api](https://github.com/shopsys/frontend-api)

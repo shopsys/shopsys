@@ -1,0 +1,12 @@
+{
+    "name": "shopsys/biome-config",
+    "type": "library",
+    "description": "Shared Biome configuration for Shopsys Platform",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com"
+        }
+    ]
+}
