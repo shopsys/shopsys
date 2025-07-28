@@ -2,58 +2,77 @@
 
 {% block html_body %}
     <div class="page">
-        {% if isMailerSettingUnusual() %}
-            <div class="alert alert-important alert-danger py-0 mb-0 ms-8 text-center rounded-0 d-none" role="alert" style="margin-left: 15rem">
-                {{ ux_icon('warning') }}
-                {{ getMailerSettingInfo() }}
-                <a href="{{ url("admin_mailallowedrecipient_list") }}">{{ 'View allowed recipients.'|trans }}</a>
-            </div>
-        {% endif %}
-
         {% block aside %}{% endblock %}
 
         {% block header %}
-            <header class="navbar navbar-expand-md sticky-top d-print-none">
-                <div class="container-fluid">
-                    <button class="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            {# @todo what about navbar menu id? check responsive #}
-                            data-bs-target="#navbar-menu"
-                            aria-controls="navbar-menu"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                    >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="col-5 d-none d-xxl-block">
+            <header class="navbar sticky-md-top d-print-none flex-column gap-2">
+                {% if isMailerSettingUnusual() %}
+                    <div class="mailer-info py-1 px-3 w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div>
+                                <span class="alert-icon">{{ ux_icon('warning') }}</span>
+                                <span class="d-none d-lg-inline">{{ getMailerSettingInfo() }}</span>
+                                <span class="d-lg-none">{{ 'Mailing:' }}</span>
+                                <a href="{{ url("admin_mailallowedrecipient_list") }}" class="alert-action">{{ 'View allowed recipients.'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="container-fluid" id="navbar-menu">
+                    <div class="d-none d-xxl-flex navbar-nav">
                         <div class="dropdown">
-                            <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                            <div class="my-2 my-md-0">
                                 <div class="input-group input-group-flat">
                                     <span class="input-group-text">{{ ux_icon('search') }}</span>
                                     <input type="text"
                                            class="form-control js-search-input"
                                            placeholder="{{ "Search by section name…"|trans }}"
                                            data-search-callback-url="{{ url('admin_searchadmin_search') }}"
-                                           aria-label="Search navigation"
+                                           aria-label="{{ 'Search navigation'|trans }}"
                                     >
                                     <span class="input-group-text d-sm-none d-md-flex">{{ 'type&nbsp;%key%&nbsp;to search'|trans({'%key%': '<kbd>/</kbd>'})|raw }}</span>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-card js-search-results">
-                            <span class="dropdown-header text-end">
-                                <small>{{ 'use %keyTab% or %keyShiftTab%'|trans({'%keyTab%': '<kbd class="small">tab</kbd>', '%keyShiftTab%': '<kbd class="small">shift+tab</kbd>'})|raw }}</small>
-                            </span>
-                            <div class="list-group list-group-flush overflow-auto js-search-results__window" style="max-height: 35rem"></div>
+                            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-card js-search-results">
+                                <span class="dropdown-header text-end">
+                                    <small>{{ 'use %keyTab% or %keyShiftTab%'|trans({'%keyTab%': '<kbd class="small">tab</kbd>', '%keyShiftTab%': '<kbd class="small">shift+tab</kbd>'})|raw }}</small>
+                                </span>
+                                <div class="list-group list-group-flush overflow-auto js-search-results__window" style="max-height: 35rem"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-xxl-none">
+                        <a class="btn btn-icon" data-bs-toggle="offcanvas" href="#mobile-search-menu" role="button" aria-controls="offcanvasStart">{{ ux_icon('search') }}</a>
+                        <div
+                                class="offcanvas offcanvas-start"
+                                tabindex="-1"
+                                id="mobile-search-menu"
+                                aria-labelledby="mobileSearchMenuLabel"
+                        >
+                            <div class="offcanvas-header">
+                                <h2 class="offcanvas-title" id="mobileSearchMenuLabel">{{ 'Search by section name…'|trans }}</h2>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="{{ 'Close'|trans }}"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <input type="text"
+                                       placeholder="{{ 'Search by section name…'|trans }}"
+                                       class="form-control js-search-input"
+                                       data-search-callback-url="{{ url('admin_searchadmin_search') }}"
+                                       aria-label="{{ 'Search navigation'|trans }}"
+                                >
+                                <div class="js-search-results">
+                                    <div class="list-group list-group-flush js-search-results__window"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="navbar-nav flex-row order-md-last ms-auto">
                         {% if isMultidomain() %}
                             {% if allowedAdminLocales()|length > 1 %}
-                                <div class="nav-item dropdown">
+                                <div class="nav-item dropdown me-3">
                                     <a class="nav-link dropdown-toggle"
                                        data-bs-toggle="dropdown"
                                        href="#"
@@ -79,10 +98,10 @@
                                 </div>
                             {% endif %}
 
-                            <div class="nav-item dropdown">
+                            <div class="nav-item dropdown me-3">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon d-none d-lg-inline-block">{{ ux_icon('filter') }}</span>
-                                    <span class="nav-link-title">{{ 'Domain filter'|trans }}</span>
+                                    <span class="nav-link-icon">{{ ux_icon('filter') }}</span>
+                                    <span class="nav-link-title d-none d-md-inline">{{ 'Domain filter'|trans }}</span>
                                     {% if app.user.displayOnlyDomainIds|length > 0 %}
                                         <span class="badge badge-sm bg-red text-red-fg">{{ app.user.displayOnlyDomainIds|length }}</span>
                                     {% endif %}
@@ -91,10 +110,10 @@
                             </div>
                         {% endif %}
 
-                        <div class="nav-item dropdown">
+                        <div class="nav-item dropdown me-3">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                                 <span class="nav-link-icon">{{ ux_icon('forward-page') }}</span>
-                                {{ 'Go to Frontend'|trans }}
+                                <span class="d-none d-md-inline">{{ 'Go to Frontend'|trans }}</span>
                             </a>
                             <ul class="dropdown-menu overflow-auto" style="max-height: 300px">
                                 {% for domainConfig in getDomain().getAll() %}

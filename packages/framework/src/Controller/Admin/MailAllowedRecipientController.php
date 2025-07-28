@@ -39,7 +39,7 @@ class MailAllowedRecipientController extends AbstractController
             $enabledWhitelistByDomainId[$domainId] = $this->mailerSettingProvider->isWhitelistEnabled($domainId);
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/MailAllowedRecipient/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/mailAllowedRecipient/list.html.twig', [
             'patternsByDomainId' => $patternsByDomainId,
             'enabledWhitelistByDomainId' => $enabledWhitelistByDomainId,
             'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
