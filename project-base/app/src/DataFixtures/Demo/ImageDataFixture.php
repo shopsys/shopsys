@@ -256,6 +256,9 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             4 => 208,
             5 => 209,
             6 => 210,
+            7 => 603,
+            8 => 604,
+            9 => 605,
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
@@ -276,6 +279,9 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             4 => 211,
             5 => 212,
             6 => 213,
+            7 => 606,
+            8 => 607,
+            9 => 608,
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
