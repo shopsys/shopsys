@@ -237,24 +237,11 @@ check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & sto
 
 generate-tailwind-for-admin:
 	@echo "🚀 Compiling Tailwind CSS for admin..."
-	@echo "🗑️  Cleaning up existing files..."
-	rm -f project-base/app/web/public/admin/styles/tailwind-for-admin.css
+	rm -rf project-base/storefront/public/tailwind-for-admin/style.css
+	mkdir -p project-base/storefront/public/tailwind-for-admin
 	mutagen-compose exec storefront pnpm compile-tailwind-for-admin
-	@echo "⏳ Waiting for file sync..."
-	@for i in 1 2 3 4 5; do \
-		if [ -f project-base/storefront/public/tailwind-for-admin.css ]; then \
-			break; \
-		fi; \
-		sleep 1; \
-	done
-	@if [ ! -f project-base/storefront/public/tailwind-for-admin.css ]; then \
-		echo "❌ Error: Compiled file not found after waiting. Check compilation."; \
-		exit 1; \
-	fi
-	mkdir -p project-base/app/web/public/admin/styles
-	cp project-base/storefront/public/tailwind-for-admin.css project-base/app/web/public/admin/styles/tailwind-for-admin.css
-	rm project-base/storefront/public/tailwind-for-admin.css
-	@echo "✅ Tailwind CSS compiled and moved to: project-base/app/web/public/admin/styles/tailwind-for-admin.css"
+	@echo "✅ Tailwind CSS compiled to: project-base/storefront/public/tailwind-for-admin/style.css"
 	@echo "🔧 Rebuilding backend admin assets..."
 	mutagen-compose exec php-fpm php phing npm-dev
 	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."
+

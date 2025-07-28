@@ -24,6 +24,7 @@ export default class GrapesWebEditor {
             'ckeditor',
             'text',
             'link',
+            'web-button-link',
             'text-with-image',
             'custom-image',
             'column1',
@@ -53,7 +54,7 @@ export default class GrapesWebEditor {
             nativeDnD: true,
             plugins: plugins,
             canvas: {
-                styles: ['/public/admin/styles/tailwind-for-admin.css'],
+                styles: ['/tailwind-for-admin/style.css'],
             },
             i18n: {
                 locale: Translator.locale,
@@ -101,8 +102,7 @@ export default class GrapesWebEditor {
                     blocks: [],
                     block: () => {
                         return {
-                            label: Translator.trans('Link'),
-                            category: Translator.trans('Basic objects'),
+                            category: 'basic-objects',
                             attributes: { class: 'fa fa-link' },
                         };
                     },

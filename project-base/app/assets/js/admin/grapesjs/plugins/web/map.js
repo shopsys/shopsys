@@ -1,11 +1,9 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('map', (editor, _options) => {
     editor.Blocks.add('map', {
         select: true,
-        label: Translator.trans('Map'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'fa fa-map-o' },
         content: {
             type: 'map',

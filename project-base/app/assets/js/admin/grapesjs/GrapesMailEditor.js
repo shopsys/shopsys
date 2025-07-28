@@ -20,6 +20,7 @@ export default class GrapesMailEditor {
             'ckeditor',
             'mail-template',
             'mail-text',
+            'mail-button-link',
             'mail-custom-image',
         ];
 
@@ -161,14 +162,10 @@ export default class GrapesMailEditor {
         editor.BlockManager.remove('text');
 
         editor.BlockManager.get('link-block')
-            .set('category', Translator.trans('Basic objects'))
+            .set('category', 'basic-objects')
             .set('attributes', { class: 'mail-icon' });
-        editor.BlockManager.get('sect50')
-            .set('category', Translator.trans('Basic objects'))
-            .set('attributes', { class: 'mail-icon' });
-        editor.BlockManager.get('sect100')
-            .set('category', Translator.trans('Basic objects'))
-            .set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('sect50').set('category', 'basic-objects').set('attributes', { class: 'mail-icon' });
+        editor.BlockManager.get('sect100').set('category', 'basic-objects').set('attributes', { class: 'mail-icon' });
     }
 
     static setupBodyForGrapesJsEditor() {

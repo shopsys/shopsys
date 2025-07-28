@@ -1,10 +1,8 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('column2', (editor, _options) => {
     editor.Blocks.add('column2', {
-        label: Translator.trans('Column 2'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-b2' },
         content: `
             <div class="row" data-gjs-droppable=".column">

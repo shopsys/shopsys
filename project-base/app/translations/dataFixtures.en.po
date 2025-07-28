@@ -1006,9 +1006,6 @@ msgstr ""
 msgid "Logitech S120 black"
 msgstr ""
 
-msgid "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium"
-msgstr ""
-
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr ""
 
@@ -1817,9 +1814,6 @@ msgid "Video"
 msgstr ""
 
 msgid "Viewfinder type"
-msgstr ""
-
-msgid "Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum."
 msgstr ""
 
 msgid "W"

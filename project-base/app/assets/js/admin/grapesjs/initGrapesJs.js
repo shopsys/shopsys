@@ -4,6 +4,7 @@ import GrapesMailEditor from './GrapesMailEditor';
 import GrapesWebEditor from './GrapesWebEditor';
 import './grapesjs-non-editable-page';
 import './plugins/mail/image-with-variable';
+import './plugins/mail/mail-button-link';
 import './plugins/mail/mail-image';
 import './plugins/mail/template';
 import './plugins/mail/text';
@@ -18,9 +19,10 @@ import './plugins/web/link.js';
 import './plugins/web/map';
 import './plugins/web/products';
 import './plugins/web/table';
-import './plugins/web/text-with-image';
 import './plugins/web/text';
+import './plugins/web/text-with-image';
 import './plugins/web/video';
+import './plugins/web/web-button-link';
 import './plugins/web/web-image';
 
 global.Buffer = Buffer;
@@ -29,7 +31,7 @@ export default class InitGrapesJs {
     static init($container) {
         let isAnyButtonOnPage = false;
         $container.filterAllNodes('.js-grapesjs-button').each((_index, element) => {
-            $(element).on('click', (event) => {
+            $(element).on('click', event => {
                 const frontendUrl = $(element).data('template-url');
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
@@ -42,7 +44,7 @@ export default class InitGrapesJs {
         });
 
         $container.filterAllNodes('.js-grapesjs-mail-button').each((_index, element) => {
-            $(element).on('click', (event) => {
+            $(element).on('click', event => {
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
                 const templateHtml = $(element).data('template');

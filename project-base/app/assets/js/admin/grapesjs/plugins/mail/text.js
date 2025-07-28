@@ -3,8 +3,7 @@ import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('mail-text', editor => {
     editor.Blocks.add('text-ckeditor', {
-        label: Translator.trans('Text'),
-        category: Translator.trans('Basic objects'),
+        category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-text' },
         content: { type: 'text-ckeditor', content: Translator.trans('Insert your text here'), activeOnRender: 1 },
     });

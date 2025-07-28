@@ -218,7 +218,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,
             );
-            $blogArticleData->perexes[$locale] = t('Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum.', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->perexes[$locale] = 'Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum.';
         }
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
@@ -270,7 +270,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
                     <div class="gjs-product" data-product="9184449"></div>
                 </div>
             EOT));
-            $blogArticleData->perexes[$locale] = t('Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->perexes[$locale] = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quos doloribus accusantium';
         }
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

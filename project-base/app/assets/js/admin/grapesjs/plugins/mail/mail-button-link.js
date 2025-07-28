@@ -4,7 +4,7 @@ import grapesjs from 'grapesjs';
 const linkPositionDataAttribute = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
 
-export default grapesjs.plugins.add('mail-custom-button-link', editor => {
+export default grapesjs.plugins.add('mail-button-link', editor => {
     editor.Blocks.add('button-link', {
         id: 'button-link',
         category: 'basic-objects',

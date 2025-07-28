@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Basic objects"
-msgstr ""
-
 msgid "Close"
 msgstr ""
 
@@ -25,12 +22,6 @@ msgstr ""
 msgid "Insert your text here"
 msgstr ""
 
-msgid "Left"
-msgstr ""
-
-msgid "Link"
-msgstr ""
-
 msgid "Mandatory variables"
 msgstr ""
 
@@ -38,18 +29,6 @@ msgid "No products are set. Please add some in the component settings."
 msgstr ""
 
 msgid "Optional variables"
-msgstr ""
-
-msgid "Path to file"
-msgstr ""
-
-msgid "Position of image"
-msgstr ""
-
-msgid "Position of link"
-msgstr ""
-
-msgid "Product image"
 msgstr ""
 
 msgid "Related products"
@@ -62,15 +41,6 @@ msgid "TOP"
 msgstr ""
 
 msgid "Terms-and-conditions.html"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Text with image"
-msgstr ""
-
-msgid "Title"
 msgstr ""
 
 msgid "Unsupported file type"

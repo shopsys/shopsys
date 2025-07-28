@@ -40,7 +40,6 @@ export default grapesjs.plugins.add('iframe', editor => {
     });
 
     editor.BlockManager.add('iframe', {
-        label: 'Iframe',
         type: 'iframe',
         content: '<iframe class="gjs-iframe" style="width: 100%"></iframe>',
         category: 'basic-objects',
