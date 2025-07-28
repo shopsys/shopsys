@@ -6,7 +6,9 @@
             <div class="window-fixed-bar__in">
                 <div class="window-fixed-bar__item">
                     <div class="window-fixed-bar__item__cell">
+                        {{ ux_icon('warning') }}
                         {{ getMailerSettingInfo() }}
+                        <a href="{{ url("admin_mailallowedrecipient_list") }}">{{ 'View allowed recipients.'|trans }}</a>
                     </div>
                 </div>
             </div>

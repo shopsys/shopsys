@@ -292,9 +292,6 @@ msgstr ""
 msgid "All domains"
 msgstr ""
 
-msgid "All emails will be sent only to entered addresses."
-msgstr ""
-
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr ""
 
@@ -1855,6 +1852,9 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
+msgid "Email allowed recipients"
+msgstr ""
+
 msgid "Email name"
 msgstr ""
 
@@ -1867,9 +1867,6 @@ msgstr ""
 msgid "Email settings modified."
 msgstr ""
 
-msgid "Email settings:"
-msgstr ""
-
 msgid "Email template"
 msgstr ""
 
@@ -1880,6 +1877,15 @@ msgid "Email templates"
 msgstr ""
 
 msgid "Email templates settings"
+msgstr ""
+
+msgid "Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent."
+msgstr ""
+
+msgid "Emails are sent normally on this domain"
+msgstr ""
+
+msgid "Emails will be sent only to addresses matching at least one of these patterns:"
 msgstr ""
 
 msgid "Enable"
@@ -2168,9 +2174,6 @@ msgid "Flags - view"
 msgstr ""
 
 msgid "Flags overview"
-msgstr ""
-
-msgid "Following expressions are allowed in whitelist: %whitelist%."
 msgstr ""
 
 msgid "Footer"
@@ -2954,6 +2957,12 @@ msgid "No domains so far."
 msgstr ""
 
 msgid "No email templates found. You have to create some first."
+msgstr ""
+
+msgid "No email whitelist is enabled, all emails will be sent."
+msgstr ""
+
+msgid "No email will be sent from this domain."
 msgstr ""
 
 msgid "No files found."
@@ -4144,7 +4153,7 @@ msgstr ""
 msgid "Send test mail"
 msgstr ""
 
-msgid "Sending emails off, no email will be sent from the app."
+msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr ""
 
 msgid "Seo"
@@ -4804,6 +4813,9 @@ msgstr ""
 msgid "Videos"
 msgstr ""
 
+msgid "View allowed recipients."
+msgstr ""
+
 msgid "Visibility"
 msgstr ""
 
@@ -4889,9 +4901,6 @@ msgid "When changing the default currency there is no recalculation of prices"
 msgstr ""
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
-msgstr ""
-
-msgid "Whitelist is active, but empty. No email will be sent from the app."
 msgstr ""
 
 msgid "XML Feeds"

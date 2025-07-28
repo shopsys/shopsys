@@ -292,9 +292,6 @@ msgstr "Vše - zobrazení"
 msgid "All domains"
 msgstr "Všechny domény"
 
-msgid "All emails will be sent only to entered addresses."
-msgstr "Všechny e-maily budou doručeny pouze na uvedené adresy."
-
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak se jednotková cena bez DPH a celkové ceny pro tuto položku přepočítají automaticky."
 
@@ -1855,6 +1852,9 @@ msgstr "Editace skladu - %name%"
 msgid "Email"
 msgstr "E-mail"
 
+msgid "Email allowed recipients"
+msgstr "Povolení příjemci e-mailů"
+
 msgid "Email name"
 msgstr "Jméno k e-mailu"
 
@@ -1867,9 +1867,6 @@ msgstr "Nastavení e-mailů"
 msgid "Email settings modified."
 msgstr "Nastavení e-mailů bylo upraveno."
 
-msgid "Email settings:"
-msgstr "Nastavení e-mailů:"
-
 msgid "Email template"
 msgstr "E-mailová šablona"
 
@@ -1881,6 +1878,15 @@ msgstr "Šablony e-mailů"
 
 msgid "Email templates settings"
 msgstr "Nastavení šablon e-mailů"
+
+msgid "Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent."
+msgstr "Whitelist e-mailových adres je povolený na některých doménách. Budou odeslány pouze odpovídající e-maily."
+
+msgid "Emails are sent normally on this domain"
+msgstr "Na této doméně jsou e-maily odesílány běžným způsobem."
+
+msgid "Emails will be sent only to addresses matching at least one of these patterns:"
+msgstr "E-maily budou odeslány pouze na adresy, které odpovídají alespoň jednomu z těchto vzorů:"
 
 msgid "Enable"
 msgstr "Zapnout"
@@ -2169,9 +2175,6 @@ msgstr "Příznaky - zobrazení"
 
 msgid "Flags overview"
 msgstr "Přehled příznaků"
-
-msgid "Following expressions are allowed in whitelist: %whitelist%."
-msgstr "Ve whitelistu jsou povoleny následující výrazy: %whitelist%."
 
 msgid "Footer"
 msgstr "Patička"
@@ -2955,6 +2958,12 @@ msgstr "Doposud nejsou žádné domény."
 
 msgid "No email templates found. You have to create some first."
 msgstr "Nebyly nalezeny žádné e-mailové šablony. Nejprve musíte nějaké vytvořit."
+
+msgid "No email whitelist is enabled, all emails will be sent."
+msgstr "Není aktivní žádný whitelist e-mailových adres. Budou odesílány všechny e-maily."
+
+msgid "No email will be sent from this domain."
+msgstr "Z této domény nebude odeslán žádný e-mail."
 
 msgid "No files found."
 msgstr "Žádné soubory nebyly nalezeny."
@@ -4144,7 +4153,7 @@ msgstr "Zaslat e-mail pro reset hesla"
 msgid "Send test mail"
 msgstr "Odeslat testovací email"
 
-msgid "Sending emails off, no email will be sent from the app."
+msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
 msgid "Seo"
@@ -4804,6 +4813,9 @@ msgstr "DPH - zobrazení"
 msgid "Videos"
 msgstr "Videa"
 
+msgid "View allowed recipients."
+msgstr "Zobrazit povolené příjemce."
+
 msgid "Visibility"
 msgstr "Viditelnost"
 
@@ -4890,9 +4902,6 @@ msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
 msgstr "Mějte na paměti, že při vytváření cenové skupiny je nutné, aby aplikace přepočítala nové ceny pro všechny produkty. Produkty bez přepočtené ceny nebudou na e-shopu zobrazeny. Pro 2000 položek přepočet trvá asi hodinu."
-
-msgid "Whitelist is active, but empty. No email will be sent from the app."
-msgstr "Whitelist je aktivní, ale prázdný. Z aplikace nebude odeslán žádný e-mail."
 
 msgid "XML Feeds"
 msgstr "XML Feedy"

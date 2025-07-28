@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
-use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -15,12 +14,10 @@ class MailerSettingExtension extends AbstractExtension
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
-     * @param \Twig\Environment $twigEnvironment
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly MailerSettingProvider $mailerSettingProvider,
-        protected readonly Environment $twigEnvironment,
         protected readonly Domain $domain,
     ) {
     }
@@ -29,7 +26,7 @@ class MailerSettingExtension extends AbstractExtension
      * @return \Twig\TwigFunction[]
      */
     #[Override]
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isMailerSettingUnusual', $this->isMailerSettingUnusual(...)),
@@ -40,28 +37,43 @@ class MailerSettingExtension extends AbstractExtension
     /**
      * @return bool
      */
-    public function isMailerSettingUnusual()
+    public function isMailerSettingUnusual(): bool
     {
-        return $this->mailerSettingProvider->isDeliveryDisabled()
-            || $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId());
+        if ($this->mailerSettingProvider->isDeliveryDisabled()) {
+            return true;
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if ($this->mailerSettingProvider->isWhitelistEnabled($domainId)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
      * @return string
      */
-    public function getMailerSettingInfo()
+    public function getMailerSettingInfo(): string
     {
-        return $this->twigEnvironment->render('@ShopsysFramework/Components/MailerSettingInfo/mailerSettingInfo.html.twig', [
-            'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
-            'isWhitelistEnabled' => $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId()),
-            'mailerWhitelistExpressions' => $this->mailerSettingProvider->getWhitelistPatternsAsArray($this->domain->getId()),
-        ]);
+        if ($this->mailerSettingProvider->isDeliveryDisabled()) {
+            return t('Sending emails is turned off, no email will be sent from the app.');
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if ($this->mailerSettingProvider->isWhitelistEnabled($domainId)) {
+                return t('Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent.');
+            }
+        }
+
+        return t('No email whitelist is enabled, all emails will be sent.');
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'shopsys.twig.mailer_setting_extension';
     }
