@@ -105,6 +105,11 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         if (value < min || isNaN(value)) {
             setMinValueThumb(min);
             setMinValueInput(min);
+            setMinValueCallback(min);
+        } else if (value > maxValueThumb) {
+            setMinValueThumb(maxValueThumb);
+            setMinValueInput(maxValueThumb);
+            setMinValueCallback(maxValueThumb);
         } else {
             setMinValueCallback(value);
         }
@@ -119,6 +124,11 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         if (value > max || isNaN(value)) {
             setMaxValueThumb(max);
             setMaxValueInput(max);
+            setMaxValueCallback(max);
+        } else if (value < minValueThumb) {
+            setMaxValueThumb(minValueThumb);
+            setMaxValueInput(minValueThumb);
+            setMaxValueCallback(minValueThumb);
         } else {
             setMaxValueCallback(value);
         }
