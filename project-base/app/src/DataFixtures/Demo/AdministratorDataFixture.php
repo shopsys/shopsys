@@ -11,6 +11,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 
 class AdministratorDataFixture extends AbstractReferenceFixture
 {
@@ -20,10 +21,12 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \App\Model\Administrator\AdministratorDataFactory $administratorDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
     public function __construct(
         private readonly AdministratorFacade $administratorFacade,
         private readonly AdministratorDataFactory $administratorDataFactory,
+        private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
     ) {
     }
 
@@ -60,7 +63,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     private function setRoleAllForAdministrator(Administrator $administrator): void
     {
         $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
-        $administratorData->roles[] = SystemRole::ALL;
+        $administratorData->roleGroup = $this->administratorRoleGroupFacade->getSystemManagedRoleGroup(SystemRole::ALL);
         $this->administratorFacade->edit($administrator->getId(), $administratorData);
     }
 }

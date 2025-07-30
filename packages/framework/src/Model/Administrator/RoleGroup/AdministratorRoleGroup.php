@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 
 /**
  * @ORM\Entity
@@ -26,6 +26,12 @@ class AdministratorRoleGroup
      * @ORM\Column(type="string", length=100, unique = true)
      */
     protected $name;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $systemManaged = false;
 
     /**
      * @var string[]
@@ -72,7 +78,11 @@ class AdministratorRoleGroup
      */
     public function getName()
     {
-        return $this->name;
+        return match ($this->name) {
+            SystemRole::ALL => t('Full access'),
+            SystemRole::ALL_VIEW => t('Full access (view only)'),
+            default => $this->name,
+        };
     }
 
     /**
@@ -81,8 +91,21 @@ class AdministratorRoleGroup
     public function getRoles()
     {
         $roles = $this->roles;
-        $roles[] = Roles::ROLE_ADMIN;
+        $roles[] = SystemRole::ADMIN;
 
         return array_unique($roles);
+    }
+
+    /**
+     * Check if this role group can be edited by users
+     *
+     * System-managed roles are created and maintained by the application
+     * and should not be modified by end users
+     *
+     * @return bool
+     */
+    public function isSystemManaged(): bool
+    {
+        return $this->systemManaged;
     }
 }

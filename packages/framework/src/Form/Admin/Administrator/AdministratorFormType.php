@@ -131,7 +131,7 @@ final class AdministratorFormType extends AbstractType
         if ($this->canWorkWithRoles($adminToEdit)) {
             $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
                 'required' => false,
-                'choices' => $this->administratorRoleGroupFacade->getSelectable(),
+                'choices' => $this->administratorRoleGroupFacade->getAll(),
                 'placeholder' => t('Custom'),
                 'multiple' => false,
                 'label' => t('Role Group'),

@@ -418,6 +418,16 @@ class RouteConfigCustomization
                     ->setParameter('search', 'prod')
                     ->setExpectedStatusCode(200);
             })
+            ->customizeByRouteName('admin_administratorrolegroup_edit', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('First two role groups are system managed, so they can not be edited.')
+                    ->setParameter('id', 3)
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_administratorrolegroup_copy', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('First two role groups are system managed, so they can not be copied.')
+                    ->setParameter('id', 3)
+                    ->setExpectedStatusCode(200);
+            })
         ;
     }
 

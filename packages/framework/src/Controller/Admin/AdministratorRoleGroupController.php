@@ -48,7 +48,7 @@ class AdministratorRoleGroupController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $queryBuilder = $this->administratorRoleGroupFacade->getAllQueryBuilder();
+        $queryBuilder = $this->administratorRoleGroupFacade->getAllNotSystemManagedQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'arg.id');
 
         $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, 'ROLE_ADMINISTRATOR');
