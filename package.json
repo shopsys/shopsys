@@ -3,6 +3,7 @@
     "private": true,
     "workspaces": [
         "packages/*/assets",
+        "packages/biome-config",
         "project-base/app"
     ],
     "dependencies": {

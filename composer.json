@@ -284,6 +284,7 @@
     "replace": {
         "shopsys/administration": "self.version",
         "shopsys/article-feed-luigis-box": "self.version",
+        "shopsys/biome-config": "self.version",
         "shopsys/brand-feed-luigis-box": "self.version",
         "shopsys/category-feed-luigis-box": "self.version",
         "shopsys/coding-standards": "self.version",

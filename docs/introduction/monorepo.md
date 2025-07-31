@@ -40,6 +40,7 @@ If you are interested, you can read more about the monorepo approach here - http
 - [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
 - [shopsys/product-feed-luigis-box](https://github.com/shopsys/product-feed-luigis-box)
 - [shopsys/article-feed-luigis-box](https://github.com/shopsys/article-feed-luigis-box)
+- [shopsys/biome-config](https://github.com/shopsys/biome-config)
 - [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
 - [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
 - [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
