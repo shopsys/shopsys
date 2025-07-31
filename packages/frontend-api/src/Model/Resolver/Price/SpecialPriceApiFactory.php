@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use DateTimeImmutable;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFactory;
