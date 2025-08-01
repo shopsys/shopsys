@@ -127,6 +127,7 @@
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^11.2.1",
         "psr/event-dispatcher": "^1.0.0",
+        "shopsys/biome-config": "17.0.x-dev",
         "shopsys/coding-standards": "17.0.x-dev",
         "sspooky13/yaml-standards": "^9.0",
         "symfony/maker-bundle": "^1.62" ,
