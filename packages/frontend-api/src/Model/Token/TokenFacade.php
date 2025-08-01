@@ -60,7 +60,7 @@ class TokenFacade
         string $deviceId,
         ?Administrator $administrator = null,
     ): string {
-        $tokenBuilder = $this->getTokenBuilderWithExpiration(static::ACCESS_TOKEN_EXPIRATION)
+        $tokenBuilder = $this->getTokenBuilderWithExpiration(static::ACCESS_TOKEN_EXPIRATION, $customerUser->getDomainId())
             ->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId)
             ->withClaim(FrontendApiUser::CLAIM_ADMINISTRATOR_UUID, $administrator?->getUuid());
 
@@ -86,7 +86,7 @@ class TokenFacade
         string $secretChain,
         string $deviceId,
     ): UnencryptedToken {
-        $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION)
+        $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION, $customerUser->getDomainId())
             ->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid())
             ->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain)
             ->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
@@ -98,16 +98,18 @@ class TokenFacade
 
     /**
      * @param int $expiration
+     * @param int $domainId
      * @return \Lcobucci\JWT\Builder
      */
-    protected function getTokenBuilderWithExpiration(int $expiration): Builder
+    protected function getTokenBuilderWithExpiration(int $expiration, int $domainId): Builder
     {
         $currentTime = new DateTimeImmutable();
         $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
-        return $this->jwtConfigurationProvider->getConfiguration()->builder(ChainedFormatter::withUnixTimestampDates())
-            ->issuedBy($this->domain->getUrl())
-            ->permittedFor($this->domain->getUrl())
+        return $this->jwtConfigurationProvider->getConfiguration()
+            ->builder(ChainedFormatter::withUnixTimestampDates())
+            ->issuedBy($this->domain->getDomainConfigById($domainId)->getUrl())
+            ->permittedFor($this->domain->getDomainConfigById($domainId)->getUrl())
             ->issuedAt($currentTime)
             ->canOnlyBeUsedAfter($currentTime)
             ->expiresAt($expirationTime);

@@ -1321,6 +1321,8 @@ type Mutation {
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
   "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
   Login(input: LoginInput!): LoginResult!
+  "Exchange one-time token for access and refresh tokens"
+  LoginViaExchangeToken(exchangeToken: String!): Token!
   "Logout user"
   Logout: Boolean!
   "Subscribe for e-mail newsletter"

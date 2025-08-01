@@ -1669,6 +1669,20 @@ Login user and return login result data (consisting of access and refresh tokens
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mutation.loginviaexchangetoken">LoginViaExchangeToken</strong></td>
+<td valign="top"><a href="#token">Token</a>!</td>
+<td>
+
+Exchange one-time token for access and refresh tokens
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">exchangeToken</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mutation.logout">Logout</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>

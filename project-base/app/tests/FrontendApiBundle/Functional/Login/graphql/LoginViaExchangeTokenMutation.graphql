@@ -1,0 +1,6 @@
+mutation LoginViaExchangeTokenMutation($exchangeToken: String!) {
+    LoginViaExchangeToken(exchangeToken: $exchangeToken) {
+        accessToken
+        refreshToken
+    }
+}

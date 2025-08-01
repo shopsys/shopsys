@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
@@ -17,6 +18,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\TooManyLogi
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
+use Shopsys\FrontendApiBundle\Model\Security\TokensData;
 use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -91,5 +93,20 @@ class LoginMutation extends AbstractMutation
             $input['cartUuid'] ?? null,
             null,
         );
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
+     */
+    public function loginViaExchangeTokenMutation(Argument $argument): TokensData
+    {
+        $exchangeToken = $argument['exchangeToken'];
+
+        try {
+            return $this->loginAsUserFacade->loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken($exchangeToken);
+        } catch (LoginAsRememberedUserException) {
+            throw new InvalidCredentialsUserError('Invalid or expired exchange token.');
+        }
     }
 }

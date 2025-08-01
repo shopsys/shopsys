@@ -47,7 +47,7 @@ class SocialNetworkController extends AbstractController
             $redirectUrl = $this->generateUrl('front_social_network_login', ['type' => $type], UrlGeneratorInterface::ABSOLUTE_URL);
             $loginResultData = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
 
-            return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
+            return $this->render('@ShopsysFrontendApi/SocialLogin/loginAsCustomerUser.html.twig', [
                 'tokens' => $loginResultData->tokens,
                 'url' => $this->getRefererUrl(
                     $request,

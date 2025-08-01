@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository as BaseA
 /**
  * @method \App\Model\Administrator\Administrator|null findById(int $administratorId)
  * @method \App\Model\Administrator\Administrator getById(int $administratorId)
- * @method \App\Model\Administrator\Administrator getByValidMultidomainLoginToken(string $multidomainLoginToken)
  * @method \App\Model\Administrator\Administrator|null findByUserName(string $administratorUserName)
  * @method \App\Model\Administrator\Administrator getByUserName(string $administratorUserName)
  * @method \App\Model\Administrator\Administrator|null findByUuid(string $uuid)

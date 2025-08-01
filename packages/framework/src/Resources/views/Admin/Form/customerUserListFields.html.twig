@@ -69,11 +69,14 @@
                                                data-confirm-contiue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
                                         {% endif %}
                                     {%endif %}
-                                    <a class="in-icon table-action"
-                                       href="{{ getSsoLoginAsUserUrl(customerUser) }}"
-                                       target="_blank"
-                                       title="{{ 'Log in as user'|trans }}"
-                                    >{{ ux_icon('forward-page') }}</a>
+                                    {% set loginAsUserUrl = getLoginAsUserUrl(customerUser) %}
+                                    {% if loginAsUserUrl is not null %}
+                                        <a class="in-icon table-action"
+                                           href="{{ loginAsUserUrl }}"
+                                           target="_blank"
+                                           title="{{ 'Log in as user'|trans }}"
+                                        >{{ ux_icon('forward-page') }}</a>
+                                    {% endif %}
 
                                     {% set customerId = customerUser.id %}
                                     {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}

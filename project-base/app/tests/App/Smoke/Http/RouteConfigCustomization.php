@@ -201,11 +201,6 @@ class RouteConfigCustomization
                     ->setAuth(new NoAuth())
                     ->setExpectedStatusCode(200);
             })
-            ->customizeByRouteName('admin_login_sso', function (RouteConfig $config, RouteInfo $info) {
-                $debugNote = sprintf('Route "%s" should always just redirect.', $info->getRouteName());
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setExpectedStatusCode(302);
-            })
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
                     ->setExpectedStatusCode(403);
@@ -391,7 +386,7 @@ class RouteConfigCustomization
                     ->setExpectedStatusCode(200);
             })
             ->customizeByRouteName(['admin_customeruser_loginascustomeruser'], function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet()->setExpectedStatusCode(403);
+                $config->changeDefaultRequestDataSet()->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_languageconstant_edit', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')

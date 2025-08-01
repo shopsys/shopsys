@@ -3,10 +3,13 @@
 {% block title %}- {{ 'Editing customer'|trans }} - {{ customerUser.customerUserfullName }}{% endblock %}
 {% block h1 %}
     {{ 'Editing customer'|trans }} - {{ customerUser.customerUserfullName }}
-    <a href="{{ ssoLoginAsUserUrl }}" target="_blank" class="btn-link-style btn-link-style--iconic-l">
-        {{ ux_icon('forward-page') }}
-        <span>
-            {{ 'Log in as user'|trans }}
-        </span>
-    </a>
+    {% set loginAsUserUrl = getLoginAsUserUrl(customerUser) %}
+    {% if loginAsUserUrl is not null %}
+        <a href="{{ loginAsUserUrl }}" target="_blank" class="btn-link-style btn-link-style--iconic-l">
+            {{ ux_icon('forward-page') }}
+            <span>
+                {{ 'Log in as user'|trans }}
+            </span>
+        </a>
+    {% endif %}
 {% endblock %}

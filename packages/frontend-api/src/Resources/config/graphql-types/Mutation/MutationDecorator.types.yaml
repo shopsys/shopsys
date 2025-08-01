@@ -30,6 +30,13 @@ MutationDecorator:
                     input:
                         type: RefreshTokenInput!
                 resolve: "@=mutation('refreshTokensMutation', args)"
+            LoginViaExchangeToken:
+                type: Token!
+                description: "Exchange one-time token for access and refresh tokens"
+                args:
+                    exchangeToken:
+                        type: String!
+                resolve: "@=mutation('loginViaExchangeTokenMutation', args)"
             ChangePassword:
                 type: 'CurrentCustomerUser!'
                 description: "Changes customer user password"

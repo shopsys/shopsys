@@ -34,7 +34,7 @@ class LoginListener
             $user->setLastActivity(new DateTime());
         }
 
-        if ($user instanceof UniqueLoginInterface && !$user->isMultidomainLogin()) {
+        if ($user instanceof UniqueLoginInterface) {
             $user->setLoginToken(uniqid('', true));
         }
 
