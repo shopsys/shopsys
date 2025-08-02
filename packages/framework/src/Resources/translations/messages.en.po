@@ -4924,6 +4924,9 @@ msgstr ""
 msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
 msgstr ""
 
+msgid "You can change the settings <a href=\"%linkUrl%\">here</a>."
+msgstr ""
+
 msgid "You can drag additional content here."
 msgstr ""
 
