@@ -1852,8 +1852,8 @@ msgstr "Editace skladu - %name%"
 msgid "Email"
 msgstr "E-mail"
 
-msgid "Email allowed recipients"
-msgstr "Povolení příjemci e-mailů"
+msgid "Email allowed recipients (whitelist)"
+msgstr "Povolení příjemci e-mailů (whitelist)"
 
 msgid "Email name"
 msgstr "Jméno k e-mailu"

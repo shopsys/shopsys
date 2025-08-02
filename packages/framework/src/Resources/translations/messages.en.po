@@ -1852,7 +1852,7 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-msgid "Email allowed recipients"
+msgid "Email allowed recipients (whitelist)"
 msgstr ""
 
 msgid "Email name"

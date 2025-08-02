@@ -263,7 +263,7 @@ class SideMenuBuilder
             static::MAIL_ALLOWED_RECIPIENTS,
             [
                 'route' => 'admin_mailallowedrecipient_list',
-                'label' => t('Email allowed recipients'),
+                'label' => t('Email allowed recipients (whitelist)'),
                 'display' => false,
             ],
         );
