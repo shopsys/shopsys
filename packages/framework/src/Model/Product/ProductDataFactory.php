@@ -277,7 +277,7 @@ class ProductDataFactory
     protected function fillProductVideosByProductId(ProductData $productData, Product $product): void
     {
         foreach ($this->productVideoRepository->findByProductId($product->getId()) as $video) {
-            $productData->productVideosData[$video->getid()] = $this->productVideoDataFactory->createFromProductVideo($video);
+            $productData->productVideosData[] = $this->productVideoDataFactory->createFromProductVideo($video);
         }
     }
 }
