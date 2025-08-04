@@ -313,7 +313,15 @@ class OrderData
      */
     public function addItem(OrderItemData $item): void
     {
-        $this->items[] = $item;
+        $count = 0;
+
+        foreach ($this->items as $key => $value) {
+            if (str_starts_with((string)$key, self::NEW_ITEM_PREFIX)) {
+                $count++;
+            }
+        }
+
+        $this->items[self::NEW_ITEM_PREFIX . $count] = $item;
     }
 
     /**
