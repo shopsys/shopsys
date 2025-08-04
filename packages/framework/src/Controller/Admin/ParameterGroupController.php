@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterGroupFormType;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
@@ -25,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_PARAMETER_GROUP')]
+#[ForRole(AdminRoleConstant::ROLE_PARAMETER_GROUP)]
 class ParameterGroupController extends AdminBaseController
 {
     /**
@@ -171,7 +172,7 @@ class ParameterGroupController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
 
-        $grid = $this->gridFactory->create('parameterGroupsList', $dataSource, 'ROLE_PARAMETER_GROUP');
+        $grid = $this->gridFactory->create('parameterGroupsList', $dataSource, AdminRoleConstant::ROLE_PARAMETER_GROUP);
 
         $grid->addColumn('name', 'pgt.name', t('Name'));
         $grid->setDefaultOrder('pg.position');

@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -28,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_ADVERT')]
+#[ForRole(AdminRoleConstant::ROLE_ADVERT)]
 class AdvertController extends AdminBaseController
 {
     /**
@@ -128,7 +129,7 @@ class AdvertController extends AdminBaseController
             },
         );
 
-        $grid = $this->gridFactory->create('advertList', $dataSource, 'ROLE_ADVERT');
+        $grid = $this->gridFactory->create('advertList', $dataSource, AdminRoleConstant::ROLE_ADVERT);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 

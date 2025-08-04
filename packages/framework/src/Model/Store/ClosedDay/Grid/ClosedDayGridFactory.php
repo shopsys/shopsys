@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -56,7 +57,7 @@ class ClosedDayGridFactory
                     return $row;
                 },
             ),
-            'ROLE_CLOSED_DAYS',
+            AdminRoleConstant::ROLE_CLOSED_DAYS,
         );
         $grid->enablePaging();
         $grid->setDefaultOrder('date');

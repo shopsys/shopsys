@@ -29,6 +29,7 @@ class DomainFilterController extends AdminBaseController
      * @param string $namespace
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[RequireRole(SystemRole::ADMIN)]
     public function domainFilterTabsAction(string $namespace): Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Domain/filter.html.twig', [

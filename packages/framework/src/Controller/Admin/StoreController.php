@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Store\StoreFormType;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_STORE')]
+#[ForRole(AdminRoleConstant::ROLE_STORE)]
 class StoreController extends AdminBaseController
 {
     /**
@@ -63,7 +64,7 @@ class StoreController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('storeList', $dataSource, 'ROLE_STORE');
+        $grid = $this->gridFactory->create('storeList', $dataSource, AdminRoleConstant::ROLE_STORE);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');

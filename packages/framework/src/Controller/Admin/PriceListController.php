@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\ImportPriceListFormType;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\PriceListFormType;
@@ -30,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_PRICE_LIST')]
+#[ForRole(AdminRoleConstant::ROLE_PRICE_LIST)]
 class PriceListController extends AdminBaseController
 {
     protected const string DOMAIN_FILTER_NAMESPACE = 'priceList';

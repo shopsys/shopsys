@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory\TopCategoriesFormType;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_TOP_CATEGORY')]
+#[ForRole(AdminRoleConstant::ROLE_TOP_CATEGORY)]
 class TopCategoryController extends AdminBaseController
 {
     /**

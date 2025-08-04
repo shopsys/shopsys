@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transfer\TransferIssueSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_TRANSFER')]
+#[ForRole(AdminRoleConstant::ROLE_TRANSFER)]
 class TransferIssueController extends AdminBaseController
 {
     /**
@@ -65,7 +66,7 @@ class TransferIssueController extends AdminBaseController
         }
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ti.id');
 
-        $grid = $this->gridFactory->create('transferIssueList', $dataSource, 'ROLE_TRANSFER');
+        $grid = $this->gridFactory->create('transferIssueList', $dataSource, AdminRoleConstant::ROLE_TRANSFER);
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt DESC, id');
 

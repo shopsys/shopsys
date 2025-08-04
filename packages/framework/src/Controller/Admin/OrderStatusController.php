@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_ORDER_STATUS')]
+#[ForRole(AdminRoleConstant::ROLE_ORDER_STATUS)]
 class OrderStatusController extends AdminBaseController
 {
     /**

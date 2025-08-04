@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -36,7 +37,7 @@ class CustomerUserController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/login-as-customer-user/{customerUserId}')]
-    #[CanEdit('ROLE_CUSTOMER')]
+    #[CanEdit(AdminRoleConstant::ROLE_CUSTOMER)]
     public function loginAsCustomerUserAction(int $customerUserId): Response
     {
         try {

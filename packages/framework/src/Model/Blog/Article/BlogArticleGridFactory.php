@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class BlogArticleGridFactory
 {
@@ -32,7 +33,7 @@ class BlogArticleGridFactory
     {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ba.id');
 
-        $grid = $this->gridFactory->create('blog_article', $dataSource, 'ROLE_BLOG_ARTICLE');
+        $grid = $this->gridFactory->create('blog_article', $dataSource, AdminRoleConstant::ROLE_BLOG_ARTICLE);
         $grid->setDefaultOrder('createdAt DESC');
         $grid->enablePaging();
 

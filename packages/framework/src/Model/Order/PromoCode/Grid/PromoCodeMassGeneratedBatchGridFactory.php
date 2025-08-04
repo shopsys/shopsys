@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 class PromoCodeMassGeneratedBatchGridFactory
@@ -36,7 +37,7 @@ class PromoCodeMassGeneratedBatchGridFactory
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
 
-        $grid = $this->gridFactory->create('promoCodeList', $dataSource, 'ROLE_PROMO_CODE');
+        $grid = $this->gridFactory->create('promoCodeList', $dataSource, AdminRoleConstant::ROLE_PROMO_CODE);
         $grid->setDefaultOrder('batchId');
         $grid->addColumn('code', 'batchId', t('Batch ID'), true);
         $grid->addColumn('prefix', 'pc.prefix', t('Promo code prefix'), true);

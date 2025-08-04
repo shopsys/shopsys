@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class ProductGridFactory
 {
@@ -35,7 +36,7 @@ class ProductGridFactory
     public function getProductControllerGrid(QueryBuilder $queryBuilder): Grid
     {
         $dataSource = $this->getGridDataSource($queryBuilder);
-        $grid = $this->gridFactory->create('productList', $dataSource, 'ROLE_PRODUCT');
+        $grid = $this->gridFactory->create('productList', $dataSource, AdminRoleConstant::ROLE_PRODUCT);
         $grid->enablePaging();
         $grid->enableSelecting();
         $grid->setDefaultOrder('name');
@@ -69,7 +70,7 @@ class ProductGridFactory
     {
         $dataSource = $this->getGridDataSource($queryBuilder);
 
-        $grid = $this->gridFactory->create('productPicker', $dataSource, 'ROLE_PRODUCT');
+        $grid = $this->gridFactory->create('productPicker', $dataSource, AdminRoleConstant::ROLE_PRODUCT);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 

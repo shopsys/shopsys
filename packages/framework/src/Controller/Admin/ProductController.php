@@ -14,6 +14,9 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductMassActionFormType;
@@ -41,7 +44,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_PRODUCT')]
+#[ForRole(AdminRoleConstant::ROLE_PRODUCT)]
 class ProductController extends AdminBaseController
 {
     /**
@@ -335,7 +338,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/visibility/{productId}')]
-    #[CanView]
+    #[RequireRole(SystemRole::ADMIN)]
     public function visibilityAction(int $productId): Response
     {
         $product = $this->productFacade->getById($productId);
@@ -351,7 +354,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/edit/catnum-exists')]
-    #[CanView]
+    #[RequireRole(SystemRole::ADMIN)]
     public function catnumExistsAction(Request $request): Response
     {
         $catnum = $request->get('catnum');
@@ -373,7 +376,7 @@ class ProductController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/product/names-by-catnums', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
-    #[CanView]
+    #[RequireRole(SystemRole::ADMIN)]
     public function productNamesByCatnumsAction(Request $request): JsonResponse
     {
         $catnums = $request->get('catnums');

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorResetPasswordFormType;
@@ -40,7 +41,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-#[ForRole('ROLE_ADMINISTRATOR')]
+#[ForRole(AdminRoleConstant::ROLE_ADMINISTRATOR)]
 class AdministratorController extends AdminBaseController
 {
     protected const int MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
@@ -79,7 +80,7 @@ class AdministratorController extends AdminBaseController
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
-        $grid = $this->gridFactory->create('administratorList', $dataSource, 'ROLE_ADMINISTRATOR');
+        $grid = $this->gridFactory->create('administratorList', $dataSource, AdminRoleConstant::ROLE_ADMINISTRATOR);
         $grid->setDefaultOrder('realName');
 
         $grid->addColumn('realName', 'a.realName', t('Full name'), true);
@@ -148,7 +149,7 @@ class AdministratorController extends AdminBaseController
                 ],
             );
 
-            $redirectRouteName = $this->accessChecker->canView('ROLE_ADMINISTRATOR') ? 'admin_administrator_list' : 'admin_default_dashboard';
+            $redirectRouteName = $this->accessChecker->canView(AdminRoleConstant::ROLE_ADMINISTRATOR) ? 'admin_administrator_list' : 'admin_default_dashboard';
 
             return $this->redirectToRoute($redirectRouteName);
         }
@@ -187,9 +188,9 @@ class AdministratorController extends AdminBaseController
         }
 
         if ($request->getMethod() === Request::METHOD_GET) {
-            $this->accessChecker->denyUnlessCanView('ROLE_ADMINISTRATOR');
+            $this->accessChecker->denyUnlessCanView(AdminRoleConstant::ROLE_ADMINISTRATOR);
         } else {
-            $this->accessChecker->denyUnlessCanEdit('ROLE_ADMINISTRATOR');
+            $this->accessChecker->denyUnlessCanEdit(AdminRoleConstant::ROLE_ADMINISTRATOR);
         }
     }
 

@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\StockFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\StockSettingsFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -30,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_STOCK')]
+#[ForRole(AdminRoleConstant::ROLE_STOCK)]
 class StockController extends AdminBaseController
 {
     /**
@@ -287,7 +288,7 @@ class StockController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('stockList', $dataSource, 'ROLE_STOCK');
+        $grid = $this->gridFactory->create('stockList', $dataSource, AdminRoleConstant::ROLE_STOCK);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');

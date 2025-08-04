@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 
@@ -38,7 +39,7 @@ class PriceListGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pl.id');
 
-        $grid = $this->gridFactory->create('priceList', $dataSource, 'ROLE_PRICE_LIST');
+        $grid = $this->gridFactory->create('priceList', $dataSource, AdminRoleConstant::ROLE_PRICE_LIST);
 
         $grid->enablePaging();
         $grid->setDefaultOrder('lastUpdate', DataSourceInterface::ORDER_DESC);

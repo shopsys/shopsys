@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -27,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_PROMO_CODE')]
+#[ForRole(AdminRoleConstant::ROLE_PROMO_CODE)]
 class PromoCodeController extends AdminBaseController
 {
     /**
@@ -59,7 +60,7 @@ class PromoCodeController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $grid = $this->promoCodeGridFactory->create('ROLE_PROMO_CODE', search: $quickSearchForm->getData()->text);
+        $grid = $this->promoCodeGridFactory->create(AdminRoleConstant::ROLE_PROMO_CODE, search: $quickSearchForm->getData()->text);
         $grid->enablePaging();
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);

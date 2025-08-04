@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\SliderParameterValuesUpdateFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_PARAMETER_VALUE')]
+#[ForRole(AdminRoleConstant::ROLE_PARAMETER_VALUE)]
 class ParameterValueController extends AdminBaseController
 {
     /**
@@ -58,7 +59,7 @@ class ParameterValueController extends AdminBaseController
         $queryBuilder = $this->parameterRepository->getQueryBuilderParameterValuesUsedByProductsByLocaleAndType($domainConfig->getLocale(), Parameter::PARAMETER_TYPE_COLOR);
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pv.id');
 
-        $grid = $this->gridFactory->create('parameterValues', $dataSource, 'ROLE_PARAMETER_VALUE');
+        $grid = $this->gridFactory->create('parameterValues', $dataSource, AdminRoleConstant::ROLE_PARAMETER_VALUE);
 
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));

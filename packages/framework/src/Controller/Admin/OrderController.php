@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -37,7 +38,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_ORDER')]
+#[ForRole(AdminRoleConstant::ROLE_ORDER)]
 class OrderController extends AdminBaseController
 {
     protected const string ORDERS_LIST_FOR_GRID_CACHE_KEY = 'ORDERS_LIST_FOR_GRID_CACHE_KEY';
@@ -233,7 +234,7 @@ class OrderController extends AdminBaseController
             null,
         );
 
-        $grid = $this->gridFactory->create('orderList', $dataSource, 'ROLE_ORDER');
+        $grid = $this->gridFactory->create('orderList', $dataSource, AdminRoleConstant::ROLE_ORDER);
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 

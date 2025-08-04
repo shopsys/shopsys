@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -37,7 +38,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_CUSTOMER')]
+#[ForRole(AdminRoleConstant::ROLE_CUSTOMER)]
 class CustomerController extends AdminBaseController
 {
     /**
@@ -206,7 +207,7 @@ class CustomerController extends AdminBaseController
         );
         $dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
 
-        $grid = $this->gridFactory->create('customerList', $dataSource, 'ROLE_CUSTOMER');
+        $grid = $this->gridFactory->create('customerList', $dataSource, AdminRoleConstant::ROLE_CUSTOMER);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 

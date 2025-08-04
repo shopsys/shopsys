@@ -9,13 +9,14 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\UserConsentPolicy\UserConsentPolicySettingFormType;
 use Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_USER_CONSENT_POLICY')]
+#[ForRole(AdminRoleConstant::ROLE_USER_CONSENT_POLICY)]
 class UserConsentPolicyController extends AdminBaseController
 {
     /**

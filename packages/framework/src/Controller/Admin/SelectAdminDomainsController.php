@@ -31,6 +31,7 @@ class SelectAdminDomainsController extends AdminBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[RequireRole(SystemRole::ADMIN)]
     public function renderFormAction(): Response
     {
         $form = $this->createForm(AdminDomainsFormType::class, $this->domain->getAdminEnabledDomainIds());

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Flag\FlagFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_FLAG')]
+#[ForRole(AdminRoleConstant::ROLE_FLAG)]
 class FlagController extends AdminBaseController
 {
     /**
@@ -51,7 +52,7 @@ class FlagController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->flagGridFactory->create('ROLE_FLAG');
+        $grid = $this->flagGridFactory->create(AdminRoleConstant::ROLE_FLAG);
 
         return $this->render('@ShopsysFramework/Admin/Content/Flag/list.html.twig', [
             'gridView' => $grid->createView(),

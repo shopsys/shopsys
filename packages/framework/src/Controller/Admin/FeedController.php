@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_FEED')]
+#[ForRole(AdminRoleConstant::ROLE_FEED)]
 class FeedController extends AdminBaseController
 {
     /**
@@ -142,7 +143,7 @@ class FeedController extends AdminBaseController
 
         $dataSource = new ArrayDataSource($feedsData, 'label');
 
-        $grid = $this->gridFactory->create('feedsList', $dataSource, 'ROLE_FEED');
+        $grid = $this->gridFactory->create('feedsList', $dataSource, AdminRoleConstant::ROLE_FEED);
 
         $grid->addColumn('label', 'feedLabel', t('Feed'));
         $grid->addColumn('created', 'created', t('Generated'));
@@ -152,7 +153,9 @@ class FeedController extends AdminBaseController
             $grid->addColumn('generate', 'generate', t('Generate'));
         }
 
-        $grid->addColumn('schedule', 'schedule', t('Schedule'));
+        if ($this->accessChecker->canEdit(AdminRoleConstant::ROLE_FEED)) {
+            $grid->addColumn('schedule', 'schedule', t('Schedule'));
+        }
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Feed/listGrid.html.twig');
 

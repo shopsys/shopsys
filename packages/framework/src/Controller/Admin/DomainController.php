@@ -17,13 +17,14 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Domain\DomainFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_DOMAIN')]
+#[ForRole(AdminRoleConstant::ROLE_DOMAIN)]
 class DomainController extends AdminBaseController
 {
     /**
@@ -45,6 +46,7 @@ class DomainController extends AdminBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[RequireRole(SystemRole::ADMIN)]
     public function domainTabsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [

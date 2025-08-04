@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_TRANSPORT_AND_PAYMENT')]
+#[ForRole(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
 class TransportController extends AdminBaseController
 {
     /**
@@ -160,7 +161,7 @@ class TransportController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->transportGridFactory->create('ROLE_TRANSPORT_AND_PAYMENT');
+        $grid = $this->transportGridFactory->create(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT);
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/list.html.twig', [
             'gridView' => $grid->createView(),

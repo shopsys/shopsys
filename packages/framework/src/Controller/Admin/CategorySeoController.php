@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\CategorySeoFilterFormType;
 use Shopsys\FrameworkBundle\Form\Admin\CategorySeo\ReadyCategorySeoCombinationFormType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -35,7 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_CATEGORY_SEO')]
+#[ForRole(AdminRoleConstant::ROLE_CATEGORY_SEO)]
 class CategorySeoController extends AdminBaseController
 {
     /**
@@ -307,6 +308,8 @@ class CategorySeoController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function readyCombinationButtonAction(
         int $categoryId,
         array $categorySeoFilterFormTypeAllQueries,

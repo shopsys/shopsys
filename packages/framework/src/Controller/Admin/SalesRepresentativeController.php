@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative\SalesRepresentativeFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_SALES_REPRESENTATIVE')]
+#[ForRole(AdminRoleConstant::ROLE_SALES_REPRESENTATIVE)]
 class SalesRepresentativeController extends AdminBaseController
 {
     protected const int DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT = 10;
@@ -53,7 +54,7 @@ class SalesRepresentativeController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->salesRepresentativeGridFactory->create('ROLE_SALES_REPRESENTATIVE');
+        $grid = $this->salesRepresentativeGridFactory->create(AdminRoleConstant::ROLE_SALES_REPRESENTATIVE);
 
         return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/list.html.twig', [
             'gridView' => $grid->createView(),

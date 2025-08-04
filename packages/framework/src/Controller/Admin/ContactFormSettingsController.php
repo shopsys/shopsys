@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\ContactForm\ContactFormSettingsFormType;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_CONTACT_FORM')]
+#[ForRole(AdminRoleConstant::ROLE_CONTACT_FORM)]
 class ContactFormSettingsController extends AdminBaseController
 {
     /**

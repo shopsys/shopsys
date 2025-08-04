@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\Status\ComplaintStatusFormType;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
@@ -87,6 +88,6 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
     #[Override]
     protected function getRoleConstant(): string
     {
-        return 'ROLE_COMPLAINT';
+        return AdminRoleConstant::ROLE_COMPLAINT_STATUS;
     }
 }

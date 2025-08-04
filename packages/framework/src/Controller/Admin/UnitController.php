@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_UNIT')]
+#[ForRole(AdminRoleConstant::ROLE_UNIT)]
 class UnitController extends AdminBaseController
 {
     /**
@@ -145,7 +146,6 @@ class UnitController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/product/unit/setting/')]
     #[CanEdit(methods: [HttpMethod::POST])]
     #[CanView(methods: [HttpMethod::GET])]
     public function settingAction(Request $request): Response

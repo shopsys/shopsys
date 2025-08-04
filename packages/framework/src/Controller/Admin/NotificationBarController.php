@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\NotificationBar\NotificationBarFormType;
 use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFoundException;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_NOTIFICATION_BAR')]
+#[ForRole(AdminRoleConstant::ROLE_NOTIFICATION_BAR)]
 class NotificationBarController extends AdminBaseController
 {
     /**
@@ -50,7 +51,7 @@ class NotificationBarController extends AdminBaseController
         $queryBuilder = $this->notificationBarFacade->getAllByDomainIdQueryBuilderForGrid($this->adminDomainTabsFacade->getSelectedDomainId());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'nb.id');
 
-        $grid = $this->gridFactory->create('NotificationBarList', $dataSource, 'ROLE_NOTIFICATION_BAR');
+        $grid = $this->gridFactory->create('NotificationBarList', $dataSource, AdminRoleConstant::ROLE_NOTIFICATION_BAR);
 
         $grid->addColumn('visible', 'visibility', t('Visibility'), true)->setClassAttribute('table-col table-col-10');
         $grid->addColumn('text', 'nb.text', t('Text'));

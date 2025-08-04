@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Category\CategoryTranslation;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation;
 
@@ -38,7 +39,7 @@ class ReadyCategorySeoMixGridFactory
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'rcsmId');
 
-        $grid = $this->gridFactory->create('ready_category_seo_mix', $dataSource, 'ROLE_CATEGORY_SEO');
+        $grid = $this->gridFactory->create('ready_category_seo_mix', $dataSource, AdminRoleConstant::ROLE_CATEGORY_SEO);
 
         $grid->addColumn('categoryName', 'categoryName', t('Category name'));
         $grid->addColumn('friendlyUrlSlug', 'fuSlug', t('Main URL'));

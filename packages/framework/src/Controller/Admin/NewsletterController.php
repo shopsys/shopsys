@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_NEWSLETTER')]
+#[ForRole(AdminRoleConstant::ROLE_NEWSLETTER)]
 class NewsletterController extends AdminBaseController
 {
     /**
@@ -53,7 +54,7 @@ class NewsletterController extends AdminBaseController
         );
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
-        $grid = $this->gridFactory->create('customerList', $dataSource, 'ROLE_NEWSLETTER');
+        $grid = $this->gridFactory->create('customerList', $dataSource, AdminRoleConstant::ROLE_NEWSLETTER);
         $grid->enablePaging();
 
         $grid->addColumn('email', 'email', 'Email');

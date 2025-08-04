@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusNotFoundException;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_COMPLAINT_STATUS')]
+#[ForRole(AdminRoleConstant::ROLE_COMPLAINT_STATUS)]
 class ComplaintStatusController extends AdminBaseController
 {
     /**

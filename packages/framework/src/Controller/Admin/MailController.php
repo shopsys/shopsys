@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateSendFormType;
@@ -27,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
-#[ForRole('ROLE_MAIL_TEMPLATE')]
+#[ForRole(AdminRoleConstant::ROLE_MAIL_TEMPLATE)]
 class MailController extends AdminBaseController
 {
     /**
@@ -61,7 +62,7 @@ class MailController extends AdminBaseController
     #[CanView]
     public function templateAction(): Response
     {
-        $grid = $this->mailTemplateGridFactory->create('ROLE_MAIL_TEMPLATE');
+        $grid = $this->mailTemplateGridFactory->create(AdminRoleConstant::ROLE_MAIL_TEMPLATE);
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -165,8 +166,8 @@ class MailController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/mail/setting/')]
-    #[CanEdit(methods: [HttpMethod::POST])]
-    #[CanView(methods: [HttpMethod::GET])]
+    #[CanEdit(AdminRoleConstant::ROLE_MAIL_SETTING, methods: [HttpMethod::POST])]
+    #[CanView(AdminRoleConstant::ROLE_MAIL_SETTING, methods: [HttpMethod::GET])]
     public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

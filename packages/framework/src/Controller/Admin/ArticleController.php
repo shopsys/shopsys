@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\Article;
@@ -29,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_ARTICLE')]
+#[ForRole(AdminRoleConstant::ROLE_ARTICLE)]
 class ArticleController extends AdminBaseController
 {
     /**
@@ -249,7 +250,7 @@ class ArticleController extends AdminBaseController
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
         $gridId = $articlePlacement;
-        $grid = $this->gridFactory->create($gridId, $dataSource, 'ROLE_ARTICLE');
+        $grid = $this->gridFactory->create($gridId, $dataSource, AdminRoleConstant::ROLE_ARTICLE);
         $grid->setDefaultOrder('position');
 
         $grid->addColumn('name', 'a.name', t('Name'));

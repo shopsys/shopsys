@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl\FriendlyUrlFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -124,6 +125,6 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     #[Override]
     protected function getRoleConstant(): string
     {
-        return 'ROLE_FRIENDLY_URL';
+        return AdminRoleConstant::ROLE_FRIENDLY_URL;
     }
 }

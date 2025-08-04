@@ -9,6 +9,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueEntityField;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -170,7 +171,7 @@ final class AdministratorFormType extends AbstractType
     private function canWorkWithRoles(Administrator|null $adminToEdit): bool
     {
         if ($adminToEdit === null) {
-            return $this->accessChecker->canCreate('ROLE_ADMINISTRATOR');
+            return $this->accessChecker->canCreate(AdminRoleConstant::ROLE_ADMINISTRATOR);
         }
 
         if ($adminToEdit->isSuperadmin()) {
@@ -184,7 +185,7 @@ final class AdministratorFormType extends AbstractType
             return false;
         }
 
-        return $this->accessChecker->canEdit('ROLE_ADMINISTRATOR');
+        return $this->accessChecker->canEdit(AdminRoleConstant::ROLE_ADMINISTRATOR);
     }
 
     /**

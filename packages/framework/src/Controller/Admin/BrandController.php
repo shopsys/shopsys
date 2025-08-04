@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Brand\BrandFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -27,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_BRAND')]
+#[ForRole(AdminRoleConstant::ROLE_BRAND)]
 class BrandController extends AdminBaseController
 {
     /**
@@ -103,7 +104,7 @@ class BrandController extends AdminBaseController
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'b.id');
 
-        $grid = $this->gridFactory->create('brandList', $dataSource, 'ROLE_BRAND');
+        $grid = $this->gridFactory->create('brandList', $dataSource, AdminRoleConstant::ROLE_BRAND);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 

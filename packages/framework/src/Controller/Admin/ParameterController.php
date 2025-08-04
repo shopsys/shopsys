@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_PARAMETER')]
+#[ForRole(AdminRoleConstant::ROLE_PARAMETER)]
 class ParameterController extends AdminBaseController
 {
     /**
@@ -46,7 +47,7 @@ class ParameterController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->parameterGridFactory->create('ROLE_PARAMETER');
+        $grid = $this->parameterGridFactory->create(AdminRoleConstant::ROLE_PARAMETER);
 
         return $this->render('@ShopsysFramework/Admin/Content/Parameter/list.html.twig', [
             'gridView' => $grid->createView(),

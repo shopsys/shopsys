@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Country\CountryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactory;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_COUNTRY')]
+#[ForRole(AdminRoleConstant::ROLE_COUNTRY)]
 class CountryController extends AdminBaseController
 {
     /**
@@ -45,7 +46,7 @@ class CountryController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->countryGridFactory->create('ROLE_COUNTRY');
+        $grid = $this->countryGridFactory->create(AdminRoleConstant::ROLE_COUNTRY);
 
         return $this->render('@ShopsysFramework/Admin/Content/Country/list.html.twig', [
             'gridView' => $grid->createView(),

@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -85,6 +86,6 @@ class UnitInlineEdit extends AbstractGridInlineEdit
     #[Override]
     protected function getRoleConstant(): string
     {
-        return 'ROLE_UNIT';
+        return AdminRoleConstant::ROLE_UNIT;
     }
 }

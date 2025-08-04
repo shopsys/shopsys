@@ -55,18 +55,20 @@
             </div>
         </div>
 
-        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-            {% block fixed_bar_content %}
-                <button
-                        class="btn btn--disabled"
-                        id="js-category-tree-sorting-save-button"
-                        data-category-apply-sorting-url="{{ url('admin_blogcategory_applysorting') }}"
-                        type="button"
-                >
-                    {{ 'Save changes in order'|trans }}
-                </button>
-            {% endblock %}
-        {% endembed %}
+        {% if can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_BLOG_CATEGORY')) %}
+            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+                {% block fixed_bar_content %}
+                    <button
+                            class="btn btn--disabled"
+                            id="js-category-tree-sorting-save-button"
+                            data-category-apply-sorting-url="{{ url('admin_blogcategory_applysorting') }}"
+                            type="button"
+                    >
+                        {{ 'Save changes in order'|trans }}
+                    </button>
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
     {% else %}
         <div class="form-line">
             <div class="form-tree form-tree--open form-tree--dragable">

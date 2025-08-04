@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_TRANSPORT_AND_PAYMENT')]
+#[ForRole(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
 class PaymentController extends AdminBaseController
 {
     /**
@@ -155,9 +156,10 @@ class PaymentController extends AdminBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->paymentGridFactory->create('ROLE_TRANSPORT_AND_PAYMENT');
+        $grid = $this->paymentGridFactory->create(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT);
 
         return $this->render('@ShopsysFramework/Admin/Content/Payment/list.html.twig', [
             'gridView' => $grid->createView(),

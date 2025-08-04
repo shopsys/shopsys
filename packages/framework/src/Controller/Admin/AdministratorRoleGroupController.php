@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorRoleGroupFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_ADMINISTRATOR')]
+#[ForRole(AdminRoleConstant::ROLE_ADMINISTRATOR)]
 class AdministratorRoleGroupController extends AdminBaseController
 {
     /**
@@ -51,7 +52,7 @@ class AdministratorRoleGroupController extends AdminBaseController
         $queryBuilder = $this->administratorRoleGroupFacade->getAllNotSystemManagedQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'arg.id');
 
-        $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, 'ROLE_ADMINISTRATOR');
+        $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, AdminRoleConstant::ROLE_ADMINISTRATOR);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'arg.name', t('Role name'), true);

@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Order\Status\OrderStatusFormType;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
@@ -87,6 +88,6 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
     #[Override]
     protected function getRoleConstant(): string
     {
-        return 'ROLE_ORDER_STATUS';
+        return AdminRoleConstant::ROLE_ORDER_STATUS;
     }
 }

@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -84,6 +85,6 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
     #[Override]
     protected function getRoleConstant(): string
     {
-        return 'ROLE_PRICING_GROUP';
+        return AdminRoleConstant::ROLE_PRICING_GROUP;
     }
 }

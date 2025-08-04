@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class SeoPageGridFactory
 {
@@ -35,7 +36,7 @@ class SeoPageGridFactory
             'sp.id',
         );
 
-        $grid = $this->gridFactory->create('seo_page', $dataSource, 'ROLE_SEO');
+        $grid = $this->gridFactory->create('seo_page', $dataSource, AdminRoleConstant::ROLE_SEO_PAGES);
         $grid->enablePaging();
 
         $grid->addColumn('pageName', 'sp.pageName', t('Page name'), true);

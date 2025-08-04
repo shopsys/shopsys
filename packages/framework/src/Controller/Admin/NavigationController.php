@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Navigation\NavigationItemFormType;
 use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[ForRole('ROLE_NAVIGATION')]
+#[ForRole(AdminRoleConstant::ROLE_NAVIGATION)]
 class NavigationController extends AdminBaseController
 {
     /**
@@ -181,7 +182,7 @@ class NavigationController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ni.id');
 
-        $grid = $this->gridFactory->create('navigationItemsList', $dataSource, 'ROLE_NAVIGATION');
+        $grid = $this->gridFactory->create('navigationItemsList', $dataSource, AdminRoleConstant::ROLE_NAVIGATION);
 
         $grid->addColumn('name', 'ni.name', t('Name'));
 
