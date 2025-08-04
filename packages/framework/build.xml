@@ -1303,7 +1303,6 @@
                 <touch file="${path.root}/ACCEPTANCE"/>
             </then>
         </if>
-        <phingcall target="warmup"/>
         <phingcall target="test-db-dump"/>
         <phingcall target="acceptance-elasticsearch-export"/>
         <delete failonerror="false" includeemptydirs="true">
