@@ -98,7 +98,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
             new Role(AdminRoleConstant::ROLE_PARAMETER, t('Parameters'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_PARAMETER_GROUP, t('Parameter groups'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_PARAMETER_VALUE, t('Color parameter values'), [Permission::EDIT]),
-            new Role(AdminRoleConstant::ROLE_UNIT, t('Units'), [Permission::FULL]),
+            new Role(AdminRoleConstant::ROLE_UNIT, t('Measurement units'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_CATEGORY, t('Categories'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_TOP_CATEGORY, t('Top categories'), [Permission::VIEW, Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_BRAND, t('Brands'), [Permission::FULL]),

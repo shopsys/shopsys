@@ -7,10 +7,67 @@ msgstr ""
 msgid "%entity_name% Overview"
 msgstr ""
 
+msgid "Administrator"
+msgstr ""
+
+msgid "Administrators"
+msgstr ""
+
+msgid "Adverts"
+msgstr ""
+
+msgid "Alternate language settings"
+msgstr ""
+
+msgid "Articles"
+msgstr ""
+
 msgid "Back to overview"
 msgstr ""
 
+msgid "Bestselling products"
+msgstr ""
+
+msgid "Blog article"
+msgstr ""
+
+msgid "Blog category"
+msgstr ""
+
+msgid "Brands"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Categories extended SEO"
+msgstr ""
+
+msgid "Closed days"
+msgstr ""
+
+msgid "Color parameter values"
+msgstr ""
+
+msgid "Complaint statuses"
+msgstr ""
+
+msgid "Complaints"
+msgstr ""
+
+msgid "Contact form"
+msgstr ""
+
+msgid "Content Management"
+msgstr ""
+
+msgid "Countries"
+msgstr ""
+
 msgid "Creating new %entity_name%"
+msgstr ""
+
+msgid "Customers"
 msgstr ""
 
 msgid "Delete"
@@ -19,15 +76,177 @@ msgstr ""
 msgid "Do you really want to delete this item?"
 msgstr ""
 
+msgid "E-shop identification"
+msgstr ""
+
 msgid "Edit"
 msgstr ""
 
 msgid "Editing %entity_name%"
 msgstr ""
 
+msgid "Feeds"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Flags"
+msgstr ""
+
+msgid "Free transport and payment"
+msgstr ""
+
+msgid "Full access"
+msgstr ""
+
+msgid "Full access (view only)"
+msgstr ""
+
+msgid "Heureka setting"
+msgstr ""
+
+msgid "Inquiries"
+msgstr ""
+
+msgid "Language constants"
+msgstr ""
+
+msgid "Legal & Compliance"
+msgstr ""
+
+msgid "Legal conditions article setting"
+msgstr ""
+
+msgid "Mail setting"
+msgstr ""
+
+msgid "Mail templates"
+msgstr ""
+
+msgid "Marketing & Promotions"
+msgstr ""
+
+msgid "Measurement units"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
 msgid "New"
 msgstr ""
 
+msgid "Newsletter"
+msgstr ""
+
+msgid "Notification bar"
+msgstr ""
+
+msgid "Order statuses"
+msgstr ""
+
+msgid "Order submitted page setting"
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Orders & Customers"
+msgstr ""
+
+msgid "Parameter groups"
+msgstr ""
+
+msgid "Parameters"
+msgstr ""
+
+msgid "Personal data access pages setting"
+msgstr ""
+
+msgid "Price lists"
+msgstr ""
+
+msgid "Pricing groups"
+msgstr ""
+
+msgid "Privacy policy article setting"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Products & Catalog"
+msgstr ""
+
+msgid "Promo codes"
+msgstr ""
+
+msgid "Public access"
+msgstr ""
+
+msgid "Robots.txt settings"
+msgstr ""
+
+msgid "SEO"
+msgstr ""
+
+msgid "SEO & Marketing Tools"
+msgstr ""
+
+msgid "SEO pages"
+msgstr ""
+
+msgid "Sales representatives"
+msgstr ""
+
+msgid "Settings & Configuration"
+msgstr ""
+
+msgid "Slider items"
+msgstr ""
+
+msgid "Stores"
+msgstr ""
+
+msgid "Super Administrator"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "System Tools"
+msgstr ""
+
+msgid "Top categories"
+msgstr ""
+
+msgid "Top products"
+msgstr ""
+
+msgid "Transfers"
+msgstr ""
+
+msgid "Transports and payments"
+msgstr ""
+
+msgid "Unused friendly URLs"
+msgstr ""
+
+msgid "User consent policy article setting"
+msgstr ""
+
+msgid "Vats"
+msgstr ""
+
 msgid "Viewing %entity_name%"
+msgstr ""
+
+msgid "Warehouses"
+msgstr ""
+
+msgid "Watchdogs"
+msgstr ""
+
+msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
 msgstr ""
 

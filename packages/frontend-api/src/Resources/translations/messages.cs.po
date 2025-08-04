@@ -4,8 +4,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Access to all the complaints created under the user's company"
+msgstr "Přístup ke všem reklamacím vytvořeným pod firmou uživatele"
+
+msgid "Access to all the orders created under the user's company"
+msgstr "Přístup ke všem objednávkám vytvořeným pod firmou uživatele"
+
+msgid "B2B data and user management"
+msgstr "Správa B2B údajů a uživatelů"
+
+msgid "Cart manipulation and order creation"
+msgstr "Manipulace s košíkem a vytváření objednávky"
+
+msgid "Complaint creation"
+msgstr "Vytváření reklamace"
+
 msgid "Customer not found."
 msgstr "Zákazník nenalezen."
+
+msgid "Customer sees prices"
+msgstr "Zákazník vidí ceny"
+
+msgid "Customer self manage"
+msgstr "Spravovat své údaje"
 
 msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."
 msgstr "{0}Zákazník se ještě nepřihlásil.|[1,Inf[ Zákazník se přihlašuje přes %loginTypes%."

@@ -7,11 +7,68 @@ msgstr ""
 msgid "%entity_name% Overview"
 msgstr "Přehled %entity_name%"
 
+msgid "Administrator"
+msgstr "Administrátor"
+
+msgid "Administrators"
+msgstr "Administrátoři"
+
+msgid "Adverts"
+msgstr "Reklamní systém"
+
+msgid "Alternate language settings"
+msgstr "Nastavení alternativních jazyků"
+
+msgid "Articles"
+msgstr "Články"
+
 msgid "Back to overview"
 msgstr "Zpět na přehled"
 
+msgid "Bestselling products"
+msgstr "Nejprodávanější zboží"
+
+msgid "Blog article"
+msgstr "Články blogu"
+
+msgid "Blog category"
+msgstr "Kategorie blogu"
+
+msgid "Brands"
+msgstr "Značky"
+
+msgid "Categories"
+msgstr "Kategorie"
+
+msgid "Categories extended SEO"
+msgstr "Rozšířené SEO kategorií"
+
+msgid "Closed days"
+msgstr "Svátky a interní dny"
+
+msgid "Color parameter values"
+msgstr "Hodnota parametru typu barva"
+
+msgid "Complaint statuses"
+msgstr "Stavy reklamací"
+
+msgid "Complaints"
+msgstr "Reklamace"
+
+msgid "Contact form"
+msgstr "Kontaktní formulář"
+
+msgid "Content Management"
+msgstr "Správa obsahu"
+
+msgid "Countries"
+msgstr "Státy"
+
 msgid "Creating new %entity_name%"
 msgstr "Vytvoření nové %entity_name%"
+
+msgid "Customers"
+msgstr "Zákazníci"
 
 msgid "Delete"
 msgstr "Smazat"
@@ -19,15 +76,177 @@ msgstr "Smazat"
 msgid "Do you really want to delete this item?"
 msgstr "Opravdu chcete odstranit tuto položku?"
 
+msgid "E-shop identification"
+msgstr "Identifikace e-shopu"
+
 msgid "Edit"
 msgstr "Upravit"
 
 msgid "Editing %entity_name%"
 msgstr "Editace %entity_name%"
 
+msgid "Feeds"
+msgstr "XML Feedy"
+
+msgid "Files"
+msgstr "Soubory"
+
+msgid "Flags"
+msgstr "Příznaky"
+
+msgid "Free transport and payment"
+msgstr "Doprava a platba zdarma"
+
+msgid "Full access"
+msgstr ""
+
+msgid "Full access (view only)"
+msgstr ""
+
+msgid "Heureka setting"
+msgstr "Heureka nastavení"
+
+msgid "Inquiries"
+msgstr "Poptávky"
+
+msgid "Language constants"
+msgstr "Jazykové konstanty"
+
+msgid "Legal & Compliance"
+msgstr "Právní záležitosti a dodržování předpisů"
+
+msgid "Legal conditions article setting"
+msgstr "Obchodní podmínky"
+
+msgid "Mail setting"
+msgstr "Nastavení e-mailů"
+
+msgid "Mail templates"
+msgstr "Šablony e-mailů"
+
+msgid "Marketing & Promotions"
+msgstr "Marketing a propagační akce"
+
+msgid "Measurement units"
+msgstr "Měrné jednotky"
+
+msgid "Navigation"
+msgstr "Navigace"
+
 msgid "New"
 msgstr "Vytvořit"
 
+msgid "Newsletter"
+msgstr "E-maily zpravodaje"
+
+msgid "Notification bar"
+msgstr "Notifikační lišta"
+
+msgid "Order statuses"
+msgstr "Stavy objednávek"
+
+msgid "Order submitted page setting"
+msgstr "Stránka s potvrzením objednávky"
+
+msgid "Orders"
+msgstr "Objednávky"
+
+msgid "Orders & Customers"
+msgstr "Objednávky a zákazníci"
+
+msgid "Parameter groups"
+msgstr "Skupiny parametrů"
+
+msgid "Parameters"
+msgstr "Parametry"
+
+msgid "Personal data access pages setting"
+msgstr "Nastavení zobrazení osobních údajů"
+
+msgid "Price lists"
+msgstr "Ceníky"
+
+msgid "Pricing groups"
+msgstr "Cenové skupiny"
+
+msgid "Privacy policy article setting"
+msgstr "Nastavení zásad ochrany osobních údajů"
+
+msgid "Products"
+msgstr "Produkty"
+
+msgid "Products & Catalog"
+msgstr "Produkty a katalog"
+
+msgid "Promo codes"
+msgstr "Slevové kupóny"
+
+msgid "Public access"
+msgstr "Veřejný přístup"
+
+msgid "Robots.txt settings"
+msgstr "Nastavení Robots.txt"
+
+msgid "SEO"
+msgstr "SEO"
+
+msgid "SEO & Marketing Tools"
+msgstr "SEO a marketingové nástroje"
+
+msgid "SEO pages"
+msgstr "SEO stránky"
+
+msgid "Sales representatives"
+msgstr "Obchodní zástupci"
+
+msgid "Settings & Configuration"
+msgstr "Nastavení a konfigurace"
+
+msgid "Slider items"
+msgstr "Bannery"
+
+msgid "Stores"
+msgstr "Prodejny"
+
+msgid "Super Administrator"
+msgstr "Super administrátor"
+
+msgid "System"
+msgstr "Systém"
+
+msgid "System Tools"
+msgstr "Systémové nástroje"
+
+msgid "Top categories"
+msgstr "Promované kategorie"
+
+msgid "Top products"
+msgstr "Promované produkty"
+
+msgid "Transfers"
+msgstr "Přehled chyb v přenosech"
+
+msgid "Transports and payments"
+msgstr "Dopravy a platby"
+
+msgid "Unused friendly URLs"
+msgstr "Seznam nepoužívaných hezkých URL"
+
+msgid "User consent policy article setting"
+msgstr "Správa osobních údajů (nastavení článku)"
+
+msgid "Vats"
+msgstr "DPH"
+
 msgid "Viewing %entity_name%"
 msgstr "Detail %entity_name%"
+
+msgid "Warehouses"
+msgstr "Sklady"
+
+msgid "Watchdogs"
+msgstr "Hlídací psi"
+
+msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
+msgstr "Nemáte přístup k požadované stránce. Požádejte správce, aby vám udělil přístup."
 
