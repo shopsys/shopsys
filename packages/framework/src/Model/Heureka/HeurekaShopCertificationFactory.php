@@ -39,7 +39,7 @@ class HeurekaShopCertificationFactory
         $heurekaShopCertification->setEmail($order->getEmail());
 
         foreach ($order->getProductItems() as $item) {
-            if ($item->hasProduct()) {
+            if ($item->isTypeProductAndHasProduct()) {
                 $heurekaShopCertification->addProductItemId((string)$item->getProduct()->getId());
             }
         }

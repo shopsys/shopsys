@@ -390,11 +390,9 @@ class OrderItem
     /**
      * @return bool
      */
-    public function hasProduct()
+    public function isTypeProductAndHasProduct()
     {
-        $this->checkTypeProduct();
-
-        return $this->product !== null;
+        return $this->isTypeProduct() && $this->product !== null;
     }
 
     /**
