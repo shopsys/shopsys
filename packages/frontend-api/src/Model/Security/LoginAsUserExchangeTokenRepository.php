@@ -54,4 +54,14 @@ class LoginAsUserExchangeTokenRepository
         $this->entityManager->remove($exchangeToken);
         $this->entityManager->flush();
     }
+
+    public function deleteAllExpired(): void
+    {
+        $this->entityManager->createQueryBuilder()
+            ->delete(LoginAsUserExchangeToken::class, 'e')
+            ->where('e.expiresAt < :now')
+            ->setParameter('now', new DateTime())
+            ->getQuery()
+            ->execute();
+    }
 }

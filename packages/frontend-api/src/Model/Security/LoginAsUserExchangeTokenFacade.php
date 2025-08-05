@@ -66,4 +66,9 @@ class LoginAsUserExchangeTokenFacade
         $this->entityManager->remove($exchangeTokenEntity);
         $this->entityManager->flush();
     }
+
+    public function deleteAllExpired(): void
+    {
+        $this->loginAsUserExchangeTokenRepository->deleteAllExpired();
+    }
 }
