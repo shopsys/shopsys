@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -42,6 +42,7 @@ class StockController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockDataFactory $stockDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade $stockSettingsDataFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFactory $stockSettingsDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -51,6 +52,7 @@ class StockController extends AdminBaseController
         protected readonly StockDataFactory $stockDataFactory,
         protected readonly StockSettingsDataFacade $stockSettingsDataFacade,
         protected readonly StockSettingsDataFactory $stockSettingsDataFactory,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -286,7 +288,7 @@ class StockController extends AdminBaseController
     {
         $queryBuilder = $this->stockFacade->getAllStockQueryBuilder();
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 's.id');
 
         $grid = $this->gridFactory->create('stockList', $dataSource, AdminRoleConstant::ROLE_STOCK);
 

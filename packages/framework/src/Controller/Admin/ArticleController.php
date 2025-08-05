@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -42,6 +42,7 @@ class ArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade $userConsentPolicyFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
@@ -52,6 +53,7 @@ class ArticleController extends AdminBaseController
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
         protected readonly UserConsentPolicyFacade $userConsentPolicyFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -247,7 +249,7 @@ class ArticleController extends AdminBaseController
             $articlePlacement,
         );
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'a.id');
 
         $gridId = $articlePlacement;
         $grid = $this->gridFactory->create($gridId, $dataSource, AdminRoleConstant::ROLE_ARTICLE);

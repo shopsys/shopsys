@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Category\CategoryTranslation;
@@ -20,10 +20,12 @@ class ReadyCategorySeoMixGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly EntityManagerInterface $em,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -37,7 +39,7 @@ class ReadyCategorySeoMixGridFactory
     {
         $queryBuilder = $this->getAllByDomainIdQueryBuilder($domainId, $locale);
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'rcsmId');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'rcsmId');
 
         $grid = $this->gridFactory->create('ready_category_seo_mix', $dataSource, AdminRoleConstant::ROLE_CATEGORY_SEO);
 

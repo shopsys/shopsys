@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -35,6 +35,7 @@ class ParameterValueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory $parameterValueConversionDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -44,6 +45,7 @@ class ParameterValueController extends AdminBaseController
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ParameterValueConversionDataFactory $parameterValueConversionDataFactory,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -57,7 +59,7 @@ class ParameterValueController extends AdminBaseController
         $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
 
         $queryBuilder = $this->parameterRepository->getQueryBuilderParameterValuesUsedByProductsByLocaleAndType($domainConfig->getLocale(), Parameter::PARAMETER_TYPE_COLOR);
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pv.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'pv.id');
 
         $grid = $this->gridFactory->create('parameterValues', $dataSource, AdminRoleConstant::ROLE_PARAMETER_VALUE);
 

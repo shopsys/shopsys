@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Grid;
 
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
@@ -15,10 +15,12 @@ class UploadedFileGridFactory extends AbstractUploadedFileGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade $uploadedFileAdminListFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         GridFactory $gridFactory,
         protected readonly UploadedFileAdminListFacade $uploadedFileAdminListFacade,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
         parent::__construct($gridFactory);
     }
@@ -31,7 +33,7 @@ class UploadedFileGridFactory extends AbstractUploadedFileGridFactory
     {
         $queryBuilder = $this->uploadedFileAdminListFacade->getQueryBuilderByQuickSearchData($quickSearchFormData);
 
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             'u.id',
             function ($row) {

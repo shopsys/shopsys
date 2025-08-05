@@ -7,17 +7,23 @@ namespace Tests\App\Functional\Component\Grid;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @inject
+     */
+    protected QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory;
+
     public function testGetOneRow()
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p');
 
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource($qb, 'p.id', function ($row) {
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create($qb, 'p.id', function ($row) {
             $row['newField'] = 'newValue';
 
             return $row;
@@ -39,7 +45,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
             ->setFirstResult(8)
             ->setMaxResults(5);
 
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource($qb, 'p.id', function ($row) {
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create($qb, 'p.id', function ($row) {
             $row['newField'] = 'newValue' . $row['p']['id'];
 
             return $row;
@@ -57,7 +63,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
             ->from(Product::class, 'p')
             ->setMaxResults(5);
 
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource($qb, 'p.id', function ($row) {
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create($qb, 'p.id', function ($row) {
             $row['newField'] = 'newValue' . $row['p']['id'];
 
             return $row;

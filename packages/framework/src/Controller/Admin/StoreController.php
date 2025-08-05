@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -33,12 +33,14 @@ class StoreController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreDataFactory $storeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly StoreDataFactory $storeDataFactory,
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -62,7 +64,7 @@ class StoreController extends AdminBaseController
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $queryBuilder = $this->storeFacade->getStoresByDomainIdQueryBuilder($domainId);
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 's.id');
 
         $grid = $this->gridFactory->create('storeList', $dataSource, AdminRoleConstant::ROLE_STORE);
 

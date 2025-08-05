@@ -7,17 +7,22 @@ namespace Tests\App\Functional\Component\Grid;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @inject
+     */
+    protected QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory;
     public function testGetOneRow()
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p');
 
-        $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
+        $queryBuilderDataSource = $this->queryBuilderDataSourceFactory->create($qb, 'p.id');
 
         $row = $queryBuilderDataSource->getOneRow($this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class)->getId());
 
@@ -34,7 +39,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
             ->setFirstResult(8)
             ->setMaxResults(5);
 
-        $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
+        $queryBuilderDataSource = $this->queryBuilderDataSourceFactory->create($qb, 'p.id');
 
         $count = $queryBuilderDataSource->getTotalRowsCount();
 
@@ -48,7 +53,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
             ->from(Product::class, 'p')
             ->setMaxResults(5);
 
-        $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
+        $queryBuilderDataSource = $this->queryBuilderDataSourceFactory->create($qb, 'p.id');
 
         $rows = $queryBuilderDataSource->getPaginatedRows()->getResults();
         $this->assertIsArray($rows);
@@ -67,7 +72,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
             ->from(Product::class, 'p')
             ->setMaxResults(10);
 
-        $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
+        $queryBuilderDataSource = $this->queryBuilderDataSourceFactory->create($qb, 'p.id');
 
         $rows = $queryBuilderDataSource->getPaginatedRows(
             null,
@@ -95,7 +100,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
             ->from(Product::class, 'p')
             ->setMaxResults(10);
 
-        $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
+        $queryBuilderDataSource = $this->queryBuilderDataSourceFactory->create($qb, 'p.id');
 
         $rows = $queryBuilderDataSource->getPaginatedRows(
             null,

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Store\ClosedDay\Grid;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
@@ -19,11 +19,13 @@ class ClosedDayGridFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly ClosedDayFacade $closedDayFacade,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -43,7 +45,7 @@ class ClosedDayGridFactory
 
         $grid = $this->gridFactory->create(
             'closedDayList',
-            new QueryBuilderWithRowManipulatorDataSource(
+            $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
                 $queryBuilder,
                 'cd.id',
                 function (array $row): array {

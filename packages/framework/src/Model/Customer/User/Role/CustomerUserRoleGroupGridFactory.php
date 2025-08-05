@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
@@ -18,11 +18,13 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupRepository $customerUserRoleGroupRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly CustomerUserRoleGroupRepository $customerUserRoleGroupRepository,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -35,7 +37,7 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
     {
         $queryBuilder = $this->getGridQueryBuilder();
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'cug.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'cug.id');
 
         $grid = $this->gridFactory->create('customerUserRoleGroupsList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
@@ -16,10 +16,12 @@ class PromoCodeMassGeneratedBatchGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly EntityManagerInterface $em,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -35,7 +37,7 @@ class PromoCodeMassGeneratedBatchGridFactory
             ->andWhere('pc.massGenerateBatchId IS NOT NULL')
             ->orderBy('batchId', 'DESC');
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'pc.id');
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource, AdminRoleConstant::ROLE_PROMO_CODE);
         $grid->setDefaultOrder('batchId');

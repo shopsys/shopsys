@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -34,12 +34,14 @@ class ParameterGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly ParameterGroupFacade $parameterGroupFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly ParameterGroupDataFactory $parameterGroupDataFactory,
         protected readonly Domain $domain,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -170,7 +172,7 @@ class ParameterGroupController extends AdminBaseController
     {
         $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($this->domain->getLocale());
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'pg.id');
 
         $grid = $this->gridFactory->create('parameterGroupsList', $dataSource, AdminRoleConstant::ROLE_PARAMETER_GROUP);
 

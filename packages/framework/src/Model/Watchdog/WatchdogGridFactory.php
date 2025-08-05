@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
@@ -18,10 +18,12 @@ class WatchdogGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -34,7 +36,7 @@ class WatchdogGridFactory
         QueryBuilder $queryBuilder,
         Administrator $administrator,
     ): GridView {
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'productId');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'productId');
 
         $grid = $this->gridFactory->create('watchdogList', $dataSource, AdminRoleConstant::ROLE_WATCHDOG);
 
@@ -62,7 +64,7 @@ class WatchdogGridFactory
         QueryBuilder $queryBuilder,
         Administrator $administrator,
     ): GridView {
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'w.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'w.id');
 
         $grid = $this->gridFactory->create('watchdogList', $dataSource, AdminRoleConstant::ROLE_WATCHDOG);
 

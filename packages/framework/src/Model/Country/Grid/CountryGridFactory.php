@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Country\CountryRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
@@ -20,12 +20,14 @@ class CountryGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly CountryRepository $countryRepository,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
         protected readonly Domain $domain,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -40,7 +42,7 @@ class CountryGridFactory implements GridFactoryInterface
             ->createSortedJoinedQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities(), $this->domain->getId())
             ->addSelect('ct');
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'c.id');
 
         $grid = $this->gridFactory->create('CountryList', $dataSource, $roleConstant);
 

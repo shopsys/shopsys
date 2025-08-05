@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository;
@@ -23,12 +23,14 @@ class PromoCodeGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly PromoCodeLimitRepository $promoCodeLimitRepository,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -70,7 +72,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
                 ->setParameter('search', '%' . $search . '%');
         }
 
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource($queryBuilder, 'pc.id', $manipulator);
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create($queryBuilder, 'pc.id', $manipulator);
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('code');

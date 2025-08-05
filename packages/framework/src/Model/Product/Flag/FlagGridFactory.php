@@ -10,7 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class FlagGridFactory implements GridFactoryInterface
@@ -19,11 +19,13 @@ class FlagGridFactory implements GridFactoryInterface
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -40,7 +42,7 @@ class FlagGridFactory implements GridFactoryInterface
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'f.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'f.id');
 
         $grid = $this->gridFactory->create('flagList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');

@@ -7,10 +7,10 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
-use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
@@ -38,6 +38,8 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory
      */
     public function __construct(
         protected readonly StatisticsFacade $statisticsFacade,
@@ -49,6 +51,8 @@ class DefaultController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly TransferIssueFacade $transferIssueFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly ArrayDataSourceFactory $arrayDataSourceFactory,
     ) {
     }
 
@@ -207,7 +211,7 @@ class DefaultController extends AdminBaseController
             ];
         }
 
-        $dataSource = new ArrayDataSource($data);
+        $dataSource = $this->arrayDataSourceFactory->create($data);
 
         $cronListGrid = $this->gridFactory->create('cronList', $dataSource, SystemRole::ADMIN);
 
@@ -319,7 +323,7 @@ class DefaultController extends AdminBaseController
         }
 
         $queryBuilder = $this->cronModuleFacade->getRunsByCronModuleQueryBuilder($cronModule);
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmr.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'cmr.id');
 
         $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource, SystemRole::ADMIN);
 

@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class ProductGridFactory
@@ -20,11 +21,13 @@ class ProductGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -94,7 +97,7 @@ class ProductGridFactory
      */
     protected function getGridDataSource(QueryBuilder $queryBuilder): QueryBuilderWithRowManipulatorDataSource
     {
-        return new QueryBuilderWithRowManipulatorDataSource(
+        return $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             'p.id',
             function ($product, $products) {

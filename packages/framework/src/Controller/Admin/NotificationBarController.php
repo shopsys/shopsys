@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -32,12 +32,14 @@ class NotificationBarController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
      * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly NotificationBarFacade $notificationBarFacade,
         protected readonly NotificationBarDataFactory $notificationBarDataFactory,
         protected readonly GridFactory $gridFactory,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -49,7 +51,7 @@ class NotificationBarController extends AdminBaseController
     public function listAction(): Response
     {
         $queryBuilder = $this->notificationBarFacade->getAllByDomainIdQueryBuilderForGrid($this->adminDomainTabsFacade->getSelectedDomainId());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'nb.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'nb.id');
 
         $grid = $this->gridFactory->create('NotificationBarList', $dataSource, AdminRoleConstant::ROLE_NOTIFICATION_BAR);
 

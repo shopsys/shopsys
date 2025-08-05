@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -24,6 +24,7 @@ class TransportGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -31,6 +32,7 @@ class TransportGridFactory implements GridFactoryInterface
         protected readonly Localization $localization,
         protected readonly TransportFacade $transportFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -45,7 +47,7 @@ class TransportGridFactory implements GridFactoryInterface
             ->addSelect('tt.name')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
             ->setParameter('locale', $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale());
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             't.id',
             function ($row) {

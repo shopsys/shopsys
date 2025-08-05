@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository;
 
@@ -21,12 +21,14 @@ class MailTemplateGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly MailTemplateRepository $mailTemplateRepository,
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly MailTemplateConfiguration $mailTemplateConfiguration,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -68,6 +70,6 @@ class MailTemplateGridFactory implements GridFactoryInterface
             $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
-        return new QueryBuilderDataSource($queryBuilder, 'mt.id');
+        return $this->queryBuilderDataSourceFactory->create($queryBuilder, 'mt.id');
     }
 }

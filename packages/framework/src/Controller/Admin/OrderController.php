@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
@@ -58,6 +58,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -74,6 +75,7 @@ class OrderController extends AdminBaseController
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly EntityLogFacade $entityLogFacade,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -225,7 +227,7 @@ class OrderController extends AdminBaseController
      */
     protected function getOrdersGrid(QueryBuilder $queryBuilder): Grid
     {
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             'o.id',
             function ($row, $rows) {
