@@ -194,13 +194,63 @@ describe('Spinbox Component', () => {
             await user.type(input, '25');
             expect(input).toHaveValue(25);
 
-            await user.clear(input);
+            await user.keyboard('{Backspace}');
+            await user.keyboard('{Backspace}');
             expect(input).toHaveValue(null);
 
             fireEvent.blur(input);
             expect(input).toHaveValue(25);
 
             expect(onChangeCallback).toHaveBeenCalledWith(25);
+        });
+
+        test('handles legitimate value change from multi-digit to different multi-digit number', async () => {
+            const user = userEvent.setup();
+            const onChangeCallback = vi.fn();
+            const { container } = render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
+
+            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+
+            await user.clear(input);
+            await user.type(input, '100');
+            expect(input).toHaveValue(100);
+
+            await user.keyboard('{Backspace}');
+            expect(input).toHaveValue(10);
+
+            await user.keyboard('{Backspace}');
+            await user.keyboard('{Backspace}');
+            expect(input).toHaveValue(null);
+
+            fireEvent.blur(input);
+            expect(input).toHaveValue(10);
+
+            expect(onChangeCallback).toHaveBeenCalledWith(10);
+        });
+
+        test('handles legitimate value change from multi-digit to different multi-digit number', async () => {
+            const user = userEvent.setup();
+            const onChangeCallback = vi.fn();
+            const { container } = render(<Spinbox {...defaultProps} onChangeValueCallback={onChangeCallback} />);
+
+            const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+
+            await user.clear(input);
+            await user.type(input, '1000');
+            expect(input).toHaveValue(1000);
+
+            await user.keyboard('{Backspace}');
+            expect(input).toHaveValue(100);
+
+            await user.keyboard('{Backspace}');
+            await user.keyboard('{Backspace}');
+            await user.keyboard('{Backspace}');
+            expect(input).toHaveValue(null);
+
+            fireEvent.blur(input);
+            expect(input).toHaveValue(100);
+
+            expect(onChangeCallback).toHaveBeenCalledWith(100);
         });
 
         test('handles multiple value changes and NaN restoration', async () => {
