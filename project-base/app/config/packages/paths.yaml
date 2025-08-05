@@ -32,6 +32,6 @@ parameters:
     shopsys.uploaded_file_config_filepath: '%kernel.project_dir%/config/uploaded_files.yaml'
     shopsys.uploaded_file_dir: '/web%shopsys.uploaded_file_url_prefix%'
     shopsys.uploaded_file_url_prefix: '/%shopsys.content_dir_name%/uploadedFiles/'
-    shopsys.var_dir: '/var'
+    shopsys.var_dir: '%kernel.project_dir%/var'
     shopsys.vendor_dir: '%kernel.project_dir%/vendor'
     shopsys.web_dir: '%kernel.project_dir%/web'
