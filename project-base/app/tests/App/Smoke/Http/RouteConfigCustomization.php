@@ -133,8 +133,8 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
-                    $debugNote = 'Add CSRF token for any delete action during test execution. '
+                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())) {
+                    $debugNote = 'Add CSRF token for protected actions during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->addCallDuringTestExecution(

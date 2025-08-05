@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -31,6 +32,7 @@ class CustomerUserController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $customerUserId
      * @return \Symfony\Component\HttpFoundation\Response
      */
