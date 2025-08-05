@@ -2,23 +2,31 @@
 
 As a data source, the [Grid Component](index.md) requires an implementation of [`DataSourceInterface`]({{github.link}}/packages/framework/src/Component/Grid/DataSourceInterface.php).
 
-You can find 4 implementations of the interface in Shopsys Platform.
+## Use Factories for Creating DataSources
 
-## [`QueryBuilderDataSource`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
+- [`QueryBuilderDataSourceFactory`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderDataSourceFactory.php)
+- [`QueryBuilderWithRowManipulatorDataSourceFactory`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSourceFactory.php)
+- [`ArrayDataSourceFactory`]({{github.link}}/packages/framework/src/Component/Grid/ArrayDataSourceFactory.php)
+- [`ArrayWithPaginationDataSourceFactory`]({{github.link}}/packages/framework/src/Component/Grid/ArrayWithPaginationDataSourceFactory.php)
+- [`MoneyConvertingDataSourceDecoratorFactory`]({{github.link}}/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecoratorFactory.php)
 
 The most commonly used data source is created from Doctrine Query Builder.
 
 ### Example of usage
 
 ```php
-/** @var Doctrine\ORM\EntityManagerInterface $entityManager */
+public function __construct(
+    private readonly \Doctrine\ORM\EntityManagerInterface $em,
+    private readonly \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+) {
+}
 
-$queryBuilder = $entityManager->createQueryBuilder();
+$queryBuilder = $this->em->createQueryBuilder();
 
 $queryBuilder->select('p')
     ->from(Product::class, 'p');
 
-$dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id', SortableNullsWalker::class);
+$dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'p.id');
 ```
 
 QueryBuilderDataSource contains a third default parameter $hint which is pre-set to SortableNullsWalker::class as a way to sort null values to the beginning in the case of ASC sorting, or to the end in the case of DESC sorting.
@@ -33,20 +41,25 @@ e.g., you can add some calculated price into the data set.
 ### Example of usage
 
 ```php
-/** @var Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository */
-/** @var Shopsys\FrameworkBundle\Model\Localization\Localization $localization */
+public function __construct(
+    private readonly \Doctrine\ORM\EntityManagerInterface $em,
+    private readonly \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
+    private readonly \Shopsys\FrameworkBundle\Model\Localization\Localization $localization,
+    private readonly \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository,
+) {
+}
 
-$queryBuilder = $transportRepository->getQueryBuilderForAll()
+$queryBuilder = $this->transportRepository->getQueryBuilderForAll()
     ->addSelect('tt')
     ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
-    ->setParameter('locale', $localization->getCurrentLocaleForTranslatableEntities());
+    ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
 
-$dataSource = new QueryBuilderWithRowManipulatorDataSource(
+$dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
     $queryBuilder,
     't.id',
     function ($row, $results) {
         if ($this->transportsIndexedByIdLocalCache === null) {
-            $this->transportsIndexedByIdLocalCache = $transportRepository->findAllByIdsIndexedById(array_map(fn ($result) => $result['t']['id'], $results));
+            $this->transportsIndexedByIdLocalCache = $this->transportRepository->findAllByIdsIndexedById(array_map(fn ($result) => $result['t']['id'], $results));
         }
 
         $transport = $this->transportsIndexedByIdLocalCache[$row['t']['id']];
@@ -74,10 +87,14 @@ Data source that is created from an array. It is suitable when you need to displ
 ### Example of usage
 
 ```php
-/** @var Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+public function __construct(
+    private readonly \Shopsys\FrameworkBundle\Component\Domain\Domain $domain,
+    private readonly \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory,
+) {
+}
 
 $domainData = [];
-foreach ($domain->getAll() as $domainConfig) {
+foreach ($this->domain->getAll() as $domainConfig) {
     $domainData[] = [
         'id' => $domainConfig->getId(),
         'name' => $domainConfig->getName(),
@@ -86,7 +103,7 @@ foreach ($domain->getAll() as $domainConfig) {
     ];
 }
 
-$dataSource = new ArrayDataSource($domainData, 'id');
+$dataSource = $this->arrayDataSourceFactory->create($domainData, 'id');
 ```
 
 ## [`MoneyConvertingDataSourceDecorator`]({{github.link}}/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
@@ -96,7 +113,13 @@ A decorator that can be applied to any of the data sources described above. It c
 ### Example of usage
 
 ```php
-$innerDataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
+public function __construct(
+    private readonly \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+    private readonly \Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecoratorFactory $moneyConvertingDataSourceDecoratorFactory,
+) {
+}
 
-$dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
+$innerDataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'u.id');
+
+$dataSource = $this->moneyConvertingDataSourceDecoratorFactory->create($innerDataSource, ['ordersSumPrice']);
 ```
