@@ -350,6 +350,22 @@ public function buildGrid(string $context, array $excludedRoles): array
 
 **Example**: Instead of writing custom iteration logic, use existing "Select All" functionality and build upon it.
 
+### 8. **Test code rules**
+
+- To inject service in functional and GraphQl test cases do not use `$this->getContainer->get()` but use `@inject` annotation instead
+
+### 9. **project-base folder rules**
+- `project-base` folder includes a final version of files, that will be used as it is in future projects
+- use `private` visibility instead of `protected`
+- use typehints and return types everywhere
+- use `final`
+
+### 10. **packages folder rules**
+- `packages` folder classes are expected to be extended and overridden in the `project-base` so we want to keep code as easily changeable as possible
+- use `protected` visibility instead of `private`
+- do not use any typehints or return types in entities and data objects (no parameter types, no return types, no property types)
+- do not use `final` with one exception being FormType classes, where final is required
+
 ## Code Best Practices
 
 ### Documentation Best Practices
