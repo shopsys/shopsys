@@ -22,3 +22,15 @@ export const getHostFromDomain = (domain: string): string => {
     const url = new URL(domain);
     return `${url.protocol}//${url.host}/`;
 };
+
+/**
+ * Extracts locale from a domain URL with explicit path or returns default
+ *
+ * @param domainUrl Domain URL to analyze (e.g., "http://127.0.0.1:8000/sk")
+ * @return Extracted locale or DEFAULT_LOCALE if no explicit locale in path
+ */
+export const getExplicitPathDomainLocaleOrDefault = (domainUrl: string): string => {
+    const normalizedUrl = domainUrl.endsWith('/') ? domainUrl.slice(0, -1) : domainUrl;
+    const urlSegments = normalizedUrl.split('/');
+    return urlSegments.length > 3 ? urlSegments[urlSegments.length - 1] : DEFAULT_LOCALE;
+};

@@ -1,15 +1,20 @@
 import { getCookie } from 'cookies-next';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { OptionalTokenType } from 'urql/types';
+import { getCookieName } from 'utils/cookies/cookieNaming';
+import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getProtocol, getIsHttps } from 'utils/requestProtocol';
 
-export const getTokensFromCookies = (context?: GetServerSidePropsContext | NextPageContext): OptionalTokenType => {
-    let accessToken = getCookie('accessToken', {
+export const getTokensFromCookies = (
+    domainConfig: DomainConfigType,
+    context?: GetServerSidePropsContext | NextPageContext,
+): OptionalTokenType => {
+    let accessToken = getCookie(getCookieName('accessToken', domainConfig.domainId), {
         req: context?.req,
         res: context?.res,
         secure: getIsHttps(getProtocol(context)),
     });
-    let refreshToken = getCookie('refreshToken', {
+    let refreshToken = getCookie(getCookieName('refreshToken', domainConfig.domainId), {
         req: context?.req,
         res: context?.res,
         secure: getIsHttps(getProtocol(context)),

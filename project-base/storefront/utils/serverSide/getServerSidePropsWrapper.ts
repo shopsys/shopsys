@@ -17,10 +17,8 @@ export const getServerSidePropsWrapper =
         }) => GetServerSideProps,
     ): any =>
     async (context: GetServerSidePropsContext) => {
-        const cookiesStoreState = getCookiesStoreState(context);
-        console.log(context.locale);
-        const domainConfig = getDomainConfig(context.req.headers.host!, context.locale);
-        console.log(domainConfig);
+        const domainConfig = getDomainConfig(context);
+        const cookiesStoreState = getCookiesStoreState(domainConfig, context);
         const createRedisClient = (await import('redis')).createClient;
         const redisClient = createRedisClient({
             url: `redis://${process.env.REDIS_HOST}`,

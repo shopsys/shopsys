@@ -1,6 +1,7 @@
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -24,9 +25,10 @@ export const NotificationBars: FC = memo(function NotificationBars() {
     const user = useCurrentCustomerData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const logout = useLogout();
+    const domainConfig = useDomainConfig();
 
     useEffect(() => {
-        const { accessToken: encodedAccessToken } = getTokensFromCookies();
+        const { accessToken: encodedAccessToken } = getTokensFromCookies(domainConfig);
         if (!encodedAccessToken) {
             return;
         }
@@ -35,7 +37,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
         const isUserAdmin = !!decodedAccessToken.administratorUuid;
 
         setLoggedAsUserEmail(isUserAdmin ? user!.email : undefined);
-    }, [user]);
+    }, [user, domainConfig]);
 
     useCountdown(nextRevalidationTime, () => fetchNotificationBars(), COUNTDOWN_REVALIDATION_INTERVAL);
 

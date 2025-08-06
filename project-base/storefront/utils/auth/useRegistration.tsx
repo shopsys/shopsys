@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRegistrationByOrderMutation } from 'graphql/requests/registration/mutations/RegistrationByOrderMutation.generated';
 import { useRegistrationMutation } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
 import { TypeLoginResult, TypeRegistrationByOrderInput, TypeRegistrationDataInput } from 'graphql/types';
@@ -19,6 +20,7 @@ export const useRegistration = () => {
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
+    const domainConfig = useDomainConfig();
 
     const register = async (registrationInput: Omit<TypeRegistrationDataInput, 'productListsUuids'>) => {
         blurInput();
@@ -55,7 +57,7 @@ export const useRegistration = () => {
         const accessToken = registerResultData.tokens.accessToken;
         const refreshToken = registerResultData.tokens.refreshToken;
 
-        setTokensToCookies(accessToken, refreshToken);
+        setTokensToCookies(accessToken, refreshToken, domainConfig);
         updateCartUuid(null);
         updateProductListUuids({});
 

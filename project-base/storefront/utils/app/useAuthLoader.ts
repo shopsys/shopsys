@@ -1,9 +1,11 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getCookies } from 'cookies-next';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { getCookieName } from 'utils/cookies/cookieNaming';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getIsHttps } from 'utils/requestProtocol';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
@@ -13,6 +15,7 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 export const useAuthLoader = () => {
     const { t } = useTranslation();
     const authLoading = usePersistStore((store) => store.authLoading);
+    const domainConfig = useDomainConfig();
 
     const router = useRouter();
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -21,12 +24,14 @@ export const useAuthLoader = () => {
 
     useEffect(() => {
         const cookies = getCookies({ secure: getIsHttps() });
-        const isWithUserTokens = !!(cookies.accessToken && cookies.refreshToken);
+        const accessTokenName = getCookieName('accessToken', domainConfig.domainId);
+        const refreshTokenName = getCookieName('refreshToken', domainConfig.domainId);
+        const isWithUserTokens = !!(cookies[accessTokenName] && cookies[refreshTokenName]);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
             router.reload();
         }
-    }, [slug]);
+    }, [slug, domainConfig.domainId]);
 
     useEffect(() => {
         if (typeof authLoading === 'object' && authLoading?.authLoadingStatus === 'social-login-fail') {

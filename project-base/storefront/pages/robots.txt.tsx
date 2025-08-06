@@ -23,10 +23,9 @@ const Robots: FC = (): null => {
 const domains = getPublicConfigProperty('domains', []) as DomainConfigType[];
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, ssrExchange }) => async (context) => {
-    const domain = context.req.headers.host!;
-    const domainConfig = getDomainConfig(domain, context.locale);
+    const domainConfig = getDomainConfig(context);
     const client = await createClient({
-        publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+        domainConfig,
         ssrExchange,
         redisClient,
         context,

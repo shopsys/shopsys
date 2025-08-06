@@ -87,7 +87,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             }
 
             const client = await createClient({
-                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                domainConfig,
                 ssrExchange,
                 redisClient,
                 context,

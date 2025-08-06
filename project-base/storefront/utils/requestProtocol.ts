@@ -28,7 +28,7 @@ export const getProtocol = (context: GetServerSidePropsContext | NextPageContext
         throw new Error('host was not found in the request headers');
     }
 
-    const domainConfig = getDomainConfig(host, context.locale);
+    const domainConfig = getDomainConfig(context);
     const protocol = domainConfig.url.split('://')[0];
 
     if (protocol !== 'http' && protocol !== 'https') {

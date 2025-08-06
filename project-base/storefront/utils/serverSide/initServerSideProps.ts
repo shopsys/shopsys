@@ -93,11 +93,11 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     const currentClient =
         client ??
         createClient({
+            t,
             ssrExchange: currentSsrCache,
+            domainConfig,
             redisClient,
             context,
-            t,
-            publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
         });
 
     const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);

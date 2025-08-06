@@ -1,4 +1,5 @@
 import { getBaseUrlWithLocale } from './domainUtils';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
@@ -22,8 +23,14 @@ export type DomainConfigType = {
     type: CustomerUserAreaEnum;
 };
 
-export function getDomainConfig(domainUrl: string, locale: string | undefined): DomainConfigType {
-    console.log(domainUrl, locale);
+export function getDomainConfig(context: GetServerSidePropsContext | NextPageContext): DomainConfigType {
+    if (!context.req?.headers.host) {
+        throw new Error('getDomainConfig requires server-side context with req.headers.host');
+    }
+
+    const domainUrl = context.req.headers.host;
+    const locale = context.locale;
+
     const normalizedDomain = domainUrl.replace(':3000', ':8000');
     const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
     const isDefaultLocale = locale === 'default';

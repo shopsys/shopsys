@@ -72,7 +72,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
             return null;
         }
 
-        dispatchBroadcastChannel('refetchCart');
+        dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
 
         const addedCartItem = addToCartResult.addProductResult.cartItem;
 

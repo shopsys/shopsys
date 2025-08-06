@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     TypeLoginViaExchangeTokenMutationVariables,
     TypeLoginViaExchangeTokenMutation,
@@ -14,6 +15,7 @@ type LoginViaExchangeTokenHandler = (
 export const useLoginViaExchangeToken = () => {
     const [, loginViaExchangeTokenMutation] = useLoginViaExchangeTokenMutation();
     const handleActionsAfterLogin = useHandleActionsAfterLogin();
+    const domainConfig = useDomainConfig();
 
     const loginViaExchangeToken: LoginViaExchangeTokenHandler = async (exchangeToken) => {
         const loginResult = await loginViaExchangeTokenMutation({ exchangeToken });
@@ -22,7 +24,7 @@ export const useLoginViaExchangeToken = () => {
             const accessToken = loginResult.data.LoginViaExchangeToken.accessToken;
             const refreshToken = loginResult.data.LoginViaExchangeToken.refreshToken;
 
-            setTokensToCookies(accessToken, refreshToken);
+            setTokensToCookies(accessToken, refreshToken, domainConfig);
 
             // For login-as-user from admin, don't show cart merge info and clean URL
             handleActionsAfterLogin(false, '/');

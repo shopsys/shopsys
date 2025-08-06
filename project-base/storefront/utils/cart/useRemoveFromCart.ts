@@ -15,7 +15,8 @@ export type RemoveFromCart = (
 
 export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) => {
     const [{ fetching: isRemovingFromCart }, removeItemFromCartMutation] = useRemoveFromCartMutation();
-    const { url, currencyCode } = useDomainConfig();
+    const domainConfig = useDomainConfig();
+    const { url, currencyCode } = domainConfig;
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { fetchCart } = useCurrentCart();
     const { canSeePrices } = useAuthorization();
@@ -45,7 +46,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
                 );
             });
 
-            dispatchBroadcastChannel('refetchCart');
+            dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
         }
 
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;

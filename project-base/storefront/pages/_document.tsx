@@ -14,13 +14,7 @@ class MyDocument extends Document<MyDocumentInitialProps> {
         let htmlLang = 'en';
 
         try {
-            const host = context.req?.headers.host;
-
-            if (!host) {
-                throw new Error('host was not found in the request headers');
-            }
-
-            const domainConfig = getDomainConfig(host);
+            const domainConfig = getDomainConfig(context);
             htmlLang = domainConfig.defaultLocale;
         } catch (error) {
             logException(error);

@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useLogoutMutation } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
@@ -14,6 +15,7 @@ export const useLogout = () => {
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
     const router = useRouter();
+    const domainConfig = useDomainConfig();
 
     const logout = async () => {
         const logoutResult = await logoutMutation({});
@@ -21,11 +23,11 @@ export const useLogout = () => {
         if (logoutResult.data?.Logout) {
             resetContactInformation();
             updateProductListUuids({});
-            removeTokensFromCookies();
+            removeTokensFromCookies(domainConfig);
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');
 
-            dispatchBroadcastChannel('reloadPage');
+            dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
             router.reload();
         }
     };

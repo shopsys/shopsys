@@ -8,18 +8,20 @@ import { Translate } from 'next-translate';
 import { ClientOptions, fetchExchange, SSRExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
 import { cache } from 'urql/cache/cacheExchange';
+import { DomainConfigType } from 'utils/domain/domainConfig';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,
     t: Translate,
+    domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
 ): ClientOptions['exchanges'] => [
     devtoolsExchange,
     dedupExchange,
     cache,
-    getErrorExchange(t, context),
+    getErrorExchange(t, domainConfig, context),
     ssrExchange,
-    authExchange(getAuthExchangeOptions(context)),
+    authExchange(getAuthExchangeOptions(domainConfig, context)),
     operationNameExchange,
     fetchExchange,
 ];

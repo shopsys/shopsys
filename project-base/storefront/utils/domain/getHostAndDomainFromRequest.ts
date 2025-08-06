@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from './domainUtils';
+import { DEFAULT_LOCALE, getExplicitPathDomainLocaleOrDefault } from './domainUtils';
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import type { NextRequest } from 'next/server';
 
@@ -28,8 +28,7 @@ export const getHostAndDomainFromRequest = (
     // Extract domain configurations and locales from STATIC_REWRITE_PATHS
     const domainEntries = Object.keys(STATIC_REWRITE_PATHS).map((domainUrl, index) => {
         const normalizedDomainUrl = removeTrailingSlash(domainUrl);
-        const urlSegments = normalizedDomainUrl.split('/');
-        const locale = urlSegments.length > 3 ? urlSegments[urlSegments.length - 1] : DEFAULT_LOCALE;
+        const locale = getExplicitPathDomainLocaleOrDefault(normalizedDomainUrl);
 
         return {
             domainUrl: normalizedDomainUrl,

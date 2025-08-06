@@ -10,6 +10,7 @@ import { CombinedError, makeOperation, Operation } from 'urql';
 import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
+import { DomainConfigType } from 'utils/domain/domainConfig';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (
@@ -30,9 +31,10 @@ const isRefreshTokenMutation = (operation: Operation) => {
  */
 const addAuthToOperation = (
     operation: Operation,
+    domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
 ): Operation => {
-    const { accessToken, refreshToken } = getTokensFromCookies(context);
+    const { accessToken, refreshToken } = getTokensFromCookies(domainConfig, context);
 
     if (!accessToken || !refreshToken || isRefreshTokenMutation(operation)) {
         return operation;
@@ -65,6 +67,7 @@ const didAuthError = (error: CombinedError): boolean => {
 const doTryRefreshToken = async (
     refreshToken: string,
     mutate: AuthUtilities['mutate'],
+    domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
 ): Promise<void> => {
     const { data: refreshTokenData } = await mutate<TypeRefreshTokens, TypeRefreshTokensVariables>(
@@ -73,7 +76,7 @@ const doTryRefreshToken = async (
     );
 
     if (!refreshTokenData?.RefreshTokens) {
-        removeTokensFromCookies(context);
+        removeTokensFromCookies(domainConfig, context);
 
         if (typeof window !== 'undefined') {
             window.location.reload();
@@ -85,15 +88,17 @@ const doTryRefreshToken = async (
     setTokensToCookies(
         refreshTokenData.RefreshTokens.accessToken,
         refreshTokenData.RefreshTokens.refreshToken,
+        domainConfig,
         context,
     );
 };
 
 const refreshAuth = async (
     authUtilities: AuthUtilities,
-    context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
+    domainConfig: DomainConfigType,
+    context?: GetServerSidePropsContext | NextPageContext,
 ): Promise<void> => {
-    const { refreshToken } = getTokensFromCookies(context);
+    const { refreshToken } = getTokensFromCookies(domainConfig, context);
     try {
         if (!refreshToken) {
             if (typeof window !== 'undefined') {
@@ -103,7 +108,7 @@ const refreshAuth = async (
             return;
         }
 
-        await doTryRefreshToken(refreshToken, authUtilities.mutate, context);
+        await doTryRefreshToken(refreshToken, authUtilities.mutate, domainConfig, context);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
@@ -111,9 +116,9 @@ const refreshAuth = async (
 };
 
 export const getAuthExchangeOptions =
-    (context?: GetServerSidePropsContext | NextPageContext) =>
+    (domainConfig: DomainConfigType, context?: GetServerSidePropsContext | NextPageContext) =>
     async (authUtilities: AuthUtilities): Promise<AuthConfig> => ({
-        addAuthToOperation: (operation) => addAuthToOperation(operation, context),
+        addAuthToOperation: (operation) => addAuthToOperation(operation, domainConfig, context),
         didAuthError,
-        refreshAuth: () => refreshAuth(authUtilities, context),
+        refreshAuth: () => refreshAuth(authUtilities, domainConfig, context),
     });
