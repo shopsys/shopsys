@@ -3,6 +3,7 @@ import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
+import { PersistStoreProvider } from 'components/providers/PersistStoreProvider';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { GtmProvider } from 'gtm/context/GtmProvider';
 import i18nConfig from 'i18n';
@@ -69,18 +70,20 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
-                        <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                            <GtmProvider>
-                                <MotionConfig reducedMotion="user">
-                                    <LazyMotion features={framerMotionPlugins}>
-                                        <RouteAccessibilityManager>
-                                            <RouteAnnouncer />
-                                            <AppPageContent Component={Component} pageProps={pageProps} />
-                                        </RouteAccessibilityManager>
-                                    </LazyMotion>
-                                </MotionConfig>
-                            </GtmProvider>
-                        </AuthorizationProvider>
+                        <PersistStoreProvider>
+                            <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                                <GtmProvider>
+                                    <MotionConfig reducedMotion="user">
+                                        <LazyMotion features={framerMotionPlugins}>
+                                            <RouteAccessibilityManager>
+                                                <RouteAnnouncer />
+                                                <AppPageContent Component={Component} pageProps={pageProps} />
+                                            </RouteAccessibilityManager>
+                                        </LazyMotion>
+                                    </MotionConfig>
+                                </GtmProvider>
+                            </AuthorizationProvider>
+                        </PersistStoreProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>
             </UrqlWrapper>

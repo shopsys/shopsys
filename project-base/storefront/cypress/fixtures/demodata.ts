@@ -198,7 +198,7 @@ export const url = {
     blogArticleGrapesJs: '/grapesjs-page',
 } as const;
 
-export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
+export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store-1';
 
 export const DEFAULT_PERSIST_STORE_STATE = {
     state: {
