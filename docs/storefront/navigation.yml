@@ -4,6 +4,7 @@ arrange:
     - setup-storefront.md
     - project-structure.md
     - dependecies.md
+    - domain-configuration.md
     - coding-standards.md
     - typescript.md
     - tailwind.md
