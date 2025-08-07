@@ -9,7 +9,7 @@
             <div class="table-responsive">
                 {{ form_errors(form.itemsWithoutTransportAndPayment) }}
 
-                <table class="table table-transparent">
+                <table class="table table-transparent table-vcenter">
                     <thead>
                         <tr>
                             <th class="w-25">{{ 'Name'|trans }}</th>
@@ -63,14 +63,23 @@
             </div>
         </div>
         <div class="card-footer">
-            <a id="js-order-item-add" class="btn" href="#">
-                {{ ux_icon('plus') }}
-                {{ 'Add item'|trans }}
-            </a>
-            <a id="js-order-item-add-product" class="btn" data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: false}) }}" href="#">
-                {{ ux_icon('plus') }}
-                {{ 'Add product'|trans }}
-            </a>
+            <div class="btn-list">
+                <button type="button"
+                        id="js-order-item-add"
+                        class="btn"
+                >
+                    {{ ux_icon('plus') }}
+                    {{ 'Add item'|trans }}
+                </button>
+                <button type="button"
+                        id="js-order-item-add-product"
+                        class="btn"
+                        data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: false}) }}"
+                >
+                    {{ ux_icon('plus') }}
+                    {{ 'Add product'|trans }}
+                </button>
+            </div>
         </div>
     </div>
 {% endblock %}

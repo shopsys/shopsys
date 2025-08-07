@@ -1,3 +1,4 @@
+import { Tooltip } from '@tabler/core';
 import Ajax from '../../common/utils/Ajax';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
@@ -9,11 +10,14 @@ import Translator from 'bazinga-translator';
 import FormChangeInfo from './FormChangeInfo';
 
 export default class OrderItems {
+    static textDisabledClass = 'text-secondary';
+
     constructor($container) {
         const $collection = $container.filterAllNodes('#js-order-items');
         $collection.on('click', '.js-order-item-remove', event => this.onRemoveItemClick(event));
         $container.filterAllNodes('#js-order-item-add').on('click', event => this.onAddItemClick(event));
 
+        this.tooltip = null;
         this.refreshCount($collection);
         // eslint-disable-next-line no-new
         new ProductPicker($container.filterAllNodes('#js-order-item-add-product'), (productId, productName) => {
@@ -23,17 +27,22 @@ export default class OrderItems {
 
     refreshCount($collection) {
         const $items = $collection.find('.js-order-item');
+
         if ($items.length === 1) {
-            $items
-                .find('.js-order-item-remove')
-                .addClass('text-disabled')
-                .tooltip({
-                    title: Translator.trans('Order must contain at least one item'),
-                    placement: 'bottom',
-                });
+            const $orderItemRemoveButton = $items.find('.js-order-item-remove');
+
+            $orderItemRemoveButton.addClass(OrderItems.textDisabledClass);
+
+            this.tooltip = new Tooltip($orderItemRemoveButton, {
+                title: Translator.trans('Order must contain at least one item'),
+            });
         } else {
-            $items.find('.js-order-item-remove').removeClass('text-disabled');
-            // .tooltip('destroy');
+            $items.find('.js-order-item-remove').removeClass(OrderItems.textDisabledClass);
+
+            if (this.tooltip) {
+                this.tooltip.dispose();
+                this.tooltip = null;
+            }
         }
     }
 
@@ -71,7 +80,7 @@ export default class OrderItems {
     }
 
     onRemoveItemClick(event) {
-        if (!$(event.currentTarget).hasClass('text-disabled')) {
+        if (!$(event.currentTarget).hasClass(OrderItems.textDisabledClass)) {
             const $item = $(event.currentTarget).closest('.js-order-item');
             const $itemNameElement = $item.find('.js-order-item-name');
             const itemName = escapeHtml($itemNameElement.val());
@@ -93,14 +102,14 @@ export default class OrderItems {
 
         $item.remove();
 
+        FormChangeInfo.showInfo();
         this.refreshCount($collection);
     }
 
-    onAddItemClick(event) {
-        const $collection = $(event.currentTarget).closest('table').find('#js-order-items');
+    onAddItemClick() {
+        const $collection = $('#js-order-items');
 
         this.addItem($collection);
-        event.preventDefault();
     }
 
     addItem($collection) {
