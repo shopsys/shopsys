@@ -7,6 +7,22 @@ namespace Shopsys\FrameworkBundle\Component\Utils;
 class Utils
 {
     /**
+     * @param string $haystack
+     * @param string[] $needles
+     * @return bool
+     */
+    public static function strStartsWithAny(string $haystack, array $needles): bool
+    {
+        foreach ($needles as $needle) {
+            if (str_starts_with($haystack, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param mixed $testVariable
      * @param mixed $default
      * @return mixed
