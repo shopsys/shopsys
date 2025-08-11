@@ -50,7 +50,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
     /**
      * @return array
      */
-    public static function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
+    public static function getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
             'property redeclared in the child using annotation' => [ReflectionObject::createFromName(
@@ -75,7 +75,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
      */
-    #[DataProvider('testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider')]
+    #[DataProvider('getProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider')]
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,
         ReflectionClass $projectReflectionClass,
