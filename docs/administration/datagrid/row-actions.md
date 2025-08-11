@@ -64,7 +64,7 @@ $rowAction = RowAction::create('name', t('Label'), 'icon')
     // You can also set an icon if you want
     ->setIcon('eye')
     // If the icon is not enough, you can also set additional CSS class
-    ->setAdditionalClass('btn--primary')
+    ->setAdditionalClass('btn-primary')
     // or any other attribute (Some attributes are used internally and cannot be overridden)
     ->setAttribute('data-attribute', 'value')
     // You can conditionally display action only when you need it

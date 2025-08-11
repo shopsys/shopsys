@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface;
  */
 final class RowAction extends AbstractRoutableAction implements GridRowActionInterface
 {
-    private const string DEFAULT_CLASSES = 'in-icon in-icon--edit table-action';
+    private const string DEFAULT_CLASSES = 'px-1 link-secondary';
 
     private bool $renderTooltip = true;
 
@@ -112,14 +112,11 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
         $this->attributes['class'] = self::DEFAULT_CLASSES;
 
         if ($this->renderTooltip) {
-            $this->attributes['class'] .= ' js-tooltip';
-            $this->attributes['data-toggle'] = 'tooltip';
-            $this->attributes['data-placement'] = 'left';
-            $this->attributes['title'] = '';
-            $this->attributes['data-original-title'] = $this->label;
-        } else {
-            $this->attributes['title'] = $this->label;
+            $this->attributes['data-bs-toggle'] = 'tooltip';
+            $this->attributes['data-bs-placement'] = 'left';
         }
+
+        $this->attributes['title'] = $this->label;
 
         if ($this->additionalClass !== null) {
             $this->attributes['class'] .= ' ' . $this->additionalClass;
@@ -150,9 +147,8 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             'title' => 'Title is set automatically based on label.',
 
             // Tooltip attributes
-            'data-toggle' => 'Tooltip is enabled by default. Use "showTooltip" method to disable it.',
-            'data-placement' => 'Tooltip is enabled by default. Use "showTooltip" method to disable it.',
-            'data-original-title' => 'Tooltip is enabled by default. Use "showTooltip" method to disable it.',
+            'data-bs-toggle' => 'Tooltip is enabled by default. Use "showTooltip" method to disable it.',
+            'data-bs-placement' => 'Tooltip is enabled by default. Use "showTooltip" method to disable it.',
 
             // Confirm dialog attributes
             'data-confirm-message' => 'Use "setConfirmMessage" method to set confirm message.',

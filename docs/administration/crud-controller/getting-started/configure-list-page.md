@@ -94,7 +94,7 @@ protected function configureActions(ActionsConfig $actions): void
     $actions->add(
         ActionType::LIST,
         Action::create('linkToDashboard', t('Link To dashboard'))
-            ->setAttribute('class', 'btn--primary', true)
+            ->setAttribute('class', 'btn-primary', true)
             ->setOpenInNewTab()
             ->linkToRoute('admin_default_dashboard', fn () => [
                 'id' => 1,
