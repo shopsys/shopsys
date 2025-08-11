@@ -11,6 +11,7 @@ export default grapesjs.plugins.add('mail-custom-button-link', editor => {
         content:
             `<div style="width: 100%">
                 <a data-gjs-type='button-link'
+                    href="#"
                     style="
                     margin: 0.75rem auto; 
                     display: block; 
@@ -33,9 +34,7 @@ export default grapesjs.plugins.add('mail-custom-button-link', editor => {
                     transition: all 0.2s ease;
                     color: #fff;
                 ">
-                    <div class="gjs-text-ckeditor text">` +
-            Translator.trans('Insert your text here') +
-            `</div>
+                    <span class="gjs-text-ckeditor text" style="display: block;">` + Translator.trans('Insert your text here') + `</span>
                 </a>
             </div>`,
         attributes: { class: 'fa fa-external-link' },

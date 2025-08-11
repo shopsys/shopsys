@@ -10,11 +10,11 @@ export default grapesjs.plugins.add('custom-button-link', editor => {
         type: 'Link',
         category: 'basic-objects',
         content:
-            `<a data-gjs-type='button-link' class='gjs-button-link button-link-position-center'>
-            <div class="gjs-text-ckeditor text">` +
-            Translator.trans('Insert your text here') +
-            `</div>
-        </a>`,
+            `<div style="width: 100%">
+                <a data-gjs-type='button-link' class='gjs-button-link button-link-position-center' href="#">
+                    <span class="gjs-text-ckeditor text" style="display: block;">` + Translator.trans('Insert your text here') + `</span>
+                </a>
+            </div>`,
         attributes: { class: 'fa fa-external-link' },
     });
 
