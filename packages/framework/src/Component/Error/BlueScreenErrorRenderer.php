@@ -18,11 +18,15 @@ final class BlueScreenErrorRenderer implements ErrorRendererInterface
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface $fallbackErrorRenderer
      * @param bool $isDebug
+     * @param string $localPathToProjectRoot
+     * @param string $tracyDebuggerIdeUrlFormat
      */
     public function __construct(
         private readonly RequestStack $requestStack,
         private readonly ErrorRendererInterface $fallbackErrorRenderer,
         private readonly bool $isDebug,
+        private readonly string $localPathToProjectRoot,
+        private readonly string $tracyDebuggerIdeUrlFormat,
     ) {
     }
 
@@ -38,6 +42,10 @@ final class BlueScreenErrorRenderer implements ErrorRendererInterface
         }
 
         Debugger::$time = time();
+        Debugger::$editor = $this->tracyDebuggerIdeUrlFormat;
+        Debugger::$editorMapping = [
+            '/var/www/html/' => $this->localPathToProjectRoot . '/',
+        ];
         $blueScreen = new BlueScreen();
 
         ob_start();

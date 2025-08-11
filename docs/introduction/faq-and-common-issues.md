@@ -210,3 +210,12 @@ The default is `selling_price` which displays the price using setting of the sel
 ```bash
 git config --system core.longpaths true
 ```
+
+## How can I make file paths in error pages clickable in my IDE?
+
+Shopsys Platform supports clickable file paths in error pages (Blue Screen of Death) and Symfony profiler that open directly in your PHPStorm.
+This feature automatically maps Docker container file paths to your local project paths.
+
+The installation script automatically configures the `LOCAL_PATH_TO_PROJECT_ROOT` environment variable with your current working directory in your `docker-compose.yml` file.
+
+If you're using a different IDE than PHPStorm, you need to update environment variables `SYMFONY_IDE_URL_FORMAT` and `TRACY_DEBUGGER_IDE_URL_FORMAT` in your `.env.local` file to match your IDE's URL format.
