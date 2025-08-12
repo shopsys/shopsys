@@ -147,11 +147,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
                     class="gjs-button-link button-link-position-center"
                     title="Order detail"
                     href="{order_detail_url}"
-                >
-                    <span class="gjs-text-ckeditor text" data-gjs-type="text" style="display: block;">'
-                        . t('Order detail', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale) . '
-                    </span>
-                </a>
+                >' . t('Order detail', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale) . '</a>
             </div>
             <br/>';
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);

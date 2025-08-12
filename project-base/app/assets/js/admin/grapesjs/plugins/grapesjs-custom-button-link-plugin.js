@@ -11,9 +11,9 @@ export default grapesjs.plugins.add('custom-button-link', editor => {
         category: 'basic-objects',
         content:
             `<div style="width: 100%">
-                <a data-gjs-type='button-link' class='gjs-button-link button-link-position-center' href="#">
-                    <span class="gjs-text-ckeditor text" style="display: block;">` + Translator.trans('Insert your text here') + `</span>
-                </a>
+                <a href="" data-gjs-type='button-link' class='gjs-button-link button-link-position-center'>`
+                    + Translator.trans('Insert your text here') +
+                `</a>
             </div>`,
         attributes: { class: 'fa fa-external-link' },
     });
