@@ -1,7 +1,7 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% block title %}- {{ 'Email allowed recipients'|trans }}{% endblock %}
-{% block h1 %}{{ 'Email allowed recipients'|trans }}{% endblock %}
+{% block title %}- {{ 'Email allowed recipients (whitelist)'|trans }}{% endblock %}
+{% block h1 %}{{ 'Email allowed recipients (whitelist)'|trans }}{% endblock %}
 
 {% block main_content %}
     {% if isDeliveryDisabled %}
@@ -43,7 +43,13 @@
             </div>
         {% endfor %}
     {% else %}
-        <h2>Email Allowed Recipients</h2>
+        <h2>Email allowed recipients (whitelist)</h2>
         <p><strong>No email patterns configured.</strong> All outgoing emails are currently blocked.</p>
+    {% endif %}
+    {% if is_granted(constant('\\Shopsys\\FrameworkBundle\\Model\\Security\\Roles::ROLE_SUPER_ADMIN')) %}
+        <div class="margin-top-25">
+            {{ ux_icon('info') }}
+            {{ 'You can change the settings <a href="%linkUrl%">here</a>.'|trans({ '%linkUrl%': url('admin_superadmin_mailwhitelist') })|raw }}
+        </div>
     {% endif %}
 {% endblock %}

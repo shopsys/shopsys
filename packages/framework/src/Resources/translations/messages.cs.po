@@ -1852,8 +1852,8 @@ msgstr "Editace skladu - %name%"
 msgid "Email"
 msgstr "E-mail"
 
-msgid "Email allowed recipients"
-msgstr "Povolení příjemci e-mailů"
+msgid "Email allowed recipients (whitelist)"
+msgstr "Povolení příjemci e-mailů (whitelist)"
 
 msgid "Email name"
 msgstr "Jméno k e-mailu"
@@ -4923,6 +4923,9 @@ msgstr "Můžete si zapnout dvoufaktorové ověření pouze pro sebe."
 
 msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
 msgstr "Nemáte přístup k požadované stránce. Požádejte správce, aby vám udělil přístup."
+
+msgid "You can change the settings <a href=\"%linkUrl%\">here</a>."
+msgstr "Nastavení můžete změnit <a href=\"%linkUrl%\">zde</a>."
 
 msgid "You can drag additional content here."
 msgstr "Zde můžete přetáhnout další obsah."
