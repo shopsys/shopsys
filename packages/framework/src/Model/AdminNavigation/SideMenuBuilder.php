@@ -419,6 +419,8 @@ class SideMenuBuilder
             'label' => t('Customer user role groups'),
         ]);
 
+        $roleGroupMenu->setExtra('superadmin', true);
+
         $roleGroupMenu->addChild(static::NEW_CUSTOMER_USER_ROLE_GROUP, [
             'route' => 'admin_superadmin_customer_user_role_group_new',
             'display' => false,
