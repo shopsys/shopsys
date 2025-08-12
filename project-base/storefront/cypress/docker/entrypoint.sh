@@ -20,22 +20,22 @@ elif [ "$COMMAND" = "smoke" ]; then
     npm run smoke
 elif [ "$COMMAND" = "open" ]; then
     echo "🖥️  DISPLAY variable is set to: $DISPLAY"
-    if [ "$TYPE" = "actual" ]; then
-        npm run open-actual
+    if [ "$TYPE" = "regression" ]; then
+        npm run open-regression
     else
         npm run open-base
     fi
 elif [ "$COMMAND" = "selected" ]; then
     echo "📋 Running selected tests"
-    if [ "$TYPE" = "actual" ]; then
-        npm run selected-actual
+    if [ "$TYPE" = "regression" ]; then
+        npm run selected-regression
     else
         npm run selected-base
     fi
 else
     echo "🚀 Running default tests"
-    if [ "$TYPE" = "actual" ]; then
-        npm run actual
+    if [ "$TYPE" = "regression" ]; then
+        npm run regression
     else
         npm run base
     fi

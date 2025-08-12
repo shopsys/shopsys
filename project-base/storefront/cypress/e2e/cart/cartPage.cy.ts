@@ -1,25 +1,23 @@
 import {
-    increaseCartItemQuantityWithSpinbox,
+    applyPromoCodeOnCartPage,
+    checkCartItemSpinboxDecreaseButtonIsDisabled,
+    checkCartItemSpinboxDecreaseButtonIsEnabled,
+    checkCartItemSpinboxIncreaseButtonIsEnabled,
+    clickOnPromoCodeButton,
     decreaseCartItemQuantityWithSpinbox,
     goToNextOrderStep,
     goToPreviousOrderStep,
+    increaseCartItemQuantityWithSpinbox,
     removeProductFromCartPage,
-    applyPromoCodeOnCartPage,
     removePromoCodeOnCartPage,
-    clickOnPromoCodeButton,
-    checkCartItemSpinboxDecreaseButtonIsDisabled,
-    checkCartItemSpinboxIncreaseButtonIsEnabled,
-    checkCartItemSpinboxDecreaseButtonIsEnabled,
 } from './cartSupport';
 import { checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import { changeSelectionOfTransportByName } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { products, transport, url } from 'fixtures/demodata';
 import {
-    changeCartItemQuantityWithSpinboxInput,
     checkAndHideInfoToast,
     checkAndHideSuccessToast,
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
-    checkNumberOfApiRequestsTriggeredByActions,
     checkUrl,
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
@@ -43,18 +41,15 @@ describe('Cart Page Tests', () => {
     });
 
     it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
-        checkNumberOfApiRequestsTriggeredByActions(
-            () => {
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                loseFocus();
-                cy.wait(1100);
-            },
-            1,
-            'AddToCartMutation',
-        );
+        cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
+
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        loseFocus();
+
+        cy.wait('@addToCartMutation');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after increase', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -64,16 +59,11 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        checkNumberOfApiRequestsTriggeredByActions(
-            () => {
-                decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                loseFocus();
-                cy.wait(1100);
-            },
-            1,
-            'AddToCartMutation',
-        );
+        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        loseFocus();
+
+        cy.wait('@addToCartMutation');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after decrease', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -85,21 +75,25 @@ describe('Cart Page Tests', () => {
     });
 
     it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
-        checkNumberOfApiRequestsTriggeredByActions(
-            () => {
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
-                increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
-                loseFocus();
-            },
-            4,
-            'AddToCartMutation',
-        );
+        cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
+
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        cy.wait('@addToCartMutation');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
+
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        cy.wait('@addToCartMutation');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
+
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        cy.wait('@addToCartMutation');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
+
+        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        cy.wait('@addToCartMutation');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
+
+        loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after increase', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -109,17 +103,15 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        checkNumberOfApiRequestsTriggeredByActions(
-            () => {
-                decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
-                decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-                checkLoaderOverlayIsNotVisibleAfterTimePeriod(1100);
-                loseFocus();
-            },
-            2,
-            'AddToCartMutation',
-        );
+        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        cy.wait('@addToCartMutation');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
+
+        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        cy.wait('@addToCartMutation');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
+
+        loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after decrease', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },

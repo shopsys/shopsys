@@ -8,7 +8,7 @@ COPY ./docker/entrypoint.sh /
 
 RUN npm ci --force
 
-ENV TYPE=actual
+ENV TYPE=regression
 ENV COMMAND=run
 
 ENTRYPOINT ["/entrypoint.sh"]

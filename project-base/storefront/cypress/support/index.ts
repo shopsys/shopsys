@@ -1,7 +1,7 @@
 /// <reference types="cypress-wait-for-stable-dom" />
 import './api';
 import 'cypress-real-events';
-import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
+import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
 import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME, url } from 'fixtures/demodata';
 import { TIDs } from 'tids';
@@ -81,9 +81,9 @@ Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
     return cy.waitForStableAndInteractiveDOM();
 });
 
-compareSnapshotCommand({
+addCompareSnapshotCommand({
     capture: 'fullPage',
-    errorThreshold: 0.005,
+    errorThreshold: Cypress.env('visualRegressionErrorThreshold'),
 });
 
 export const initializePersistStoreInLocalStorageToDefaultValues = () => {
@@ -183,6 +183,7 @@ export const takeSnapshotAndCompare = (
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     hideScrollbars();
     callbackBeforeBlackout?.();
+    disableAnimationsBeforeScreenshot();
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
     removePointerEventsBeforeScreenshot([
         ...ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS,
@@ -199,6 +200,7 @@ export const takeSnapshotAndCompare = (
 
     removeBlackoutsAfterScreenshot();
     resetPointerEventsAfterScreenshot();
+    resetAnimationsAfterScreenshot();
 };
 
 const getSnapshotNameFormatted = (testName: string, snapshotName: string) => `${testName} ${snapshotName}`;
@@ -264,7 +266,7 @@ const removePointerEventsBeforeScreenshot = (removePointerEvents: (TIDs | string
         doc.head.appendChild(style);
 
         const selectors = removePointerEvents.map((selector) => {
-            if (Object.values<any>(TIDs).includes(selector)) {
+            if (Object.values(TIDs).includes(selector as TIDs)) {
                 return `[data-tid='${selector}']`;
             }
             return selector;
@@ -273,6 +275,30 @@ const removePointerEventsBeforeScreenshot = (removePointerEvents: (TIDs | string
         const selectorString = selectors.join(', ');
 
         style.innerHTML = `${selectorString} { pointer-events: none !important; }`;
+    });
+};
+
+const disableAnimationsBeforeScreenshot = () => {
+    cy.document().then((doc) => {
+        const style = doc.createElement('style');
+        style.setAttribute('id', 'disable-animations');
+        style.innerHTML = `
+            *, *::before, *::after {
+                transition: none !important;
+                animation: none !important;
+                caret-color: transparent !important;
+            }
+        `;
+        doc.head.appendChild(style);
+    });
+};
+
+const resetAnimationsAfterScreenshot = () => {
+    cy.document().then((doc) => {
+        const style = doc.getElementById('disable-animations');
+        if (style) {
+            doc.head.removeChild(style);
+        }
     });
 };
 

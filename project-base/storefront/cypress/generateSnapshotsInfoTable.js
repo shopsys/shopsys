@@ -46,7 +46,7 @@ try {
     process.exit(1);
 }
 
-const fileNames = glob.sync('./e2e/**/*.cy.ts');
+const fileNames = glob.sync('./e2e/**/*.cy.ts').reverse();
 
 // Markdown file path
 const outputMarkdownFilePath = './snapshots-info-table.md';
