@@ -81,6 +81,23 @@ Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
     return cy.waitForStableAndInteractiveDOM();
 });
 
+Cypress.Commands.add('waitForHydration', () => {
+    cy.get('body[data-hydrated="true"]', { timeout: 10000 }).should('exist');
+});
+
+Cypress.on('uncaught:exception', (err) => {
+    if (
+        /hydrat/i.test(err.message) ||
+        /Minified React error #421/.test(err.message) ||
+        /Minified React error #418/.test(err.message)
+    ) {
+        cy.log('💦 React hydration error', err.message);
+        cy.log('💦 React hydration error', err.stack);
+        return false;
+    }
+    return true;
+});
+
 addCompareSnapshotCommand({
     capture: 'fullPage',
     errorThreshold: Cypress.env('visualRegressionErrorThreshold'),

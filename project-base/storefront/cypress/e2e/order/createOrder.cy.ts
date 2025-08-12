@@ -194,9 +194,11 @@ describe('Create Order Tests', () => {
             submitRegistrationFormAfterOrder();
             checkAndHideSuccessToast('Your account has been created and you are logged in now');
             cy.waitForStableAndInteractiveDOM();
+            cy.waitForHydration();
             checkUrl('/');
 
             cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
+            cy.waitForHydration();
             goToOrderDetailFromOrderList();
             changeOrderDetailDynamicPartsToStaticDemodata(true);
             checkOrderDetailFromOrderPageWithComplaintButton(transport.czechPost.name, payment.onDelivery.name);

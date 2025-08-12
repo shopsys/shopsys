@@ -8,7 +8,7 @@ import appWithI18n from 'next-translate/appWithI18n';
 import { AppProps as NextAppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import 'nprogress/nprogress.css';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';
@@ -52,6 +52,10 @@ const Error500ContentWithBoundary = dynamic(
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     const { defaultLocale } = pageProps.domainConfig;
     initDayjsLocale(defaultLocale);
+
+    useEffect(() => {
+        document.body.setAttribute('data-hydrated', 'true');
+    }, []);
 
     return (
         <ErrorBoundary

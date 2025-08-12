@@ -107,6 +107,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         loginFromHeader(registrationInput.email, password);
         checkAndHideSuccessToast('Successfully logged in');
         cy.waitForStableAndInteractiveDOM();
+        cy.waitForHydration();
 
         goToCartPageFromHeader();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {
@@ -140,6 +141,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         loginFromHeader(registrationInput.email, password);
         checkAndHideSuccessToast('Successfully logged in');
         checkAndHideInfoToast('Your cart has been modified. Please check the changes.');
+        cy.waitForHydration();
 
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after second login', {
             blackout: [

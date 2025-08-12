@@ -15,6 +15,7 @@ declare global {
             waitForStableAndInteractiveDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
             visitAndWaitForStableAndInteractiveDOM(url: string): Cypress.Chainable<JQuery<HTMLElement>>;
             reloadAndWaitForStableAndInteractiveDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
+            waitForHydration(): Cypress.Chainable<void>;
             addProductToCartForTest(productUuid?: string, quantity?: number): Cypress.Chainable<any>;
             addPromoCodeToCartForTest(promoCode: string): Cypress.Chainable<any>;
             preselectTransportForTest(
