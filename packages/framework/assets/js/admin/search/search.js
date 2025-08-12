@@ -113,7 +113,6 @@ export default class Search {
         const value = $searchInput.val();
         Ajax.ajax({
             url: $searchInput.data('search-callback-url'),
-            loaderElement: 'none',
             type: 'GET',
             data: {
                 search: value,

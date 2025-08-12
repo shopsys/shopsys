@@ -84,12 +84,15 @@ export default class MailTemplate {
     static submitSendForm($form) {
         const $errorsContainer = $('.js-mail-template-send-errors');
         $errorsContainer.hide();
+
+        const $submitButton = $form.find('button[type=submit]');
+
         Ajax.ajax({
             url: $form.attr('action'),
             data: $form.serialize(),
             type: $form.attr('method'),
             dataType: 'json',
-            loaderElement: $form,
+            loaderElement: $submitButton,
             success: data => {
                 if (data.result === 'valid') {
                     document.location.reload();
