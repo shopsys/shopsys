@@ -10,6 +10,7 @@ use Override;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 final class OrmAdapter implements AdapterInterface
@@ -20,12 +21,14 @@ final class OrmAdapter implements AdapterInterface
      * @param class-string $entityClass
      * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Grid\HintsHelper $hintsHelper
      * @param null|\Closure(\Doctrine\ORM\QueryBuilder $configureQuery): void $configureQuery
      */
     public function __construct(
         string $entityClass,
         private readonly ManagerRegistry $managerRegistry,
         private readonly Localization $localization,
+        private readonly HintsHelper $hintsHelper,
         ?Closure $configureQuery,
     ) {
         $this->proxyQuery = $this->createProxyQuery($entityClass);
@@ -53,15 +56,20 @@ final class OrmAdapter implements AdapterInterface
             $this->proxyQuery->addSelect($field->getSelectProperty());
         }
 
-        return new DatagridDataSource($this->proxyQuery->getQueryBuilder(), $identificationName, function ($row, $results) use ($fields) {
-            foreach ($fields as $field) {
-                if ($field->getTransform() !== null) {
-                    $row[$field->getName()] = call_user_func($field->getTransform(), $row[$field->getName()] ?? null, $row, $results);
+        return new DatagridDataSource(
+            $this->proxyQuery->getQueryBuilder(),
+            $identificationName,
+            function ($row, $results) use ($fields) {
+                foreach ($fields as $field) {
+                    if ($field->getTransform() !== null) {
+                        $row[$field->getName()] = call_user_func($field->getTransform(), $row[$field->getName()] ?? null, $row, $results);
+                    }
                 }
-            }
 
-            return $row;
-        });
+                return $row;
+            },
+            $this->hintsHelper->getDefaultHints(),
+        );
     }
 
     /**

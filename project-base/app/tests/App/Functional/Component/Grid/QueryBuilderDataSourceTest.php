@@ -6,16 +6,26 @@ namespace Tests\App\Functional\Component\Grid;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 {
+    #[Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->createRequest();
+    }
+
     /**
      * @inject
      */
     protected QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory;
+
     public function testGetOneRow()
     {
         $qb = $this->em->createQueryBuilder();

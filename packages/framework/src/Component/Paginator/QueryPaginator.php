@@ -9,7 +9,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class QueryPaginator implements PaginatorInterface
@@ -19,12 +18,12 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $hydrationMode
-     * @param string|null $hint
+     * @param array<string, mixed> $hints
      */
     public function __construct(
         protected readonly QueryBuilder $queryBuilder,
         protected readonly ?string $hydrationMode = null,
-        protected readonly ?string $hint = SortableNullsWalker::class,
+        protected readonly array $hints = [],
     ) {
     }
 
@@ -68,8 +67,8 @@ class QueryPaginator implements PaginatorInterface
 
         $query = $queryBuilder->getQuery();
 
-        if ($this->hint) {
-            $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, $this->hint);
+        foreach ($this->hints as $hintName => $hintValue) {
+            $query->setHint($hintName, $hintValue);
         }
 
         if ($this->includeMetaColumns) {

@@ -31,10 +31,10 @@ class OrderListAdminRepository
                 o.createdAt,
                 MAX(ost.name) AS statusName,
                 o.totalPriceWithVat,
-                (CASE WHEN o.companyName IS NOT NULL
+                CASE WHEN o.companyName IS NOT NULL
                     THEN o.companyName
                     ELSE CONCAT(o.lastName, \' \', o.firstName)
-                END) AS customerName')
+                END AS customerName')
             ->from(Order::class, 'o')
             ->where('o.deleted = :deleted')
             ->join('o.status', 'os')

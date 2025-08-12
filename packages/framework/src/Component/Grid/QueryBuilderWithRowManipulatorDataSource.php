@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 use Closure;
 use Doctrine\ORM\QueryBuilder;
 use Override;
-use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
@@ -16,15 +15,15 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      * @param \Closure $manipulateRowCallback
-     * @param string|null $hint
+     * @param array<string, mixed> $hints
      */
     public function __construct(
         QueryBuilder $queryBuilder,
         string $rowIdSourceColumnName,
         protected readonly Closure $manipulateRowCallback,
-        ?string $hint = SortableNullsWalker::class,
+        protected array $hints,
     ) {
-        parent::__construct($queryBuilder, $rowIdSourceColumnName, $hint);
+        parent::__construct($queryBuilder, $rowIdSourceColumnName, $hints);
     }
 
     /**
