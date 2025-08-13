@@ -18,6 +18,7 @@ help: ## Displays list of available commands
 .PHONY: help generate-schema generate-schema-native check-fix php-checks php-lock-icons php-translations \
 	storefront-checks storefront-translations run-acceptance-tests-base \
 	run-acceptance-tests-actual selected-acceptance-tests-base selected-acceptance-tests-actual \
+	run-specific-test-actual run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-actual run-smoke-tests \
 	generate-snapshots-info-table _prepare-data-for-acceptance-tests _cypress-prepare _cypress-cleanup
 
@@ -113,6 +114,15 @@ define selected_acceptance_tests
 	$(call _cypress-cleanup)
 endef
 
+define run_specific_acceptance_test
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
+	@echo "▶️ Running specific acceptance test: $(2) of type $(1)..."
+	-docker compose run --rm -e TYPE=$(1) -e SPEC=$(2) cypress || true
+	@echo "✅ Specific acceptance test $(2) of type $(1) finished."
+	$(call cypress-cleanup)
+endef
+
 IS_WSL := $(shell uname -r | grep -i microsoft)
 ifeq ($(IS_WSL),)
     # MacOS or Linux
@@ -147,6 +157,20 @@ selected-acceptance-tests-base: ## Runs selected base acceptance tests (interact
 
 selected-acceptance-tests-actual: ## Runs selected actual acceptance tests (interactive selection, headless)
 	$(call selected_acceptance_tests,actual)
+
+run-specific-test-base: ## Runs a specific base acceptance test (interactive selection, headless)
+	@if [ -z "$(SPEC)" ]; then \
+		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
+		exit 1; \
+	fi
+	$(call run_specific_acceptance_test,base,$(SPEC))
+
+run-specific-test-actual: ## Runs a specific actual acceptance test (interactive selection, headless)
+	@if [ -z "$(SPEC)" ]; then \
+		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-actual SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
+		exit 1; \
+	fi
+	$(call run_specific_acceptance_test,actual,$(SPEC))
 
 open-acceptance-tests-base: ## Opens the Cypress GUI for debugging base acceptance tests
 	$(call open_acceptance_tests,base)
