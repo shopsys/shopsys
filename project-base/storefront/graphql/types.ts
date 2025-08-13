@@ -1516,6 +1516,8 @@ export type TypeMutation = {
   EditDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Login user and return login result data (consisting of access and refresh tokens, and information about cart merge) */
   Login: TypeLoginResult;
+  /** Exchange one-time token for access and refresh tokens */
+  LoginViaExchangeToken: TypeToken;
   /** Logout user */
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
@@ -1655,6 +1657,11 @@ export type TypeMutationEditDeliveryAddressArgs = {
 
 export type TypeMutationLoginArgs = {
   input: TypeLoginInput;
+};
+
+
+export type TypeMutationLoginViaExchangeTokenArgs = {
+  exchangeToken: Scalars['String']['input'];
 };
 
 

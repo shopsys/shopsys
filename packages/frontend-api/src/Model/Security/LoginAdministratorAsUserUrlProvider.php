@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Security;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Controller\Admin\LoginController;
+use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider as BaseLoginAdministratorAsUserUrlProvider;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class LoginAdministratorAsUserUrlProvider extends BaseLoginAdministratorAsUserUrlProvider
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      */
     public function __construct(
-        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly RouterInterface $router,
+        protected RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 
@@ -27,25 +28,18 @@ class LoginAdministratorAsUserUrlProvider extends BaseLoginAdministratorAsUserUr
      * @return string
      */
     #[Override]
-    public function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser): string
+    public function getLoginAsCustomerUserUrl(CustomerUser $customerUser): string
     {
-        $customerDomainRouter = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
-        $loginAsUserUrl = $customerDomainRouter->generate(
-            'admin_customeruser_loginascustomeruser',
-            [
-                'customerUserId' => $customerUser->getId(),
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
+        $routeName = 'admin_customeruser_loginascustomeruser';
 
-        $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
+        $parameters = [
+            RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute($routeName),
+            'customerUserId' => $customerUser->getId(),
+        ];
 
-        return $mainAdminDomainRouter->generate(
-            'admin_login_sso',
-            [
-                LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
-                LoginController::ORIGINAL_REFERER_PARAMETER_NAME => $loginAsUserUrl,
-            ],
+        return $this->router->generate(
+            $routeName,
+            $parameters,
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }

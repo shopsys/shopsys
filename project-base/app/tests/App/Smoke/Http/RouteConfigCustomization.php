@@ -133,8 +133,8 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
-                    $debugNote = 'Add CSRF token for any delete action during test execution. '
+                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())) {
+                    $debugNote = 'Add CSRF token for protected actions during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->addCallDuringTestExecution(
@@ -200,11 +200,6 @@ class RouteConfigCustomization
                 )
                     ->setAuth(new NoAuth())
                     ->setExpectedStatusCode(200);
-            })
-            ->customizeByRouteName('admin_login_sso', function (RouteConfig $config, RouteInfo $info) {
-                $debugNote = sprintf('Route "%s" should always just redirect.', $info->getRouteName());
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
@@ -391,7 +386,7 @@ class RouteConfigCustomization
                     ->setExpectedStatusCode(200);
             })
             ->customizeByRouteName(['admin_customeruser_loginascustomeruser'], function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet()->setExpectedStatusCode(403);
+                $config->changeDefaultRequestDataSet()->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_languageconstant_edit', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')

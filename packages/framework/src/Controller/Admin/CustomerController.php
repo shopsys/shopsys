@@ -27,7 +27,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +46,6 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
@@ -63,7 +61,6 @@ class CustomerController extends AdminBaseController
         protected readonly OrderFacade $orderFacade,
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly Domain $domain,
-        protected readonly LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider,
         protected readonly CustomerFacade $customerFacade,
         protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         protected readonly WatchdogFacade $watchdogFacade,
@@ -122,7 +119,6 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 
@@ -178,7 +174,6 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 

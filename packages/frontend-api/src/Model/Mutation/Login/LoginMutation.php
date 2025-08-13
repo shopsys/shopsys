@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
@@ -17,8 +18,10 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\TooManyLogi
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
+use Shopsys\FrontendApiBundle\Model\Security\TokensData;
 use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -64,11 +67,7 @@ class LoginMutation extends AbstractMutation
     {
         $input = $argument['input'];
 
-        $limit = $this->loginRateLimiter->consume($this->requestStack->getCurrentRequest());
-
-        if (!$limit->isAccepted()) {
-            throw new TooManyLoginAttemptsUserError('Too many login attempts. Try again later.');
-        }
+        $currentRequest = $this->checkLoginRateLimitAndGetCurrentRequest();
 
         try {
             $customerUser = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
@@ -80,7 +79,7 @@ class LoginMutation extends AbstractMutation
             throw new InvalidCredentialsUserError('Log in failed.');
         }
 
-        $this->loginRateLimiter->reset($this->requestStack->getCurrentRequest());
+        $this->loginRateLimiter->reset($currentRequest);
 
         return $this->loginAsUserFacade->runLoginSteps(
             $customerUser,
@@ -91,5 +90,45 @@ class LoginMutation extends AbstractMutation
             $input['cartUuid'] ?? null,
             null,
         );
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
+     */
+    public function loginViaExchangeTokenMutation(Argument $argument): TokensData
+    {
+        $exchangeToken = $argument['exchangeToken'];
+
+        $currentRequest = $this->checkLoginRateLimitAndGetCurrentRequest();
+
+        try {
+            $tokensData = $this->loginAsUserFacade->loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken($exchangeToken);
+            $this->loginRateLimiter->reset($currentRequest);
+
+            return $tokensData;
+        } catch (LoginAsRememberedUserException) {
+            throw new InvalidCredentialsUserError('Invalid or expired exchange token.');
+        }
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function checkLoginRateLimitAndGetCurrentRequest(): Request
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($request === null) {
+            throw new InvalidCredentialsUserError('Request is not available.');
+        }
+
+        $limit = $this->loginRateLimiter->consume($request);
+
+        if (!$limit->isAccepted()) {
+            throw new TooManyLoginAttemptsUserError('Too many login attempts. Try again later.');
+        }
+
+        return $request;
     }
 }

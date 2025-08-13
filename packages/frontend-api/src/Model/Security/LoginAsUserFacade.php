@@ -7,9 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Security;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
@@ -24,8 +22,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class LoginAsUserFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator $tokenAuthenticator
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
@@ -36,10 +32,9 @@ class LoginAsUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade
      */
     public function __construct(
-        protected readonly CustomerUserRepository $customerUserRepository,
-        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         protected readonly RequestStack $requestStack,
         protected readonly TokenAuthenticator $tokenAuthenticator,
         protected readonly AdministratorFacade $administratorFacade,
@@ -50,26 +45,31 @@ class LoginAsUserFacade
         protected readonly LoginResultDataFactory $loginResultDataFactory,
         protected readonly ProductListFacade $productListFacade,
         protected readonly MergeCartFacade $mergeCartFacade,
+        protected readonly LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade,
     ) {
     }
 
     /**
-     * @param int $customerUserId
+     * @param string $exchangeToken
      * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
      */
-    public function loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken(int $customerUserId): TokensData
+    public function loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken(string $exchangeToken): TokensData
     {
-        if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
-            throw new LoginAsRememberedUserException('Access denied');
+        $exchangeTokenEntity = $this->loginAsUserExchangeTokenFacade->findValidByToken($exchangeToken);
+
+        if ($exchangeTokenEntity === null) {
+            throw new LoginAsRememberedUserException('Invalid or expired exchange token');
         }
 
         $deviceId = Uuid::uuid4()->toString();
-        $user = $this->customerUserRepository->getCustomerUserById($customerUserId);
-        $administrator = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
+        $user = $exchangeTokenEntity->getCustomerUser();
+        $administrator = $exchangeTokenEntity->getAdministrator();
 
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
             $this->customerUserLoginTypeDataFactory->create($user, LoginTypeEnum::ADMIN),
         );
+
+        $this->loginAsUserExchangeTokenFacade->delete($exchangeTokenEntity);
 
         return $this->tokensDataFactory->create(
             $this->tokenFacade->createAccessTokenAsString($user, $deviceId, $administrator),

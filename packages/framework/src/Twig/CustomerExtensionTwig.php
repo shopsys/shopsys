@@ -26,16 +26,16 @@ class CustomerExtensionTwig extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getSsoLoginAsUserUrl', $this->getSsoLoginAsUserUrl(...)),
+            new TwigFunction('getLoginAsUserUrl', $this->getLoginAsUserUrl(...)),
         ];
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return string
+     * @return string|null
      */
-    protected function getSsoLoginAsUserUrl(CustomerUser $customerUser): string
+    protected function getLoginAsUserUrl(CustomerUser $customerUser): ?string
     {
-        return $this->loginAsCustomerUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser);
+        return $this->loginAsCustomerUserUrlProvider->getLoginAsCustomerUserUrl($customerUser);
     }
 }

@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRepository
@@ -47,28 +46,6 @@ class AdministratorRepository
             $message = 'Administrator with ID ' . $administratorId . ' not found.';
 
             throw new AdministratorNotFoundException($message);
-        }
-
-        return $administrator;
-    }
-
-    /**
-     * @param string $multidomainLoginToken
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function getByValidMultidomainLoginToken($multidomainLoginToken)
-    {
-        $queryBuilder = $this->getAdministratorRepository()
-            ->createQueryBuilder('a')
-            ->where('a.multidomainLoginToken = :multidomainLoginToken')
-            ->setParameter('multidomainLoginToken', $multidomainLoginToken)
-            ->andWhere('a.multidomainLoginTokenExpiration > CURRENT_TIMESTAMP()');
-        $administrator = $queryBuilder->getQuery()->getOneOrNullResult();
-
-        if ($administrator === null) {
-            $message = 'Administrator with valid multidomain login token ' . $multidomainLoginToken . ' not found.';
-
-            throw new InvalidTokenException($message);
         }
 
         return $administrator;

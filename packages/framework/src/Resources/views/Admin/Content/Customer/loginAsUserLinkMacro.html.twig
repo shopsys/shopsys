@@ -1,0 +1,13 @@
+{% macro loginAsUserLink(customerUser, linkCssClasses = "btn-link-style btn-link-style--iconic-l", onlyIcon = false) %}
+    {% set loginAsUserUrl = getLoginAsUserUrl(customerUser) %}
+    {% if loginAsUserUrl is not null %}
+        <a href="{{ loginAsUserUrl }}" target="_blank" class="{{ linkCssClasses }}" {% if onlyIcon is same as true %} title="{{ 'Log in as user'|trans }}"{% endif %}>
+            {{ ux_icon('forward-page') }}
+            {% if onlyIcon is same as false %}
+                <span>
+                    {{ 'Log in as user'|trans }}
+                </span>
+            {% endif %}
+        </a>
+    {% endif %}
+{% endmacro %}

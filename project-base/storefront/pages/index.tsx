@@ -1,4 +1,5 @@
 import { PageDefer } from 'components/Layout/PageDefer';
+import { ExchangeTokenHandler } from 'components/Pages/HomePage/ExchangeTokenHandler';
 import { HomePageContent } from 'components/Pages/HomePage/HomePageContent';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import {
@@ -21,6 +22,7 @@ import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initS
 const HomePage: NextPage<ServerSidePropsType> = () => {
     return (
         <PageDefer>
+            <ExchangeTokenHandler />
             <HomePageContent />
         </PageDefer>
     );

@@ -108,23 +108,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $roles;
 
     /**
-     * @var bool
-     */
-    protected $multidomainLogin = false;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    protected $multidomainLoginToken;
-
-    /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $multidomainLoginTokenExpiration;
-
-    /**
      * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -199,8 +182,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->lastActivity = new DateTime();
         $this->gridLimits = new ArrayCollection();
         $this->loginToken = '';
-        $this->multidomainLoginToken = '';
-        $this->multidomainLoginTokenExpiration = new DateTime();
         $this->roles = new ArrayCollection();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
         $this->uuid = Uuid::uuid4()->toString();
@@ -401,18 +382,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @param string $multidomainLoginToken
-     * @param \DateTime $multidomainLoginTokenExpiration
-     */
-    public function setMultidomainLoginTokenWithExpiration(
-        $multidomainLoginToken,
-        DateTime $multidomainLoginTokenExpiration,
-    ) {
-        $this->multidomainLoginToken = $multidomainLoginToken;
-        $this->multidomainLoginTokenExpiration = $multidomainLoginTokenExpiration;
-    }
-
-    /**
      * @return array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTime}
      */
     public function __serialize(): array
@@ -479,24 +448,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function getSalt(): ?string
     {
         return null; // bcrypt include salt in password hash
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function isMultidomainLogin()
-    {
-        return $this->multidomainLogin;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function setMultidomainLogin($multidomainLogin)
-    {
-        $this->multidomainLogin = $multidomainLogin;
     }
 
     /**

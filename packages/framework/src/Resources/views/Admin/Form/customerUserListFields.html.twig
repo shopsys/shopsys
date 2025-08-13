@@ -1,4 +1,6 @@
 {% block customer_user_list_row %}
+{% import '@ShopsysFramework/Admin/Content/Customer/loginAsUserLinkMacro.html.twig' as loginAsUserLinkMacro %}
+
     <div class="wrap-divider">
         <div class="wrap-bar">
             <h2 class="wrap-bar__heading">{{ 'Customer users'|trans }}</h2>
@@ -69,11 +71,7 @@
                                                data-confirm-contiue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
                                         {% endif %}
                                     {%endif %}
-                                    <a class="in-icon table-action"
-                                       href="{{ getSsoLoginAsUserUrl(customerUser) }}"
-                                       target="_blank"
-                                       title="{{ 'Log in as user'|trans }}"
-                                    >{{ ux_icon('forward-page') }}</a>
+                                    {{ loginAsUserLinkMacro.loginAsUserLink(customerUser, "in-icon table-action", true) }}
 
                                     {% set customerId = customerUser.id %}
                                     {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}
