@@ -6,13 +6,13 @@
                 {% for domainConfig in domainConfigs %}
                     {% if domainConfig.id == selectedDomainId %}
                         <span class="btn active">
-                            {{ domainIcon(domainConfig.id) }}
+                            {{ domain_icon(domainConfig.id) }}
                             {{ domainConfig.name }}
                         </span>
                     {% else %}
                         <a class="btn"
                            href="{{ url('admin_domain_selectdomain', {id: domainConfig.id}) }}">
-                            {{ domainIcon(domainConfig.id) }}
+                            {{ domain_icon(domainConfig.id) }}
                             {{ domainConfig.name }}
                         </a>
                     {% endif %}

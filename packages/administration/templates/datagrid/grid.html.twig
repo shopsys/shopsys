@@ -381,7 +381,11 @@
 {% endblock %}
 
 {% block grid_value_cell_id_domainId %}
-    {{ domainIcon(value, 'small') }}
+    {{ domain_icon(value) }}
+{% endblock %}
+
+{% block grid_value_cell_id_domain_id %}
+    {{ domain_icon(value) }}
 {% endblock %}
 
 {% block grid_value_cell_type_Shopsys_FrameworkBundle_Component_Money_Money %}

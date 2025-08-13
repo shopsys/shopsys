@@ -13,10 +13,6 @@
     {% endif %}
 {% endblock %}
 
-{% block grid_value_cell_id_domain_id %}
-    {{ domain_icon(value) }}
-{% endblock %}
-
 {% block grid_value_cell_id_customer_name %}
     <a href="{{ url('admin_customer_edit', { id: row.customerUserId }) }}">{{ value }}</a>
 {% endblock %}

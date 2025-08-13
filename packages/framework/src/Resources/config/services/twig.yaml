@@ -11,10 +11,6 @@ services:
     Shopsys\FrameworkBundle\Twig\:
         resource: '../../Twig/'
 
-    Shopsys\FrameworkBundle\Twig\DomainExtension:
-        arguments:
-            - '%shopsys.domain_images_url_prefix%'
-
     Shopsys\FrameworkBundle\Twig\ImageExtension:
         arguments:
             $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'

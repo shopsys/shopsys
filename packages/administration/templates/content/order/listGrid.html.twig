@@ -21,10 +21,6 @@
     {{ value|priceWithCurrency(row.order.currency) }}
 {% endblock %}
 
-{% block grid_value_cell_id_domain_id %}
-    {{ domain_icon(value) }}
-{% endblock %}
-
 {% block grid_value_cell_id_created_at %}
     {{ value|formatDateTime }}
 {% endblock %}

@@ -7,29 +7,18 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
-use Symfony\Component\Asset\Packages;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class DomainExtension extends AbstractExtension
 {
-    protected string $domainImagesUrlPrefix;
-
     /**
-     * @param mixed $domainImagesUrlPrefix
-     * @param \Symfony\Component\Asset\Packages $assetPackages
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade
      */
     public function __construct(
-        $domainImagesUrlPrefix,
-        protected readonly Packages $assetPackages,
         protected readonly Domain $domain,
-        protected readonly DomainFacade $domainFacade,
     ) {
-        $this->domainImagesUrlPrefix = $domainImagesUrlPrefix;
     }
 
     /**
@@ -41,7 +30,6 @@ class DomainExtension extends AbstractExtension
         return [
             new TwigFunction('getDomain', $this->getDomain(...)),
             new TwigFunction('getDomainName', $this->getDomainNameById(...)),
-            new TwigFunction('domainIcon', $this->getDomainIconHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('isMultidomain', $this->isMultidomain(...)),
             new TwigFunction('getDomainUrlByLocale', $this->getDomainUrlByLocale(...)),
             new TwigFunction('getFirstDomain', $this->getFirstDomainConfig(...)),
@@ -71,45 +59,6 @@ class DomainExtension extends AbstractExtension
     public function getDomainNameById($domainId)
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $size
-     * @return string
-     */
-    public function getDomainIconHtml($domainId, $size = 'normal')
-    {
-        $domainName = $this->getDomain()->getDomainConfigById($domainId)->getName();
-
-        if ($this->domainFacade->existsDomainIcon($domainId)) {
-            $src = $this->assetPackages->getUrl(sprintf('%s/%u.png', $this->domainImagesUrlPrefix, $domainId));
-
-            return '<img class="me-2" src="' . htmlspecialchars($src, ENT_QUOTES)
-                        . '" alt="' . htmlspecialchars((string)$domainId, ENT_QUOTES) . '"'
-                        . ' title="' . htmlspecialchars($domainName, ENT_QUOTES) . '"/>';
-
-            return '
-                <span class="in-image in-image--' . $size . '">
-                    <span
-                        class="in-image__in"
-                    >
-                        <img src="' . htmlspecialchars($src, ENT_QUOTES)
-                        . '" alt="' . htmlspecialchars((string)$domainId, ENT_QUOTES) . '"'
-                        . ' title="' . htmlspecialchars($domainName, ENT_QUOTES) . '"/>
-                    </span>
-                </span>';
-        }
-
-        return '<span class="badge bg-blue-lt me-2" title="' . htmlspecialchars($domainName, ENT_QUOTES) . '">' . $domainId . '</span>';
-        '
-                <span class="in-image in-image--' . $size . '">
-                    <span
-                        class="in-image__in in-image__in--' . $domainId . '"
-                        title="' . htmlspecialchars($domainName, ENT_QUOTES) . '"
-                    >' . $domainId . '</span>
-                </span>
-            ';
     }
 
     /**
