@@ -68,4 +68,17 @@ class UtilsTest extends TestCase
         $value = ['1', 3, []];
         $this->assertSame($value, Utils::mixedToArray($value));
     }
+
+    public function testStrStartsWithAny(): void
+    {
+        $utils = new Utils();
+
+        $this->assertTrue($utils::strStartsWithAny('test', ['test', 'example']));
+        $this->assertTrue($utils::strStartsWithAny('example', ['test', 'example']));
+        $this->assertTrue($utils::strStartsWithAny('example', ['exa', 'example']));
+
+        $this->assertFalse($utils::strStartsWithAny('test', []));
+        $this->assertFalse($utils::strStartsWithAny('example', ['test', 'sample']));
+        $this->assertFalse($utils::strStartsWithAny('sample', ['test', 'example']));
+    }
 }

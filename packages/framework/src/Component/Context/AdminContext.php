@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Context;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class AdminContext extends AbstractContext
 {
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param string[] $adminRoutePrefixes
      */
     public function __construct(
         private readonly RequestStack $requestStack,
+        private readonly array $adminRoutePrefixes = [],
     ) {
     }
 
@@ -40,6 +43,6 @@ final class AdminContext extends AbstractContext
 
         $route = $request->attributes->get('_route', '');
 
-        return is_string($route) && str_starts_with($route, 'admin_');
+        return is_string($route) && Utils::strStartsWithAny($route, $this->adminRoutePrefixes);
     }
 }

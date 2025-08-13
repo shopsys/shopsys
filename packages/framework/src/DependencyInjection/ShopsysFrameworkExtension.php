@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\DependencyInjection;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
@@ -88,6 +89,8 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(CategoryAutomatedFilterInterface::class)
             ->addTag('shopsys.category_automated_filter');
+
+        $this->setAdminContextRoutePrefixes($config['admin_context_route_prefixes'], $container);
     }
 
     /**
@@ -131,5 +134,15 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->getDefinition(OrderProcessingStack::class)
             ->setArgument('$processingMiddlewares', $middlewareReferences);
+    }
+
+    /**
+     * @param string[] $adminRoutePrefixes
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    protected function setAdminContextRoutePrefixes(array $adminRoutePrefixes, ContainerBuilder $container): void
+    {
+        $container->getDefinition(AdminContext::class)
+            ->setArgument('$adminRoutePrefixes', $adminRoutePrefixes);
     }
 }

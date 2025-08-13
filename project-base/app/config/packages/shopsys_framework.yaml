@@ -1,4 +1,9 @@
 shopsys_framework:
+    admin_context_route_prefixes:
+        - 'admin_'
+        - 'ef_connect'
+        - 'ef_main_js'
+        - 'elfinder'
     order:
         processing_middlewares:
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetCustomerUserMiddleware'
