@@ -60,7 +60,6 @@ export default class CategoryTreeFormItem {
     }
 
     updateStatusIcon() {
-        this.$statusIcon.removeClass('sprite sprite-level cursor-pointer form-tree__item__icon--level');
         switch (this.status) {
             case CategoryTreeFormItem.STATUS_OPENED:
             case CategoryTreeFormItem.STATUS_LOADING:
@@ -72,7 +71,7 @@ export default class CategoryTreeFormItem {
                 this.$statusIcon.addClass('cursor-pointer');
                 break;
             case CategoryTreeFormItem.STATUS_NONE:
-                this.$statusIcon.addClass('sprite sprite-level form-tree__item__icon--level');
+                this.$statusIcon.addClass('d-none');
                 break;
         }
     }

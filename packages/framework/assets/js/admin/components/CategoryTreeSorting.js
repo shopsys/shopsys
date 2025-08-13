@@ -24,7 +24,7 @@ export default class CategoryTreeSorting {
             listType: 'ul',
             handle: '.js-category-tree-item-handle',
             items: '.js-category-tree-item',
-            placeholder: 'js-category-tree-placeholder form-tree__placeholder',
+            placeholder: 'js-category-tree-placeholder',
             toleranceElement: '> .js-category-tree-item-line',
             forcePlaceholderSize: true,
             helper: 'clone',
@@ -32,28 +32,35 @@ export default class CategoryTreeSorting {
             revert: 100,
             protectRoot: this.$rootTree.hasClass('js-protect-root'),
             change: () => this.onChange(),
+            start: (event, ui) => this.onDragStart(event, ui),
         });
 
         $saveButton.click(() => this.onSaveClick());
     }
 
     onChange() {
-        this.$saveButton.removeClass('btn--disabled');
+        this.$saveButton.prop('disabled', false);
         FormChangeInfo.showInfo();
     }
 
+    onDragStart(_event, ui) {
+        ui.helper.find('.js-category-tree-item-handle').removeClass('cursor-grab').addClass('cursor-grabbing');
+    }
+
     onSaveClick() {
-        if (this.$saveButton.hasClass('btn--disabled')) {
+        if (this.$saveButton.prop('disabled')) {
             return;
         }
+
         Ajax.ajax({
+            loaderElement: this.$saveButton,
             url: this.$saveButton.data('category-apply-sorting-url'),
             type: 'post',
             data: {
                 categoriesOrderingData: JSON.stringify(this.getNestedSetData()),
             },
             success: () => {
-                this.$saveButton.addClass('btn--disabled');
+                this.$saveButton.prop('disabled', true);
                 FormChangeInfo.removeInfo();
                 // eslint-disable-next-line no-new
                 new ModalWindow({
