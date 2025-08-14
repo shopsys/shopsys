@@ -20,7 +20,8 @@ help: ## Displays list of available commands
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
-	generate-snapshots-info-table _prepare-data-for-acceptance-tests _cypress-prepare _cypress-cleanup
+	generate-snapshots-info-table _prepare-data-for-acceptance-tests _cypress-prepare _cypress-cleanup \
+	check-licenses
 
 # ------------------------------------------------------------------------------
 # 🔧 Generating GraphQL schema and types
@@ -48,7 +49,7 @@ generate-schema-native: ## Generates GraphQL schema and frontend types (natively
 # ✅ Code Checks and Fixes (PHP & JS/TS)
 # ------------------------------------------------------------------------------
 
-check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations ## Runs all code checks (backend & storefront) and attempts to fix issues
+check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations check-licenses ## Runs all code checks (backend & storefront) and attempts to fix issues
 
 php-checks: ## Runs PHP checks (coding standards, PHPStan) and attempts to fix issues
 	docker compose exec php-fpm php phing standards-fix phpstan
@@ -211,3 +212,9 @@ generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
 	-docker compose exec storefront-cypress npm run generate-snapshots-table --prefix cypress || true
 	@echo "✅ Snapshots info table generation finished."
 	$(call _cypress-cleanup)
+
+check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & storefront)
+	@echo "🔍 Checking dependency licenses..."
+	@docker compose exec php-fpm bash -lc "scripts/check-licenses.sh" && \
+	 docker compose exec storefront sh -lc "sh scripts/check-licenses.sh" && \
+	 echo "✅ All license checks passed"
