@@ -59,7 +59,10 @@ export default class PriceListProductPicker {
             content: iframeContent,
             title: Translator.trans('Assign products'),
             size: 'xl',
+            buttons: [{ text: Translator.trans('Finish assigning') }],
         });
+
+        return false;
     }
 
     initItem($item) {
@@ -73,7 +76,8 @@ export default class PriceListProductPicker {
 
         this.updateDiscount($item);
         this.productItems.push($item);
-        $item.find('.js-price-list-product-picker-item-button-delete').click(() => {
+        $item.find('.js-price-list-product-picker-item-button-delete').click(event => {
+            event.preventDefault();
             this.removeItem($item);
         });
     }

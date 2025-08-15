@@ -20,10 +20,9 @@ export default class PriceListProductPickerWindow {
 
     markAddButtonAsAdded($addButton) {
         const originalLabelText = $addButton.find('.js-products-picker-label').text();
-        const originalIconText = $addButton.find('.js-products-picker-icon').text();
+        const originalIconHtml = $addButton.find('.js-products-picker-icon').html();
         $addButton
-            .addClass('cursor-auto btn--success')
-            .removeClass('btn--plus btn--light')
+            .addClass('btn-success')
             .find('.js-products-picker-label')
             .text(Translator.trans('Added'))
             .end()
@@ -31,7 +30,7 @@ export default class PriceListProductPickerWindow {
             .html(Check)
             .end()
             .on('click.removeProduct', () => {
-                this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
+                this.onClickOnAddedButton($addButton, originalLabelText, originalIconHtml);
             })
             .click(() => false);
     }
@@ -71,25 +70,24 @@ export default class PriceListProductPickerWindow {
         return false;
     }
 
-    onClickOnAddedButton($addButton, originalLabelText, originalIconText) {
+    onClickOnAddedButton($addButton, originalLabelText, originalIconHtml) {
         const productsPicker =
             window.parent.PriceListProductPickerInstances[$addButton.data('product-picker-instance-id')];
-        this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText);
+        this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconHtml);
         $addButton.off('click.removeProduct');
         productsPicker.removeItemByProductId($addButton.data('product-picker-product-id'));
 
         return false;
     }
 
-    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText) {
+    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconHtml) {
         $addButton
-            .addClass('btn--plus btn--light')
-            .removeClass('cursor-auto btn--success')
+            .removeClass('btn-success')
             .find('.js-products-picker-label')
             .text(originalLabelText)
             .end()
             .find('.js-products-picker-icon')
-            .text(originalIconText)
+            .html(originalIconHtml)
             .end()
             .on('click.addProduct', event => this.onClickAddButton(event))
             .click(() => false);

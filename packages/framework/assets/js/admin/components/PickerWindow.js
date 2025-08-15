@@ -18,10 +18,9 @@ export default class PickerWindow {
 
     markAddButtonAsAdded($addButton) {
         const originalLabelText = $addButton.find('.js-picker-label').text();
-        const originalIconText = $addButton.find('.js-picker-icon').text();
+        const originalIconHtml = $addButton.find('.js-picker-icon').html();
         $addButton
-            .addClass('cursor-auto btn--success')
-            .removeClass('btn--plus btn--light')
+            .addClass('btn-success')
             .find('.js-picker-label')
             .text(Translator.trans('Added'))
             .end()
@@ -29,7 +28,7 @@ export default class PickerWindow {
             .html(Check)
             .end()
             .on('click.removeItem', () => {
-                this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
+                this.onClickOnAddedButton($addButton, originalLabelText, originalIconHtml);
             })
             .click(() => false);
     }
@@ -59,24 +58,23 @@ export default class PickerWindow {
         return false;
     }
 
-    onClickOnAddedButton($addButton, originalLabelText, originalIconText) {
+    onClickOnAddedButton($addButton, originalLabelText, originalIconHtml) {
         const picker = window.parent.PickerInstances[$addButton.data('picker-instance-id')];
-        this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText);
+        this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconHtml);
         $addButton.off('click.removeItem');
         picker.removeItemById($addButton.data('picker-id'));
 
         return false;
     }
 
-    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText) {
+    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconHtml) {
         $addButton
-            .addClass('btn--plus btn--light')
-            .removeClass('cursor-auto btn--success')
+            .removeClass('btn-success')
             .find('.js-picker-label')
             .text(originalLabelText)
             .end()
             .find('.js-picker-icon')
-            .text(originalIconText)
+            .html(originalIconHtml)
             .end()
             .on('click.addItem', event => this.onClickAddButton(event))
             .click(() => false);
