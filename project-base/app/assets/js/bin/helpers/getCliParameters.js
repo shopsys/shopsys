@@ -1,12 +1,8 @@
 const getCliParameters = (parameters, parameterName) => {
+    const prefix = `${parameterName}=`;
     return parameters
-        .map(parameter => {
-            const keyValueParameter = parameter.split('=');
-            if (keyValueParameter[0] === parameterName) {
-                return keyValueParameter[1];
-            }
-        })
-        .filter(item => item !== undefined);
+        .filter(parameter => parameter.startsWith(prefix))
+        .map(parameter => parameter.slice(prefix.length));
 };
 
 module.exports = getCliParameters;
