@@ -220,7 +220,11 @@
         }
 
         .gjs-text-with-image {
-            @apply my-8 grid w-full grid-cols-1 items-center gap-5 lg:my-10 lg:grid-cols-2 lg:gap-10;
+            @apply my-8 flex w-full flex-col items-center justify-between gap-5 lg:my-10 lg:flex-row lg:gap-10;
+
+            & > * {
+                @apply lg:w-1/2 lg:max-w-1/2;
+            }
 
             &.gjs-text-with-image-float-left {
                 & img {
@@ -288,5 +292,13 @@
                 @apply min-h-52 w-full bg-emerald-100;
             }
         }
+    }
+}
+
+/* Safari iframe drag-drop fix: 6px gap enables "below" drop zone detection */
+@supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+    [data-gjs-type='map'] iframe,
+    iframe[src*='maps.google.com'] {
+        height: calc(100% - 6px) !important;
     }
 }

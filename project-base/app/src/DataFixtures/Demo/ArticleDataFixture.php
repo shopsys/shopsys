@@ -132,23 +132,20 @@ class ArticleDataFixture extends AbstractReferenceFixture
                             <div class="gjs-text-ckeditor">
                                 <h2 id="i75nl3" draggable="true">H2 Integer id pretium quam, id placerat nulla.</h2>
                             </div>
-                            <div class="gjs-text-with-image">
-                                <div
+                            <div
+                                data-image-position="left"
+                                class="gjs-text-with-image gjs-text-with-image-float-left"
+                            >
+                                <img
                                     data-image-position="left"
-                                    data-image-type="outside-layout"
-                                    class="gjs-text-with-image-inner gjs-text-with-image-float-left gjs-text-with-image-type-outside-layout"
-                                >
-                                    <img
-                                        data-image-position="left"
-                                        src="' . $homepageUrl . 'content/images/blogArticle/default/600.jpg"
-                                        class="image"
-                                    />
-                                    <div class="gjs-text-ckeditor text" data-gjs-type="text">
-                                        Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed
-                                        placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a
-                                        arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor
-                                        neque quis tincidunt tempus
-                                    </div>
+                                    src="' . $homepageUrl . 'content/images/blogArticle/default/600.jpg"
+                                    class="image"
+                                />
+                                <div class="gjs-text-ckeditor text" data-gjs-type="text">
+                                    Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed
+                                    placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a
+                                    arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor
+                                    neque quis tincidunt tempus
                                 </div>
                             </div>
                         </div>

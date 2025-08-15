@@ -195,7 +195,6 @@ export const en = {
                 path: 'Path to file',
                 'data-image-position': 'Position of image',
                 'data-products': 'Catalog numbers',
-                'data-image-type': 'Type of image',
             },
             // In a simple trait, like text input, these are used on input attributes
             /*
@@ -225,10 +224,6 @@ export const en = {
                     left: 'Left',
                     center: 'Center',
                     right: 'Right',
-                },
-                'data-image-type': {
-                    'outside-layout': 'Outside layout',
-                    'inside-layout': 'Inside layout',
                 },
             },
         },

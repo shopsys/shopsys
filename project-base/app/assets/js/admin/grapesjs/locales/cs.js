@@ -195,7 +195,6 @@ export const cs = {
                 path: 'Cesta k souboru',
                 'data-image-position': 'Pozice obrázku',
                 'data-products': 'Katalogová čísla',
-                'data-image-type': 'Typ obrázku',
             },
             // In a simple trait, like text input, these are used on input attributes
             /*
@@ -225,10 +224,6 @@ export const cs = {
                     left: 'Vlevo',
                     center: 'Střed',
                     right: 'Vpravo',
-                },
-                'data-image-type': {
-                    'outside-layout': 'Vnější rozložení',
-                    'inside-layout': 'Vnitřní rozložení',
                 },
             },
         },

@@ -5,13 +5,13 @@ const IMAGE_POSITION_DATA_ATTRIBUTE = 'data-image-position';
 
 const TEXT_WITH_IMAGE_TYPE = 'text-with-image';
 
-const IMAGE_CLASS = 'gjs-text-with-image';
-const IMAGE_CLASS_FLOAT = 'gjs-text-with-image-float';
+const TEXT_WITH_IMAGE_CLASS = 'gjs-text-with-image';
+const IMAGE_FLOAT_CLASS = 'gjs-text-with-image-float';
 
 const IMAGE_POSITION_LEFT = 'left';
 const IMAGE_POSITION_RIGHT = 'right';
 
-export default grapesjs.plugins.add('text-with-image', editor => {
+export default grapesjs.plugins.add('text-with-image', (editor) => {
     editor.Blocks.add('textWithImage', {
         id: 'text-with-image',
         category: 'basic-objects',
@@ -22,7 +22,7 @@ export default grapesjs.plugins.add('text-with-image', editor => {
     });
 
     editor.DomComponents.addType(TEXT_WITH_IMAGE_TYPE, {
-        isComponent: element => element.classList?.contains(IMAGE_CLASS),
+        isComponent: (element) => element.classList?.contains(TEXT_WITH_IMAGE_CLASS),
         model: {
             init() {
                 this.on(`change:attributes:${IMAGE_POSITION_DATA_ATTRIBUTE}`, this.handlePositionChange);
@@ -30,20 +30,16 @@ export default grapesjs.plugins.add('text-with-image', editor => {
 
             handlePositionChange(element) {
                 element.setClass([
-                    IMAGE_CLASS,
-                    `${IMAGE_CLASS_FLOAT}-${this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE]}`,
+                    TEXT_WITH_IMAGE_CLASS,
+                    `${IMAGE_FLOAT_CLASS}-${this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE]}`,
                 ]);
             },
 
             defaults: {
-                removable: true,
-                draggable: true,
-                copyable: true,
-                droppable: true,
-                resizable: false,
+                droppable: false,
                 attributes: {
                     [IMAGE_POSITION_DATA_ATTRIBUTE]: IMAGE_POSITION_LEFT,
-                    class: [IMAGE_CLASS, `${IMAGE_CLASS_FLOAT}-left`],
+                    class: [TEXT_WITH_IMAGE_CLASS, `${IMAGE_FLOAT_CLASS}-left`],
                 },
                 components: [
                     {
@@ -53,9 +49,36 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                         attributes: {
                             'data-gjs-type': 'image',
                         },
-                        editable: true,
-                        selectable: true,
                         removable: false,
+                        draggable: false,
+                        copyable: false,
+                        resizable: {
+                            tl: 1,
+                            tr: 1,
+                            bl: 1,
+                            br: 1,
+                            tc: 0,
+                            bc: 0,
+                            cl: 0,
+                            cr: 0,
+                            updateTarget: (el, rect) => {
+                                const widthPx = Math.round(rect.w) + 'px';
+                                const heightPx = 'auto';
+
+                                // Update DOM element immediately for visual feedback
+                                el.style.width = widthPx;
+                                el.style.height = heightPx;
+
+                                // Get the component model and update its styles for persistence
+                                const component = editor.getSelected();
+                                if (component && component.getEl() === el) {
+                                    component.addStyle({
+                                        width: widthPx,
+                                        height: heightPx,
+                                    });
+                                }
+                            },
+                        },
                     },
                     {
                         tagName: 'div',
@@ -66,6 +89,8 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                             'data-gjs-type': 'text',
                         },
                         removable: false,
+                        draggable: false,
+                        copyable: false,
                     },
                 ],
                 traits: [
