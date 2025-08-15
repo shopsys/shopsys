@@ -1,4 +1,3 @@
-import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 import Check from 'icons/tabler/check.svg';
 import Denied from 'icons/tabler/circle-x-filled.svg';

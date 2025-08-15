@@ -1,13 +1,12 @@
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import { Tooltip } from '@tabler/core';
+import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
-import ProductPicker from './ProductPicker';
-import '../../common/bootstrap/tooltip';
-import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
-import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
-import Translator from 'bazinga-translator';
 import FormChangeInfo from './FormChangeInfo';
+import ProductPicker from './ProductPicker';
 
 export default class OrderItems {
     static textDisabledClass = 'text-secondary';

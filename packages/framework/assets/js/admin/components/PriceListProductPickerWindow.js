@@ -1,4 +1,3 @@
-import '../../common/bootstrap/tooltip';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Check from 'icons/tabler/check.svg';

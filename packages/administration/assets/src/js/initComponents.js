@@ -2,6 +2,7 @@ import { Dropdown, Modal, Popover, Tab, Toast, Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
 import TomSelect from 'tom-select';
+import registerTooltip from './utils/registerTooltip';
 
 function initSelect($container) {
     $container.filterAllNodes('select').each((_key, el) => {
@@ -80,6 +81,7 @@ export function initComponents($container) {
     initModal($container);
     initTab($container);
     initToast($container);
+    registerTooltip();
 }
 
 new Register().registerCallback(initComponents, 'initComponents');
