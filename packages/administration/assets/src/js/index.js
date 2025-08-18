@@ -4,6 +4,7 @@ import './initComponents';
 import './colorPicker';
 import './ajaxPopover';
 import './dev/fixedBar';
+import './scrollMenuEntryToViewport';
 import './utils/copyToClipboard';
 import './utils/recommendedLength';
 import './utils/modalWindow';
