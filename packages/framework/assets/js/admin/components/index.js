@@ -1,4 +1,4 @@
-import './advert';
+import './Advert';
 import './AdministratorForm';
 import './AdvancedSearch';
 import './AjaxConfirm';
