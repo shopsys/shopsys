@@ -1463,7 +1463,7 @@ msgid "Do you really want to remove rate \"%name%\" permanently? It is not used 
 msgstr "Opravdu si přejete trvale odstranit sazbu \"%name%\"? Nikde není použita."
 
 msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
-msgstr "Opravdu si přejete trvale odstranit obchodního zástupce \"%name%\"? Nikde není použit."
+msgstr "Opravdu si přejete trvale odstranit obchodního zástupce \"%label%\"? Nikde není použit."
 
 msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav reklamace \"%name%\"? Nikde není použitý."
