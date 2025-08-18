@@ -136,7 +136,7 @@ export default class OrderItems {
         $collection.find('.js-order-item').each(function () {
             const indexStr = $(this).data('index').toString();
             if (indexStr.indexOf(newItemIndex) === 0) {
-                const index = parseInt(indexStr.slice(4));
+                const index = parseInt(indexStr.slice(4), 10);
                 if (index > maxIndex) {
                     maxIndex = index;
                 }

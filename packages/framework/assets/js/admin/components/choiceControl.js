@@ -50,11 +50,11 @@ export function getSelectedValues(choiceListSelector) {
         const $element = $(element);
         if ($element.is('input')) {
             if ($element.is(':checked')) {
-                values.push(parseInt($element.val()));
+                values.push(parseInt($element.val(), 10));
             }
         } else if ($element.is('option')) {
             if ($element.is(':selected')) {
-                values.push(parseInt($element.val()));
+                values.push(parseInt($element.val(), 10));
             }
         }
     });
@@ -65,7 +65,7 @@ export function getSelectedValues(choiceListSelector) {
 export function findChoice($choiceList, value) {
     return findAllChoices($choiceList).filter((_key, element) => {
         const $element = $(element);
-        return parseInt($element.val()) === value;
+        return parseInt($element.val(), 10) === value;
     });
 }
 
@@ -77,7 +77,7 @@ export function getNewIndex($choiceList) {
     let maxIndex = 0;
     findAllChoices($choiceList).each((_key, element) => {
         const $input = $(element);
-        const index = parseInt($input.attr('name').replace(/.*\[(.+)\]/, '$1'));
+        const index = parseInt($input.attr('name').replace(/.*\[(.+)\]/, '$1'), 10);
         if (index > maxIndex) {
             maxIndex = index;
         }
