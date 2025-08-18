@@ -48,6 +48,7 @@ case "$operatingSystem" in
         sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
         sed -i -r "s#node_uid: [0-9]+#node_uid: $(id -u)#" ./docker-compose.yml
+        sed -i -r "s#LOCAL_PATH_TO_PROJECT_ROOT: .*#LOCAL_PATH_TO_PROJECT_ROOT: $(pwd)#" ./docker-compose.yml
 
         echo "Starting docker compose"
         docker compose up -d --build --force-recreate
@@ -58,6 +59,7 @@ case "$operatingSystem" in
         sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
         sed -i '' -E "s#defaultOwner: \"id:501\"+#defaultOwner: \"id:$(id -u)\"#" ./docker-compose.yml
+        sed -i '' -E "s#LOCAL_PATH_TO_PROJECT_ROOT: .*#LOCAL_PATH_TO_PROJECT_ROOT: $(pwd)#" ./docker-compose.yml
 
         if [[ $1 != --skip-aliasing ]]; then
             echo "You will be asked to enter sudo password in case to allow second domain alias in your system config"

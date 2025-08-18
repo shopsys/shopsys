@@ -857,6 +857,8 @@ services:
         arguments:
             $fallbackErrorRenderer: '@twig.error_renderer.html'
             $isDebug: '%kernel.debug%'
+            $localPathToProjectRoot: '%env(LOCAL_PATH_TO_PROJECT_ROOT)%'
+            $tracyDebuggerIdeUrlFormat: '%env(TRACY_DEBUGGER_IDE_URL_FORMAT)%'
         class: Shopsys\FrameworkBundle\Component\Error\BlueScreenErrorRenderer
 
     fragment.handler:

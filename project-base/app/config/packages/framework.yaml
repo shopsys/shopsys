@@ -10,6 +10,7 @@ framework:
         legacy_error_messages: false
     fragments: ~
     http_method_override: true
+    ide: '%env(SYMFONY_IDE_URL_FORMAT)%&/var/www/html/>%env(LOCAL_PATH_TO_PROJECT_ROOT)%/'
     profiler:
         collect: false
         enabled: false

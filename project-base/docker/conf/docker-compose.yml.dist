@@ -112,6 +112,7 @@ services:
             - ./app/:/var/www/html
         environment:
             <<: *blackfire_environments
+            LOCAL_PATH_TO_PROJECT_ROOT: /var/www/html
         ports:
             - "35729:35729"
 
