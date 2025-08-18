@@ -7,21 +7,20 @@ export default class Product {
     }
 
     static initializeSideNavigation($container) {
-        const $productDetailNavigation = $container.find('.js-product-detail-navigation');
-        const $webContent = $('.web__content');
+        const $productDetailNavigation = $container.find('.toc .nav');
+        const $topOffset = $('.page-header').offset().top;
 
-        $('.form-group__title, .form-full__title').each(function () {
+        $('#product_form h3').each(function () {
             const $title = $(this);
             const $titleClone = $title.clone();
 
-            $titleClone.find('.js-validation-errors-list').remove();
             const $navigationItem = $(
-                `<li class="side-menu__item"><span class="side-menu__item__link"><span class="side-menu__item__text">${$titleClone.text()}</span></span></li>`,
+                `<span class="nav-link cursor-pointer"><span class="nav-link-title">${$titleClone.text()}</span></span>`,
             );
             $productDetailNavigation.append($navigationItem);
 
             $navigationItem.click(() => {
-                const scrollOffsetTop = $title.offset().top - $webContent.offset().top;
+                const scrollOffsetTop = $title.offset().top - $topOffset;
                 $('html, body').animate({ scrollTop: scrollOffsetTop }, 'slow');
             });
         });
