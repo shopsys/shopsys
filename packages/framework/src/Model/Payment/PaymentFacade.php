@@ -350,4 +350,22 @@ class PaymentFacade
             return false;
         }
     }
+
+    /**
+     * @param string $externalPaymentMethod
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
+     */
+    public function getPaymentByExternalMethodTransportAndDomainId(
+        string $externalPaymentMethod,
+        Transport $transport,
+        int $domainId,
+    ): ?Payment {
+        return $this->paymentRepository->getPaymentByExternalMethodTransportAndDomainId(
+            $externalPaymentMethod,
+            $transport,
+            $domainId,
+        );
+    }
 }
