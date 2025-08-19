@@ -586,8 +586,7 @@ final class ProductFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getTitlePlaceholder($locale, $product),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'product_form_name_' . $locale,
+                    'data-js-placeholder-source-input-id' => 'product_form_name_' . $locale,
                     'data-js-recommended-length' => 60,
                 ],
             ];

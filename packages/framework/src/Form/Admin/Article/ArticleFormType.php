@@ -151,9 +151,8 @@ final class ArticleFormType extends AbstractType
             ->add('seoTitle', TextType::class, [
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'article_form_name',
                     'data-js-recommended-length' => 60,
+                    'data-js-placeholder-source-input-id' => 'article_form_articleData_name',
                 ],
                 'label' => t('Page title'),
             ])
@@ -165,8 +164,7 @@ final class ArticleFormType extends AbstractType
             ->add('seoH1', TextType::class, [
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'article_form_name',
+                    'data-js-placeholder-source-input-id' => 'article_form_articleData_name',
                 ],
                 'label' => t('Heading (H1)'),
             ]);
@@ -222,7 +220,7 @@ final class ArticleFormType extends AbstractType
 
     /**
      * @param array $options
-     * @return string[]
+     * @return array<string, int|string|null>
      */
     private function getSeoMetaDescriptionAttributes(array $options): array
     {

@@ -197,3 +197,33 @@ The counter displays in the format:
 ```
 Used: 45 characters. Recommended max. 160
 ```
+
+## Dynamic Placeholder
+
+Automatically updates placeholder text in SEO fields (page title, H1) based on entity names as users type. Commonly used in product, category, article, and brand forms.
+
+### Usage
+
+Add `data-js-placeholder-source-input-id` to target fields, referencing the source input's ID:
+
+```html
+<!-- Entity name field -->
+<input type="text" id="product_form_name" name="name" value="Gaming Laptop" />
+
+<!-- SEO title field with dynamic placeholder -->
+<input
+    type="text"
+    name="seoTitle"
+    data-js-placeholder-source-input-id="product_form_name"
+    placeholder="Gaming Laptop"
+/>
+```
+
+### Common Applications
+
+- **Product forms**: Page title and H1 fields mirror product name
+- **Category forms**: SEO fields reflect category names across locales
+- **Article/Blog forms**: Title and heading fields sync with article names
+- **Brand forms**: SEO metadata inherits from brand names
+
+Updates happen in real-time as users modify the source field.

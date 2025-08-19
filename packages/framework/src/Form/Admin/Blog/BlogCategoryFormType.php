@@ -172,8 +172,7 @@ final class BlogCategoryFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['blogCategory']),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_category_form_settings_names_' . $domainConfig->getLocale(),
                     'data-js-recommended-length' => 60,
                 ],
             ];
@@ -186,8 +185,7 @@ final class BlogCategoryFormType extends AbstractType
             $seoH1OptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['blogCategory']),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_category_form_settings_names_' . $domainConfig->getLocale(),
                 ],
             ];
         }

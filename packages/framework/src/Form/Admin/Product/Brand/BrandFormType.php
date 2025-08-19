@@ -55,8 +55,7 @@ final class BrandFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getTitlePlaceholder($brand),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'brand_form_name',
+                    'data-js-placeholder-source-input-id' => 'brand_form_basicInformation_name',
                     'data-js-recommended-length' => 60,
                 ],
             ];
@@ -69,8 +68,7 @@ final class BrandFormType extends AbstractType
             $seoH1sOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getTitlePlaceholder($brand),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'brand_form_name',
+                    'data-js-placeholder-source-input-id' => 'brand_form_basicInformation_name',
                 ],
             ];
         }

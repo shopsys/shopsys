@@ -302,8 +302,7 @@ final class BlogArticleFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getArticleNameForPlaceholder($domainConfig, $blogArticle),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_article_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_article_form_settings_names_' . $domainConfig->getLocale(),
                     'data-js-recommended-length' => 60,
                 ],
             ];
@@ -316,8 +315,7 @@ final class BlogArticleFormType extends AbstractType
             $seoH1OptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getArticleNameForPlaceholder($domainConfig, $blogArticle),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_article_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_article_form_settings_names_' . $domainConfig->getLocale(),
                 ],
             ];
         }
