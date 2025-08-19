@@ -155,6 +155,34 @@ test:storefront-acceptance:
         - docker compose logs storefront > storefront-log.txt
     interruptible: true
 
+test:cypress-smoke:
+    image: tmaier/docker-compose:latest
+    stage: test
+    <<: *only-default
+    tags:
+        - tests
+    artifacts:
+        paths:
+            - ./storefront/cypress/videos/
+            - ./storefront/cypress/screenshots/
+            - php-fpm-log.txt
+            - webserver-log.txt
+            - storefront-log.txt
+        when: on_failure
+        expire_in: 1 day
+        name: "cypress-smoke-$CI_JOB_ID"
+    script:
+        - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
+        - docker compose up -d
+        - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
+        - cd storefront
+        - docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress
+    after_script:
+        - docker compose logs php-fpm > php-fpm-log.txt
+        - docker compose logs webserver > webserver-log.txt
+        - docker compose logs storefront > storefront-log.txt
+    interruptible: true
+
 regenerate-storefront-screenshots:
     image: tmaier/docker-compose:latest
     stage: regenerate
@@ -185,7 +213,18 @@ regenerate-storefront-screenshots:
         - git config --global user.name "Shopsys Bot"
         - git config --global user.email "bot@shopsys.com"
         - git clean -fdx
-        - git checkout "$CI_COMMIT_REF_NAME"
+        - |
+            # Decision about target branch
+            if [ -n "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" ]; then
+            echo "Pipeline run on merge request. Using source branch: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"
+            TARGET_BRANCH="$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"
+            else
+            echo "Pipeline run on branch: $CI_COMMIT_REF_NAME"
+            TARGET_BRANCH="$CI_COMMIT_REF_NAME"
+            fi
+            echo "Working on branch: $TARGET_BRANCH"
+        - git fetch origin "$TARGET_BRANCH"
+        - git checkout "$TARGET_BRANCH"
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
@@ -199,9 +238,9 @@ regenerate-storefront-screenshots:
                 else
                     git commit -m "Regenerated Cypress screenshots for ${GROUP} group"
                 fi
-                git fetch origin "$CI_COMMIT_REF_NAME"
-                git pull --rebase origin "$CI_COMMIT_REF_NAME"
-                git push https://shopsys_bot:$API_TOKEN@gitlab.shopsys.cz/ss6-projects/${CI_PROJECT_NAME}.git "$CI_COMMIT_REF_NAME" --force -v || (echo "Failed to push changes" && git log -n 5 && exit 1)
+                git fetch origin "$TARGET_BRANCH"
+                git pull --rebase origin "$TARGET_BRANCH"
+                git push https://shopsys_bot:$API_TOKEN@gitlab.shopsys.cz/ss6-projects/${CI_PROJECT_NAME}.git "$TARGET_BRANCH" --force -v || (echo "Failed to push changes" && git log -n 5 && exit 1)
             else
                 echo "No changes in snapshots, skipping commit."
             fi

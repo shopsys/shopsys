@@ -49,6 +49,8 @@ services:
         volumes:
             - ./storefront/cypress:/app
             - node_modules:/app/node_modules
+            - ./storefront/config:/app/config
+            - ./storefront/pages:/app/pages
         profiles:
             - storefront-acceptance-tests
         network_mode: "host"
@@ -63,6 +65,8 @@ services:
         volumes:
             - ./storefront/cypress:/app
             - node_modules:/app/node_modules
+            - ./storefront/config:/app/config
+            - ./storefront/pages:/app/pages
         profiles:
             - storefront-regenerate-screenshots
         network_mode: "host"
