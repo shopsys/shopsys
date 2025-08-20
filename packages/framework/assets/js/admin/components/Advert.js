@@ -6,11 +6,24 @@ export default class Advert {
         this.$categoryTreeRow = $container.find('[data-js-advert-categories]');
         this.positionNamesWithCategoryTree = ['productListSecondRow'];
 
-        this.initAdvertForm();
-        this.$positionNameSelect.on('change', () => this.initAdvertForm());
+        this.$advertTypeSelect = $container.find('input[name="advert_form[settings][type]"]');
+
+        this.initCategoryTreeVisibility();
+        this.initContentTypeVisibility($container);
+        this.$positionNameSelect.on('change', () => this.initCategoryTreeVisibility());
+        this.$advertTypeSelect.on('change', () => this.initContentTypeVisibility($container));
     }
 
-    initAdvertForm() {
+    initContentTypeVisibility($container) {
+        const checkedAdvertType = this.$advertTypeSelect.filter(':checked').val();
+
+        $container.find('[data-js-advert-type-content]').hide();
+        if (checkedAdvertType) {
+            $container.find(`[data-js-advert-type-content=${checkedAdvertType}]`).show();
+        }
+    }
+
+    initCategoryTreeVisibility() {
         const checkedPositionName = this.$positionNameSelect.val();
 
         if (this.positionNamesWithCategoryTree.includes(checkedPositionName)) {

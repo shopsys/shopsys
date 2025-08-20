@@ -120,23 +120,18 @@ final class AdvertFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter HTML code for advertisement area',
-                        'groups' => [static::VALIDATION_GROUP_TYPE_CODE],
+                        'groups' => [self::VALIDATION_GROUP_TYPE_CODE],
                     ]),
                 ],
-                'attr' => [
-                    'class' => 'height-150',
-                ],
-                'js_container' => [
-                    'container_class' => 'js-advert-type-content',
-                    'data_type' => 'code',
+                'row_attr' => [
+                    'data-js-advert-type-content' => 'code',
                 ],
             ]);
 
         $builderImageGroup = $builder->create('image_group', GroupType::class, [
             'label' => t('Images'),
-            'js_container' => [
-                'container_class' => 'js-advert-type-content',
-                'data_type' => 'image',
+            'row_attr' => [
+                'data-js-advert-type-content' => 'image',
             ],
         ]);
 
@@ -234,9 +229,9 @@ final class AdvertFormType extends AbstractType
                     $advertData = $form->getData();
 
                     if ($advertData->type === Advert::TYPE_CODE) {
-                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_CODE;
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_CODE;
                     } elseif ($advertData->type === Advert::TYPE_IMAGE) {
-                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_IMAGE;
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_IMAGE;
                     }
 
                     return $validationGroups;
