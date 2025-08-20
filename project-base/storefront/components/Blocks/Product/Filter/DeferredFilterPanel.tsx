@@ -1,9 +1,9 @@
 import { FilterPanelProps } from './FilterPanel';
 import { SkeletonModuleFilterPanel } from 'components/Blocks/Skeleton/SkeletonModuleFilterPanel';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay), {

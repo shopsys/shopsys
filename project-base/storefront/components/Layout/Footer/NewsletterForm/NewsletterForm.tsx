@@ -7,7 +7,6 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
@@ -15,6 +14,7 @@ import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export const NewsletterForm: FC = () => {
@@ -61,7 +61,7 @@ export const NewsletterForm: FC = () => {
                                     name={formMeta.fields.email.name}
                                     render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
-                                        'aria-label': t('To sign up for newsletter, enter'),
+                                        'aria-label': t('To sign up for newsletter, enter', { ns: 'accessibility' }),
                                         inputSize: 'small',
                                         label: formMeta.fields.email.label,
                                         required: true,
@@ -86,7 +86,7 @@ export const NewsletterForm: FC = () => {
 
                             <div className="col-start-3 row-start-1">
                                 <SubmitButton
-                                    aria-label={t('Submit form to sign up for newsletter')}
+                                    aria-label={t('Submit form to sign up for newsletter', { ns: 'accessibility' })}
                                     className="h-12 w-full py-0 sm:w-auto"
                                     hasDisabledCursor={!formProviderMethods.formState.isValid}
                                     title={t('Sign up')}

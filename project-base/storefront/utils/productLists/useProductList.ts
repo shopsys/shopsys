@@ -10,13 +10,13 @@ import {
     useProductListQuery,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const useProductList = (
     productListType: TypeProductListTypeEnum,

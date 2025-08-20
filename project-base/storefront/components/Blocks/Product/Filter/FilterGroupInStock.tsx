@@ -1,5 +1,5 @@
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -16,7 +16,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ inStockCount }
     return (
         <div className="bg-background-more rounded-md p-5 py-2.5">
             <Checkbox
-                aria-label={t('Filter by in stock')}
+                aria-label={t('Filter by in stock', { ns: 'accessibility' })}
                 count={inStockCount}
                 id="onlyInStock"
                 label={t('In stock')}

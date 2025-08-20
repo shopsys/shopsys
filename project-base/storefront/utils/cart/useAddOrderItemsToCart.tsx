@@ -2,11 +2,11 @@ import { useCurrentCart } from './useCurrentCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
 import { TypeAddOrderItemsToCartInput } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 

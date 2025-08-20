@@ -6,9 +6,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { Fragment, useState } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const ProductDetailRelatedProductsTab = dynamic(
     () => import('./ProductDetailRelatedProductsTab').then((component) => component.ProductDetailRelatedProductsTab),
@@ -176,9 +176,12 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             {files.map((file) => (
                                 <li key={file.url}>
                                     <a
-                                        aria-label={t('Download {{file}}', { file: file.anchorText })}
                                         className="bg-background-more flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
                                         href={file.url}
+                                        aria-label={t('Download {{file}}', {
+                                            ns: 'accessibility',
+                                            file: file.anchorText,
+                                        })}
                                     >
                                         <DownloadIcon className="size-6" />
 

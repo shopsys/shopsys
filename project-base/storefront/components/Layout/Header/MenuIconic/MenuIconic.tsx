@@ -5,8 +5,8 @@ import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import useTranslation from 'next-translate/useTranslation';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -26,11 +26,11 @@ export const MenuIconic: FC = () => {
         'absolute -right-3 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-secondary text-xs font-bold leading-normal text-text-inverted lg:-top-[6.5px]';
 
     return (
-        <nav aria-label={t('User tools navigation')}>
+        <nav aria-label={t('User tools navigation', { ns: 'accessibility' })}>
             <ul className="flex lg:gap-7">
                 <MenuIconicItem className="flex max-lg:hidden">
                     <MenuIconicItemLink
-                        aria-label={t('Go to stores page')}
+                        aria-label={t('Go to stores page', { ns: 'accessibility' })}
                         href={storesUrl}
                         title={t('Stores page')}
                         type="stores"
@@ -42,7 +42,7 @@ export const MenuIconic: FC = () => {
 
                 <MenuIconicItem>
                     <MenuIconicItemLink
-                        aria-label={t('Go to comparison page')}
+                        aria-label={t('Go to comparison page', { ns: 'accessibility' })}
                         href={productComparisonUrl}
                         title={t('Comparison page')}
                         type="comparison"
@@ -59,7 +59,7 @@ export const MenuIconic: FC = () => {
 
                 <MenuIconicItem>
                     <MenuIconicItemLink
-                        aria-label={t('Go to wishlist page')}
+                        aria-label={t('Go to wishlist page', { ns: 'accessibility' })}
                         href={wishlistUrl}
                         title={t('Wishlist page')}
                         type="wishlist"

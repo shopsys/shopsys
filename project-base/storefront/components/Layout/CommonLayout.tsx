@@ -10,11 +10,11 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { OgTypeEnum } from 'types/seo';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 
 export type CommonLayoutProps = {
@@ -68,9 +68,13 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </header>
 
                 <main
-                    aria-label={title ? t('Main content: {{pageTitle}}', { pageTitle: title }) : t('Main content')}
                     className="mt-4 mb-10 flex flex-col"
                     id="main-content"
+                    aria-label={
+                        title
+                            ? t('Main content: {{pageTitle}}', { ns: 'accessibility', pageTitle: title })
+                            : t('Main content', { ns: 'accessibility' })
+                    }
                 >
                     <Adverts withWebline className="mb-4" positionName="header" />
 
@@ -89,7 +93,10 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     <Adverts withWebline className="mt-10" positionName="footer" />
                 </main>
 
-                <footer aria-label={t('Site information and navigation')} className="mt-auto h-fit">
+                <footer
+                    aria-label={t('Site information and navigation', { ns: 'accessibility' })}
+                    className="mt-auto h-fit"
+                >
                     <DeferredNewsletterForm />
 
                     <DeferredFooter />

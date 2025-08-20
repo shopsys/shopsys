@@ -4,8 +4,8 @@ import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragment
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type AutocompleteSearchCategoriesResultProps = {

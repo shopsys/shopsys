@@ -1,11 +1,11 @@
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { TIDs } from 'cypress/tids';
 import { TypeOpeningHours } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { formatAccessibleTime } from 'utils/accessibility/formatAccessibleTime';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -73,7 +73,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                 })}
 
             <div
-                aria-label={t('Opening hours')}
+                aria-label={t('Opening hours', { ns: 'accessibility' })}
                 className={twMergeCustom('text-text-default flex flex-col gap-1 self-baseline text-xs', className)}
                 data-tid={TIDs.opening_hours}
                 role="list"

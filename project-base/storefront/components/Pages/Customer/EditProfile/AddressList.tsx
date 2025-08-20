@@ -7,12 +7,12 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDeleteDeliveryAddressMutation } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
 import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -175,7 +175,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <div className="space-between mt-auto flex gap-2 pt-2">
                                 <Button
                                     aria-haspopup="dialog"
-                                    aria-label={t('Delete this delivery address')}
+                                    aria-label={t('Delete this delivery address', { ns: 'accessibility' })}
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"
@@ -186,7 +186,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
 
                                 <Button
                                     aria-haspopup="dialog"
-                                    aria-label={t('Edit this delivery address')}
+                                    aria-label={t('Edit this delivery address', { ns: 'accessibility' })}
                                     className="flex-1"
                                     size="small"
                                     variant="inverted"

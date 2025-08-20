@@ -6,10 +6,10 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
@@ -151,18 +151,22 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     return (
         <>
             <div className="relative" data-tid={tid}>
-                <AccessibleLink className="w-auto" href={`#${ariaAnchorName}`} title={t('Skip product slider')} />
+                <AccessibleLink
+                    className="w-auto"
+                    href={`#${ariaAnchorName}`}
+                    title={t('Skip product slider', { ns: 'accessibility' })}
+                />
 
                 {isWithControls && (
                     <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
                         <SliderButton
-                            ariaLabel={t('Show previous products in slider')}
+                            ariaLabel={t('Show previous products in slider', { ns: 'accessibility' })}
                             title={t('Previous products')}
                             type="prev"
                             onClick={handlePrevious}
                         />
                         <SliderButton
-                            ariaLabel={t('Show next products in slider')}
+                            ariaLabel={t('Show next products in slider', { ns: 'accessibility' })}
                             title={t('Next products')}
                             type="next"
                             onClick={handleNext}

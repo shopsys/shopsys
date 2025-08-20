@@ -1,10 +1,10 @@
 import { ComplaintDetailComplaintItem } from './ComplaintDetailComplaintItem';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ComplaintDetailBasicInfoProps = {

@@ -5,7 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type MainProps = {
     articles: TypeListedBlogArticleFragment[];
@@ -62,10 +62,13 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                         </div>
 
                         <ArticleLink
-                            ariaLabel={t('Go to article page of {{ articleName }}', { articleName: article.name })}
                             className="h4 text-text-inverted"
                             href={article.link}
                             title={t('Blog article')}
+                            ariaLabel={t('Go to article page of {{ articleName }}', {
+                                ns: 'accessibility',
+                                articleName: article.name,
+                            })}
                         >
                             {article.name}
                         </ArticleLink>

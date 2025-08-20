@@ -3,11 +3,11 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validatePassword, validatePasswordConfirm, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const useRegistrationAfterOrderForm = (): [

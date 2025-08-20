@@ -12,11 +12,11 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const useCustomerChangeProfileForm = (

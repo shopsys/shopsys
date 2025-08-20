@@ -4,8 +4,8 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrdersContentProps = {
     areOrdersFetching: boolean;

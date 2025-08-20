@@ -5,9 +5,9 @@ import {
     getGtmPaymentEventFromLocalStorage,
     removeGtmPaymentEventFromLocalStorage,
 } from 'gtm/utils/gtmPaymentEventLocalStorage';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';

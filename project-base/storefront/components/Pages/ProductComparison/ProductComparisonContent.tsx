@@ -5,9 +5,9 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -107,12 +107,16 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
 
     return (
         <Button
-            aria-label={isRight ? t('Show next product in comparison') : t('Show previous product in comparison')}
             className={twMergeCustom('p-3', isShowed ? 'flex' : 'hidden')}
             hasDisabledLook={!isActive}
             tabIndex={isActive ? 0 : -1}
             title={isRight ? t('Next product') : t('Previous product')}
             variant="inverted"
+            aria-label={
+                isRight
+                    ? t('Show next product in comparison', { ns: 'accessibility' })
+                    : t('Show previous product in comparison', { ns: 'accessibility' })
+            }
             onClick={onClick}
         >
             <ArrowIcon className={twJoin('size-5', isRight ? '-rotate-90' : 'rotate-90')} />

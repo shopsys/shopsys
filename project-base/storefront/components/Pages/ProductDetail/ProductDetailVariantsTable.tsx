@@ -9,10 +9,10 @@ import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragmen
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const ProductVariantsAvailabilityPopup = dynamic(
     () =>

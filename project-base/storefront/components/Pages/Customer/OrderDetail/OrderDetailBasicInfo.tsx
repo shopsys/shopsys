@@ -10,12 +10,12 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type OrderDetailBasicInfoProps = {
@@ -78,6 +78,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                             tid={TIDs.order_detail_repeat_order_button}
                             variant="inverted"
                             aria-label={t('Repeat order number {{ orderNumber }}', {
+                                ns: 'accessibility',
                                 orderNumber: order.number,
                             })}
                             onClick={() => addOrderItemsToEmptyCart(order.uuid)}
@@ -121,6 +122,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                         href={order.trackingUrl}
                                         target="_blank"
                                         aria-label={t('Go to tracking package {{ trackingNumber }}', {
+                                            ns: 'accessibility',
                                             trackingNumber: order.trackingNumber,
                                         })}
                                     >

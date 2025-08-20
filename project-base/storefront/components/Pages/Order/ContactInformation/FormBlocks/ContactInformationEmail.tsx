@@ -5,13 +5,13 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const LoginPopup = dynamic(
     () => import('components/Blocks/Popup/LoginPopup').then((component) => component.LoginPopup),

@@ -1,6 +1,6 @@
 import { LoginForm, LoginFormProps } from 'components/Blocks/Login/LoginForm';
 import { Popup } from 'components/Layout/Popup/Popup';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart, formHeading }) => {
     const { t } = useTranslation();

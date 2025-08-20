@@ -4,8 +4,8 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrderedItemsContentProps = {
     areOrderedItemsFetching: boolean;

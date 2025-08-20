@@ -13,7 +13,6 @@ import {
 import { useCreateDeliveryAddressMutation } from 'graphql/requests/customer/mutations/CreateDeliveryAddressMutation.generated';
 import { useEditDeliveryAddressMutation } from 'graphql/requests/customer/mutations/EditDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
@@ -22,6 +21,7 @@ import { DeliveryAddressFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -215,7 +215,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                         <>
                                             <Select
                                                 isRequired
-                                                ariaLabel={t('Select country')}
+                                                ariaLabel={t('Select country', { ns: 'accessibility' })}
                                                 label={formMeta.fields.country.label}
                                                 options={countriesAsSelectOptions}
                                                 tid={formMeta.formName + '-' + formMeta.fields.country.name}
@@ -230,7 +230,9 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                 />
                             </FormLine>
                             <FormButtonWrapper>
-                                <SubmitButton aria-label={t('Submit form to save delivery address')}>
+                                <SubmitButton
+                                    aria-label={t('Submit form to save delivery address', { ns: 'accessibility' })}
+                                >
                                     {t('Save')}
                                 </SubmitButton>
                             </FormButtonWrapper>

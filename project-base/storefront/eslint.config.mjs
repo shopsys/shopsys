@@ -143,6 +143,10 @@ export default [
                     message: 'Please use ExtendedNextLink instead',
                 },
                 {
+                    name: 'next-translate/useTranslation',
+                    message: 'Please use useTranslation from utils/i18n/useTranslationWrapper instead',
+                },
+                {
                     name: 'urql',
                     importNames: ['createClient'],
                     message: 'Please use the custom createClient function from storefront/urql/fetcher.ts',

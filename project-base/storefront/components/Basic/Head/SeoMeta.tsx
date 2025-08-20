@@ -1,11 +1,11 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeHreflangLink } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { OgTypeEnum } from 'types/seo';
 import { logMessage } from 'utils/errors/logMessage';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 import { useSeo } from 'utils/seo/useSeo';
 

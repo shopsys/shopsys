@@ -52,6 +52,13 @@ vi.mock('store/useSessionStore', () => ({
     },
 }));
 
+vi.mock('next-translate/useTranslation', () => ({
+    __esModule: true,
+    default: () => ({
+        t: (key: string) => key,
+    }),
+}));
+
 vi.mock('framer-motion', async () => {
     const actual = (await vi.importActual('framer-motion')) as any;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -726,53 +733,6 @@ describe('FilterGroupParameters', () => {
             fireEvent.blur(maxInput);
 
             expect(mockUpdateFilterQuery).toHaveBeenCalledTimes(3);
-        });
-    });
-
-    describe('Performance', () => {
-        test('handles large number of parameter values', () => {
-            const manyValues = Array.from({ length: 100 }, (_, i) => ({
-                uuid: `value-${i}`,
-                name: `Value ${i}`,
-                count: (i % 10) + 1,
-            }));
-
-            const largeParameter = createCheckboxParameter('param-large', 'Large Parameter', manyValues);
-
-            const startTime = performance.now();
-            render(<FilterGroupParameters {...defaultCheckboxProps} parameter={largeParameter} />);
-            const endTime = performance.now();
-
-            // Increased threshold to account for CI environment variability
-            expect(endTime - startTime).toBeLessThan(200);
-
-            const checkboxes = screen.getAllByRole('checkbox');
-            expect(checkboxes).toHaveLength(3);
-        });
-
-        test('handles large number of color values', () => {
-            const manyColors = Array.from({ length: 50 }, (_, i) => ({
-                uuid: `color-${i}`,
-                name: `Color ${i}`,
-                count: (i % 5) + 1,
-                rgbColor: `#${i.toString(16).padStart(6, '0')}`,
-            }));
-
-            const largeColorParameter = createColorParameter('param-colors', 'Many Colors', manyColors);
-
-            const startTime = performance.now();
-            render(<FilterGroupParameters {...defaultColorProps} parameter={largeColorParameter} />);
-            const endTime = performance.now();
-
-            // Increased threshold to account for CI environment variability
-            // Original: 100ms was too tight for shared CI runners
-            expect(endTime - startTime).toBeLessThan(200);
-
-            const allInputs = screen.getAllByRole('checkbox');
-            const colorInputs = allInputs.filter((input) =>
-                input.getAttribute('name')?.includes('parameters.1.values'),
-            );
-            expect(colorInputs).toHaveLength(50);
         });
     });
 

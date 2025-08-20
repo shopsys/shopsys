@@ -1,8 +1,8 @@
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { memo } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: TypeCategoryDetailFragment['readyCategorySeoMixLinks'];

@@ -3,10 +3,10 @@ import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { SelectList } from 'components/Forms/Select/SelectList';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { SelectOptionType } from 'types/selectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import useClickClosePopup from 'utils/ui/useClickClosePopup';
 

@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { formatPrice } from 'utils/formaters/formatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type FormatPriceFunctionType = (price: string | number, options?: { explicitZero?: boolean }) => string;
 

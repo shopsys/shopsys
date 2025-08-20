@@ -11,9 +11,9 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 

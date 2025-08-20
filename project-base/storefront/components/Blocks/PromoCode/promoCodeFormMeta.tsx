@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCodeFormType] => {

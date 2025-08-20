@@ -12,9 +12,9 @@ import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/Order
 import { Form, FormContentWrapper } from 'components/Forms/Form/Form';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, useWatch } from 'react-hook-form';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationWrapper: FC = () => {
     const { t } = useTranslation();

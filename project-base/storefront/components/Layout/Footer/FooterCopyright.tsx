@@ -7,7 +7,7 @@ import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const FooterCopyright: FC = () => {
@@ -35,7 +35,7 @@ export const FooterCopyright: FC = () => {
                     {t('Customized E-shop by')}
 
                     <a
-                        aria-label={t('Visit Shopsys.com')}
+                        aria-label={t('Visit Shopsys.com', { ns: 'accessibility' })}
                         href="https://www.shopsys.com"
                         rel="noreferrer"
                         tabIndex={0}
@@ -48,7 +48,7 @@ export const FooterCopyright: FC = () => {
 
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
                     <ExtendedNextLink
-                        aria-label={t('Go to user consent update page')}
+                        aria-label={t('Go to user consent update page', { ns: 'accessibility' })}
                         className="text-sm leading-6"
                         href={userConsentUrl}
                         skeletonType="user-consent"
@@ -59,7 +59,7 @@ export const FooterCopyright: FC = () => {
                 )}
 
                 <Button
-                    aria-label={t('Go to top of the page')}
+                    aria-label={t('Go to top of the page', { ns: 'accessibility' })}
                     className="w-full md:w-auto lg:hidden"
                     variant="secondary"
                     onClick={handleBackToTop}

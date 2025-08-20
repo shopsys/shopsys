@@ -2,11 +2,11 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, Control, useController, FieldError } from 'react-hook-form';
 import { formatBytes } from 'utils/formaters/formatBytes';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type DropzoneControlledProps = {

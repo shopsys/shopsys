@@ -1,7 +1,7 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 
 type ProductComparisonButtonRemoveAllProps = {
@@ -14,7 +14,7 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
 
     return (
         <Button
-            aria-label={t('Remove all products from comparison')}
+            aria-label={t('Remove all products from comparison', { ns: 'accessibility' })}
             className={twJoin(displayMobile && 'mb-5 inline-flex sm:hidden')}
             variant="inverted"
             onClick={handleRemoveComparison}

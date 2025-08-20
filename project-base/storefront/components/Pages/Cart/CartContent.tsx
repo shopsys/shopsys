@@ -7,7 +7,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CartContentProps = {
     cart: TypeCartFragment;

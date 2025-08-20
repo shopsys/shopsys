@@ -9,7 +9,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
 import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
@@ -17,6 +16,7 @@ import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type PersonalDataExportContentProps = {
@@ -82,7 +82,9 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                 />
                                 <FormButtonWrapper>
                                     <SubmitButton
-                                        aria-label={t('Submit form to send your personal data export request')}
+                                        aria-label={t('Submit form to send your personal data export request', {
+                                            ns: 'accessibility',
+                                        })}
                                     >
                                         {t('Send')}
                                     </SubmitButton>

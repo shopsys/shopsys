@@ -1,8 +1,8 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type MergeCartsPopupProps = {
     mergeOrderItemsWithCurrentCart: (orderUuid: string, shouldMerge?: boolean | undefined) => void;

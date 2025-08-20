@@ -3,9 +3,9 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import { useAddToCart } from 'utils/cart/useAddToCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CartListProps = {
     items: TypeCartItemFragment[];
@@ -22,7 +22,11 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
                 {t('Shopping cart with {{count}} items', { count: cartItems.length })}
             </h2>
 
-            <ul aria-label={t('Cart items list')} aria-live="polite" className="flex flex-col gap-4">
+            <ul
+                aria-label={t('Cart items list', { ns: 'accessibility' })}
+                aria-live="polite"
+                className="flex flex-col gap-4"
+            >
                 {(isRemovingFromCart || isAddingToCart) && <LoaderWithOverlay isFullScreen className="w-16" />}
 
                 {cartItems.map((cartItem, listIndex) => (

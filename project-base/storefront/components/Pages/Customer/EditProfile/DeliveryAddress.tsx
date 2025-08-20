@@ -3,10 +3,10 @@ import { Button } from 'components/Forms/Button/Button';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { DeliveryAddressType } from 'types/customer';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const DeliveryAddressPopup = dynamic(
     () => import('components/Blocks/Popup/DeliveryAddressPopup').then((component) => component.DeliveryAddressPopup),

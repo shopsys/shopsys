@@ -6,10 +6,10 @@ import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { useDebounce } from 'utils/useDebounce';
@@ -124,9 +124,12 @@ export const CartListItem: FC<CartListItemProps> = ({
                 <CartItemPrice productPrice={product.price} quantity={quantity} />
 
                 <RemoveCartItemButton
-                    ariaLabel={t('Remove product {{ productName }} from cart', { productName: product.fullName })}
                     className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"
                     title={t('Remove product from cart')}
+                    ariaLabel={t('Remove product {{ productName }} from cart', {
+                        ns: 'accessibility',
+                        productName: product.fullName,
+                    })}
                     onRemoveFromCart={onRemoveFromCart}
                 />
             </section>

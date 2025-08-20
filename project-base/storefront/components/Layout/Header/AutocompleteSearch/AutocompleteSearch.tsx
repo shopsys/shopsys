@@ -7,12 +7,12 @@ import {
     useAutocompleteSearchQuery,
 } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageViewEvents/useGtmAutocompleteResultsViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
 
@@ -77,14 +77,14 @@ export const AutocompleteSearch: FC = () => {
     return (
         <>
             <div
-                aria-label={t('Site search section')}
+                aria-label={t('Site search section', { ns: 'accessibility' })}
                 className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}
                 role="search"
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
                     aria-haspopup="listbox"
-                    ariaLabelForSearchButton={t('Go to search page')}
+                    ariaLabelForSearchButton={t('Go to search page', { ns: 'accessibility' })}
                     className="w-full"
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}

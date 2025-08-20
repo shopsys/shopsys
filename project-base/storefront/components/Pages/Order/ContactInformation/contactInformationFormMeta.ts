@@ -15,7 +15,6 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo, useEffect } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -23,6 +22,7 @@ import { CustomerTypeEnum } from 'types/customer';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 import * as Yup from 'yup';
 

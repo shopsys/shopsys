@@ -8,13 +8,13 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
-import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export const ResetPasswordContent: FC = () => {
@@ -75,7 +75,7 @@ export const ResetPasswordContent: FC = () => {
                                 />
                                 <FormButtonWrapper>
                                     <SubmitButton
-                                        aria-label={t('Submit form to reset your password')}
+                                        aria-label={t('Submit form to reset your password', { ns: 'accessibility' })}
                                         hasDisabledCursor={!!error || value.length === 0}
                                     >
                                         {t('Reset password')}

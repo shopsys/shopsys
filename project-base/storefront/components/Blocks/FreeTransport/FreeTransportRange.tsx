@@ -1,6 +1,6 @@
-import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const FreeTransportRange: FC = () => {
     const testIdentifier = 'blocks-freetransport-range';

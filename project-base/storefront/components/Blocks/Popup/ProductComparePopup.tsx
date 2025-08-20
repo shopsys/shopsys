@@ -2,7 +2,7 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const ProductComparePopup: FC = () => {

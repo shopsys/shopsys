@@ -1,6 +1,6 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimatePresence, m } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 

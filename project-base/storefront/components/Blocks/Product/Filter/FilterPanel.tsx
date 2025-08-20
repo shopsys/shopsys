@@ -7,9 +7,9 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { TypeCategoryAutomatedFilterEnum, TypeProductOrderingModeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
@@ -45,18 +45,22 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
     return (
         <div
-            aria-label={t('Product filters')}
+            aria-label={t('Product filters', { ns: 'accessibility' })}
             className="z-aboveOverlay bg-background-default vl:z-above relative flex h-full flex-col pb-1"
             id="filter-panel"
             role="region"
         >
-            <AccessibleLink className="vl:block hidden rounded-md" href="#product-list" title={t('Skip filters')} />
+            <AccessibleLink
+                className="vl:block hidden rounded-md"
+                href="#product-list"
+                title={t('Skip filters', { ns: 'accessibility' })}
+            />
 
             <div className="vl:hidden flex items-center justify-between p-5">
                 <h2 className="h5">{t('Product filter')}</h2>
 
                 <button
-                    aria-label={t('Close filter panel')}
+                    aria-label={t('Close filter panel', { ns: 'accessibility' })}
                     className="text-icon-less hover:text-icon-accent flex cursor-pointer items-center justify-center"
                     tabIndex={0}
                     title={t('Close filter panel')}
@@ -73,7 +77,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <div className="divide-border-less divide-y">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
-                            ariaLabel={t('Filter by price')}
+                            ariaLabel={t('Filter by price', { ns: 'accessibility' })}
                             initialMaxPrice={filterOptions.maximalPrice}
                             initialMinPrice={filterOptions.minimalPrice}
                             isActive={activePriceFilter}
@@ -83,7 +87,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                     {!!filterOptions.flags?.length && (
                         <FilterGroupGeneric
-                            ariaLabel={t('Filter by flags')}
+                            ariaLabel={t('Filter by flags', { ns: 'accessibility' })}
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_FLAGS}
                             filterField="flags"
                             isActive={activeFlagFilter}
@@ -94,7 +98,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                     {!!filterOptions.brands?.length && (
                         <FilterGroupGeneric
-                            ariaLabel={t('Filter by brands')}
+                            ariaLabel={t('Filter by brands', { ns: 'accessibility' })}
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_BRANDS}
                             filterField="brands"
                             isActive={activeBrandFilter}
@@ -129,7 +133,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                 {currentFilter !== null && (
                     <Button
-                        aria-label={t('Clear all active filters')}
+                        aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                         size="large"
                         variant="inverted"
                         onClick={resetAllFilterQueries}

@@ -10,13 +10,13 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { LoginFormType } from 'types/form';
 import { useLogin } from 'utils/auth/useLogin';
 import { blurInput } from 'utils/forms/blurInput';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export type LoginFormProps = {
@@ -106,7 +106,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                             <FormButtonWrapper className="mt-2.5 flex flex-col gap-4">
                                 <FormButtonWrapper className="mt-0 justify-start">
                                     <SubmitButton
-                                        aria-label={t('Submit form to login to your account')}
+                                        aria-label={t('Submit form to login to your account', { ns: 'accessibility' })}
                                         size="large"
                                         tid={TIDs.login_form_submit_button}
                                         variant="inverted"
@@ -117,7 +117,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 
                                 <div className="mb-4 whitespace-nowrap">
                                     <ExtendedNextLink
-                                        aria-label={t('Go to forgot password page')}
+                                        aria-label={t('Go to forgot password page', { ns: 'accessibility' })}
                                         href={resetPasswordUrl}
                                         skeletonType="forgot-password"
                                     >

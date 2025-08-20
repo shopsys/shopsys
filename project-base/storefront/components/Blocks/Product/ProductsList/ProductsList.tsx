@@ -8,9 +8,9 @@ import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragment
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 

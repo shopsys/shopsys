@@ -8,8 +8,8 @@ import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -59,8 +59,8 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             title={isExpanded ? t('Collapse store info') : t('Expand store info')}
             aria-label={
                 isExpanded
-                    ? t('Collapse store info {{storeName}}', { storeName: store.name })
-                    : t('Expand store info {{storeName}}', { storeName: store.name })
+                    ? t('Collapse store info {{storeName}}', { ns: 'accessibility', storeName: store.name })
+                    : t('Expand store info {{storeName}}', { ns: 'accessibility', storeName: store.name })
             }
             className={twMergeCustom(
                 'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5 text-left',
@@ -71,12 +71,15 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                 setIsExpanded((isExpanded) => !isExpanded);
             }}
         >
-            <div aria-label={t('Store info')} className="flex items-center justify-between gap-3.5">
+            <div
+                aria-label={t('Store info', { ns: 'accessibility' })}
+                className="flex items-center justify-between gap-3.5"
+            >
                 <div className="w-full items-center justify-between xl:flex">
                     <div className="max-xl:mb-2.5 xl:w-[215px]">
                         <span className="h5">{store.name}</span>
 
-                        <p aria-label={t('Address')} className="mt-1.5 text-xs">
+                        <p aria-label={t('Address', { ns: 'accessibility' })} className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
                     </div>
@@ -126,7 +129,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             ) : null}
 
                             <InfoItem>
-                                <p className="h5 mb-2">{t('Opening hours')}</p>
+                                <p className="h5 mb-2">{t('Opening hours', { ns: 'accessibility' })}</p>
                                 <OpeningHours openingHours={store.openingHours} />
                             </InfoItem>
 

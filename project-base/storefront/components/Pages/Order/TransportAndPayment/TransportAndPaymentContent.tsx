@@ -8,12 +8,12 @@ import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { OrderLayout } from 'components/Layout/OrderLayout';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const TransportAndPaymentContent: FC = () => {
     const { t } = useTranslation();
@@ -65,12 +65,15 @@ export const TransportAndPaymentContent: FC = () => {
                 )}
 
                 <OrderAction
-                    ariaLabelNextStep={t('Continue with order to {{ step }}', { step: t('Contact information') })}
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}
                     isDisabled={isDisabled}
                     nextStepClickHandler={goToNextStepFromTransportAndPaymentPage}
+                    ariaLabelNextStep={t('Continue with order to {{ step }}', {
+                        ns: 'accessibility',
+                        step: t('Contact information'),
+                    })}
                     shouldShowSpinnerOnNextStepButton={
                         (isChangingTransportInCart || isChangingPaymentInOrder) && !!transport && !!payment
                     }

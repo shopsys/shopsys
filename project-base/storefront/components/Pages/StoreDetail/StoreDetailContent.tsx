@@ -7,9 +7,9 @@ import { StoreContact } from 'components/Blocks/StoreList/StoreContact';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const ModalGallery = dynamic(() =>
     import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),

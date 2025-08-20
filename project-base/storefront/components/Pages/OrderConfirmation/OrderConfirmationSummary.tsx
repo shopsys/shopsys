@@ -1,9 +1,9 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import React, { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type OrderConfirmationSummaryProps = {

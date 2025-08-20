@@ -3,7 +3,7 @@ import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCust
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrderDetailContentProps = {
     order: TypeOrderDetailFragment;

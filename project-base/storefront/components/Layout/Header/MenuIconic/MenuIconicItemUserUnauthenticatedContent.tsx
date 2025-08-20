@@ -4,8 +4,8 @@ import { LoginForm } from 'components/Blocks/Login/LoginForm';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useFocusTrap } from 'utils/useFocusTrap';
 
@@ -40,7 +40,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                 </div>
 
                 <LinkButton
-                    aria-label={t('Go to registration page')}
+                    aria-label={t('Go to registration page', { ns: 'accessibility' })}
                     aria-labelledby="registration-form-description"
                     href={registrationUrl}
                     skeletonType="registration"

@@ -7,10 +7,10 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -32,12 +32,13 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
     const ariaDescription = t(
-        'You have added quantity {{quantity}} {{unit}} to your cart{{priceInfo}}. You can now proceed to checkout or continue shopping',
+        'You have added quantity {{quantity}} {{unit}} to your cart for {{priceInfo}}. You can now proceed to checkout or continue shopping',
         {
+            ns: 'accessibility',
             quantity,
             unit: product.unit.name,
             priceInfo: isPriceVisible(product.price.priceWithVat)
-                ? ` for ${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`
+                ? `${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`
                 : '',
         },
     );
@@ -101,7 +102,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
 
             <div className="flex flex-col gap-4 text-center md:flex-row md:items-center md:justify-between md:p-0">
                 <Button
-                    aria-label={t('Go back to shop')}
+                    aria-label={t('Go back to shop', { ns: 'accessibility' })}
                     className="w-full md:w-auto"
                     variant="inverted"
                     onClick={() => updatePortalContent(null)}
@@ -110,7 +111,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 </Button>
 
                 <LinkButton
-                    aria-label={t('Go to cart')}
+                    aria-label={t('Go to cart', { ns: 'accessibility' })}
                     href={cartUrl}
                     skeletonType="cart"
                     tid={TIDs.popup_go_to_cart_button}

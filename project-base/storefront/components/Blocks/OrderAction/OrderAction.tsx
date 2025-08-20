@@ -3,7 +3,7 @@ import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrderActionProps = {
     buttonBack: string;
@@ -33,7 +33,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     return (
         <div className="my-5 flex flex-col-reverse items-center justify-between gap-4 md:my-10 md:flex-row">
             <Button
-                aria-label={t('Go to previous step')}
+                aria-label={t('Go to previous step', { ns: 'accessibility' })}
                 size="large"
                 tid={TIDs.blocks_orderaction_back}
                 variant="inverted"

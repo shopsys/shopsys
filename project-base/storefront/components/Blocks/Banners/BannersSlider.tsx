@@ -4,10 +4,10 @@ import { bannersReducer } from './bannersUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
 const SLIDER_STOP_SLIDE_TIMEOUT = 300 as const;

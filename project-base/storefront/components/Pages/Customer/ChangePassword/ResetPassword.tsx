@@ -2,7 +2,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type ResetPasswordProps = {

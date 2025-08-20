@@ -11,10 +11,10 @@ import {
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type TransportAndPaymentSelectProps = {

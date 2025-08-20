@@ -5,8 +5,8 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type CategoryDetailProductsWrapperProps = {
     category: TypeCategoryDetailFragment;

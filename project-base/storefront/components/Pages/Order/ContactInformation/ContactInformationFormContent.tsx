@@ -9,11 +9,11 @@ import { ContactInformationDeliveryAddress } from 'components/Pages/Order/Contac
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationFormContent: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);

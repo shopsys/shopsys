@@ -1,7 +1,7 @@
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const ANNOUNCEMENT_MAX_WAIT_MS = 4000;
 const ANNOUNCEMENT_POLL_INTERVAL_MS = 80;
@@ -64,7 +64,7 @@ export const RouteAnnouncer: FC = () => {
                 lastAnnouncedRef.current = normalized;
                 const resolvedMessage = options.formatter
                     ? options.formatter(normalized)
-                    : t('You are on {{pageTitle}} page', { pageTitle: normalized });
+                    : t('You are on {{pageTitle}} page', { ns: 'accessibility', pageTitle: normalized });
                 setMessage(resolvedMessage);
             }, 50);
         },
@@ -138,7 +138,7 @@ export const RouteAnnouncer: FC = () => {
             clearTimers();
             lastAnnouncedRef.current = '';
 
-            const loadingText = t('Page loading');
+            const loadingText = t('Page loading', { ns: 'accessibility' });
             loadingTitleRef.current = loadingText;
             document.title = loadingText;
             announceTitle(loadingText, {

@@ -6,11 +6,11 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -84,6 +84,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                 href={orderItem.product.slug}
                                 skeletonType="product"
                                 aria-label={t('Go to product {{ productName }}', {
+                                    ns: 'accessibility',
                                     productName: orderItem.name,
                                 })}
                             >
@@ -99,6 +100,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                                         data-tid={TIDs.order_detail_create_complaint_button}
                                         tabIndex={0}
                                         aria-label={t('Create complaint for product {{ productName }}', {
+                                            ns: 'accessibility',
                                             productName: orderItem.name,
                                         })}
                                         onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}

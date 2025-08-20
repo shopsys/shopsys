@@ -5,13 +5,13 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const PromoCode: FC = () => {
     const { promoCodes } = useCurrentCart();
@@ -35,7 +35,7 @@ export const PromoCode: FC = () => {
             <div data-tid={TIDs.blocks_promocode_add_button}>
                 <Checkbox
                     aria-expanded={isContentVisible}
-                    aria-label={t('Toggle promo code')}
+                    aria-label={t('Toggle promo code', { ns: 'accessibility' })}
                     id="promo-code"
                     label={t('I have a discount coupon')}
                     value={isContentVisible}
@@ -71,7 +71,7 @@ export const PromoCode: FC = () => {
                             </div>
 
                             <SubmitButton
-                                aria-label={t('Submit form to apply promo code')}
+                                aria-label={t('Submit form to apply promo code', { ns: 'accessibility' })}
                                 className="self-start"
                                 hasDisabledCursor={!formProviderMethods.formState.isValid}
                                 size="xlarge"

@@ -16,7 +16,6 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateComplaint } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
@@ -27,6 +26,7 @@ import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelec
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -256,7 +256,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     <>
                                         <Select
                                             isRequired
-                                            ariaLabel={t('Select resolution')}
+                                            ariaLabel={t('Select resolution', { ns: 'accessibility' })}
                                             className="mb-2.5"
                                             isDisabled={isSubmitting}
                                             label={formMeta.fields.resolution.label}
@@ -449,7 +449,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                                 <>
                                                     <Select
                                                         isRequired
-                                                        ariaLabel={t('Select country')}
+                                                        ariaLabel={t('Select country', { ns: 'accessibility' })}
                                                         isDisabled={isSubmitting}
                                                         label={formMeta.fields.country.label}
                                                         options={countriesAsSelectOptions}
@@ -468,7 +468,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             )}
 
                             <FormButtonWrapper>
-                                <SubmitButton aria-label={t('Submit your complaint')}>
+                                <SubmitButton aria-label={t('Submit your complaint', { ns: 'accessibility' })}>
                                     {isSubmitting ? (
                                         <>
                                             <Loader className="h-4 w-4" /> {t('Sending...')}

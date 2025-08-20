@@ -3,9 +3,9 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type BlogSignpostItemProps = {

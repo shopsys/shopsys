@@ -9,12 +9,12 @@ import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
 import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -61,7 +61,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
-                ariaLabel={t('Filter by parameter') + ' ' + title}
+                ariaLabel={t('Filter by parameter {{ parameterName }}', { ns: 'accessibility', parameterName: title })}
                 isActive={isActive}
                 isOpen={!isGroupCollapsed}
                 title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}

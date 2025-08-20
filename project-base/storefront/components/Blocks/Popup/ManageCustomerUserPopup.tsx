@@ -15,12 +15,12 @@ import { getCustomerUser } from 'connectors/customer/CustomerUser';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useAddNewCustomerUserMutation } from 'graphql/requests/customer/mutations/AddNewCustomerUserMutation.generated';
 import { useEditCustomerUserPersonalDataMutation } from 'graphql/requests/customer/mutations/EditCustomerUserPersonalDataMutation.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { CustomerUserManageProfileFormType } from 'types/form';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCustomerUserGroupsAsSelectOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
 
@@ -167,7 +167,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                     <>
                                         <Select
                                             isRequired
-                                            ariaLabel={t('Select role group')}
+                                            ariaLabel={t('Select role group', { ns: 'accessibility' })}
                                             label={formMeta.fields.roleGroup.label}
                                             options={customerUserRoleGroupsAsSelectOptions}
                                             tid={formMeta.formName + '-' + formMeta.fields.roleGroup.name}
@@ -188,8 +188,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 <SubmitButton
                                     aria-label={
                                         mode === 'edit'
-                                            ? t('Submit form to save user changes')
-                                            : t('Submit form to add new user')
+                                            ? t('Submit form to save user changes', { ns: 'accessibility' })
+                                            : t('Submit form to add new user', { ns: 'accessibility' })
                                     }
                                 >
                                     {mode === 'edit' ? t('Save user') : t('Add user')}

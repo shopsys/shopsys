@@ -1,7 +1,7 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
-import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type DeleteCustomerUserPopupProps = {
     deleteCustomerUserHandler: () => void;

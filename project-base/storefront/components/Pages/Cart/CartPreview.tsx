@@ -4,10 +4,10 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 export const CartPreview: FC = () => {
@@ -38,10 +38,13 @@ export const CartPreview: FC = () => {
                             <Flag type="discount">{promoCodes[0].code}</Flag>
 
                             <button
-                                aria-label={t('Remove promo code {{ promoCode }}', { promoCode: promoCodes[0].code })}
                                 className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
                                 data-tid={TIDs.blocks_promocode_promocodeinfo_code}
                                 tabIndex={0}
+                                aria-label={t('Remove promo code {{ promoCode }}', {
+                                    ns: 'accessibility',
+                                    promoCode: promoCodes[0].code,
+                                })}
                                 onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
                                 {t('Remove')}
@@ -80,11 +83,14 @@ export const CartPreview: FC = () => {
                 )}
 
             <Button
-                aria-label={t('Continue with order to {{ step }}', { step: t('Transport and payment') })}
                 className="mt-4"
                 size="xlarge"
                 tid={TIDs.blocks_orderaction_next}
                 variant="primary"
+                aria-label={t('Continue with order to {{ step }}', {
+                    ns: 'accessibility',
+                    step: t('Transport and payment'),
+                })}
                 onClick={goToNextStepFromCartPage}
             >
                 {t('Continue with order')}

@@ -4,8 +4,8 @@ import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
@@ -22,7 +22,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
             <div
                 aria-expanded={isUserMenuOpen}
                 aria-haspopup="menu"
-                aria-label={t('Show logged in user poup')}
+                aria-label={t('Show logged in user popup')}
                 className={twMergeCustom('group outline-none lg:relative lg:flex', isUserMenuOpen && 'z-aboveOverlay')}
                 data-tid={TIDs.my_account_link}
                 role="button"

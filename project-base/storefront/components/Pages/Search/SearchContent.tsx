@@ -2,8 +2,8 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
 import { TypeSearchQuery } from 'graphql/requests/search/queries/SearchQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type SearchContentProps = {

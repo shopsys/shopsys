@@ -1,9 +1,9 @@
 import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useState, useRef, useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import useWindowDimensions from 'utils/useWindowDimensions';
 
 export type NavigationProps = {
@@ -50,7 +50,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     };
 
     return (
-        <nav aria-label={t('Main navigation')} className="relative" id="main-navigation">
+        <nav aria-label={t('Main navigation', { ns: 'accessibility' })} className="relative" id="main-navigation">
             <ul
                 ref={navigationRef}
                 className={twJoin(

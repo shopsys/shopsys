@@ -1,7 +1,7 @@
-import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { useCartStepNavigation } from 'utils/cart/useCartStepNavigation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CartStepProps = {
     step: number;
@@ -28,7 +28,7 @@ export const CartStep: FC<CartStepProps> = ({
     return (
         <li>
             <button
-                aria-label={t('Go to {{ step }} step', { step: step })}
+                aria-label={t('Go to {{ step }} step', { ns: 'accessibility', step: step })}
                 disabled={isDisabled}
                 tabIndex={0}
                 className={twJoin(

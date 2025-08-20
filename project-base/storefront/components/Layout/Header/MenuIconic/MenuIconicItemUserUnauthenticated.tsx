@@ -4,8 +4,8 @@ import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useState, MouseEvent as ReactMouseEvent } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useDebounce } from 'utils/useDebounce';
@@ -23,7 +23,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
             <div
                 aria-expanded={isActive}
                 aria-haspopup="menu"
-                aria-label={t('Show registration and login popup')}
+                aria-label={t('Show registration and login popup', { ns: 'accessibility' })}
                 data-tid={TIDs.my_account_link}
                 role="button"
                 tabIndex={0}

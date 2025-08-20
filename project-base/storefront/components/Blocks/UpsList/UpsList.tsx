@@ -5,7 +5,7 @@ import { UpsFourthIcon } from 'components/Basic/Icon/UpsFourthIcon';
 import { UpsSecondIcon } from 'components/Basic/Icon/UpsSecondIcon';
 import { UpsThirdIcon } from 'components/Basic/Icon/UpsThirdIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 export const UpsList: FC = () => {

@@ -6,12 +6,12 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import useTranslation from 'next-translate/useTranslation';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
@@ -82,7 +82,7 @@ export const ContactInformationAddress: FC = () => {
                         <>
                             <Select
                                 isRequired
-                                ariaLabel={t('Select country')}
+                                ariaLabel={t('Select country', { ns: 'accessibility' })}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
                                 tid={formMeta.formName + '-' + formMeta.fields.country.name}

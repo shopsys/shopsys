@@ -1,7 +1,7 @@
 import { TIDs } from 'cypress/tids';
 import { TypeOpeningHours } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { formatAccessibleTime } from 'utils/accessibility/formatAccessibleTime';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export default function OpeningHoursToday({ openingHours }: { openingHours: TypeOpeningHours }) {
     const { t, lang } = useTranslation();
@@ -12,7 +12,7 @@ export default function OpeningHoursToday({ openingHours }: { openingHours: Type
         return null;
     }
 
-    const ariaLabel = `${t('Today opening hours')} ${todayOpeningDayRanges
+    const ariaLabel = `${t('Today opening hours', { ns: 'accessibility' })} ${todayOpeningDayRanges
         .map(({ openingTime, closingTime }) => {
             const openingFormatted = formatAccessibleTime(openingTime, lang);
             const closingFormatted = formatAccessibleTime(closingTime, lang);

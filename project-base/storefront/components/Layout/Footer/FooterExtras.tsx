@@ -5,7 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { TIDs } from 'cypress/tids';
 import { useTransportsImage } from 'graphql/requests/transports/queries/TransportsImage.generated';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const FooterExtras = () => {
     const { t } = useTranslation();
@@ -37,13 +37,31 @@ export const FooterExtras = () => {
                 )}
 
                 <div className="flex gap-4" data-tid={TIDs.footer_social_links}>
-                    <a aria-label={t('Go to Instagram')} href="/" tabIndex={0} target="_blank" title="Instagram">
+                    <a
+                        aria-label={t('Go to Instagram', { ns: 'accessibility' })}
+                        href="/"
+                        tabIndex={0}
+                        target="_blank"
+                        title="Instagram"
+                    >
                         <InstagramIcon className="size-10" />
                     </a>
-                    <a aria-label={t('Go to Facebook')} href="/" tabIndex={0} target="_blank" title="Facebook">
+                    <a
+                        aria-label={t('Go to Facebook', { ns: 'accessibility' })}
+                        href="/"
+                        tabIndex={0}
+                        target="_blank"
+                        title="Facebook"
+                    >
                         <FacebookIcon className="size-10" />
                     </a>
-                    <a aria-label={t('Go to Youtube')} href="/" tabIndex={0} target="_blank" title="Youtube">
+                    <a
+                        aria-label={t('Go to Youtube', { ns: 'accessibility' })}
+                        href="/"
+                        tabIndex={0}
+                        target="_blank"
+                        title="Youtube"
+                    >
                         <YoutubeIcon className="size-10" />
                     </a>
                 </div>

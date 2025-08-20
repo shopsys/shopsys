@@ -1,10 +1,10 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { memo } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type SimpleNavigationProps = {
@@ -34,7 +34,7 @@ const SimpleNavigationComp: FC<SimpleNavigationProps> = ({
         <Webline>
             {title && <h2 className="sr-only">{title}</h2>}
             <nav
-                aria-label={ariaLabel || title || t('Navigation')}
+                aria-label={ariaLabel || title || t('Navigation', { ns: 'accessibility' })}
                 className={twMergeCustom(
                     !isWithoutSlider &&
                         'snap-x snap-mandatory auto-cols-[40%] grid-flow-col overflow-x-auto overflow-y-hidden overscroll-x-contain md:grid-flow-row',

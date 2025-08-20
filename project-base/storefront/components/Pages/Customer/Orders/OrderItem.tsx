@@ -7,9 +7,9 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -44,6 +44,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                             className="font-bold"
                             type="orderDetail"
                             aria-label={t('Go to order detail number {{ orderNumber }}', {
+                                ns: 'accessibility',
                                 orderNumber: order.number,
                             })}
                             href={{
@@ -89,6 +90,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         tid={TIDs.order_list_repeat_order_button}
                         variant="inverted"
                         aria-label={t('Repeat order number {{ orderNumber }}', {
+                            ns: 'accessibility',
                             orderNumber: order.number,
                         })}
                         onClick={() => addOrderItemsToEmptyCart(order.uuid)}
@@ -102,6 +104,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         type="orderDetail"
                         variant="primary"
                         aria-label={t('Repeat payment for order number {{ orderNumber }}', {
+                            ns: 'accessibility',
                             orderNumber: order.number,
                         })}
                         href={{
@@ -118,6 +121,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     type="orderDetail"
                     variant="secondary"
                     aria-label={t('Go to order detail number {{ orderNumber }}', {
+                        ns: 'accessibility',
                         orderNumber: order.number,
                     })}
                     href={{

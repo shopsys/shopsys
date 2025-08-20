@@ -8,7 +8,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 export const Wishlist: FC = () => {
@@ -27,7 +27,7 @@ export const Wishlist: FC = () => {
                     <>
                         <div className="flex w-full flex-col items-center justify-between pb-2 lg:flex-row">
                             <Button
-                                aria-label={t('Remove all product from wishlist')}
+                                aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
                                 variant="inverted"
                                 onClick={() => {
                                     handleRemoveWishlist();

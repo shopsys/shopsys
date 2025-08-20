@@ -13,7 +13,7 @@ import { TypeRecommendationType } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const HomePageContent: FC = () => {
     const { t } = useTranslation();
@@ -40,7 +40,7 @@ export const HomePageContent: FC = () => {
                         <DeferredRecommendedProducts
                             recommendationType={TypeRecommendationType.Personalized}
                             render={(recommendedProductsContent) => (
-                                <section aria-label={t('Recommended products')}>
+                                <section aria-label={t('Recommended products', { ns: 'accessibility' })}>
                                     <h2 className="h3 mb-3">{t('Recommended for you')}</h2>
                                     {recommendedProductsContent}
                                 </section>

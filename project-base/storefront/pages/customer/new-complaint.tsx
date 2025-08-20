@@ -19,9 +19,9 @@ import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/O
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
@@ -98,11 +98,13 @@ const NewComplaintPage: FC = () => {
                     title={t('New complaint')}
                 >
                     <SearchInput
-                        ariaLabelForSearchButton={t('Search for a product you want to complain about')}
                         className="border-input-border-default w-full border"
                         label={t('Search for a product you want to complain about')}
                         shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
                         value={searchQueryValue}
+                        ariaLabelForSearchButton={t('Search for a product you want to complain about', {
+                            ns: 'accessibility',
+                        })}
                         onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
                         onClear={() => setSearchQueryValue('')}
                     />

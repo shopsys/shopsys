@@ -2,9 +2,9 @@ import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
 import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 type GoPayGatewayProps = {

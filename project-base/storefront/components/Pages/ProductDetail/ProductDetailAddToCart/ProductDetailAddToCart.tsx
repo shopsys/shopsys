@@ -7,12 +7,12 @@ import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/P
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapPriceForCalculations } from 'utils/mappers/price';
 
 const AddToCartPopup = dynamic(
@@ -73,7 +73,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         return (
             <Button
                 aria-haspopup="dialog"
-                aria-label={t('Open inquiry popup')}
+                aria-label={t('Open inquiry popup', { ns: 'accessibility' })}
                 className="w-fit"
                 size="large"
                 title={t('Inquire popup')}
@@ -93,6 +93,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         product.isSellingDenied;
 
     const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
+        ns: 'accessibility',
         productName: product.name,
         quantity: spinboxRef.current?.valueAsNumber,
         unit: product.unit.name,

@@ -5,10 +5,10 @@ import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
 
 const ModalGallery = dynamic(() =>
@@ -95,9 +95,12 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                 <Fragment key={index}>
                                     <li>
                                         <button
-                                            aria-label={t('Open image gallery of {{ productName }}', { productName })}
                                             tabIndex={0}
                                             title={t('View product image')}
+                                            aria-label={t('Open image gallery of {{ productName }}', {
+                                                ns: 'accessibility',
+                                                productName,
+                                            })}
                                             className={twJoin(
                                                 'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
                                                 (isWithAdditionalImages || isVideo) && 'relative',
@@ -140,6 +143,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                 tabIndex={0}
                                                 title={t('View product image')}
                                                 aria-label={t('Open image gallery of {{ productName }}', {
+                                                    ns: 'accessibility',
                                                     productName,
                                                 })}
                                                 onClick={() => setSelectedGalleryItemIndex(index + 2)}

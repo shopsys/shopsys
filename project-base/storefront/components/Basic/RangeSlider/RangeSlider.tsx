@@ -1,5 +1,4 @@
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import useTranslation from 'next-translate/useTranslation';
 import {
     ChangeEvent,
     ChangeEventHandler,
@@ -14,6 +13,7 @@ import {
     useState,
 } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 /*
  * Inspired by
@@ -169,7 +169,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         <>
             <div className="relative flex h-4 w-full items-center justify-center">
                 <RangeSliderThumb
-                    aria-label={t('Minimum value')}
+                    aria-label={t('Minimum value', { ns: 'accessibility' })}
                     className="pr-4"
                     disabled={isDisabled}
                     max={max}
@@ -182,7 +182,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMinValueThumbCallback}
                 />
                 <RangeSliderThumb
-                    aria-label={t('Maximum value')}
+                    aria-label={t('Maximum value', { ns: 'accessibility' })}
                     className="pl-4"
                     disabled={isDisabled}
                     max={max}
@@ -205,7 +205,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 <div className="w-1/2">
                     <TextInput
                         aria-hidden
-                        aria-label={t('Filter by minimum value')}
+                        aria-label={t('Filter by minimum value', { ns: 'accessibility' })}
                         disabled={isDisabled}
                         id={`${title} - from`}
                         label={t('from')}
@@ -219,7 +219,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 <div className="w-1/2">
                     <TextInput
                         aria-hidden
-                        aria-label={t('Filter by maximum value')}
+                        aria-label={t('Filter by maximum value', { ns: 'accessibility' })}
                         disabled={isDisabled}
                         id={`${title} - to`}
                         label={t('to')}

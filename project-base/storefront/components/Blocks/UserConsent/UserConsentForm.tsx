@@ -5,11 +5,11 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { JSX } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type UserConsentFormProps = {
     onSetCallback?: () => void;
@@ -79,7 +79,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
             <div className="bg-background-more vl:p-8 flex flex-col gap-4 rounded-xl p-4">
                 <ToggleSwitchControlled
-                    ariaLabel={t('Toggle marketing consent')}
+                    ariaLabel={t('Toggle marketing consent', { ns: 'accessibility' })}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.marketing.name}
@@ -87,7 +87,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 />
 
                 <ToggleSwitchControlled
-                    ariaLabel={t('Toggle statistics consent')}
+                    ariaLabel={t('Toggle statistics consent', { ns: 'accessibility' })}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.statistics.name}
@@ -95,7 +95,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 />
 
                 <ToggleSwitchControlled
-                    ariaLabel={t('Toggle preferences consent')}
+                    ariaLabel={t('Toggle preferences consent', { ns: 'accessibility' })}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.preferences.name}
@@ -105,19 +105,23 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
             <div className="flex flex-wrap justify-end gap-3">
                 <Button
-                    aria-label={t('Submit form to save your choices')}
+                    aria-label={t('Submit form to save your choices', { ns: 'accessibility' })}
                     size="small"
                     onClick={saveUserConsentChoices}
                 >
                     {t('Save choices')}
                 </Button>
 
-                <Button aria-label={t('Submit form to accept all choices')} size="small" onClick={giveFullUserConsent}>
+                <Button
+                    aria-label={t('Submit form to accept all choices', { ns: 'accessibility' })}
+                    size="small"
+                    onClick={giveFullUserConsent}
+                >
                     {t('Accept all')}
                 </Button>
 
                 <Button
-                    aria-label={t('Submit form to reject all choices')}
+                    aria-label={t('Submit form to reject all choices', { ns: 'accessibility' })}
                     size="small"
                     variant="inverted"
                     onClick={rejectUserConsent}

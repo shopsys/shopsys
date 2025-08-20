@@ -7,8 +7,8 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getMappedProducts } from 'utils/mappers/products';
 
 type SearchProductsContentProps = {

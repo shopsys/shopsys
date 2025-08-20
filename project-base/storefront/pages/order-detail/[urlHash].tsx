@@ -18,11 +18,11 @@ import {
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';

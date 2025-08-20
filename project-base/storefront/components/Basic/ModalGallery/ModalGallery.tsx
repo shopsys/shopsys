@@ -6,10 +6,10 @@ import { AnimatePresence } from 'framer-motion';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, forwardRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useFocusTrap } from 'utils/useFocusTrap';
 import { useKeypress } from 'utils/useKeyPress';
@@ -86,7 +86,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
     return (
         <div
-            aria-label={t('Gallery')}
+            aria-label={t('Gallery', { ns: 'accessibility' })}
             aria-modal="true"
             className="z-maximum bg-background-default focus-visible:outline-background-accent fixed inset-0 flex flex-col p-2 select-none focus-visible:outline-4 focus-visible:outline-offset-[-2px]"
             ref={modalRef}
@@ -96,7 +96,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 <div
                     className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center"
                     {...handlers}
-                    aria-label={t('Gallery content')}
+                    aria-label={t('Gallery content', { ns: 'accessibility' })}
                     role="region"
                 >
                     <SpinnerIcon aria-hidden="true" className="-z-above text-text-inverted absolute w-16 opacity-50" />
@@ -130,10 +130,12 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                                 <iframe
                                     allowFullScreen
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    aria-label={selectedGalleryItem.description ?? t('Product Video')}
                                     className="aspect-video max-h-full w-full max-w-xl md:max-w-[1500px]"
                                     src={`https://www.youtube.com/embed/${selectedGalleryItem.token}?autoplay=1&mute=1`}
                                     title={selectedGalleryItem.description ?? t('Product Video')}
+                                    aria-label={
+                                        selectedGalleryItem.description ?? t('Product Video', { ns: 'accessibility' })
+                                    }
                                 />
                             </AnimateSlideDiv>
                         )}
@@ -168,7 +170,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 )}
 
                 <div
-                    aria-label={t('Gallery navigation')}
+                    aria-label={t('Gallery navigation', { ns: 'accessibility' })}
                     className="mt-4 flex items-center justify-center gap-8"
                     role="toolbar"
                 >
@@ -177,7 +179,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 </div>
 
                 <div
-                    aria-label={t('Gallery thumbnails')}
+                    aria-label={t('Gallery thumbnails', { ns: 'accessibility' })}
                     className="mt-4 flex items-center justify-center gap-2"
                     role="tablist"
                 >

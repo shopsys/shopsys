@@ -13,10 +13,10 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 export type ProductVisibleItemsConfigType = {
@@ -84,13 +84,16 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             >
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                     className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     tabIndex={allowKeyboardFocus ? 0 : -1}
                     title={t('Go to product page')}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
+                    aria-label={t('Go to product page of {{ productName }}', {
+                        ns: 'accessibility',
+                        productName: product.fullName,
+                    })}
                     onMouseUp={() => {
                         onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
                         onClick?.(product, listIndex);

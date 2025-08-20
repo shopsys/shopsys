@@ -1,6 +1,6 @@
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductAvailabilityProps = {
     availability: TypeAvailability;
@@ -30,7 +30,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
         <div
             {...(isInteractive && {
                 'aria-haspopup': 'dialog',
-                'aria-label': t('Open stores availability popup'),
+                'aria-label': t('Open stores availability popup', { ns: 'accessibility' }),
                 role: 'button',
                 tabIndex: 0,
                 title: t('Show stores availability'),

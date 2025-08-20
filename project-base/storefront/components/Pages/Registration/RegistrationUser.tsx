@@ -4,10 +4,10 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationUser: FC = () => {
     const { t } = useTranslation();

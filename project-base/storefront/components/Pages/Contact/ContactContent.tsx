@@ -11,13 +11,13 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactFormMutation } from 'graphql/requests/contact/mutations/ContactFormMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export const ContactContent: FC = () => {
@@ -114,7 +114,7 @@ export const ContactContent: FC = () => {
                                 />
                                 <FormButtonWrapper>
                                     <SubmitButton
-                                        aria-label={t('Submit form to send your message')}
+                                        aria-label={t('Submit form to send your message', { ns: 'accessibility' })}
                                         hasDisabledCursor={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Send message')}

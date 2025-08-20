@@ -8,8 +8,8 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const SearchProducts: FC = () => {

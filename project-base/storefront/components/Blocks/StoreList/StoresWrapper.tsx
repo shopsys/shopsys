@@ -5,9 +5,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { useStoresQuery } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { TypeCoordinates } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { useDebounce } from 'utils/useDebounce';
@@ -56,7 +56,7 @@ export const StoresWrapper: FC = () => {
             <div className="flex flex-col-reverse gap-5 lg:flex-row">
                 <div className="basis-1/2">
                     <SearchInput
-                        ariaLabelForSearchButton={t('Search for a store')}
+                        ariaLabelForSearchButton={t('Search for a store', { ns: 'accessibility' })}
                         label={t('City or postcode')}
                         shouldShowSpinnerInInput={isFetching}
                         value={searchTextValue}

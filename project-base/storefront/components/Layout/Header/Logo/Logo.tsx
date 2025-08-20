@@ -3,7 +3,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 export const Logo: FC = () => {
@@ -13,7 +13,7 @@ export const Logo: FC = () => {
             <LogoMetadata />
 
             <ExtendedNextLink
-                aria-label={t('Go to homepage')}
+                aria-label={t('Go to homepage', { ns: 'accessibility' })}
                 className="vl:flex-none group order-2 flex-1 rounded-md px-2 sm:px-3 lg:order-1 lg:px-0"
                 href="/"
                 tid={TIDs.header_homepage_link}
