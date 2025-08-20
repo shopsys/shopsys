@@ -54,7 +54,6 @@
     * [GoPayPaymentMethod](#gopaypaymentmethod)
     * [HreflangLink](#hreflanglink)
     * [Image](#image)
-    * [LanguageConstant](#languageconstant)
     * [Link](#link)
     * [LoginInfo](#logininfo)
     * [LoginResult](#loginresult)
@@ -737,15 +736,6 @@ Check if email is registered
 <td colspan="2" align="right" valign="top">email</td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="query.languageconstants">languageConstants</strong></td>
-<td valign="top">[<a href="#languageconstant">LanguageConstant</a>!]!</td>
-<td>
-
-Return user translated language constants for current domain locale
-
-</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="query.lastorder">lastOrder</strong></td>
@@ -5527,41 +5517,6 @@ Name of the image usable as an alternative text
 <td>
 
 URL address of the image
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### LanguageConstant
-
-Represents a single user translation of language constant
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong id="languageconstant.key">key</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Translation key
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="languageconstant.translation">translation</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-User translation
 
 </td>
 </tr>

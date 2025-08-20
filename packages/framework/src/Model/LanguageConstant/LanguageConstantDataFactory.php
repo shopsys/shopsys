@@ -11,7 +11,10 @@ class LanguageConstantDataFactory
      */
     public function create(): LanguageConstantData
     {
-        return new LanguageConstantData();
+        $languageConstantData = new LanguageConstantData();
+        $languageConstantData->namespace = LanguageConstant::NAMESPACE_COMMON;
+
+        return $languageConstantData;
     }
 
     /**
@@ -19,6 +22,7 @@ class LanguageConstantDataFactory
      * @param string $locale
      * @param string $translation
      * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null $languageConstant
+     * @param string $namespace
      * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
      */
     public function createFromDataOrLanguageConstant(
@@ -26,9 +30,10 @@ class LanguageConstantDataFactory
         string $locale,
         string $translation,
         ?LanguageConstant $languageConstant,
+        string $namespace,
     ): LanguageConstantData {
         return $languageConstant === null
-            ? $this->createFromData($key, $locale, $translation)
+            ? $this->createFromData($key, $locale, $translation, $namespace)
             : $this->createFromLanguageConstant($languageConstant, $locale, $translation);
     }
 
@@ -36,12 +41,18 @@ class LanguageConstantDataFactory
      * @param string $key
      * @param string $locale
      * @param string $originalTranslation
+     * @param string $namespace
      * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
      */
-    protected function createFromData(string $key, string $locale, string $originalTranslation): LanguageConstantData
-    {
+    protected function createFromData(
+        string $key,
+        string $locale,
+        string $originalTranslation,
+        string $namespace,
+    ): LanguageConstantData {
         $languageConstantData = $this->create();
         $languageConstantData->key = $key;
+        $languageConstantData->namespace = $namespace;
         $languageConstantData->locale = $locale;
         $languageConstantData->originalTranslation = $originalTranslation;
 
@@ -61,6 +72,7 @@ class LanguageConstantDataFactory
     ): LanguageConstantData {
         $languageConstantData = $this->create();
         $languageConstantData->key = $languageConstant->getKey();
+        $languageConstantData->namespace = $languageConstant->getNamespace();
         $languageConstantData->locale = $locale;
         $languageConstantData->originalTranslation = $originalTranslation;
         $languageConstantData->userTranslation = $languageConstant->getTranslation($locale);

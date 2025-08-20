@@ -14,6 +14,11 @@ class LanguageConstantData
     /**
      * @var string
      */
+    public $namespace;
+
+    /**
+     * @var string
+     */
     public $locale;
 
     /**

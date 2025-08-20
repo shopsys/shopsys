@@ -2611,6 +2611,9 @@ msgstr ""
 msgid "Names"
 msgstr ""
 
+msgid "Namespace"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 

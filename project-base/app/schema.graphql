@@ -1143,14 +1143,6 @@ type Image {
   url: String!
 }
 
-"Represents a single user translation of language constant"
-type LanguageConstant {
-  "Translation key"
-  key: String!
-  "User translation"
-  translation: String!
-}
-
 "Represents an internal link"
 type Link {
   "Clickable text for a hyperlink"
@@ -2265,8 +2257,6 @@ type Query {
   GoPaySwifts(currencyCode: String!): [GoPayBankSwift!]!
   "Check if email is registered"
   isCustomerUserRegistered(email: String!): Boolean!
-  "Return user translated language constants for current domain locale"
-  languageConstants: [LanguageConstant!]!
   "Returns last order of the user or null if no order was placed yet"
   lastOrder: Order
   MainVariant: MainVariant
