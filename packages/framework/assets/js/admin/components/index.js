@@ -49,7 +49,6 @@ import './PromoCodeLimits';
 import './RoleGroups';
 import './SelectAdminDomains';
 import './SelectToggle';
-import './SideMenu';
 import './SortableValues';
 import './Statistics';
 import './ToggleMenu';
