@@ -29,9 +29,6 @@ export default class OpeningHoursCollection {
             new Register().registerNewContent($item);
 
             FormChangeInfo.showInfo();
-
-            event.preventDefault();
-            return false;
         });
     }
 }
