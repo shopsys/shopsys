@@ -61,18 +61,4 @@ class DatabaseConnectionCredentialsProvider
     {
         return $this->databasePassword;
     }
-
-    /**
-     * @return string
-     */
-    public function getConnectionDsn(): string
-    {
-        $dsnParams = [
-            'host' => $this->getDatabaseHost(),
-            'port' => $this->getDatabasePort(),
-            'dbname' => $this->getDatabaseName(),
-        ];
-
-        return 'pgsql:' . http_build_query($dsnParams, '', ';');
-    }
 }

@@ -29,7 +29,7 @@
     <property name="path.src" value="${path.root}/src"/>
     <property name="path.assets" value="${path.root}/assets"/>
     <property name="path.templates" value="${path.root}/templates"/>
-    <property name="path.test.database.dump" value="${path.var}/cache/test-db-dump.sql"/>
+    <property name="path.test.database.dump" value="var/cache/test-db-dump.sql"/>
     <property name="path.tests" value="${path.root}/tests"/>
     <property name="path.tests.failed" value="${path.var}/PHING_TESTS_FAILED"/>
     <property name="path.tests.functional" value="${path.tests}/App/Functional/"/>
