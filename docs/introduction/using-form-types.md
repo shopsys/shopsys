@@ -23,11 +23,6 @@ Defaults to `null`.
 You can use this option if you want to have no padding in your rendered form_row.
 To achieve this you need to fill this option with constant `FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING`
 
-### js_container
-
-Defaults to `null`.  
-This option is used as array with two options (`container_class`, `data_type`) and can be used to wrap your form_row in `<div class="{{ js_container.container_class }}" data-type="{{ js_container.data_type }}">`
-
 ## Form types
 
 We created some form types which can help you with creating your own form types.
