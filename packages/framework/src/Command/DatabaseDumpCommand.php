@@ -46,11 +46,12 @@ class DatabaseDumpCommand extends Command
         // --schema=public option is used in order to dump only "public" schema which contains the application data
         // --no-owner option ensures that the dump can be imported on system with different database username
         $command = sprintf(
-            '%s --host=%s --dbname=%s --no-owner --schema=public --username=%s --no-password',
+            '%s --host=%s --dbname=%s --no-owner --schema=public --username=%s --port=%s --no-password -Fc',
             escapeshellcmd($input->getOption(self::OPT_PGDUMP_BIN)),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseHost()),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseName()),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseUsername()),
+            escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabasePort()),
         );
 
         putenv('PGPASSWORD=' . $this->databaseConnectionCredentialsProvider->getDatabasePassword());

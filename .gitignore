@@ -1,6 +1,7 @@
 /.idea
 /nbproject
 /.npm-global
+/var/cache/test-db-dump.sql
 /vendor
 /.php_cs.cache
 /.phpcs-cache

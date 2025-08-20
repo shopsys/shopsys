@@ -9,10 +9,6 @@ modules:
     enabled:
         # SymfonyHelper enables using Symfony DI container.
         - Tests\App\Test\Codeception\Helper\SymfonyHelper
-        # DatabaseHelper sets the configuration of Db module in _initialize().
-        # Db module reads this configuration in its own _initialize(),
-        # therefore DatabaseHelper must be included before Db.
-        - Tests\App\Test\Codeception\Helper\DatabaseHelper
         - Tests\App\Test\Codeception\Module\Db
         - Tests\App\Test\Codeception\Module\StrictWebDriver
         - Tests\App\Test\Codeception\Helper\WebDriverHelper
@@ -25,12 +21,13 @@ modules:
         - Tests\App\Test\Codeception\Helper\NumberFormatHelper
     config:
         Tests\App\Test\Codeception\Module\Db:
-            dsn: ~
-            user: ~
-            password: ~
-            dump: ../var/cache/test-db-dump.sql
+            dsn: 'pgsql:host=%DATABASE_HOST%;port=%DATABASE_PORT%;dbname=%DATABASE_NAME%'
+            user: '%DATABASE_USER%'
+            password: '%DATABASE_PASSWORD%'
+            dump: var/cache/test-db-dump.sql
             populate: true
             cleanup: true
+            populator: 'PGPASSWORD=$password pg_restore -U $user -h $host -d $dbname $dump' # see https://codeception.com/docs/modules/Db.html#Populator
         Tests\App\Test\Codeception\Module\StrictWebDriver:
             host: '%SELENIUM_SERVER_HOST%'
             port: 4444
