@@ -43,7 +43,7 @@ final class TermsAndConditionsSettingFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose article --'),
                 'label' => t('Terms and conditions'),
-                'help' => 'Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.',
+                'help' => t('Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.'),
             ]);
 
         $builder
