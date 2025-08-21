@@ -51,6 +51,5 @@ import './SelectAdminDomains';
 import './SelectToggle';
 import './SortableValues';
 import './Statistics';
-import './ToggleMenu';
 import './TransportPriceWithWeightLimitCollection';
 import './ImportPriceList';
