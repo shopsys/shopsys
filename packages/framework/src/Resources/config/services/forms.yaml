@@ -19,10 +19,6 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
 
-    Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
     Shopsys\FrameworkBundle\Form\InvertChoiceTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }

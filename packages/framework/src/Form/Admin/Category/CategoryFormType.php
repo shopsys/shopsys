@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -214,7 +213,6 @@ final class CategoryFormType extends AbstractType
             ->add('descriptions', MultidomainType::class, [
                 'entry_type' => CKEditorType::class,
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [

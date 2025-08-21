@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -101,7 +100,6 @@ final class BlogCategoryFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
-     * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createSettingsGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
@@ -270,7 +268,6 @@ final class BlogCategoryFormType extends AbstractType
                 'entry_type' => CKEditorType::class,
                 'label' => t('Description'),
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ]);
 
         return $builderDescriptionGroup;

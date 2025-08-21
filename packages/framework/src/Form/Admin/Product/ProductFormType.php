@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -258,7 +257,6 @@ final class ProductFormType extends AbstractType
                     'expanded' => true,
                 ],
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 'label' => t('Flags'),
             ])
             ->add('brand', ChoiceType::class, [
@@ -309,7 +307,6 @@ final class ProductFormType extends AbstractType
                     'entry_type' => TextareaType::class,
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
-                    'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 ]);
         }
 
@@ -338,7 +335,6 @@ final class ProductFormType extends AbstractType
                     'entry_type' => CKEditorType::class,
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
-                    'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 ]);
         }
 
@@ -423,7 +419,6 @@ final class ProductFormType extends AbstractType
                     'options_by_domain_id' => $categoriesOptionsByDomainId,
                     'disabled' => $this->isProductVariant($product),
                     'label' => t('Assign to category'),
-                    'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 ]);
         }
         $builderDisplayAvailabilityGroup

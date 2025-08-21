@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -187,7 +186,6 @@ final class BlogArticleFormType extends AbstractType
                 'entry_type' => BlogCategoriesType::class,
                 'options_by_domain_id' => $categoriesOptionsByDomainId,
                 'label' => t('Assign to category'),
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ])
             ->add('hidden', YesNoType::class, [
                 'label' => t('Hide'),

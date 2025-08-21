@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
@@ -301,7 +300,6 @@ final class PromoCodeFormType extends AbstractType
             'required' => false,
             'domain_id' => $this->getDomainId(),
             'label' => false,
-            'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
         ]);
         $builder->add($displayCategoriesGroup);
     }

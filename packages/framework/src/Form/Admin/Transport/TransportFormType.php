@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -217,7 +216,6 @@ final class TransportFormType extends AbstractType
                 'entry_type' => CKEditorType::class,
                 'label' => t('Tracking instructions'),
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ])
             ->add('trackingInstructionsVariables', DisplayVariablesType::class, [
                 'label' => t('Tracking instructions variables'),

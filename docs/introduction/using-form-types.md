@@ -11,18 +11,6 @@ We use two types of naming for form types:
 
 Every form type has some default options that can be used for various things.
 
-### icon_title
-
-Defaults to `null`.  
-This option is used to add information icon after form field that shows tooltip with message after hovering.
-To show message you need to fill this option with string that you want to show in the tooltip.
-
-### display_format
-
-Defaults to `null`.  
-You can use this option if you want to have no padding in your rendered form_row.
-To achieve this you need to fill this option with constant `FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING`
-
 ## Form types
 
 We created some form types which can help you with creating your own form types.
