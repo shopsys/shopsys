@@ -109,11 +109,12 @@ final class CustomerUserFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'choice_attr' => function (PricingGroup $pricingGroup) {
-                    return ['class' => 'js-select-toggle-option-' . $pricingGroup->getDomainId()];
+                    return [
+                        'data-js-toggle-option' => $pricingGroup->getDomainId(),
+                    ];
                 },
                 'label' => t('Pricing group'),
                 'attr' => [
-                    'class' => 'js-toggle-opt-group',
                     'data-js-toggle-opt-group-control' => '.js-toggle-opt-group-control',
                 ],
                 'disabled' => !$options['allowEditSystemData'],
