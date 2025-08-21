@@ -57,7 +57,7 @@ class ProductRecalculationFacade
         $exportScopesIndexedByProductId = $this->productRecalculationDeduplicationFacade->getScopesIndexedByProductId($productIds, $priority);
 
         foreach ($this->groupProductIdsWithSameScopes($exportScopesIndexedByProductId) as $productIdsWithScopes) {
-            $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculateByMainVariantIds(
+            $idsToRecalculate = $this->productRecalculationRepository->getRelevantIdsToRecalculate(
                 $productIdsWithScopes[self::KEY_PRODUCT_IDS],
             );
 

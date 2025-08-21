@@ -41,16 +41,18 @@ class ProductRecalculationRepository
     }
 
     /**
-     * @param int[] $mainVariantsIds
+     * @param int[] $inputProductIds
      * @return int[]
      */
-    public function getIdsToRecalculateByMainVariantIds(array $mainVariantsIds): array
+    public function getRelevantIdsToRecalculate(array $inputProductIds): array
     {
         $ids = $this->em
             ->createQuery('SELECT p.id FROM ' . Product::class . ' p WHERE p.mainVariant IN (:productIds) OR p.id IN (:productIds)')
-            ->setParameter('productIds', $mainVariantsIds)
+            ->setParameter('productIds', $inputProductIds)
             ->getArrayResult();
 
-        return array_column($ids, 'id');
+        $ids = array_column($ids, 'id');
+
+        return array_unique([...$ids, ...$inputProductIds]);
     }
 }

@@ -22,7 +22,7 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
     #[DataProvider('getProductsForRecalculationProvider')]
     public function testProperIdsAreReturned(array $inputIds, array $expectedIds): void
     {
-        $calculatedIds = $this->productRecalculationRepository->getIdsToRecalculateByMainVariantIds($inputIds);
+        $calculatedIds = $this->productRecalculationRepository->getRelevantIdsToRecalculate($inputIds);
 
         $this->assertEqualsCanonicalizing($expectedIds, $calculatedIds);
     }
