@@ -34,23 +34,9 @@ final class ProductFormTypeExtension extends AbstractTypeExtension
         $product = $options['product'];
 
         $this->setSeoGroup($builder);
-        $this->setPricesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product|null $product
-     */
-    private function setPricesGroup(FormBuilderInterface $builder, ?Product $product): void
-    {
-        $builderPricesGroup = $builder->get('pricesGroup');
-
-        if ($this->isProductMainVariant($product)) {
-            $builderPricesGroup->remove('disabledPricesOnMainVariant');
-        }
     }
 
     /**
@@ -88,14 +74,5 @@ final class ProductFormTypeExtension extends AbstractTypeExtension
     public static function getExtendedTypes(): iterable
     {
         yield ProductFormType::class;
-    }
-
-    /**
-     * @param \App\Model\Product\Product|null $product
-     * @return bool
-     */
-    private function isProductMainVariant(?Product $product): bool
-    {
-        return $product !== null && $product->isMainVariant();
     }
 }

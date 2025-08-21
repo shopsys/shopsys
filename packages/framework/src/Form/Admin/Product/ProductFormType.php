@@ -468,7 +468,8 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductMainVariant($product)) {
             $stockGroupBuilder
-                ->add('productStockData', DisplayOnlyType::class, [
+                ->add('productStockDataMessage', DisplayOnlyType::class, [
+                    'label' => false,
                     'data' => t('The stock quantities are set for the product variants separately.'),
                 ]);
         } else {
