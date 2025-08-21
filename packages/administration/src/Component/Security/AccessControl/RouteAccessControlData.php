@@ -18,13 +18,13 @@ use Webmozart\Assert\Assert;
 class RouteAccessControlData
 {
     /**
-     * @param string $routeName
+     * @param string|null $routeName
      * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[] $accessControlRules
      * @param string $controllerClass
      * @param string $controllerMethod
      */
     public function __construct(
-        public readonly string $routeName,
+        public readonly ?string $routeName,
         public readonly array $accessControlRules,
         public readonly string $controllerClass,
         public readonly string $controllerMethod,

@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Security\AccessControl;
 
 use Override;
+use ReflectionMethod;
+use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -21,10 +25,14 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
      * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
+     * @param \Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor $attributeProcessor
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
         private readonly ContextResolverInterface $contextResolver,
+        private readonly AttributeProcessor $attributeProcessor,
+        private readonly Security $security,
     ) {
     }
 
@@ -44,8 +52,13 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
      */
     public function onKernelController(ControllerEvent $event): void
     {
-        // Only apply to admin routes
-        if ($event->isMainRequest() === false || !$this->contextResolver->isCurrentContext(AdminContext::class)) {
+        if (!$this->contextResolver->isCurrentContext(AdminContext::class)) {
+            return;
+        }
+
+        if ($event->isMainRequest() === false) {
+            $this->handleSubrequestAccess($event);
+
             return;
         }
 
@@ -58,6 +71,38 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
 
         // Check route access with HTTP method restrictions
         if (!$this->routeAccessChecker->hasAccess($routeName, $request->getMethod())) {
+            throw new AccessDeniedException('Access denied for this route and HTTP method combination.');
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
+     */
+    private function handleSubrequestAccess(ControllerEvent $event): void
+    {
+        $controllerCallable = $event->getController();
+
+        if (is_array($controllerCallable)) {
+            [$controllerObject, $method] = $controllerCallable;
+        } elseif (is_object($controllerCallable) && method_exists($controllerCallable, '__invoke')) {
+            $controllerObject = $controllerCallable;
+            $method = '__invoke';
+        } else {
+            return;
+        }
+
+        $routeData = $this->attributeProcessor->processMethod(new ReflectionMethod($controllerObject, $method));
+        $routeAccessControlData = new RouteAccessControlData(
+            null,
+            $routeData,
+            get_class($controllerObject),
+            $method,
+        );
+
+        $method = HttpMethod::getValidHttpMethod($event->getRequest()->getMethod());
+        $hasAccess = $routeAccessControlData->hasAccess($method, fn (string $role) => $this->security->isGranted($role));
+
+        if (!$hasAccess) {
             throw new AccessDeniedException('Access denied for this route and HTTP method combination.');
         }
     }
