@@ -37,35 +37,45 @@ class ProductVideoFacade
      */
     public function saveProductVideosToProduct(Product $product, array $productVideoDataList): void
     {
-        $productVideos = $this->productVideoRepository->findByProductId($product->getId());
+        $existingProductVideos = $this->productVideoRepository->findByProductId($product->getId());
 
-        $videoDataListToUpdate = array_filter($productVideoDataList, function (ProductVideoData $productVideoData) {
-            return (bool)$productVideoData->id;
-        });
+        // Separate videos by whether they have IDs (existing) or not (new)
+        $videoDataToUpdateById = [];
+        $videoDataListToCreate = [];
 
-        $videoDataListToCreate = array_filter($productVideoDataList, function (ProductVideoData $productVideoData) {
-            return (bool)$productVideoData->id !== true;
-        });
-
-        $productVideosToRemove = [];
-
-        foreach ($productVideos as $productVideo) {
-            if (array_key_exists($productVideo->getId(), $videoDataListToUpdate)) {
-                $productVideo->setVideoToken(
-                    str_replace(self::YOUTUBE_LINKS_ARRAY, '', ($videoDataListToUpdate[$productVideo->getId()])->videoToken),
-                );
-                $this->cleanProductVideoTranslationsForProductVideo($productVideo);
-                $this->persistVideoTranslations($videoDataListToUpdate[$productVideo->getId()], $productVideo);
+        foreach ($productVideoDataList as $videoData) {
+            if ($videoData->id !== null) {
+                $videoDataToUpdateById[$videoData->id] = $videoData;
             } else {
-                $productVideosToRemove[] = $productVideo;
+                $videoDataListToCreate[] = $videoData;
             }
         }
 
+        // Determine which existing videos to remove (not present in update data)
+        $productVideosToRemove = [];
+
+        foreach ($existingProductVideos as $existingVideo) {
+            if (array_key_exists($existingVideo->getId(), $videoDataToUpdateById)) {
+                // Update existing video
+                $updateData = $videoDataToUpdateById[$existingVideo->getId()];
+                $existingVideo->setVideoToken(
+                    str_replace(self::YOUTUBE_LINKS_ARRAY, '', $updateData->videoToken),
+                );
+                $this->cleanProductVideoTranslationsForProductVideo($existingVideo);
+                $this->persistVideoTranslations($updateData, $existingVideo);
+            } else {
+                // Mark for removal - video not present in form data
+                $productVideosToRemove[] = $existingVideo;
+            }
+        }
+
+        // Remove videos that are no longer present
         foreach ($productVideosToRemove as $productVideoToRemove) {
             $this->cleanProductVideoTranslationsForProductVideo($productVideoToRemove);
             $this->em->remove($productVideoToRemove);
         }
 
+        // Create new videos
         foreach ($videoDataListToCreate as $videoDataToCreate) {
             $productVideoEntity = $this->productVideoFactory->create($videoDataToCreate);
             $productVideoEntity->setProduct($product);
@@ -74,6 +84,7 @@ class ProductVideoFacade
 
             $this->persistVideoTranslations($videoDataToCreate, $productVideoEntity);
         }
+
         $this->em->flush();
     }
 
