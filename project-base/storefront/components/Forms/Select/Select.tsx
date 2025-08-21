@@ -75,6 +75,11 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
         onSelectOption(option);
     };
 
+    const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        comboBoxConfig?.setSearchValue(e.target.value);
+        setIsOpen(true);
+    };
+
     const filteredOptions = comboBoxConfig
         ? options.filter((option) => option.label.toLowerCase().includes(comboBoxConfig.searchValue.toLowerCase()))
         : options;
@@ -103,7 +108,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
-                                onChange={(e) => comboBoxConfig.setSearchValue(e.target.value)}
+                                onChange={(e) => handleSearchValueChange(e)}
                                 onClick={() => onSelectToggleOpenHandler(true)}
                             />
 
@@ -177,6 +182,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             itemBeforeText={itemBeforeText}
                             listClassName={listClassName}
                             options={filteredOptions}
+                            setIsOpen={setIsOpen}
                             tid={tid}
                             onSelectOption={onSelectOptionExtended}
                         />
