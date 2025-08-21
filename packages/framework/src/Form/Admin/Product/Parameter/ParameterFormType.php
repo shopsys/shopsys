@@ -73,12 +73,9 @@ final class ParameterFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter parameter ordering priority']),
                 ],
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi\'s Box. For ordering of parameters in filter use settings in the category.',
-                    ),
-                ],
+                'help' => t(
+                    'This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi\'s Box. For ordering of parameters in filter use settings in the category.',
+                ),
             ])
             ->add('group', ChoiceType::class, [
                 'placeholder' => t('-- Choose group --'),

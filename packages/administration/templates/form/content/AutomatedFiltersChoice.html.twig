@@ -1,0 +1,12 @@
+{%- block _category_form_settings_automatedFilters_entry_widget -%}
+    <label class="form-check">
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-check-input')|trim}) -%}
+        <input type="checkbox" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+
+        <span class="form-check-label"> {{ form.vars.label }} </span>
+
+        {% if form.vars.attr['data-help'] is defined %}
+            <span class="form-check-description"> {{ form.vars.attr['data-help'] }} </span>
+        {% endif %}
+    </label>
+{%- endblock %}

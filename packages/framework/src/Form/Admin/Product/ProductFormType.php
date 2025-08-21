@@ -390,12 +390,9 @@ final class ProductFormType extends AbstractType
             ])
             ->add('sellingDenied', YesNoType::class, [
                 'label' => t('Exclude from sale on whole eshop'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
-                    ),
-                ],
+                'help' => t(
+                    'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
+                ),
             ])
             ->add('saleExclusion', MultidomainType::class, [
                 'label' => t('Exclude from sale on domains'),
@@ -476,10 +473,7 @@ final class ProductFormType extends AbstractType
             $stockGroupBuilder->add('isAllowedNegativeStock', YesNoType::class, [
                 'required' => false,
                 'label' => t('Allow negative stock'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
-                ],
+                'help' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
             ]);
 
             $stockGroupBuilder->add('productStockData', CollectionType::class, [

@@ -75,10 +75,7 @@ final class CountryFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Code'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t('Country code in ISO 3166-1 alpha-2'),
-                ],
+                'help' => t('Country code in ISO 3166-1 alpha-2'),
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
@@ -87,12 +84,9 @@ final class CountryFormType extends AbstractType
             ->add('priority', MultidomainType::class, [
                 'entry_type' => IntegerType::class,
                 'entry_options' => [
-                    'attr' => [
-                        'icon' => true,
-                        'iconTitle' => t(
-                            'The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically.',
-                        ),
-                    ],
+                    'help' => t(
+                        'The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically.',
+                    ),
                     'required' => false,
                     'constraints' => [
                         new Constraints\Type(['type' => 'numeric']),

@@ -41,12 +41,9 @@ final class AdministratorResetPasswordFormType extends AbstractType
                             'message' => 'Please enter password',
                         ]),
                     ],
-                    'attr' => [
-                        'icon' => true,
-                        'iconTitle' => t(
-                            'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.',
-                        ),
-                    ],
+                    'help' => t(
+                        'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.',
+                    ),
                 ],
                 'second_options' => [
                     'label' => t('Password again'),

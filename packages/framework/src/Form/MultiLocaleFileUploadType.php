@@ -26,13 +26,7 @@ final class MultiLocaleFileUploadType extends AbstractType
             'allow_add' => true,
             'entry_options' => [
                 'label' => '',
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'Name in the corresponding locale must be filled-in in order to display the file on the storefront',
-                    ),
-                    'iconPlacement' => 'right',
-                ],
+                'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length([

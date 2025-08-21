@@ -155,17 +155,14 @@ final class CategoryFormType extends AbstractType
                 'expanded' => true,
                 'choices' => $this->categoryAutomatedFilterFacade->getAllValuesIndexedByLabel(),
                 'choice_attr' => function ($choice, $key, $value) use ($categoryAutomatedFiltersNotesIndexedByValue) {
-                    $iconTitle = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
+                    $help = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
 
-                    if ($iconTitle === null) {
+                    if ($help === null) {
                         return [];
                     }
 
                     return [
-                        'icon' => true,
-                        'iconTitle' => $iconTitle,
-                        'iconPlacement' => 'right',
-                        'iconClass' => 'margin-left-10',
+                        'data-help' => $help,
                     ];
                 },
             ]);
