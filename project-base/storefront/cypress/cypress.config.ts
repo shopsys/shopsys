@@ -1,9 +1,12 @@
 import { defineConfig } from 'cypress';
-import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin';
-import glob from 'glob';
+import { configureVisualRegression } from 'cypress-visual-regression';
+import { globSync } from 'glob';
 
 const getProjectPages = () => {
-    const files = glob.sync('**/*.tsx', { cwd: './pages', ignore: ['\\[...all].tsx', '_*.tsx', 'robots.txt.tsx'] });
+    const files = globSync('**/*.tsx', {
+        cwd: './pages',
+        ignore: ['\\[...all].tsx', '_*.tsx', 'robots.txt.tsx'],
+    }).reverse();
 
     /*
         Transform filepaths to routes:
@@ -32,16 +35,17 @@ export default defineConfig({
     videosFolder: 'videos',
     trashAssetsBeforeRuns: true,
     env: {
-        failSilently: false,
-        SNAPSHOT_BASE_DIRECTORY: 'snapshots',
-        SNAPSHOT_DIFF_DIRECTORY: 'snapshotDiffs',
         skipSnapshots: false,
+        visualRegressionErrorThreshold: 0.005,
+        visualRegressionFailSilently: false,
+        visualRegressionBaseDirectory: 'snapshots',
+        visualRegressionDiffDirectory: 'snapshotDiffs',
     },
     e2e: {
         setupNodeEvents(on, config) {
-            getCompareSnapshotsPlugin(on, config);
+            configureVisualRegression(on);
 
-            const glob = require('glob');
+            const { globSync } = require('glob');
             const group = process.env.GROUP || 'default-group';
             const isSmoke = process.env.COMMAND === 'smoke';
 
@@ -63,7 +67,7 @@ export default defineConfig({
                 } else if (group in patternsMap) {
                     config.specPattern = patternsMap[group];
                 } else if (group === 'others') {
-                    const allFiles = glob.sync('e2e/**/*.cy.ts');
+                    const allFiles = globSync('e2e/**/*.cy.ts').reverse();
 
                     const filteredFiles = allFiles.filter(
                         (file: string) =>

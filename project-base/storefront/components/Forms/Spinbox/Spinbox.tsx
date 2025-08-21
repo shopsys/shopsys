@@ -31,6 +31,8 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const [lastValidValue, setLastValidValue] = useState<number>(defaultValue);
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
+        const lastKeyPressedRef = useRef<string | null>(null);
+        const backspaceSequenceRef = useRef<boolean>(false);
 
         const spinboxRef = useForwardedRef<HTMLInputElement>(spinboxForwardedRef);
         const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -51,7 +53,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             }
         };
 
-        const updateInputValue = (newValue: number) => {
+        const updateInputValue = (newValue: number, skipLastValidUpdate: boolean = false) => {
             if (!spinboxRef.current) {
                 return;
             }
@@ -78,7 +80,10 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             } else {
                 spinboxRef.current.valueAsNumber = integerValue;
                 setValue(integerValue);
-                setLastValidValue(integerValue);
+
+                if (!skipLastValidUpdate) {
+                    setLastValidValue(integerValue);
+                }
             }
         };
 
@@ -103,6 +108,8 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 return;
             }
 
+            backspaceSequenceRef.current = false;
+
             const inputValue = event.currentTarget.valueAsNumber;
 
             if (isValidNumber(inputValue)) {
@@ -122,11 +129,32 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             }
 
             const inputValue = event.currentTarget.valueAsNumber;
-            updateInputValue(inputValue);
+            const isDeletingContent =
+                lastKeyPressedRef.current === 'Backspace' || lastKeyPressedRef.current === 'Delete';
+
+            if (isDeletingContent) {
+                if (!backspaceSequenceRef.current) {
+                    backspaceSequenceRef.current = true;
+
+                    // We use >= 10 as the threshold because single-digit values (1-9) are more likely to be
+                    // intermediate states during deletion, while double-digit values represent meaningful
+                    // user inputs that should be preserved for restoration on blur
+                    const shouldUpdateOnFirstDeletion = isValidNumber(inputValue) && inputValue >= 10;
+                    updateInputValue(inputValue, !shouldUpdateOnFirstDeletion);
+                } else {
+                    updateInputValue(inputValue, true);
+                }
+            } else {
+                backspaceSequenceRef.current = false;
+                updateInputValue(inputValue, false);
+            }
+
+            lastKeyPressedRef.current = null;
         };
 
         const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
-            // Prevent decimal point input for integer-only spinbox
+            lastKeyPressedRef.current = event.key;
+
             if (event.key === '.' || event.key === ',') {
                 event.preventDefault();
             }
@@ -147,8 +175,8 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         }, [spinboxRef]);
 
         useEffect(() => {
-            if (onChangeValueCallback !== undefined && debouncedValue !== undefined && !isNaN(debouncedValue)) {
-                onChangeValueCallback(debouncedValue);
+            if (debouncedValue !== undefined && !isNaN(debouncedValue)) {
+                onChangeValueCallback?.(debouncedValue);
             }
         }, [debouncedValue]);
 

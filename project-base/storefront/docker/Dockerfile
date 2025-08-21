@@ -1,7 +1,7 @@
 FROM node:20-alpine3.17 AS base
 
 RUN corepack enable
-RUN corepack prepare --activate pnpm@9.0.5
+RUN corepack prepare --activate pnpm@9.6.0
 
 FROM base as dependencies
 

@@ -17,9 +17,9 @@ help: ## Displays list of available commands
 
 .PHONY: help generate-schema generate-schema-native check-fix php-checks php-lock-icons php-translations \
 	storefront-checks storefront-translations run-acceptance-tests-base \
-	run-acceptance-tests-actual selected-acceptance-tests-base selected-acceptance-tests-actual \
-	run-specific-test-actual run-specific-test-base \
-	open-acceptance-tests-base open-acceptance-tests-actual run-smoke-tests \
+	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
+	run-specific-test-regression run-specific-test-base \
+	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
 	generate-snapshots-info-table _prepare-data-for-acceptance-tests _cypress-prepare _cypress-cleanup
 
 # ------------------------------------------------------------------------------
@@ -149,14 +149,28 @@ endef
 run-acceptance-tests-base: ## Runs the base set of acceptance tests (headless)
 	$(call run_acceptance_tests,base)
 
-run-acceptance-tests-actual: ## Runs the actual (project-specific) set of acceptance tests (headless)
-	$(call run_acceptance_tests,actual)
+run-acceptance-tests-regression: ## Runs the regression (project-specific) set of acceptance tests (headless)
+	$(call run_acceptance_tests,regression)
 
 selected-acceptance-tests-base: ## Runs selected base acceptance tests (interactive selection, headless)
 	$(call selected_acceptance_tests,base)
 
-selected-acceptance-tests-actual: ## Runs selected actual acceptance tests (interactive selection, headless)
-	$(call selected_acceptance_tests,actual)
+selected-acceptance-tests-regression: ## Runs selected regression acceptance tests (interactive selection, headless)
+	$(call selected_acceptance_tests,regression)
+
+run-specific-test-base: ## Runs a specific base acceptance test (interactive selection, headless)
+	@if [ -z "$(SPEC)" ]; then \
+		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
+		exit 1; \
+	fi
+	$(call run_specific_acceptance_test,base,$(SPEC))
+
+run-specific-test-regression: ## Runs a specific regression acceptance test (interactive selection, headless)
+	@if [ -z "$(SPEC)" ]; then \
+		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
+		exit 1; \
+	fi
+	$(call run_specific_acceptance_test,regression,$(SPEC))
 
 run-specific-test-base: ## Runs a specific base acceptance test (interactive selection, headless)
 	@if [ -z "$(SPEC)" ]; then \
@@ -175,8 +189,8 @@ run-specific-test-actual: ## Runs a specific actual acceptance test (interactive
 open-acceptance-tests-base: ## Opens the Cypress GUI for debugging base acceptance tests
 	$(call open_acceptance_tests,base)
 
-open-acceptance-tests-actual: ## Opens the Cypress GUI for debugging actual acceptance tests
-	$(call open_acceptance_tests,actual)
+open-acceptance-tests-regression: ## Opens the Cypress GUI for debugging regression acceptance tests
+	$(call open_acceptance_tests,regression)
 
 run-smoke-tests: ## Runs smoke tests (Cypress)
 	$(call _prepare-data-for-acceptance-tests)
