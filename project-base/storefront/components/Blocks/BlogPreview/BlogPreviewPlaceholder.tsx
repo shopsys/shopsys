@@ -33,9 +33,8 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
 
             <div
                 className={twJoin(
-                    'vl:flex vl:justify-between vl:gap-16 grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain',
+                    'vl:flex vl:justify-between vl:gap-16 hide-scrollbar grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain',
                     'auto-cols-[60%] md:auto-cols-[40%] lg:auto-cols-[30%]',
-                    "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
                 )}
             >
                 {!!blogItems && <BlogPreviewMain isPlaceholder articles={blogItems} />}

@@ -71,8 +71,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     });
 
     const slidingButtonsTwClass = twJoin(
-        'snap-mandatory vl:grid vl:snap-x vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain',
-        "vl:[-ms-overflow-style:'none'] vl:[scrollbar-width:'none'] vl:[&::-webkit-scrollbar]:hidden",
+        'snap-mandatory vl:grid vl:snap-x vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain hide-scrollbar',
     );
 
     return (

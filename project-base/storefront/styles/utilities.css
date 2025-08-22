@@ -25,3 +25,7 @@
 @utility z-maximum {
     z-index: 10100;
 }
+
+@utility hide-scrollbar {
+    @apply [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}

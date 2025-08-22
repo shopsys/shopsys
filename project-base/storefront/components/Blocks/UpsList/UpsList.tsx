@@ -14,9 +14,9 @@ export const UpsList: FC = () => {
     return (
         <Webline
             className={twMergeCustom([
+                'hide-scrollbar grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain',
+                'auto-cols-[60%] sm:auto-cols-[37%] md:auto-cols-[26%] lg:auto-cols-[20%]',
                 'vl:flex vl:justify-around',
-                'grid snap-x snap-mandatory auto-cols-[60%] grid-flow-col gap-5 overflow-x-auto sm:auto-cols-[37%] md:auto-cols-[26%] lg:auto-cols-[20%]',
-                "overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
             ])}
         >
             <UpsListItem>
