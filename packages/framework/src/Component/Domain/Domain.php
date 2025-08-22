@@ -345,4 +345,46 @@ class Domain implements DomainIdsProviderInterface
 
         return static::FIRST_DOMAIN_ID;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $inputDomainConfig
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     */
+    public function getAllWithSameBaseUrl(DomainConfig $inputDomainConfig): array
+    {
+        $domainsWithSameBaseUrl = [];
+
+        foreach ($this->getAll() as $domainConfig) {
+            if ($domainConfig->getBaseUrl() === $inputDomainConfig->getBaseUrl()) {
+                $domainsWithSameBaseUrl[] = $domainConfig;
+            }
+        }
+
+        return $domainsWithSameBaseUrl;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return bool
+     */
+    public function isMainDomainWithinSameBaseUrlGroup(DomainConfig $domainConfig): bool
+    {
+        if ($domainConfig->getPostfix() === null) {
+            return true;
+        }
+
+        $domainsWithSameBaseUrl = $this->getAllWithSameBaseUrl($domainConfig);
+
+        if (count($domainsWithSameBaseUrl) === 1) {
+            return true;
+        }
+
+        foreach ($domainsWithSameBaseUrl as $domain) {
+            if ($domain->getId() < $domainConfig->getId()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

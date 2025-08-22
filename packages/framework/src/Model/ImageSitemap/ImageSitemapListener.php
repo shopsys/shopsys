@@ -9,6 +9,7 @@ use Presta\SitemapBundle\Service\UrlContainerInterface;
 use Presta\SitemapBundle\Sitemap\Url\GoogleImage;
 use Presta\SitemapBundle\Sitemap\Url\GoogleImageUrlDecorator;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -16,11 +17,11 @@ class ImageSitemapListener implements EventSubscriberInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade $sitemapFacade
+     * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade $imageSitemapFacade
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly ImageSitemapFacade $sitemapFacade,
+        protected readonly ImageSitemapFacade $imageSitemapFacade,
     ) {
     }
 
@@ -38,10 +39,9 @@ class ImageSitemapListener implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapPopulateEvent $event
      */
-    public function populateImageSitemap(ImageSitemapPopulateEvent $event)
+    public function populateImageSitemap(ImageSitemapPopulateEvent $event): void
     {
-        $section = $event->getSection();
-        $domainId = (int)$section;
+        $domainId = (int)$event->getSection();
 
         /** @var \Presta\SitemapBundle\Service\AbstractGenerator $generator */
         $generator = $event->getUrlContainer();
@@ -52,8 +52,19 @@ class ImageSitemapListener implements EventSubscriberInterface
         ]);
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-        $productSitemapItems = $this->sitemapFacade->getImageSitemapItemsForVisibleProducts($domainConfig);
-        $this->addUrlsBySitemapItems($productSitemapItems, $generator, 'products');
+        foreach ($this->domain->getAllWithSameBaseUrl($domainConfig) as $relevantDomainConfig) {
+            $this->populateForDomainConfig($relevantDomainConfig, $generator);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \Presta\SitemapBundle\Service\UrlContainerInterface $generator
+     */
+    protected function populateForDomainConfig(DomainConfig $domainConfig, UrlContainerInterface $generator): void
+    {
+        $productSitemapItems = $this->imageSitemapFacade->getImageSitemapItemsForVisibleProducts($domainConfig);
+        $this->addUrlsBySitemapItems($productSitemapItems, $generator, $this->imageSitemapFacade->getProductsSectionName($domainConfig));
     }
 
     /**

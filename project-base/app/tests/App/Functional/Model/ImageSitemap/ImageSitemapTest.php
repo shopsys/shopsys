@@ -40,17 +40,24 @@ class ImageSitemapTest extends ApplicationTestCase
         $sitemapDir = $this->parameterBag->get('kernel.project_dir') . $this->parameterBag->get('shopsys.sitemaps_dir');
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            if ($this->domain->isMainDomainWithinSameBaseUrlGroup($domainConfig) === false) {
+                continue;
+            }
+
             $domainId = $domainConfig->getId();
-            $filename = $sitemapDir . '/domain_' . $domainId . '_sitemap_image.products.xml';
-            $xml = simplexml_load_file($filename);
 
-            $expectedRegular = $this->getExpectedXmlRegex($domainConfig);
-            $unexpectedNotMainImage = $this->getUnexpectedNotMainXml($domainConfig);
-            $unexpectedNotNotVisibleProduct = $this->getUnexpectedNotVisibleXml($domainConfig);
+            foreach ($this->domain->getAllWithSameBaseUrl($domainConfig) as $relevantDomainConfig) {
+                $filename = sprintf('%s/domain_%d_sitemap_image.%s.xml', $sitemapDir, $domainId, $this->imageSitemapFacade->getProductsSectionName($relevantDomainConfig));
+                $xml = simplexml_load_file($filename);
 
-            $this->assertMatchesRegularExpression($expectedRegular, $xml->asXML());
-            $this->assertStringNotContainsStringIgnoringCase($unexpectedNotMainImage, $xml->asXML());
-            $this->assertStringNotContainsStringIgnoringCase($unexpectedNotNotVisibleProduct, $xml->asXML());
+                $expectedRegular = $this->getExpectedXmlRegex($relevantDomainConfig);
+                $unexpectedNotMainImage = $this->getUnexpectedNotMainXml($relevantDomainConfig);
+                $unexpectedNotNotVisibleProduct = $this->getUnexpectedNotVisibleXml($relevantDomainConfig);
+
+                $this->assertMatchesRegularExpression($expectedRegular, $xml->asXML());
+                $this->assertStringNotContainsStringIgnoringCase($unexpectedNotMainImage, $xml->asXML());
+                $this->assertStringNotContainsStringIgnoringCase($unexpectedNotNotVisibleProduct, $xml->asXML());
+            }
         }
     }
 
