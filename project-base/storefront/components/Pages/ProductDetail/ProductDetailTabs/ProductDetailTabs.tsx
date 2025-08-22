@@ -174,7 +174,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                     <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === filesTabIndex}>
                         <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                             {files.map((file) => (
-                                <li key={file.url} className="">
+                                <li key={file.url}>
                                     <a
                                         aria-label={t('Download {{file}}', { file: file.anchorText })}
                                         className="bg-background-more flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
