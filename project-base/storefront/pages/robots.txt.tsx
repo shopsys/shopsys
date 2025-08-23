@@ -6,7 +6,7 @@ import {
 import { createClient } from 'urql/createClient';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
-import { DEFAULT_LOCALE, getHostFromDomain } from 'utils/domain/domainUtils';
+import { getHostFromDomain, getLocalePrefix } from 'utils/domain/domainUtils';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -24,6 +24,14 @@ const domains = getPublicConfigProperty('domains', []) as DomainConfigType[];
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, ssrExchange }) => async (context) => {
     const domainConfig = getDomainConfig(context);
+
+    // Return 404 if robots.txt is accessed from a domain with locale suffix
+    if (getLocalePrefix(domainConfig) !== '') {
+        return {
+            notFound: true,
+        };
+    }
+
     const client = await createClient({
         domainConfig,
         ssrExchange,
@@ -39,14 +47,27 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, s
     const res = context.res;
 
     res.setHeader('Content-Type', 'text/plain');
-    res.write(getRobotsTxtContent(domainConfig.url, robotsTxtResponse.data?.settings?.seo.robotsTxtContent));
+    res.write(getRobotsTxtContent(domainConfig, robotsTxtResponse.data?.settings?.seo.robotsTxtContent));
     res.end();
 
     return { props: {} };
 });
 
-const getRobotsTxtContent = (domain: string, robotsTxtContentFromAdmin: string | null | undefined): string => {
-    const host = getHostFromDomain(domain);
+const getRobotsTxtContent = (
+    currentDomainConfig: DomainConfigType,
+    robotsTxtContentFromAdmin: string | null | undefined,
+): string => {
+    const host = getHostFromDomain(currentDomainConfig.url);
+    const currentDomainHost = new URL(currentDomainConfig.url).host;
+    const domainId = currentDomainConfig.domainId;
+
+    // Find all domains with the same base URL (host)
+    const domainsWithSameHost = domains.filter((domainConfig) => {
+        const domainConfigHost = new URL(domainConfig.url).host;
+
+        return domainConfigHost === currentDomainHost;
+    });
+
     const urlsToInternationalize = [
         '/cart',
         '/new-password',
@@ -63,25 +84,33 @@ const getRobotsTxtContent = (domain: string, robotsTxtContentFromAdmin: string |
         { url: '/order-detail/:urlHash', param: '*' },
     ] as Url[];
 
-    const staticUrlsToNoIndex = domains.flatMap((domainConfig) => {
+    // Aggregate static URLs from all domains with the same host
+    const staticUrlsToNoIndex = domainsWithSameHost.flatMap((domainConfig) => {
         const internationalizedUrls = getInternationalizedStaticUrls(urlsToInternationalize, domainConfig.url);
-        const localePrefixUrl = domainConfig.defaultLocale === DEFAULT_LOCALE ? '' : `/${domainConfig.defaultLocale}`;
+        const localePrefixUrl = getLocalePrefix(domainConfig);
+
         return internationalizedUrls.map((url) => `${localePrefixUrl}${url}`);
     });
 
-    const [customerUrl] = getInternationalizedStaticUrls(['/customer'], domain);
+    // Aggregate customer URLs from all domains with the same host
+    const customerUrlsToNoIndex = domainsWithSameHost.flatMap((domainConfig) => {
+        const [customerUrl] = getInternationalizedStaticUrls(['/customer'], domainConfig.url);
+        const localePrefixUrl = getLocalePrefix(domainConfig);
+
+        return `${localePrefixUrl}${customerUrl}/*`;
+    });
 
     return `User-Agent: *
 ${staticUrlsToNoIndex.map((page) => `\nDisallow: ${page}`).join('')}
-Disallow: ${customerUrl}/*
+${customerUrlsToNoIndex.map((customerUrl) => `\nDisallow: ${customerUrl}`).join('')}
 Disallow: *?${FILTER_QUERY_PARAMETER_NAME}=
 Disallow: *?${LOAD_MORE_QUERY_PARAMETER_NAME}=
 Disallow: *?${SORT_QUERY_PARAMETER_NAME}=
 Disallow: /*?width=
 ${robotsTxtContentFromAdmin || ''}
 
-Sitemap: ${host}content/sitemaps/sitemap.xml
-Sitemap: ${host}content/sitemaps/sitemap_image.xml`;
+Sitemap: ${host}content/sitemaps/domain_${domainId}_sitemap.xml
+Sitemap: ${host}content/sitemaps/domain_${domainId}_sitemap_image.xml`;
 };
 
 export default Robots;
