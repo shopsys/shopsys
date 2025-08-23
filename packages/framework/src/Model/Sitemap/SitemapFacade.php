@@ -31,6 +31,10 @@ class SitemapFacade
     public function generateForAllDomains(): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
+            if ($this->domain->isMainDomainWithinSameBaseUrlGroup($domainConfig) === false) {
+                continue;
+            }
+
             $section = (string)$domainConfig->getId();
 
             $domainSitemapDumper = $this->domainSitemapDumperFactory->createForDomain($domainConfig->getId());
@@ -107,5 +111,19 @@ class SitemapFacade
     public function getSitemapItemsForVisibleCategorySeoMix(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForVisibleCategorySeoMix($domainConfig);
+    }
+
+    /**
+     * @param string $sectionName
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return string
+     */
+    public function getSectionNameForDomainConfig(string $sectionName, DomainConfig $domainConfig): string
+    {
+        if ($domainConfig->getPostfix() !== null) {
+            $sectionName .= '_' . trim($domainConfig->getPostfix(), '/');
+        }
+
+        return $sectionName;
     }
 }

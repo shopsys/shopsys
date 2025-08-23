@@ -56,7 +56,18 @@ class SitemapListener implements EventSubscriberInterface
         $generator = $event->getUrlContainer();
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-        $this->addUrlForHomepage($generator, $domainConfig, $section);
+        foreach ($this->domain->getAllWithSameBaseUrl($domainConfig) as $relevantDomainConfig) {
+            $this->populateForDomainConfig($relevantDomainConfig, $generator);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
+     */
+    protected function populateForDomainConfig(DomainConfig $domainConfig, AbstractGenerator $generator): void
+    {
+        $this->addUrlForHomepage($generator, $domainConfig);
 
         $categorySitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleCategories($domainConfig);
         $this->addUrlsForSitemapItemsWithAlternativeLocations(
@@ -141,7 +152,7 @@ class SitemapListener implements EventSubscriberInterface
             $absoluteUrl = $this->getAbsoluteUrlByDomainConfigAndSlug($domainConfig, $sitemapItem->slug);
             $urlConcrete = new UrlConcrete($absoluteUrl);
 
-            $generator->addUrl($urlConcrete, $section);
+            $generator->addUrl($urlConcrete, $this->sitemapFacade->getSectionNameForDomainConfig($section, $domainConfig));
         }
     }
 
@@ -183,19 +194,17 @@ class SitemapListener implements EventSubscriberInterface
                 }
             }
 
-            $generator->addUrl($multilingualUrl, $section);
+            $generator->addUrl($multilingualUrl, $this->sitemapFacade->getSectionNameForDomainConfig($section, $domainConfig));
         }
     }
 
     /**
      * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $section
      */
     protected function addUrlForHomepage(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        string $section,
     ): void {
         $urlConcrete = new UrlConcrete($domainConfig->getUrl());
         $multilingualUrl = new GoogleMultilangUrlDecorator($urlConcrete);
@@ -207,7 +216,7 @@ class SitemapListener implements EventSubscriberInterface
             $multilingualUrl->addLink($domain->getUrl(), $domain->getLocale());
         }
 
-        $generator->addUrl($multilingualUrl, $section);
+        $generator->addUrl($multilingualUrl, $this->sitemapFacade->getSectionNameForDomainConfig('homepage', $domainConfig));
     }
 
     /**
