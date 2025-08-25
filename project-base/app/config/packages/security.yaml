@@ -33,7 +33,7 @@ security:
             pattern: ^/(%admin_url%/|efconnect|elfinder)
             user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
             provider: administrators
-            access_denied_url: "/%admin_url%/access-denied/"
+            access_denied_handler: Shopsys\AdministrationBundle\Component\Security\AccessDeniedHandler
             entry_point: form_login
             login_throttling:
                 max_attempts: 5

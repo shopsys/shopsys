@@ -103,12 +103,6 @@ class RouteConfigCustomization
                     $config->skipRoute('Domain list in administration is not available when only 1 domain exists.');
                 }
             })
-            ->customizeByRouteName('admin_access_denied', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet(
-                    'This route serves as "access_denied_url" (see security.yaml) and always redirects to a referer (or dashboard).',
-                )
-                    ->setExpectedStatusCode(403);
-            })
             ->customizeByRouteName('admin_flag_delete', function (RouteConfig $config) {
                 $config->skipRoute('Deletion of flag from ShopSys is disabled.');
             })
@@ -179,7 +173,7 @@ class RouteConfigCustomization
             ->customize(function (RouteConfig $config, RouteInfo $info) {
                 if (preg_match('~^admin_(superadmin_|translation_list$)~', $info->getRouteName())) {
                     $config->changeDefaultRequestDataSet('Only superadmin should be able to see this route.')
-                        ->setExpectedStatusCode(403);
+                        ->setExpectedStatusCode(308);
 
                     if (preg_match('~(_delete$)~', $info->getRouteName())) {
                         $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
@@ -203,28 +197,28 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Superadmin can schedule cron')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_default_cronenable', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to enable cron')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Superadmin can enable cron')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_default_crondisable', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to disable cron')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Superadmin can disable cron')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_administrator_edit', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to edit superadmin (with ID 1)')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Superadmin can edit superadmin')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
@@ -280,32 +274,32 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_redis_clean', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Only superadmin can clean the storefront query cache.')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('You can clean the storefront query cache when logged in as superadmin.')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_redis_show', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('You are not allowed to access storefront cache clean. Log in as superadmin.')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('As superadmin, you are allowed to access storefront cache clean.')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
             })
             ->customizeByRouteName('admin_currency_list', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
             })
             ->customizeByRouteName('admin_currency_delete', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
             })
             ->customizeByRouteName('admin_currency_deleteconfirm', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
@@ -380,7 +374,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_cspheader_setting', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('CSP setting is available only to superadmin.')
-                    ->setExpectedStatusCode(403);
+                    ->setExpectedStatusCode(308);
                 $config->addExtraRequestDataSet('Login as "superadmin" to see CSP setting page')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
