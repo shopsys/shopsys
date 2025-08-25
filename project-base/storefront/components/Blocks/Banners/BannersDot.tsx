@@ -10,6 +10,7 @@ export type BannersDotProps = {
     isActive: boolean;
     sliderItem: TypeSliderItemFragment;
     moveToSlide: (slideToMoveTo: number) => void;
+    moveToSlideWithKeyboard: (slideToMoveTo: number) => void;
     slideInterval: number;
     totalItems: number;
 };
@@ -19,6 +20,7 @@ export const BannersDot: FC<BannersDotProps> = ({
     isActive,
     sliderItem,
     moveToSlide,
+    moveToSlideWithKeyboard,
     slideInterval,
     totalItems,
 }) => {
@@ -39,12 +41,18 @@ export const BannersDot: FC<BannersDotProps> = ({
         }
     }, [isActive]);
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            moveToSlideWithKeyboard(index);
+        }
+    };
+
     return (
         <button
             key={sliderItem.uuid}
+            aria-label={t('Go to slide {{ slideName }}', { slideName: sliderItem.name })}
             ref={dotRef}
             tabIndex={0}
-            title={t('Go to slide {{ slideName }}', { slideName: sliderItem.name })}
             className={twMergeCustom(
                 'bg-icon-less group relative block size-4 cursor-pointer rounded-full transition',
                 'vl:rounded-none vl:first-of-type:rounded-bl-md vl:last-of-type:rounded-br-md',
@@ -54,6 +62,7 @@ export const BannersDot: FC<BannersDotProps> = ({
                 'hover:bg-background-most',
             )}
             onClick={() => moveToSlide(index)}
+            onKeyDown={handleKeyDown}
         >
             <span className="h6 vl:line-clamp-4 hidden wrap-anywhere">{sliderItem.name}</span>
             <span
