@@ -41,3 +41,17 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+// fix validation cross position
+.form-control.is-invalid,
+.was-validated .form-control:invalid,
+textarea.form-control.is-invalid {
+    background-position: right calc(.375em + .1875rem) center;
+}
+
+// visually distinguish readonly input
+.form-control:read-only {
+    opacity: 1;
+    background-color: var(--tblr-bg-surface-secondary);
+    color: var(--tblr-secondary);
+}
