@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageDomainNotFoundExcept
  */
 class SeoPage
 {
-    public const SEO_PAGE_HOMEPAGE_SLUG = 'homepage';
+    public const string SEO_PAGE_HOMEPAGE_SLUG = '/';
 
     /**
      * @var int

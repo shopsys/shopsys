@@ -256,7 +256,12 @@ class HreflangLinksFacade
     protected function createHreflangLinkForSeoPage(int $domainId, SeoPage $seoPage, bool $absoluteUrl): HreflangLink
     {
         $domainConfig = $this->domain->getDomainConfigById($domainId);
-        $href = ($absoluteUrl === true ? $domainConfig->getUrl() : '') . '/' . $seoPage->getPageSlug($domainId);
+        $href = ($absoluteUrl === true ? $domainConfig->getUrl() : '') . '/';
+        $pageSlug = $seoPage->getPageSlug($domainId);
+
+        if ($pageSlug !== SeoPage::SEO_PAGE_HOMEPAGE_SLUG) {
+            $href .= $pageSlug;
+        }
 
         return new HreflangLink(
             $domainConfig->getLocale(),
