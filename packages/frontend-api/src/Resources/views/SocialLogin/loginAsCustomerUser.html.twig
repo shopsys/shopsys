@@ -1,13 +1,13 @@
 <script type="text/javascript">
     var date = new Date();
-    const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
+    const PERSIST_STORE_NAME = 'shopsys-platform-persist-store' + {{ domainId }};
 
     date.setTime(date.getTime() + 14 * 24 * 60 * 60 * 1000); // 14 days
 
     document.cookie =
-        'accessToken=' + '{{ tokens.accessToken }}' + ";{{ app.request.scheme == 'https' ? ' secure;' }} path=/";
+        'accessToken-' + {{ domainId }} + '=' + '{{ tokens.accessToken }}' + ";{{ app.request.scheme == 'https' ? ' secure;' }} path=/";
     document.cookie =
-        'refreshToken=' +
+        'refreshToken-' + {{ domainId }} + '=' +
         '{{ tokens.refreshToken }}' +
         '; expires=' +
         date.toUTCString() +

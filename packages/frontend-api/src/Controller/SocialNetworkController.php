@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Controller;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,10 +29,12 @@ class SocialNetworkController extends AbstractController
     /**
      * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade $socialNetworkFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
         protected readonly SocialNetworkFacade $socialNetworkFacade,
         protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -44,7 +48,8 @@ class SocialNetworkController extends AbstractController
         $this->saveNecessaryDataBeforeRedirectToSocialNetwork($request);
 
         try {
-            $redirectUrl = $this->generateUrl('front_social_network_login', ['type' => $type], UrlGeneratorInterface::ABSOLUTE_URL);
+            $domainRouter = $this->domainRouterFactory->getRouter($this->domain->getId());
+            $redirectUrl = $domainRouter->generate('front_social_network_login', ['type' => $type], UrlGeneratorInterface::ABSOLUTE_URL);
             $loginResultData = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
 
             return $this->render('@ShopsysFrontendApi/SocialLogin/loginAsCustomerUser.html.twig', [
@@ -57,6 +62,7 @@ class SocialNetworkController extends AbstractController
                     $loginResultData->isRegistration,
                 ),
                 'showCartMergeInfo' => $loginResultData->showCartMergeInfo ? 'true' : 'false',
+                'domainId' => $this->domain->getId(),
             ]);
         } catch (SocialNetworkLoginException $exception) {
             return $this->redirect($this->getRefererUrl($request, $type, true));
@@ -109,13 +115,9 @@ class SocialNetworkController extends AbstractController
         bool $showCartMergeInfo = false,
         bool $isRegistration = false,
     ): string {
-        $homepageUrl = $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $refererUrl = $request->getSession()->get(self::REFERER_URL);
-        $refererUrl = $refererUrl ?? $homepageUrl;
-        $request->getSession()->remove(self::REFERER_URL);
-        $refererUrl = str_replace($this->domain->getUrl(), '', $refererUrl);
+        $domainRouter = $this->domainRouterFactory->getRouter($this->domain->getId());
         $parameters = [
-            'redirect' => $refererUrl,
+            'redirect' => $this->getRedirectPathParameter($request, $domainRouter),
             'showCartMergeInfo' => $showCartMergeInfo ? 'true' : 'false',
             'isRegistration' => $isRegistration ? 'true' : 'false',
         ];
@@ -125,6 +127,29 @@ class SocialNetworkController extends AbstractController
             $parameters['socialNetwork'] = $type;
         }
 
-        return $this->generateUrl('front_social_network_login_page', $parameters, UrlGeneratorInterface::RELATIVE_PATH);
+        return $domainRouter->generate('front_social_network_login_page', $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouter $domainRouter
+     * @return string
+     */
+    protected function getRedirectPathParameter(Request $request, DomainRouter $domainRouter): string
+    {
+        $refererUrl = $request->getSession()->get(self::REFERER_URL);
+
+        if ($refererUrl === null) {
+            return $domainRouter->generate('front_homepage');
+        }
+
+        $request->getSession()->remove(self::REFERER_URL);
+        $redirectPath = str_replace($this->domain->getUrl(), '', $refererUrl);
+
+        if ($redirectPath === '') {
+            return '/';
+        }
+
+        return $redirectPath;
     }
 }
