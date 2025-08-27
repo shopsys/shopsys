@@ -202,7 +202,7 @@
             }
 
             img {
-                @apply !my-0;
+                @apply !my-0 max-w-fit;
             }
         }
 
@@ -249,7 +249,7 @@
             }
 
             img {
-                @apply m-0 !w-full shrink-0;
+                @apply m-0;
             }
 
             h2:first-child,

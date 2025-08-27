@@ -6,6 +6,7 @@ export default grapesjs.plugins.add('video', (editor, _options) => {
         attributes: { class: 'fa fa-youtube-play' },
         content: {
             type: 'video',
+            resizable: false,
         },
     });
 });

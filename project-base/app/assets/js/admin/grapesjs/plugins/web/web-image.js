@@ -35,7 +35,25 @@ export default grapesjs.plugins.add('custom-image', editor => {
             },
 
             defaults: {
-                resizable: false,
+                resizable: {
+                    updateTarget: (el, rect) => {
+                        const widthPx = Math.round(rect.w) + 'px';
+                        const heightPx = 'auto';
+
+                        // Update DOM element immediately for visual feedback
+                        el.style.width = widthPx;
+                        el.style.height = heightPx;
+
+                        // Get the component model and update its styles for persistence
+                        const component = editor.getSelected();
+                        if (component && component.getEl() === el) {
+                            component.addStyle({
+                                width: widthPx,
+                                height: heightPx
+                            });
+                        }
+                    }
+                },
                 attributes: {
                     [imagePositionDataAttribute]: 'left',
                     class: ['image-position-left'],

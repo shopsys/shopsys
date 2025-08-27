@@ -8,6 +8,7 @@ export default grapesjs.plugins.add('map', (editor, _options) => {
         content: {
             type: 'map',
             style: { height: '350px', width: '100%' },
+            resizable: false,
         },
     });
 });
