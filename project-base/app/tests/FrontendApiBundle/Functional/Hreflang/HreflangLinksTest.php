@@ -205,7 +205,7 @@ class HreflangLinksTest extends GraphQlTestCase
     private function getUrlByRouteNameAndEntityId(string $routeName, int $domainId, object $entity): string
     {
         if ($entity instanceof SeoPage) {
-            return $this->domain->getUrl() . '/' . $entity->getPageSlug($domainId);
+            return $this->domain->getDomainConfigById($domainId)->getUrl() . '/' . $entity->getPageSlug($domainId);
         }
 
         return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
