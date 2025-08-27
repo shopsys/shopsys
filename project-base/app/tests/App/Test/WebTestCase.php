@@ -30,6 +30,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\FrameworkBundle\Test\ProductIndexBackupFacade;
+use App\Component\Test\AttributeExtractorFactory;
 use Zalas\Injector\Factory\DefaultExtractorFactory;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 use Zalas\Injector\PHPUnit\TestListener\TestCaseContainerFactory;
@@ -260,7 +261,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      */
     protected function injectServices(): void
     {
-        $injector = new Injector(new TestCaseContainerFactory($this), new DefaultExtractorFactory([TestCase::class, Assert::class]));
+        $injector = new Injector(new TestCaseContainerFactory($this), new AttributeExtractorFactory([TestCase::class, Assert::class]));
         $injector->inject($this);
     }
 
