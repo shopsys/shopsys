@@ -3,27 +3,27 @@ import grapesjs from 'grapesjs';
 
 const linkPositionDataAttribute = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
+const textDataAttribute = 'data-text';
 
-export default grapesjs.plugins.add('web-button-link', editor => {
+export default grapesjs.plugins.add('web-button-link', (editor) => {
     editor.Blocks.add('button-link', {
         id: 'button-link',
         type: 'Link',
         category: 'basic-objects',
         content:
-            `<a data-gjs-type='button-link' class='gjs-button-link button-link-position-center'>
-            <span class="gjs-text-ckeditor text">` +
+            `<a data-gjs-type='button-link' class='gjs-button-link button-link-position-center'>` +
             Translator.trans('Insert your text here') +
-            `</span>
-            </a>`,
+            `</a>`,
         attributes: { class: 'fa fa-external-link' },
     });
 
     editor.DomComponents.addType('button-link', {
-        isComponent: element => element.tagName === 'A',
+        isComponent: (element) => element.tagName === 'A',
         model: {
             init() {
                 this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
                 this.on(`change:attributes:${BUTTON_COLOR_ATTRIBUTE}`, this.handleColorChange);
+                this.on(`change:attributes:${textDataAttribute}`, this.handleTextAttributeChange);
             },
 
             handleLinkPositionChange(element) {
@@ -45,13 +45,23 @@ export default grapesjs.plugins.add('web-button-link', editor => {
                 });
             },
 
+            handleTextAttributeChange(element) {
+                const newText = this.getAttributes()[textDataAttribute];
+                this.components(newText);
+            },
+
             defaults: {
                 attributes: {
                     [linkPositionDataAttribute]: 'center',
                     [BUTTON_COLOR_ATTRIBUTE]: '#00C8B7',
+                    [textDataAttribute]: 'Insert your text here',
                     class: ['button-link-position-center'],
                 },
                 traits: [
+                    {
+                        type: 'input',
+                        name: textDataAttribute,
+                    },
                     {
                         type: 'input',
                         name: 'title',

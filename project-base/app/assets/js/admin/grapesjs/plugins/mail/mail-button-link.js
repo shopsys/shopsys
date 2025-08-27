@@ -3,8 +3,9 @@ import grapesjs from 'grapesjs';
 
 const linkPositionDataAttribute = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
+const textDataAttribute = 'data-text';
 
-export default grapesjs.plugins.add('mail-button-link', editor => {
+export default grapesjs.plugins.add('mail-button-link', (editor) => {
     editor.Blocks.add('button-link', {
         id: 'button-link',
         category: 'basic-objects',
@@ -32,22 +33,21 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
                     outline: none; 
                     transition: all 0.2s ease;
                     color: #fff;
-                ">
-                    <div class="gjs-text-ckeditor text">` +
+                ">` +
             Translator.trans('Insert your text here') +
-            `</div>
-                </a>
+            `</a>
             </div>`,
         attributes: { class: 'fa fa-external-link' },
     });
 
     editor.DomComponents.addType('button-link', {
-        isComponent: element => element.tagName === 'A',
+        isComponent: (element) => element.tagName === 'A',
 
         model: {
             init() {
                 this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
                 this.on(`change:attributes:${BUTTON_COLOR_ATTRIBUTE}`, this.handleColorChange);
+                this.on(`change:attributes:${textDataAttribute}`, this.handleTextAttributeChange);
             },
 
             handleLinkPositionChange(component) {
@@ -73,12 +73,23 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
                         : `#${this.getAttributes()[BUTTON_COLOR_ATTRIBUTE]}`,
                 });
             },
+
+            handleTextAttributeChange(element) {
+                const newText = this.getAttributes()[textDataAttribute];
+                this.components(newText);
+            },
+
             defaults: {
                 attributes: {
                     [linkPositionDataAttribute]: 'center',
                     [BUTTON_COLOR_ATTRIBUTE]: '#00C8B7',
+                    [textDataAttribute]: 'Insert your text here',
                 },
                 traits: [
+                    {
+                        type: 'input',
+                        name: textDataAttribute,
+                    },
                     {
                         type: 'input',
                         name: 'title',

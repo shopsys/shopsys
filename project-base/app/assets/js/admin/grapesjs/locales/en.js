@@ -186,6 +186,7 @@ export const en = {
                 startfrom: 'Start from',
                 endText: 'End text',
                 'data-link-position': 'Position of link',
+                'data-text': 'Text of button',
                 backgroundColor: 'Color of button',
                 rows: 'Rows',
                 columns: 'Columns',

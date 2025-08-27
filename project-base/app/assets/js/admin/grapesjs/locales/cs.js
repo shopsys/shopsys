@@ -186,6 +186,7 @@ export const cs = {
                 startfrom: 'Začátek',
                 endText: 'Text po ukončení',
                 'data-link-position': 'Pozice odkazu',
+                'data-text': 'Text tlačítka',
                 backgroundColor: 'Barva tlačítka',
                 rows: 'Řádky',
                 columns: 'Sloupce',
