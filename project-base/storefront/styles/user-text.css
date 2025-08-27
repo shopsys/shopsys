@@ -206,17 +206,19 @@
             }
         }
 
-        .image-position-left {
+        .image-position-left,
+        .button-link-position-left {
             @apply ml-0;
         }
 
         .image-position-center,
         .button-link-position-center {
-            @apply mx-auto;
+            @apply !mx-auto;
         }
 
-        .image-position-right {
-            @apply ml-auto;
+        .image-position-right,
+        .button-link-position-right {
+            @apply !ml-auto;
         }
 
         .gjs-text-with-image {
