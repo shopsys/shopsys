@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useAfterUserEntry } from 'utils/app/useAfterUserEntry';
 import { useAuthLoader } from 'utils/app/useAuthLoader';
+import { useHtmlLangLoader } from 'utils/app/useHtmlLangLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
 import { useReloadCart } from 'utils/cart/useReloadCart';
 import { useRefetchComparedProducts } from 'utils/productLists/comparison/useRefetchComparedProducts';
@@ -16,6 +17,7 @@ export const Loaders = () => {
     useAfterUserEntry();
     useRefetchComparedProducts();
     useRefetchWishedProducts();
+    useHtmlLangLoader();
     useBroadcastChannel('reloadPage', () => {
         router.reload();
     });
