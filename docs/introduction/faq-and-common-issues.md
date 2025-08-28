@@ -217,5 +217,6 @@ Shopsys Platform supports clickable file paths in error pages (Blue Screen of De
 This feature automatically maps Docker container file paths to your local project paths.
 
 The installation script automatically configures the `LOCAL_PATH_TO_PROJECT_ROOT` environment variable with your current working directory in your `docker-compose.yml` file.
+For macOS and Windows users, no further configuration is needed. Linux requires additional installation of [phpstorm-url-handler](https://github.com/sanduhrs/phpstorm-url-handler) as stated in the [Symfony docs](https://symfony.com/doc/current/reference/configuration/framework.html#ide).
 
 If you're using a different IDE than PHPStorm, you need to update environment variables `SYMFONY_IDE_URL_FORMAT` and `TRACY_DEBUGGER_IDE_URL_FORMAT` in your `.env.local` file to match your IDE's URL format.
