@@ -21,8 +21,6 @@ export const useApplyPromoCodeToCart = (messages: { success: string; error: stri
                 input: { promoCode: newPromoCode, cartUuid },
             });
 
-            // EXTEND PROMO CODE MODIFICATIONS HERE
-
             if (applyPromoCodeResult.error !== undefined) {
                 const { userError } = getUserFriendlyErrors(applyPromoCodeResult.error, t);
                 if (userError?.validation?.promoCode !== undefined) {

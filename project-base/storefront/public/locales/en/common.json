@@ -513,7 +513,7 @@
     "The price of the transport you selected has changed.": "The price of the transport you selected has changed.",
     "The price of your order may change by the price of the payment": "The price of your order may change by the price of the payment",
     "The promo code {{ promoCode }} is no longer applicable.": "The promo code {{ promoCode }} is no longer applicable.",
-    "The transport you selected is no longer available.": "The transport you selected is no longer available.",
+    "The transport you selected is no longer available. Your transport and payment selection has been removed.": "The transport you selected is no longer available. Your transport and payment selection has been removed.",
     "There are no products in the wishlist. Add some first.": "There are no products in the wishlist. Add some first.",
     "There are no results as you have searched with an empty query...": "There are no results as you have searched with an empty query...",
     "There was an error while adding a promo code to the order.": "There was an error while adding a promo code to the order.",
@@ -598,7 +598,7 @@
     "You": "You",
     "You are being redirected...": "You are being redirected...",
     "You can also buy": "You can also buy",
-    "You have exceeded the weight limit of the selected transport.": "You have exceeded the weight limit of the selected transport.",
+    "You have exceeded the weight limit of the selected transport. Your transport and payment selection has been removed.": "You have exceeded the weight limit of the selected transport. Your transport and payment selection has been removed.",
     "You have no complaints": "You have no complaints",
     "You have no ordered items": "You have no ordered items",
     "You have no orders": "You have no orders",
@@ -633,7 +633,6 @@
     "Your preferences have been set.": "Your preferences have been set.",
     "Your profile has been changed successfully": "Your profile has been changed successfully",
     "Your sales representative": "Your sales representative",
-    "Your transport and payment selection has been removed.": "Your transport and payment selection has been removed.",
     "Your watchdog has been created": "Your watchdog has been created",
     "Zip code cannot be longer than {{ postcodeLength }} characters": "Zip code cannot be longer than {{ postcodeLength }} characters"
 }

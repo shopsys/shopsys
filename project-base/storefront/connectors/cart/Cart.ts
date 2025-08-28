@@ -13,87 +13,119 @@ export const handleCartModifications = (
     t: Translate,
     changePaymentInCart: ChangePaymentInCart,
 ): void => {
-    handleRemovedProductFromEshopModifications(cartModifications.someProductWasRemovedFromEshop, t);
-    handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
-    handleCartPaymentModifications(cartModifications.paymentModifications, t);
-    handleCartItemModifications(cartModifications.itemModifications, t);
-    handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t);
+    const allMessages = [
+        ...handleRemovedProductFromEshopModifications(cartModifications.someProductWasRemovedFromEshop, t),
+        ...handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart),
+        ...handleCartPaymentModifications(cartModifications.paymentModifications, t),
+        ...handleCartItemModifications(cartModifications.itemModifications, t),
+        ...handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t),
+    ];
+
+    if (allMessages.length > 0) {
+        const combinedMessage = allMessages.join(' ');
+        showInfoMessage(combinedMessage, GtmMessageOriginType.cart);
+    }
 };
 
-const handleRemovedProductFromEshopModifications = (someProductWasRemovedFromEshop: boolean, t: Translate): void => {
+const handleRemovedProductFromEshopModifications = (
+    someProductWasRemovedFromEshop: boolean,
+    t: Translate,
+): string[] => {
+    const messages: string[] = [];
+
     if (someProductWasRemovedFromEshop) {
-        showInfoMessage(
-            t('Some product was removed from e-shop and your cart was recalculated.'),
-            GtmMessageOriginType.cart,
-        );
+        messages.push(t('Some product was removed from e-shop and your cart was recalculated.'));
     }
+
+    return messages;
 };
 
 const handleCartTransportModifications = (
     transportModifications: TypeCartTransportModificationsFragment,
     t: Translate,
     changePaymentInCart: ChangePaymentInCart,
-): void => {
+): string[] => {
+    const messages: string[] = [];
+
     if (transportModifications.transportPriceChanged) {
-        showInfoMessage(t('The price of the transport you selected has changed.'), GtmMessageOriginType.cart);
+        messages.push(t('The price of the transport you selected has changed.'));
     }
     if (transportModifications.transportUnavailable) {
         changePaymentInCart(null, null);
-        showInfoMessage(t('The transport you selected is no longer available.'), GtmMessageOriginType.cart);
-        showInfoMessage(t('Your transport and payment selection has been removed.'), GtmMessageOriginType.cart);
+        messages.push(
+            t(
+                'The transport you selected is no longer available. Your transport and payment selection has been removed.',
+            ),
+        );
     }
     if (transportModifications.transportWeightLimitExceeded) {
         changePaymentInCart(null, null);
-        showInfoMessage(t('You have exceeded the weight limit of the selected transport.'), GtmMessageOriginType.cart);
-        showInfoMessage(t('Your transport and payment selection has been removed.'), GtmMessageOriginType.cart);
+        messages.push(
+            t(
+                'You have exceeded the weight limit of the selected transport. Your transport and payment selection has been removed.',
+            ),
+        );
     }
+
+    return messages;
 };
 
 const handleCartPaymentModifications = (
     paymentModifications: TypeCartPaymentModificationsFragment,
     t: Translate,
-): void => {
+): string[] => {
+    const messages: string[] = [];
+
     if (paymentModifications.paymentPriceChanged) {
-        showInfoMessage(t('The price of the payment you selected has changed.'), GtmMessageOriginType.cart);
+        messages.push(t('The price of the payment you selected has changed.'));
     }
     if (paymentModifications.paymentUnavailable) {
-        showInfoMessage(t('The payment you selected is no longer available.'), GtmMessageOriginType.cart);
+        messages.push(t('The payment you selected is no longer available.'));
     }
+
+    return messages;
 };
 
-const handleCartItemModifications = (itemModifications: TypeCartItemModificationsFragment, t: Translate): void => {
+const handleCartItemModifications = (itemModifications: TypeCartItemModificationsFragment, t: Translate): string[] => {
+    const messages: string[] = [];
+
     for (const cartItemWithModifiedPrice of itemModifications.cartItemsWithModifiedPrice) {
-        showInfoMessage(
+        messages.push(
             t('The price of item {{ itemName }} has changed.', {
                 itemName: cartItemWithModifiedPrice.product.fullName,
             }),
-            GtmMessageOriginType.cart,
         );
     }
+
     for (const nonListableCartItem of itemModifications.noLongerListableCartItems) {
-        showInfoMessage(
+        messages.push(
             t('Item {{ itemName }} can no longer be bought.', { itemName: nonListableCartItem.product.fullName }),
-            GtmMessageOriginType.cart,
         );
     }
+
     for (const itemWithChangedQuantity of itemModifications.cartItemsWithChangedQuantity) {
-        showInfoMessage(
+        messages.push(
             t('Quantity of item {{ itemName }} in cart was changed due to insufficient supply.', {
                 itemName: itemWithChangedQuantity.product.fullName,
             }),
             GtmMessageOriginType.cart,
         );
     }
+
+    return messages;
 };
 
 const handleCartPromoCodeModifications = (
     promoCodeModifications: TypeCartPromoCodeModificationsFragment,
     t: Translate,
-): void => {
+): string[] => {
+    const messages: string[] = [];
+
     for (const nonApplicablePromoCode of promoCodeModifications.noLongerApplicablePromoCode) {
-        showInfoMessage(
+        messages.push(
             t('The promo code {{ promoCode }} is no longer applicable.', { promoCode: nonApplicablePromoCode }),
-            GtmMessageOriginType.cart,
         );
     }
+
+    return messages;
 };

@@ -23,16 +23,16 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
 
     return (
         <button
-            aria-haspopup="dialog"
+            aria-haspopup={isProductInComparison ? 'dialog' : undefined}
             tabIndex={tabIndex}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             aria-label={
                 isProductInComparison
-                    ? t('Remove product {{ productName }} from comparison', {
-                          ns: 'accessibility',
+                    ? t('Remove from comparison product {{ productName }}', {
                           productName: productName,
+                          ns: 'accessibility',
                       })
-                    : t('Add product {{ productName }} to comparison', {
+                    : t('Add to comparison product {{ productName }}', {
                           ns: 'accessibility',
                           productName: productName,
                       })
