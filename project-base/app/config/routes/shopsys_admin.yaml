@@ -1,4 +1,14 @@
-shopsys_shop_admin:
+shopsys_administration:
+    prefix: /%admin_url%
+    resource: "@ShopsysAdministrationBundle/config/routing.yaml"
+
+shopsys_framework:
+    prefix: /%admin_url%
+    resource: "@ShopsysFrameworkBundle/Controller/Admin"
+    type: attribute
+
+# has to be last to properly override routes from bundles above
+shopsys_project_base:
     prefix: /%admin_url%
     resource: "../../src/Controller/Admin/"
     type: attribute
