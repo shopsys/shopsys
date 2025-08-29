@@ -30,7 +30,7 @@ The Shopsys storefront includes intelligent fallback domain redirection function
 The system always attempts exact domain matching first. With the current configuration:
 
 - **`http://127.0.0.1:8000/en`** matches domain 1 (`http://127.0.0.1:8000/`) → `/en` is treated as a regular path
-- **`http://127.0.0.1:8000/anything`** matches domain 1 (`http://127.0.0.1:8000/`) → `/anything` is treated as a regular path  
+- **`http://127.0.0.1:8000/anything`** matches domain 1 (`http://127.0.0.1:8000/`) → `/anything` is treated as a regular path
 - **`http://127.0.0.2:8000/products`** matches domain 2 (`http://127.0.0.2:8000/`) → `/products` is the application path
 - **`http://127.0.0.1:8000/sk/categories`** matches domain 3 (`http://127.0.0.1:8000/sk/`) → `/categories` is the application path
 
@@ -149,11 +149,11 @@ export const getCookieName = (baseName: string, domainId: number): string => {
 
 ### Cookie Naming Examples
 
-| Domain URL                 | Domain ID | Access Token     | Refresh Token     | Cookie Store      |
-| -------------------------- | --------- | ---------------- | ----------------- | ----------------- |
-| `http://127.0.0.1:8000`    | 1         | `accessToken-1`  | `refreshToken-1`  | `cookiesStore-1`  |
-| `http://127.0.0.2:8000`    | 2         | `accessToken-2`  | `refreshToken-2`  | `cookiesStore-2`  |
-| `http://127.0.0.1:8000/sk` | 3         | `accessToken-3`  | `refreshToken-3`  | `cookiesStore-3`  |
+| Domain URL                 | Domain ID | Access Token    | Refresh Token    | Cookie Store     |
+| -------------------------- | --------- | --------------- | ---------------- | ---------------- |
+| `http://127.0.0.1:8000`    | 1         | `accessToken-1` | `refreshToken-1` | `cookiesStore-1` |
+| `http://127.0.0.2:8000`    | 2         | `accessToken-2` | `refreshToken-2` | `cookiesStore-2` |
+| `http://127.0.0.1:8000/sk` | 3         | `accessToken-3` | `refreshToken-3` | `cookiesStore-3` |
 
 ### Why Name-Based Instead of Path-Based?
 
@@ -380,22 +380,22 @@ getBaseUrlWithLocale(baseUrl, 'sk'); // 'http://127.0.0.1:8000/sk'
 
 ### Common Issues and Solutions
 
-| Issue                             | Cause                            | Solution                                 |
-| --------------------------------- | -------------------------------- | ---------------------------------------- |
-| Users logged into wrong domain   | Cookies not properly isolated    | Verify cookie names include domain ID    |
-| Lost locale after redirect       | Middleware not preserving locale | Check `getBaseUrlWithLocale` usage       |
-| Domain not found errors          | Missing configuration            | Verify domain config in `next.config.js` |
-| Cookies visible across domains   | Using same cookie names          | Implement `getCookieName` utility        |
-| Unexpected fallback redirect     | No exact domain match found      | Check domain configuration covers all expected URLs |
-| Paths treated as locales         | Misunderstanding domain matching | Remember: only exact domain matches work, other paths are regular routes |
-| Redirect when expecting direct serve | Domain URL doesn't match exactly | Ensure domain configuration includes trailing slashes consistently |
+| Issue                                | Cause                            | Solution                                                                 |
+| ------------------------------------ | -------------------------------- | ------------------------------------------------------------------------ |
+| Users logged into wrong domain       | Cookies not properly isolated    | Verify cookie names include domain ID                                    |
+| Lost locale after redirect           | Middleware not preserving locale | Check `getBaseUrlWithLocale` usage                                       |
+| Domain not found errors              | Missing configuration            | Verify domain config in `next.config.js`                                 |
+| Cookies visible across domains       | Using same cookie names          | Implement `getCookieName` utility                                        |
+| Unexpected fallback redirect         | No exact domain match found      | Check domain configuration covers all expected URLs                      |
+| Paths treated as locales             | Misunderstanding domain matching | Remember: only exact domain matches work, other paths are regular routes |
+| Redirect when expecting direct serve | Domain URL doesn't match exactly | Ensure domain configuration includes trailing slashes consistently       |
 
 ## Summary
 
 The Shopsys storefront domain configuration system provides:
 
 - **Flexible multi-domain support** with optional locale-in-path URLs
-- **Exact domain matching priority** with paths treated as regular application routes  
+- **Exact domain matching priority** with paths treated as regular application routes
 - **Comprehensive domain coverage** in default configuration (base domains + locale-specific paths)
 - **Fallback redirection** for edge cases with orphaned base URLs
 - **Complete cookie isolation** between domains sharing the same host
