@@ -227,6 +227,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 </SpinboxButton>
 
                 <input
+                    aria-hidden
                     aria-describedby="quantity-input-description"
                     aria-label={t('Quantity')}
                     data-tid={TIDs.spinbox_input}

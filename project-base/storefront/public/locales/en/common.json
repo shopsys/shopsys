@@ -385,6 +385,7 @@
     "Overview": "Overview",
     "page {{ currentPage }} from {{ totalPages }}": "page {{ currentPage }} from {{ totalPages }}",
     "page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}": "page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}",
+    "Page loading": "Page loading",
     "Pagination navigation": "Pagination navigation",
     "Paid": "Paid",
     "Parameters": "Parameters",
