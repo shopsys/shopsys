@@ -15,11 +15,58 @@ The Shopsys storefront supports multi-domain configurations with flexible locale
 
 ### 2. Locale-in-Path Domains
 
-- **Example**: `http://127.0.0.2:8000/sk`
+- **Example**: `http://127.0.0.1:8000/sk`
 - **URL Structure**: `/sk/products`, `/sk/categories`, `/sk/cart`
 - **Locale**: Extracted from URL path segment
 - **Cookie Naming**: Uses domain ID for isolation (same as standard domains)
 - **Special Handling**: Middleware preserves locale prefix in all URLs
+
+## Fallback Domain Redirection
+
+The Shopsys storefront includes intelligent fallback domain redirection functionality that only activates when a user accesses a base URL that has no exact domain configuration. This is a fallback mechanism, not the primary domain resolution method.
+
+### Primary Resolution: Exact Domain Matching
+
+The system always attempts exact domain matching first. With the current configuration:
+
+- **`http://127.0.0.1:8000/en`** matches domain 1 (`http://127.0.0.1:8000/`) → `/en` is treated as a regular path
+- **`http://127.0.0.1:8000/anything`** matches domain 1 (`http://127.0.0.1:8000/`) → `/anything` is treated as a regular path  
+- **`http://127.0.0.2:8000/products`** matches domain 2 (`http://127.0.0.2:8000/`) → `/products` is the application path
+- **`http://127.0.0.1:8000/sk/categories`** matches domain 3 (`http://127.0.0.1:8000/sk/`) → `/categories` is the application path
+
+**Important**: Paths that look like locales are treated as regular application paths unless they match an exact domain configuration with that locale path.
+However, paths matching locales configured in `i18n.js` (currently `['default', 'en', 'cs', 'sk']`) will be intercepted by Next.js i18n system before reaching domain resolution. In the current setup, `/fr` etc. on `127.0.0.2:8000` are regular paths served by domain 2, while `/en`, `/cs`, `/sk` paths are handled by Next.js i18n on any domain.
+
+### When Fallback Redirection Is Triggered
+
+Fallback redirection would only be triggered in configurations where you have "orphaned" base URLs. For example, if domains were configured like this:
+
+```
+- http://127.0.0.1:8000/cs/ (Czech, domain 1)
+- http://127.0.0.1:8000/sk/ (Slovak, domain 2)
+Note: No domain configured for base http://127.0.0.1:8000/
+
+Then accessing http://127.0.0.1:8000/products would trigger fallback:
+- Browser: Accept-Language: sk-SK,sk;q=0.9,en;q=0.8
+- Result: Redirects to http://127.0.0.1:8000/sk/products (matches browser locale)
+```
+
+### Browser Locale Detection
+
+The system parses the `Accept-Language` header to extract user preferences:
+
+- **Quality values**: Respects `q` parameters (e.g., `sk;q=0.9`)
+- **Language extraction**: Extracts base language codes (e.g., `cs` from `cs-CZ`)
+- **Priority ordering**: Processes locales in order of preference
+- **Fallback behavior**: Uses first available domain if no locale matches
+
+### Technical Implementation
+
+The redirection logic is implemented in:
+
+- **`getHostAndDomainFromRequest`**: Domain resolution with redirect flag
+- **`middleware.ts`**: HTTP redirect handling with 308 status code
+- **Browser locale parsing**: Automatic `Accept-Language` header processing
 
 ## Core Configuration
 
@@ -61,14 +108,14 @@ publicRuntimeConfig: {
             // ... other config
         },
         {
-            url: 'http://127.0.0.2:8000',
+            url: 'http://127.0.0.2:8000', // Base domain without locale
             defaultLocale: 'cs',
             domainId: 2,
             currencyCode: 'CZK',
             // ... other config
         },
         {
-            url: 'http://127.0.0.2:8000/sk', // Locale in path
+            url: 'http://127.0.0.1:8000/sk', // Locale in path
             defaultLocale: 'sk',
             domainId: 3,
             currencyCode: 'EUR',
@@ -106,7 +153,7 @@ export const getCookieName = (baseName: string, domainId: number): string => {
 | -------------------------- | --------- | ---------------- | ----------------- | ----------------- |
 | `http://127.0.0.1:8000`    | 1         | `accessToken-1`  | `refreshToken-1`  | `cookiesStore-1`  |
 | `http://127.0.0.2:8000`    | 2         | `accessToken-2`  | `refreshToken-2`  | `cookiesStore-2`  |
-| `http://127.0.0.2:8000/sk` | 3         | `accessToken-3`  | `refreshToken-3`  | `cookiesStore-3`  |
+| `http://127.0.0.1:8000/sk` | 3         | `accessToken-3`  | `refreshToken-3`  | `cookiesStore-3`  |
 
 ### Why Name-Based Instead of Path-Based?
 
@@ -286,7 +333,7 @@ const MyComponent = () => {
 import { getExplicitPathDomainLocaleOrDefault } from 'utils/domain/domainUtils';
 
 // Extract locale or return default
-getExplicitPathDomainLocaleOrDefault('http://127.0.0.2:8000/sk'); // 'sk'
+getExplicitPathDomainLocaleOrDefault('http://127.0.0.1:8000/sk'); // 'sk'
 getExplicitPathDomainLocaleOrDefault('http://127.0.0.1:8000'); // 'default'
 ```
 
@@ -312,7 +359,7 @@ The Next.js middleware (`middleware.ts`) handles locale-in-path domains by:
 2. **Rewriting URLs**: Maps public URLs to internal Next.js pages
 3. **Preserving locale context**: Ensures all redirects maintain the locale prefix
 
-Example flow for `http://127.0.0.2:8000/sk/products`:
+Example flow for `http://127.0.0.1:8000/sk/products`:
 
 1. Middleware extracts: `domainId: 3`, `locale: 'sk'`
 2. Rewrites to internal route: `/products` (Next.js page)
@@ -324,55 +371,33 @@ Example flow for `http://127.0.0.2:8000/sk/products`:
 import { getBaseUrlWithLocale } from 'utils/domain/domainUtils';
 
 // Generate URLs that respect locale paths
-const baseUrl = 'http://127.0.0.2:8000';
-getBaseUrlWithLocale(baseUrl, 'default'); // 'http://127.0.0.2:8000'
-getBaseUrlWithLocale(baseUrl, 'sk'); // 'http://127.0.0.2:8000/sk'
+const baseUrl = 'http://127.0.0.1:8000';
+getBaseUrlWithLocale(baseUrl, 'default'); // 'http://127.0.0.1:8000'
+getBaseUrlWithLocale(baseUrl, 'sk'); // 'http://127.0.0.1:8000/sk'
 ```
 
 ## Troubleshooting
 
 ### Common Issues and Solutions
 
-| Issue                          | Cause                            | Solution                                 |
-| ------------------------------ | -------------------------------- | ---------------------------------------- |
-| Users logged into wrong domain | Cookies not properly isolated    | Verify cookie names include domain ID    |
-| Lost locale after redirect     | Middleware not preserving locale | Check `getBaseUrlWithLocale` usage       |
-| Domain not found errors        | Missing configuration            | Verify domain config in `next.config.js` |
-| Cookies visible across domains | Using same cookie names          | Implement `getCookieName` utility        |
-
-### Debugging Tips
-
-1. **Inspect Cookies**: Use browser dev tools → Application → Cookies
-    - Check cookie names match expected pattern
-    - Verify all cookies use `path="/"`
-    - Ensure secure flag is set for HTTPS
-
-2. **Check Domain Config**:
-
-    ```typescript
-    // In any component
-    const domainConfig = useDomainConfig();
-    console.log('Current domain:', domainConfig);
-    ```
-
-3. **Verify Cookie Operations**:
-
-    ```typescript
-    // Test cookie naming
-    console.log('Cookie name:', getCookieName('test', domainConfig.domainId));
-    ```
-
-4. **Monitor Middleware**: Add logging to `middleware.ts`:
-    ```typescript
-    console.log('Request:', request.url);
-    console.log('Detected domain:', domainId, 'locale:', currentLocale);
-    ```
+| Issue                             | Cause                            | Solution                                 |
+| --------------------------------- | -------------------------------- | ---------------------------------------- |
+| Users logged into wrong domain   | Cookies not properly isolated    | Verify cookie names include domain ID    |
+| Lost locale after redirect       | Middleware not preserving locale | Check `getBaseUrlWithLocale` usage       |
+| Domain not found errors          | Missing configuration            | Verify domain config in `next.config.js` |
+| Cookies visible across domains   | Using same cookie names          | Implement `getCookieName` utility        |
+| Unexpected fallback redirect     | No exact domain match found      | Check domain configuration covers all expected URLs |
+| Paths treated as locales         | Misunderstanding domain matching | Remember: only exact domain matches work, other paths are regular routes |
+| Redirect when expecting direct serve | Domain URL doesn't match exactly | Ensure domain configuration includes trailing slashes consistently |
 
 ## Summary
 
 The Shopsys storefront domain configuration system provides:
 
 - **Flexible multi-domain support** with optional locale-in-path URLs
+- **Exact domain matching priority** with paths treated as regular application routes  
+- **Comprehensive domain coverage** in default configuration (base domains + locale-specific paths)
+- **Fallback redirection** for edge cases with orphaned base URLs
 - **Complete cookie isolation** between domains sharing the same host
 - **Consistent API** for cookie operations across client and server
 - **Automatic locale handling** in middleware and routing

@@ -10,7 +10,7 @@ export type LocaleInfo = {
 
 export const getHostAndDomainFromRequest = (
     request: NextRequest,
-): { host: string; domainId: number; currentLocale: string | undefined } => {
+): { host: string; domainId: number; currentLocale: string | undefined; redirect?: boolean } => {
     const requestHeaders = new Headers(request.headers);
     const requestHost = requestHeaders.get('host');
 
@@ -81,12 +81,55 @@ export const getHostAndDomainFromRequest = (
         }
     }
 
-    // Fallback: return first domain configuration
-    const fallbackDomain = domainEntries[0];
+    // Step 3: Fallback - only if no exact domain match was found
+    // This handles cases where user accesses base host that has no exact domain configuration
+    // but there are domains with the same host + locale paths
+    const domainsWithSameHost = domainEntries.filter((entry) => {
+        const domainUrlObj = new URL(entry.domainUrl);
+        return domainUrlObj.host === requestUrlObj.host;
+    });
+
+    if (domainsWithSameHost.length > 0) {
+        // Get browser preferred locales from Accept-Language header
+        const acceptLanguage = requestHeaders.get('accept-language') || '';
+        const browserLocales = parseBrowserLocales(acceptLanguage);
+
+        // Try to find a domain matching browser's preferred locale
+        let targetDomain = domainsWithSameHost[0]; // Default to first domain
+
+        for (const browserLocale of browserLocales) {
+            const matchingDomain = domainsWithSameHost.find((domain) => {
+                // Only match explicit locale paths
+                if (domain.locale === DEFAULT_LOCALE) {
+                    return false;
+                }
+
+                return domain.locale.toLowerCase() === browserLocale.toLowerCase();
+            });
+
+            if (matchingDomain) {
+                targetDomain = matchingDomain;
+                break;
+            }
+        }
+
+        // Found a domain with the same host - redirect to it
+        return {
+            host: targetDomain.domainUrl + '/',
+            domainId: targetDomain.domainId,
+            currentLocale: targetDomain.locale,
+            redirect: true,
+        };
+    }
+
+    // This should not happen as nginx should handle other domains
+    // But keeping the ultimate fallback for safety
+    const ultimateFallback = domainEntries[0];
     return {
-        host: fallbackDomain.domainUrl + '/',
-        domainId: fallbackDomain.domainId,
-        currentLocale: fallbackDomain.locale,
+        host: ultimateFallback.domainUrl + '/',
+        domainId: ultimateFallback.domainId,
+        currentLocale: ultimateFallback.locale,
+        redirect: true,
     };
 };
 
@@ -96,4 +139,30 @@ const removeTrailingSlash = (url: string) => {
     }
 
     return url;
+};
+
+/**
+ * Parse Accept-Language header to extract browser preferred locales
+ * @param acceptLanguage Accept-Language header value
+ * @return Array of locale codes sorted by preference
+ */
+const parseBrowserLocales = (acceptLanguage: string): string[] => {
+    if (!acceptLanguage) {
+        return [];
+    }
+
+    const locales = acceptLanguage
+        .split(',')
+        .map((lang) => {
+            const [locale, qValue] = lang.trim().split(';q=');
+            const quality = qValue ? parseFloat(qValue) : 1.0;
+            // Extract the language code (e.g., 'cs' from 'cs-CZ')
+            const languageCode = locale.split('-')[0].toLowerCase();
+            return { locale: languageCode, quality };
+        })
+        .sort((a, b) => b.quality - a.quality)
+        .map((item) => item.locale);
+
+    // Remove duplicates
+    return Array.from(new Set(locales));
 };

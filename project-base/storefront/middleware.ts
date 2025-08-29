@@ -19,20 +19,23 @@ export const middleware: NextMiddleware = async (request) => {
             return new NextResponse(null, { status: 404 });
         }
 
-        const { host, domainId, currentLocale } = getHostAndDomainFromRequest(request);
+        const domainInfo = getHostAndDomainFromRequest(request);
         const { search, origin: baseOrigin } = new URL(request.url);
-        const origin = getBaseUrlWithLocale(baseOrigin, currentLocale);
 
         let pathname = request.nextUrl.pathname;
         if (pathname.startsWith('/')) {
             pathname = pathname.substring(1);
         }
 
-        if (domainId < 1) {
-            const defaultDomainUrl = Object.keys(STATIC_REWRITE_PATHS)[0];
-            return NextResponse.redirect(new URL(`${defaultDomainUrl}${pathname}${search}`));
+        // Handle redirect if domain couldn't be resolved
+        if (domainInfo.redirect) {
+            const redirectUrl = new URL(`${domainInfo.host}${pathname}${search}`);
+            return NextResponse.redirect(redirectUrl, 308);
         }
 
+        const { host, domainId, currentLocale } = domainInfo;
+
+        const origin = getBaseUrlWithLocale(baseOrigin, currentLocale);
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
