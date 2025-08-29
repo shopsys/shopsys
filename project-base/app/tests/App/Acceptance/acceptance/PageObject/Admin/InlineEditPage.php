@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance\PageObject\Admin;
 
+use Facebook\WebDriver\WebDriverBy;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class InlineEditPage extends AbstractPage
@@ -14,7 +15,8 @@ class InlineEditPage extends AbstractPage
     public function startInlineEdit($rowId)
     {
         $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-edit';
-        $this->tester->scrollTo(['css' => $class]);
+        $element = $this->webDriver->findElement(WebDriverBy::cssSelector($class));
+        $this->tester->scrollToElement($element);
         $this->tester->clickByCss($class);
         $this->tester->waitForAjax();
     }
@@ -30,7 +32,7 @@ class InlineEditPage extends AbstractPage
      */
     public function delete($rowId)
     {
-        $class = $this->getRowCssLocator($rowId) . ' .in-icon--delete';
+        $class = $this->getRowCssLocator($rowId) . ' .test-type-delete';
         $this->tester->scrollTo(['css' => $class]);
         $this->tester->clickByCss($class);
         $this->tester->wait(1); // Pop-up animation
