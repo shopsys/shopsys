@@ -357,12 +357,12 @@ class PaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
-    public function getPaymentByExternalMethodTransportAndDomainId(
+    public function findPaymentByExternalMethodTransportAndDomainId(
         string $externalPaymentMethod,
         Transport $transport,
         int $domainId,
     ): ?Payment {
-        return $this->paymentRepository->getPaymentByExternalMethodTransportAndDomainId(
+        return $this->paymentRepository->findPaymentByExternalMethodTransportAndDomainId(
             $externalPaymentMethod,
             $transport,
             $domainId,

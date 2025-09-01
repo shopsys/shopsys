@@ -494,7 +494,7 @@ class OrderFacade
             return;
         }
 
-        $payment = $this->paymentFacade->getPaymentByExternalMethodTransportAndDomainId(
+        $payment = $this->paymentFacade->findPaymentByExternalMethodTransportAndDomainId(
             $paymentMethod,
             $order->getTransport(),
             $order->getDomainId(),

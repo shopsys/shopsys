@@ -64,13 +64,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             $oldIsOrderPaid = $order->isPaid();
 
             try {
-                $previousTransactionMethod = $order->getLastTransaction()?->getExternalPaymentMethod();
-
-                $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
-
-                $lastTransactionMethod = $order->getLastTransaction()?->getExternalPaymentMethod();
-
-                if ($lastTransactionMethod !== $previousTransactionMethod) {
+                if ($this->paymentServiceFacade->updatePaymentTransactionsByOrder($order)) {
                     $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
                 }
             } catch (GoPayPaymentDownloadException $e) {

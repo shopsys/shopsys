@@ -177,7 +177,7 @@ class PaymentRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
-    public function getPaymentByExternalMethodTransportAndDomainId(
+    public function findPaymentByExternalMethodTransportAndDomainId(
         string $externalPaymentMethod,
         Transport $transport,
         int $domainId,
