@@ -8,28 +8,29 @@ use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class LoginPage extends AbstractPage
 {
-    public const ADMIN_USERNAME = 'admin';
-    public const ADMIN_PASSWORD = 'admin123';
+    public const string ADMIN_USERNAME = 'admin';
+    public const string ADMIN_PASSWORD = 'admin123';
 
     /**
      * @param string $username
      * @param string $password
      */
-    public function login($username, $password)
+    public function login(string $username, string $password): void
     {
         $this->tester->amOnPage('/admin/');
         $this->tester->fillFieldByName('admin_login_form[username]', $username);
         $this->tester->fillFieldByName('admin_login_form[password]', $password);
+        $this->tester->clickByName('admin_login_form[username]');
         $this->tester->clickByTranslationAdmin('Log in');
     }
 
-    public function loginAsAdmin()
+    public function loginAsAdmin(): void
     {
         $this->login(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
         $this->tester->seeTranslationAdmin('Dashboard');
     }
 
-    public function assertLoginFailed()
+    public function assertLoginFailed(): void
     {
         $this->tester->seeTranslationAdmin('Log in failed.');
         $this->tester->seeCurrentPageEquals('/admin/');

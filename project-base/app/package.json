@@ -40,6 +40,7 @@
         "js-yaml": "^3.14.1",
         "less": "^4.2.2",
         "less-loader": "^12.2.0",
+        "license-checker": "^25.0.1",
         "ncp": "^2.0.0",
         "pofile": "^1.1.1",
         "postcss-loader": "^8.1.1",
