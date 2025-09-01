@@ -82,14 +82,14 @@ export default class GrapesMailEditor {
                         strinsert_strings: [
                             { name: Translator.trans('Mandatory variables') },
                             ...variables
-                                .filter(variable => variable.isRequired === true)
-                                .map(variable => {
+                                .filter((variable) => variable.isRequired === true)
+                                .map((variable) => {
                                     return { name: variable.label, value: variable.placeholder };
                                 }),
                             { name: Translator.trans('Optional variables') },
                             ...variables
-                                .filter(variable => variable.isRequired === false)
-                                .map(variable => {
+                                .filter((variable) => variable.isRequired === false)
+                                .map((variable) => {
                                     return { name: variable.label, value: variable.placeholder };
                                 }),
                         ],
@@ -134,6 +134,7 @@ export default class GrapesMailEditor {
         editor.addStyle(`
             .gjs-editable {
                 min-height: 50px !important;
+                padding-block: 1px !important;
             }
         `);
 
