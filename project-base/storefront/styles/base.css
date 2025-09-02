@@ -132,7 +132,9 @@
     }
 
     .Toastify__toast {
-        @apply !rounded-toast;
+        @variant md {
+            @apply !rounded-toast;
+        }
     }
 
     .Toastify__toast-container {

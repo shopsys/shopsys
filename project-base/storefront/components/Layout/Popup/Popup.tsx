@@ -93,7 +93,7 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'z-aboveOverlay bg-background-default fixed flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md p-5 shadow-2xl',
+                            'z-aboveOverlay bg-background-default fixed flex w-[calc(100%-40px)] max-w-screen-lg cursor-auto flex-col rounded-md p-5 shadow-2xl lg:max-h-[80vh]',
                             className,
                         )}
                         initial={{
