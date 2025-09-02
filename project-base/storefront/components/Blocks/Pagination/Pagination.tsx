@@ -54,11 +54,10 @@ export const Pagination: FC<PaginationProps> = ({
 
     const onChangePage = (pageNumber: number) => () => {
         updatePagination(pageNumber);
+
         // timeout for safari scroll
         setTimeout(() => {
-            if (paginationScrollTargetRef?.current) {
-                paginationScrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
-            }
+            paginationScrollTargetRef?.current?.scrollIntoView({ behavior: 'smooth' });
         }, 100);
     };
 

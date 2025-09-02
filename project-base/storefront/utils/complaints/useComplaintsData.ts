@@ -1,6 +1,6 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { MINIMAL_SEARCH_QUERY_LENGTH } from 'components/Layout/Header/AutocompleteSearch/constants';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { useComplaintsQuery } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
 import { useCookiesStore } from 'store/useCookiesStore';
@@ -16,8 +16,9 @@ export const useComplaintsData = (searchQueryValue: string) => {
 
     const [{ data: complaintsData, fetching: complaintsDataFetching }] = useComplaintsQuery({
         variables: {
-            first: DEFAULT_PAGE_SIZE,
-            after: isSearchQueryValid ? null : getEndCursor(currentPage),
+            first: DEFAULT_ORDERS_SIZE,
+            after: isSearchQueryValid ? null : getEndCursor(currentPage, 0, DEFAULT_ORDERS_SIZE),
+            // { after: getEndCursor(currentPage, 0, DEFAULT_ORDERS_SIZE), first: DEFAULT_ORDERS_SIZE }
             searchInput: {
                 parameters: [],
                 search: isSearchQueryValid ? debouncedSearchQuery : '',
@@ -30,5 +31,5 @@ export const useComplaintsData = (searchQueryValue: string) => {
     const mappedComplaints = mapConnectionEdges<TypeComplaintDetailFragment>(complaintsData?.complaints.edges);
     const complaintsTotalCount = complaintsData?.complaints.totalCount;
 
-    return { mappedComplaints, complaintsTotalCount, complaintsDataFetching };
+    return { mappedComplaints, complaintsTotalCount, complaintsDataFetching, complaintsData };
 };
