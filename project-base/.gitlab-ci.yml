@@ -88,7 +88,7 @@ test:storefront-standards-with-codegen-with-tests-with-licenses-check:
         - corepack enable
         - corepack prepare --activate pnpm@9.0.5
         - pnpm config set store-dir .pnpm-store
-        - apk add --no-cache grep
+        - apk add --no-cache grep git
         - cp ./app/schema.graphql ./storefront/schema.graphql
         - cd ./storefront
     script:
@@ -98,6 +98,15 @@ test:storefront-standards-with-codegen-with-tests-with-licenses-check:
         - pnpm run check
         - pnpm test--no-watch
         - sh scripts/check-licenses.sh
+        - pnpm run translate
+        - |
+            if [ -n "$(git status --porcelain)" ]; then
+                echo "Not all translations are dumped. Run 'pnpm run translate' and commit the changes."
+                git status -s
+                exit 1
+            else
+                echo "All translations are dumped"
+            fi
     interruptible: true
 
 tests:functional-and-acceptance-with-licenses-check:
