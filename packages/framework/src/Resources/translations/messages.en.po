@@ -271,6 +271,9 @@ msgstr ""
 msgid "All search results"
 msgstr ""
 
+msgid "Allow negative stock"
+msgstr ""
+
 msgid "Alternate language domains"
 msgstr ""
 
@@ -2231,6 +2234,9 @@ msgid "IP address"
 msgstr ""
 
 msgid "Icon"
+msgstr ""
+
+msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
 msgstr ""
 
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"

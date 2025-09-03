@@ -189,6 +189,12 @@ class Product extends AbstractTranslatableEntity
     protected $productVideos;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $isAllowedNegativeStock;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -253,6 +259,7 @@ class Product extends AbstractTranslatableEntity
         $this->unit = $productData->unit;
         $this->weight = $productData->weight;
         $this->productType = $productData->productType;
+        $this->isAllowedNegativeStock = $productData->isAllowedNegativeStock;
         $this->setTranslations($productData);
         $this->setExcludedTransports($productData->excludedTransports);
     }
@@ -984,5 +991,13 @@ class Product extends AbstractTranslatableEntity
     public function getProductVideos()
     {
         return $this->productVideos->getValues();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAllowedNegativeStock()
+    {
+        return $this->isAllowedNegativeStock;
     }
 }
