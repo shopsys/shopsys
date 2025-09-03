@@ -4,11 +4,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "book"
+msgid "Test image"
 msgstr ""
 
 msgid "audio"
 msgstr ""
 
-msgid "Test image"
+msgid "book"
 msgstr ""

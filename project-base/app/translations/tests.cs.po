@@ -4,11 +4,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "book"
-msgstr "kniha"
+msgid "Test image"
+msgstr "Testovací obrázek"
 
 msgid "audio"
 msgstr "audio"
 
-msgid "Test image"
-msgstr "Testovací obrázek"
+msgid "book"
+msgstr "kniha"
+
