@@ -79,7 +79,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                         label: formMeta.fields.newsletterSubscription.label,
                     }}
                     onChange={(event) =>
-                        updateContactInformation({ newsletterSubscription: Boolean(event.currentTarget.value) })
+                        updateContactInformation({ newsletterSubscription: event.currentTarget.checked })
                     }
                 />
             )}

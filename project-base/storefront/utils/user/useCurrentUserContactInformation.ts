@@ -136,6 +136,7 @@ const mapCurrentCustomerContactInformationApiData = (
             apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser'
                 ? CustomerTypeEnum.CompanyCustomer
                 : CustomerTypeEnum.CommonCustomer,
+        newsletterSubscription: apiCurrentCustomerUserData.newsletterSubscription,
         note: '',
     };
 };

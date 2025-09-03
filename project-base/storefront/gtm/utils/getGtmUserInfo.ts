@@ -30,6 +30,7 @@ const getGtmUserInfoForVisitor = (userContactInformation: ContactInformation) =>
     ...(userContactInformation.street.length > 0 && { street: userContactInformation.street }),
     ...(userContactInformation.lastName.length > 0 && { lastName: userContactInformation.lastName }),
     type: getGtmUserType(userContactInformation.customer),
+    newsletterSubscription: userContactInformation.newsletterSubscription,
 });
 
 const getGtmUserType = (customerType: CustomerTypeEnum | undefined): GtmUserType | undefined => {
