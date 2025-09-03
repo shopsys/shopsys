@@ -1,5 +1,5 @@
-import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import grapesjs from 'grapesjs';
 
 export default grapesjs.plugins.add('mail-template', editor => {
     editor.DomComponents.addType('wrapper', {

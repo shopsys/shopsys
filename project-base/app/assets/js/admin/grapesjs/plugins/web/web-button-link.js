@@ -5,7 +5,7 @@ const linkPositionDataAttribute = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
 const textDataAttribute = 'data-text';
 
-export default grapesjs.plugins.add('web-button-link', (editor) => {
+export default grapesjs.plugins.add('web-button-link', editor => {
     editor.Blocks.add('button-link', {
         id: 'button-link',
         type: 'Link',
@@ -18,7 +18,7 @@ export default grapesjs.plugins.add('web-button-link', (editor) => {
     });
 
     editor.DomComponents.addType('button-link', {
-        isComponent: (element) => element.tagName === 'A',
+        isComponent: element => element.tagName === 'A',
         model: {
             init() {
                 this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
@@ -45,7 +45,7 @@ export default grapesjs.plugins.add('web-button-link', (editor) => {
                 });
             },
 
-            handleTextAttributeChange(element) {
+            handleTextAttributeChange(_element) {
                 const newText = this.getAttributes()[textDataAttribute];
                 this.components(newText);
             },

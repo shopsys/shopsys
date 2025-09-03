@@ -37,7 +37,7 @@ export default grapesjs.plugins.add('custom-image', editor => {
             defaults: {
                 resizable: {
                     updateTarget: (el, rect) => {
-                        const widthPx = Math.round(rect.w) + 'px';
+                        const widthPx = `${Math.round(rect.w)}px`;
                         const heightPx = 'auto';
 
                         // Update DOM element immediately for visual feedback
@@ -49,10 +49,10 @@ export default grapesjs.plugins.add('custom-image', editor => {
                         if (component && component.getEl() === el) {
                             component.addStyle({
                                 width: widthPx,
-                                height: heightPx
+                                height: heightPx,
                             });
                         }
-                    }
+                    },
                 },
                 attributes: {
                     [imagePositionDataAttribute]: 'left',

@@ -11,7 +11,7 @@ const IMAGE_FLOAT_CLASS = 'gjs-text-with-image-float';
 const IMAGE_POSITION_LEFT = 'left';
 const IMAGE_POSITION_RIGHT = 'right';
 
-export default grapesjs.plugins.add('text-with-image', (editor) => {
+export default grapesjs.plugins.add('text-with-image', editor => {
     editor.Blocks.add('textWithImage', {
         id: 'text-with-image',
         category: 'basic-objects',
@@ -22,7 +22,7 @@ export default grapesjs.plugins.add('text-with-image', (editor) => {
     });
 
     editor.DomComponents.addType(TEXT_WITH_IMAGE_TYPE, {
-        isComponent: (element) => element.classList?.contains(TEXT_WITH_IMAGE_CLASS),
+        isComponent: element => element.classList?.contains(TEXT_WITH_IMAGE_CLASS),
         model: {
             init() {
                 this.on(`change:attributes:${IMAGE_POSITION_DATA_ATTRIBUTE}`, this.handlePositionChange);
@@ -62,7 +62,7 @@ export default grapesjs.plugins.add('text-with-image', (editor) => {
                             cl: 0,
                             cr: 0,
                             updateTarget: (el, rect) => {
-                                const widthPx = Math.round(rect.w) + 'px';
+                                const widthPx = `${Math.round(rect.w)}px`;
                                 const heightPx = 'auto';
 
                                 // Update DOM element immediately for visual feedback

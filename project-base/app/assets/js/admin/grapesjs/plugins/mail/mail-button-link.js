@@ -5,7 +5,7 @@ const linkPositionDataAttribute = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
 const textDataAttribute = 'data-text';
 
-export default grapesjs.plugins.add('mail-button-link', (editor) => {
+export default grapesjs.plugins.add('mail-button-link', editor => {
     editor.Blocks.add('button-link', {
         id: 'button-link',
         category: 'basic-objects',
@@ -41,7 +41,7 @@ export default grapesjs.plugins.add('mail-button-link', (editor) => {
     });
 
     editor.DomComponents.addType('button-link', {
-        isComponent: (element) => element.tagName === 'A',
+        isComponent: element => element.tagName === 'A',
 
         model: {
             init() {
@@ -74,7 +74,7 @@ export default grapesjs.plugins.add('mail-button-link', (editor) => {
                 });
             },
 
-            handleTextAttributeChange(element) {
+            handleTextAttributeChange(_element) {
                 const newText = this.getAttributes()[textDataAttribute];
                 this.components(newText);
             },
