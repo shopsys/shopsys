@@ -229,8 +229,7 @@ check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & sto
 	@docker compose exec -T php-fpm bash -lc "project-base/scripts/check-licenses.sh" && \
 	 docker compose exec -T storefront sh -lc "sh scripts/check-licenses.sh" && \
 	 echo "✅ All license checks passed"
-	$(call cypress-cleanup)
-
+	 
 # ------------------------------------------------------------------------------
 # 💅 Compiling Tailwind CSS for admin
 # ------------------------------------------------------------------------------
