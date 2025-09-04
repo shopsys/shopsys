@@ -48,6 +48,12 @@ const REQUEST_WITHOUT_DIRECTIVE = {
 } as unknown as RequestInit;
 
 const TEST_URL = 'https://test.ts/graphql/';
+const TEST_URL_WITH_DIRECTIVE =
+    'https://test.ts/graphql/?query=query%20TestQuery%20@redisCache(ttl:%203600)%20{%0A%20foobar%0A}';
+const TEST_URL_WITH_ENCODED_DIRECTIVE =
+    'https://test.ts/graphql/?query=query%20TestQuery%20%40redisCache%28ttl%3A%203600%29%20%7B%0A%20foobar%0A%7D';
+const TEST_URL_WITH_FRIENDLY_URL =
+    'https://test.ts/graphql/?query=query%20TestQuery%20@friendlyUrl%20{%0A%20foobar%0A}';
 const TEST_RESPONSE_BODY = { testBody: 'test data' };
 
 describe('fetcher test', () => {
@@ -154,5 +160,105 @@ describe('fetcher test', () => {
         const responseBodyFromRedis = await (await testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE)).json();
 
         expect(responseBodyFromRedis).toStrictEqual({ data: TEST_RESPONSE_BODY });
+    });
+
+    describe('URL directive cleaning', () => {
+        test('should clean @redisCache directive from URL string', () => {
+            (isClientGetter as Mock).mockImplementation(() => true);
+
+            const testFetcher = fetcher(mockRedisClient);
+            testFetcher(TEST_URL_WITH_DIRECTIVE, REQUEST_WITHOUT_DIRECTIVE);
+
+            const expectedCleanedUrl = 'https://test.ts/graphql/?query=query%20TestQuery%20%20{%0A%20foobar%0A}';
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+        });
+
+        test('should clean encoded @redisCache directive from URL string', () => {
+            (isClientGetter as Mock).mockImplementation(() => true);
+
+            const testFetcher = fetcher(mockRedisClient);
+            testFetcher(TEST_URL_WITH_ENCODED_DIRECTIVE, REQUEST_WITHOUT_DIRECTIVE);
+
+            const expectedCleanedUrl = 'https://test.ts/graphql/?query=query%20TestQuery%20%20%7B%0A%20foobar%0A%7D';
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+        });
+
+        test('should clean @friendlyUrl directive from URL string', () => {
+            (isClientGetter as Mock).mockImplementation(() => true);
+
+            const testFetcher = fetcher(mockRedisClient);
+            testFetcher(TEST_URL_WITH_FRIENDLY_URL, REQUEST_WITHOUT_DIRECTIVE);
+
+            const expectedCleanedUrl = 'https://test.ts/graphql/?query=query%20TestQuery%20%20{%0A%20foobar%0A}';
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+        });
+
+        test('should clean directives from URL object', () => {
+            (isClientGetter as Mock).mockImplementation(() => true);
+
+            const testFetcher = fetcher(mockRedisClient);
+            const urlObject = new URL(TEST_URL_WITH_DIRECTIVE);
+            testFetcher(urlObject, REQUEST_WITHOUT_DIRECTIVE);
+
+            const expectedCleanedUrl = new URL(
+                'https://test.ts/graphql/?query=query%20TestQuery%20%20{%0A%20foobar%0A}',
+            );
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+        });
+
+        test('should handle server-side URL cleaning with Redis cache enabled', async () => {
+            (isClientGetter as Mock).mockImplementation(() => false);
+            vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
+            mockFetch.mockImplementation(() =>
+                Promise.resolve({
+                    headers: new Headers({
+                        'content-type': 'application/json',
+                    }),
+                    json: () => Promise.resolve({ data: TEST_RESPONSE_BODY }),
+                }),
+            );
+
+            const testFetcher = fetcher(mockRedisClient);
+            await testFetcher(TEST_URL_WITH_DIRECTIVE, REQUEST_WITH_DIRECTIVE);
+
+            const expectedCleanedUrl = 'https://test.ts/graphql/?query=query%20TestQuery%20%20{%0A%20foobar%0A}';
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+            vi.unstubAllEnvs();
+        });
+
+        test('should handle URLs without directives', () => {
+            (isClientGetter as Mock).mockImplementation(() => true);
+
+            const testFetcher = fetcher(mockRedisClient);
+            testFetcher(TEST_URL, REQUEST_WITHOUT_DIRECTIVE);
+
+            expect(mockFetch).toBeCalledWith(TEST_URL, REQUEST_WITHOUT_DIRECTIVE);
+        });
+
+        test('should clean multiple query parameters correctly', () => {
+            (isClientGetter as Mock).mockImplementation(() => true);
+
+            const urlWithMultipleParams =
+                'https://test.ts/graphql/?param1=value1&query=test@redisCache(ttl:3600)&param2=value2';
+            const expectedCleanedUrl = 'https://test.ts/graphql/?param1=value1&query=test&param2=value2';
+
+            const testFetcher = fetcher(mockRedisClient);
+            testFetcher(urlWithMultipleParams, REQUEST_WITHOUT_DIRECTIVE);
+
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+        });
+
+        test('should handle error scenarios with URL cleaning', async () => {
+            (isClientGetter as Mock).mockImplementation(() => false);
+            mockFetch.mockImplementation(() => Promise.reject(new Error('Network error')));
+
+            const testFetcher = fetcher(mockRedisClient);
+
+            await expect(testFetcher(TEST_URL_WITH_DIRECTIVE, REQUEST_WITH_DIRECTIVE)).rejects.toThrow('Network error');
+
+            expect(captureException).toBeCalledWith(new Error('Network error'));
+            const expectedCleanedUrl = 'https://test.ts/graphql/?query=query%20TestQuery%20%20{%0A%20foobar%0A}';
+            expect(mockFetch).toBeCalledWith(expectedCleanedUrl, REQUEST_WITHOUT_DIRECTIVE);
+        });
     });
 });
