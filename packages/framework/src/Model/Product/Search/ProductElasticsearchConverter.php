@@ -66,6 +66,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION] = $product[ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION] ?? [];
         $result[ProductExportFieldProvider::AVAILABLE_STORES_COUNT] = $product[ProductExportFieldProvider::AVAILABLE_STORES_COUNT] ?? null;
         $result[ProductExportFieldProvider::STOCK_QUANTITY] = $product[ProductExportFieldProvider::STOCK_QUANTITY] ?? null;
+        $result[ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK] = $product[ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK] ?? true;
 
         $result[ProductExportFieldProvider::UUID] = $product[ProductExportFieldProvider::UUID] ?? '00000000-0000-0000-0000-000000000000';
         $result[ProductExportFieldProvider::UNIT] = $product[ProductExportFieldProvider::UNIT] ?? '';

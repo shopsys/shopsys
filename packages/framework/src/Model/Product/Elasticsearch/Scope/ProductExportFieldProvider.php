@@ -36,6 +36,7 @@ class ProductExportFieldProvider
     public const string UUID = 'uuid';
     public const string UNIT = 'unit';
     public const string STOCK_QUANTITY = 'stock_quantity';
+    public const string IS_ALLOWED_NEGATIVE_STOCK = 'is_allowed_negative_stock';
     public const string VARIANTS = 'variants';
     public const string MAIN_VARIANT_ID = 'main_variant_id';
     public const string SEO_H1 = 'seo_h1';

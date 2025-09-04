@@ -81,6 +81,7 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE,
             ProductExportFieldProvider::IN_STOCK,
             ProductExportFieldProvider::STOCK_QUANTITY,
+            ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK,
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT,
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION,
             ProductExportFieldProvider::AVAILABILITY_STATUS,

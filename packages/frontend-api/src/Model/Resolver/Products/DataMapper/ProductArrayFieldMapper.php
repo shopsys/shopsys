@@ -127,6 +127,15 @@ class ProductArrayFieldMapper
 
     /**
      * @param array $data
+     * @return bool
+     */
+    public function isAllowedNegativeStock(array $data): bool
+    {
+        return $data['is_allowed_negative_stock'];
+    }
+
+    /**
+     * @param array $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
     public function getBrand(array $data): ?Brand

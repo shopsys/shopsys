@@ -331,6 +331,9 @@
             "stock_quantity": {
                 "type": "integer"
             },
+            "is_allowed_negative_stock": {
+                "type": "boolean"
+            },
             "variants": {
                 "type": "integer"
             },
