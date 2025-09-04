@@ -8,10 +8,12 @@ use DateTimeInterface;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -115,55 +117,61 @@ class CustomerUserRepository
         int $domainId,
         QuickSearchFormData $quickSearchData,
     ): QueryBuilder {
+        $ordersCountSubquery = $this->em->createQueryBuilder()
+            ->select('COUNT(o1.id)')
+            ->from(Order::class, 'o1')
+            ->where('o1.customer = c.id AND o1.deleted = false');
+
+        $ordersSumSubquery = $this->em->createQueryBuilder()
+            ->select('COALESCE(SUM(o2.totalPriceWithVat), 0)')
+            ->from(Order::class, 'o2')
+            ->where('o2.customer = c.id AND o2.deleted = false');
+
+        $lastOrderSubquery = $this->em->createQueryBuilder()
+            ->select('MAX(o3.createdAt)')
+            ->from(Order::class, 'o3')
+            ->where('o3.customer = c.id AND o3.deleted = false');
+
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('
-                MAX(ba.id) AS billingAddressId,
-                MAX(c.id) AS customerId,
-                MAX(u.id) AS id,
-                MAX(CASE WHEN ba.companyCustomer = true
-                        THEN \'\'
-                        ELSE u.email
-                    END) email,
-                MAX(CASE WHEN ba.companyCustomer = true
-                        THEN \'\'
-                        ELSE u.telephone
-                    END) telephone,
-                BOOL_AND(ba.companyCustomer) AS isCompanyCustomer,
-                MAX(u.domainId) domainId,
-                MAX(CASE WHEN ba.companyCustomer = true
-                        THEN \'\'
-                        ELSE pg.name
-                    END) pricingGroup,
-                MAX(ba.city) city,
-                MAX(CASE WHEN ba.companyCustomer = true
-                        THEN ba.companyName
-                        ELSE CONCAT(u.lastName, \' \', u.firstName)
-                    END) AS name,
-                COUNT(o.id) ordersCount,
-                SUM(o.totalPriceWithVat) ordersSumPrice,
-                MAX(o.createdAt) lastOrderAt,
-                BOOL_AND(ba.activated) as isActivated')
-            ->from(CustomerUser::class, 'u')
-            ->where('u.domainId = :selectedDomainId')
-            ->setParameter('selectedDomainId', $domainId)
-            ->join('u.customer', 'c')
-            ->leftJoin(BillingAddress::class, 'ba', 'WITH', 'c.id = ba.customer')
-            ->leftJoin(Order::class, 'o', 'WITH', 'o.customerUser = u.id AND o.deleted = :deleted')
-            ->setParameter('deleted', false)
-            ->leftJoin(PricingGroup::class, 'pg', 'WITH', 'pg.id = u.pricingGroup')
-            ->groupBy('c.id');
+                ba.id AS billingAddressId,
+                c.id AS customerId,
+                cu.id AS id,
+                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE cu.email END as email,
+                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE cu.telephone END as telephone,
+                ba.companyCustomer AS isCompanyCustomer,
+                cu.domainId as domainId,
+                CASE WHEN ba.companyCustomer = true THEN \'\' ELSE pg.name END as pricingGroup,
+                ba.city as city,
+                CASE WHEN ba.companyCustomer = true THEN ba.companyName ELSE CONCAT(cu.lastName, \' \', cu.firstName) END AS name,
+                ba.activated as isActivated,
+                (' . $ordersCountSubquery->getDQL() . ') as ordersCount,
+                (' . $ordersSumSubquery->getDQL() . ') as ordersSumPrice,
+                (' . $lastOrderSubquery->getDQL() . ') as lastOrderAt')
+            ->from(Customer::class, 'c')
+            ->join(CustomerUser::class, 'cu', Join::WITH, 'cu.customer = c.id AND cu.domainId = :selectedDomainId AND NOT EXISTS (
+                SELECT 1 FROM ' . CustomerUser::class . ' cu2 
+                WHERE cu2.customer = c.id AND cu2.domainId = :selectedDomainId AND cu2.id < cu.id
+            )')
+            ->leftJoin('cu.pricingGroup', 'pg')
+            ->leftJoin(BillingAddress::class, 'ba', Join::WITH, 'ba.customer = c.id AND NOT EXISTS (
+                SELECT 1 FROM ' . BillingAddress::class . ' ba2 
+                WHERE ba2.customer = c.id AND ba2.id < ba.id
+            )')
+            ->where('cu.id IS NOT NULL')
+            ->setParameter('selectedDomainId', $domainId);
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
                 ->andWhere('
                     (
-                        NORMALIZED(u.lastName) LIKE NORMALIZED(:text)
+                        NORMALIZED(cu.lastName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZED(u.email) LIKE NORMALIZED(:text)
+                        NORMALIZED(cu.email) LIKE NORMALIZED(:text)
                         OR
                         NORMALIZED(ba.companyName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZED(u.telephone) LIKE :text
+                        NORMALIZED(cu.telephone) LIKE :text
                     )');
             $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
