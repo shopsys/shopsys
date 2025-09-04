@@ -2,12 +2,10 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeOrderPaymentFailedContentQueryVariables = Types.Exact<{
-  orderUuid: Types.Scalars['Uuid']['input'];
-}>;
+export type TypeTransportsImageVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeOrderPaymentFailedContentQuery = { __typename?: 'Query', orderPaymentFailedContent: string };
+export type TypeTransportsImage = { __typename?: 'Query', transports: Array<{ __typename?: 'Transport', mainImage: { __typename?: 'Image', name: string | null, url: string } | null }> };
 
 
       export interface PossibleTypesResultData {
@@ -93,8 +91,13 @@ export type TypeOrderPaymentFailedContentQuery = { __typename?: 'Query', orderPa
       export default result;
     
 
-export const OrderPaymentFailedContentQueryDocument = gql`
-    query OrderPaymentFailedContentQuery($orderUuid: Uuid!) {
-  orderPaymentFailedContent(orderUuid: $orderUuid)
+export const TransportsImageDocument = gql`
+    query TransportsImage {
+  transports {
+    mainImage {
+      name
+      url
+    }
+  }
 }
     `;

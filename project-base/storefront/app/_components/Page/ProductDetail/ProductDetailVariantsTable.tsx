@@ -42,7 +42,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = async ({ vari
                             />
                         </div>
 
-                        <div className="font-secondary group-hover:text-link line-clamp-2 min-h-[2.5rem] text-center text-sm font-semibold group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
+                        <div className="font-secondary group-hover:text-link-default line-clamp-2 min-h-[2.5rem] text-center text-sm font-semibold group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
                             {variant.fullName}
                         </div>
 

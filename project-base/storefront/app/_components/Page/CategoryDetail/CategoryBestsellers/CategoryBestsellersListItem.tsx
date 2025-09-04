@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductAvailability } from 'app/_components/Blocks/Product/ProductAvailability';
 import { ProductFlags } from 'app/_components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';

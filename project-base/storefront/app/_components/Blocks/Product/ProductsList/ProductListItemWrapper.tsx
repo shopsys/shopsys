@@ -16,7 +16,7 @@ export const ProductListItemWrapper: FC<ProductItemProps> = ({ children, product
 
     return (
         <ExtendedNextLink
-            className="text-text hover:text-link flex grow no-underline select-text hover:no-underline"
+            className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
             draggable={false}
             href={product.slug}
             type={product.isMainVariant ? 'productMainVariant' : 'product'}

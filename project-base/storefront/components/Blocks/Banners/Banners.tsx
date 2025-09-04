@@ -5,16 +5,10 @@ import { Suspense } from 'react';
 
 export function Banners() {
     return (
-        <Suspense
-            fallback={
-                <Webline width="xxl">
-                    <SkeletonModuleBanners />
-                </Webline>
-            }
-        >
-            <Webline width="xxl">
+        <Webline width="xxl">
+            <Suspense fallback={<SkeletonModuleBanners />}>
                 <BannersContent />
-            </Webline>
-        </Suspense>
+            </Suspense>
+        </Webline>
     );
 }

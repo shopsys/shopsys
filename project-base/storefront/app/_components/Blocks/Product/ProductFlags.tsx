@@ -1,10 +1,9 @@
 'use client';
 
+import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 import { Flag } from 'app/_components/Basic/Flag/Flag';
-import { ProductFlag } from 'app/_components/Blocks/Product/ProductFlag';
-import { ProductVisibleItemsConfigType } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductFlagsProps = {
@@ -33,7 +32,7 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
 
     const variantTwClass = {
         list: 'top-5 right-2.5 sm:right-5 items-end z-above',
-        detail: 'top-3 right-0',
+        detail: 'top-3 right-0 items-end',
         comparison: 'top-3 left-0',
         bestsellers: 'flex-row relative flex-wrap mb-1 gap-2',
     };
@@ -42,7 +41,13 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
         <div className={twMergeCustom('absolute flex flex-col items-start gap-1', variantTwClass[variant])}>
             {visibleItemsConfig.flags &&
                 flags.length > 0 &&
-                flags.map(({ name, rgbColor }, index) => <ProductFlag key={index} name={name} rgbColor={rgbColor} />)}
+                flags.map(({ name, rgbColor }, index) => {
+                    return (
+                        <Flag key={index} rgbBgColor={rgbColor}>
+                            {name}
+                        </Flag>
+                    );
+                })}
 
             {visibleItemsConfig.discount &&
                 !!percentageDiscount &&

@@ -44,7 +44,7 @@ const BlogArticleDetailPage = async ({ params }: { params: Promise<{ blogArticle
                 )}
 
                 <div
-                    className="text-textDisabled mb-2 text-left text-xs font-semibold"
+                    className="text-text-disabled mb-2 text-left text-xs font-semibold"
                     tid={TIDs.blog_article_publication_date}
                 >
                     {formatDate(blogArticleData.publishDate, 'l')}

@@ -1,6 +1,6 @@
 import { PromotedCategoriesContent } from './PromotedCategoriesContent';
-import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import { Suspense } from 'react';
 
@@ -9,21 +9,15 @@ export type PromotedCategoriesProps = {
 };
 
 export async function PromotedCategories({ promotedCategoriesData }: PromotedCategoriesProps) {
-    const t = await getTranslation();
-
     if (!promotedCategoriesData?.promotedCategories.length) {
         return null;
     }
 
     return (
-        <Suspense
-            fallback={
-                <section>
-                    <SkeletonModulePromotedCategories />
-                </section>
-            }
-        >
-            <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
-        </Suspense>
+        <Webline>
+            <Suspense fallback={<SkeletonModulePromotedCategories />}>
+                <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
+            </Suspense>
+        </Webline>
     );
 }

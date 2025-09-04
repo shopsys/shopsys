@@ -1,9 +1,14 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { PageInfoFragment } from '../../pageInfo/fragments/PageInfoFragment.ssr';
-import { ListedOrderFragment } from './ListedOrderFragment.ssr';
-export type TypeOrderListFragment = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', quantity: number, product: { __typename: 'MainVariant', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | { __typename: 'RegularProduct', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | { __typename: 'Variant', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | null }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', url: string, name: string | null } | null }, payment: { __typename: 'Payment', name: string, type: Types.TypePaymentTypeEnum, mainImage: { __typename?: 'Image', url: string } | null }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
+import { TokenFragments } from '../fragments/TokensFragment.ssr';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type TypeLoginViaExchangeTokenMutationVariables = Types.Exact<{
+  exchangeToken: Types.Scalars['String']['input'];
+}>;
+
+
+export type TypeLoginViaExchangeTokenMutation = { __typename?: 'Mutation', LoginViaExchangeToken: { __typename?: 'Token', accessToken: string, refreshToken: string } };
 
 
       export interface PossibleTypesResultData {
@@ -88,20 +93,11 @@ export type TypeOrderListFragment = { __typename: 'OrderConnection', totalCount:
 };
       export default result;
     
-export const OrderListFragment = gql`
-    fragment OrderListFragment on OrderConnection {
-  __typename
-  totalCount
-  pageInfo {
-    ...PageInfoFragment
-  }
-  edges {
-    __typename
-    node {
-      ...ListedOrderFragment
-    }
-    cursor
+
+export const LoginViaExchangeTokenMutationDocument = gql`
+    mutation LoginViaExchangeTokenMutation($exchangeToken: String!) {
+  LoginViaExchangeToken(exchangeToken: $exchangeToken) {
+    ...TokenFragments
   }
 }
-    ${PageInfoFragment}
-${ListedOrderFragment}`;
+    ${TokenFragments}`;

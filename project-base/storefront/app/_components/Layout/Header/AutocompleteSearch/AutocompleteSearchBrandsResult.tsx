@@ -1,7 +1,7 @@
 import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSection';
 import { AUTOCOMPLETE_BRAND_LIMIT } from './constants';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Tag } from 'components/Basic/Tag/Tag';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 
 type AutocompleteSearchBrandsResultProps = {
@@ -25,7 +25,7 @@ export const AutocompleteSearchBrandsResult: FC<AutocompleteSearchBrandsResultPr
         <AutocompleteSearchResultSection title={title}>
             {brandSearch.slice(0, AUTOCOMPLETE_BRAND_LIMIT).map((brand) => (
                 <li key={brand.slug}>
-                    <LabelLink
+                    <Tag
                         href={brand.slug}
                         type="brand"
                         // onClick={() => {
@@ -37,7 +37,7 @@ export const AutocompleteSearchBrandsResult: FC<AutocompleteSearchBrandsResultPr
                         // }}
                     >
                         {brand.name}
-                    </LabelLink>
+                    </Tag>
                 </li>
             ))}
         </AutocompleteSearchResultSection>

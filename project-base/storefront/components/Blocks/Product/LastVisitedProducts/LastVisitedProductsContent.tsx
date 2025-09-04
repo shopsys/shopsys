@@ -14,9 +14,7 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
         getLastVisitedProductsQuery(productsCatnums),
     ]);
 
-    const lastVisitedProducts = lastVisitedProductsResult?.productsByCatnums;
-
-    if (!lastVisitedProducts) {
+    if (!lastVisitedProductsResult) {
         return null;
     }
 
@@ -33,7 +31,7 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
             <ProductsSlider
                 ariaAnchorName="product-slider-last-visited"
                 gtmProductListName={GtmProductListNameType.last_visited_products}
-                products={lastVisitedProducts}
+                products={lastVisitedProductsResult}
                 variant="lastVisited"
                 visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
                 productItemProps={{

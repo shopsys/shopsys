@@ -22,9 +22,9 @@ export async function ProductDetailAccessories({ accessories }: ProductDetailAcc
             <h2 className="h5 mb-3">{t('You can also buy')}</h2>
 
             <ProductSlider
+                ariaAnchorName="product-slider-accessories"
                 totalItems={accessories.length}
                 variant="default"
-                ariaAnchorName="product-slider-accessories"
             >
                 {accessories.map((product, index) => (
                     <ProductListItem

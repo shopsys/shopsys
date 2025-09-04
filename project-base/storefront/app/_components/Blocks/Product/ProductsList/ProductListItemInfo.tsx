@@ -21,7 +21,7 @@ export const ProductListItemInfo: FC<ProductListItemInfoProps> = async ({
         <>
             <div
                 className={twJoin(
-                    'font-secondary group-hover:text-link grow overflow-hidden font-semibold break-words group-hover:underline',
+                    'font-secondary group-hover:text-link-default grow overflow-hidden font-semibold break-words group-hover:underline',
                     textSize === 'xs' ? 'text-xs' : 'text-sm',
                 )}
             >
@@ -29,8 +29,8 @@ export const ProductListItemInfo: FC<ProductListItemInfoProps> = async ({
             </div>
 
             {typename === 'MainVariant' && (
-                <div className="bg-background font-secondary group-hover:text-text flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
-                    <VariantIcon className="text-textAccent size-3" />
+                <div className="bg-background-default font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
+                    <VariantIcon className="text-text-accent size-3" />
                     {variantsCount} {t('variants count', { count: variantsCount })}
                 </div>
             )}

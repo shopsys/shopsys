@@ -1,11 +1,11 @@
 import { ProductMetadataJsonLd } from 'app/_components/Basic/Head/ProductMetadataJsonLd';
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { RecommendedProducts } from 'app/_components/Blocks/Product/RecommendedProducts/RecommendedProducts';
-import { Container } from 'app/_components/Layout/Container/Container';
 import { ProductDetailAccessories } from 'app/_components/Page/ProductDetail/ProductDetailAccessories';
 import { ProductDetailContent } from 'app/_components/Page/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'app/_components/Page/ProductDetail/ProductDetailMainVariantContent';
 import { getProductQuery } from 'app/_queries/getProductQuery';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeRecommendationType } from 'graphql/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -41,7 +41,7 @@ const ProductPage = async (props: { params: Promise<{ productSlug: string }> }) 
         <>
             <ProductMetadataJsonLd product={product} />
 
-            <Container>
+            <VerticalStack gap="md">
                 {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
 
                 {product.__typename === 'MainVariant' && <ProductDetailMainVariantContent product={product} />}
@@ -54,7 +54,7 @@ const ProductPage = async (props: { params: Promise<{ productSlug: string }> }) 
                 />
 
                 <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
-            </Container>
+            </VerticalStack>
         </>
     );
 };

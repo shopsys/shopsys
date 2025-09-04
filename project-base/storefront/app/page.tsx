@@ -1,5 +1,4 @@
 import { BlogPreview } from './_components/Blocks/BlogPreview/BlogPreview';
-import { Container } from './_components/Layout/Container/Container';
 import { getPromotedCategoriesQuery } from './_queries/getPromotedCategoriesQuery';
 import { HomepageMetadataJsonLd } from 'app/_components/Basic/Head/HomepageMetadataJsonLd';
 import { PromotedCategories } from 'app/_components/Blocks/Categories/PromotedCategories';
@@ -9,6 +8,7 @@ import { RecommendedProducts } from 'app/_components/Blocks/Product/RecommendedP
 import { UpsList } from 'app/_components/Blocks/UpsList/UpsList';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { Banners } from 'components/Blocks/Banners/Banners';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeRecommendationType } from 'graphql/types';
 import { headers } from 'next/headers';
 
@@ -23,7 +23,7 @@ const HomePage = async () => {
         <>
             <HomepageMetadataJsonLd url={domainConfig.url} />
 
-            <Container gap="large">
+            <VerticalStack gap="lg">
                 <Banners />
 
                 <UpsList />
@@ -37,7 +37,7 @@ const HomePage = async () => {
                 <BlogPreview />
 
                 <LastVisitedProducts />
-            </Container>
+            </VerticalStack>
         </>
     );
 };

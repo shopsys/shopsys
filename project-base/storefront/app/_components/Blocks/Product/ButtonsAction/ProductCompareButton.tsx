@@ -119,7 +119,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> =
             aria-disabled={isPending}
             title={optimisticIsInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             className={twMergeCustom(
-                'text-inputPlaceholder hover:text-inputPlaceholderHovered flex cursor-pointer items-center gap-2',
+                'text-input-placeholder-default hover:text-input-placeholder-hovered flex cursor-pointer items-center gap-2',
             )}
             onClick={optimisticIsInComparison ? handleRemoveFromComparison : handleAddToComparison}
         >

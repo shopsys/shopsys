@@ -12,7 +12,7 @@ const GrapesJSTemplatePage = async () => {
         <Webline>
             <h1>Blog or Article title</h1>
             <div className="mb-12 flex w-full flex-col">
-                <div className="text-textAccent mb-2 text-left text-xs font-semibold">{formatDate(dayjs())}</div>
+                <div className="text-text-accent mb-2 text-left text-xs font-semibold">{formatDate(dayjs())}</div>
                 <GrapesJs className="gjs-editable pt-4 pb-4" />
             </div>
         </Webline>

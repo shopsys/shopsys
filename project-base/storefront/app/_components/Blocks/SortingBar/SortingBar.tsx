@@ -89,9 +89,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
 
             <div
                 className={twJoin(
-                    'bg-background vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
+                    'bg-background-default vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
                     isSortMenuOpen
-                        ? 'z-aboveOverlay divide-borderAccentLess absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
+                        ? 'z-aboveOverlay divide-border-less absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
                         : 'hidden',
                 )}
             >
@@ -120,9 +120,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                         // <button
                         //     key={sortOption}
                         //     className={twMergeCustom(
-                        //         'font-secondary text-link hover:text-linkHovered vl:relative vl:rounded-t-xl vl:bg-backgroundMore vl:px-5 vl:py-2.5 vl:text-center h-9 py-4 text-right text-xs font-bold uppercase underline',
+                        //         'font-secondary text-link-default hover:text-linkHovered vl:relative vl:rounded-t-xl vl:bg-background-more vl:px-5 vl:py-2.5 vl:text-center h-9 py-4 text-right text-xs font-bold uppercase underline',
                         //         sortOption === selectedSortOption &&
-                        //             'text-text vl:border vl:border-borderAccentLess vl:bg-background vl:after:absolute vl:after:bottom-[-2px] vl:after:left-0 vl:after:h-[2px] vl:after:w-full vl:after:bg-background font-semibold no-underline',
+                        //             'text-text-default vl:border vl:border-border-less vl:bg-background-default vl:after:absolute vl:after:bottom-[-2px] vl:after:left-0 vl:after:h-[2px] vl:after:w-full vl:after:bg-background-default font-semibold no-underline',
                         //     )}
                         //     onClick={() => handleChangeSort(sortOption)}
                         // >
@@ -132,7 +132,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 })}
             </div>
 
-            <div className="font-secondary text-inputPlaceholder vl:block hidden text-xs">
+            <div className="font-secondary text-input-placeholder-default vl:block hidden text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
 

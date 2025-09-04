@@ -60,7 +60,7 @@ async function resolveFriendlyUrl(request: NextRequest, previousResponse: NextRe
 
 function rewriteDynamicPages(pageType: FriendlyPageTypesValue, request: NextRequest, previousResponse: NextResponse) {
     const pageTypeKey = (Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKey[]).find(
-        (key) => FriendlyPagesTypes[key] === pageType,
+        (key) => FriendlyPagesTypes[key].toLowerCase() === pageType.toLowerCase(),
     );
 
     if (!pageTypeKey) {
@@ -78,5 +78,6 @@ function rewriteDynamicPages(pageType: FriendlyPageTypesValue, request: NextRequ
     previousResponse.headers.set('x-asPath', request.nextUrl.origin + friendlyPathname);
     const newUrl = request.nextUrl.clone();
     newUrl.pathname = friendlyPrefix + request.nextUrl.pathname;
+
     return NextResponse.rewrite(newUrl, previousResponse);
 }

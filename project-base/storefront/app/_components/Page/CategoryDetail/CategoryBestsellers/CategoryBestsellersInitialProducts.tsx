@@ -9,7 +9,7 @@ export const CategoryBestsellersInitialProducts: FC<CategoryBestsellersInitialPr
     initialProducts,
 }) => {
     return (
-        <div className="divide-borderAccentLess flex flex-col divide-y">
+        <div className="divide-border-less flex flex-col divide-y">
             {initialProducts.map((product) => (
                 <CategoryBestsellersListItem
                     key={product.uuid}

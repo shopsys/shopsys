@@ -1,7 +1,7 @@
 import { getNotificationBarsQuery } from 'app/_queries/getNotificationBarsQuery';
 import { Image } from 'components/Basic/Image/Image';
 import { twJoin } from 'tailwind-merge';
-import tinycolor from 'tinycolor2';
+import { getYIQContrastTextColor } from 'utils/colors/colors';
 
 export const UserBar = async () => {
     const { data } = await getNotificationBarsQuery();
@@ -15,7 +15,7 @@ export const UserBar = async () => {
             <div
                 className={twJoin(
                     'flex items-center justify-center px-5 text-center text-sm font-bold xl:mx-auto xl:w-full xl:max-w-screen-xl',
-                    tinycolor(item.rgbColor).isLight() ? 'text-text' : 'text-textInverted',
+                    getYIQContrastTextColor(item.rgbColor),
                 )}
             >
                 {!!item.mainImage && (

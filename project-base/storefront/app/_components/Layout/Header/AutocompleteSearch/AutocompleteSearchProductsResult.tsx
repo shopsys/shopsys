@@ -3,8 +3,8 @@ import { ProductSlider } from 'app/_components/Blocks/Product/ProductSlider';
 import { ProductListItem } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
+import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -43,7 +43,12 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
             tid={TIDs.layout_header_search_autocomplete_popup_products}
             title={title}
         >
-            <ProductSlider isWithArrows={false} totalItems={mappedProductSearchResults.length} variant="autocomplete">
+            <ProductSlider
+                ariaAnchorName="product-slider-autocomplete"
+                isWithArrows={false}
+                totalItems={mappedProductSearchResults.length}
+                variant="autocomplete"
+            >
                 {mappedProductSearchResults.map((product, index) => (
                     <ProductListItem
                         key={product.uuid}

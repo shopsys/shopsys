@@ -59,7 +59,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group border-backgroundMore bg-backgroundMore hover:border-borderAccentLess hover:bg-background relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
+                    'group border-background-more bg-background-more hover:border-border-less hover:bg-background-default relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
                     isShownInSlider && 'mr-2 snap-center last:mr-0 md:mr-4 md:snap-start',
                     className,

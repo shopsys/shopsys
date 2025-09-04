@@ -1,8 +1,8 @@
 import { SkeletonModuleFilterAndSortingBar } from './SkeletonModuleFilterAndSortingBar';
 import { SkeletonModuleFilterPanel } from './SkeletonModuleFilterPanel';
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
+import { productListTwClass } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
