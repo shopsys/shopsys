@@ -5,6 +5,8 @@ fragment ListedProductFragment on Product {
     slug
     fullName
     name
+    stockQuantity
+    isAllowedNegativeStock
     unit {
         name
     }

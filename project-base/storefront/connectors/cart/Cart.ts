@@ -76,6 +76,14 @@ const handleCartItemModifications = (itemModifications: TypeCartItemModification
             GtmMessageOriginType.cart,
         );
     }
+    for (const itemWithChangedQuantity of itemModifications.cartItemsWithChangedQuantity) {
+        showInfoMessage(
+            t('Quantity of item {{ itemName }} in cart was changed due to insufficient supply.', {
+                itemName: itemWithChangedQuantity.product.fullName,
+            }),
+            GtmMessageOriginType.cart,
+        );
+    }
 };
 
 const handleCartPromoCodeModifications = (

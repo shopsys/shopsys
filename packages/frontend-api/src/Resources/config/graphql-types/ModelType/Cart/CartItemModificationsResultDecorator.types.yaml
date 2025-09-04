@@ -7,3 +7,5 @@ CartItemModificationsResultDecorator:
                 type: "[CartItem!]!"
             cartItemsWithModifiedPrice:
                 type: "[CartItem!]!"
+            cartItemsWithChangedQuantity:
+                type: "[CartItem!]!"

@@ -41,6 +41,8 @@ fragment ProductDetailInterfaceFragment on Product {
     availability {
         ...AvailabilityFragment
     }
+    stockQuantity
+    isAllowedNegativeStock
     seoTitle
     seoMetaDescription
     hreflangLinks {

@@ -21,6 +21,7 @@ const AddToCartPopup = dynamic(() =>
 type AddToCartProps = {
     productUuid: string;
     minQuantity: number;
+    maxQuantity: number | null;
     gtmMessageOrigin: GtmMessageOriginType;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
@@ -37,6 +38,7 @@ type AddToCartProps = {
 export const AddToCart: FC<AddToCartProps> = ({
     productUuid,
     minQuantity,
+    maxQuantity,
     gtmMessageOrigin,
     gtmProductListName,
     listIndex,
@@ -92,6 +94,7 @@ export const AddToCart: FC<AddToCartProps> = ({
                 <Spinbox
                     defaultValue={1}
                     id={productUuid}
+                    max={maxQuantity}
                     min={minQuantity}
                     ref={spinboxRef}
                     size={buttonSize}

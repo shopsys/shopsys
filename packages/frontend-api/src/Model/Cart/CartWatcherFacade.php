@@ -56,6 +56,7 @@ class CartWatcherFacade
         $this->checkRemovedProductsItems($cart);
         $this->checkNotListableItems($cart);
         $this->checkModifiedPrices($cart);
+        $this->checkStockQuantities($cart);
         $this->checkPromoCodeValidity($cart);
 
         $this->em->flush();
@@ -119,6 +120,38 @@ class CartWatcherFacade
             } catch (PromoCodeException) {
                 $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
                 $this->cartWithModificationsResult->addChangedPromoCode($promoCode->getCode());
+            }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    protected function checkStockQuantities(Cart $cart): void
+    {
+        foreach ($cart->getItems() as $cartItem) {
+            $product = $cartItem->getProduct();
+
+            if ($product === null || $product->isAllowedNegativeStock()) {
+                continue;
+            }
+
+            $currentQuantity = $cartItem->getQuantity();
+            $notOnStockQuantity = $this->productAvailabilityFacade->getNotOnStockQuantity($product, $this->domain->getId(), $currentQuantity) ?? 0;
+
+            if ($notOnStockQuantity <= 0) {
+                continue;
+            }
+
+            $newQuantity = $currentQuantity - $notOnStockQuantity;
+
+            if ($newQuantity <= 0) {
+                $cart->removeItemById($cartItem->getId());
+                $this->em->remove($cartItem);
+                $this->cartWithModificationsResult->setCartHasRemovedProducts();
+            } else {
+                $cartItem->changeQuantity($newQuantity);
+                $this->cartWithModificationsResult->addCartItemWithChangedQuantity($cartItem);
             }
         }
     }
