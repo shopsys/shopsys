@@ -23,8 +23,9 @@ use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\App\Test\ApplicationTestCase;
+use Tests\App\Test\SettingsProfileTestCase;
 
-abstract class GraphQlTestCase extends ApplicationTestCase
+abstract class GraphQlTestCase extends SettingsProfileTestCase
 {
     protected string $currentBaseDomainUrl;
 
