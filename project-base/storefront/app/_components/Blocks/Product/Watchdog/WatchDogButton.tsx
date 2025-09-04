@@ -2,20 +2,21 @@
 
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
 import { Button } from 'components/Forms/Button/Button';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 
 const WatchdogPopup = dynamic(
-    () => import('app/_components/Blocks/Popup/WatchdogPopup').then((component) => component.WatchdogPopup),
+    () => import('components/Blocks/Popup/WatchdogPopup').then((component) => component.WatchdogPopup),
     {
         ssr: false,
     },
 );
 
 type WatchDogButtonProps = {
+    productName: string;
     productUuid: string | undefined;
     isInquiryType: boolean;
     availability: TypeAvailability;
@@ -23,6 +24,7 @@ type WatchDogButtonProps = {
 };
 
 export const WatchDogButton: FC<WatchDogButtonProps> = ({
+    productName,
     productUuid,
     isInquiryType,
     availability,
@@ -51,8 +53,11 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({
 
     return (
         <Button
+            aria-haspopup="dialog"
+            aria-label={t('Open watchdog popup for {{productName}}', { productName })}
             className={twJoin('whitespace-nowrap', className)}
             size="large"
+            title={t('Watchdog popup')}
             variant="primary"
             onClick={openWatchDogPopup}
         >

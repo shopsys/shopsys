@@ -18,7 +18,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteSearchPopupProps> = ({ chil
                 initial="hidden"
                 variants={fadeAnimation}
                 className={twJoin(
-                    'z-aboveOverlay bg-background origin-top translate-y-full overflow-auto rounded-xl p-8',
+                    'z-aboveOverlay bg-background-default origin-top translate-y-full overflow-auto rounded-xl p-8',
                     'absolute -bottom-3 left-0',
                     'vl:gap-7 flex flex-col gap-5',
                     'vl:w-[700px] w-full',

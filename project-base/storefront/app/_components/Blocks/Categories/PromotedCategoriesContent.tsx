@@ -1,9 +1,9 @@
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getLinkType } from 'components/Blocks/SimpleNavigation/simpleNavigationUtils';
 import { TIDs } from 'cypress/tids';
 import { TypePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
@@ -11,8 +11,8 @@ import { twMergeCustom } from 'utils/twMerge';
 type PromotedCategoriesContentProps = {
     promotedCategoriesData: TypePromotedCategoriesQuery;
 };
-export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ promotedCategoriesData }) => {
-    const { t } = useTranslation();
+export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = async ({ promotedCategoriesData }) => {
+    const t = await getTranslation();
     const categoriesLength = promotedCategoriesData.promotedCategories.length;
 
     return (

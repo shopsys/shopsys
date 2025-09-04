@@ -1,9 +1,13 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { PageInfoFragment } from '../../pageInfo/fragments/PageInfoFragment.ssr';
-import { ListedOrderFragment } from './ListedOrderFragment.ssr';
-export type TypeOrderListFragment = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', quantity: number, product: { __typename: 'MainVariant', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | { __typename: 'RegularProduct', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | { __typename: 'Variant', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | null }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', url: string, name: string | null } | null }, payment: { __typename: 'Payment', name: string, type: Types.TypePaymentTypeEnum, mainImage: { __typename?: 'Image', url: string } | null }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type TypeOrderPaymentPageContentQueryVariables = Types.Exact<{
+  orderUuid: Types.Scalars['Uuid']['input'];
+}>;
+
+
+export type TypeOrderPaymentPageContentQuery = { __typename?: 'Query', orderPaymentPageContent: { __typename: 'OrderPaymentPageContent', content: string, status: Types.TypePaymentContentPageStatusEnum } };
 
 
       export interface PossibleTypesResultData {
@@ -88,20 +92,13 @@ export type TypeOrderListFragment = { __typename: 'OrderConnection', totalCount:
 };
       export default result;
     
-export const OrderListFragment = gql`
-    fragment OrderListFragment on OrderConnection {
-  __typename
-  totalCount
-  pageInfo {
-    ...PageInfoFragment
-  }
-  edges {
+
+export const OrderPaymentPageContentQueryDocument = gql`
+    query OrderPaymentPageContentQuery($orderUuid: Uuid!) {
+  orderPaymentPageContent(orderUuid: $orderUuid) {
     __typename
-    node {
-      ...ListedOrderFragment
-    }
-    cursor
+    content
+    status
   }
 }
-    ${PageInfoFragment}
-${ListedOrderFragment}`;
+    `;

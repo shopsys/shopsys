@@ -48,11 +48,11 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
                 <h5>
                     {user.firstName} {user.lastName}
                 </h5>
-                {user.companyName && <h6 className="text-textSubtle">{user.companyName}</h6>}
+                {user.companyName && <h6 className="text-text-less">{user.companyName}</h6>}
                 <span
                     className={twJoin(
                         'max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap',
-                        '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                        '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                     )}
                 >
                     {user.email}

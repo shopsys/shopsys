@@ -3,7 +3,6 @@ import { getBlogCategoryArticlesQuery } from 'app/_queries/getBlogCategoryArticl
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
@@ -63,7 +62,7 @@ export const BlogArticlesServer = async ({ blogCategoryUuid, endCursor }: BlogAr
                         <div className="flex flex-1 flex-col gap-y-3">
                             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                                 <span
-                                    className="font-secondary text-textSubtle text-sm font-semibold"
+                                    className="font-secondary text-text-less text-sm font-semibold"
                                     tid={TIDs.blog_article_publication_date}
                                 >
                                     {new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}

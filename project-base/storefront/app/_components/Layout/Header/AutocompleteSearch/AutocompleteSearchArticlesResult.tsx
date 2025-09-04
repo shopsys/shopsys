@@ -1,7 +1,7 @@
 import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSection';
 import { AUTOCOMPLETE_ARTICLE_LIMIT } from './constants';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Tag } from 'components/Basic/Tag/Tag';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 
 type AutocompleteSearchArticlesResultProps = {
@@ -25,7 +25,7 @@ export const AutocompleteSearchArticlesResult: FC<AutocompleteSearchArticlesResu
         <AutocompleteSearchResultSection title={title}>
             {articlesSearch.slice(0, AUTOCOMPLETE_ARTICLE_LIMIT).map((article) => (
                 <li key={article.slug}>
-                    <LabelLink
+                    <Tag
                         href={article.slug}
                         type={article.__typename === 'ArticleSite' ? 'article' : 'blogArticle'}
                         // onClick={() => {
@@ -37,7 +37,7 @@ export const AutocompleteSearchArticlesResult: FC<AutocompleteSearchArticlesResu
                         // }}
                     >
                         {article.name}
-                    </LabelLink>
+                    </Tag>
                 </li>
             ))}
         </AutocompleteSearchResultSection>

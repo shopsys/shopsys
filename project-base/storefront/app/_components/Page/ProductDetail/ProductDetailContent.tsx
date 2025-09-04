@@ -7,6 +7,8 @@ import { ProductDetailGallery } from 'app/_components/Page/ProductDetail/Product
 import { ProductDetailInfo } from 'app/_components/Page/ProductDetail/ProductDetailInfo';
 import { ProductDetailPrice } from 'app/_components/Page/ProductDetail/ProductDetailPrice';
 import { ProductDetailTabs } from 'app/_components/Page/ProductDetail/ProductDetailTabs/ProductDetailTabs';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.ssr';
 
 type ProductDetailContentProps = {
@@ -20,8 +22,8 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
     // useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
-        <>
-            <section className="flex flex-col flex-wrap gap-6 lg:flex-row">
+        <VerticalStack gap="md">
+            <Webline className="vl:flex-row flex flex-col gap-6">
                 <ProductDetailGallery
                     categoryName={product.categories[0]?.name}
                     flags={product.flags}
@@ -50,7 +52,6 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                             availableStoresCount={product.availableStoresCount}
                             isInquiryType={product.isInquiryType}
                             isSellingDenied={product.isSellingDenied}
-                            productName={product.name}
                             storeAvailabilities={product.storeAvailabilities}
                         />
 
@@ -59,6 +60,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                             className="self-start"
                             isInquiryType={product.isInquiryType}
                             productIsSellingDenied={product.isSellingDenied}
+                            productName={product.name}
                             productUuid={product.uuid}
                         />
 
@@ -70,7 +72,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Webline>
 
             <ProductDetailTabs
                 description={product.description}
@@ -78,6 +80,6 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                 parameters={product.parameters}
                 relatedProducts={product.relatedProducts}
             />
-        </>
+        </VerticalStack>
     );
 }

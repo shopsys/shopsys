@@ -1,6 +1,7 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'app/_components/Basic/Tabs/Tabs';
+import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactNode, useState } from 'react';
 
@@ -27,7 +28,7 @@ export const ProductDetailTabsContent: FC<ProductDetailTabsContentProps> = ({
     const filesTabIndex = files ? ++tabIndex : -1;
 
     return (
-        <section>
+        <Webline>
             <Tabs
                 className="flex flex-col gap-5"
                 selectedIndex={selectedTab}
@@ -77,6 +78,6 @@ export const ProductDetailTabsContent: FC<ProductDetailTabsContentProps> = ({
                     </TabsContent>
                 )}
             </Tabs>
-        </section>
+        </Webline>
     );
 };

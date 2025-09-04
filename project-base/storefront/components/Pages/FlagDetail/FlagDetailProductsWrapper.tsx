@@ -13,10 +13,9 @@ import { getMappedProducts } from 'utils/mappers/products';
 
 type FlagDetailProductsWrapperProps = {
     flag: TypeFlagDetailFragment;
-    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
 };
 
-export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, paginationScrollTargetRef }) => {
+export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag }) => {
     const { products, areProductsFetching, hasNextPage, isLoadingMoreProducts } = useProductsData(
         FlagProductsQueryDocument,
         flag.products.totalCount,
@@ -35,12 +34,7 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
                 products={flagListedProducts}
             />
 
-            <Pagination
-                isWithLoadMore
-                hasNextPage={hasNextPage}
-                totalCount={flag.products.totalCount}
-                paginationScrollTargetRef={paginationScrollTargetRef}
-            />
+            <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={flag.products.totalCount} />
         </>
     );
 };

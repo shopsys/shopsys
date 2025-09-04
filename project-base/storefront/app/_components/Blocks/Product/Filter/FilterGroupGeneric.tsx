@@ -8,9 +8,9 @@ import {
     ShowAllButton,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
+import { Flag } from 'app/_components/Basic/Flag/Flag';
 import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
-import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
@@ -64,6 +64,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel={title}
                 isActive={isActive}
                 isOpen={isGroupOpen}
                 title={title}
@@ -83,7 +84,9 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
                                     const optionLabel =
                                         filterField === 'flags' ? (
-                                            <ProductFlag name={option.name} rgbColor={option.rgbColor ?? ''} />
+                                            <Flag className="flex w-fit py-0.5" rgbBgColor={option.rgbColor}>
+                                                {option.name}
+                                            </Flag>
                                         ) : (
                                             option.name
                                         );

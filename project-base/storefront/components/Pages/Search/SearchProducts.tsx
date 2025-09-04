@@ -16,7 +16,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 export const SearchProducts: FC = () => {
     const { t } = useTranslation();
-    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
+    const paginationScrollTargetRef = useRef<HTMLDivElement | null>(null);
     const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 

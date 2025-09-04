@@ -1,7 +1,6 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 
 type FilteredProductsWrapperProps = {
-    paginationScrollTargetRef: React.RefObject<HTMLDivElement | null>;
     children: React.ReactNode;
 };
 

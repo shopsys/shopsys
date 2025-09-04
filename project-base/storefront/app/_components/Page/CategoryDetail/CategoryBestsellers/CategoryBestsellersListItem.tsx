@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductAvailability } from 'app/_components/Blocks/Product/ProductAvailability';
 import { ProductFlags } from 'app/_components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';
@@ -5,8 +7,6 @@ import { ProductListItemImage } from 'app/_components/Blocks/Product/ProductsLis
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 
 type CategoryBestsellersListItemProps = {

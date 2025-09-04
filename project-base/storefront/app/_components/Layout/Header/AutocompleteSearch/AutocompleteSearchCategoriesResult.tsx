@@ -1,7 +1,7 @@
 import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSection';
 import { AUTOCOMPLETE_CATEGORY_LIMIT } from './constants';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Tag } from 'components/Basic/Tag/Tag';
 import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -29,7 +29,7 @@ export const AutocompleteSearchCategoriesResult: FC<AutocompleteSearchCategories
         <AutocompleteSearchResultSection title={title}>
             {mappedCategoriesSearchResults.slice(0, AUTOCOMPLETE_CATEGORY_LIMIT).map((category) => (
                 <li key={category.slug}>
-                    <LabelLink
+                    <Tag
                         href={category.slug}
                         type="category"
                         // onClick={() => {
@@ -41,7 +41,7 @@ export const AutocompleteSearchCategoriesResult: FC<AutocompleteSearchCategories
                         // }}
                     >
                         {category.name}
-                    </LabelLink>
+                    </Tag>
                 </li>
             ))}
         </AutocompleteSearchResultSection>

@@ -8,10 +8,6 @@ export const useCurrentFilterQuery = (): FilterOptionsUrlQueryType | null => {
     try {
         const searchParams = useSearchParams();
 
-        if (!searchParams) {
-            return null;
-        }
-
         const query = getQueryWithoutSlugTypeParameterFromParsedUrlQuery(searchParams) as UrlQueries;
         const filterQueryAsString = query[FILTER_QUERY_PARAMETER_NAME];
 

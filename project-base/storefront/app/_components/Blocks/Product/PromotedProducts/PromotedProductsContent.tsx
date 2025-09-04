@@ -13,10 +13,14 @@ export const PromotedProductsContent = async () => {
     }
 
     return (
-        <section>
+        <>
             <h3 className="mb-3">{t('News on offer')}</h3>
 
-            <ProductSlider totalItems={promotedProductsResult.promotedProducts.length} variant="default">
+            <ProductSlider
+                ariaAnchorName="product-slider-promoted"
+                totalItems={promotedProductsResult.promotedProducts.length}
+                variant="default"
+            >
                 {promotedProductsResult.promotedProducts.map((product, index) => (
                     <ProductListItem
                         key={product.uuid}
@@ -28,6 +32,6 @@ export const PromotedProductsContent = async () => {
                     />
                 ))}
             </ProductSlider>
-        </section>
+        </>
     );
 };

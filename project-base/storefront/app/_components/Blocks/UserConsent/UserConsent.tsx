@@ -20,7 +20,7 @@ export const UserConsent = ({ isConsentUpdatePage }: { isConsentUpdatePage: bool
 
     return (
         <div className="z-maximum fixed bottom-0 left-0 flex w-full justify-end">
-            <div className="border-borderAccent bg-backgroundMore absolute right-4 bottom-3 w-[calc(100vw-32px)] max-w-lg rounded-sm border-4 p-5 shadow-md">
+            <div className="border-borderAccent bg-background-more absolute right-4 bottom-3 w-[calc(100vw-32px)] max-w-lg rounded-sm border-4 p-5 shadow-md">
                 <UserConsentForm onSetCallback={onSetCallback} />
             </div>
         </div>

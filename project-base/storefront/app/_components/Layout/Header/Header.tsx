@@ -10,7 +10,7 @@ import { TIDs } from 'cypress/tids';
 
 export const Header = () => {
     return (
-        <header className="from-backgroundBrand to-backgroundBrandLess bg-gradient-to-tr" tid={TIDs.header}>
+        <header className="from-background-brand to-background-brand-less bg-gradient-to-tr" tid={TIDs.header}>
             <Webline>
                 <div className="flex flex-wrap items-center gap-y-3 pt-3 pb-4 lg:gap-x-7 lg:pt-6 lg:pb-1">
                     <Logo />
@@ -24,11 +24,11 @@ export const Header = () => {
                     </div>
 
                     <div className="order-1 flex cursor-pointer items-center justify-center text-lg lg:hidden">
-                        <MenuIcon className="text-linkInverted size-6" />
+                        <MenuIcon className="text-link-inverted-default size-6" />
                     </div>
 
                     <div className="vl:order-4 order-3 ml-auto">
-                        <CartIcon className="text-linkInverted size-6" />
+                        <CartIcon className="text-link-inverted-default size-6" />
                     </div>
                 </div>
 

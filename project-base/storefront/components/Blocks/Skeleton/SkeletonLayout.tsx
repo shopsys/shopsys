@@ -1,5 +1,3 @@
-'use client';
-
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
 

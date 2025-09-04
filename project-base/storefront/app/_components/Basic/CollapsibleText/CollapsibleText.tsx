@@ -3,15 +3,15 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import DOMPurify from 'isomorphic-dompurify';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type CollapsibleTextProps = {
     text: string;
+    scrollTargetRef: RefObject<HTMLDivElement>;
 };
 
-export const CollapsibleText: FC<CollapsibleTextProps> = ({ text }) => {
-    const scrollTargetRef = useRef<HTMLDivElement>(null);
+export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef }) => {
     const { t } = useTranslation();
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [shouldShowButton, setShouldShowButton] = useState(false);
@@ -40,7 +40,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text }) => {
     };
 
     return (
-        <div className="flex w-full flex-col items-start gap-2" ref={scrollTargetRef}>
+        <div className="flex w-full flex-col items-start gap-2">
             <div className={twJoin('relative max-w-2xl', showFullDescription ? '' : 'line-clamp-4')} ref={textRef}>
                 <div
                     dangerouslySetInnerHTML={{ __html: cleanHtml }}
@@ -48,14 +48,15 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text }) => {
                         'user-text',
                         !showFullDescription &&
                             shouldShowButton &&
-                            "after:from-background after:absolute after:bottom-0 after:left-0 after:h-6 after:w-full after:bg-linear-to-t/srgb after:to-transparent after:content-['']",
+                            "after:from-background-default after:absolute after:bottom-0 after:left-0 after:h-6 after:w-full after:bg-linear-to-t/srgb after:to-transparent after:content-['']",
                     )}
                 />
             </div>
 
             <button
+                tabIndex={0}
                 className={twJoin(
-                    'hover:text-textAccent cursor-pointer underline',
+                    'hover:text-text-accent cursor-pointer underline',
                     showFullDescription && 'mt-2',
                     !shouldShowButton && 'invisible',
                 )}
@@ -63,7 +64,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text }) => {
             >
                 {showFullDescription ? t('Close full description') : t('Open full description')}
                 <ArrowSecondaryIcon
-                    className={twJoin('text-textDisabled ml-2 size-3', showFullDescription && 'rotate-180')}
+                    className={twJoin('text-text-disabled ml-2 size-3', showFullDescription && 'rotate-180')}
                 />
             </button>
         </div>

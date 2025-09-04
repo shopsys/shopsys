@@ -25,7 +25,7 @@ export const CategoryBestselllersRemainingProductsCollapsible: FC<
         <>
             <AnimatePresence initial={false}>
                 {!isCollapsed && (
-                    <div className="divide-borderAccentLess border-borderAccentLess flex flex-col divide-y border-t">
+                    <div className="divide-border-less border-border-less flex flex-col divide-y border-t">
                         <AnimateCollapseDiv className={twJoin('!block')}>{children}</AnimateCollapseDiv>
                     </div>
                 )}
@@ -33,7 +33,7 @@ export const CategoryBestselllersRemainingProductsCollapsible: FC<
 
             <div className="mt-3 text-center">
                 <button
-                    className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
+                    className="font-secondary text-link-default hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
                     onClick={() => setIsCollapsed((prev) => !prev)}
                 >
                     {isCollapsed

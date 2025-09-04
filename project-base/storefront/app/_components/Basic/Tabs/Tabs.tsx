@@ -14,10 +14,12 @@ import {
     Tabs as TabsReact,
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
+import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
+import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
 /**
- * In background of styled tab parts we are using - react-tabs components
+ * In background-default of styled tab parts we are using - react-tabs components
  * https://github.com/reactjs/react-tabs
  */
 type TabsContentProps = {
@@ -45,8 +47,10 @@ export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
 export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
     <Tab
         selectedClassName="isActive"
-        className={twJoin(
-            'bg-backgroundMore font-secondary outline-borderAccentSuccess [&.isActive]:bg-textInverted cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold outline-1 select-none [&.isActive]:outline',
+        tabIndex="0"
+        className={twMergeCustom(
+            'bg-background-more hover:bg-background-most font-secondary outline-border-success [&.isActive]:bg-background-default cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
+            'focus-visible:text-text-default! focus-visible:bg-orange-500! focus-visible:outline-none!',
             className,
         )}
         {...props}
@@ -66,34 +70,47 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
     const mobileTab = () => setIsActiveOnMobile(!isActiveOnMobile);
     const isLg = useMediaMin('lg');
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            mobileTab();
+        }
+    };
+
     return (
         <TabPanel
             forceRender
-            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex"
+            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex [&.isActive]:lg:pt-5"
             selectedClassName="isActive"
             {...props}
         >
             <div
-                className="bg-backgroundMore font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
+                aria-controls={createAriaParameter('tabs-content', headingTextMobile)}
+                aria-expanded={isActiveOnMobile}
+                className="bg-background-more font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
+                role="button"
+                tabIndex={0}
                 onClick={mobileTab}
+                onKeyDown={handleKeyDown}
             >
                 {headingTextMobile}
                 <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
-                    <ArrowIcon className={twJoin('text-text size-4 rotate-0 transition')} />
+                    <ArrowIcon className={twJoin('text-text-default size-4 rotate-0 transition')} />
                 </AnimateRotateDiv>
             </div>
 
-            <AnimatePresence initial={false}>
-                {(isActiveOnMobile || (isActive && isLg)) && (
-                    <AnimateCollapseDiv
-                        className="relative mt-3 !block w-full lg:mt-0"
-                        initial={skipInitialAnimation ? 'open' : 'closed'}
-                        keyName={`tabs-content-${headingTextMobile}`}
-                    >
-                        {children}
-                    </AnimateCollapseDiv>
-                )}
-            </AnimatePresence>
+            <div className="relative mt-3 w-full lg:mt-0" id={createAriaParameter('tabs-content', headingTextMobile)}>
+                <AnimatePresence initial={false}>
+                    {(isActiveOnMobile || (isActive && isLg)) && (
+                        <AnimateCollapseDiv
+                            className="!block"
+                            initial={skipInitialAnimation ? 'open' : 'closed'}
+                            keyName={`tabs-content-${headingTextMobile}`}
+                        >
+                            {children}
+                        </AnimateCollapseDiv>
+                    )}
+                </AnimatePresence>
+            </div>
         </TabPanel>
     );
 };

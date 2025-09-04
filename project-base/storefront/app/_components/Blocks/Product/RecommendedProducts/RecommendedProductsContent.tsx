@@ -47,7 +47,11 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
         <section>
             <h3 className="mb-3">{t('Recommended for you')}</h3>
 
-            <ProductSlider totalItems={recommendedProductsData.recommendedProducts.length} variant="default">
+            <ProductSlider
+                ariaAnchorName={t('Recommended for you')}
+                totalItems={recommendedProductsData.recommendedProducts.length}
+                variant="default"
+            >
                 {recommendedProductsData.recommendedProducts.map((product, index) => (
                     <ProductListItem
                         key={product.uuid}

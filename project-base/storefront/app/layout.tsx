@@ -9,7 +9,7 @@ import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
-import 'styles/theme.css';
+import 'styles/globals.css';
 
 export const generateMetadata = async (): Promise<Metadata> => {
     // TODO: Dynamic metadata generation based on the route (refactor `useSeo`)
