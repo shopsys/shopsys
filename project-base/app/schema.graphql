@@ -432,6 +432,7 @@ type CartItem {
 }
 
 type CartItemModificationsResult {
+  cartItemsWithChangedQuantity: [CartItem!]!
   cartItemsWithModifiedPrice: [CartItem!]!
   noLongerListableCartItems: [CartItem!]!
 }
@@ -1227,6 +1228,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Whether the product allows purchasing more items than are currently in stock"
+  isAllowedNegativeStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
@@ -1987,6 +1990,8 @@ interface Product {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Whether the product allows purchasing more items than are currently in stock"
+  isAllowedNegativeStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
@@ -2483,6 +2488,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Whether the product allows purchasing more items than are currently in stock"
+  isAllowedNegativeStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
@@ -2830,6 +2837,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  "Whether the product allows purchasing more items than are currently in stock"
+  isAllowedNegativeStock: Boolean!
   isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!

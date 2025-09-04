@@ -536,6 +536,7 @@ export type TypeCartItem = {
 
 export type TypeCartItemModificationsResult = {
   __typename?: 'CartItemModificationsResult';
+  cartItemsWithChangedQuantity: Array<TypeCartItem>;
   cartItemsWithModifiedPrice: Array<TypeCartItem>;
   noLongerListableCartItems: Array<TypeCartItem>;
 };
@@ -1411,6 +1412,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Whether the product allows purchasing more items than are currently in stock */
+  isAllowedNegativeStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
@@ -2430,6 +2433,8 @@ export type TypeProduct = {
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Whether the product allows purchasing more items than are currently in stock */
+  isAllowedNegativeStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
@@ -3190,6 +3195,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Whether the product allows purchasing more items than are currently in stock */
+  isAllowedNegativeStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
@@ -3602,6 +3609,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  /** Whether the product allows purchasing more items than are currently in stock */
+  isAllowedNegativeStock: Scalars['Boolean']['output'];
   isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
