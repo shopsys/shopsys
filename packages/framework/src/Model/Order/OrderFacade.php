@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
@@ -76,6 +77,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -109,6 +111,7 @@ class OrderFacade
         protected readonly PricingSetting $pricingSetting,
         protected readonly OrderInputFactory $orderInputFactory,
         protected readonly OrderProcessor $orderProcessor,
+        protected readonly PaymentFacade $paymentFacade,
     ) {
     }
 
@@ -396,16 +399,23 @@ class OrderFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @param bool $updatePaymentPrice
      */
-    public function changeOrderPayment(Order $order, Payment $payment): void
+    public function changeOrderPayment(Order $order, Payment $payment, bool $updatePaymentPrice = true): void
     {
-        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $order->getCurrency(),
-            $order->getTotalProductsPrice(),
-            $order->getDomainId(),
-            $order->isFreeTransportAndPaymentApplied(),
-        );
+        $previousPaymentItems = $order->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);
+
+        if ($updatePaymentPrice || count($previousPaymentItems) === 0) {
+            $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+                $payment,
+                $order->getCurrency(),
+                $order->getTotalProductsPrice(),
+                $order->getDomainId(),
+                $order->isFreeTransportAndPaymentApplied(),
+            );
+        } else {
+            $paymentPrice = reset($previousPaymentItems)->getPrice();
+        }
 
         $orderPaymentData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PAYMENT);
         $orderPaymentData->name = $payment->getName();
@@ -465,5 +475,39 @@ class OrderFacade
             $orderInput,
             $orderData,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     */
+    public function updatePaymentByLastPaymentTransaction(Order $order): void
+    {
+        $lastPaymentTransaction = $order->getLastTransaction();
+
+        if ($lastPaymentTransaction === null) {
+            return;
+        }
+
+        $paymentMethod = $lastPaymentTransaction->getExternalPaymentMethod();
+
+        if ($paymentMethod === null) {
+            return;
+        }
+
+        $payment = $this->paymentFacade->findPaymentByExternalMethodTransportAndDomainId(
+            $paymentMethod,
+            $order->getTransport(),
+            $order->getDomainId(),
+        );
+
+        if ($payment === null || $payment === $order->getPayment()) {
+            return;
+        }
+
+        $this->changeOrderPayment($order, $payment, false);
+
+        $lastPaymentTransaction->setPayment($payment);
+
+        $this->em->flush();
     }
 }

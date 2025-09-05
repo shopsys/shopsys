@@ -72,7 +72,9 @@ class PaymentMutation extends AbstractMutation
             $orderPaymentStatusPageValidityHash = $argument['orderPaymentStatusPageValidityHash'] ?? null;
             $order = $this->orderApiFacade->getByUuid($uuid);
 
-            $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
+            if ($this->paymentServiceFacade->updatePaymentTransactionsByOrder($order)) {
+                $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
+            }
 
             if ($orderPaymentStatusPageValidityHash !== null && $order->getOrderPaymentStatusPageValidityHash() === $orderPaymentStatusPageValidityHash) {
                 $this->orderFacade->setOrderPaymentStatusPageValidFromNow($order);

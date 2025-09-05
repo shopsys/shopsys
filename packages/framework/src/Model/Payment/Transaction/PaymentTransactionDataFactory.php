@@ -34,6 +34,7 @@ class PaymentTransactionDataFactory
         $paymentTransactionData->externalPaymentSubStatus = $paymentTransaction->getExternalPaymentSubStatus();
         $paymentTransactionData->externalPaymentUrl = $paymentTransaction->getExternalPaymentUrl();
         $paymentTransactionData->refundedAmount = $paymentTransaction->getRefundedAmount();
+        $paymentTransactionData->externalPaymentMethod = $paymentTransaction->getExternalPaymentMethod();
 
         return $paymentTransactionData;
     }

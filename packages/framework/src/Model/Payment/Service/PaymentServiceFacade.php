@@ -93,9 +93,12 @@ class PaymentServiceFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
      */
-    public function updatePaymentTransactionsByOrder(Order $order): void
+    public function updatePaymentTransactionsByOrder(Order $order): bool
     {
+        $updated = false;
+
         foreach ($order->getPaymentTransactions() as $paymentTransaction) {
             $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
 
@@ -105,6 +108,7 @@ class PaymentServiceFacade
 
                 if ($update) {
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
+                    $updated = true;
                 }
             } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException|GoPayNotEnabledOnDomainException|PaymentTransactionHasNoAssignedPayment $exception) {
                 $this->logger->error(
@@ -113,6 +117,8 @@ class PaymentServiceFacade
                 );
             }
         }
+
+        return $updated;
     }
 
     /**

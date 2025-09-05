@@ -11,6 +11,7 @@ use Monolog\Logger;
 use Override;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
@@ -23,12 +24,14 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade $goPayFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoPayFacade $goPayFacade,
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
+        protected readonly OrderFacade $orderFacade,
     ) {
     }
 
@@ -61,7 +64,9 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             $oldIsOrderPaid = $order->isPaid();
 
             try {
-                $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
+                if ($this->paymentServiceFacade->updatePaymentTransactionsByOrder($order)) {
+                    $this->orderFacade->updatePaymentByLastPaymentTransaction($order);
+                }
             } catch (GoPayPaymentDownloadException $e) {
                 $this->logger->error($e->getMessage(), [
                     'exception' => $e,

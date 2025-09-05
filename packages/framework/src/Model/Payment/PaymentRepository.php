@@ -170,4 +170,26 @@ class PaymentRepository
             ->setParameter('domainId', $domainConfig->getId())
             ->getQuery()->execute();
     }
+
+    /**
+     * @param string $externalPaymentMethod
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
+     */
+    public function findPaymentByExternalMethodTransportAndDomainId(
+        string $externalPaymentMethod,
+        Transport $transport,
+        int $domainId,
+    ): ?Payment {
+        return $this->getQueryBuilderForAll()
+            ->join('p.transports', 't', Join::WITH)
+            ->andWhere('t = :transport')->setParameter('transport', $transport)
+            ->join(PaymentDomain::class, 'pd', Join::WITH, 'pd.payment = p AND pd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->join('pd.goPayPaymentMethod', 'gppm', Join::WITH, 'gppm.identifier = :goPayPaymentMethod AND gppm.domainId = :domainId')
+            ->setParameter('goPayPaymentMethod', $externalPaymentMethod)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

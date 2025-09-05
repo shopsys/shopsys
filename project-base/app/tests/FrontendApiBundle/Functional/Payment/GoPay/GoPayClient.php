@@ -23,6 +23,7 @@ class GoPayClient extends BaseGoPayClient
             'gw_url' => 'https://example.com?supertoken=xyz123456',
             'id' => '987654321',
             'state' => 'CREATED',
+            'payment_instrument' => 'BANK_ACCOUNT',
         ];
         $response->statusCode = 200;
 

@@ -81,6 +81,12 @@ class PaymentTransaction
     protected $externalPaymentSubStatus;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $externalPaymentMethod;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      */
     public function __construct(PaymentTransactionData $paymentTransactionData)
@@ -101,6 +107,7 @@ class PaymentTransaction
         $this->externalPaymentSubStatus = $paymentTransactionData->externalPaymentSubStatus;
         $this->refundedAmount = $paymentTransactionData->refundedAmount;
         $this->externalPaymentUrl = $paymentTransactionData->externalPaymentUrl;
+        $this->externalPaymentMethod = $paymentTransactionData->externalPaymentMethod;
     }
 
     /**
@@ -245,5 +252,21 @@ class PaymentTransaction
     public function getExternalPaymentUrl()
     {
         return $this->externalPaymentUrl;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExternalPaymentMethod()
+    {
+        return $this->externalPaymentMethod;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
     }
 }

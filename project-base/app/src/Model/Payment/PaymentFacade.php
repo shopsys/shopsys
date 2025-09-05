@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @method \App\Model\Payment\Payment[] getVisibleOnDomainByTransport(int $domainId, \App\Model\Transport\Transport $transport)
  * @method bool isPaymentVisibleAndEnabledOnCurrentDomain(\App\Model\Payment\Payment $payment)
  * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomain()
+ * @method \App\Model\Payment\Payment|null findPaymentByExternalMethodTransportAndDomainId(string $externalPaymentMethod, \App\Model\Transport\Transport $transport, int $domainId)
  */
 class PaymentFacade extends BasePaymentFacade
 {

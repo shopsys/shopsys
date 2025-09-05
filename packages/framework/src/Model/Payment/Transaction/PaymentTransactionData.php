@@ -45,4 +45,9 @@ class PaymentTransactionData
      * @var string|null
      */
     public $externalPaymentSubStatus;
+
+    /**
+     * @var string|null
+     */
+    public $externalPaymentMethod;
 }

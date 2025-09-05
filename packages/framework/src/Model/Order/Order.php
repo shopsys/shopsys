@@ -450,6 +450,14 @@ class Order
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction|null
+     */
+    public function getLastTransaction(): ?PaymentTransaction
+    {
+        return $this->paymentTransactions->last() ?: null;
+    }
+
+    /**
      * @return bool
      */
     public function isMaxTransactionCountReached(): bool
