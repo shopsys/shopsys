@@ -1,16 +1,12 @@
-import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
 export const linkPositionDataAttribute = 'data-link-position';
-export default grapesjs.plugins.add('custom-link', editor => {
+export default grapesjs.plugins.add('link', editor => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
         category: 'basic-objects',
-        content:
-            `
-          <a data-gjs-type="link-block" class="gjs-link-block">` +
-            Translator.trans('Insert your text here') +
-            `</a>`,
+        content: `
+          <a data-gjs-type="link-block" class="gjs-link-block"></a>`,
         attributes: { class: 'fa fa-link' },
     });
 

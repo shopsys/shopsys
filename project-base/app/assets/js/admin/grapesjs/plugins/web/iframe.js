@@ -3,7 +3,7 @@ import grapesjs from 'grapesjs';
 const IFRAME_WIDTH_ATTRIBUTE = 'width';
 const IFRAME_HEIGHT_ATTRIBUTE = 'height';
 
-export default grapesjs.plugins.add('custom-iframe', editor => {
+export default grapesjs.plugins.add('iframe', editor => {
     editor.DomComponents.addType('iframe', {
         isComponent: el => el.tagName === 'IFRAME',
         model: {
@@ -19,6 +19,7 @@ export default grapesjs.plugins.add('custom-iframe', editor => {
             },
             defaults: {
                 type: 'iframe',
+                resizable: false,
                 traits: [
                     {
                         type: 'text',
@@ -39,7 +40,6 @@ export default grapesjs.plugins.add('custom-iframe', editor => {
     });
 
     editor.BlockManager.add('iframe', {
-        label: 'Iframe',
         type: 'iframe',
         content: '<iframe class="gjs-iframe" style="width: 100%"></iframe>',
         category: 'basic-objects',

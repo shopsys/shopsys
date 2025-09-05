@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "Basic objects"
-msgstr "Basic"
-
 msgid "Close"
 msgstr "Zavřít"
 
@@ -24,9 +21,6 @@ msgstr "Vložit proměnnou"
 
 msgid "Insert your text here"
 msgstr "Zde vložte text"
-
-msgid "Link"
-msgstr "Odkaz"
 
 msgid "Mandatory variables"
 msgstr "Povinné proměnné"

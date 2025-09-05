@@ -1,60 +1,145 @@
+@import 'tailwindcss';
+@import './theme.css';
+@import './fonts.css';
+@import './base.css';
+@import './utilities.css';
+@import './custom.css';
+@import './grapesjs.css';
+
 @layer components {
     .user-text {
+        @apply text-text-default text-lg leading-relaxed;
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            @apply font-secondary font-semibold;
+
+            &:first-child {
+                @apply mt-0;
+            }
+        }
+
+        h2 {
+            @apply text-3xl;
+            @apply mt-10 mb-5 lg:mt-12 lg:mb-6;
+        }
+
+        h3 {
+            @apply text-2xl;
+            @apply mt-8 mb-4 lg:mt-10 lg:mb-5;
+        }
+
+        h4 {
+            @apply text-xl;
+            @apply mt-6 mb-3 lg:mt-8 lg:mb-4;
+        }
+
+        h5 {
+            @apply text-lg;
+            @apply mt-5 mb-3 lg:mt-6 lg:mb-3;
+        }
+
+        h6 {
+            @apply text-lg tracking-normal normal-case;
+            @apply mt-4 mb-2 lg:mt-5 lg:mb-3;
+        }
+
+        p {
+            @apply mb-6 text-lg lg:mb-8 lg:text-lg;
+        }
+
+        a {
+            @apply text-link-default underline transition-colors duration-200;
+
+            &:hover {
+                @apply text-link-hovered;
+            }
+
+            &:active {
+                @apply text-link-hovered;
+            }
+        }
+
+        strong,
+        b {
+            @apply font-bold;
+        }
+
+        em,
+        i {
+            @apply italic;
+        }
+
+        hr {
+            @apply border-border-default my-8 border-0 border-t lg:my-10;
+        }
+
         ul {
-            @apply ml-5 list-inside list-["•\0020"] space-y-2;
+            @apply mb-6 ml-10 list-outside list-["•\0020"] space-y-3 lg:mb-8;
 
             li {
-                @apply marker:text-base marker:text-current;
+                @apply marker:text-border-brand marker:text-xl;
             }
 
             ul {
-                @apply my-2 list-inside list-["◦\0020"] space-y-2;
-
-                li {
-                    @apply marker:text-base marker:text-current;
-                }
+                @apply my-2 list-outside list-["◦\0020"] space-y-3;
 
                 ul {
-                    @apply list-inside list-["▪\0020"] space-y-2;
-
-                    li {
-                        @apply marker:text-base marker:text-current;
-                    }
+                    @apply list-outside list-["▪\0020"] space-y-3;
                 }
             }
         }
 
         ol {
-            @apply ml-5 list-inside list-decimal;
+            @apply mb-6 ml-10 list-outside list-decimal space-y-3 lg:mb-8;
+
+            ol {
+                @apply my-2 list-outside list-decimal space-y-3;
+
+                ol {
+                    @apply list-outside list-decimal space-y-3;
+                }
+            }
 
             ul {
-                @apply my-2 space-y-2;
+                @apply my-2 space-y-3;
 
                 ul {
-                    @apply space-y-2;
+                    @apply space-y-3;
                 }
             }
         }
 
         img {
-            @apply block h-auto rounded-sm;
+            @apply my-8 block h-auto max-w-full lg:my-10;
         }
 
         iframe {
-            @apply max-w-full;
+            @apply my-8 max-w-full lg:my-10;
+
+            &:empty {
+                @apply min-h-52 w-full bg-emerald-100;
+            }
         }
 
         iframe:not(.gjs-iframe) {
-            @apply aspect-video w-full;
+            @apply my-8 aspect-video w-full lg:my-10;
+
+            &:empty {
+                @apply min-h-52 w-full bg-emerald-100;
+            }
         }
 
         video {
-            @apply w-full;
+            @apply my-8 w-full lg:my-10;
         }
 
         .gjs-table-custom {
-            max-width: 100%;
-            overflow-x: auto;
+            @apply my-8 max-w-full overflow-x-auto lg:my-10;
         }
 
         .gjs-button-link {
@@ -72,11 +157,11 @@
 
             td,
             th {
-                @apply p-[10px] text-base leading-6;
+                @apply p-2.5 text-base leading-6;
             }
 
             th {
-                @apply text-text-default text-left leading-[26px] font-bold;
+                @apply text-text-default text-left font-bold;
                 @apply lg:text-xl;
             }
 
@@ -94,40 +179,89 @@
         }
 
         .row {
-            @apply block w-full gap-3 py-3 lg:flex lg:flex-wrap;
+            @apply my-8 flex w-full flex-col gap-5 lg:my-10 lg:flex-row lg:gap-10;
 
             .column {
-                @apply flex flex-1 flex-col py-3;
+                @apply flex flex-1 flex-col;
+
+                h2:first-child,
+                h3:first-child,
+                h4:first-child,
+                h5:first-child,
+                h6:first-child {
+                    @apply mt-0;
+                }
+
+                * > *:last-child {
+                    @apply mb-0;
+                }
+
+                &:empty {
+                    @apply min-h-7 bg-emerald-100;
+                }
+            }
+
+            img {
+                @apply !my-0 max-w-fit;
             }
         }
 
-        .image-position-right,
-        .button-link-position-right {
-            @apply ml-auto;
+        .image-position-left,
+        .button-link-position-left {
+            @apply ml-0;
         }
 
         .image-position-center,
         .button-link-position-center {
-            @apply mx-auto;
+            @apply !mx-auto;
+        }
+
+        .image-position-right,
+        .button-link-position-right {
+            @apply !ml-auto;
         }
 
         .gjs-text-with-image {
-            .gjs-text-with-image-inner {
-                @apply flex flex-wrap items-start gap-5 lg:flex-nowrap;
+            @apply my-8 flex w-full flex-col items-center justify-between gap-5 lg:my-10 lg:flex-row lg:gap-10;
 
+            & > * {
+                @apply lg:w-1/2 lg:max-w-1/2;
+            }
+
+            &.gjs-text-with-image-float-left {
                 & img {
-                    @apply !w-full shrink-0 lg:max-w-sm;
+                    @apply lg:order-1;
                 }
 
-                &.gjs-text-with-image-float-right {
-                    & img {
-                        @apply order-2;
-                    }
-
-                    & .text {
-                        @apply order-1;
-                    }
+                & .text {
+                    @apply lg:order-2;
                 }
+            }
+
+            &.gjs-text-with-image-float-right {
+                & img {
+                    @apply lg:order-2;
+                }
+
+                & .text {
+                    @apply lg:order-1;
+                }
+            }
+
+            img {
+                @apply m-0;
+            }
+
+            h2:first-child,
+            h3:first-child,
+            h4:first-child,
+            h5:first-child,
+            h6:first-child {
+                @apply mt-0;
+            }
+
+            * > *:last-child {
+                @apply mb-0;
             }
         }
 
@@ -152,5 +286,21 @@
                 }
             }
         }
+
+        .gjs-link-block {
+            @apply my-8 block lg:my-10;
+
+            &:empty {
+                @apply min-h-52 w-full bg-emerald-100;
+            }
+        }
+    }
+}
+
+/* Safari iframe drag-drop fix: 6px gap enables "below" drop zone detection */
+@supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+    [data-gjs-type='map'] iframe,
+    iframe[src*='maps.google.com'] {
+        height: calc(100% - 6px) !important;
     }
 }

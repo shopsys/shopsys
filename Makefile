@@ -220,8 +220,27 @@ generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
 	@echo "✅ Snapshots info table generation finished."
 	$(call _cypress-cleanup)
 
+# ------------------------------------------------------------------------------
+# 📦 Checking dependencies licenses
+# ------------------------------------------------------------------------------
+
 check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & storefront)
 	@echo "🔍 Checking dependency licenses..."
 	@docker compose exec -T php-fpm bash -lc "project-base/scripts/check-licenses.sh" && \
 	 docker compose exec -T storefront sh -lc "sh scripts/check-licenses.sh" && \
 	 echo "✅ All license checks passed"
+	 
+# ------------------------------------------------------------------------------
+# 💅 Compiling Tailwind CSS for admin
+# ------------------------------------------------------------------------------
+
+generate-tailwind-for-admin:
+	@echo "🚀 Compiling Tailwind CSS for admin..."
+	rm -rf project-base/storefront/public/tailwind-for-admin/style.css
+	mkdir -p project-base/storefront/public/tailwind-for-admin
+	docker compose exec storefront pnpm compile-tailwind-for-admin
+	@echo "✅ Tailwind CSS compiled to: project-base/storefront/public/tailwind-for-admin/style.css"
+	@echo "🔧 Rebuilding backend admin assets..."
+	docker compose exec php-fpm php phing npm-dev
+	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."
+

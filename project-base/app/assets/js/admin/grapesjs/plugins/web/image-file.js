@@ -1,6 +1,6 @@
 import grapesjs from 'grapesjs';
 
-export default grapesjs.plugins.add('custom-image-file', editor => {
+export default grapesjs.plugins.add('image-file', editor => {
     editor.Blocks.add('image-file', {
         select: true,
         activate: true,

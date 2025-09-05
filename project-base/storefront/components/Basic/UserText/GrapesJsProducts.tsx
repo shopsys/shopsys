@@ -49,7 +49,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
     }
 
     return (
-        <div className={twMergeCustom('my-4', products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-9' : '')}>
+        <section className={twMergeCustom('my-8', products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-10' : '')}>
             <ProductsSlider
                 ariaAnchorName="product-slider-grapesjs"
                 gtmMessageOrigin={GtmMessageOriginType.other}
@@ -58,6 +58,6 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
                 variant="article"
                 visibleSliderItems={visibleSliderItems}
             />
-        </div>
+        </section>
     );
 };

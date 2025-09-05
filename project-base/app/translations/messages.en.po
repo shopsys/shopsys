@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Basic objects"
-msgstr ""
-
 msgid "Close"
 msgstr ""
 
@@ -23,9 +20,6 @@ msgid "Insert variable"
 msgstr ""
 
 msgid "Insert your text here"
-msgstr ""
-
-msgid "Link"
 msgstr ""
 
 msgid "Mandatory variables"

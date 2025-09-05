@@ -1,37 +1,30 @@
 import grapesjs from 'grapesjs';
-import { linkPositionDataAttribute } from './grapesjs-custom-link-plugin';
+import { linkPositionDataAttribute } from './link';
 
-export default grapesjs.plugins.add('mail-custom-image', editor => {
+export default grapesjs.plugins.add('custom-image', editor => {
     const imagePositionDataAttribute = 'data-image-position';
 
-    editor.Blocks.add('mail-custom-image', {
+    editor.Blocks.add('image', {
         select: true,
         activate: true,
         category: 'basic-objects',
         attributes: { class: 'gjs-fonts gjs-f-image' },
         content: {
-            type: 'mail-custom-image',
+            type: 'image',
             attributes: {
-                'data-gjs-type': 'mail-custom-image',
+                'data-gjs-type': 'image',
             },
         },
     });
 
-    editor.DomComponents.addType('mail-custom-image', {
-        isComponent: element =>
-            element.tagName === 'IMG' &&
-            element.getAttribute('data-gjs-type') === 'mail-custom-image' &&
-            !element.hasAttribute('path'),
+    editor.DomComponents.addType('image', {
+        isComponent: element => element.tagName === 'IMG' && element.getAttribute('data-gjs-type') === 'image',
         extend: 'image',
         model: {
             init() {
-                this.setStyle({});
-                this.on('change:src', this.handlePathChange);
                 this.on(`change:attributes:${imagePositionDataAttribute}`, this.handleImagePositionChange);
             },
-            handlePathChange(element) {
-                element.addAttributes({ path: this.attributes.src });
-            },
+
             handleImagePositionChange(element) {
                 element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
@@ -40,16 +33,32 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
                     });
                 }
             },
+
             defaults: {
+                resizable: {
+                    updateTarget: (el, rect) => {
+                        const widthPx = `${Math.round(rect.w)}px`;
+                        const heightPx = 'auto';
+
+                        // Update DOM element immediately for visual feedback
+                        el.style.width = widthPx;
+                        el.style.height = heightPx;
+
+                        // Get the component model and update its styles for persistence
+                        const component = editor.getSelected();
+                        if (component && component.getEl() === el) {
+                            component.addStyle({
+                                width: widthPx,
+                                height: heightPx,
+                            });
+                        }
+                    },
+                },
                 attributes: {
                     [imagePositionDataAttribute]: 'left',
                     class: ['image-position-left'],
                 },
                 traits: [
-                    {
-                        type: 'text',
-                        name: 'path',
-                    },
                     {
                         type: 'select',
                         name: imagePositionDataAttribute,
@@ -70,28 +79,7 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
                         name: 'alt',
                     },
                 ],
-                resizable: false,
             },
         },
     });
-
-    editor.addStyle(`
-        .image-position-center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .image-position-left {
-            display: block;
-            margin-left: 0;
-            margin-right: auto;
-        }
-
-        .image-position-right {
-            display: block;
-            margin-left: auto;
-            margin-right: 0;
-        }
-    `);
 });
