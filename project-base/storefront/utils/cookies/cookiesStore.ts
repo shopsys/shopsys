@@ -1,8 +1,8 @@
 import { getCookies, setCookie } from 'cookies-next';
 import { GetServerSidePropsContext } from 'next';
-import getConfig from 'next/config';
 import { useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { getProtocol, getIsHttps } from 'utils/requestProtocol';
 import { v4 as uuidV4 } from 'uuid';
 import { createStore } from 'zustand/vanilla';
@@ -26,8 +26,7 @@ type CookiesType = {
 const COOKIES_STORE_NAME = 'cookiesStore' as const;
 const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
 
-const { publicRuntimeConfig } = getConfig();
-const userSnapEnabledDefaultValue = publicRuntimeConfig.userSnapEnabledDefaultValue;
+const userSnapEnabledDefaultValue = getPublicConfigProperty('userSnapEnabledDefaultValue', false) ?? false;
 
 const getDefaultInitState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,

@@ -14,7 +14,6 @@ import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/tra
 import { Maybe } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
-import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -26,6 +25,7 @@ import { getLastOrderPickupPlace, PICKUP_POINT_NOT_SET_ERROR_MESSAGE } from 'uti
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
 import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
@@ -46,7 +46,7 @@ const ErrorPopup = dynamic(
     },
 );
 
-const { publicRuntimeConfig } = getConfig();
+const packeteryApiKey = getPublicConfigProperty('packeteryApiKey', '');
 
 export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCart) => {
     const { payment: currentPayment, paymentGoPayBankSwift: currentPaymentGoPayBankSwift } = useCurrentCart();
@@ -128,7 +128,7 @@ export const useTransportChangeInSelect = (
     };
 
     const openPacketeryPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
-        const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
+        // packeteryApiKey is available from module scope
 
         if (!packeteryApiKey?.length) {
             logException('Packeta API key was not set');

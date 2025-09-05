@@ -2,11 +2,11 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 // eslint-disable-next-line no-restricted-imports
 import { initUrqlClient } from 'next-urql';
-import getConfig from 'next/config';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
+import { getServerConfigProperty } from 'utils/config/getNextConfig';
 
 export const createClient = ({
     t,
@@ -21,8 +21,7 @@ export const createClient = ({
     redisClient?: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
     context?: GetServerSidePropsContext | NextPageContext;
 }): Client => {
-    const { serverRuntimeConfig } = getConfig();
-    const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
+    const internalGraphqlEndpoint = getServerConfigProperty('internalGraphqlEndpoint');
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
 
     return initUrqlClient(

@@ -1,9 +1,7 @@
-import getConfig from 'next/config';
 import { Suspense } from 'react';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const {
-    publicRuntimeConfig: { shouldUseDefer },
-} = getConfig();
+const shouldUseDefer = getPublicConfigProperty('shouldUseDefer', false);
 
 export const PageDefer: FC = ({ children }) => {
     if (shouldUseDefer) {
