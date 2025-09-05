@@ -6,11 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencyFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -18,19 +18,19 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyGridFactory $currencyGridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory $currencyDataFactory
      */
     public function __construct(
         CurrencyGridFactory $currencyGridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly CurrencyDataFactory $currencyDataFactory,
     ) {
-        parent::__construct($currencyGridFactory, $security);
+        parent::__construct($currencyGridFactory, $accessChecker);
     }
 
     /**
@@ -95,8 +95,8 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_SUPER_ADMIN;
+        return SystemRole::SUPER_ADMIN;
     }
 }

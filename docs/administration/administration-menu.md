@@ -37,7 +37,7 @@ $menuItem->setExtra('icon', 'cart');
 
 There is an extra boolean attribute `superadmin` supported to allow highlighting of restricted access of the menu.
 
-It's only used for the visual effect. The restriction itself has to be done manually using the `#[AccessControlRule]` attribute on the controller action, see the [separate article](./admin-rights.md) for more information.
+It's only used for the visual effect. The restriction itself has to be done manually using security attributes like `#[SuperAdminOnly]` on the controller action, see the [separate article](./admin-rights.md) for more information.
 
 ## Events
 

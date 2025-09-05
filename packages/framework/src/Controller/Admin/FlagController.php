@@ -6,19 +6,25 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Flag\FlagFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_FLAG)]
 class FlagController extends AdminBaseController
 {
     /**
@@ -43,10 +49,10 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/list/')]
-    #[AccessControlRule([Roles::ROLE_FLAG_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->flagGridFactory->create(Roles::ROLE_FLAG_FULL);
+        $grid = $this->flagGridFactory->create(AdminRoleConstant::ROLE_FLAG);
 
         return $this->render('@ShopsysFramework/Admin/Content/Flag/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -58,7 +64,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/new/')]
-    #[AccessControlRule([Roles::ROLE_FLAG_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $flagData = $this->flagDataFactory->create();
@@ -104,8 +110,8 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FLAG_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_FLAG_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $flag = $this->flagFacade->getById($id);
@@ -148,7 +154,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FLAG_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -180,7 +186,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_FLAG_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {

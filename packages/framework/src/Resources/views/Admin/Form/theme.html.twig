@@ -53,8 +53,18 @@
 {%- endblock localized_widget %}
 
 {% block form_row %}
+    {% set row_attr = row_attr|merge({'class': (row_attr.class|default('') ~ ' form-line')|trim}) %}
+
+    {% if multidomain is defined and multidomain %}
+        {% set row_attr = row_attr|merge({'class': (row_attr.class|default('') ~ ' form-line--no-horizontal-gap')|trim}) %}
+    {% endif %}
+
+    {% if attr.disabledField is defined %}
+        {% set row_attr = row_attr|merge({'class': (row_attr.class|default('') ~ ' form-input-disabled form-line--disabled')|trim}) %}
+    {% endif %}
+
     {% if render_form_row %}
-        <div class="form-line{% if multidomain is defined and multidomain %} form-line--no-horizontal-gap{% endif %}{{ attr.disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+        <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
     {% endif %}

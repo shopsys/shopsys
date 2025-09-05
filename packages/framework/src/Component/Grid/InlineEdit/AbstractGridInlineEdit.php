@@ -8,20 +8,19 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
-use Symfony\Bundle\SecurityBundle\Security;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class AbstractGridInlineEdit implements GridInlineEditInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface $gridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      */
     public function __construct(
         protected readonly GridFactoryInterface $gridFactory,
-        protected readonly Security $security,
+        protected readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -33,7 +32,11 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     #[Override]
     public function saveForm(Request $request, int|string|null $rowId): int|string
     {
-        $this->checkAdministratorHasEditRole();
+        if ($rowId !== null) {
+            $this->accessChecker->denyUnlessCanEdit($this->getRoleConstant());
+        } else {
+            $this->accessChecker->denyUnlessCanCreate($this->getRoleConstant());
+        }
 
         $form = $this->getForm($rowId);
         $form->handleRequest($request);
@@ -66,11 +69,8 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     #[Override]
     public function getGrid(): Grid
     {
-        $grid = $this->gridFactory->create($this->getEditRole());
-
-        if ($this->canEdit()) {
-            $grid->setInlineEditService($this);
-        }
+        $grid = $this->gridFactory->create($this->getRoleConstant());
+        $grid->setInlineEditService($this);
 
         return $grid;
     }
@@ -81,7 +81,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     #[Override]
     public function canAddNewRow(): bool
     {
-        return $this->canEdit();
+        return $this->accessChecker->canCreate($this->getRoleConstant());
     }
 
     /**
@@ -118,20 +118,5 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * @return string
      */
-    abstract protected function getEditRole(): string;
-
-    protected function checkAdministratorHasEditRole(): void
-    {
-        if (!$this->canEdit()) {
-            throw new AccessDeniedException();
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function canEdit(): bool
-    {
-        return $this->security->isGranted($this->getEditRole());
-    }
+    abstract protected function getRoleConstant(): string;
 }

@@ -10,7 +10,14 @@ use Shopsys\FrameworkBundle\Component\Grid\ActionColumn;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -26,13 +33,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_CUSTOMER)]
 class CustomerController extends AdminBaseController
 {
     /**
@@ -73,8 +79,8 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -128,8 +134,8 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/edit-customer-user/{id}', name: 'admin_customer_user_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editCustomerUserAction(Request $request, int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -182,7 +188,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/list/')]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -201,7 +207,7 @@ class CustomerController extends AdminBaseController
         );
         $dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
 
-        $grid = $this->gridFactory->create('customerList', $dataSource, Roles::ROLE_CUSTOMER_FULL);
+        $grid = $this->gridFactory->create('customerList', $dataSource, AdminRoleConstant::ROLE_CUSTOMER);
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 
@@ -220,7 +226,7 @@ class CustomerController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_customer_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_customer_delete', ['id' => 'id'])
-            ?->setConfirmMessage(t('Do you really want to remove this customer?'));
+            ->setConfirmMessage(t('Do you really want to remove this customer?'));
         $grid->addActionColumn(ActionColumn::TYPE_RESET_PASSWORD, t('Send reset password'), 'admin_customer_send_reset_password', ['id' => 'cu.id'])
             ->setConfirmMessage(t('This will send an email to customer user for resetting password. Do you really want to send it ?'));
 
@@ -239,7 +245,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/new/')]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
@@ -282,7 +288,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/new-customer-user/{customerId}/', name: 'admin_customer_new_customer_user', requirements: ['customerId' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
+    #[CanCreate]
     public function newCustomerUserAction(Request $request, int $customerId): Response
     {
         $customer = $this->customerFacade->getById($customerId);
@@ -334,7 +340,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -372,7 +378,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete-all/{id}', name: 'admin_customer_delete_all', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_FULL])]
+    #[CanDelete]
     public function deleteAllAction(int $id): Response
     {
         $customer = $this->customerFacade->getById($id);
@@ -401,7 +407,7 @@ class CustomerController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/send-reset-password/{id}', name: 'admin_customer_send_reset_password', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CUSTOMER_VIEW])]
+    #[CanEdit]
     public function sendResetPasswordAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);

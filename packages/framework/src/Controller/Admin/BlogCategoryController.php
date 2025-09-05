@@ -6,20 +6,26 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogCategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_BLOG_CATEGORY)]
 class BlogCategoryController extends AdminBaseController
 {
     /**
@@ -44,8 +50,8 @@ class BlogCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/category/edit/{id}', name: 'admin_blogcategory_edit', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $blogCategory = $this->blogCategoryFacade->getById($id);
@@ -87,7 +93,7 @@ class BlogCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/category/new/', name: 'admin_blogcategory_new')]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $blogCategoryData = $this->blogCategoryDataFactory->create();
@@ -126,7 +132,7 @@ class BlogCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/category/list/', name: 'admin_blogcategory_list')]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'blog-category';
@@ -156,7 +162,7 @@ class BlogCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/category/apply-sorting/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_FULL])]
+    #[CanEdit]
     public function applySortingAction(Request $request): Response
     {
         $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
@@ -173,7 +179,7 @@ class BlogCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/category/delete/{id}', name: 'admin_blogcategory_delete', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -200,7 +206,7 @@ class BlogCategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/blog/category/branch/{domainId}/{id}', name: 'admin_blogcategory_loadbranchjson', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
-    #[AccessControlRule([Roles::ROLE_BLOG_CATEGORY_VIEW])]
+    #[CanView]
     public function loadBranchJsonAction(int $domainId, int $id): JsonResponse
     {
         $blogParentCategory = $this->blogCategoryFacade->getById($id);

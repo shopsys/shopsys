@@ -43,6 +43,8 @@ twig:
         - '@ShopsysFramework/Admin/Form/productParameterValue.html.twig'
         - '@ShopsysFramework/Admin/Form/promoCodeFlagFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/promoCodeLimitFormTheme.html.twig'
+        - '@ShopsysFramework/Admin/Form/roleRowType.html.twig'
+        - '@ShopsysFramework/Admin/Form/roleSectionType.html.twig'
         - '@ShopsysFramework/Admin/Form/rolesType.html.twig'
         - '@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/transportPricesFormTheme.html.twig'

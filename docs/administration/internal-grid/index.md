@@ -16,6 +16,7 @@ It helps to present data to the user, can paginate the results, allows ordering 
 - Inline editing
 - Extendable template
 - Support for multiple data sources
+- Automatic permission-based feature control
 
 ## Philosophy
 
@@ -24,6 +25,76 @@ This factory can use `GridFactory` class from `shopsys/framework` package to cre
 
 Grid uses an object implementing `DataSourceInterface` to obtain data to be rendered.
 Read more about various data sources in the [Grid data sources](grid-data-sources.md) article.
+
+## Permission Integration
+
+Grids automatically integrate with the RBAC system to control access to various features based on user permissions. This ensures that users only see and can interact with functionality appropriate to their assigned roles.
+
+### Role-Based Grid Creation
+
+When creating a grid, you pass a role constant that determines the permission context:
+
+```php
+#[Route(path: '/administrator/list/')]
+#[CanView('ROLE_ADMINISTRATOR')]
+public function listAction(): Response
+{
+    $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
+    
+    // Pass role constant for permission checks
+    $grid = $this->gridFactory->create('administratorList', $dataSource, 'ROLE_ADMINISTRATOR');
+    
+    return $this->render('list.html.twig', [
+        'gridView' => $grid->createView(),
+    ]);
+}
+```
+
+### Automatic Permission Controls
+
+The grid system automatically controls access to features based on user permissions:
+
+#### Action Columns
+Action columns are automatically filtered based on route permissions. Users only see actions they can actually perform:
+
+```php
+// These actions are only visible if user has access to the routes
+$grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
+$grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id']);
+```
+
+#### Feature-Level Permissions
+
+Grid features automatically respect permission levels:
+
+- **Inline Editing**: Only enabled if user has EDIT permission for the role
+- **Row Selection**: Only enabled if user has EDIT permission for the role  
+- **Drag & Drop Ordering**: Only enabled if user has EDIT permission for the role
+- **Add New Row**: Only shown if user has CREATE permission for the role
+
+### Permission-Aware Inline Editing
+
+When using inline editing, permissions are checked for each operation:
+
+```php
+class AdministratorInlineEdit extends AbstractGridInlineEdit
+{
+    protected function getRoleConstant(): string
+    {
+        return 'ROLE_ADMINISTRATOR';
+    }
+    
+    // Automatically checks CREATE permission before allowing new rows
+    // Automatically checks EDIT permission before allowing edits
+}
+```
+
+### Best Practices
+
+1. **Always specify role constants** when creating grids to enable permission checks
+2. **Use route-based actions** so the system can automatically filter based on route permissions  
+3. **Let the system handle permissions** rather than manually checking in templates
+4. **Test with different user roles** to ensure proper permission enforcement
 
 ## Configurations
 

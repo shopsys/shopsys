@@ -137,7 +137,6 @@ return ECSConfig::configure()
             ForbiddenDumpSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/DateTimeHelper/Exception/CannotParseDateTimeException.php',
                 __DIR__ . '/packages/framework/src/Twig/VarDumperExtension.php',
-                __DIR__ . '/packages/framework/src/Model/Security/AccessControl/RouteAccessControlDataProvider.php',
             ],
             ForceLateStaticBindingForProtectedConstantsSniff::class => [
                 __DIR__ . '/project-base',
@@ -155,7 +154,6 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/Scope/ProductExportScopeConfig.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
                 __DIR__ . '/packages/framework/src/Model/Product/ProductVisibilityRepository.php',
-                __DIR__ . '/packages/framework/src/Model/Security/MenuItemsGrantedRolesSetting.php',
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
                 __DIR__ . '/packages/framework/src/Model/Sitemap/SitemapListener.php',
                 __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainDataCreatorTest.php',

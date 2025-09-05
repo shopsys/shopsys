@@ -1,0 +1,12 @@
+# Administration Bundle Configuration
+shopsys_administration:
+    access_control:
+        # Additional route names to exclude from access control checks
+        additional_excluded_route_names:
+    # Add your custom routes here
+    #       - 'your_custom_public_route'
+    #       - 'admin_health_check'
+
+    roles:
+        # Enable simple permissions (VIEW, FULL) instead of all permissions
+        simple_permissions: false

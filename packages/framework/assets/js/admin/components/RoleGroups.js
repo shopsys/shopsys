@@ -1,75 +1,140 @@
 import Register from '../../common/utils/Register';
 
 export default class RoleGroups {
-    constructor($container) {
-        const _this = this;
-        this.$container = $container;
-        this.COLUMN_FULL_SELECTOR = 'js-roles-column-full';
-        this.COLUMN_VIEW_SELECTOR = 'js-roles-column-view';
-        this.$allFullCheckbox = $container
-            .find('.js-roles-first-row')
-            .find('.js-roles-column-full input[type=checkbox]');
-        this.$allViewCheckbox = $container
-            .find('.js-roles-first-row')
-            .find('.js-roles-column-view input[type=checkbox]');
+    constructor(gridElement) {
+        this.grid = gridElement;
 
-        this.$allFullCheckbox.on('change', function () {
-            _this.changeAllCheckbox(this, _this.COLUMN_FULL_SELECTOR);
-        });
-        this.$allViewCheckbox.on('change', function () {
-            _this.changeAllCheckbox(this, _this.COLUMN_VIEW_SELECTOR);
-        });
+        if (!this.grid) return;
 
-        // Remove checked for view checkbox if full checkbox is checked and vise versa
-        $container
-            .find('.js-roles-row:not(.js-roles-first-row)')
-            .filterAllNodes('input[type=checkbox]')
-            .on('change', function () {
-                const $row = $(this).closest('.js-roles-row');
-                const fullCheckboxClicked = $(this).closest('.js-roles-column').hasClass(_this.COLUMN_FULL_SELECTOR);
-                const $fullColumn = $row.find('.js-roles-column-full');
-                const $viewColumn = $row.find('.js-roles-column-view');
+        this.dependencies = this.getDependencies();
+        this.selectors = {
+            permissionCheckbox: '.js-roles-permission-checkbox',
+            roleRow: '.js-roles-row',
+            action: '.js-roles-action',
+        };
 
-                if (this.checked) {
-                    if (fullCheckboxClicked === true) {
-                        $viewColumn.find('input[type=checkbox]').prop('checked', false).trigger('change');
-                        _this.$allViewCheckbox.prop('checked', false);
-                    }
+        this.init();
+        this.initStickyHeader();
+    }
 
-                    if (fullCheckboxClicked === false) {
-                        $fullColumn.find('input[type=checkbox]').prop('checked', false).trigger('change');
-                        _this.$allFullCheckbox.prop('checked', false);
-                    }
-                } else {
-                    if (fullCheckboxClicked === true) {
-                        _this.$allFullCheckbox.prop('checked', false);
-                    }
-                    if (fullCheckboxClicked === false) {
-                        _this.$allViewCheckbox.prop('checked', false);
-                    }
-                }
+    init() {
+        // Add change events to all permission checkboxes
+        this.grid.querySelectorAll(this.selectors.permissionCheckbox).forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.handlePermissionChange(checkbox);
+                this.updateToggleState(checkbox.dataset.role);
             });
+        });
+
+        // Add hover events to all role rows
+        this.grid.querySelectorAll(this.selectors.roleRow).forEach(row => {
+            const role = row.dataset.scope;
+            if (!role) {
+                console.warn('Role row missing data-scope attribute:', row);
+                return;
+            }
+            row.addEventListener('mouseenter', () => {
+                this.updateToggleState(role);
+            });
+        });
+
+        // Add click events to all action buttons
+        this.grid.querySelectorAll(this.selectors.action).forEach(button => {
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                const target = button.dataset.target;
+                const wrapper = target ? this.grid.querySelector(`[data-scope="${target}"]`) : this.grid;
+                this.toggleAll(wrapper, button.dataset.type === 'select');
+            });
+        });
+    }
+
+    initStickyHeader() {
+        const header = this.grid.querySelector('.roles-grid__header');
+        const content = this.grid.querySelector('.roles-grid__content');
+        if (!header || !content) return;
+
+        // Sync horizontal scroll between header and content
+        content.addEventListener('scroll', () => {
+            const scrollLeft = content.scrollLeft;
+            header.style.transform = `translateX(${-scrollLeft}px)`;
+        });
+    }
+
+    getDependencies() {
+        const dependenciesData = this.grid.dataset.dependencies;
+        if (dependenciesData) {
+            try {
+                return JSON.parse(dependenciesData);
+            } catch (e) {
+                console.warn('Failed to parse dependencies data:', e);
+            }
+        }
+        return { dependsOn: {}, dependents: {} };
+    }
+
+    getCheckbox(role, permission) {
+        return this.grid.querySelector(
+            `${this.selectors.permissionCheckbox}[data-role="${role}"][data-permission="${permission}"]`,
+        );
+    }
+
+    handlePermissionChange(checkbox) {
+        const role = checkbox.dataset.role;
+        const permission = checkbox.dataset.permission;
+        const isChecked = checkbox.checked;
+
+        const dependencyType = isChecked ? 'dependsOn' : 'dependents';
+        const deps = this.dependencies[dependencyType]?.[permission] || [];
+        deps.forEach(dep => {
+            const dependencyCheckbox = this.getCheckbox(role, dep);
+            if (dependencyCheckbox) {
+                dependencyCheckbox.checked = isChecked;
+            }
+        });
+    }
+
+    toggleAll(wrapper, shouldSelect) {
+        if (!wrapper) return;
+
+        const checkboxes = wrapper.querySelectorAll(`${this.selectors.permissionCheckbox}:not(:disabled)`);
+        const affectedRoles = new Set();
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked !== shouldSelect) {
+                checkbox.checked = shouldSelect;
+                if (checkbox.dataset.role) {
+                    affectedRoles.add(checkbox.dataset.role);
+                }
+            }
+        });
+
+        // Update toggle states for affected roles
+        affectedRoles.forEach(role => {
+            this.updateToggleState(role);
+        });
+    }
+
+    updateToggleState(role) {
+        const roleRow = this.grid.querySelector(`${this.selectors.roleRow}[data-scope="${role}"]`);
+        if (!roleRow) return;
+
+        const roleCheckboxes = Array.from(roleRow.querySelectorAll(this.selectors.permissionCheckbox));
+        if (roleCheckboxes.length === 0) return;
+
+        const checkedCount = roleCheckboxes.filter(cb => cb.checked).length;
+        const showDeselect = checkedCount > roleCheckboxes.length / 2;
+
+        roleRow.querySelectorAll(this.selectors.action).forEach(button => {
+            const isDeselectBtn = button.dataset.type === 'deselect';
+            button.style.display = showDeselect === isDeselectBtn ? 'block' : 'none';
+        });
     }
 
     static init() {
-        const $container = $('#administrator_role_group_form_roles');
-        // eslint-disable-next-line no-new
-        new RoleGroups($container);
-    }
-
-    // Set all checkboxes in column as selected or deselected if `all` checkbox is checked
-    changeAllCheckbox($input, checkboxesSelector) {
-        if ($input.checked) {
-            this.$container
-                .filterAllNodes(`.js-roles-row:not(.js-roles-first-row) .${checkboxesSelector} input[type=checkbox]`)
-                .prop('checked', true)
-                .trigger('change');
-        } else {
-            this.$container
-                .filterAllNodes(`.js-roles-row:not(.js-roles-first-row) .${checkboxesSelector} input[type=checkbox]`)
-                .prop('checked', false)
-                .trigger('change');
-        }
+        document.querySelectorAll('.js-roles-grid').forEach(gridElement => {
+            new RoleGroups(gridElement);
+        });
     }
 }
 

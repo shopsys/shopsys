@@ -6,6 +6,11 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\ComplaintFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -14,12 +19,11 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplain
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_COMPLAINT)]
 class ComplaintController extends AdminBaseController
 {
     /**
@@ -47,7 +51,7 @@ class ComplaintController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/list/')]
-    #[AccessControlRule([Roles::ROLE_COMPLAINT_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'complaints';
@@ -98,8 +102,8 @@ class ComplaintController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_COMPLAINT_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_COMPLAINT_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $complaint = $this->complaintFacade->getById($id);
@@ -143,7 +147,7 @@ class ComplaintController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/get-advanced-search-rule-form/', methods: ['post'])]
-    #[AccessControlRule([Roles::ROLE_COMPLAINT_VIEW])]
+    #[CanView]
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchComplaintFacade->createRuleForm(

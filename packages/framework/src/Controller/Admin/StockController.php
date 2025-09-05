@@ -8,12 +8,17 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\StockFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\StockSettingsFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Stock\Exception\StockNotFoundException;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Stock\StockDataFactory;
@@ -26,6 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_STOCK)]
 class StockController extends AdminBaseController
 {
     /**
@@ -52,7 +58,7 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/stock/list/')]
-    #[AccessControlRule([Roles::ROLE_STOCK_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $grid = $this->getGrid();
@@ -67,8 +73,8 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/stock/setting/')]
-    #[AccessControlRule([Roles::ROLE_STOCK_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_STOCK_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function settingsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Stock/settings.html.twig', [
@@ -95,7 +101,7 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/stock/savesettings/')]
-    #[AccessControlRule([Roles::ROLE_STOCK_FULL])]
+    #[CanEdit]
     public function saveSettingsAction(Request $request): RedirectResponse
     {
         $form = $this->getStockSettingsForm();
@@ -132,7 +138,7 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/stock/new/')]
-    #[AccessControlRule([Roles::ROLE_STOCK_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $stockData = $this->stockDataFactory->create();
@@ -174,8 +180,8 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/stock/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_STOCK_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_STOCK_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $stock = $this->stockFacade->getById($id);
@@ -219,7 +225,7 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/stock/setdefault/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_STOCK_FULL])]
+    #[CanEdit]
     public function setDefaultAction(int $id): Response
     {
         try {
@@ -246,7 +252,7 @@ class StockController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/stock/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_STOCK_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
@@ -282,7 +288,7 @@ class StockController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('stockList', $dataSource, Roles::ROLE_STOCK_FULL);
+        $grid = $this->gridFactory->create('stockList', $dataSource, AdminRoleConstant::ROLE_STOCK);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');
@@ -290,7 +296,7 @@ class StockController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
+            ->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 

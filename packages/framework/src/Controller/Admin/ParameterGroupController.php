@@ -8,19 +8,25 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterGroupFormType;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_PARAMETER_GROUP)]
 class ParameterGroupController extends AdminBaseController
 {
     /**
@@ -41,7 +47,7 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/list/')]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $grid = $this->getGrid();
@@ -56,7 +62,7 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/new/')]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $parameterGroupData = $this->parameterGroupDataFactory->create();
@@ -95,8 +101,8 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $parameterGroup = $this->parameterGroupFacade->getById($id);
@@ -137,7 +143,7 @@ class ParameterGroupController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/product/parameter-group/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PARAMETER_GROUP_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
@@ -166,7 +172,7 @@ class ParameterGroupController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
 
-        $grid = $this->gridFactory->create('parameterGroupsList', $dataSource, Roles::ROLE_PARAMETER_GROUP_FULL);
+        $grid = $this->gridFactory->create('parameterGroupsList', $dataSource, AdminRoleConstant::ROLE_PARAMETER_GROUP);
 
         $grid->addColumn('name', 'pgt.name', t('Name'));
         $grid->setDefaultOrder('pg.position');
@@ -174,7 +180,7 @@ class ParameterGroupController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_parametergroup_edit', ['id' => 'pg.id']);
         $grid->addDeleteActionColumn('admin_parametergroup_delete', ['id' => 'pg.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this parameter groups? By deleting this parameter group you will '
+            ->setConfirmMessage(t('Do you really want to remove this parameter groups? By deleting this parameter group you will '
                 . 'unset all groups by associated parameters. This step is irreversible!'));
 
         $grid->enableDragAndDrop(ParameterGroup::class);

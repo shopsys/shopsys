@@ -8,11 +8,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory;
@@ -21,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_SLIDER_ITEM)]
 class SliderController extends AdminBaseController
 {
     /**
@@ -45,7 +51,7 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/list/')]
-    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
@@ -57,14 +63,14 @@ class SliderController extends AdminBaseController
             ->addOrderBy('s.id');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('sliderItemList', $dataSource, Roles::ROLE_SLIDER_ITEM_FULL);
+        $grid = $this->gridFactory->create('sliderItemList', $dataSource, AdminRoleConstant::ROLE_SLIDER_ITEM);
         $grid->enableDragAndDrop(SliderItem::class);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->addColumn('link', 's.link', t('Link'));
         $grid->addEditActionColumn('admin_slider_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_slider_delete', ['id' => 's.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this page?'));
+            ->setConfirmMessage(t('Do you really want to remove this page?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Slider/listGrid.html.twig');
 
@@ -78,7 +84,7 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/new/')]
-    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
@@ -120,8 +126,8 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
@@ -167,7 +173,7 @@ class SliderController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SLIDER_ITEM_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {

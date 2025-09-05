@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\HreflangSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoRobotsSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,8 +34,8 @@ class SeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/')]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_SEO_VIEW], ['GET'])]
+    #[CanView(AdminRoleConstant::ROLE_SEO, methods: [HttpMethod::GET])]
+    #[CanEdit(AdminRoleConstant::ROLE_SEO, methods: [HttpMethod::POST])]
     public function indexAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -72,8 +74,8 @@ class SeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/robots/')]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_SEO_VIEW], ['GET'])]
+    #[CanView(AdminRoleConstant::ROLE_ROBOTS, methods: [HttpMethod::GET])]
+    #[CanEdit(AdminRoleConstant::ROLE_ROBOTS, methods: [HttpMethod::POST])]
     public function robotsAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -104,8 +106,8 @@ class SeoController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/seo/hreflang/')]
-    #[AccessControlRule([Roles::ROLE_SEO_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_SEO_VIEW], ['GET'])]
+    #[CanView(AdminRoleConstant::ROLE_HREFLANG, methods: [HttpMethod::GET])]
+    #[CanEdit(AdminRoleConstant::ROLE_HREFLANG, methods: [HttpMethod::POST])]
     public function hreflangAction(Request $request): Response
     {
         $hreflangData = [

@@ -9,10 +9,10 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl\FriendlyUrlFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -25,7 +25,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
@@ -33,13 +33,13 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         FriendlyUrlGridFactory $gridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly FriendlyUrlDataFactory $friendlyUrlDataFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        parent::__construct($gridFactory, $security);
+        parent::__construct($gridFactory, $accessChecker);
 
         $this->gridQuickSearchFormData = new QuickSearchFormData();
     }
@@ -64,7 +64,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     public function getGrid(): Grid
     {
         $this->gridFactory->setQuickSearchFormData($this->getGridQuickSearchFormData());
-        $grid = $this->gridFactory->create($this->getEditRole());
+        $grid = $this->gridFactory->create($this->getRoleConstant());
 
         $grid->setInlineEditService($this);
 
@@ -123,8 +123,8 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_FRIENDLY_URL_FULL;
+        return AdminRoleConstant::ROLE_FRIENDLY_URL;
     }
 }

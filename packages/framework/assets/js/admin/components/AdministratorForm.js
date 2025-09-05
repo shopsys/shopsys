@@ -5,6 +5,10 @@ export default class AdministratorForm {
         const $roleGroupInput = $container.find('.js-role-group-select');
         const $rolesCustomInputLine = $container.find('.js-role-group-custom').closest('.form-line');
 
+        if ($roleGroupInput.length === 0) {
+            return;
+        }
+
         if ($roleGroupInput.val() !== '') {
             $rolesCustomInputLine.addClass('display-none');
         }

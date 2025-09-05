@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Store\ClosedDayFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\Exception\ClosedDayNotFoundException;
@@ -17,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_CLOSED_DAYS)]
 class ClosedDayController extends AdminBaseController
 {
     /**
@@ -39,7 +45,7 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/list/')]
-    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/ClosedDay/list.html.twig', [
@@ -52,7 +58,7 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/new/')]
-    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $closedDayData = $this->closedDayDataFactory->create();
@@ -90,8 +96,8 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $closedDay = $this->closedDayFacade->getById($id);
@@ -138,7 +144,7 @@ class ClosedDayController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/closed-day/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CLOSED_DAYS_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {

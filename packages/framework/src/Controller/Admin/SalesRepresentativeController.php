@@ -5,7 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative\SalesRepresentativeFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -13,12 +20,11 @@ use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentat
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_SALES_REPRESENTATIVE)]
 class SalesRepresentativeController extends AdminBaseController
 {
     protected const int DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT = 10;
@@ -45,10 +51,10 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/list/')]
-    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->salesRepresentativeGridFactory->create(Roles::ROLE_SALES_REPRESENTATIVE_FULL);
+        $grid = $this->salesRepresentativeGridFactory->create(AdminRoleConstant::ROLE_SALES_REPRESENTATIVE);
 
         return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -60,7 +66,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/new/')]
-    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $salesRepresentativeData = $this->salesRepresentativeDataFactory->create();
@@ -96,8 +102,8 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $salesRepresentative = $this->salesRepresentativeFacade->getById($id);
@@ -146,7 +152,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -173,7 +179,7 @@ class SalesRepresentativeController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sales-representative/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_SALES_REPRESENTATIVE_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         try {

@@ -15,7 +15,7 @@ use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterf
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -300,7 +300,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function isSuperadmin()
     {
         foreach ($this->roles as $role) {
-            if ($role->getRole() === Roles::ROLE_SUPER_ADMIN) {
+            if ($role->getRole() === SystemRole::SUPER_ADMIN) {
                 return true;
             }
         }
@@ -427,19 +427,17 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function getRoles(): array
     {
         if ($this->roleGroup !== null) {
-            $roles = $this->roleGroup->getRoles();
-
-            return array_merge($roles, [Roles::ROLE_ADMIN]);
+            return $this->roleGroup->getRoles();
         }
 
-        $roles = [];
+        $roles = [SystemRole::ADMIN];
 
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
         foreach ($this->roles->getValues() as $role) {
             $roles[] = $role->getRole();
         }
 
-        return $roles;
+        return array_unique($roles);
     }
 
     /**

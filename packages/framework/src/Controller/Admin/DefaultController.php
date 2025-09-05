@@ -11,11 +11,12 @@ use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
@@ -55,7 +56,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/dashboard/')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function dashboardAction(): Response
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
@@ -147,7 +148,7 @@ class DefaultController extends AdminBaseController
     protected function getCronGridViews(): ?array
     {
         if ($this->getParameter('shopsys.display_cron_overview_for_superadmin_only') === true
-            && $this->isGranted(Roles::ROLE_SUPER_ADMIN) === false
+            && $this->isGranted(SystemRole::SUPER_ADMIN) === false
         ) {
             return null;
         }
@@ -208,7 +209,7 @@ class DefaultController extends AdminBaseController
 
         $dataSource = new ArrayDataSource($data);
 
-        $cronListGrid = $this->gridFactory->create('cronList', $dataSource);
+        $cronListGrid = $this->gridFactory->create('cronList', $dataSource, SystemRole::ADMIN);
 
         $cronListGrid->addColumn('name', 'name', t('Name'), false);
         $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'), false);
@@ -229,7 +230,7 @@ class DefaultController extends AdminBaseController
         );
         $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col');
 
-        if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
+        if ($this->isGranted(SystemRole::SUPER_ADMIN)) {
             $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute(
                 'table-grid__cell--actions column--superadmin',
             );
@@ -245,7 +246,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/schedule/{serviceId}')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
+    #[SuperAdminOnly]
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
@@ -261,7 +262,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/disable/{serviceId}')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
+    #[SuperAdminOnly]
     public function cronDisableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
@@ -277,7 +278,7 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/enable/{serviceId}')]
-    #[AccessControlRule([Roles::ROLE_SUPER_ADMIN])]
+    #[SuperAdminOnly]
     public function cronEnableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
@@ -293,11 +294,11 @@ class DefaultController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/cron/detail/{serviceId}')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function cronDetailAction(string $serviceId): Response
     {
         if ($this->getParameter('shopsys.display_cron_overview_for_superadmin_only') === true) {
-            $this->denyAccessUnlessGranted(Roles::ROLE_SUPER_ADMIN);
+            $this->denyAccessUnlessGranted(SystemRole::SUPER_ADMIN);
         }
 
         $cronModule = $this->cronModuleFacade->getCronModuleByServiceId($serviceId);
@@ -320,7 +321,7 @@ class DefaultController extends AdminBaseController
         $queryBuilder = $this->cronModuleFacade->getRunsByCronModuleQueryBuilder($cronModule);
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmr.id');
 
-        $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource);
+        $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource, SystemRole::ADMIN);
 
         $cronRunsListGrid->addColumn('startedAt', 'cmr.startedAt', t('Started at'), false);
         $cronRunsListGrid->addColumn('finishedAt', 'cmr.finishedAt', t('Finished at'), false);

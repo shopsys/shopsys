@@ -10,25 +10,43 @@ services:
             - '../src/Controller/'
         resource: '../src/'
 
+    Shopsys\AdministrationBundle\Command\:
+        resource: '../src/Command/'
+        tags: [ 'console.command' ]
+
     Shopsys\AdministrationBundle\Component\Menu\CrudMenuSubscriber:
         tags:
             - { name: kernel.event_subscriber }
 
     Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry:
         arguments:
-            - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
-            - '%shopsys.admin.crud_controllers%'
+            $entityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
+            $crudControllers: '%shopsys.admin.crud_controllers%'
 
     Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry:
         arguments:
             $crudControllerExtensions: '%shopsys.admin.crud_controllers_extensions%'
 
     Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader:
-        arguments:
-            - '@Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry'
         tags:
             - { name: routing.loader }
+
+    Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface:
+        alias: Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider
+
+    Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider:
+        arguments:
+            $cache: '@cache.app'
+            $environment: '%kernel.environment%'
+            $adminUrl: '%admin_url%'
+
+    Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
 
     Shopsys\AdministrationBundle\Controller\:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
+
+    Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface:
+        alias: Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessChecker

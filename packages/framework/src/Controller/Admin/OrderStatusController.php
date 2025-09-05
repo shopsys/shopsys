@@ -6,16 +6,19 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_ORDER_STATUS)]
 class OrderStatusController extends AdminBaseController
 {
     /**
@@ -34,7 +37,7 @@ class OrderStatusController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order-status/list/')]
-    #[AccessControlRule([Roles::ROLE_ORDER_STATUS_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $grid = $this->orderStatusInlineEdit->getGrid();
@@ -51,7 +54,7 @@ class OrderStatusController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order-status/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ORDER_STATUS_FULL])]
+    #[CanDelete]
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
@@ -97,7 +100,7 @@ class OrderStatusController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/order-status/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ORDER_STATUS_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         try {

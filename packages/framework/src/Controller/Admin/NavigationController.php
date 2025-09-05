@@ -8,18 +8,24 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Navigation\NavigationItemFormType;
 use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_NAVIGATION)]
 class NavigationController extends AdminBaseController
 {
     /**
@@ -40,7 +46,7 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/list/')]
-    #[AccessControlRule([Roles::ROLE_NAVIGATION_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $grid = $this->getGrid(
@@ -57,7 +63,7 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/new/')]
-    #[AccessControlRule([Roles::ROLE_NAVIGATION_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $navigationItemData = $this->navigationItemDataFactory->createNew();
@@ -99,8 +105,8 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_NAVIGATION_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_NAVIGATION_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $navigationItem = $this->navigationItemFacade->getById($id);
@@ -144,7 +150,7 @@ class NavigationController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/navigation/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_NAVIGATION_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -176,13 +182,13 @@ class NavigationController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ni.id');
 
-        $grid = $this->gridFactory->create('navigationItemsList', $dataSource, Roles::ROLE_NAVIGATION_FULL);
+        $grid = $this->gridFactory->create('navigationItemsList', $dataSource, AdminRoleConstant::ROLE_NAVIGATION);
 
         $grid->addColumn('name', 'ni.name', t('Name'));
 
         $grid->addEditActionColumn('admin_navigation_edit', ['id' => 'ni.id']);
         $grid->addDeleteActionColumn('admin_navigation_delete', ['id' => 'ni.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this navigation item?'));
+            ->setConfirmMessage(t('Do you really want to remove this navigation item?'));
 
         $grid->enableDragAndDrop(NavigationItem::class);
 

@@ -7,9 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatFormType;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -17,7 +17,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatGridFactory $vatGridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
@@ -25,13 +25,13 @@ class VatInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         VatGridFactory $vatGridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly VatFacade $vatFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly VatDataFactory $vatDataFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        parent::__construct($vatGridFactory, $security);
+        parent::__construct($vatGridFactory, $accessChecker);
     }
 
     /**
@@ -79,8 +79,8 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_VAT_FULL;
+        return AdminRoleConstant::ROLE_VAT;
     }
 }

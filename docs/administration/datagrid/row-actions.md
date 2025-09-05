@@ -2,18 +2,24 @@
 
 Row actions are buttons that are displayed in the last column of the grid. They are used for performing actions on a single row.
 
+!!! info "Automatic Permission Filtering"
+
+    Row actions that link to routes are automatically filtered based on user permissions. The underlying Grid component checks if the user has access to the target route before displaying the action. This ensures users only see actions they can actually perform, based on the `roleConstant` provided to the datagrid.
+
 ## Configuration
 
 Row actions are defined by the `Datagrid` class using the `actions()` method. The method returns an instance of the `DatagridRowActions` class that is used to configure row actions.
 
 ```php
 // ...
-use Shopsys\AdministrationBundle\Component\Action\RowAction
+use Shopsys\AdministrationBundle\Component\Action\RowAction;
 
 //...
 
 /** @var \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid $datagrid */
-$datagrid = $datagridFactory->create($adapter);
+$datagrid = $datagridFactory->create($adapter, [
+    'roleConstant' => 'ROLE_ARTICLE', // Required for permission checks
+]);
 
 /** @var \Shopsys\AdministrationBundle\Component\Datagrid\DatagridRowActions $rowActions */
 $rowActions = $datagrid->actions();

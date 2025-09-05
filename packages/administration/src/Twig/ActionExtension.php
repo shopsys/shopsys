@@ -12,6 +12,8 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData
 use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -22,11 +24,13 @@ class ActionExtension extends AbstractExtension
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
      * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
      */
     public function __construct(
         private readonly CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
         private readonly RouterInterface $router,
+        private readonly RouteAccessCheckerInterface $routeAccessChecker,
     ) {
     }
 
@@ -47,9 +51,9 @@ class ActionExtension extends AbstractExtension
     /**
      * @param \Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface|null $actionRoute
      * @param mixed $data
-     * @return string
+     * @return string|null Return null if user does not have access to the action
      */
-    private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): string
+    private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): ?string
     {
         if ($actionRoute === null) {
             return 'javascript:void(0)';
@@ -67,13 +71,27 @@ class ActionExtension extends AbstractExtension
 
             $parameters = $actionRoute->getId($data) !== null ? ['id' => $actionRoute->getId($data)] : [];
 
-            return $this->router->generate($routeItem->getRouteName(), $parameters);
+            return $this->generateByRoute($routeItem->getRouteName(), $parameters);
         }
 
         if ($actionRoute instanceof RouteActionRouteData) {
-            return $this->router->generate($actionRoute->getRouteName(), $actionRoute->getRouteParameters($data));
+            return $this->generateByRoute($actionRoute->getRouteName(), $actionRoute->getRouteParameters($data));
         }
 
         throw new InvalidArgumentException('Action has invalid route type');
+    }
+
+    /**
+     * @param string $routeName
+     * @param array $parameters
+     * @return string|null
+     */
+    private function generateByRoute(string $routeName, array $parameters): ?string
+    {
+        if (!$this->routeAccessChecker->hasAccess($routeName, HttpMethod::GET)) {
+            return null;
+        }
+
+        return $this->router->generate($routeName, $parameters);
     }
 }

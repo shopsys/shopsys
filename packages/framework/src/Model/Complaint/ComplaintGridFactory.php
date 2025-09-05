@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 
@@ -38,7 +39,7 @@ class ComplaintGridFactory
     ): GridView {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmp.id');
 
-        $grid = $this->gridFactory->create('complaintList', $dataSource);
+        $grid = $this->gridFactory->create('complaintList', $dataSource, AdminRoleConstant::ROLE_COMPLAINT);
 
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);

@@ -6,17 +6,22 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatSettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_VAT)]
 class VatController extends AdminBaseController
 {
     /**
@@ -37,8 +42,8 @@ class VatController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/list/')]
-    #[AccessControlRule([Roles::ROLE_VAT_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_VAT_VIEW], ['GET'])]
+    #[CanView(methods: [HttpMethod::GET])]
+    #[CanEdit(methods: [HttpMethod::POST])]
     public function listAction(): Response
     {
         $grid = $this->vatInlineEdit->getGrid();
@@ -54,7 +59,7 @@ class VatController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_VAT_FULL])]
+    #[CanDelete]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -93,7 +98,7 @@ class VatController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_VAT_FULL])]
+    #[CanDelete]
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
@@ -131,6 +136,8 @@ class VatController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function settingsAction(Request $request): Response
     {
         $vatSettingsFormData = [

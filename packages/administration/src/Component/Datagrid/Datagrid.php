@@ -14,7 +14,6 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -80,6 +79,9 @@ final class Datagrid
         $resolver->setAllowedTypes('name', 'string');
         $resolver->setAllowedTypes('crudConfig', [CrudConfigData::class, 'null']);
         $resolver->setAllowedTypes('pagination', 'bool');
+        $resolver->setAllowedTypes('roleConstant', 'string');
+
+        $resolver->setRequired('roleConstant');
 
         return $resolver->resolve($options);
     }
@@ -230,7 +232,7 @@ final class Datagrid
     public function createView(): GridView
     {
         $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
-        $grid = $this->gridFactory->create($this->options['name'], $datasource, Roles::ROLE_ADMIN);
+        $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
         if ($this->fields->isEmpty() || $this->fields->forAll(fn ($key, FieldDescriptor $field) => $field->isVisible() === false)) {
             return $grid->createView();

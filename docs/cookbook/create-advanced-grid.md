@@ -235,7 +235,7 @@ final class SalesmanFormType extends AbstractType
 ### 1.6 Create new `SalesmanGridInlineEdit` class
 
 We have everything prepared and can put it all together in the new class (`SalesmanGridInlineEdit`) responsible for inline editing.
-The class needs to extend `AbstractGridInlineEdit` and implement three methods -`getForm`, `editEntity`, and `createEntityAndGetId`.
+The class needs to extend `AbstractGridInlineEdit` and implement four methods - `getForm`, `editEntity`, `createEntityAndGetId`, and `getRoleConstant`.
 We must also inject the original `SalesmanGridFactory` into the new class constructor.
 
 ```php
@@ -319,6 +319,14 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
 
         return $salesman->getId();
     }
+
+    /**
+     * @return string
+     */
+    protected function getRoleConstant(): string
+    {
+        return 'ROLE_SALESMAN';
+    }
 }
 ```
 
@@ -327,6 +335,17 @@ The new class must be registered in `services.yaml`:
 ```yaml
 App\Grid\Salesman\SalesmanGridInlineEdit: ~
 ```
+
+!!! info "Role Constant for Inline Edit Permissions"
+
+    The `getRoleConstant()` method is crucial for inline editing permissions. It returns the role constant that the system uses to:
+
+    - Check if users can create new rows (CREATE permission)
+    - Check if users can edit existing rows (EDIT permission)
+    - Enable or disable the "Add new row" button based on permissions
+    - Enforce permission checks when saving inline edits
+
+    This ensures that inline editing respects the same permission rules as the rest of your application.
 
 ### 1.7 Use `SalesmanGridInlineEdit` in `SalesmanController`
 
@@ -341,6 +360,7 @@ namespace App\Controller\Admin;
 +use App\Grid\Salesman\SalesmanGridInlineEdit;
 use App\Model\Salesman\SalesmanFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -369,6 +389,7 @@ class SalesmanController extends AdminBaseController
     /**
      * @Route("/salesman/list/")
      */
+    #[CanView('ROLE_SALESMAN')]
     public function listAction()
     {
 -        $grid = $this->salesmanGridFactory->create();
@@ -477,7 +498,7 @@ php phing db-migrations
 
 class SalesmanGridFactory implements GridFactoryInterface
 {
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
         ...
 +       $grid->enableDragAndDrop(Salesman::class);

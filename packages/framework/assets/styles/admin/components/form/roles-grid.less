@@ -1,0 +1,257 @@
+@roles-grid-cell-padding: 0.75rem;
+@roles-grid-border-color: @color-grey-light;
+@roles-grid-header-bg: @color-f;
+@roles-grid-row-stripe-bg: @color-grey-light;
+@roles-grid-row-hover-bg: @color-e;
+@roles-grid-role-name-width: 250px;
+@roles-grid-checkbox-scale: 1.2;
+
+.roles-grid {
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    border: 2px solid @roles-grid-border-color;
+    border-radius: 4px;
+
+    @media @query-not-large-desktop {
+        margin-top: 50px;
+    }
+
+    &__header,
+    &__row {
+        display: grid;
+        grid-template-columns: @roles-grid-role-name-width repeat(var(--permissions-count, 2), minmax(100px, 1fr));
+        min-width: max-content;
+        width: 100%;
+
+        &--single {
+            grid-template-columns: @roles-grid-role-name-width minmax(calc(var(--permissions-count, 1) * 100px), 1fr);
+        }
+
+        .roles-grid--single & {
+            grid-template-columns: 100px 1fr;
+        }
+    }
+    
+    &__section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        grid-column: 1 / -1;
+        padding: 0.5rem 0.75rem;
+        border-top: 1px solid #d4d4d4;
+        border-bottom: 1px solid #d4d4d4;
+        background-color: #f3f3f3;
+    }
+
+    &__header-wrapper {
+        position: sticky;
+        top: @height-header;
+        z-index: 10;
+        overflow-x: clip;
+        width: 100%;
+
+        .web--with-info & {
+            top: @height-header + @height-fixed-bar-mobile;
+
+            @media @query-md {
+                top: @height-header + @height-fixed-bar;
+            }
+        }
+    }
+
+    &__header {
+        background-color: @roles-grid-header-bg;
+        font-weight: bold;
+        
+        .roles-grid__cell {
+            padding: @roles-grid-cell-padding;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+            color: @color-3;
+            
+            &--role-name {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: @roles-grid-role-name-width;
+            }
+        }
+    }
+
+    &__row {
+        position: relative;
+        
+        &:nth-child(even),
+        &:nth-child(even) .roles-grid__cell--role-name {
+            background-color: @roles-grid-row-stripe-bg;
+        }
+
+        &:nth-child(odd),
+        &:nth-child(odd) .roles-grid__cell--role-name {
+            background-color: @color-f;
+        }
+
+        &:hover,
+        &:hover .roles-grid__cell--role-name {
+            background-color: @roles-grid-row-hover-bg;
+        }
+    }
+
+    &__content {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    &__section {
+        width: fit-content;
+        min-width: 100%;
+    }
+
+    &__cell {
+        padding: @roles-grid-cell-padding;
+        border: 1px solid @roles-grid-border-color;
+        display: flex;
+        align-items: center;
+
+        &--role-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+            padding-right: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .roles-grid--single & {
+                border-right: none;
+                grid-column: 2;
+                grid-row: 1;
+            }
+        }
+
+        &--permission {
+            justify-content: center;
+            text-align: center;
+            padding: @roles-grid-cell-padding 0.5rem;
+
+            .roles-grid--single & {
+                grid-column: 1;
+                grid-row: 1;
+            }
+        }
+
+        &--empty {
+            color: @color-grey;
+            font-style: italic;
+        }
+    }
+
+    &__permission-label {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        letter-spacing: 0.5px;
+        color: @color-3;
+        margin: 0;
+    }
+
+
+    &__checkbox {
+        text-align: center;
+        padding: 0.5rem;
+
+        & .css-checkbox__image {
+            padding-left: 18px !important;
+        }
+    }
+
+    &__display-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    &__section-title {
+        font-weight: 500;
+        font-size: 0.9em;
+        color: @color-3;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        display: flex;
+        align-items: center;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.85em;
+
+        &--header {
+            text-transform: none;
+            font-weight: normal;
+            font-size: 0.94em; // Compensate for parent's 0.9em to match section actions
+            line-height: 1.5; // Ensure consistent line-height
+            letter-spacing: normal; // Reset letter-spacing from header
+
+            & .tooltip {
+                overflow: visible;
+            }
+        }
+    }
+
+    &__action {
+        color: @color-link;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: color 0.2s;
+
+        &:hover {
+            color: @color-link-hover;
+            text-decoration: none;
+        }
+
+        span {
+            font-weight: normal;
+            letter-spacing: normal;
+        }
+    }
+
+    &__section-icon {
+        display: inline-block;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+        font-size: 0.85em;
+        opacity: 0.7;
+    }
+
+    &__row-actions {
+        display: flex;
+        gap: 0.25rem;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    &__row:hover &__row-actions {
+        opacity: 1;
+    }
+
+    &__row-action {
+        display: inline-flex;
+        align-items: center;
+        color: @color-link;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+    }
+}

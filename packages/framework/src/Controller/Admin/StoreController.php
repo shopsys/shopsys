@@ -8,10 +8,15 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Store\StoreFormType;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
@@ -20,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_STORE)]
 class StoreController extends AdminBaseController
 {
     /**
@@ -40,7 +46,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/list/')]
-    #[AccessControlRule([Roles::ROLE_STORE_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Store/list.html.twig', [
@@ -58,7 +64,7 @@ class StoreController extends AdminBaseController
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
-        $grid = $this->gridFactory->create('storeList', $dataSource, Roles::ROLE_STORE_FULL);
+        $grid = $this->gridFactory->create('storeList', $dataSource, AdminRoleConstant::ROLE_STORE);
 
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');
@@ -66,7 +72,7 @@ class StoreController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_store_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_store_delete', ['id' => 's.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this store? This step is irreversible!'));
+            ->setConfirmMessage(t('Do you really want to remove this store? This step is irreversible!'));
         $grid->enableDragAndDrop(Store::class);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Store/listGrid.html.twig');
@@ -79,7 +85,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/new/')]
-    #[AccessControlRule([Roles::ROLE_STORE_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -119,8 +125,8 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_STORE_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_STORE_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $store = $this->storeFacade->getById($id);
@@ -161,7 +167,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/delete/{id}', name: 'admin_store_delete', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_STORE_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -194,7 +200,7 @@ class StoreController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/store/setdefault/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_STORE_FULL])]
+    #[CanEdit]
     public function setDefaultAction(int $id): Response
     {
         try {

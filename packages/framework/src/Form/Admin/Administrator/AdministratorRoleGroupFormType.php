@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Administrator;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Form\RolesType;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
@@ -35,6 +36,7 @@ final class AdministratorRoleGroupFormType extends AbstractType
         ]);
         $builder->add('roles', RolesType::class, [
             'label' => 'Roles',
+            'context' => AdminContext::class,
         ]);
 
         $builder->add('actionBar', ActionBarType::class, [

@@ -7,6 +7,13 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorResetPasswordFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
@@ -20,8 +27,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -36,6 +41,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+#[ForRole(AdminRoleConstant::ROLE_ADMINISTRATOR)]
 class AdministratorController extends AdminBaseController
 {
     protected const int MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
@@ -68,13 +74,13 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/list/')]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
-        $grid = $this->gridFactory->create('administratorList', $dataSource, Roles::ROLE_ADMINISTRATOR_FULL);
+        $grid = $this->gridFactory->create('administratorList', $dataSource, AdminRoleConstant::ROLE_ADMINISTRATOR);
         $grid->setDefaultOrder('realName');
 
         $grid->addColumn('realName', 'a.realName', t('Full name'), true);
@@ -83,7 +89,7 @@ class AdministratorController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this administrator?'));
+            ->setConfirmMessage(t('Do you really want to remove this administrator?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Administrator/listGrid.html.twig');
 
@@ -98,7 +104,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function editAction(Request $request, int $id): Response
     {
         $this->denyAccessUnlessHimselfOrGranted($request, $id);
@@ -143,7 +149,7 @@ class AdministratorController extends AdminBaseController
                 ],
             );
 
-            $redirectRouteName = $this->isGranted(Roles::ROLE_ADMINISTRATOR_VIEW) ? 'admin_administrator_list' : 'admin_default_dashboard';
+            $redirectRouteName = $this->accessChecker->canView(AdminRoleConstant::ROLE_ADMINISTRATOR) ? 'admin_administrator_list' : 'admin_default_dashboard';
 
             return $this->redirectToRoute($redirectRouteName);
         }
@@ -182,9 +188,9 @@ class AdministratorController extends AdminBaseController
         }
 
         if ($request->getMethod() === Request::METHOD_GET) {
-            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_VIEW);
+            $this->accessChecker->denyUnlessCanView(AdminRoleConstant::ROLE_ADMINISTRATOR);
         } else {
-            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_FULL);
+            $this->accessChecker->denyUnlessCanEdit(AdminRoleConstant::ROLE_ADMINISTRATOR);
         }
     }
 
@@ -192,7 +198,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/my-account/')]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function myAccountAction(): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
@@ -208,7 +214,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/new/')]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
@@ -249,7 +255,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMINISTRATOR_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -289,7 +295,7 @@ class AdministratorController extends AdminBaseController
         name: 'admin_administrator_enable-two-factor-authentication',
         requirements: ['id' => '\d+'],
     )]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function enableTwoFactorAuthenticationAction(
         Request $request,
         int $id,
@@ -417,7 +423,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/disable-two-factor-authentication/{id}', name: 'admin_administrator_disable-two-factor-authentication', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function disableTwoFactorAuthenticationAction(Request $request, int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
@@ -531,7 +537,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/send-reset-password/{id}', name: 'admin_administrator_send-reset-password', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_ADMIN])]
+    #[RequireRole(SystemRole::ADMIN)]
     public function sendResetPasswordAction(int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
@@ -553,7 +559,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/set-new-password/', name: 'admin_administrator_set-new-password')]
-    #[AccessControlRule(['PUBLIC_ACCESS'])]
+    #[CanView]
     public function setNewPasswordAction(Request $request): Response
     {
         $email = $request->query->get('email');
@@ -579,7 +585,7 @@ class AdministratorController extends AdminBaseController
                 $administratorData->password,
             );
 
-            if (!$this->isGranted(Roles::ROLE_ADMIN)) {
+            if (!$this->isGranted(SystemRole::ADMIN)) {
                 $this->security->login($administrator, 'security.authenticator.form_login.administration');
                 $request->getSession()->migrate();
             }

@@ -6,6 +6,9 @@ parameters:
     fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
     fp_js_form_validator.twig_extension.class: Shopsys\FrameworkBundle\Twig\JsFormValidatorTwigExtension
 
+    # RolesType configuration
+    shopsys.administration.roles.simple_permissions: false
+
 services:
     _defaults:
         autoconfigure: true
@@ -322,7 +325,7 @@ services:
     Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100 }
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
         arguments:
@@ -442,6 +445,15 @@ services:
         arguments:
             - '@annotations.reader'
 
+    Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface:
+        class: Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessChecker
+
+    Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\ContextAwareRoleHierarchy:
+        decorates: security.role_hierarchy
+
+    Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistry
+
     Shopsys\FrameworkBundle\Component\Setting\Setting: ~
 
     Shopsys\FrameworkBundle\Component\Translation\ConfigConstraintMessageExtractor:
@@ -531,6 +543,10 @@ services:
     Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
+
+    Shopsys\FrameworkBundle\Form\RolesType:
+        arguments:
+            $useSimplePermissions: '%shopsys.administration.roles.simple_permissions%'
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
@@ -748,14 +764,6 @@ services:
             $logger: '@monolog.logger.queue'
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
-
-    Shopsys\FrameworkBundle\Model\Security\AccessControl\RouteAccessControlDataProvider:
-        arguments:
-            $projectRootDirectory: '%kernel.project_dir%'
-            $cacheDirectory: '%kernel.cache_dir%'
-            $frameworkRootDirectory: '%shopsys.framework.root_dir%'
-            $packagesRegistry: '%shopsys.packages.registry%'
-            $environment: '%kernel.environment%'
 
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:

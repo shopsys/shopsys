@@ -117,65 +117,29 @@ The event subscriber should be auto-discovered by Symfony, reconfiguring the men
 ## Access control
 
 When adding a new administrator page, you need to decide which [administrator roles](../administration/admin-rights.md) should have access to it.
-For the new agenda, you will probably need to create a new role. Usually, a `VIEW`/`FULL` pair of roles is used, so let's follow the convention here as well. In `Roles.php`, add the new roles, define theirs translations, and put them into the hierarchy:
-
-```php
-
-<?php
-
-declare(strict_types=1);
-
-namespace App\Model\Security;
-
-use Override;
-use Shopsys\FrameworkBundle\Model\Security\Roles as BaseRoles;
-
-class Roles extends BaseRoles
-{
-    public const string ROLE_X_VIEW = 'ROLE_X_VIEW';
-    public const string ROLE_X_FULL = 'ROLE_X_FULL';
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    protected static function addRolesToHierarchy(array $rolesHierarchy): array
-    {
-         return static::addRolePairsToHierarchy($rolesHierarchy, [static::ROLE_X_FULL => static::ROLE_X_VIEW]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    protected function addRolesToGrid(array $rolesGrid): array
-    {
-        $rolePair = [
-            static::ROLE_X_FULL => t('X.com feed - full'),
-            static::ROLE_X_VIEW => t('X.com feed - view'),
-        ];
-
-        return $this->addRolePairsToGrid($rolesGrid, [$rolePair]);
-    }
-}
-
-```
+For the new page, you will probably need to create a new role. See the [Creating Custom Roles](../introduction/role-based-access-control.md#creating-custom-roles) section for details on how to add new roles using the `AdminRoleProvider` or creating a new role provider.
 
 After that, you need to cover your new route with the access control rules. Let's say that the administrator needs to have full rights to perform POST requests and view rights for GET requests:
 
-```diff
+```php
 // src/Controller/Admin/DashboardController.php
 
-+ use App\Model\Security\Roles;
-+ use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequirePermission;
+use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+use Symfony\Component\Routing\Attribute\Route;
 
+class DashboardController extends AdminBaseController
+{
     #[Route('/dashboard/x/')]
-+   #[AccessControlRule([Roles::ROLE_X_FULL], ['POST'])]
-+   #[AccessControlRule([Roles::ROLE_X_VIEW], ['GET'])]
+    #[CanView('ROLE_X', ['GET'])]
+    #[RequirePermission('ROLE_X', Permission::FULL, [HttpMethod::POST])]
     public function xAction()
     {
         return $this->render('Admin/Content/Dashboard/x.html.twig');
     }
+}
 ```
 
 ## Conclusion

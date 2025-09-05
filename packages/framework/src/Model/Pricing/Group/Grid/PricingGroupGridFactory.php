@@ -28,11 +28,11 @@ class PricingGroupGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -42,12 +42,12 @@ class PricingGroupGridFactory implements GridFactoryInterface
             ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
 
-        $grid = $this->gridFactory->create('pricingGroupList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('pricingGroupList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'pg.name', t('Name'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_pricinggroup_deleteconfirm', ['id' => 'pg.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Pricing/Groups/listGrid.html.twig');
 

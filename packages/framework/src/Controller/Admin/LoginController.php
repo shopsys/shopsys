@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,7 +33,7 @@ class LoginController extends AdminBaseController
     #[Route(path: '/logout/', name: 'admin_logout')]
     public function loginAction(Request $request): Response
     {
-        if ($this->isGranted(Roles::ROLE_ADMIN)) {
+        if ($this->isGranted(SystemRole::ADMIN)) {
             return $this->redirectToRoute('admin_default_dashboard');
         }
 

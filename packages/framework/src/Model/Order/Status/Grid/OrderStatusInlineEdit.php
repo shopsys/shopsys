@@ -8,11 +8,11 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Order\Status\OrderStatusFormType;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -20,7 +20,7 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory $orderStatusGridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory $orderStatusDataFactory
@@ -28,13 +28,13 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         OrderStatusGridFactory $orderStatusGridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly OrderStatusDataFactory $orderStatusDataFactory,
         protected readonly Domain $domain,
     ) {
-        parent::__construct($orderStatusGridFactory, $security);
+        parent::__construct($orderStatusGridFactory, $accessChecker);
     }
 
     /**
@@ -86,8 +86,8 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_ORDER_STATUS_FULL;
+        return AdminRoleConstant::ROLE_ORDER_STATUS;
     }
 }

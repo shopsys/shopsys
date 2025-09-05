@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
@@ -18,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
 class TransportController extends AdminBaseController
 {
     /**
@@ -41,7 +47,7 @@ class TransportController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/new/')]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $transportData = $this->transportDataFactory->create();
@@ -81,8 +87,8 @@ class TransportController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $transport = $this->transportFacade->getById($id);
@@ -128,7 +134,7 @@ class TransportController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -152,10 +158,10 @@ class TransportController extends AdminBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[AccessControlRule([Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
-        $grid = $this->transportGridFactory->create(Roles::ROLE_TRANSPORT_AND_PAYMENT_FULL);
+        $grid = $this->transportGridFactory->create(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT);
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/list.html.twig', [
             'gridView' => $grid->createView(),

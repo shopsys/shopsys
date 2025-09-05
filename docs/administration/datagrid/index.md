@@ -27,6 +27,12 @@ You can also create your own adapter by implementing the `Shopsys\Administration
 
 The `Shopsys\AdministrationBundle\Component\Datagrid\Datagrid` class is the main class that is used to configure the Datagrid. It provides methods to configure columns, filters, actions, and other features.
 
+## Permission Integration
+
+Datagrid acts as a decorator for the internal Grid component and automatically integrates with the RBAC permission system through the required `roleConstant` parameter. The role constant is passed to the underlying Grid component, which handles all permission-based features.
+
+For detailed information about automatic permission controls, see [Grid Permission Integration](../internal-grid/index.md#automatic-permission-controls).
+
 
 ## Define Datagrid
 
@@ -82,7 +88,9 @@ class MyController extends AbstractController
     {
         // ...
 
-        $datagrid = $this->datagridFactory->create($adapter);
+        $datagrid = $this->datagridFactory->create($adapter, [
+            'roleConstant' => 'ROLE_MY', // required - enables permission-based features
+        ]);
         
         
         // In template use {{ grid.render }} method to render the datagrid

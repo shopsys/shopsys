@@ -30,11 +30,11 @@ class VatGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -51,13 +51,13 @@ class VatGridFactory implements GridFactoryInterface
             return $row;
         });
 
-        $grid = $this->gridFactory->create('vatList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('vatList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'v.name', t('Name'), true);
         $grid->addColumn('percent', 'v.percent', t('Percent'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_vat_deleteconfirm', ['id' => 'v.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Vat/listGrid.html.twig');
 

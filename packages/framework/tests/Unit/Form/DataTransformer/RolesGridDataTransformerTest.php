@@ -1,0 +1,321 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\FrameworkBundle\Unit\Form\DataTransformer;
+
+use InvalidArgumentException;
+use Override;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+use Shopsys\FrameworkBundle\Component\Security\Role\Role;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleIdentifierHelper;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider;
+use Shopsys\FrameworkBundle\Form\DataTransformer\RolesGridDataTransformer;
+
+class RolesGridDataTransformerTest extends TestCase
+{
+    private RolesGridDataTransformer $transformer;
+
+    private RolesGridDataTransformer $simpleTransformer;
+
+    private RoleRegistryInterface&MockObject $roleRegistry;
+
+    #[Override]
+    protected function setUp(): void
+    {
+        $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
+        $this->transformer = new RolesGridDataTransformer(
+            $this->roleRegistry,
+            AdminContext::class,
+            ['ROLE_SUPER_ADMIN'],
+            true, // shouldGroupBySections
+        );
+
+        $this->simpleTransformer = new RolesGridDataTransformer(
+            $this->roleRegistry,
+            AdminContext::class,
+            ['ROLE_SUPER_ADMIN'],
+            false, // shouldGroupBySections - use virtual section when false
+        );
+    }
+
+    public function testTransformRoleIdentifiers(): void
+    {
+        $role = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
+        $this->prepareRolesMock([$role]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW'];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
+        $this->assertSame(['ROLE_ORDER_VIEW'], $result[AbstractRoleSectionProvider::OTHER]);
+    }
+
+    public function testTransformWithFullPermission(): void
+    {
+        $role = new Role('ROLE_ORDER', 'Order Role', [Permission::FULL]);
+        $this->prepareRolesMock([$role]);
+
+        $roleIdentifiers = ['ROLE_ORDER_FULL'];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
+        $this->assertSame(['ROLE_ORDER_FULL'], $result[AbstractRoleSectionProvider::OTHER]);
+    }
+
+    public function testTransformWithVirtualSection(): void
+    {
+        $role = new Role('ROLE_ORDER', 'Order Role', [Permission::EDIT]);
+        $this->prepareRolesMock([$role]);
+
+        $roleIdentifiers = ['ROLE_ORDER_EDIT', 'ROLE_ORDER_VIEW'];
+
+        $result = $this->simpleTransformer->transform($roleIdentifiers);
+
+        // Should use virtual section 'all_roles'
+        $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
+        $this->assertEqualsCanonicalizing(['ROLE_ORDER_EDIT', 'ROLE_ORDER_VIEW'], $result[AbstractRoleSectionProvider::OTHER]);
+    }
+
+    public function testReverseTransformSectionData(): void
+    {
+        $formData = [
+            AbstractRoleSectionProvider::OTHER => ['ROLE_ORDER_VIEW', 'ROLE_ORDER_EDIT'],
+            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_PRODUCT_VIEW'],
+        ];
+
+        $result = $this->transformer->reverseTransform($formData);
+
+        $expected = ['ROLE_ORDER_VIEW', 'ROLE_ORDER_EDIT', 'ROLE_PRODUCT_VIEW'];
+
+        $this->assertEqualsCanonicalizing($expected, $result);
+    }
+
+    public function testReverseTransformWithVirtualSection(): void
+    {
+        $formData = [
+            AbstractRoleSectionProvider::OTHER => ['ROLE_ORDER_VIEW', 'ROLE_ORDER_FULL'],
+        ];
+
+        $result = $this->simpleTransformer->reverseTransform($formData);
+
+        $expected = ['ROLE_ORDER_VIEW', 'ROLE_ORDER_FULL'];
+
+        $this->assertEqualsCanonicalizing($expected, $result);
+    }
+
+    public function testTransformExcludesExcludedRoles(): void
+    {
+        $this->prepareRolesMock([
+            new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]),
+            new Role('ROLE_SUPER_ADMIN', 'Super Admin Role', [Permission::FULL]),
+        ]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW', 'ROLE_SUPER_ADMIN_FULL'];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        // Should only include ROLE_ORDER, not ROLE_SUPER_ADMIN
+        $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
+        $this->assertSame(['ROLE_ORDER_VIEW'], $result[AbstractRoleSectionProvider::OTHER]);
+    }
+
+    public function testReverseTransformWithEmptySection(): void
+    {
+        $formData = [
+            AbstractRoleSectionProvider::OTHER => [],
+            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_PRODUCT_VIEW'],
+        ];
+
+        $result = $this->transformer->reverseTransform($formData);
+
+        $expected = ['ROLE_PRODUCT_VIEW'];
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testTransformWithInvalidIdentifier(): void
+    {
+        $this->prepareRolesMock([
+            new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]),
+        ]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW', 'INVALID_IDENTIFIER', 'ROLE_NONEXISTENT_VIEW'];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        $expected = [
+            AbstractRoleSectionProvider::OTHER => ['ROLE_ORDER_VIEW'],
+        ];
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testTransformWithNonArrayInput(): void
+    {
+        $result = $this->transformer->transform(null);
+        $this->assertSame([], $result);
+
+        $result = $this->transformer->transform('not an array');
+        $this->assertSame([], $result);
+    }
+
+    public function testTransformMultipleRolesWithSections(): void
+    {
+        $orderRole = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
+        $orderRole->setRoleSection(AdminRoleSectionsProvider::ORDERS_CUSTOMERS);
+
+        $productRole = new Role('ROLE_PRODUCT', 'Product Role', [Permission::FULL]);
+        $productRole->setRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG);
+
+        $this->prepareRolesMock([$orderRole, $productRole]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        // Should group by different sections
+        $this->assertArrayHasKey(AdminRoleSectionsProvider::ORDERS_CUSTOMERS, $result);
+        $this->assertArrayHasKey(AdminRoleSectionsProvider::PRODUCTS_CATALOG, $result);
+        $this->assertSame(['ROLE_ORDER_VIEW'], $result[AdminRoleSectionsProvider::ORDERS_CUSTOMERS]);
+        $this->assertSame(['ROLE_PRODUCT_FULL'], $result[AdminRoleSectionsProvider::PRODUCTS_CATALOG]);
+    }
+
+    public function testReverseTransformWithNonArrayInput(): void
+    {
+        $result = $this->transformer->reverseTransform(null);
+        $this->assertSame([], $result);
+
+        $result = $this->transformer->reverseTransform('not an array');
+        $this->assertSame([], $result);
+    }
+
+    public function testReverseTransformWithNonArraySectionData(): void
+    {
+        $formData = [
+            AbstractRoleSectionProvider::OTHER => 'not an array',
+            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_PRODUCT_VIEW'],
+        ];
+
+        $result = $this->transformer->reverseTransform($formData);
+
+        $expected = ['ROLE_PRODUCT_VIEW'];
+        $this->assertSame($expected, $result);
+    }
+
+    public function testTransformWithNonStringIdentifiers(): void
+    {
+        $role = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
+        $this->prepareRolesMock([$role]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW', 123, null, false, ['array']];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
+        $this->assertSame(['ROLE_ORDER_VIEW'], $result[AbstractRoleSectionProvider::OTHER]);
+    }
+
+    public function testGetSectionsFromRoleSectionClass(): void
+    {
+        // Test that the transformer correctly uses RoleSection class methods
+        $role = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
+        $this->prepareRolesMock([$role]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW'];
+
+        $result = $this->transformer->transform($roleIdentifiers);
+
+        // Should have a section key that exists in RoleSection
+        $this->assertCount(1, $result);
+        $sectionKey = array_key_first($result);
+        $this->assertTrue(in_array($sectionKey, [
+            AdminRoleSectionsProvider::SYSTEM,
+            AdminRoleSectionsProvider::ORDERS_CUSTOMERS,
+            AdminRoleSectionsProvider::PRODUCTS_CATALOG,
+            AdminRoleSectionsProvider::MARKETING_PROMOTIONS,
+            AdminRoleSectionsProvider::CONTENT_MANAGEMENT,
+            AdminRoleSectionsProvider::SETTINGS_CONFIGURATION,
+            AdminRoleSectionsProvider::LEGAL_COMPLIANCE,
+            AdminRoleSectionsProvider::SEO_MARKETING_TOOLS,
+            AdminRoleSectionsProvider::SYSTEM_TOOLS,
+            AbstractRoleSectionProvider::OTHER,
+        ], true));
+    }
+
+    /**
+     * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $roles
+     */
+    private function prepareRolesMock(array $roles): void
+    {
+        $this->roleRegistry
+            ->method('getRoles')
+            ->with(AdminContext::class)
+            ->willReturn($roles);
+
+        $this->roleRegistry
+            ->method('getRole')
+            ->willReturnCallback(function (string $roleIdentifier, string $context) use ($roles) {
+                $roleConstant = RoleIdentifierHelper::getRoleConstantFromIdentifier($roleIdentifier);
+
+                foreach ($roles as $role) {
+                    if ($role->getConstant() === $roleConstant) {
+                        return $role;
+                    }
+                }
+
+                throw new InvalidArgumentException(sprintf('Role "%s" not found', $roleConstant));
+            });
+    }
+
+    // Virtual section tests (used when sections are disabled)
+
+    public function testTransformWithVirtualSectionGroupsAllRoles(): void
+    {
+        $orderRole = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
+        $productRole = new Role('ROLE_PRODUCT', 'Product Role', [Permission::FULL]);
+        $this->prepareRolesMock([$orderRole, $productRole]);
+
+        $roleIdentifiers = ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'];
+
+        $result = $this->simpleTransformer->transform($roleIdentifiers);
+
+        // All roles should be in 'all_roles' virtual section
+        $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
+        $this->assertEqualsCanonicalizing(['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'], $result[AbstractRoleSectionProvider::OTHER]);
+    }
+
+    // Edge cases
+
+    public function testTransformWithEmptyArray(): void
+    {
+        $result = $this->transformer->transform([]);
+        $this->assertSame([], $result);
+    }
+
+    public function testReverseTransformWithEmptyArray(): void
+    {
+        $result = $this->transformer->reverseTransform([]);
+        $this->assertSame([], $result);
+    }
+
+    public function testReverseTransformWithMixedSectionData(): void
+    {
+        $formData = [
+            AbstractRoleSectionProvider::OTHER => ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'],
+            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_INQUIRY_VIEW'],
+        ];
+
+        $result = $this->transformer->reverseTransform($formData);
+
+        $expected = ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL', 'ROLE_INQUIRY_VIEW'];
+        $this->assertEqualsCanonicalizing($expected, $result);
+    }
+}

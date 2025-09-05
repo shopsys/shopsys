@@ -1,0 +1,87 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Migrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Override;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+
+class Version20250711031748 extends AbstractMigration
+{
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    #[Override]
+    public function up(Schema $schema): void
+    {
+        $this->sql('ALTER TABLE administrator_role_groups ADD system_managed BOOLEAN DEFAULT FALSE NOT NULL');
+        $this->sql('ALTER TABLE administrator_role_groups ALTER system_managed DROP DEFAULT');
+
+        $this->sql('INSERT INTO administrator_role_groups (name, roles, system_managed) VALUES (:name, :roles, :system_managed)', [
+            'name' => SystemRole::ALL,
+            'roles' => '["' . SystemRole::ALL . '"]',
+            'system_managed' => true,
+        ]);
+
+        $this->sql('INSERT INTO administrator_role_groups (name, roles, system_managed) VALUES (:name, :roles, :system_managed)', [
+            'name' => SystemRole::ALL_VIEW,
+            'roles' => '["' . SystemRole::ALL_VIEW . '"]',
+            'system_managed' => true,
+        ]);
+
+        $this->migrateAdministratorSystemRolesToRoleGroups();
+    }
+
+    /**
+     * Migrates administrators from having ROLE_ALL or ROLE_ALL_VIEW directly
+     * to using the corresponding system-managed role groups
+     */
+    private function migrateAdministratorSystemRolesToRoleGroups(): void
+    {
+        $roleAllGroupId = $this->connection->fetchOne(
+            'SELECT id FROM administrator_role_groups WHERE name = :name',
+            ['name' => SystemRole::ALL],
+        );
+
+        $roleAllViewGroupId = $this->connection->fetchOne(
+            'SELECT id FROM administrator_role_groups WHERE name = :name',
+            ['name' => SystemRole::ALL_VIEW],
+        );
+
+        $administratorsWithSystemRoles = $this->connection->fetchAllAssociative(
+            'SELECT DISTINCT administrator_id, 
+                    MAX(CASE WHEN role = :role_all THEN 1 ELSE 0 END) as has_role_all
+             FROM administrator_roles 
+             WHERE role IN (:role_all, :role_all_view)
+             GROUP BY administrator_id',
+            [
+                'role_all' => SystemRole::ALL,
+                'role_all_view' => SystemRole::ALL_VIEW,
+            ],
+        );
+
+        foreach ($administratorsWithSystemRoles as $admin) {
+            $administratorId = $admin['administrator_id'];
+
+            // Determine which role group to assign
+            $roleGroupId = $admin['has_role_all'] ? $roleAllGroupId : $roleAllViewGroupId;
+
+            $this->sql(
+                'UPDATE administrators SET role_group_id = :role_group_id WHERE id = :administrator_id',
+                [
+                    'role_group_id' => $roleGroupId,
+                    'administrator_id' => $administratorId,
+                ],
+            );
+
+            // Remove all individual roles for this administrator
+            $this->sql(
+                'DELETE FROM administrator_roles WHERE administrator_id = :administrator_id',
+                ['administrator_id' => $administratorId],
+            );
+        }
+    }
+}

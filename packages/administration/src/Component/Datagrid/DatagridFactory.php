@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
  *     name?: string,
  *     crudConfig?: \Shopsys\AdministrationBundle\Component\Config\CrudConfigData|null,
  *     pagination?: bool,
+ *     roleConstant: string,
  * }
  */
 final class DatagridFactory
@@ -29,7 +30,7 @@ final class DatagridFactory
      * @param DatagridOptions $options
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid
      */
-    public function create(AdapterInterface $adapter, array $options = []): Datagrid
+    public function create(AdapterInterface $adapter, array $options): Datagrid
     {
         return new Datagrid($adapter, $this->gridFactory, $options);
     }

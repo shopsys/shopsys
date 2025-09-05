@@ -6,17 +6,20 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Administrator;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueEntityField;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\RolesType;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,14 +37,14 @@ final class AdministratorFormType extends AbstractType
     /**
      * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Security\Roles $roles
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      */
     public function __construct(
         private readonly Security $security,
         private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
-        private readonly Roles $roles,
         private readonly RouteCsrfProtector $routeCsrfProtector,
+        private readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -56,10 +59,13 @@ final class AdministratorFormType extends AbstractType
             'label' => t('Settings'),
         ]);
 
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $adminToEdit */
+        $adminToEdit = $options['administrator'];
+
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
-                    'data' => $options['administrator']->getId(),
+                    'data' => $adminToEdit->getId(),
                     'label' => t('ID'),
                 ]);
         }
@@ -72,7 +78,7 @@ final class AdministratorFormType extends AbstractType
                         ['max' => 100, 'maxMessage' => 'Username cannot be longer than {{ limit }} characters'],
                     ),
                     new UniqueEntityField([
-                        'entityInstance' => $options['administrator'],
+                        'entityInstance' => $adminToEdit,
                         'message' => 'Administrator with user name "{{ value }}" is already registered',
                         'fieldName' => 'username',
                         'entityName' => Administrator::class,
@@ -98,7 +104,7 @@ final class AdministratorFormType extends AbstractType
                         ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters'],
                     ),
                     new UniqueEntityField([
-                        'entityInstance' => $options['administrator'],
+                        'entityInstance' => $adminToEdit,
                         'message' => 'Administrator with email "{{ value }}" is already registered',
                         'fieldName' => 'email',
                         'entityName' => Administrator::class,
@@ -112,7 +118,7 @@ final class AdministratorFormType extends AbstractType
                 add('resetPassword', DisplayOnlyUrlType::class, [
                     'route' => 'admin_administrator_send-reset-password',
                     'route_params' => [
-                        'id' => $options['administrator']->getId(),
+                        'id' => $adminToEdit->getId(),
                         RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute(
                             'admin_administrator_send-reset-password',
                         ),
@@ -123,7 +129,7 @@ final class AdministratorFormType extends AbstractType
                 ]);
         }
 
-        if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
+        if ($this->canWorkWithRoles($adminToEdit)) {
             $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->administratorRoleGroupFacade->getAll(),
@@ -138,25 +144,15 @@ final class AdministratorFormType extends AbstractType
                 ],
             ]);
 
-            $builderSettingsGroup->add('roles', ChoiceType::class, [
-                'required' => false,
-                'choices' => $this->roles->getAvailableAdministratorRolesChoices(),
-                'placeholder' => t('-- Select a role --'),
-                'multiple' => true,
+            $builderSettingsGroup->add('roles', RolesType::class, [
                 'label' => t('Role'),
+                'context' => AdminContext::class,
                 'attr' => [
                     'class' => 'js-role-group-custom',
                 ],
-            ]);
-        } elseif ($options['administrator'] !== null) {
-            $builderSettingsGroup->add('roleGroup', DisplayOnlyType::class, [
-                'label' => t('Role Group'),
-                'data' => $options['administrator']->getRoleGroup()?->getName() ?? t('Custom'),
-            ]);
-
-            $builderSettingsGroup->add('roles', DisplayOnlyType::class, [
-                'label' => t('Role'),
-                'data' => $this->getAdministratorRolesList($options['administrator']),
+                'row_attr' => [
+                    'class' => $adminToEdit !== null && $adminToEdit->getRoleGroup() !== null ? ' display-none' : '',
+                ],
             ]);
         }
 
@@ -164,20 +160,32 @@ final class AdministratorFormType extends AbstractType
             ->add($builderSettingsGroup)
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_administrator_list',
-                'entity' => $options['administrator'],
+                'entity' => $adminToEdit,
             ]);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @return string
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $adminToEdit
+     * @return bool
      */
-    private function getAdministratorRolesList(Administrator $administrator): string
+    private function canWorkWithRoles(Administrator|null $adminToEdit): bool
     {
-        $allAvailableRoleChoices = $this->roles->getAvailableAdministratorRolesChoices();
-        $intersection = array_intersect($allAvailableRoleChoices, $administrator->getRoles());
+        if ($adminToEdit === null) {
+            return $this->accessChecker->canCreate(AdminRoleConstant::ROLE_ADMINISTRATOR);
+        }
 
-        return implode(', ', array_keys($intersection));
+        if ($adminToEdit->isSuperadmin()) {
+            return false;
+        }
+
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $currentAdministrator */
+        $currentAdministrator = $this->security->getUser();
+
+        if ($currentAdministrator->getId() === $adminToEdit->getId()) {
+            return false;
+        }
+
+        return $this->accessChecker->canEdit(AdminRoleConstant::ROLE_ADMINISTRATOR);
     }
 
     /**

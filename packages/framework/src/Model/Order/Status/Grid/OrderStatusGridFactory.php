@@ -30,11 +30,11 @@ class OrderStatusGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -44,14 +44,14 @@ class OrderStatusGridFactory implements GridFactoryInterface
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'os.id');
 
-        $grid = $this->gridFactory->create('orderStatusList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('orderStatusList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'ost.name', t('Name'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_orderstatus_deleteconfirm', ['id' => 'os.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/OrderStatus/listGrid.html.twig', [
             'TYPE_NEW' => OrderStatusTypeEnum::TYPE_NEW,

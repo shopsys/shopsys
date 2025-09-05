@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
-use Symfony\Bundle\SecurityBundle\Security;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -17,35 +17,35 @@ class GridFactory
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      * @param \Twig\Environment $twig
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
         protected readonly Environment $twig,
-        protected readonly Security $security,
+        protected readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 
     /**
      * @param string $gridId
      * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @param string|null $editRole
+     * @param string $roleConstant
      * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(string $gridId, DataSourceInterface $dataSource, ?string $editRole = null)
+    public function create(string $gridId, DataSourceInterface $dataSource, string $roleConstant)
     {
         return new Grid(
             $gridId,
-            $editRole,
+            $roleConstant,
             $dataSource,
             $this->requestStack,
             $this->router,
             $this->routeCsrfProtector,
             $this->twig,
-            $this->security,
+            $this->accessChecker,
         );
     }
 }

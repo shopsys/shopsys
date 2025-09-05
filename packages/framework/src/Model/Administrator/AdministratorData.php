@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use DateTime;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 
 class AdministratorData
 {
@@ -56,7 +56,7 @@ class AdministratorData
 
     public function __construct()
     {
-        $this->roles[] = Roles::ROLE_ADMIN;
+        $this->roles[] = SystemRole::ADMIN;
         $this->transferIssuesLastSeenDateTime = new DateTime('1970-01-01 00:00:00');
         $this->roleGroup = null;
     }

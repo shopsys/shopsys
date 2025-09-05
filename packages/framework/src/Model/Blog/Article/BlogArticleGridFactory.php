@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class BlogArticleGridFactory
 {
@@ -33,7 +33,7 @@ class BlogArticleGridFactory
     {
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ba.id');
 
-        $grid = $this->gridFactory->create('blog_article', $dataSource, Roles::ROLE_BLOG_ARTICLE_FULL);
+        $grid = $this->gridFactory->create('blog_article', $dataSource, AdminRoleConstant::ROLE_BLOG_ARTICLE);
         $grid->setDefaultOrder('createdAt DESC');
         $grid->enablePaging();
 
@@ -43,7 +43,7 @@ class BlogArticleGridFactory
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_blogarticle_edit', ['id' => 'ba.id']);
         $grid->addDeleteActionColumn('admin_blogarticle_deleteconfirm', ['id' => 'ba.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Blog/Article/listGrid.html.twig');
 

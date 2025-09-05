@@ -46,9 +46,10 @@ class SalesmanGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param string $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
         /* @TODO: implement */
     }
@@ -63,7 +64,7 @@ App\Grid\Salesman\SalesmanGridFactory: ~
 
 ### 1.2 Configure grid data source
 
-`GridFactory::create()` requires an implementation of `DataSourceInterface` as its second argument.
+`GridFactory::create()` requires an implementation of `DataSourceInterface` as its second argument and a role constant as the third argument for permission checks.
 So we create one that returns all the salesmen we need.
 
 In our `SalesmanGridFactory`, we add a new protected method, that creates and returns data source.
@@ -85,16 +86,26 @@ And because we want to get data from the database, we use a data source created 
     }
 
     /**
+     * @param string $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
 -       /* @TODO: implement */
-+       $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource());
++       $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource(), $roleConstant);
 
 +       return $grid;
     }
 ```
+
+!!! info "Role Constant for Permission Checks"
+
+    The third parameter `'ROLE_SALESMAN'` is crucial for the grid's permission system. This role constant determines what features users can access:
+
+    - Grid actions (edit, delete) are automatically filtered based on route permissions
+    - Inline editing is only enabled if users have EDIT permission for this role
+    - Row selection and drag-drop features respect permission levels
+    - The role should match the security attributes used in your controller actions
 
 Now, let's implement `createAndGetDataSource` method that should be in the same `SalesmanGridFactory` and will look like this.
 
@@ -129,9 +140,9 @@ We are going to change this now.
 First, we add columns we want to see into `SalesmanGridFactory::create` method.
 
 ```diff
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
-        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource());
+        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource(), $roleConstant);
 
 +       $grid->addColumn('id', 's.id', t('Id'));
 +       $grid->addColumn('name', 's.name', t('Name'));
@@ -158,6 +169,7 @@ We must inject (pass through the constructor) `SalesmanGridFactory` created earl
 namespace App\Controller\Admin;
 
 use App\Grid\Salesman\SalesmanGridFactory;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -179,6 +191,7 @@ class SalesmanController extends AdminBaseController
     /**
      * @Route("/salesman/list/")
      */
+    #[CanView('ROLE_SALESMAN')]
     public function listAction()
     {
         $grid = $this->salesmanGridFactory->create();
@@ -239,9 +252,9 @@ Now that we have template ready, we just need to set it as the theme in the grid
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory
 
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
-        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource());
+        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource(), $roleConstant);
 
         ...
 
@@ -261,9 +274,9 @@ A default order will be by date with the newest salesmen at the top.
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory
 
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
-        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource());
+        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource(), $roleConstant);
 
         $grid->addColumn('id', 's.id', t('Id'));
 -       $grid->addColumn('name', 's.name', t('Title'));
@@ -287,9 +300,9 @@ In the grid, we just need to call one method.
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory
 
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
-        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource());
+        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource(), $roleConstant);
         ...
 
 +       $grid->enablePaging();
@@ -415,6 +428,7 @@ namespace App\Controller\Admin;
 use App\Grid\Salesman\SalesmanGridFactory;
 + use App\Model\Salesman\SalesmanFacade;
 + use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
++ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -436,6 +450,7 @@ class SalesmanController extends AdminBaseController
 +     * @Route("/salesman/delete/{id}", requirements={"id" = "\d+"})
 +     * @CsrfProtection
 +     */
++    #[CanDelete('ROLE_SALESMAN')]
 +    public function deleteAction($id)
 +    {
 +        $this->salesmanFacade->deleteById($id);
@@ -459,9 +474,9 @@ To prevent accidental deletion, we can also set a confirmation message.
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory
 
-    public function create(): Grid
+    public function create(string $roleConstant): Grid
     {
-        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource());
+        $grid = $this->gridFactory->create('salesmanGrid', $this->createAndGetDataSource(), $roleConstant);
 
         $grid->addColumn('id', 's.id', t('Id'));
         $grid->addColumn('name', 's.name', t('Title'));

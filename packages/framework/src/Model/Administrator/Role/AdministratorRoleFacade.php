@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRoleFacade
 {
@@ -56,10 +56,10 @@ class AdministratorRoleFacade
      */
     protected function addAdminRoleIfMissing(Administrator $administrator, array $roles): array
     {
-        $adminRole = Roles::ROLE_ADMIN;
+        $adminRole = SystemRole::ADMIN;
 
         if ($administrator->isSuperadmin()) {
-            $adminRole = Roles::ROLE_SUPER_ADMIN;
+            $adminRole = SystemRole::SUPER_ADMIN;
         }
 
         if (in_array($adminRole, $roles, true) === false) {

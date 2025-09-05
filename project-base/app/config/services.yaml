@@ -128,8 +128,6 @@ services:
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 
-    App\Model\Security\Roles: ~
-
     App\Twig\:
         resource: '../src/Twig/'
 
@@ -398,9 +396,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer:
         alias: App\Model\Product\Search\ProductFilterDataToQueryTransformer
-
-    Shopsys\FrameworkBundle\Model\Security\Roles:
-        alias: App\Model\Security\Roles
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory:
         alias: App\Model\Slider\SliderItemDataFactory

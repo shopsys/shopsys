@@ -7,8 +7,15 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\CsvResponse;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\ImportPriceListFormType;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\PriceListFormType;
@@ -18,14 +25,13 @@ use Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListGridFactory;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_PRICE_LIST)]
 class PriceListController extends AdminBaseController
 {
     protected const string DOMAIN_FILTER_NAMESPACE = 'priceList';
@@ -58,7 +64,7 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/price-list/list/')]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_VIEW])]
+    #[CanView]
     public function listAction(): Response
     {
         $queryBuilder = $this->priceListFacade->getPriceListGridQueryBuilder();
@@ -86,7 +92,7 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/price-list/new/')]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $priceListData = $this->priceListDataFactory->create();
@@ -129,8 +135,8 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/price-list/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $priceList = $this->priceListFacade->getById($id);
@@ -173,7 +179,7 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/pricing/price-list/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
@@ -199,7 +205,7 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/price-list/export/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_VIEW])]
+    #[CanView]
     public function exportAction(int $id): Response
     {
         try {
@@ -225,7 +231,7 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/price-list/import')]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_FULL])]
+    #[CanCreate]
     public function importAction(Request $request): Response
     {
         $form = $this->createForm(ImportPriceListFormType::class);
@@ -309,7 +315,7 @@ class PriceListController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/pricing/price-list/loadMetadata/{id}', requirements: ['id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
-    #[AccessControlRule([Roles::ROLE_PRICE_LIST_VIEW])]
+    #[CanView]
     public function loadMetadataAction(int $id): Response
     {
         try {

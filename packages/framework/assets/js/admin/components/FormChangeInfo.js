@@ -10,7 +10,7 @@ export default class FormChangeInfo {
 
     initContent($container) {
         $container
-            .filterAllNodes('.web__content form')
+            .filterAllNodes('.web__content form:has(button[type="submit"])')
             .change(() => FormChangeInfo.showInfo())
             .each(function () {
                 if ($(this).find('.form-input-error:first, .js-validation-errors-list li:first').length > 0) {

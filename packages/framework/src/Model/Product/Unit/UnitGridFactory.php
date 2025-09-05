@@ -28,11 +28,11 @@ class UnitGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -42,14 +42,14 @@ class UnitGridFactory implements GridFactoryInterface
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
 
-        $grid = $this->gridFactory->create('unitList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('unitList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'ut.name', t('Name'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_unit_deleteconfirm', ['id' => 'u.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Unit/listGrid.html.twig');
 

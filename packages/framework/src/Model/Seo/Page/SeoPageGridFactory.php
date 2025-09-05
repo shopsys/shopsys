@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class SeoPageGridFactory
 {
@@ -36,7 +36,7 @@ class SeoPageGridFactory
             'sp.id',
         );
 
-        $grid = $this->gridFactory->create('seo_page', $dataSource, Roles::ROLE_SEO_FULL);
+        $grid = $this->gridFactory->create('seo_page', $dataSource, AdminRoleConstant::ROLE_SEO_PAGES);
         $grid->enablePaging();
 
         $grid->addColumn('pageName', 'sp.pageName', t('Page name'), true);
@@ -45,7 +45,7 @@ class SeoPageGridFactory
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_seopage_edit', ['id' => 'sp.id']);
         $grid->addDeleteActionColumn('admin_seopage_deleteconfirm', ['id' => 'sp.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Seo/Page/listGrid.html.twig');
 

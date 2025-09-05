@@ -8,7 +8,14 @@ use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory;
@@ -16,12 +23,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_CATEGORY)]
 class CategoryController extends AdminBaseController
 {
     /**
@@ -52,8 +58,8 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/edit/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL], ['POST'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_VIEW], ['GET'])]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         $category = $this->categoryFacade->getById($id);
@@ -98,7 +104,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/new/')]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL])]
+    #[CanCreate]
     public function newAction(Request $request): Response
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -137,7 +143,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/list/')]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'category';
@@ -172,7 +178,7 @@ class CategoryController extends AdminBaseController
      * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      */
     #[Route(path: '/category/apply-sorting/', methods: ['post'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL])]
+    #[CanEdit]
     public function applySortingAction(Request $request): Response
     {
         $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
@@ -189,7 +195,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/delete/{id}', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): Response
     {
         try {
@@ -216,7 +222,7 @@ class CategoryController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
-    #[AccessControlRule([Roles::ROLE_CATEGORY_VIEW])]
+    #[CanView]
     public function loadBranchJsonAction(int $domainId, int $id): Response
     {
         $parentCategory = $this->categoryFacade->getById($id);

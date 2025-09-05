@@ -35,11 +35,11 @@ class PaymentGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->paymentRepository->getQueryBuilderForAll()
             ->addSelect('pt')
@@ -57,7 +57,7 @@ class PaymentGridFactory implements GridFactoryInterface
             },
         );
 
-        $grid = $this->gridFactory->create('paymentList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('paymentList', $dataSource, $roleConstant);
         $grid->enableDragAndDrop(Payment::class);
 
         $grid->addColumn('name', 'pt.name', t('Name'));
@@ -66,7 +66,7 @@ class PaymentGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_payment_edit', ['id' => 'p.id']);
         $grid->addDeleteActionColumn('admin_payment_delete', ['id' => 'p.id'])
-            ?->setConfirmMessage(t('Do you really want to remove this payment?'));
+            ->setConfirmMessage(t('Do you really want to remove this payment?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Payment/listGrid.html.twig');
 

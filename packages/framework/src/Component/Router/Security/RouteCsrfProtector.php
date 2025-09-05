@@ -31,13 +31,13 @@ class RouteCsrfProtector implements EventSubscriberInterface
     }
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
     #[Override]
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::CONTROLLER => 'onKernelController',
+            KernelEvents::CONTROLLER => ['onKernelController', 80],
         ];
     }
 

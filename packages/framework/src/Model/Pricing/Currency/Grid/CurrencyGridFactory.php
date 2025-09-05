@@ -28,11 +28,11 @@ class CurrencyGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param string|null $editRole
+     * @param string|null $roleConstant
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     #[Override]
-    public function create(?string $editRole): Grid
+    public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -40,7 +40,7 @@ class CurrencyGridFactory implements GridFactoryInterface
             ->from(Currency::class, 'c');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
 
-        $grid = $this->gridFactory->create('currencyList', $dataSource, $editRole);
+        $grid = $this->gridFactory->create('currencyList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'c.name', t('Name'), true);
         $grid->addColumn('code', 'c.code', t('Code'), true);
@@ -50,7 +50,7 @@ class CurrencyGridFactory implements GridFactoryInterface
         $grid->addColumn('roundingPlacesPriceWithoutVat', 'c.roundingPlacesPriceWithoutVat', t('Rounding places of price without VAT and VAT amount'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_currency_deleteconfirm', ['id' => 'c.id'])
-            ?->setAjaxConfirm();
+            ->setAjaxConfirm();
 
         $grid->setTheme(
             '@ShopsysFramework/Admin/Content/Currency/listGrid.html.twig',

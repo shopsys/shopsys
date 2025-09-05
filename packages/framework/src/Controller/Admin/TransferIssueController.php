@@ -7,11 +7,13 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Transfer\TransferIssueSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
-use Shopsys\FrameworkBundle\Model\Security\AccessControl\AccessControlRule;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[ForRole(AdminRoleConstant::ROLE_TRANSFER)]
 class TransferIssueController extends AdminBaseController
 {
     /**
@@ -40,7 +43,7 @@ class TransferIssueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transfer/issue/list/', name: 'admin_transferissue_list')]
-    #[AccessControlRule([Roles::ROLE_TRANSFER_VIEW])]
+    #[CanView]
     public function listAction(Request $request): Response
     {
         $administrator = $this->getCurrentAdministrator();
@@ -63,7 +66,7 @@ class TransferIssueController extends AdminBaseController
         }
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ti.id');
 
-        $grid = $this->gridFactory->create('transferIssueList', $dataSource, Roles::ROLE_TRANSFER_FULL);
+        $grid = $this->gridFactory->create('transferIssueList', $dataSource, AdminRoleConstant::ROLE_TRANSFER);
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt DESC, id');
 
@@ -71,7 +74,7 @@ class TransferIssueController extends AdminBaseController
         $grid->addColumn('message', 'ti.message', t('Message text'));
         $grid->addColumn('createdAt', 'ti.createdAt', t('Date and time'));
         $grid->addDeleteActionColumn('admin_transferissue_delete', ['id' => 'ti.id'])
-            ?->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
+            ->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
@@ -87,7 +90,7 @@ class TransferIssueController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/transfer/issue/delete/{id}', name: 'admin_transferissue_delete', requirements: ['id' => '\d+'])]
-    #[AccessControlRule([Roles::ROLE_TRANSFER_FULL])]
+    #[CanDelete]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

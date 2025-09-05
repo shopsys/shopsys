@@ -1,6 +1,10 @@
 # Managing Access Control in Frontend API
 
-This guide will walk you through the process of managing access control in the Frontend API. We will cover the default roles, how to grant permissions for queries/mutations, how to override these permissions, and how to use Symfony's voter system.
+This guide covers Frontend API-specific access control implementation using GraphQL directives and Symfony voters. The Frontend API integrates with the platform's unified role-based access control system.
+
+!!! info "Global RBAC System"
+
+    This page focuses on Frontend API-specific implementation details. For a comprehensive overview of the role-based access control system used across the platform, see [Role-Based Access Control](../introduction/role-based-access-control.md).
 
 ## 1. Default Roles
 

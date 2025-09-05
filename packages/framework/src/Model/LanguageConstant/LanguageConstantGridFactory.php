@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class LanguageConstantGridFactory
 {
@@ -34,7 +34,7 @@ class LanguageConstantGridFactory
             ? $this->getTranslationsWithSearch($originalTranslations, $userTranslations, $locale, mb_strtolower($search))
             : $this->getTranslations($originalTranslations, $userTranslations, $locale);
 
-        $grid = $this->gridFactory->create('languageConstantList', new ArrayWithPaginationDataSource($translations, 'key'), Roles::ROLE_LANGUAGE_CONSTANTS_FULL);
+        $grid = $this->gridFactory->create('languageConstantList', new ArrayWithPaginationDataSource($translations, 'key'), AdminRoleConstant::ROLE_LANGUAGE_CONSTANTS);
         $grid->setDefaultOrder('key');
         $grid->enablePaging();
 
@@ -52,7 +52,7 @@ class LanguageConstantGridFactory
         $grid->addEditActionColumn('admin_languageconstant_edit', ['key' => 'key']);
         $grid
             ->addDeleteActionColumn('admin_languageconstant_delete', ['key' => 'key'])
-            ?->setConfirmMessage(t('Do you really want to remove this language constant translation?'));
+            ->setConfirmMessage(t('Do you really want to remove this language constant translation?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/LanguageConstant/listGrid.html.twig');
 

@@ -25,9 +25,9 @@ class AdministratorRoleGroupFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllQueryBuilder(): QueryBuilder
+    public function getAllNotSystemManagedQueryBuilder(): QueryBuilder
     {
-        return $this->administratorRoleGroupRepository->getAllQueryBuilder();
+        return $this->administratorRoleGroupRepository->getAllNotSystemManagedQueryBuilder();
     }
 
     /**
@@ -104,5 +104,14 @@ class AdministratorRoleGroupFacade
     public function getAll(): array
     {
         return $this->administratorRoleGroupRepository->getAll();
+    }
+
+    /**
+     * @param string $name
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     */
+    public function getSystemManagedRoleGroup(string $name): AdministratorRoleGroup
+    {
+        return $this->administratorRoleGroupRepository->getSystemManagedRoleGroup($name);
     }
 }

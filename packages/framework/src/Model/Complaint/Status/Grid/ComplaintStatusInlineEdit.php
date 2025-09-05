@@ -8,11 +8,11 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\Status\ComplaintStatusFormType;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -20,7 +20,7 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\Grid\ComplaintStatusGridFactory $complaintStatusGridFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface $accessChecker
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory $complaintStatusDataFactory
@@ -28,13 +28,13 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         ComplaintStatusGridFactory $complaintStatusGridFactory,
-        Security $security,
+        AccessCheckerInterface $accessChecker,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly ComplaintStatusDataFactory $complaintStatusDataFactory,
         protected readonly Domain $domain,
     ) {
-        parent::__construct($complaintStatusGridFactory, $security);
+        parent::__construct($complaintStatusGridFactory, $accessChecker);
     }
 
     /**
@@ -86,8 +86,8 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      * @return string
      */
     #[Override]
-    protected function getEditRole(): string
+    protected function getRoleConstant(): string
     {
-        return Roles::ROLE_COMPLAINT_FULL;
+        return AdminRoleConstant::ROLE_COMPLAINT_STATUS;
     }
 }

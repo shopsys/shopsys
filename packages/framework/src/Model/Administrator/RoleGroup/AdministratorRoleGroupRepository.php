@@ -29,9 +29,11 @@ class AdministratorRoleGroupRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllQueryBuilder(): QueryBuilder
+    public function getAllNotSystemManagedQueryBuilder(): QueryBuilder
     {
-        return $this->getAdministratorRoleGroupRepository()->createQueryBuilder('arg');
+        return $this->getAdministratorRoleGroupRepository()->createQueryBuilder('arg')
+            ->where('arg.systemManaged = :systemManaged')
+            ->setParameter('systemManaged', false);
     }
 
     /**
@@ -40,7 +42,11 @@ class AdministratorRoleGroupRepository
      */
     public function getById(int $id): AdministratorRoleGroup
     {
-        $administratorRoleGroup = $this->getAdministratorRoleGroupRepository()->find($id);
+        $administratorRoleGroup = $this->getAllNotSystemManagedQueryBuilder()
+            ->andWhere('arg.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
 
         if ($administratorRoleGroup === null) {
             throw new AdministratorRoleGroupNotFoundException('Administrator role group with id `' . $id . '` not found.');
@@ -54,7 +60,7 @@ class AdministratorRoleGroupRepository
      */
     public function getAll(): array
     {
-        return $this->getAllQueryBuilder()->getQuery()->getResult();
+        return $this->getAdministratorRoleGroupRepository()->findAll();
     }
 
     /**
@@ -64,5 +70,21 @@ class AdministratorRoleGroupRepository
     public function findByName(string $name): ?AdministratorRoleGroup
     {
         return $this->getAdministratorRoleGroupRepository()->findOneBy(['name' => $name]);
+    }
+
+    /**
+     * @param string $name
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     */
+    public function getSystemManagedRoleGroup(string $name): AdministratorRoleGroup
+    {
+        return $this->getAdministratorRoleGroupRepository()
+            ->createQueryBuilder('arg')
+            ->where('arg.systemManaged = :systemManaged')
+            ->andWhere('arg.name = :name')
+            ->setParameter('systemManaged', true)
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
