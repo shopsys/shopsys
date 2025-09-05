@@ -22,6 +22,7 @@ final class GithubActionsStatusReporter
      */
     private const array IGNORED_PACKAGES = [
         'shopsys/deployment',
+        'shopsys/biome-config',
     ];
 
     /**
