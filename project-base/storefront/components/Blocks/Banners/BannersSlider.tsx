@@ -78,6 +78,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         <div className="flex flex-col" data-tid={TIDs.banners_slider}>
             <div {...handlers}>
                 <ExtendedNextLink
+                    preventRedirectOnTextSelection
                     className="group block rounded-t-xl rounded-b-none !no-underline select-text"
                     draggable={false}
                     href={sliderItems[bannerSliderState.sliderPosition].link}

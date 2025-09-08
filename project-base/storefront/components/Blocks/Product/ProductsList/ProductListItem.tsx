@@ -83,6 +83,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 <ExtendedNextLink
+                    preventRedirectOnTextSelection
                     aria-label={t('Go to product page of {{ productName }}', { productName: product.fullName })}
                     className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
                     draggable={false}

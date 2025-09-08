@@ -30,6 +30,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     return (
         <ExtendedNextLink
+            preventRedirectOnTextSelection
             aria-label={t('Go to bestseller product page of {{ productName }}', { productName: product.fullName })}
             className="hover:bg-background-default flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:no-underline"
             draggable={false}
