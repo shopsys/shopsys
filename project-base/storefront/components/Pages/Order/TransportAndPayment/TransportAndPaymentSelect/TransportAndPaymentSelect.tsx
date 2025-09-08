@@ -54,7 +54,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         <legend className="sr-only">{t('Choose transport type')}</legend>
                         <AnimatePresence initial={false}>
                             {!!transport && (
-                                <AnimateCollapseDiv className="relative !block" keyName="transport-selected">
+                                <AnimateCollapseDiv
+                                    className="relative !block"
+                                    disableAnimation={transports.length === 1 ? true : false}
+                                    keyName="transport-selected"
+                                >
                                     <TransportListItem
                                         isActive
                                         changeTransport={changeTransport}
@@ -68,7 +72,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                         <AnimatePresence initial={false}>
                             {!transport && (
-                                <AnimateCollapseDiv className="relative !block" keyName="transport-list">
+                                <AnimateCollapseDiv
+                                    className="relative !block"
+                                    disableAnimation={transports.length === 1 ? true : false}
+                                    keyName="transport-list"
+                                >
                                     {transports.map((transportItem) => (
                                         <TransportListItem
                                             key={transportItem.uuid}
@@ -84,7 +92,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 </ul>
 
                 <AnimatePresence initial={false}>
-                    {!!transport && (
+                    {!!transport && transports.length > 1 && (
                         <AnimateCollapseDiv className="relative !flex flex-col" keyName="transport-reset">
                             <ResetButton
                                 text={t('Change transport type')}
@@ -113,7 +121,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             <legend className="sr-only">{t('Choose payment type')}</legend>
                             <AnimatePresence initial={false}>
                                 {!!payment && (
-                                    <AnimateCollapseDiv className="relative !block" keyName="payment-selected">
+                                    <AnimateCollapseDiv
+                                        className="relative !block"
+                                        disableAnimation={transport.payments.length === 1 ? true : false}
+                                        keyName="payment-selected"
+                                    >
                                         <PaymentListItem isActive changePayment={changePayment} payment={payment} />
                                     </AnimateCollapseDiv>
                                 )}
@@ -121,7 +133,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                             <AnimatePresence initial={false}>
                                 {!payment && (
-                                    <AnimateCollapseDiv className="relative !block" keyName="payment-list">
+                                    <AnimateCollapseDiv
+                                        className="relative !block"
+                                        disableAnimation={transport.payments.length === 1 ? true : false}
+                                        keyName="payment-list"
+                                    >
                                         {transport.payments.map((paymentItem) => (
                                             <PaymentListItem
                                                 key={paymentItem.uuid}
@@ -135,7 +151,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         </fieldset>
 
                         <AnimatePresence initial={false}>
-                            {payment !== null && (
+                            {payment !== null && transport.payments.length > 1 && (
                                 <AnimateCollapseDiv className="relative !flex flex-col" keyName="payment-reset">
                                     <ResetButton
                                         text={t('Change payment type')}
