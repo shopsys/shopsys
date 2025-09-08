@@ -19,6 +19,7 @@ export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof Li
         queryParams?: Record<string, string>;
         type?: PageType;
         skeletonType?: PageType;
+        preventRedirectOnTextSelection?: boolean;
     };
 
 export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
@@ -31,6 +32,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     skeletonType,
     className,
     tid,
+    preventRedirectOnTextSelection = false,
     ...props
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -52,7 +54,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
         const isTargetBlank = props.target === '_blank';
         const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick && !isTargetBlank;
 
-        if (isTextSelected()) {
+        if (preventRedirectOnTextSelection && isTextSelected()) {
             e.preventDefault();
             e.stopPropagation();
 
