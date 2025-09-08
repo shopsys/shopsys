@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Error;
 
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
-use Shopsys\FrontendApiBundle\Component\Context\FrontendApiContext;
+use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
