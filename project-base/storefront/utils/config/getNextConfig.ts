@@ -57,13 +57,16 @@ export function getNextConfig(): NextConfig {
         return {};
     }
 }
+
 export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeConfig>(
     key: K,
 ): NextConfigPublicRuntimeConfig[K] | undefined;
+
 export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeConfig, T>(
     key: K,
     defaultValue: T,
 ): NextConfigPublicRuntimeConfig[K] | T;
+
 export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeConfig, T>(
     key: K,
     defaultValue?: T,
@@ -76,10 +79,12 @@ export function getPublicConfigProperty<K extends keyof NextConfigPublicRuntimeC
 export function getServerConfigProperty<K extends keyof NextConfigServerRuntimeConfig>(
     key: K,
 ): NextConfigServerRuntimeConfig[K] | undefined;
+
 export function getServerConfigProperty<K extends keyof NextConfigServerRuntimeConfig, T>(
     key: K,
     defaultValue: T,
 ): NextConfigServerRuntimeConfig[K] | T;
+
 export function getServerConfigProperty<K extends keyof NextConfigServerRuntimeConfig, T>(
     key: K,
     defaultValue?: T,
