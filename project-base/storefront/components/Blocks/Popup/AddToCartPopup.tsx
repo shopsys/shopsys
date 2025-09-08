@@ -99,10 +99,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 />
             )}
 
-            <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
+            <div className="flex flex-col gap-4 text-center md:flex-row md:items-center md:justify-between md:p-0">
                 <Button
                     aria-label={t('Go back to shop')}
-                    className="mt-2 w-full md:w-auto"
+                    className="w-full md:w-auto"
                     variant="inverted"
                     onClick={() => updatePortalContent(null)}
                 >
