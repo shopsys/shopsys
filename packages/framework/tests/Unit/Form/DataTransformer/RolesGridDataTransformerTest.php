@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
@@ -24,6 +23,9 @@ class RolesGridDataTransformerTest extends TestCase
     private RolesGridDataTransformer $simpleTransformer;
 
     private RoleRegistryInterface&MockObject $roleRegistry;
+
+    protected const string ORDER_SECTION = 'orders_customers';
+    protected const string PRODUCT_SECTION = 'products_catalog';
 
     #[Override]
     protected function setUp(): void
@@ -88,7 +90,7 @@ class RolesGridDataTransformerTest extends TestCase
     {
         $formData = [
             AbstractRoleSectionProvider::OTHER => ['ROLE_ORDER_VIEW', 'ROLE_ORDER_EDIT'],
-            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_PRODUCT_VIEW'],
+            self::PRODUCT_SECTION => ['ROLE_PRODUCT_VIEW'],
         ];
 
         $result = $this->transformer->reverseTransform($formData);
@@ -131,7 +133,7 @@ class RolesGridDataTransformerTest extends TestCase
     {
         $formData = [
             AbstractRoleSectionProvider::OTHER => [],
-            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_PRODUCT_VIEW'],
+            self::PRODUCT_SECTION => ['ROLE_PRODUCT_VIEW'],
         ];
 
         $result = $this->transformer->reverseTransform($formData);
@@ -170,10 +172,10 @@ class RolesGridDataTransformerTest extends TestCase
     public function testTransformMultipleRolesWithSections(): void
     {
         $orderRole = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
-        $orderRole->setRoleSection(AdminRoleSectionsProvider::ORDERS_CUSTOMERS);
+        $orderRole->setRoleSection(self::ORDER_SECTION);
 
         $productRole = new Role('ROLE_PRODUCT', 'Product Role', [Permission::FULL]);
-        $productRole->setRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG);
+        $productRole->setRoleSection(self::PRODUCT_SECTION);
 
         $this->prepareRolesMock([$orderRole, $productRole]);
 
@@ -182,10 +184,10 @@ class RolesGridDataTransformerTest extends TestCase
         $result = $this->transformer->transform($roleIdentifiers);
 
         // Should group by different sections
-        $this->assertArrayHasKey(AdminRoleSectionsProvider::ORDERS_CUSTOMERS, $result);
-        $this->assertArrayHasKey(AdminRoleSectionsProvider::PRODUCTS_CATALOG, $result);
-        $this->assertSame(['ROLE_ORDER_VIEW'], $result[AdminRoleSectionsProvider::ORDERS_CUSTOMERS]);
-        $this->assertSame(['ROLE_PRODUCT_FULL'], $result[AdminRoleSectionsProvider::PRODUCTS_CATALOG]);
+        $this->assertArrayHasKey(self::ORDER_SECTION, $result);
+        $this->assertArrayHasKey(self::PRODUCT_SECTION, $result);
+        $this->assertSame(['ROLE_ORDER_VIEW'], $result[self::ORDER_SECTION]);
+        $this->assertSame(['ROLE_PRODUCT_FULL'], $result[self::PRODUCT_SECTION]);
     }
 
     public function testReverseTransformWithNonArrayInput(): void
@@ -201,7 +203,7 @@ class RolesGridDataTransformerTest extends TestCase
     {
         $formData = [
             AbstractRoleSectionProvider::OTHER => 'not an array',
-            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_PRODUCT_VIEW'],
+            self::PRODUCT_SECTION => ['ROLE_PRODUCT_VIEW'],
         ];
 
         $result = $this->transformer->reverseTransform($formData);
@@ -221,33 +223,6 @@ class RolesGridDataTransformerTest extends TestCase
 
         $this->assertArrayHasKey(AbstractRoleSectionProvider::OTHER, $result);
         $this->assertSame(['ROLE_ORDER_VIEW'], $result[AbstractRoleSectionProvider::OTHER]);
-    }
-
-    public function testGetSectionsFromRoleSectionClass(): void
-    {
-        // Test that the transformer correctly uses RoleSection class methods
-        $role = new Role('ROLE_ORDER', 'Order Role', [Permission::VIEW]);
-        $this->prepareRolesMock([$role]);
-
-        $roleIdentifiers = ['ROLE_ORDER_VIEW'];
-
-        $result = $this->transformer->transform($roleIdentifiers);
-
-        // Should have a section key that exists in RoleSection
-        $this->assertCount(1, $result);
-        $sectionKey = array_key_first($result);
-        $this->assertTrue(in_array($sectionKey, [
-            AdminRoleSectionsProvider::SYSTEM,
-            AdminRoleSectionsProvider::ORDERS_CUSTOMERS,
-            AdminRoleSectionsProvider::PRODUCTS_CATALOG,
-            AdminRoleSectionsProvider::MARKETING_PROMOTIONS,
-            AdminRoleSectionsProvider::CONTENT_MANAGEMENT,
-            AdminRoleSectionsProvider::SETTINGS_CONFIGURATION,
-            AdminRoleSectionsProvider::LEGAL_COMPLIANCE,
-            AdminRoleSectionsProvider::SEO_MARKETING_TOOLS,
-            AdminRoleSectionsProvider::SYSTEM_TOOLS,
-            AbstractRoleSectionProvider::OTHER,
-        ], true));
     }
 
     /**
@@ -310,7 +285,7 @@ class RolesGridDataTransformerTest extends TestCase
     {
         $formData = [
             AbstractRoleSectionProvider::OTHER => ['ROLE_ORDER_VIEW', 'ROLE_PRODUCT_FULL'],
-            AdminRoleSectionsProvider::PRODUCTS_CATALOG => ['ROLE_INQUIRY_VIEW'],
+            self::PRODUCT_SECTION => ['ROLE_INQUIRY_VIEW'],
         ];
 
         $result = $this->transformer->reverseTransform($formData);
