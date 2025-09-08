@@ -9,8 +9,8 @@ use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\Parser;
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
+use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
-use Shopsys\FrontendApiBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 

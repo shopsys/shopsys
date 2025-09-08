@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Component\Context;
+namespace Shopsys\FrameworkBundle\Component\Context;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Context\AbstractContext;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class FrontendApiContext extends AbstractContext

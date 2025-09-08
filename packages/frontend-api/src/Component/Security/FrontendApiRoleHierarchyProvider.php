@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Security;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
-use Shopsys\FrontendApiBundle\Component\Context\FrontendApiContext;
 
 /**
  * Generates role hierarchy for Frontend API context
