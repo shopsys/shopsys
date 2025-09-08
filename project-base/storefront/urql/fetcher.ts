@@ -8,6 +8,11 @@ const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
 const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
 const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
+// For URL-encoded: %40redisCache%28ttl%3A%203600%29 -> %40redisCache followed by optional %28...%29
+// For unencoded: @redisCache(ttl: 3600) -> @redisCache followed by optional (...)
+const URL_CACHE_REGEXP = /%40redisCache%28.*?%29|@redisCache\([^)]*\)|%40redisCache|@redisCache/g;
+const URL_FRIENDLY_URL_REGEXP = /%40friendlyUrl|@friendlyUrl/g;
+
 const removeDirectiveFromQuery = (
     query: string,
     directiveRegexps: (typeof CACHE_REGEXP | typeof FRIENDLY_URL_REGEXP)[],
@@ -28,6 +33,40 @@ const createInit = (init?: RequestInit | undefined) => ({
             : init?.body,
 });
 
+const createCleanedInput = (input: URL | RequestInfo): URL | RequestInfo => {
+    if (typeof input === 'string') {
+        if (
+            input.includes('@redisCache') ||
+            input.includes('%40redisCache') ||
+            input.includes('@friendlyUrl') ||
+            input.includes('%40friendlyUrl')
+        ) {
+            let cleanedUrl = input.replace(URL_CACHE_REGEXP, '').replace(URL_FRIENDLY_URL_REGEXP, '');
+
+            cleanedUrl = cleanedUrl
+                .replace(/[?&]{2,}/g, '?') // Replace multiple ? or & with single ?
+                .replace(/[?&]$/, '') // Remove trailing ? or &
+                .replace(/&{2,}/g, '&'); // Replace multiple & with single &
+
+            return cleanedUrl;
+        }
+    } else if (input instanceof URL) {
+        const urlString = input.toString();
+
+        if (
+            urlString.includes('@redisCache') ||
+            urlString.includes('%40redisCache') ||
+            urlString.includes('@friendlyUrl') ||
+            urlString.includes('%40friendlyUrl')
+        ) {
+            const cleanedUrlString = createCleanedInput(urlString) as string;
+            return new URL(cleanedUrlString);
+        }
+    }
+
+    return input;
+};
+
 export const fetcher =
     (redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts> | undefined) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
@@ -38,19 +77,19 @@ export const fetcher =
         }
 
         if (isClient || !init || process.env.GRAPHQL_REDIS_CACHE === '0' || !redisClient) {
-            return fetch(input, createInit(init));
+            return fetch(createCleanedInput(input), createInit(init));
         }
 
         try {
             if (typeof init.body !== 'string' || !init.body.match(CACHE_REGEXP)) {
-                return fetch(input, createInit(init));
+                return fetch(createCleanedInput(input), createInit(init));
             }
 
             const [, rawTtl] = init.body.match(CACHE_REGEXP) as string[];
             const ttl = parseInt(rawTtl, 10);
 
             if (ttl <= 0) {
-                return fetch(input, createInit(init));
+                return fetch(createCleanedInput(input), createInit(init));
             }
 
             const body = removeDirectiveFromQuery(init.body, [CACHE_REGEXP, FRIENDLY_URL_REGEXP]);
@@ -69,7 +108,7 @@ export const fetcher =
                 return Promise.resolve(response);
             }
 
-            const result = await fetch(input, {
+            const result = await fetch(createCleanedInput(input), {
                 ...init,
                 body,
             });
@@ -102,6 +141,6 @@ export const fetcher =
         } catch (e) {
             captureException(e);
 
-            return fetch(input, createInit(init));
+            return fetch(createCleanedInput(input), createInit(init));
         }
     };

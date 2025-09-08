@@ -35,9 +35,6 @@ const QUERY_OBJECT = gql`
     }
 `;
 const OPERATION_NAME = 'NotificationBars';
-const REQUEST_BODY =
-    '{"operationName":"NotificationBars","query":"query NotificationBars @redisCache(ttl: 3600) {\\n  notificationBars {\\n    text\\n    __typename\\n  }\\n}","variables":{}}';
-
 describe('createClient test', () => {
     afterEach(cleanup);
 
@@ -75,8 +72,14 @@ describe('createClient test', () => {
 
         await waitFor(() => {
             expect(mockRequestWithFetcher).toBeCalledWith(
-                publicGraphqlEndpoint + OPERATION_NAME,
-                expect.objectContaining({ body: REQUEST_BODY }),
+                expect.stringContaining(publicGraphqlEndpoint + OPERATION_NAME),
+                expect.objectContaining({
+                    method: 'GET',
+                    headers: expect.objectContaining({
+                        originalhost: 'test.ts',
+                        'x-forwarded-proto': 'on',
+                    }),
+                }),
             );
         });
     });
@@ -94,8 +97,14 @@ describe('createClient test', () => {
         await client.query(QUERY_OBJECT, undefined).toPromise();
 
         expect(mockRequestWithFetcher).toBeCalledWith(
-            publicGraphqlEndpoint + OPERATION_NAME,
-            expect.objectContaining({ body: REQUEST_BODY }),
+            expect.stringContaining(publicGraphqlEndpoint + OPERATION_NAME),
+            expect.objectContaining({
+                method: 'GET',
+                headers: expect.objectContaining({
+                    originalhost: 'test.ts',
+                    'x-forwarded-proto': 'on',
+                }),
+            }),
         );
     });
 });

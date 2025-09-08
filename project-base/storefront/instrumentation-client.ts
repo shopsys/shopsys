@@ -1,12 +1,10 @@
 import * as Sentry from '@sentry/nextjs';
-import getConfig from 'next/config';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const { publicRuntimeConfig } = getConfig();
-
-const dsn: string = publicRuntimeConfig.sentryDsn;
-const environment: string = publicRuntimeConfig.sentryEnvironment;
-const enableFeedback: boolean = publicRuntimeConfig.sentryFeedbackEnable;
-const enableReplays: boolean = publicRuntimeConfig.sentryReplaysEnable;
+const dsn = getPublicConfigProperty('sentryDsn', '');
+const environment = getPublicConfigProperty('sentryEnvironment', '');
+const enableFeedback = getPublicConfigProperty('sentryFeedbackEnable', false);
+const enableReplays = getPublicConfigProperty('sentryReplaysEnable', false);
 
 Sentry.init({
     dsn: dsn,

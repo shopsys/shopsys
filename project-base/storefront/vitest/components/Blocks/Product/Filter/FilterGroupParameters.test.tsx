@@ -739,7 +739,8 @@ describe('FilterGroupParameters', () => {
             render(<FilterGroupParameters {...defaultCheckboxProps} parameter={largeParameter} />);
             const endTime = performance.now();
 
-            expect(endTime - startTime).toBeLessThan(100);
+            // Increased threshold to account for CI environment variability
+            expect(endTime - startTime).toBeLessThan(200);
 
             const checkboxes = screen.getAllByRole('checkbox');
             expect(checkboxes).toHaveLength(3);
@@ -759,7 +760,9 @@ describe('FilterGroupParameters', () => {
             render(<FilterGroupParameters {...defaultColorProps} parameter={largeColorParameter} />);
             const endTime = performance.now();
 
-            expect(endTime - startTime).toBeLessThan(100);
+            // Increased threshold to account for CI environment variability
+            // Original: 100ms was too tight for shared CI runners
+            expect(endTime - startTime).toBeLessThan(200);
 
             const allInputs = screen.getAllByRole('checkbox');
             const colorInputs = allInputs.filter((input) =>

@@ -1,11 +1,8 @@
-import getConfig from 'next/config';
 import { CustomerUserAreaEnum } from 'types/customer';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
-
-const {
-    publicRuntimeConfig: { domains: domainsConfig, cdnDomain },
-} = getConfig() as PublicRuntimeConfig;
+const domainsConfig: DomainConfigType[] = getPublicConfigProperty('domains', []) as DomainConfigType[];
+const cdnDomain: string = getPublicConfigProperty('cdnDomain', '') as string;
 
 export type DomainConfigType = {
     url: string;

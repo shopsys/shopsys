@@ -20,7 +20,7 @@ help: ## Displays list of available commands
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
-	generate-snapshots-info-table _prepare-data-for-acceptance-tests _cypress-prepare _cypress-cleanup \
+	generate-snapshots-info-table prepare-data-for-acceptance-tests cypress-prepare cypress-cleanup \
 	check-licenses
 
 # ------------------------------------------------------------------------------
@@ -77,15 +77,6 @@ check-schema: ## Checks if generated GraphQL schema is correct
 # 🧪 Testing & Quality Assurance
 # ------------------------------------------------------------------------------
 
-_prepare-data-for-acceptance-tests:
-	$(call prepare-data-for-acceptance-tests)
-
-_cypress-prepare:
-	$(call cypress-prepare)
-
-_cypress-cleanup:
-	$(call cypress-cleanup)
-
 define prepare-data-for-acceptance-tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
 	docker compose exec php-fpm php phing test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
@@ -104,21 +95,21 @@ define cypress-cleanup
 endef
 
 define run_acceptance_tests
-	$(call _prepare-data-for-acceptance-tests)
-	$(call _cypress-prepare)
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
 	@echo "▶️ Running acceptance tests of type $(1)..."
 	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress || true
 	@echo "✅ Acceptance tests of type $(1) finished."
-	$(call _cypress-cleanup)
+	$(call cypress-cleanup)
 endef
 
 define selected_acceptance_tests
-	$(call _prepare-data-for-acceptance-tests)
-	$(call _cypress-prepare)
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
 	@echo "▶️ Running selected acceptance tests of type $(1)..."
 	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected cypress || true
 	@echo "✅ Selected acceptance tests of type $(1) finished."
-	$(call _cypress-cleanup)
+	$(call cypress-cleanup)
 endef
 
 define run_specific_acceptance_test
@@ -141,15 +132,15 @@ else
 endif
 
 define open_acceptance_tests
-	$(call _prepare-data-for-acceptance-tests)
-	$(call _cypress-prepare)
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
 	@if [ "$(IS_WSL)" = "" ]; then \
 		xhost + $(get_ip); \
 	fi
 	@echo "▶️ Opening acceptance tests of type $(1)..."
 	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress || true
 	@echo "✅ Acceptance tests of type $(1) finished."
-	$(call _cypress-cleanup)
+	$(call cypress-cleanup)
 endef
 
 # Cypress Acceptance Tests
@@ -201,24 +192,24 @@ open-acceptance-tests-regression: ## Opens the Cypress GUI for debugging regress
 	$(call open_acceptance_tests,regression)
 
 run-smoke-tests: ## Runs smoke tests (Cypress)
-	$(call _prepare-data-for-acceptance-tests)
-	$(call _cypress-prepare)
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
 	@echo "▶️ Running smoke tests..."
 	-docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress || true
 	@echo "✅ Smoke tests finished."
-	$(call _cypress-cleanup)
+	$(call cypress-cleanup)
 
 # ------------------------------------------------------------------------------
 # 📸 Snapshots & Utilities
 # ------------------------------------------------------------------------------
 
 generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
-	$(call _prepare-data-for-acceptance-tests)
-	$(call _cypress-prepare)
+	$(call prepare-data-for-acceptance-tests)
+	$(call cypress-prepare)
 	@echo "▶️ Generating snapshots info table..."
 	-docker compose exec storefront-cypress npm run generate-snapshots-table --prefix cypress || true
 	@echo "✅ Snapshots info table generation finished."
-	$(call _cypress-cleanup)
+	$(call cypress-cleanup)
 
 # ------------------------------------------------------------------------------
 # 📦 Checking dependencies licenses

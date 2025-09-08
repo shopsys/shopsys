@@ -1,7 +1,7 @@
 import { routes } from './routes';
-import getConfig from 'next/config';
+import { getNextConfig } from 'utils/config/getNextConfig';
 
-const nextConfig = getConfig();
+const nextConfig = getNextConfig();
 
 export const STATIC_REWRITE_PATHS = {
     [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.DOMAIN_HOSTNAME_1) as string]: routes[0],

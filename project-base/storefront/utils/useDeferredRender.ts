@@ -1,12 +1,10 @@
-import getConfig from 'next/config';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const {
-    publicRuntimeConfig: { shouldUseDefer },
-} = getConfig();
+const shouldUseDefer = getPublicConfigProperty('shouldUseDefer', false);
 
 type DeferPage = 'product' | 'category' | 'homepage';
 

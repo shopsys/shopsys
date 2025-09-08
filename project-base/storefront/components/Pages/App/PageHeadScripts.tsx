@@ -1,12 +1,11 @@
-import getConfig from 'next/config';
 import Head from 'next/head';
 import { useCookiesStore } from 'store/useCookiesStore';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { isClient } from 'utils/isClient';
 
 export const PageHeadScripts: FC = () => {
     const isUserSnapEnabled = useCookiesStore((store) => store.isUserSnapEnabled);
-    const { publicRuntimeConfig } = getConfig();
-    const userSnapApiKey = publicRuntimeConfig.userSnapApiKey;
+    const userSnapApiKey = getPublicConfigProperty('userSnapApiKey', '');
 
     return (
         <Head>
