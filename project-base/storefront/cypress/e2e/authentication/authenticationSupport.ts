@@ -120,7 +120,7 @@ export const checkRegistrationValidationErrorsPopup = () => {
     cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter password').should('exist');
     cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter password again').should('exist');
     cy.getByTID([TIDs.layout_popup])
-        .contains('li', 'Telephone number cannot be shorter than 9 characters')
+        .contains('li', 'Please enter a valid phone number. Examples: 123456789, +420123456789')
         .should('exist');
     cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter first name').should('exist');
     cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter last name').should('exist');
