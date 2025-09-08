@@ -67,7 +67,7 @@ export const Popup: React.FC<PopupProps> = ({
     useLayoutEffect(() => {
         if (popupRef.current) {
             setPopupPositions({
-                left: Math.round(windowDimensions.width / 2 - popupRef.current.offsetWidth / 2),
+                left: Math.round(windowDimensions.width / 2 - popupRef.current.offsetWidth / 2 - 20),
                 top: Math.round(windowDimensions.height / 2 - popupRef.current.offsetHeight / 2),
             });
         }
@@ -93,7 +93,7 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'z-aboveOverlay bg-background-default fixed flex w-[calc(100%-40px)] max-w-screen-lg cursor-auto flex-col rounded-md p-5 shadow-2xl lg:max-h-[80vh]',
+                            'z-aboveOverlay bg-background-default fixed mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md p-5 shadow-2xl',
                             className,
                         )}
                         initial={{
