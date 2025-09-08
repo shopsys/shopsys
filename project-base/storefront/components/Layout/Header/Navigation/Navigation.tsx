@@ -54,8 +54,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation }) => {
             <ul
                 ref={navigationRef}
                 className={twJoin(
-                    'hidden w-full overflow-x-auto overflow-y-hidden lg:flex',
-                    "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+                    'hide-scrollbar hidden w-full overflow-x-auto overflow-y-hidden lg:flex',
                     showNavigationShadow &&
                         'after:from-background-brand after:z-above transition-all after:absolute after:top-1/2 after:-right-1 after:h-7 after:w-20 after:-translate-y-1/2 after:bg-gradient-to-l after:from-30% after:to-transparent after:to-80% after:blur-xs',
                 )}

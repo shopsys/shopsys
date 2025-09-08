@@ -27,7 +27,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
 
             <ul
                 className={twJoin(
-                    "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+                    'hide-scrollbar grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain',
                     'vl:auto-cols-[25%] auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] xl:auto-cols-[20%]',
                 )}
             >

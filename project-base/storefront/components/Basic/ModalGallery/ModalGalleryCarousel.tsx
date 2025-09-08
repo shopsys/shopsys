@@ -25,7 +25,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
     const { t } = useTranslation();
 
     return (
-        <ul className="grid snap-x snap-mandatory auto-cols-[80px] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden">
+        <ul className="hide-scrollbar grid snap-x snap-mandatory auto-cols-[80px] grid-flow-col overflow-x-auto overscroll-x-contain">
             {items.map((galleryItem, index) => {
                 const isImage = galleryItem.__typename === 'Image';
                 const isVideo = galleryItem.__typename === 'VideoToken';
