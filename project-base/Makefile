@@ -212,9 +212,12 @@ generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
 	-docker compose exec storefront-cypress npm run generate-snapshots-table --prefix cypress || true
 	@echo "✅ Snapshots info table generation finished."
 	$(call _cypress-cleanup)
+# ------------------------------------------------------------------------------
+# 📦 Checking dependencies licenses
+# ------------------------------------------------------------------------------
 
 check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & storefront)
 	@echo "🔍 Checking dependency licenses..."
-	@docker compose exec php-fpm bash -lc "scripts/check-licenses.sh" && \
-	 docker compose exec storefront sh -lc "sh scripts/check-licenses.sh" && \
+	@docker compose exec -T php-fpm bash -lc "scripts/check-licenses.sh" && \
+	 docker compose exec -T storefront sh -lc "sh scripts/check-licenses.sh" && \
 	 echo "✅ All license checks passed"

@@ -217,10 +217,10 @@ generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
 
 check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & storefront)
 	@echo "🔍 Checking dependency licenses..."
-	@docker compose exec -T php-fpm bash -lc "project-base/scripts/check-licenses.sh" && \
+	@docker compose exec -T php-fpm bash -lc "project-base/app/scripts/check-licenses.sh" && \
 	 docker compose exec -T storefront sh -lc "sh scripts/check-licenses.sh" && \
 	 echo "✅ All license checks passed"
-	 
+
 # ------------------------------------------------------------------------------
 # 💅 Compiling Tailwind CSS for admin
 # ------------------------------------------------------------------------------
