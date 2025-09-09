@@ -10,3 +10,4 @@ Agent behavior for this repo:
 
 For the full authoritative guidance, read `./CLAUDE.md`.
 
+Do not update AGENTS.md. Any changes necessary to be documented for AI agents should be added to `CLAUDE.md`.
