@@ -30,7 +30,7 @@
         "@sentry/nextjs": "~9.38.0",
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.1.6",
-        "@urql/exchange-graphcache": "~6.4.1",
+        "@urql/exchange-graphcache": "~6.5.1",
         "cookies-next": "~4.3.0",
         "crypto-js": "~4.2.0",
         "dayjs": "~1.11.18",
