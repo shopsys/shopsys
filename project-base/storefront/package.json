@@ -96,7 +96,7 @@
         "@typescript-eslint/eslint-plugin": "~8.29.1",
         "@typescript-eslint/parser": "~8.26.1",
         "@urql/introspection": "^1.2.1",
-        "@vitejs/plugin-react": "~4.3.4",
+        "@vitejs/plugin-react": "4.2.1",
         "concurrently": "~8.2.2",
         "eslint": "~9.22.0",
         "eslint-config-prettier": "~9.1.2",
@@ -124,7 +124,14 @@
             "next-translate-plugin"
         ],
         "overrides": {
-            "@urql/core": "6.0.1"
+            "@urql/core": "6.0.1",
+            "esbuild@<=0.24.2": ">=0.25.0",
+            "vite": "5.4.19",
+            "brace-expansion@>=1.0.0 <=1.1.11": "1.1.12",
+            "brace-expansion@>=2.0.0 <=2.0.1": "1.1.12",
+            "form-data@>=4.0.0 <4.0.4": ">=4.0.4",
+            "@eslint/plugin-kit@<0.3.4": ">=0.3.4",
+            "tmp@<=0.2.3": ">=0.2.4"
         }
     }
 }
