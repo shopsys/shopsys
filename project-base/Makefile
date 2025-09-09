@@ -159,13 +159,6 @@ selected-acceptance-tests-base: ## Runs selected base acceptance tests (interact
 selected-acceptance-tests-regression: ## Runs selected regression acceptance tests (interactive selection, headless)
 	$(call selected_acceptance_tests,regression)
 
-run-specific-test-base: ## Runs a specific base acceptance test (interactive selection, headless)
-	@if [ -z "$(SPEC)" ]; then \
-		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
-		exit 1; \
-	fi
-	$(call run_specific_acceptance_test,base,$(SPEC))
-
 run-specific-test-regression: ## Runs a specific regression acceptance test (interactive selection, headless)
 	@if [ -z "$(SPEC)" ]; then \
 		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
