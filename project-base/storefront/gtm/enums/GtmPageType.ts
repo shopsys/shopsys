@@ -15,6 +15,7 @@ export enum GtmPageType {
     flag_detail = 'flag detail',
     brand_detail = 'brand detail',
     article_detail = 'article detail',
+    about = 'about',
     payment_fail = 'payment fail',
     payment_success = 'payment success',
     payment_in_process = 'payment in process',

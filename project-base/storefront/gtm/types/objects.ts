@@ -5,6 +5,11 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { GtmUserStatus } from 'gtm/enums/GtmUserStatus';
 import { GtmUserType } from 'gtm/enums/GtmUserType';
 
+export const SPECIAL_ARTICLE_GTM_TYPES = Object.freeze({
+    '/about-us': GtmPageType.about,
+    '/o-nas': GtmPageType.about,
+} as const);
+
 export type GtmReviewConsentsType = {
     seznam: boolean;
     google: boolean;
