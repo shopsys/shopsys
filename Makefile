@@ -171,13 +171,6 @@ run-specific-test-base: ## Runs a specific base acceptance test (interactive sel
 	fi
 	$(call run_specific_acceptance_test,base,$(SPEC))
 
-run-specific-test-actual: ## Runs a specific actual acceptance test (interactive selection, headless)
-	@if [ -z "$(SPEC)" ]; then \
-		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-actual SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
-		exit 1; \
-	fi
-	$(call run_specific_acceptance_test,actual,$(SPEC))
-
 open-acceptance-tests-base: ## Opens the Cypress GUI for debugging base acceptance tests
 	$(call open_acceptance_tests,base)
 
