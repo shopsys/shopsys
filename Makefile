@@ -46,7 +46,7 @@ generate-schema-native: ## Generates GraphQL schema and frontend types (natively
 	rm -rf project-base/storefront/schema.graphql
 
 # ------------------------------------------------------------------------------
-# ✅ Code Checks and Fixes (PHP a JS/TS)
+# ✅ Code Checks and Fixes (PHP and JS/TS)
 # ------------------------------------------------------------------------------
 
 check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations check-licenses ## Runs all code checks (backend & storefront) and attempts to fix issues
@@ -227,4 +227,3 @@ generate-tailwind-for-admin:
 	@echo "🔧 Rebuilding backend admin assets..."
 	docker compose exec php-fpm php phing npm-dev
 	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."
-
