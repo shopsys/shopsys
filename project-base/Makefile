@@ -220,3 +220,48 @@ generate-tailwind-for-admin:
 	@echo "🔧 Rebuilding backend admin assets..."
 	docker compose exec php-fpm php phing npm-dev
 	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."
+
+# ------------------------------------------------------------------------------
+# 🎨 Icon Generator for Styleguide
+# ------------------------------------------------------------------------------
+
+generate-icons-for-styleguide: ## Generates StyleguideIcons component from all icon files
+	@echo "🚀 Generating StyleguideIcons component..."
+	@echo ""
+	@echo "🗑️  Deleting existing file..."
+	@rm -f storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "✅ Deleted"
+	@echo ""
+	@echo "🔄 Generating new component..."
+	@echo "/*" > storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo " * This file is auto-generated. Do not edit manually." >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo " * To regenerate this file, run: make generate-icons-for-styleguide" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo " */" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "import { StyleguideSection } from './StyleguideElements';" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@for file in storefront/components/Basic/Icon/*.tsx; do \
+		name=$$(basename "$$file" .tsx); \
+		if [ "$$name" != "iconsListGeneratorScript" ]; then \
+			echo "import { $$name } from 'components/Basic/Icon/$$name';" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+		fi \
+	done
+	@echo "" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "export const StyleguideIcons = () => (" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "    <StyleguideSection title=\"Icons\">" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "        <div className=\"grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6\">" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@for file in storefront/components/Basic/Icon/*.tsx; do \
+		name=$$(basename "$$file" .tsx); \
+		if [ "$$name" != "iconsListGeneratorScript" ]; then \
+			echo "            <div className=\"border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md\">" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "                <$$name className=\"size-10\" />" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "                <span className=\"text-center text-xs break-all\">$$name</span>" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "            </div>" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+		fi \
+	done
+	@echo "        </div>" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "    </StyleguideSection>" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo ");" >> storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "✅ Generated $$(ls -1 storefront/components/Basic/Icon/*.tsx | grep -v Script | wc -l | xargs) icons"
+	@echo ""
+	@echo "🎉 StyleguideIcons generation complete!"
+	@echo "📁 File: storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx"

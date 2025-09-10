@@ -5,28 +5,25 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 type StyleguidePageProps = ServerSidePropsType & {
-    iconList?: string[];
     tailwindColors?: Record<string, any>;
 };
 
-const StyleguidePage: FC<StyleguidePageProps> = ({ iconList, tailwindColors }) => {
+const StyleguidePage: FC<StyleguidePageProps> = ({ tailwindColors }) => {
     return (
         <CommonLayout title="Styleguide">
-            <StyleguideContent iconList={iconList} tailwindColors={tailwindColors} />
+            <StyleguideContent tailwindColors={tailwindColors} />
         </CommonLayout>
     );
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    let iconList: string[] = [];
     let tailwindColors: Record<string, any> | undefined = undefined;
 
     if (isEnvironment('development')) {
         const fsModule = await import('fs');
         const pathModule = await import('path');
-        iconList = fsModule.readdirSync(pathModule.join(process.cwd(), '/components/Basic/Icon'));
 
-        const cssContent = fsModule.readFileSync(pathModule.join(process.cwd(), '/styles/globals.css'));
+        const cssContent = fsModule.readFileSync(pathModule.join(process.cwd(), '/styles/theme.css'));
         tailwindColors = cssContent
             .toString()
             .split('\n')
@@ -47,7 +44,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         redisClient,
         domainConfig,
         t,
-        additionalProps: isEnvironment('development') ? { iconList, tailwindColors } : {},
+        additionalProps: isEnvironment('development') ? { tailwindColors } : {},
     });
 });
 
