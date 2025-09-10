@@ -105,6 +105,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
             new Role(AdminRoleConstant::ROLE_BRAND, t('Brands'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_STOCK, t('Warehouses'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_PRICE_LIST, t('Price lists'), [Permission::FULL]),
+            new Role(AdminRoleConstant::ROLE_GIFT_PLAN, t('Gift plans'), [Permission::FULL]),
         ];
     }
 

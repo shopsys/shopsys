@@ -286,6 +286,9 @@ msgstr "Zadejte prosím aspoň jednu cenu"
 msgid "Please enter bank account number"
 msgstr "Prosím vyplňte číslo bankovního účtu"
 
+msgid "Please enter choose gift product"
+msgstr "Prosím vyberte dárkový produkt"
+
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
 
@@ -393,6 +396,9 @@ msgstr "Vyplňte prosím název"
 
 msgid "Please enter name of advertisement area"
 msgstr "Zadejte prosím název reklamní plochy"
+
+msgid "Please enter name of gift plan"
+msgstr "Vyplňte prosím název dárkového plánu"
 
 msgid "Please enter navigation item name"
 msgstr "Zadejte prosím název položky navigace"

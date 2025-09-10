@@ -937,6 +937,9 @@ msgstr "Uděleno"
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
 
+msgid "Gift plans"
+msgstr ""
+
 msgid "Heureka setting"
 msgstr "Heureka nastavení"
 

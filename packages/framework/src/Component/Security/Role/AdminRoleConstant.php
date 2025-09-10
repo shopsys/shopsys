@@ -30,6 +30,7 @@ class AdminRoleConstant
     public const string ROLE_NEWSLETTER = 'ROLE_NEWSLETTER';
     public const string ROLE_PROMO_CODE = 'ROLE_PROMO_CODE';
     public const string ROLE_ADVERT = 'ROLE_ADVERT';
+    public const string ROLE_GIFT_PLAN = 'ROLE_GIFT_PLAN';
     public const string ROLE_SLIDER_ITEM = 'ROLE_SLIDER_ITEM';
     public const string ROLE_ARTICLE = 'ROLE_ARTICLE';
     public const string ROLE_BLOG_CATEGORY = 'ROLE_BLOG_CATEGORY';

@@ -1,0 +1,14 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_giftplan_edit', { id: row.gp.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No gift plan found. You have to create some first.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'gift plans'|trans %}
+    {{ parent() }}
+{% endblock %}

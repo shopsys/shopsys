@@ -1366,6 +1366,9 @@ msgstr ""
 msgid "Processor frequency"
 msgstr ""
 
+msgid "Product gift"
+msgstr ""
+
 msgid "Promoted products"
 msgstr ""
 

@@ -60,6 +60,9 @@ class SideMenuBuilder
     public const string LIST_PRICING_GROUP = 'pricing_groups';
     public const string LIST_VAT = 'vat';
     public const string FREE_TRANSPORT_AND_PAYMENT = 'free_transport_and_payment';
+    public const string GIFT_PLAN_LIST = 'gift_plan_list';
+    public const string GIFT_PLAN_NEW = 'gift_plan_new';
+    public const string GIFT_PLAN_EDIT = 'gift_plan_edit';
     public const string LIST_CURRENCY = 'currencies';
     public const string ROOT_CMS = 'marketing';
     public const string LIST_ARTICLE = 'articles';
@@ -541,6 +544,15 @@ class SideMenuBuilder
             ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')],
         );
         $currenciesMenuItem->setExtra('superadmin', true);
+
+        $giftPlansMenu = $menu->addChild(
+            static::GIFT_PLAN_LIST,
+            ['route' => 'admin_giftplan_list', 'label' => t(
+                'Gift plans',
+            )],
+        );
+        $giftPlansMenu->addChild(static::GIFT_PLAN_NEW, ['route' => 'admin_giftplan_new', 'label' => t('New gift plan'), 'display' => false]);
+        $giftPlansMenu->addChild(static::GIFT_PLAN_EDIT, ['route' => 'admin_giftplan_edit', 'label' => t('Editing gift plan'), 'display' => false]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRICING, $menu);
 
