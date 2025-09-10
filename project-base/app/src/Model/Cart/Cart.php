@@ -25,6 +25,9 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @method \App\Model\Cart\Item\CartItem getItemByUuid(string $itemUuid)
  * @method assignCartToCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method \App\Model\Product\Product[] getProducts()
+ * @method \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct createQuantifiedProduct(\App\Model\Cart\Item\CartItem $cartItem)
+ * @method \App\Model\Cart\Item\CartItem[] getProductGiftCartItems()
+ * @method \App\Model\Cart\Item\CartItem[] getProductCartItems()
  */
 class Cart extends BaseCart
 {

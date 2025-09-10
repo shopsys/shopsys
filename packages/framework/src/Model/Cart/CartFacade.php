@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -99,7 +100,7 @@ class CartFacade
             $quantity -= $notOnStockQuantity;
         }
 
-        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat());
+        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat(), CartItemTypeEnum::TYPE_PRODUCT);
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 
