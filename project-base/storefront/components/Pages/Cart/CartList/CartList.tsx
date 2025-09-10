@@ -23,7 +23,7 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
             </h2>
 
             <ul aria-label={t('Cart items list')} aria-live="polite" className="flex flex-col gap-4">
-                {(isRemovingFromCart || isAddingToCart) && <LoaderWithOverlay className="w-16" />}
+                {(isRemovingFromCart || isAddingToCart) && <LoaderWithOverlay isFullScreen className="w-16" />}
 
                 {cartItems.map((cartItem, listIndex) => (
                     <CartListItem
