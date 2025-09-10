@@ -46,7 +46,7 @@ generate-schema-native: ## Generates GraphQL schema and frontend types (natively
 	rm -rf project-base/storefront/schema.graphql
 
 # ------------------------------------------------------------------------------
-# ✅ Code Checks and Fixes (PHP a JS/TS)
+# ✅ Code Checks and Fixes (PHP and JS/TS)
 # ------------------------------------------------------------------------------
 
 check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations check-licenses ## Runs all code checks (backend & storefront) and attempts to fix issues
@@ -157,13 +157,6 @@ selected-acceptance-tests-base: ## Runs selected base acceptance tests (interact
 selected-acceptance-tests-regression: ## Runs selected regression acceptance tests (interactive selection, headless)
 	$(call selected_acceptance_tests,regression)
 
-run-specific-test-base: ## Runs a specific base acceptance test (interactive selection, headless)
-	@if [ -z "$(SPEC)" ]; then \
-		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
-		exit 1; \
-	fi
-	$(call run_specific_acceptance_test,base,$(SPEC))
-
 run-specific-test-regression: ## Runs a specific regression acceptance test (interactive selection, headless)
 	@if [ -z "$(SPEC)" ]; then \
 		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
@@ -177,13 +170,6 @@ run-specific-test-base: ## Runs a specific base acceptance test (interactive sel
 		exit 1; \
 	fi
 	$(call run_specific_acceptance_test,base,$(SPEC))
-
-run-specific-test-actual: ## Runs a specific actual acceptance test (interactive selection, headless)
-	@if [ -z "$(SPEC)" ]; then \
-		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-actual SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
-		exit 1; \
-	fi
-	$(call run_specific_acceptance_test,actual,$(SPEC))
 
 open-acceptance-tests-base: ## Opens the Cypress GUI for debugging base acceptance tests
 	$(call open_acceptance_tests,base)
@@ -217,10 +203,10 @@ generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
 
 check-licenses: ## Checks dependency licenses in Composer and NPM (php-fpm & storefront)
 	@echo "🔍 Checking dependency licenses..."
-	@docker compose exec -T php-fpm bash -lc "project-base/scripts/check-licenses.sh" && \
+	@docker compose exec -T php-fpm bash -lc "project-base/app/scripts/check-licenses.sh" && \
 	 docker compose exec -T storefront sh -lc "sh scripts/check-licenses.sh" && \
 	 echo "✅ All license checks passed"
-	 
+
 # ------------------------------------------------------------------------------
 # 💅 Compiling Tailwind CSS for admin
 # ------------------------------------------------------------------------------
@@ -234,4 +220,3 @@ generate-tailwind-for-admin:
 	@echo "🔧 Rebuilding backend admin assets..."
 	docker compose exec php-fpm php phing npm-dev
 	@echo "🎉 Admin assets rebuilt! Tailwind classes are now available in GrapesJS."
-
