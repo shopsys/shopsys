@@ -3,7 +3,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.ssr';
 import { ImageFragment } from '../../images/fragments/ImageFragment.ssr';
-export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };
+export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -21,6 +21,12 @@ export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, n
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -33,9 +39,9 @@ export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, n
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -81,14 +87,14 @@ export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, n
   }
 };
       export default result;
-
+    
 export const SimplePaymentFragment = gql`
     fragment SimplePaymentFragment on Payment {
   __typename
   uuid
   name
   description
-  instruction
+  instructions
   price {
     ...PriceFragment
   }

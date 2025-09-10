@@ -24,6 +24,12 @@ export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptio
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +42,9 @@ export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptio
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,7 +90,7 @@ export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptio
   }
 };
       export default result;
-
+    
 export const ProductFilterOptionsFragment = gql`
     fragment ProductFilterOptionsFragment on ProductFilterOptions {
   __typename

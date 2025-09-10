@@ -1,3 +1,5 @@
+'use client';
+
 import dayjs from 'dayjs';
 import { twJoin } from 'tailwind-merge';
 import { useFormatDate } from 'utils/formatting/useFormatDate';

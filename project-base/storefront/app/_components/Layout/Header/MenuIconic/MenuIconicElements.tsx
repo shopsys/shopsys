@@ -21,7 +21,7 @@ type MenuIconicItemLinkProps = {
     title?: string;
     type?: PageType;
     onClick?: () => void;
-    onTouchEnd?: (e: ReactTouchEvent<HTMLDivElement>) => void;
+    onTouchEnd?: (e: ReactTouchEvent<HTMLButtonElement>) => void;
 };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
@@ -43,9 +43,9 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
     }
 
     return (
-        <a className={menuIconicSubItemLinkTwClass} tid={tid} onClick={onClick}>
+        <button className={menuIconicSubItemLinkTwClass} data-tid={tid} type="button" onClick={onClick}>
             {children}
-        </a>
+        </button>
     );
 };
 
@@ -71,15 +71,16 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         }
 
         return (
-            <div
+            <button
                 className={twMergeCustom(menuIconicItemLinkTwClass, className)}
-                tid={tid}
+                data-tid={tid}
                 title={title}
+                type="button"
                 onClick={onClick}
-                onTouchEnd={onTouchEnd}
+                onTouchEnd={onTouchEnd as any}
             >
                 {children}
-            </div>
+            </button>
         );
     },
 );

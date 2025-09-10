@@ -68,8 +68,13 @@ const TestErrorsPage = () => {
                         </Button>
                     </div>
                     <div className="mt-4 text-sm text-gray-600">
-                        <p><strong>Render Error:</strong> Immediate error during component rendering - caught by error.tsx</p>
-                        <p><strong>Network Error:</strong> Simulated API failure after delay - caught by error.tsx</p>
+                        <p>
+                            <strong>Render Error:</strong> Immediate error during component rendering - caught by
+                            error.tsx
+                        </p>
+                        <p>
+                            <strong>Network Error:</strong> Simulated API failure after delay - caught by error.tsx
+                        </p>
                     </div>
                 </div>
 
@@ -85,8 +90,7 @@ const TestErrorsPage = () => {
                             initialization errors.
                         </p>
                         <p className="mb-2">
-                            To test global-error.tsx, you need to throw an error in layout.tsx or a provider
-                            component.
+                            To test global-error.tsx, you need to throw an error in layout.tsx or a provider component.
                         </p>
                         <p>This button demonstrates the error boundary hierarchy:</p>
                     </div>

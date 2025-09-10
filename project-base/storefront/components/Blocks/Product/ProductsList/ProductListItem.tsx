@@ -70,6 +70,10 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
         const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
         const { t } = useTranslation();
         const { canSeePrices } = useAuthorization();
+        void isProductInComparison;
+        void isProductInWishlist;
+        void toggleProductInComparison;
+        void toggleProductInWishlist;
 
         return (
             <li

@@ -5,6 +5,7 @@ import { AuthorizationProvider } from './AuthorizationProvider';
 import BroadcastChannelProvider from './BroadcastChannelProvider';
 import { CookiesStoreProvider } from './CookiesStoreProvider';
 import { CookiesStoreSync } from './CookiesStoreSync';
+import { DomainConfigProvider } from './DomainConfigProvider';
 import { ProductListProvider, ProductListState } from './ProductListProvider';
 import ToastifyProvider from './ToastifyProvider';
 import { TranslationProvider } from './TranslationProvider';
@@ -13,11 +14,17 @@ import { getCurrentCustomerData } from 'app/_queries/getCurrentCustomerData';
 import { getCurrentCustomerUserRoles } from 'app/_queries/getCurrentCustomerUserRoles';
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { CookiesStoreState, getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
-import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import { DomainConfigType, getDomainConfig } from 'app/_utils/getDomainConfig';
 import { getInitialProductListState } from 'app/_utils/getInitalProductListState';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { LazyMotion, MotionConfig } from 'framer-motion';
+import { TypeSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.ssr';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
+import { Locale } from 'i18n-config';
 import { headers } from 'next/headers';
+import { use } from 'react';
+import { CurrentCustomerType } from 'types/customer';
+import { Dictionary } from 'types/translation';
 import framerMotionPlugins from 'utils/animations/framerMotionPlugins';
 import { getDictionary } from 'utils/getDictionary';
 
@@ -42,7 +49,7 @@ export function ProvidersWrapper({
     children,
     cookieStoreStateFromServerPromise,
     domainConfig,
-    staticRewritePaths,
+    //staticRewritePaths,
     settingsPromise,
     dictionaryPromise,
     lang,
@@ -67,27 +74,20 @@ export function ProvidersWrapper({
             <DomainConfigProvider domainConfig={domainConfig}>
                 <AppConfigProvider
                     domainConfig={domainConfig}
-                    settings={settingsData.value.data.settings}
+                    settings={settingsResult.data.settings}
                     staticRewritePaths={STATIC_REWRITE_PATHS[domainConfig.url]}
                 >
                     <TranslationProvider dictionary={dictionary} lang={lang}>
-                        <AuthProvider user={user.status === 'fulfilled' ? user.value : undefined}>
+                        <AuthProvider user={user}>
                             <AuthorizationProvider customerUserRoles={customerUserRoles}>
-                                <ProductListProvider
-                                    initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
-                                >
+                                <ProductListProvider initialState={initialProductListState}>
                                     <MotionConfig reducedMotion="user">
                                         <LazyMotion features={framerMotionPlugins}>
                                             <html lang={lang}>
-                                                {/* <head>
-                                            <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
-                                        </head> */}
                                                 {/* suppressHydrationWarning for ignoring grammarly extension */}
                                                 <body suppressHydrationWarning>
                                                     <ToastifyProvider>
-                                                        <AuthInfo
-                                                            isUserLoggedIn={user.status === 'fulfilled' && !!user.value}
-                                                        />
+                                                        <AuthInfo isUserLoggedIn={!!user} />
                                                         <CookiesStoreSync />
                                                         <BroadcastChannelProvider />
                                                         {children}

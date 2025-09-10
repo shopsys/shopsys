@@ -109,9 +109,10 @@ export const ProductWishlistButton: FC<ProductWishlistButtonProps & NativeProps>
     };
 
     return (
-        <div
+        <button
             aria-disabled={isPending}
             title={optimisticIsInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
+            type="button"
             className={twMergeCustom(
                 'text-input-placeholder-default hover:text-input-placeholder-hovered flex cursor-pointer items-center gap-2',
             )}
@@ -127,6 +128,6 @@ export const ProductWishlistButton: FC<ProductWishlistButtonProps & NativeProps>
                     {optimisticIsInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}
                 </span>
             )}
-        </div>
+        </button>
     );
 };

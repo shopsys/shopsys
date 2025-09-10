@@ -1,5 +1,3 @@
-import { useAppConfig } from 'components/providers/AppConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     TypeAddToCartMutation,
     useAddToCartMutation,
@@ -8,8 +6,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
-import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
-import { useCurrentCart } from 'utils/cart/useCurrentCart';
+// import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
@@ -20,19 +17,18 @@ export type AddToCart = (
     isAbsoluteQuantity?: boolean,
 ) => Promise<TypeAddToCartMutation['AddToCart'] | null>;
 
-export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductListName: GtmProductListNameType) => {
+export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, _gtmProductListName: GtmProductListNameType) => {
     const [{ fetching: isAddingToCart }, addToCartMutation] = useAddToCartMutation();
     const { t } = useTranslation();
-    const isUserLoggedIn = useIsUserLoggedIn();
-    const { cart } = useCurrentCart();
-    const domainConfig = useAppConfig((appConfig) => appConfig.domainConfig);
+    // const { cart } = useCurrentCart();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
-    const currentCustomerData = useCurrentCustomerData();
+
+    void _gtmProductListName;
 
     const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
-        const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
-        const initialQuantity = itemToBeAdded?.quantity ?? 0;
+        // const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
+        // const initialQuantity = itemToBeAdded?.quantity ?? 0;
         const addToCartActionResult = await addToCartMutation({
             input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
         });
@@ -57,7 +53,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
 
         dispatchBroadcastChannel('refetchCart');
 
-        const addedCartItem = addToCartResult.addProductResult.cartItem;
+        // const addedCartItem = addToCartResult.addProductResult.cartItem;
 
         // import('gtm/handlers/onGtmChangeCartItemEventHandler').then(({ onGtmChangeCartItemEventHandler }) => {
         //     onGtmChangeCartItemEventHandler(

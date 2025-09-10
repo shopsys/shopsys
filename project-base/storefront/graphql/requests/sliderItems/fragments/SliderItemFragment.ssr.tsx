@@ -2,7 +2,7 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.ssr';
-export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } };
+export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, name: string, link: string, description: string | null, rgbBackgroundColor: string, opacity: number, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } };
 
 
       export interface PossibleTypesResultData {
@@ -20,6 +20,12 @@ export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, n
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -32,9 +38,9 @@ export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, n
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -80,15 +86,16 @@ export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, n
   }
 };
       export default result;
-
+    
 export const SliderItemFragment = gql`
     fragment SliderItemFragment on SliderItem {
   __typename
   uuid
   name
   link
-  extendedText
-  extendedTextLink
+  description
+  rgbBackgroundColor
+  opacity
   webMainImage: mainImage(type: "web") {
     ...ImageFragment
   }

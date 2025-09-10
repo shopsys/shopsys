@@ -48,6 +48,7 @@ export const AutocompleteSearch = ({ search }: SearchInputProps) => {
         <>
             <div className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}>
                 <SearchInput
+                    ariaLabelForSearchButton={t('Search')}
                     className="w-full"
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={false}

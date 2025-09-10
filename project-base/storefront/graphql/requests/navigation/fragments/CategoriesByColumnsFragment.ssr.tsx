@@ -2,7 +2,7 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ColumnCategoriesFragment } from './ColumnCategoriesFragment.ssr';
-export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> };
+export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> };
 
 
       export interface PossibleTypesResultData {
@@ -20,6 +20,12 @@ export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', nam
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -32,9 +38,9 @@ export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', nam
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -80,12 +86,13 @@ export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', nam
   }
 };
       export default result;
-
+    
 export const CategoriesByColumnFragment = gql`
     fragment CategoriesByColumnFragment on NavigationItem {
   __typename
   name
   link
+  routeName
   categoriesByColumns {
     ...ColumnCategoriesFragment
   }

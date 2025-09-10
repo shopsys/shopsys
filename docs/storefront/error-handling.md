@@ -129,11 +129,13 @@ Global errors (`global-error.tsx`) are only triggered by:
 **Important:** Most component errors will be caught by the page-level `error.tsx`, not `global-error.tsx`. The global error boundary is a last resort for critical application-level failures.
 
 **Real-world scenarios for global errors:**
+
 - Provider initialization failures (auth, theme, etc.)
 - Root layout rendering errors
 - Critical JavaScript runtime errors
 
 **Testing limitation:** In a typical page component, errors will be caught by `error.tsx` rather than bubbling up to `global-error.tsx`. To test global errors properly, you would need to:
+
 1. Throw an error in the root layout
 2. Cause a provider-level error
 3. Trigger an error during app initialization

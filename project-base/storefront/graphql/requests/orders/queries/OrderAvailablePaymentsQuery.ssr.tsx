@@ -8,7 +8,7 @@ export type TypeOrderAvailablePaymentsQueryVariables = Types.Exact<{
 }>;
 
 
-export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayments: { __typename?: 'OrderPaymentsConfig', availablePayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, currentPayment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
+export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayments: { __typename?: 'OrderPaymentsConfig', availablePayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, currentPayment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } | null } };
 
 
       export interface PossibleTypesResultData {
@@ -26,6 +26,12 @@ export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayme
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayme
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayme
   }
 };
       export default result;
-
+    
 
 export const OrderAvailablePaymentsQueryDocument = gql`
     query OrderAvailablePaymentsQuery($orderUuid: Uuid!) {

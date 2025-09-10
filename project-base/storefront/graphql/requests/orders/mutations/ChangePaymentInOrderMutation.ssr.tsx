@@ -1,14 +1,14 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.ssr';
+import { ChangePaymentInOrderFragment } from '../fragments/ChangePaymentInOrderFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeChangePaymentInOrderMutationVariables = Types.Exact<{
   input: Types.TypeChangePaymentInOrderInput;
 }>;
 
 
-export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename?: 'Order', urlHash: string, number: string, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
+export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename: 'Order', urlHash: string, number: string, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
 
 
       export interface PossibleTypesResultData {
@@ -26,6 +26,12 @@ export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', Change
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', Change
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,16 +92,12 @@ export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', Change
   }
 };
       export default result;
-
+    
 
 export const ChangePaymentInOrderMutationDocument = gql`
     mutation ChangePaymentInOrderMutation($input: ChangePaymentInOrderInput!) {
   ChangePaymentInOrder(input: $input) {
-    urlHash
-    number
-    payment {
-      ...SimplePaymentFragment
-    }
+    ...ChangePaymentInOrderFragment
   }
 }
-    ${SimplePaymentFragment}`;
+    ${ChangePaymentInOrderFragment}`;

@@ -1,12 +1,11 @@
-import md5 from 'crypto-js/md5';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { isClient } from 'utils/isClient';
 import { Sentry } from 'utils/sentry';
 
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
-const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
-const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
+// const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
+// const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
 // For URL-encoded: %40redisCache%28ttl%3A%203600%29 -> %40redisCache followed by optional %28...%29
 // For unencoded: @redisCache(ttl: 3600) -> @redisCache followed by optional (...)
@@ -93,12 +92,10 @@ export const fetcher =
             }
 
             const body = removeDirectiveFromQuery(init.body, [CACHE_REGEXP, FRIENDLY_URL_REGEXP]);
-            const host = (init.headers ? new Headers(init.headers) : new Headers()).get('OriginalHost');
-            const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const hash = `${getRedisPrefixPattern()}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
+            // const hash = `${getRedisPrefixPattern()}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
 
             // TODO: remove redis
-            const fromCache = null;
+            // const fromCache = await redisClient.get(hash);
             // const fromCache = await redisClient.get(hash);
 
             // if (fromCache !== null) {

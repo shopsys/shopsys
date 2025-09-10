@@ -78,7 +78,7 @@ const getOptimisticChangeTransportInCartResult = (
         roundingPrice: cartQueryResult.cart?.roundingPrice ?? null,
         modifications: cartQueryResult.cart?.modifications,
         payment: cartQueryResult.cart?.payment,
-        promoCode: cartQueryResult.cart?.promoCode,
+        promoCodes: cartQueryResult.cart?.promoCodes ?? [],
         transport:
             transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
     }) as unknown as TypeChangeTransportInCartMutation['ChangeTransportInCart'];
@@ -102,7 +102,7 @@ const getOptimisticChangePaymentInCartResult = (
         roundingPrice: cartQueryResult.cart?.roundingPrice ?? null,
         modifications: cartQueryResult.cart?.modifications,
         payment: optimisticPayment,
-        promoCode: cartQueryResult.cart?.promoCode,
+        promoCodes: cartQueryResult.cart?.promoCodes ?? [],
         transport: cartQueryResult.cart?.transport,
     } as unknown as TypeChangePaymentInCartMutation['ChangePaymentInCart'];
 };

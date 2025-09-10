@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeLastOrderQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportTypeCode: Types.TypeTransportTypeEnum }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null } | null };
+export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportTypeCode: Types.TypeTransportTypeEnum }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null } | null };
 
 
       export interface PossibleTypesResultData {
@@ -24,6 +24,12 @@ export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +42,9 @@ export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,7 +90,7 @@ export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename
   }
 };
       export default result;
-
+    
 
 export const LastOrderQueryDocument = gql`
     query LastOrderQuery {

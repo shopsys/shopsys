@@ -1,7 +1,8 @@
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
-import { productListTwClass } from 'components/Pages/CategoryDetail/CategoryDetailProductsWrapper/CategoryDetailProductsWrapperPlaceholder';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+
+const productListTwClass = 'grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
 
 export const SkeletonModuleProductList: FC = () => (
     <div className={productListTwClass}>

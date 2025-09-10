@@ -21,6 +21,12 @@ export type TypeBlogArticleConnectionFragment = { __typename: 'BlogArticleConnec
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -33,9 +39,9 @@ export type TypeBlogArticleConnectionFragment = { __typename: 'BlogArticleConnec
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -81,7 +87,7 @@ export type TypeBlogArticleConnectionFragment = { __typename: 'BlogArticleConnec
   }
 };
       export default result;
-
+    
 export const BlogArticleConnectionFragment = gql`
     fragment BlogArticleConnectionFragment on BlogArticleConnection {
   __typename

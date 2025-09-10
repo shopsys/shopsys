@@ -3,7 +3,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.ssr';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.ssr';
-export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', quantity: number, product: { __typename: 'MainVariant', isVisible: boolean, isSellingDenied: boolean } | { __typename: 'RegularProduct', isVisible: boolean, isSellingDenied: boolean } | { __typename: 'Variant', isVisible: boolean, isSellingDenied: boolean } | null }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', url: string, name: string | null } | null }, payment: { __typename: 'Payment', name: string, type: string, mainImage: { __typename?: 'Image', url: string } | null }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', quantity: number, product: { __typename: 'MainVariant', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | { __typename: 'RegularProduct', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | { __typename: 'Variant', isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean } | null }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', url: string, name: string | null } | null }, payment: { __typename: 'Payment', name: string, type: Types.TypePaymentTypeEnum, mainImage: { __typename?: 'Image', url: string } | null }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
 
       export interface PossibleTypesResultData {
@@ -21,6 +21,12 @@ export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, numbe
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -33,9 +39,9 @@ export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, numbe
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -81,7 +87,7 @@ export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, numbe
   }
 };
       export default result;
-
+    
 export const ListedOrderFragment = gql`
     fragment ListedOrderFragment on Order {
   __typename
@@ -95,6 +101,7 @@ export const ListedOrderFragment = gql`
       __typename
       isVisible
       isSellingDenied
+      isInquiryType
     }
   }
   transport {
@@ -119,6 +126,8 @@ export const ListedOrderFragment = gql`
     ...PriceFragment
   }
   isPaid
+  hasExternalPayment
+  hasPaymentInProcess
   status
   note
 }

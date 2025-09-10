@@ -51,7 +51,7 @@ export const ProductSlider: FC<ProductSliderProps> = ({
     tid,
     isWithArrows = true,
     variant = 'default',
-    isLuigisEnabled, // TODO: luigis box
+    //isLuigisEnabled, // TODO: luigis box
     ariaAnchorName,
 }) => {
     const { t } = useTranslation();

@@ -4,7 +4,8 @@ import gql from 'graphql-tag';
 import { ImageFragment } from '../../../images/fragments/ImageFragment.ssr';
 import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.ssr';
 import { HreflangLinksFragment } from '../../../hreflangLinks/fragments/HreflangLinksFragment.ssr';
-export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, seoTitle: string | null, seoMetaDescription: string | null, seoH1: string | null, mainBlogCategoryUuid: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }> };
+import { SimpleBlogCategoryFragment } from '../../../blogCategories/fragments/SimpleBlogCategoryFragment.ssr';
+export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, seoTitle: string | null, seoMetaDescription: string | null, seoH1: string | null, mainBlogCategoryUuid: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }>, blogCategories: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }> };
 
 
       export interface PossibleTypesResultData {
@@ -22,6 +23,12 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -34,9 +41,9 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -82,7 +89,7 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
   }
 };
       export default result;
-
+    
 export const BlogArticleDetailFragment = gql`
     fragment BlogArticleDetailFragment on BlogArticle {
   __typename
@@ -106,7 +113,11 @@ export const BlogArticleDetailFragment = gql`
     ...HreflangLinksFragment
   }
   mainBlogCategoryUuid
+  blogCategories {
+    ...SimpleBlogCategoryFragment
+  }
 }
     ${ImageFragment}
 ${BreadcrumbFragment}
-${HreflangLinksFragment}`;
+${HreflangLinksFragment}
+${SimpleBlogCategoryFragment}`;

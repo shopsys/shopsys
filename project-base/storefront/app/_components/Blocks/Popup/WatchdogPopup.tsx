@@ -61,7 +61,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
     };
 
     return (
-        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5">
+        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5" title={t('Watchdog popup')}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>

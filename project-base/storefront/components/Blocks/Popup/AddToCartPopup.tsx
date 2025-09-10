@@ -3,7 +3,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
-import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';

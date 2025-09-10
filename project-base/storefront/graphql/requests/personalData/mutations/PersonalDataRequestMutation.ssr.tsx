@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypePersonalDataRequestMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
-  type: Types.InputMaybe<Types.TypePersonalDataAccessRequestTypeEnum>;
+  type?: Types.InputMaybe<Types.TypePersonalDataAccessRequestTypeEnum>;
 }>;
 
 
@@ -26,6 +26,12 @@ export type TypePersonalDataRequestMutation = { __typename?: 'Mutation', Request
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypePersonalDataRequestMutation = { __typename?: 'Mutation', Request
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypePersonalDataRequestMutation = { __typename?: 'Mutation', Request
   }
 };
       export default result;
-
+    
 
 export const PersonalDataRequestMutationDocument = gql`
     mutation PersonalDataRequestMutation($email: String!, $type: PersonalDataAccessRequestTypeEnum) {

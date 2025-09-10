@@ -14,7 +14,7 @@ export const useLogout = () => {
         const { error } = await logoutAction();
 
         if (error) {
-            showErrorMessage(t('An error occurred while logging out'));
+            showErrorMessage(t('An error occurred while loading form data'));
             return;
         }
 

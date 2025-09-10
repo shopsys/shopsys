@@ -8,7 +8,7 @@ export type TypeEditCustomerUserPersonalDataMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeEditCustomerUserPersonalDataMutation = { __typename?: 'Mutation', EditCustomerUserPersonalData: { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } };
+export type TypeEditCustomerUserPersonalDataMutation = { __typename?: 'Mutation', EditCustomerUserPersonalData: { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'CurrentCompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'CurrentRegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -26,6 +26,12 @@ export type TypeEditCustomerUserPersonalDataMutation = { __typename?: 'Mutation'
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeEditCustomerUserPersonalDataMutation = { __typename?: 'Mutation'
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeEditCustomerUserPersonalDataMutation = { __typename?: 'Mutation'
   }
 };
       export default result;
-
+    
 
 export const EditCustomerUserPersonalDataMutationDocument = gql`
     mutation EditCustomerUserPersonalDataMutation($input: EditCustomerUserPersonalDataInput!) {

@@ -9,9 +9,7 @@ type LastVisitedProductsProps = {
 };
 
 export const LastVisitedProductsContent = async ({ productsCatnums }: LastVisitedProductsProps) => {
-    const lastVisitedProductsResult = await getLastVisitedProductsQuery(productsCatnums);
-
-    const lastVisitedProducts = lastVisitedProductsResult?.productsByCatnums;
+    const lastVisitedProducts = await getLastVisitedProductsQuery(productsCatnums);
 
     if (!lastVisitedProducts) {
         return null;
@@ -30,8 +28,12 @@ export const LastVisitedProductsContent = async ({ productsCatnums }: LastVisite
     };
 
     return (
-        <ProductSlider totalItems={lastVisitedProducts.length} variant="lastVisited">
-            {lastVisitedProducts.map((product, index) => (
+        <ProductSlider
+            ariaAnchorName="last-visited-products"
+            totalItems={lastVisitedProducts.length}
+            variant="lastVisited"
+        >
+            {lastVisitedProducts.map((product: any, index: number) => (
                 <ProductListItem
                     key={product.uuid}
                     isShownInSlider

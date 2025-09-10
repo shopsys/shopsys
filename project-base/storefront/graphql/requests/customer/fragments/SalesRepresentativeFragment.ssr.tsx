@@ -19,6 +19,12 @@ export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative
   }
 };
       export default result;
-
+    
 export const SalesRepresentativeFragment = gql`
     fragment SalesRepresentativeFragment on SalesRepresentative {
   __typename

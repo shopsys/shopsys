@@ -62,7 +62,7 @@ export const Pagination: FC<PaginationProps> = ({
         <div className="vl:flex-row flex flex-col items-center justify-between gap-5">
             {isWithLoadMore && hasNextPage && (
                 <Button className="px-3" variant="inverted" onClick={loadMore}>
-                    {t('Load more')} {loadMoreCount} {loadMoreTranslation}
+                    {t('Load {{ count }} more {{ items }}', { count: loadMoreCount, items: loadMoreTranslation })}
                 </Button>
             )}
 
@@ -71,7 +71,7 @@ export const Pagination: FC<PaginationProps> = ({
                     const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
                     const pageParams = urlPageNumber
                         ? new URLSearchParams({
-                              ...Object.fromEntries(searchParams.entries()),
+                              ...Object.fromEntries((searchParams?.entries() ?? []) as any),
                               page: urlPageNumber,
                           }).toString()
                         : undefined;

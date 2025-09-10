@@ -9,6 +9,7 @@ export const useCalcElementHeight = (
     const { width } = useGetWindowSize();
 
     const calcHeight = useCallback(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (contentElement.current && contentElementHeight !== contentElement.current.clientHeight) {
             setContentElementHeight(contentElement.current.clientHeight);
         }

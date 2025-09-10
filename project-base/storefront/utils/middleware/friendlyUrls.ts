@@ -71,13 +71,25 @@ function rewriteDynamicPages(pageType: FriendlyPageTypesValue, request: NextRequ
         throw error;
     }
 
-    const friendlyPrefix = FriendlyPagesDestinations[pageTypeKey]; // should always begin with '/'
-    const friendlyPathname = friendlyPrefix + request.nextUrl.pathname;
+    // TODO: sync all dynamic routes to use the new format without dynamic placeholders
+    // Destination may include dynamic placeholders like '/brands/[brandSlug]'.
+    // For rewriting we only need the static base prefix (e.g. '/brands').
+    const rawPrefix = FriendlyPagesDestinations[pageTypeKey];
+    const basePrefix = rawPrefix.split('/[')[0];
 
-    previousResponse.headers.set('x-pathname', friendlyPrefix);
-    previousResponse.headers.set('x-asPath', request.nextUrl.origin + friendlyPathname);
+    const currentPathname = request.nextUrl.pathname;
+
+    // Avoid duplicating the prefix when the incoming path already starts with it
+    // e.g. '/categories' should NOT become '/categories/categories'.
+    const targetPathname =
+        currentPathname === basePrefix || currentPathname.startsWith(basePrefix + '/')
+            ? currentPathname
+            : basePrefix + currentPathname;
+
+    previousResponse.headers.set('x-pathname', basePrefix);
+    previousResponse.headers.set('x-asPath', request.nextUrl.origin + targetPathname);
     const newUrl = request.nextUrl.clone();
-    newUrl.pathname = friendlyPrefix + request.nextUrl.pathname;
+    newUrl.pathname = targetPathname;
 
     return NextResponse.rewrite(newUrl, previousResponse);
 }

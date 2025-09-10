@@ -115,9 +115,10 @@ export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> =
     };
 
     return (
-        <div
+        <button
             aria-disabled={isPending}
             title={optimisticIsInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
+            type="button"
             className={twMergeCustom(
                 'text-input-placeholder-default hover:text-input-placeholder-hovered flex cursor-pointer items-center gap-2',
             )}
@@ -131,6 +132,6 @@ export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> =
             {isWithText && (
                 <span className="text-sm">{optimisticIsInComparison ? t('Remove from comparison') : t('Compare')}</span>
             )}
-        </div>
+        </button>
     );
 };

@@ -62,7 +62,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
     };
 
     return (
-        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5">
+        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5" title={t('Inquire popup')}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(inquiryHandler)}>
                     <FormContentWrapper>

@@ -25,6 +25,12 @@ export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +43,9 @@ export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +91,7 @@ export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_
   }
 };
       export default result;
-
+    
 export const SimpleNotBlogArticleFragment = gql`
     fragment SimpleNotBlogArticleFragment on NotBlogArticleInterface {
   __typename

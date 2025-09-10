@@ -24,6 +24,12 @@ export type TypeCountriesQuery = { __typename?: 'Query', countries: Array<{ __ty
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +42,9 @@ export type TypeCountriesQuery = { __typename?: 'Query', countries: Array<{ __ty
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,7 +90,7 @@ export type TypeCountriesQuery = { __typename?: 'Query', countries: Array<{ __ty
   }
 };
       export default result;
-
+    
 
 export const CountriesQueryDocument = gql`
     query CountriesQuery {

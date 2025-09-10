@@ -75,6 +75,7 @@ export const RegistrationAddress: FC<RegistrationAddressProps> = ({ countries })
                                 <Select
                                     isRequired
                                     activeOption={countries.find((option) => option.value === field.value.value)}
+                                    ariaLabel={t('Country')}
                                     label={formMeta.fields.country.label}
                                     options={countries}
                                     tid={formMeta.formName + '-' + formMeta.fields.country.name}

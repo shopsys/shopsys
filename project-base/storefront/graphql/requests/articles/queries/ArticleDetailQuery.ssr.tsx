@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { ArticleDetailFragment } from '../../articlesInterface/articles/fragments/ArticleDetailFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeArticleDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
@@ -26,6 +26,12 @@ export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typena
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typena
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typena
   }
 };
       export default result;
-
+    
 
 export const ArticleDetailQueryDocument = gql`
     query ArticleDetailQuery($urlSlug: String) @friendlyUrl {

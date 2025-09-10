@@ -29,6 +29,8 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     // const { cart } = useCurrentCart();
 
     const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
+        void gtmProductListName;
+        void listIndex;
         // const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
         // const initialQuantity = itemToBeAdded?.quantity ?? 0;
 

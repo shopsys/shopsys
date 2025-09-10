@@ -5,18 +5,13 @@ import { useAppConfig } from 'components/providers/AppConfigProvider';
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import {
-    FriendlyPagesDestinations,
-    FriendlyPagesTypes,
-    FriendlyPagesTypesKey,
-    FriendlyPagesTypesKeys,
-} from 'types/friendlyUrl';
+import { FriendlyPagesTypes, FriendlyPagesTypesKey, FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { PageType } from 'types/simpleNavigation';
 import { UrlObject } from 'url';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { isTextSelected } from 'utils/ui/isTextSelected';
 
-export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
+export type ExtendedNextLinkProps = Omit<Omit<ComponentPropsWithoutRef<'a'>, 'type'>, keyof LinkProps> &
     Omit<LinkProps, 'prefetch'> & {
         queryParams?: Record<string, string>;
         type?: PageType;
@@ -28,7 +23,6 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     children,
     href,
     queryParams,
-    as,
     onClick,
     type,
     skeletonType,
@@ -38,18 +32,23 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     ...props
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const { url } = useAppConfig((appConfig) => appConfig.domainConfig);
+    const baseUrl = useAppConfig((appConfig) => appConfig.domainConfig).url;
 
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
-    const urlHref = isDynamic
-        ? {
-              pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
-              query: {
-                  [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
-                  ...queryParams,
-              },
-          }
-        : href;
+
+    let urlHref: string | UrlObject = href;
+
+    if (isDynamic) {
+        const friendlyPath = typeof href === 'string' ? href : (href as UrlObject).pathname;
+
+        urlHref = {
+            pathname: friendlyPath,
+            query: {
+                [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
+                ...queryParams,
+            },
+        } satisfies UrlObject;
+    }
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
@@ -66,7 +65,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
         if (isWithoutOpeningInNewTab) {
             onClick?.(e);
 
-            const isLinkExternal = isHrefExternal(href, url);
+            const isLinkExternal = isHrefExternal(href, baseUrl);
             updatePageLoadingState({
                 isPageLoading: !!type || !isLinkExternal,
                 redirectPageType: type ?? skeletonType,
@@ -77,7 +76,6 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     return (
         <NextLink
             prefetch
-            as={isDynamic ? href : as}
             className={className}
             data-tid={tid}
             href={urlHref}

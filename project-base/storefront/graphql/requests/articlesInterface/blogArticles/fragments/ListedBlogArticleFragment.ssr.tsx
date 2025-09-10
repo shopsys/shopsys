@@ -21,6 +21,12 @@ export type TypeListedBlogArticleFragment = { __typename: 'BlogArticle', uuid: s
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -33,9 +39,9 @@ export type TypeListedBlogArticleFragment = { __typename: 'BlogArticle', uuid: s
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -81,7 +87,7 @@ export type TypeListedBlogArticleFragment = { __typename: 'BlogArticle', uuid: s
   }
 };
       export default result;
-
+    
 export const ListedBlogArticleFragment = gql`
     fragment ListedBlogArticleFragment on BlogArticle {
   __typename
