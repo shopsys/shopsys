@@ -17,7 +17,7 @@ use Symfony\Component\Yaml\Parser;
 class UploadedFileConfigLoader
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
+     * @var array<class-string, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig>
      */
     protected array $uploadedFileEntityConfigsByClass;
 
