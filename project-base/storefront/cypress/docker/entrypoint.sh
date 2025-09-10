@@ -5,9 +5,9 @@ echo "SPEC variable is set to: $SPEC"
 
 if [ -n "$SPEC" ]; then
     echo "🎯 Running specific test: $SPEC"
-    if [ "$TYPE" = "actual" ]; then
-        echo "🔍 Running npm run specific-actual $SPEC"
-        npm run specific-actual "$SPEC"
+    if [ "$TYPE" = "regression" ]; then
+        echo "🔍 Running npm run specific-regression $SPEC"
+        npm run specific-regression "$SPEC"
     else
         echo "🔍 Running npm run specific-base $SPEC"
         npm run specific-base "$SPEC"
