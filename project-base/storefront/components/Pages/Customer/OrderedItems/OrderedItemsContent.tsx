@@ -8,20 +8,16 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 
 type OrderedItemsContentProps = {
-    isFetching: boolean;
+    areOrderedItemsFetching: boolean;
     items: TypeOrderDetailItemFragment[] | undefined;
     totalCount: number | undefined;
 };
 
-export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ isFetching, items, totalCount }) => {
+export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ areOrderedItemsFetching, items, totalCount }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
 
-    if (isFetching) {
-        return <SkeletonModuleCustomerComplaints />;
-    }
-
-    if (!items?.length) {
+    if (!items?.length && !areOrderedItemsFetching) {
         return (
             <div className="vl:text-xl flex gap-2 text-lg">
                 <InfoIcon className="w-5" />
@@ -32,11 +28,14 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ isFetching, 
 
     return (
         <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-            <div className="flex flex-col gap-5">
-                {items.map((item) => (
-                    <OrderedItem key={item.uuid} orderedItem={item} />
-                ))}
-            </div>
+            {areOrderedItemsFetching ? (
+                <SkeletonModuleCustomerComplaints />
+            ) : (
+                <div className="flex flex-col gap-5">
+                    {items?.map((item) => <OrderedItem key={item.uuid} orderedItem={item} />)}
+                </div>
+            )}
+
             <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
                 <Pagination totalCount={totalCount || 0} />
             </PaginationProvider>

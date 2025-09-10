@@ -108,7 +108,7 @@ const NewComplaintPage: FC = () => {
                     />
 
                     <OrderedItemsContent
-                        isFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
+                        areOrderedItemsFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
                         items={mappedOrderedItems}
                         totalCount={orderedItemsTotalCount}
                     />

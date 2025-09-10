@@ -7,7 +7,7 @@ import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { ComplaintsContent } from 'components/Pages/Customer/Complaints/ComplaintsContent';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
@@ -41,7 +41,8 @@ const ComplaintsPage: FC = () => {
     ];
 
     const [searchQueryValue, setSearchQueryValue] = useState('');
-    const { mappedComplaints, complaintsTotalCount, complaintsDataFetching } = useComplaintsData(searchQueryValue);
+    const { mappedComplaints, complaintsTotalCount, complaintsDataFetching, complaintsData } =
+        useComplaintsData(searchQueryValue);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -87,7 +88,8 @@ const ComplaintsPage: FC = () => {
                     onClear={() => setSearchQueryValue('')}
                 />
                 <ComplaintsContent
-                    isFetching={complaintsDataFetching}
+                    areComplaintsFetching={complaintsDataFetching}
+                    hasNextPage={complaintsData?.complaints.pageInfo.hasNextPage}
                     items={mappedComplaints}
                     totalCount={complaintsTotalCount}
                 />
@@ -114,8 +116,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     {
                         query: ComplaintsQueryDocument,
                         variables: {
-                            first: DEFAULT_PAGE_SIZE,
-                            after: getEndCursor(page),
+                            first: DEFAULT_ORDERS_SIZE,
+                            after: getEndCursor(page, 0, DEFAULT_ORDERS_SIZE),
                             searchInput: {
                                 parameters: [],
                                 search: '',

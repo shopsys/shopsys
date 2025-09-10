@@ -21,11 +21,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { t } = useTranslation();
 
-    if (areOrdersFetching) {
-        return <SkeletonModuleCustomerOrders />;
-    }
-
-    if (!orders?.length) {
+    if (!orders?.length && !areOrdersFetching) {
         return (
             <div className="vl:text-xl flex gap-2 text-lg">
                 <InfoIcon className="w-5" />
@@ -35,15 +31,21 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
     }
 
     return (
-        <div className="flex scroll-mt-5 flex-col gap-5" ref={paginationScrollTargetRef}>
-            {orders.map((order, index) => (
-                <OrderItem
-                    key={order.uuid}
-                    addOrderItemsToEmptyCart={addOrderItemsToEmptyCart}
-                    listIndex={index}
-                    order={order}
-                />
-            ))}
+        <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
+            {areOrdersFetching ? (
+                <SkeletonModuleCustomerOrders />
+            ) : (
+                <div className="flex flex-col gap-5">
+                    {orders?.map((order, index) => (
+                        <OrderItem
+                            key={order.uuid}
+                            addOrderItemsToEmptyCart={addOrderItemsToEmptyCart}
+                            listIndex={index}
+                            order={order}
+                        />
+                    ))}
+                </div>
+            )}
 
             <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
                 <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />

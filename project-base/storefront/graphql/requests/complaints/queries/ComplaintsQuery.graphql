@@ -1,6 +1,9 @@
 query ComplaintsQuery($first: Int, $after: String, $searchInput: SearchInput) {
     complaints(first: $first, after: $after, searchInput: $searchInput) {
         totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
         edges {
             cursor
             node {
