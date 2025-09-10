@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFile
 class UploadedFileConfig implements UploadedFileConfigInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[] $uploadedFileEntityConfigsByClass
+     * @param array<class-string, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig> $uploadedFileEntityConfigsByClass
      */
     public function __construct(protected readonly array $uploadedFileEntityConfigsByClass)
     {

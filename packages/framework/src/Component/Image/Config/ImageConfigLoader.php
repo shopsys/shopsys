@@ -17,7 +17,7 @@ use Symfony\Component\Yaml\Parser;
 class ImageConfigLoader
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
+     * @var array<class-string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig>
      */
     protected array $foundEntityConfigs;
 
