@@ -117,7 +117,7 @@ services:
             - "8060:8080"
 
     rabbitmq:
-        image: rabbitmq:3.12-management-alpine
+        image: rabbitmq:4.1-management-alpine
         container_name: shopsys-framework-rabbitmq
         ports:
             - "15672:15672"
