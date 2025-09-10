@@ -88,7 +88,7 @@ test:storefront-standards-with-codegen-with-tests-with-licenses-check:
         - corepack enable
         - corepack prepare --activate pnpm@9.0.5
         - pnpm config set store-dir .pnpm-store
-        - apk add --no-cache grep
+        - apk add --no-cache grep git
         - cp ./app/schema.graphql ./storefront/schema.graphql
         - cd ./storefront
     script:
@@ -98,6 +98,15 @@ test:storefront-standards-with-codegen-with-tests-with-licenses-check:
         - pnpm run check
         - pnpm test--no-watch
         - sh scripts/check-licenses.sh
+        - pnpm run translate
+        - |
+            if [ -n "$(git status --porcelain)" ]; then
+                echo "Not all translations are dumped. Run 'pnpm run translate' and commit the changes."
+                git status -s
+                exit 1
+            else
+                echo "All translations are dumped"
+            fi
     interruptible: true
 
 tests:functional-and-acceptance-with-licenses-check:
@@ -106,11 +115,24 @@ tests:functional-and-acceptance-with-licenses-check:
     <<: *only-default
     tags:
         - tests
+    needs:
+        - build
+        - build-storefront
     script:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker compose up -d
         - docker compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev npm-install-dependencies test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
         - docker compose exec -T php-fpm bash -c "scripts/check-licenses.sh"
+        - docker compose exec -T php-fpm /bin/bash -c "php phing translations-dump"
+        - docker compose cp php-fpm:/var/www/html/translations ./app/
+        - |
+            if [ -n "$(git status --porcelain)" ]; then
+                echo "Not all translations are dumped. Run 'php phing translations-dump' and commit the changes."
+                git status -s
+                exit 1
+            else
+                echo "All translations are dumped"
+            fi
     after_script:
         - mkdir -p codeception/
         - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
