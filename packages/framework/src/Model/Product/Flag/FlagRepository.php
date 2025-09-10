@@ -92,6 +92,19 @@ class FlagRepository
     }
 
     /**
+     * @param int $x
+     * @param int $y
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
+     */
+    public function findOneByPromotion(int $x, int $y): ?Flag
+    {
+        return $this->getFlagRepository()->findOneBy([
+            'promotionX' => $x,
+            'promotionY' => $y,
+        ]);
+    }
+
+    /**
      * @param string[] $uuids
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */

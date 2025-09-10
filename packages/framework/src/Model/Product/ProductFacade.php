@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
@@ -55,6 +56,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade $promotionFlagManager
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -79,6 +81,7 @@ class ProductFacade
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductVideoFacade $productVideoFacade,
+        protected readonly PromotionFlagFacade $promotionFlagManager,
     ) {
     }
 
@@ -100,6 +103,7 @@ class ProductFacade
         ProductData $productData,
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
+        $this->promotionFlagManager->updatePromotionFlagsInProductData($productData);
         $product = $this->productFactory->create($productData);
 
         $this->em->persist($product);
@@ -155,6 +159,7 @@ class ProductFacade
         ProductData $productData,
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
+        $this->promotionFlagManager->updatePromotionFlagsInProductData($productData);
         $product = $this->productRepository->getById($productId);
         $originalNames = $product->getFullNames();
 

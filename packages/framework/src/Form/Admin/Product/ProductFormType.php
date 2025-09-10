@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFo
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
+use Shopsys\FrameworkBundle\Form\Constraints\RequiredPair;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductCatnum;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -151,6 +152,7 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
         $builder->add($this->createStocksGroup($builder, $product));
+        $builder->add($this->createPromotionGroup($builder, $product));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsUspGroup($builder));
@@ -181,6 +183,12 @@ final class ProductFormType extends AbstractType
                 'data_class' => ProductData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'csrf_token_id' => self::CSRF_TOKEN_ID,
+                'constraints' => [
+                    new RequiredPair([
+                        'field1' => 'promotionX',
+                        'field2' => 'promotionY',
+                    ]),
+                ],
             ]);
     }
 
@@ -600,6 +608,52 @@ final class ProductFormType extends AbstractType
         }
 
         return $builderPricesGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createPromotionGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
+    {
+        $promotionGroup = $builder->create('promotionGroup', GroupType::class, [
+            'label' => t('Promotion X + Y free'),
+        ]);
+
+        if ($this->isProductMainVariant($product)) {
+            $promotionGroup->add('promotionX', DisplayOnlyType::class, [
+                'mapped' => false,
+                'required' => false,
+                'data' => t('Promotion can be set on specific variant.'),
+            ]);
+
+            return $promotionGroup;
+        }
+
+        $promotionGroup
+            ->add('promotionX', IntegerType::class, [
+                'required' => false,
+                'label' => t('X'),
+                'attr' => [
+                    'min' => 1,
+                ],
+                'constraints' => [
+                    new Constraints\GreaterThanOrEqual(['value' => 1, 'message' => 'Value must be 1 or higher']),
+                ],
+            ])
+            ->add('promotionY', IntegerType::class, [
+                'required' => false,
+                'label' => t('Y'),
+                'attr' => [
+                    'min' => 1,
+                ],
+                'constraints' => [
+                    new Constraints\GreaterThanOrEqual(['value' => 1, 'message' => 'Value must be 1 or higher']),
+                ],
+            ]);
+
+        return $promotionGroup;
     }
 
     /**

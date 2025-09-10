@@ -53,6 +53,18 @@ class Flag extends AbstractTranslatableEntity
     protected $visible;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true, name="promotion_x")
+     */
+    protected $promotionX;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true, name="promotion_y")
+     */
+    protected $promotionY;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      */
     public function __construct(FlagData $flagData)
@@ -79,6 +91,8 @@ class Flag extends AbstractTranslatableEntity
         $this->setTranslations($flagData);
         $this->rgbColor = $flagData->rgbColor;
         $this->visible = $flagData->visible;
+        $this->promotionX = $flagData->promotionX;
+        $this->promotionY = $flagData->promotionY;
     }
 
     /**
@@ -134,6 +148,22 @@ class Flag extends AbstractTranslatableEntity
     public function isVisible()
     {
         return $this->visible;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPromotionX()
+    {
+        return $this->promotionX;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPromotionY()
+    {
+        return $this->promotionY;
     }
 
     /**

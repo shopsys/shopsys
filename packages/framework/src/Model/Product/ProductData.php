@@ -218,6 +218,16 @@ class ProductData
      */
     public $productVideosData;
 
+    /**
+     * @var int|null
+     */
+    public $promotionX;
+
+    /**
+     * @var int|null
+     */
+    public $promotionY;
+
     public function __construct()
     {
         $this->name = [];
@@ -251,5 +261,7 @@ class ProductData
         $this->excludedTransports = [];
         $this->productType = ProductTypeEnum::TYPE_BASIC;
         $this->productVideosData = [];
+        $this->promotionX = null;
+        $this->promotionY = null;
     }
 }

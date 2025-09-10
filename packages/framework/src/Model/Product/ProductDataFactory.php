@@ -183,6 +183,8 @@ class ProductDataFactory
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
         $productData->unit = $product->getUnit();
+        $productData->promotionX = $product->getPromotionX();
+        $productData->promotionY = $product->getPromotionY();
 
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();

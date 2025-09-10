@@ -165,6 +165,18 @@ class Product extends AbstractTranslatableEntity
     protected $weight;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true, name="promotion_x")
+     */
+    protected $promotionX;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true, name="promotion_y")
+     */
+    protected $promotionY;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @ORM\JoinTable(name="product_excluded_transports")
@@ -252,6 +264,8 @@ class Product extends AbstractTranslatableEntity
         $this->brand = $productData->brand;
         $this->unit = $productData->unit;
         $this->weight = $productData->weight;
+        $this->promotionX = $productData->promotionX;
+        $this->promotionY = $productData->promotionY;
         $this->productType = $productData->productType;
         $this->setTranslations($productData);
         $this->setExcludedTransports($productData->excludedTransports);
@@ -376,6 +390,46 @@ class Product extends AbstractTranslatableEntity
     public function getEan()
     {
         return $this->ean;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPromotionX()
+    {
+        return $this->promotionX;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPromotionY()
+    {
+        return $this->promotionY;
+    }
+
+    /**
+     * @param int|null $promotionX
+     */
+    public function setPromotionX($promotionX): void
+    {
+        $this->promotionX = $promotionX;
+    }
+
+    /**
+     * @param int|null $promotionY
+     */
+    public function setPromotionY($promotionY): void
+    {
+        $this->promotionY = $promotionY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPromotion(): bool
+    {
+        return $this->promotionX !== null && $this->promotionY !== null;
     }
 
     /**
