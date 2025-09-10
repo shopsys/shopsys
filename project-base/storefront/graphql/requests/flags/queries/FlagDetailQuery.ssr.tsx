@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import { FlagDetailFragment } from '../fragments/FlagDetailFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeFlagDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
-  orderingMode: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
-  filter: Types.InputMaybe<Types.TypeProductFilter>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  orderingMode?: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
+  filter?: Types.InputMaybe<Types.TypeProductFilter>;
 }>;
 
 
@@ -28,6 +28,12 @@ export type TypeFlagDetailQuery = { __typename?: 'Query', flag: { __typename: 'F
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -40,9 +46,9 @@ export type TypeFlagDetailQuery = { __typename?: 'Query', flag: { __typename: 'F
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -88,7 +94,7 @@ export type TypeFlagDetailQuery = { __typename?: 'Query', flag: { __typename: 'F
   }
 };
       export default result;
-
+    
 
 export const FlagDetailQueryDocument = gql`
     query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {

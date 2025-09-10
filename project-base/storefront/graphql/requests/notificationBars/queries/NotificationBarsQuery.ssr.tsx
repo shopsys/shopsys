@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeNotificationBarsVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Array<{ __typename: 'NotificationBar', text: string, rgbColor: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> | null };
+export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Array<{ __typename: 'NotificationBar', text: string, rgbColor: string, validityFrom: any | null, validityTo: any | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> | null };
 
 
       export interface PossibleTypesResultData {
@@ -24,6 +24,12 @@ export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Arr
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +42,9 @@ export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Arr
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,10 +90,10 @@ export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Arr
   }
 };
       export default result;
-
+    
 
 export const NotificationBarsDocument = gql`
-    query NotificationBars @redisCache(ttl: 3600) {
+    query NotificationBars @redisCache(ttl: 300) {
   notificationBars {
     ...NotificationBarsFragment
   }

@@ -19,6 +19,12 @@ export type TypeBreadcrumbFragment = { __typename: 'Link', name: string, slug: s
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeBreadcrumbFragment = { __typename: 'Link', name: string, slug: s
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeBreadcrumbFragment = { __typename: 'Link', name: string, slug: s
   }
 };
       export default result;
-
+    
 export const BreadcrumbFragment = gql`
     fragment BreadcrumbFragment on Link {
   __typename

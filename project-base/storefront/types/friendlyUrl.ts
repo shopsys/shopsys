@@ -39,7 +39,7 @@ export const FriendlyPagesTypes = {
     login: 'front_login',
 } as const;
 
-// TODO: refactorovat ostatní /[whatever] routy po vzoru '/products' ?
+// TODO: refactorovat ostatní /[whatever] routy po vzoru '/products'
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
     article: '/articles',
     blogArticle: '/blogArticles',

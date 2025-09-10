@@ -8,7 +8,7 @@ export const ProductComparePopup: FC = () => {
     const { t } = useTranslation();
 
     return (
-        <Popup>
+        <Popup title={t('Product comparison')}>
             <div className="text-base lg:text-lg">{t('Comparison')}</div>
 
             <div className="flex flex-col">

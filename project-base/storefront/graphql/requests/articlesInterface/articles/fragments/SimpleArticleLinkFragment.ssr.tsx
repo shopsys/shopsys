@@ -19,6 +19,12 @@ export type TypeSimpleArticleLinkFragment = { __typename: 'ArticleLink', uuid: s
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeSimpleArticleLinkFragment = { __typename: 'ArticleLink', uuid: s
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeSimpleArticleLinkFragment = { __typename: 'ArticleLink', uuid: s
   }
 };
       export default result;
-
+    
 export const SimpleArticleLinkFragment = gql`
     fragment SimpleArticleLinkFragment on ArticleLink {
   __typename

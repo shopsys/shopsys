@@ -19,6 +19,12 @@ export type TypeCartPaymentModificationsFragment = { __typename: 'CartPaymentMod
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeCartPaymentModificationsFragment = { __typename: 'CartPaymentMod
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeCartPaymentModificationsFragment = { __typename: 'CartPaymentMod
   }
 };
       export default result;
-
+    
 export const CartPaymentModificationsFragment = gql`
     fragment CartPaymentModificationsFragment on CartPaymentModificationsResult {
   __typename

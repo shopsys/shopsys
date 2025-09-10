@@ -3,7 +3,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeMinimalCartQueryVariables = Types.Exact<{
-  cartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  cartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
 }>;
 
 
@@ -25,6 +25,12 @@ export type TypeMinimalCartQuery = { __typename?: 'Query', cart: { __typename?: 
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +43,9 @@ export type TypeMinimalCartQuery = { __typename?: 'Query', cart: { __typename?: 
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +91,7 @@ export type TypeMinimalCartQuery = { __typename?: 'Query', cart: { __typename?: 
   }
 };
       export default result;
-
+    
 
 export const MinimalCartQueryDocument = gql`
     query MinimalCartQuery($cartUuid: Uuid) {

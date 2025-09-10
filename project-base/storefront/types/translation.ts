@@ -13,6 +13,7 @@ export type Paths<T> = RemovePlural<
         [K in Extract<keyof T, string>]: T[K] extends Record<string, unknown> ? Join<K, Paths<T[K]>> : K;
     }[Extract<keyof T, string>]
 >;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dictionary = () => import('../public/locales/cs/common.json').then((module) => module.default);
 
 export type Dictionary = Awaited<ReturnType<typeof dictionary>>;

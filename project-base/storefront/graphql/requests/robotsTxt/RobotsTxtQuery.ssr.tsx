@@ -23,6 +23,12 @@ export type TypeRobotsTxtQuery = { __typename?: 'Query', settings: { __typename?
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -35,9 +41,9 @@ export type TypeRobotsTxtQuery = { __typename?: 'Query', settings: { __typename?
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -83,7 +89,7 @@ export type TypeRobotsTxtQuery = { __typename?: 'Query', settings: { __typename?
   }
 };
       export default result;
-
+    
 
 export const RobotsTxtQueryDocument = gql`
     query RobotsTxtQuery {

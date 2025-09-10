@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import { BlogArticleConnectionFragment } from '../fragments/BlogArticleConnectionFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBlogArticlesQueryVariables = Types.Exact<{
-  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
-  onlyHomepageArticles: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
+  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  onlyHomepageArticles?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
 }>;
 
 
@@ -27,6 +27,12 @@ export type TypeBlogArticlesQuery = { __typename?: 'Query', blogArticles: { __ty
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -39,9 +45,9 @@ export type TypeBlogArticlesQuery = { __typename?: 'Query', blogArticles: { __ty
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -87,7 +93,7 @@ export type TypeBlogArticlesQuery = { __typename?: 'Query', blogArticles: { __ty
   }
 };
       export default result;
-
+    
 
 export const BlogArticlesQueryDocument = gql`
     query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) @redisCache(ttl: 3600) {

@@ -19,6 +19,12 @@ export type TypeSimpleCategoryFragment = { __typename: 'Category', uuid: string,
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeSimpleCategoryFragment = { __typename: 'Category', uuid: string,
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeSimpleCategoryFragment = { __typename: 'Category', uuid: string,
   }
 };
       export default result;
-
+    
 export const SimpleCategoryFragment = gql`
     fragment SimpleCategoryFragment on Category {
   __typename

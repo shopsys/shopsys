@@ -16,6 +16,7 @@ const nextConfig = {
         optimizePackageImports: ['@urql/core', 'framer-motion', 'react-toastify', 'lodash-es'],
     },
     reactStrictMode: true,
+    allowedDevOrigins: ['127.0.0.1', '127.0.0.2', '127.0.0.3'],
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     images: {
         loader: 'custom',

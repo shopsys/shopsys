@@ -62,6 +62,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel={t('Filter by parameter')}
                 isActive={isActive}
                 isOpen={!isGroupCollapsed}
                 title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}
@@ -151,6 +152,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
                                 min={parameter.minimalValue}
                                 minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
+                                title={t('Filter by parameter')}
                                 setMaxValueCallback={(value) =>
                                     updateFilterParametersQuery(
                                         parameter.uuid,

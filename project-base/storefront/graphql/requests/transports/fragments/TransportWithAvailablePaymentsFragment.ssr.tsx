@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.ssr';
 import { ImageFragment } from '../../images/fragments/ImageFragment.ssr';
 import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.ssr';
-export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, transportTypeCode: Types.TypeTransportTypeEnum, isPersonalPickup: boolean, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }> };
+export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, transportTypeCode: Types.TypeTransportTypeEnum, isPersonalPickup: boolean, vatPercent: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }> };
 
 
       export interface PossibleTypesResultData {
@@ -22,6 +22,12 @@ export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transpor
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -34,9 +40,9 @@ export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transpor
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -82,7 +88,7 @@ export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transpor
   }
 };
       export default result;
-
+    
 export const TransportWithAvailablePaymentsFragment = gql`
     fragment TransportWithAvailablePaymentsFragment on Transport {
   __typename
@@ -101,6 +107,7 @@ export const TransportWithAvailablePaymentsFragment = gql`
   daysUntilDelivery
   transportTypeCode
   isPersonalPickup
+  vatPercent
 }
     ${PriceFragment}
 ${ImageFragment}

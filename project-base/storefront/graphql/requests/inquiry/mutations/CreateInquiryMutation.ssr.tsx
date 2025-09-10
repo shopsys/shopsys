@@ -25,6 +25,12 @@ export type TypeCreateInquiryMutation = { __typename?: 'Mutation', CreateInquiry
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +43,9 @@ export type TypeCreateInquiryMutation = { __typename?: 'Mutation', CreateInquiry
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +91,7 @@ export type TypeCreateInquiryMutation = { __typename?: 'Mutation', CreateInquiry
   }
 };
       export default result;
-
+    
 
 export const CreateInquiryMutationDocument = gql`
     mutation CreateInquiryMutation($input: CreateInquiryInput!) {

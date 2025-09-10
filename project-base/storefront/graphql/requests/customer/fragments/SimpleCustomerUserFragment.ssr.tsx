@@ -2,11 +2,15 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { CustomerUserRoleGroupFragment } from './CustomerUserRoleGroupGragment.ssr';
-export type TypeSimpleCustomerUserFragment_CompanyCustomerUser_ = { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+export type TypeSimpleCustomerUserFragment_CompanyCustomerUser_ = { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
-export type TypeSimpleCustomerUserFragment_RegularCustomerUser_ = { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+export type TypeSimpleCustomerUserFragment_CurrentCompanyCustomerUser_ = { __typename: 'CurrentCompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
-export type TypeSimpleCustomerUserFragment = TypeSimpleCustomerUserFragment_CompanyCustomerUser_ | TypeSimpleCustomerUserFragment_RegularCustomerUser_;
+export type TypeSimpleCustomerUserFragment_CurrentRegularCustomerUser_ = { __typename: 'CurrentRegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+
+export type TypeSimpleCustomerUserFragment_RegularCustomerUser_ = { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+
+export type TypeSimpleCustomerUserFragment = TypeSimpleCustomerUserFragment_CompanyCustomerUser_ | TypeSimpleCustomerUserFragment_CurrentCompanyCustomerUser_ | TypeSimpleCustomerUserFragment_CurrentRegularCustomerUser_ | TypeSimpleCustomerUserFragment_RegularCustomerUser_;
 
 
       export interface PossibleTypesResultData {
@@ -24,6 +28,12 @@ export type TypeSimpleCustomerUserFragment = TypeSimpleCustomerUserFragment_Comp
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +46,9 @@ export type TypeSimpleCustomerUserFragment = TypeSimpleCustomerUserFragment_Comp
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,9 +94,9 @@ export type TypeSimpleCustomerUserFragment = TypeSimpleCustomerUserFragment_Comp
   }
 };
       export default result;
-
+    
 export const SimpleCustomerUserFragment = gql`
-    fragment SimpleCustomerUserFragment on CustomerUser {
+    fragment SimpleCustomerUserFragment on BaseCustomerUser {
   __typename
   uuid
   firstName

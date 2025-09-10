@@ -10,7 +10,11 @@ export type ProductItemProps = {
     gtmProductListName: GtmProductListNameType;
 };
 
-export const ProductListItemWrapper: FC<ProductItemProps> = ({ children, product, gtmProductListName, listIndex }) => {
+export const ProductListItemWrapper: FC<ProductItemProps> = ({
+    children,
+    product,
+    /* gtmProductListName, listIndex */
+}) => {
     // const { url } = useDomainConfig();
     // const { canSeePrices } = useAuthorization();
 

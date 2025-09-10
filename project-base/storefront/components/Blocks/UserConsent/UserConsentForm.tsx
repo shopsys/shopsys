@@ -7,7 +7,6 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
-import { JSX } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';

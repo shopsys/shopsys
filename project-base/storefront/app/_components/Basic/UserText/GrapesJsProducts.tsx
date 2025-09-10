@@ -1,5 +1,8 @@
 import { ProductSlider } from 'app/_components/Blocks/Product/ProductSlider';
-import { ProductListItem } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
+import {
+    PREDEFINED_VISIBLE_ITEMS_CONFIGS,
+    ProductListItem,
+} from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
 import { getProductsByCatnumsQuery } from 'app/_queries/getProductsByCatnumsQuery';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -13,7 +16,8 @@ type GrapesJsProps = {
     visibleSliderItems: number;
 };
 
-export const GrapesJsProducts = async ({ catnums, rawProductPart, visibleSliderItems }: GrapesJsProps) => {
+// TODO: Remove visibleSliderItems parameter
+export const GrapesJsProducts = async ({ catnums, rawProductPart }: GrapesJsProps) => {
     const allFetchedProducts = await getProductsByCatnumsQuery(catnums);
     const products = [];
 
@@ -44,7 +48,7 @@ export const GrapesJsProducts = async ({ catnums, rawProductPart, visibleSliderI
                         gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
                         listIndex={index}
                         product={product}
-                        visibleSliderItems={visibleSliderItems}
+                        visibleItemsConfig={PREDEFINED_VISIBLE_ITEMS_CONFIGS.largeItem}
                     />
                 ))}
             </ProductSlider>

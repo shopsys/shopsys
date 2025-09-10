@@ -19,6 +19,12 @@ export type TypePricingSettingFragment = { __typename: 'PricingSetting', default
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypePricingSettingFragment = { __typename: 'PricingSetting', default
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypePricingSettingFragment = { __typename: 'PricingSetting', default
   }
 };
       export default result;
-
+    
 export const PricingSettingFragment = gql`
     fragment PricingSettingFragment on PricingSetting {
   __typename

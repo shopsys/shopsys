@@ -24,6 +24,12 @@ export type TypeBlogCategories = { __typename?: 'Query', blogCategories: Array<{
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +42,9 @@ export type TypeBlogCategories = { __typename?: 'Query', blogCategories: Array<{
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,7 +90,7 @@ export type TypeBlogCategories = { __typename?: 'Query', blogCategories: Array<{
   }
 };
       export default result;
-
+    
 
 export const BlogCategoriesDocument = gql`
     query BlogCategories @redisCache(ttl: 3600) {

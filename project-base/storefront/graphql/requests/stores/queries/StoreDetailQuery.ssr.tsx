@@ -4,11 +4,11 @@ import gql from 'graphql-tag';
 import { StoreDetailFragment } from '../fragments/StoreDetailFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeStoreDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, contactInfo: string | null, specialMessage: string | null, latitude: string | null, longitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> } | null };
+export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, email: string | null, phone: string | null, directions: string | null, specialMessage: string | null, latitude: string | null, longitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> } | null };
 
 
       export interface PossibleTypesResultData {
@@ -26,6 +26,12 @@ export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 
   }
 };
       export default result;
-
+    
 
 export const StoreDetailQueryDocument = gql`
     query StoreDetailQuery($urlSlug: String) @friendlyUrl {

@@ -2,6 +2,7 @@
 
 import { Button } from 'components/Forms/Button/Button';
 import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain } from 'components/Pages/ErrorPage/ErrorPageElements';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useEffect } from 'react';
 import { Sentry } from 'utils/sentry';
 
@@ -11,6 +12,7 @@ type GlobalErrorPageProps = {
 };
 
 const GlobalErrorPage = ({ error, reset }: GlobalErrorPageProps) => {
+    const { lang } = useTranslation();
     useEffect(() => {
         // Report all global errors to Sentry as they are critical
         Sentry.captureException(error);
@@ -30,7 +32,7 @@ const GlobalErrorPage = ({ error, reset }: GlobalErrorPageProps) => {
     };
 
     return (
-        <html>
+        <html lang={lang}>
             <body>
                 <div className="flex min-h-screen items-center justify-center bg-gray-50">
                     <ErrorPage>

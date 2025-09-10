@@ -34,7 +34,7 @@ export const getErrorExchange = async <Data, Variables extends AnyVariables>(
 const handleErrorMessagesForDevelopment = (error: CombinedError) => {
     logException({
         message: error.message,
-        originalError: JSON.stringify(error),
+        originalError: JSON.stringify(error, undefined, 2),
         location: 'getErrorExchange.handleErrorMessagesForDevelopment',
     });
 
@@ -54,7 +54,7 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate) => {
         logException({
             message: error.message,
             parsedUserError: parsedErrors.userError,
-            originalError: JSON.stringify(error),
+            originalError: JSON.stringify(error, undefined, 2),
             location: 'getErrorExchange.handleErrorMessagesForUsers',
         });
     }
@@ -67,7 +67,7 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate) => {
         logException({
             message: error.message,
             parsedApplicationError: parsedErrors.applicationError,
-            originalError: JSON.stringify(error),
+            originalError: JSON.stringify(error, undefined, 2),
             location: 'getErrorExchange.handleErrorMessagesForUsers',
         });
     }

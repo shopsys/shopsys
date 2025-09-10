@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 // prevents Tab/Shift+Tab from escaping modal, keeps focus within modal, essential for accessibility
-export const useFocusTrap = (containerRef: React.RefObject<HTMLElement> | undefined) => {
+export const useFocusTrap = (containerRef: React.RefObject<HTMLElement | null> | undefined) => {
     useEffect(() => {
         const container = containerRef?.current;
 

@@ -3,10 +3,13 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { ListedStoreConnectionFragment } from '../fragments/ListedStoreConnectionFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeStoresQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeStoresQueryVariables = Types.Exact<{
+  searchText?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  coordinates?: Types.InputMaybe<Types.TypeCoordinates>;
+}>;
 
 
-export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, identifier: string, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null> | null } };
+export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null> | null } };
 
 
       export interface PossibleTypesResultData {
@@ -24,6 +27,12 @@ export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'Sto
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +45,9 @@ export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'Sto
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,11 +93,11 @@ export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'Sto
   }
 };
       export default result;
-
+    
 
 export const StoresQueryDocument = gql`
-    query StoresQuery {
-  stores {
+    query StoresQuery($searchText: String = null, $coordinates: Coordinates = null) {
+  stores(searchText: $searchText, coordinates: $coordinates) {
     ...ListedStoreConnectionFragment
   }
 }

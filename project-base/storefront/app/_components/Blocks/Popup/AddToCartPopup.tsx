@@ -34,7 +34,13 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
     return (
-        <Popup key={key} hideCloseButton className="w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
+        <Popup
+            key={key}
+            hideCloseButton
+            className="w-11/12 max-w-5xl"
+            contentClassName="overflow-y-auto"
+            title={t('Shopping cart')}
+        >
             <div className="mb-4 flex w-full items-center md:mb-6">
                 <CheckmarkIcon className="text-textSuccess mr-4 w-7" />
                 <div className="h2 text-text-accent">{t('Great choice! We have added your item to the cart')}</div>

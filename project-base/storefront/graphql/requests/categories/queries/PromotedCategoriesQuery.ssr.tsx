@@ -24,6 +24,12 @@ export type TypePromotedCategoriesQuery = { __typename?: 'Query', promotedCatego
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -36,9 +42,9 @@ export type TypePromotedCategoriesQuery = { __typename?: 'Query', promotedCatego
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -84,7 +90,7 @@ export type TypePromotedCategoriesQuery = { __typename?: 'Query', promotedCatego
   }
 };
       export default result;
-
+    
 
 export const PromotedCategoriesQueryDocument = gql`
     query PromotedCategoriesQuery @redisCache(ttl: 3600) {

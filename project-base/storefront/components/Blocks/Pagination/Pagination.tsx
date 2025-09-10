@@ -4,7 +4,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { usePaginationContext } from 'components/providers/PaginationProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { useRouter } from 'next/router';
-import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
+import { forwardRef, Fragment, MouseEventHandler, RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
@@ -18,7 +18,7 @@ import { useScrollRestoration } from 'utils/ui/useScrollRestoration';
 
 type PaginationProps = {
     totalCount: number;
-    paginationScrollTargetRef: RefObject<HTMLDivElement | null>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement | null> | null;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
     pageSize?: number;
@@ -63,7 +63,7 @@ export const Pagination: FC<PaginationProps> = ({
 
         // timeout for safari scroll
         setTimeout(() => {
-            paginationScrollTargetRef?.current?.scrollIntoView({ behavior: 'smooth' });
+            paginationScrollTargetRef?.current.scrollIntoView({ behavior: 'smooth' });
         }, 100);
     };
 

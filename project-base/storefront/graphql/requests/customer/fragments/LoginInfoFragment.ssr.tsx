@@ -19,6 +19,12 @@ export type TypeLoginInfoFragment = { __typename: 'LoginInfo', externalId: strin
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeLoginInfoFragment = { __typename: 'LoginInfo', externalId: strin
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeLoginInfoFragment = { __typename: 'LoginInfo', externalId: strin
   }
 };
       export default result;
-
+    
 export const LoginInfoFragment = gql`
     fragment LoginInfoFragment on LoginInfo {
   __typename

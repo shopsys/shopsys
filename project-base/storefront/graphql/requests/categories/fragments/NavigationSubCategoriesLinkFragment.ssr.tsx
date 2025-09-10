@@ -19,6 +19,12 @@ export type TypeNavigationSubCategoriesLinkFragment = { __typename: 'Category', 
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -31,9 +37,9 @@ export type TypeNavigationSubCategoriesLinkFragment = { __typename: 'Category', 
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -79,7 +85,7 @@ export type TypeNavigationSubCategoriesLinkFragment = { __typename: 'Category', 
   }
 };
       export default result;
-
+    
 export const NavigationSubCategoriesLinkFragment = gql`
     fragment NavigationSubCategoriesLinkFragment on Category {
   __typename

@@ -60,7 +60,12 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     i18nKey="userConsentPolicyLink"
                     components={{
                         link: userConsentPolicyArticleUrl ? (
-                            <a href={userConsentPolicyArticleUrl} rel="noreferrer" target="_blank" />
+                            <a
+                                aria-label={t('Go to user consent update page')}
+                                href={userConsentPolicyArticleUrl}
+                                rel="noreferrer"
+                                target="_blank"
+                            />
                         ) : (
                             <span />
                         ),
@@ -69,6 +74,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             </p>
 
             <ToggleSwitchControlled
+                ariaLabel={t('Marketing')}
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.marketing.name}
@@ -76,6 +82,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             />
 
             <ToggleSwitchControlled
+                ariaLabel={t('Statistics')}
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.statistics.name}
@@ -83,6 +90,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             />
 
             <ToggleSwitchControlled
+                ariaLabel={t('Preferences')}
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.preferences.name}

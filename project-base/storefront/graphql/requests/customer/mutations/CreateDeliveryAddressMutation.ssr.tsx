@@ -26,6 +26,12 @@ export type TypeCreateDeliveryAddressMutation = { __typename?: 'Mutation', Creat
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeCreateDeliveryAddressMutation = { __typename?: 'Mutation', Creat
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeCreateDeliveryAddressMutation = { __typename?: 'Mutation', Creat
   }
 };
       export default result;
-
+    
 
 export const CreateDeliveryAddressMutationDocument = gql`
     mutation CreateDeliveryAddressMutation($input: DeliveryAddressInput!) {

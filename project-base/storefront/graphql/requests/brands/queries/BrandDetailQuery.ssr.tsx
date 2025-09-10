@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import { BrandDetailFragment } from '../fragments/BrandDetailFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBrandDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
-  orderingMode: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
-  filter: Types.InputMaybe<Types.TypeProductFilter>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  orderingMode?: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
+  filter?: Types.InputMaybe<Types.TypeProductFilter>;
 }>;
 
 
@@ -28,6 +28,12 @@ export type TypeBrandDetailQuery = { __typename?: 'Query', brand: { __typename: 
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -40,9 +46,9 @@ export type TypeBrandDetailQuery = { __typename?: 'Query', brand: { __typename: 
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -88,7 +94,7 @@ export type TypeBrandDetailQuery = { __typename?: 'Query', brand: { __typename: 
   }
 };
       export default result;
-
+    
 
 export const BrandDetailQueryDocument = gql`
     query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {

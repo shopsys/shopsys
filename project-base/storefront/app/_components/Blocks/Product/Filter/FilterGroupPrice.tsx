@@ -40,6 +40,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                ariaLabel="Filter by price"
                 isActive={isActive}
                 isOpen={isGroupOpen}
                 title={title}
@@ -55,6 +56,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
                             minValue={minimalPrice || minPriceOption}
                             setMaxValueCallback={setMaximalPrice}
                             setMinValueCallback={setMinimalPrice}
+                            title="Filter by price"
                         />
                     </FilterGroupContent>
                 )}

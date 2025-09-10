@@ -20,6 +20,12 @@ export type TypeDeliveryAddressFragment = { __typename: 'DeliveryAddress', uuid:
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -32,9 +38,9 @@ export type TypeDeliveryAddressFragment = { __typename: 'DeliveryAddress', uuid:
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -80,7 +86,7 @@ export type TypeDeliveryAddressFragment = { __typename: 'DeliveryAddress', uuid:
   }
 };
       export default result;
-
+    
 export const DeliveryAddressFragment = gql`
     fragment DeliveryAddressFragment on DeliveryAddress {
   __typename

@@ -43,7 +43,7 @@ export const BlogPreviewContent = async () => {
             style={
                 mainBlogCategoryData?.settings?.mainBlogCategoryData.mainBlogCategoryMainImage?.url
                     ? {
-                          backgroundImage: `url(${mainBlogCategoryData.settings?.mainBlogCategoryData.mainBlogCategoryMainImage.url})`,
+                          backgroundImage: `url(${mainBlogCategoryData.settings.mainBlogCategoryData.mainBlogCategoryMainImage.url})`,
                       }
                     : {}
             }

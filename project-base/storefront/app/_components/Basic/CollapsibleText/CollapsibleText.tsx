@@ -8,7 +8,8 @@ import { twJoin } from 'tailwind-merge';
 
 type CollapsibleTextProps = {
     text: string;
-    scrollTargetRef: RefObject<HTMLDivElement>;
+    // TODO: Remove null -> need to fix scroll restoration
+    scrollTargetRef?: RefObject<HTMLDivElement | null>;
 };
 
 export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef }) => {
@@ -29,7 +30,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
     const handleButtonClick = () => {
         setShowFullDescription((prev) => {
             if (prev) {
-                if (scrollTargetRef.current) {
+                if (scrollTargetRef?.current) {
                     scrollTargetRef.current.style.scrollMarginTop = '116px';
                     scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
                 }

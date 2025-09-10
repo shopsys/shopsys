@@ -20,6 +20,12 @@ export type TypeListedProductConnectionPreviewFragment = { __typename: 'ProductC
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -32,9 +38,9 @@ export type TypeListedProductConnectionPreviewFragment = { __typename: 'ProductC
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -80,7 +86,7 @@ export type TypeListedProductConnectionPreviewFragment = { __typename: 'ProductC
   }
 };
       export default result;
-
+    
 export const ListedProductConnectionPreviewFragment = gql`
     fragment ListedProductConnectionPreviewFragment on ProductConnection {
   __typename
