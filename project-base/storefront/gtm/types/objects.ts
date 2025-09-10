@@ -70,6 +70,7 @@ export type GtmUserInfoType = {
     group?: string;
     loginType?: TypeLoginTypeEnum;
     externalId?: string | null;
+    newsletterSubscription?: boolean;
 };
 
 export type GtmConsentInfoType = {
