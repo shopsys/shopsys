@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundEx
 class ImageConfig
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
+     * @var array<class-string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig>
      */
     protected array $imageEntityConfigsByClass;
 
