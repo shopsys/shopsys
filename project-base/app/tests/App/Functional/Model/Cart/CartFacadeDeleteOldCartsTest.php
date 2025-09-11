@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -73,6 +74,11 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
+
+    /**
+     * @inject
+     */
+    private GiftCartFacade $giftCartFacade;
 
     public function testOldUnregisteredCustomerCartGetsDeleted()
     {
@@ -180,6 +186,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->cartItemFactory,
             $this->cartRepository,
             $this->productAvailabilityFacade,
+            $this->giftCartFacade,
         );
     }
 

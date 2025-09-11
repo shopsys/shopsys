@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 
 class CartWatcherFacade
 {
@@ -30,6 +31,7 @@ class CartWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResultFactory $cartWithModificationsResultFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade $giftCartFacade
      */
     public function __construct(
         protected readonly CartWatcher $cartWatcher,
@@ -42,6 +44,7 @@ class CartWatcherFacade
         protected readonly CartPromoCodeFacade $cartPromoCodeFacade,
         protected readonly OrderFacade $orderFacade,
         protected readonly CartWithModificationsResultFactory $cartWithModificationsResultFactory,
+        protected readonly GiftCartFacade $giftCartFacade,
     ) {
     }
 
@@ -55,6 +58,7 @@ class CartWatcherFacade
 
         $this->checkRemovedProductsItems($cart);
         $this->checkNotListableItems($cart);
+        $this->checkProductGiftCartItemsValidity($cart);
         $this->checkModifiedPrices($cart);
         $this->checkStockQuantities($cart);
         $this->checkPromoCodeValidity($cart);
@@ -106,6 +110,20 @@ class CartWatcherFacade
             $this->em->remove($cartItem);
 
             $this->cartWithModificationsResult->addNoLongerListableCartItem($cartItem);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    protected function checkProductGiftCartItemsValidity(Cart $cart): void
+    {
+        $removedItems = $this->giftCartFacade->refreshProductGiftCartItemsAndGetInvalidItems($cart, $this->domain->getId());
+
+        foreach ($removedItems as $cartItem) {
+            $cart->removeItemById($cartItem->getId());
+            $this->em->remove($cartItem);
+            $this->em->flush();
         }
     }
 

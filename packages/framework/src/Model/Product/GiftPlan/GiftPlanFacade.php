@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class GiftPlanFacade
 {
@@ -64,5 +66,15 @@ class GiftPlanFacade
         $giftPlan = $this->getById($id);
         $this->em->remove($giftPlan);
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
+     * @param int $domainId
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product[]>
+     */
+    public function findActiveGiftProductsByMainProducts(array $mainProducts, int $domainId): array
+    {
+        return $this->giftPlanRepository->findActiveGiftProductsByMainProducts($mainProducts, $domainId);
     }
 }
