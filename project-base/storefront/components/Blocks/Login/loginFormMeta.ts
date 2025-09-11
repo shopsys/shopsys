@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { validateEmail, validatePassword } from 'components/Forms/validationRules';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -12,14 +13,16 @@ export const useLoginForm = (defaultEmail?: string): [UseFormReturn<LoginFormTyp
 
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof LoginFormType, any>>({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            password: Yup.string().required(t('This field is required')),
+            email: validateEmail(t),
+            password: validatePassword(t),
         }),
     );
+
     const defaultValues = {
         email: defaultEmail ?? '',
         password: '',
     };
+
     const formProviderMethods = useShopsysForm(resolver, defaultValues);
     useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
 

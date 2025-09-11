@@ -9,9 +9,9 @@ export const validateEmail = (t: Translate): Schema => {
         .required(t('Please enter email'))
         .matches(
             /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i,
-            t('This value is not a valid email'),
+            t('Please enter a valid email. Example: email@example.com'),
         )
-        .email(t('This value is not a valid email'))
+        .email(t('Please enter a valid email. Example: email@example.com'))
         .max(
             VALIDATION_CONSTANTS.emailMaxLength,
             t('Email must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.emailMaxLength }),
@@ -24,13 +24,22 @@ export const validateCustomer = (): Schema => {
 
 export const validateTelephone = (t: Translate): Schema => {
     return Yup.string()
-        .matches(/^[0-9+]*$/, t('Please enter only numbers and the + character'))
+        .matches(
+            /^(\+[1-9]\d{0,3})?[0-9]+$/,
+            t('Please enter a valid phone number. Examples: 123456789, +420123456789'),
+        )
         .test(
-            'more-than-8',
-            t('Telephone number cannot be shorter than {{ telephoneMinLength }} characters', {
+            'min-digits',
+            t('Telephone number must contain at least {{ telephoneMinLength }} digits', {
                 telephoneMinLength: VALIDATION_CONSTANTS.telephoneMinLength,
             }),
-            (value) => value !== undefined && value.length >= VALIDATION_CONSTANTS.telephoneMinLength,
+            (value) => {
+                if (value === undefined) {
+                    return false;
+                }
+                const digits = value.replace(/\D/g, ''); // remove all non-digit characters
+                return digits.length >= VALIDATION_CONSTANTS.telephoneMinLength;
+            },
         )
         .max(
             VALIDATION_CONSTANTS.telephoneMaxLength,
@@ -69,8 +78,10 @@ export const validateLastName = (t: Translate): Schema => {
 export const validateStreet = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter street'))
-        .matches(/\D/, t('The street must contain a letter'))
-        .matches(/\d/, t('The street must contain a number'))
+        .matches(
+            /^[a-zA-Z].*\s\d+(\/\d+)?[a-zA-Z]?$|^\d+(\/\d+)?[a-zA-Z]?\s.*[a-zA-Z]$/,
+            t('Please enter a valid street. Examples: Street 123, Street 123/4'),
+        )
         .max(
             VALIDATION_CONSTANTS.streetMaxLength,
             t('Street must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.streetMaxLength }),
@@ -82,7 +93,7 @@ export const validateCity = (t: Translate): Schema => {
         .required(t('Please enter city'))
         .max(
             VALIDATION_CONSTANTS.cityMaxLength,
-            t('City must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.streetMaxLength }),
+            t('City must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.cityMaxLength }),
         );
 };
 
