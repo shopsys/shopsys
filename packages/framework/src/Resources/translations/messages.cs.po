@@ -2740,6 +2740,9 @@ msgstr "Uložit výchozí cenovou skupinu"
 msgid "Save default unit"
 msgstr "Uložit výchozí jednotku"
 
+msgid "Save gift price setting"
+msgstr "Uložit nastavení ceny dárku"
+
 msgid "Save warehouse settings"
 msgstr "Uložit nastavení skladu"
 

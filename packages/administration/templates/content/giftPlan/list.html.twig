@@ -15,5 +15,7 @@
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\GiftPlanController::setGiftPriceAction')) }}
+
     {{ gridView.render() }}
 {% endblock %}
