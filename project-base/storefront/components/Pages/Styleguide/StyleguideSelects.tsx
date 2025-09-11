@@ -1,7 +1,9 @@
 import { StyleguideSection } from './StyleguideElements';
+import { MultiSelect } from 'components/Forms/Multiselect/Multiselect';
 import { Select } from 'components/Forms/Select/Select';
 import useTranslation from 'next-translate/useTranslation';
 import React, { useState } from 'react';
+import { SelectOptionType } from 'types/selectOptions';
 
 export const COMBO_BOX_PAGE_SIZE = 5;
 
@@ -14,6 +16,15 @@ export const StyleguideSelects: FC = () => {
 
     const [selectedInfiniteOption, setSelectedInfiniteOption] = useState<ColourOption>();
     const [page, setPage] = useState(1);
+
+    const [selectedMultiOptions, setSelectedMultiOptions] = useState<SelectOptionType<string>[]>([
+        colourOptions[0],
+        colourOptions[2],
+    ]);
+
+    const [selectedMultiOptionsWithCombobox, setSelectedMultiOptionsWithCombobox] = useState<
+        SelectOptionType<string>[]
+    >([colourOptions[3], colourOptions[4]]);
 
     const generateInfiniteOptions = (pageNum: number): ColourOption[] => {
         const itemsPerPage = 5;
@@ -96,6 +107,28 @@ export const StyleguideSelects: FC = () => {
                     },
                 }}
                 onSelectOption={(value) => setSelectedInfiniteOption(value as ColourOption)}
+            />
+
+            <MultiSelect
+                label="Multiselect"
+                options={colourOptions}
+                selectedOptions={selectedMultiOptions}
+                tid="styleguide-multiselect-basic"
+                onChange={setSelectedMultiOptions}
+            />
+
+            <MultiSelect
+                options={colourOptions}
+                selectedOptions={selectedMultiOptionsWithCombobox}
+                tid="styleguide-multiselect-with-combobox"
+                comboBoxConfig={{
+                    placeholder: t('Search'),
+                    searchValue,
+                    setSearchValue: (value) => {
+                        setSearchValue(value);
+                    },
+                }}
+                onChange={setSelectedMultiOptionsWithCombobox}
             />
         </StyleguideSection>
     );

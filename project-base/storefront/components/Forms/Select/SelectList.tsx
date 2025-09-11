@@ -6,15 +6,17 @@ import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { SelectOptionType } from 'types/selectOptions';
 import { twMergeCustom } from 'utils/twMerge';
+import { useFocusTrap } from 'utils/useFocusTrap';
 
 export type SelectListProps<T = string> = {
     itemBeforeText?: ReactNode;
     itemAfterText?: ReactNode;
     options: SelectOptionType<T>[];
-    onSelectOption: (data: SelectOptionType<T>) => void;
+    onSelectOption: (data: SelectOptionType<T>, m?: React.MouseEvent, k?: React.KeyboardEvent) => void;
     activeOption?: SelectOptionType<T> | null;
     infinityScrollConfig?: Pick<InfiniteScrollProps, 'hasMore' | 'next' | 'dataLength'> & { pageSize: number };
     listClassName?: string;
+    setIsOpen?: (isOpen: boolean) => void;
 };
 
 export const SelectList = <T extends string | number | undefined | Record<any, any> | null | boolean = string>({
@@ -26,26 +28,61 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     activeOption,
     infinityScrollConfig,
     listClassName,
+    setIsOpen,
 }: SelectListProps<T> & FunctionComponentProps) => {
-    const [focusedIndex, setFocusedIndex] = useState<number | null>(0);
+    const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
     const listRef = useRef<HTMLUListElement>(null);
 
+    useFocusTrap(listRef);
+
     useEffect(() => {
-        if (focusedIndex !== null && listRef.current) {
+        if (focusedIndex !== null && listRef.current && focusedIndex < listRef.current.children.length) {
             const focusedElement = listRef.current.children[focusedIndex] as HTMLElement;
             focusedElement.focus();
         }
+
+        const handleFirstKeyboardPress = (k: KeyboardEvent) => {
+            if (k.key === 'Escape') {
+                setIsOpen?.(false);
+                setFocusedIndex(null);
+                return;
+            }
+
+            if (k.key === 'ArrowDown' && focusedIndex === null && options.length > 0) {
+                k.preventDefault();
+                setFocusedIndex(0);
+            }
+
+            if (k.key === 'ArrowUp' && focusedIndex === null && options.length > 0) {
+                k.preventDefault();
+                setFocusedIndex(options.length - 1);
+            }
+        };
+
+        document.addEventListener('keydown', handleFirstKeyboardPress);
+
+        return () => document.removeEventListener('keydown', handleFirstKeyboardPress);
     }, [focusedIndex]);
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
+    const handleKeyDown = (k: React.KeyboardEvent<Element>) => {
+        if (options.length === 0) {
+            return;
+        }
+
+        if (k.key === 'ArrowDown') {
+            k.preventDefault();
             setFocusedIndex((prevIndex) => (prevIndex === null ? 0 : Math.min(prevIndex + 1, options.length - 1)));
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
+        } else if (k.key === 'ArrowUp') {
+            k.preventDefault();
             setFocusedIndex((prevIndex) => (prevIndex === null ? options.length - 1 : Math.max(prevIndex - 1, 0)));
-        } else if (e.key === 'Enter' && focusedIndex !== null && !options[focusedIndex].isDisabled) {
-            onSelectOption(options[focusedIndex]);
+        } else if (
+            k.key === 'Enter' &&
+            focusedIndex !== null &&
+            focusedIndex < options.length &&
+            !options[focusedIndex]?.isDisabled
+        ) {
+            onSelectOption(options[focusedIndex], undefined, k);
+            setFocusedIndex(null);
         }
     };
 
@@ -61,7 +98,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 option.isDisabled && 'bg-input-bg-disabled text-input-text-disabled pointer-events-none cursor-no-drop',
                 'focus-visible:text-text-default focus-visible:bg-orange-500',
             )}
-            onClick={!option.isDisabled ? () => onSelectOption(option) : undefined}
+            onClick={!option.isDisabled ? (e) => onSelectOption(option, e) : undefined}
             onFocus={() => setFocusedIndex(index)}
             onKeyDown={(e) => handleKeyDown(e)}
         >
