@@ -9,20 +9,19 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
-use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 
-class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
+class AddProductGiftsMiddleware implements OrderProcessorMiddlewareInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      */
     public function __construct(
-        protected readonly QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
+        protected readonly QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
     ) {
     }
 
@@ -36,33 +35,30 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
-        $orderData = $orderProcessingData->orderData;
-
         foreach ($orderProcessingData->orderInput->getQuantifiedProducts() as $quantifiedProduct) {
-            if ($quantifiedProduct->getAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY) !== CartItemTypeEnum::TYPE_PRODUCT) {
+            if ($quantifiedProduct->getAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY) !== CartItemTypeEnum::TYPE_PRODUCT_GIFT) {
                 continue;
             }
 
-            $this->addProductOrderItemData($orderData, $quantifiedProduct, $orderProcessingData);
+            $this->addProductGiftOrderItemData($orderProcessingData, $quantifiedProduct);
         }
 
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      */
-    protected function addProductOrderItemData(
-        OrderData $orderData,
-        QuantifiedProduct $quantifiedProduct,
+    protected function addProductGiftOrderItemData(
         OrderProcessingData $orderProcessingData,
+        QuantifiedProduct $quantifiedProduct,
     ): void {
-        $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
+        $orderData = $orderProcessingData->orderData;
+
+        $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculateGiftPrice(
             $quantifiedProduct,
             $orderProcessingData->getDomainId(),
-            $orderProcessingData->orderInput->getCustomerUser(),
         );
 
         $orderItemData = $this->orderItemDataFactory->createFromQuantifiedProduct(
@@ -71,6 +67,6 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
             $orderProcessingData->getDomainLocale(),
         );
         $orderData->addItem($orderItemData);
-        $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT);
+        $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 }

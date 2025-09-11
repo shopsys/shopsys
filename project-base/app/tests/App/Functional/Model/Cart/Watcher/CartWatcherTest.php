@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -56,6 +57,11 @@ class CartWatcherTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductInputPriceDataFactory $productInputPriceDataFactory;
+
+    /**
+     * @inject
+     */
+    private GiftPlanSettingFacade $giftPlanSettingFacade;
 
     public function testGetModifiedPriceItemsAndUpdatePrices(): void
     {
@@ -124,6 +130,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             $this->productPriceCalculationForCustomerUser,
             $productVisibilityFacadeMock,
             $this->domain,
+            $this->giftPlanSettingFacade,
         );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());

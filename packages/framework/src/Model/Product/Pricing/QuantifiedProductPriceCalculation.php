@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 
 class QuantifiedProductPriceCalculation
 {
@@ -25,12 +27,16 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly PriceCalculation $priceCalculation,
         protected readonly PricingSetting $pricingSetting,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly BasePriceCalculation $basePriceCalculation,
+        protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
     ) {
     }
 
@@ -72,6 +78,34 @@ class QuantifiedProductPriceCalculation
         $totalPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat);
 
         return new QuantifiedItemPrice($productPrice->getPrice(), $totalPrice, $product->getVatForDomain($domainId));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface
+     */
+    public function calculateGiftPrice(
+        QuantifiedProduct $quantifiedProduct,
+        int $domainId,
+    ): QuantifiedItemPriceInterface {
+        $inputPrice = $this->giftPlanSettingFacade->getGiftPriceWithVat($domainId);
+        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $vat = $quantifiedProduct->getProduct()->getVatForDomain($domainId);
+        $basePrice = $this->basePriceCalculation->calculateRoundedBasePrice(
+            $inputPrice,
+            PricingSetting::PRICE_TYPE_WITH_VAT,
+            $vat,
+            $defaultCurrency,
+        );
+
+        $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $basePrice);
+        $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $vat, $defaultCurrency);
+        $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithVat($totalPriceWithVat, $totalPriceVatAmount);
+
+        $totalPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat);
+
+        return new QuantifiedItemPrice($basePrice, $totalPrice, $vat);
     }
 
     /**

@@ -139,4 +139,30 @@ class OrderItemDataFactory
 
         return true;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface $quantifiedItemPrice
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
+     */
+    public function createFromQuantifiedProduct(
+        QuantifiedProduct $quantifiedProduct,
+        QuantifiedItemPriceInterface $quantifiedItemPrice,
+        string $locale,
+    ): OrderItemData {
+        $product = $quantifiedProduct->getProduct();
+
+        $orderItemData = $this->create($quantifiedProduct->getAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY));
+        $orderItemData->name = $product->getFullName($locale);
+        $orderItemData->setUnitPrice($quantifiedItemPrice->getUnitPrice());
+        $orderItemData->setTotalPrice($quantifiedItemPrice->getTotalPrice());
+        $orderItemData->vatPercent = $quantifiedItemPrice->getVat()->getPercent();
+        $orderItemData->quantity = $quantifiedProduct->getQuantity();
+        $orderItemData->unitName = $product->getUnit()->getName($locale);
+        $orderItemData->catnum = $product->getCatnum();
+        $orderItemData->product = $product;
+
+        return $orderItemData;
+    }
 }

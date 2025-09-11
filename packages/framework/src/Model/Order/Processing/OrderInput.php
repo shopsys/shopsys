@@ -53,7 +53,20 @@ class OrderInput
         $quantifiedProduct = new QuantifiedProduct($product, $quantity);
         $quantifiedProduct->setAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY, CartItemTypeEnum::TYPE_PRODUCT);
 
+        $this->addQuantifiedProduct($quantifiedProduct);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     */
+    public function addQuantifiedProduct(QuantifiedProduct $quantifiedProduct): void
+    {
         $this->products[] = $quantifiedProduct;
+    }
+
+    public function cleanProducts(): void
+    {
+        $this->products = [];
     }
 
     /**

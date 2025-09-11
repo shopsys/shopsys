@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory as BaseOrderIt
  * @method \App\Model\Order\Item\OrderItemData createFromOrderItem(\App\Model\Order\Item\OrderItem $orderItem)
  * @method fillFromOrderItem(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method \App\Model\Order\Item\OrderItemData create(string $orderItemType)
+ * @method \App\Model\Order\Item\OrderItemData createFromQuantifiedProduct(\Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct, \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface $quantifiedItemPrice, string $locale)
  */
 class OrderItemDataFactory extends BaseOrderItemDataFactory
 {
