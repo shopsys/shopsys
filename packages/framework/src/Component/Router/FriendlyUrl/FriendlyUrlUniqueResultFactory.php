@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+
 class FriendlyUrlUniqueResultFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(protected readonly FriendlyUrlFactory $friendlyUrlFactory)
-    {
+    public function __construct(
+        protected readonly FriendlyUrlFactory $friendlyUrlFactory,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**
@@ -26,11 +31,12 @@ class FriendlyUrlUniqueResultFactory
         string $entityName,
         ?array $matchedRouteData = null,
     ) {
-        if ($matchedRouteData === null) {
+        if ($matchedRouteData === null && !$this->isSlugConflictingWithAnotherDomainPostfix($friendlyUrl)) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
         }
 
-        if ($friendlyUrl->getRouteName() === $matchedRouteData['_route']
+        if ($matchedRouteData !== null
+            && $friendlyUrl->getRouteName() === $matchedRouteData['_route']
             && $friendlyUrl->getEntityId() === $matchedRouteData['id']
         ) {
             return new FriendlyUrlUniqueResult(true, null);
@@ -45,5 +51,29 @@ class FriendlyUrlUniqueResultFactory
         );
 
         return new FriendlyUrlUniqueResult(false, $newIndexedFriendlyUrl);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @return bool
+     */
+    protected function isSlugConflictingWithAnotherDomainPostfix(FriendlyUrl $friendlyUrl): bool
+    {
+        $inputDomainConfig = $this->domain->getDomainConfigById($friendlyUrl->getDomainId());
+        $domainsWithSameBaseUrl = $this->domain->getAllWithSameBaseUrl($inputDomainConfig);
+
+        foreach ($domainsWithSameBaseUrl as $domainConfig) {
+            if ($domainConfig->getId() === $inputDomainConfig->getId()) {
+                continue;
+            }
+
+            $postfix = $domainConfig->getPostfix();
+
+            if ($postfix !== null && ($friendlyUrl->getSlug() === trim($postfix, '/'))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

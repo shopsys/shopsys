@@ -33,6 +33,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
             new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            $domain,
         );
 
         $attempt = 1;
@@ -64,6 +65,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
             new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            $domain,
         );
 
         $attempt = 1;
@@ -98,6 +100,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
             new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            $domain,
         );
 
         $attempt = 3;
@@ -119,5 +122,50 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $this->assertSame($friendlyUrl->getEntityId(), $friendlyUrlForPersist->getEntityId());
         $this->assertSame($friendlyUrl->getDomainId(), $friendlyUrlForPersist->getDomainId());
         $this->assertSame('name-4', $friendlyUrlForPersist->getSlug());
+    }
+
+    public function testCreateNotUniqueWhenSlugConflictsWithAnotherDomainPostfix(): void
+    {
+        $settingMock = $this->createMock(Setting::class);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+
+        $domain = new Domain(
+            [
+                DomainConfigHelper::getDomainConfig(),
+                DomainConfigHelper::getDomainConfig(
+                    id: 2,
+                    url: DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/sk',
+                    name: 'example.com SK',
+                    locale: 'sk',
+                    postfix: '/sk',
+                ),
+            ],
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
+        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
+
+        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
+            $domain,
+        );
+
+        $attempt = 1;
+        $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'sk');
+        $matchedRouteData = null;
+        $friendlyUrlUniqueResult = $friendlyUrlUniqueResultFactory->create(
+            $attempt,
+            $friendlyUrl,
+            'sk',
+            $matchedRouteData,
+        );
+
+        $friendlyUrlForPersist = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();
+        $this->assertFalse($friendlyUrlUniqueResult->isUnique());
+        $this->assertSame($friendlyUrl->getRouteName(), $friendlyUrlForPersist->getRouteName());
+        $this->assertSame($friendlyUrl->getEntityId(), $friendlyUrlForPersist->getEntityId());
+        $this->assertSame($friendlyUrl->getDomainId(), $friendlyUrlForPersist->getDomainId());
+        $this->assertSame('sk-2', $friendlyUrlForPersist->getSlug());
     }
 }
