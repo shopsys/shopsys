@@ -10,9 +10,8 @@ use Psr\Log\LoggerInterface;
 use ReflectionException;
 use ReflectionMethod;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Contracts\Cache\CacheInterface;
 
@@ -35,7 +34,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     /**
      * @param \Symfony\Contracts\Cache\CacheInterface $cache
      * @param string $environment
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory $administrationRouterFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param string $adminUrl
      * @param \Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor $attributeProcessor
@@ -43,7 +42,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     public function __construct(
         private readonly CacheInterface $cache,
         private readonly string $environment,
-        private readonly DomainRouterFactory $domainRouterFactory,
+        private readonly AdministrationRouterFactory $administrationRouterFactory,
         private readonly LoggerInterface $logger,
         private readonly string $adminUrl,
         private readonly AttributeProcessor $attributeProcessor,
@@ -104,7 +103,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
      */
     private function buildRoutes(): array
     {
-        $router = $this->domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
+        $router = $this->administrationRouterFactory->getAdministrationRouter();
         $routes = $router->getRouteCollection();
         $adminRoutes = $this->filterAdminRoutes($routes);
         $indexedRoutes = [];

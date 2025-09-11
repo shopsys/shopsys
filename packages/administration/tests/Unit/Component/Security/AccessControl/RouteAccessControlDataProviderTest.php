@@ -12,27 +12,26 @@ use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlR
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class RouteAccessControlDataProviderTest extends TestCase
 {
     private CacheInterface&MockObject $cache;
 
-    private DomainRouterFactory&MockObject $domainRouterFactory;
+    private AdministrationRouterFactory&MockObject $administrationRouterFactory;
 
     private LoggerInterface&MockObject $logger;
 
     private AttributeProcessor $attributeProcessor;
 
-    private RouterInterface&MockObject $router;
+    private AdministrationRouter&MockObject $router;
 
     private RouteCollection $routeCollection;
 
@@ -42,9 +41,9 @@ class RouteAccessControlDataProviderTest extends TestCase
     protected function setUp(): void
     {
         $this->cache = $this->createMock(CacheInterface::class);
-        $this->domainRouterFactory = $this->createMock(DomainRouterFactory::class);
+        $this->administrationRouterFactory = $this->createMock(AdministrationRouterFactory::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->router = $this->createMock(AdministrationRouter::class);
         $this->routeCollection = new RouteCollection(); // Use real RouteCollection
         $this->roleRegistry = $this->createMock(RoleRegistryInterface::class);
 
@@ -62,10 +61,9 @@ class RouteAccessControlDataProviderTest extends TestCase
                 return $role;
             });
 
-        $this->domainRouterFactory
+        $this->administrationRouterFactory
             ->expects($this->any())
-            ->method('getRouter')
-            ->with(Domain::FIRST_DOMAIN_ID)
+            ->method('getAdministrationRouter')
             ->willReturn($this->router);
 
         // Router will return the current route collection (updated by setupRouteCollection)
@@ -306,7 +304,7 @@ class RouteAccessControlDataProviderTest extends TestCase
         return new RouteAccessControlDataProvider(
             $this->cache,
             $environment,
-            $this->domainRouterFactory,
+            $this->administrationRouterFactory,
             $this->logger,
             'admin',
             $this->attributeProcessor,
