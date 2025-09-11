@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -19,20 +18,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DomainRouterFactoryTest extends TestCase
 {
     public function testGetRouter(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        $domainConfig = new DomainConfig(
-            Domain::THIRD_DOMAIN_ID,
-            'http://example.com:8080',
-            'example',
-            'en',
-            $defaultTimeZone,
-            'http://example.com:8080',
+        $domainConfig = DomainConfigHelper::getDomainConfig(
+            id: Domain::THIRD_DOMAIN_ID,
+            locale: 'en',
         );
 
         $settingMock = $this->createMock(Setting::class);

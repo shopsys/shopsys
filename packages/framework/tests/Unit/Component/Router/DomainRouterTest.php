@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\Exception\NotSupportedException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DomainRouterTest extends TestCase
 {
-    public function testGetRouter()
+    public function testGetRouter(): void
     {
         $context = new RequestContext();
         $basicRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
@@ -32,28 +30,11 @@ class DomainRouterTest extends TestCase
             $basicRouterMock,
             $localizedRouterMock,
             $friendlyUrlRouterMock,
-            $this->getDomainConfig(),
+            DomainConfigHelper::getDomainConfig(),
             $transformStringHelper,
         );
 
         $this->expectException(NotSupportedException::class);
         $domainRouter->setContext($context);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    protected function getDomainConfig(): DomainConfig
-    {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return new DomainConfig(
-            Domain::FIRST_DOMAIN_ID,
-            'http://example.com:8080',
-            'example.com',
-            'cs',
-            $defaultTimeZone,
-            'http://example.com:8080',
-        );
     }
 }

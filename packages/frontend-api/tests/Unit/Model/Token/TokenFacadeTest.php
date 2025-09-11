@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Unit\Model\Token;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
@@ -14,7 +13,6 @@ use Lcobucci\JWT\Token\Builder;
 use Lcobucci\JWT\UnencryptedToken;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
@@ -26,6 +24,7 @@ use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class TokenFacadeTest extends TestCase
 {
@@ -63,8 +62,8 @@ class TokenFacadeTest extends TestCase
         ?DateTimeImmutable $expiresAt,
     ): UnencryptedToken {
         $builder = (new Builder(new JoseEncoder(), ChainedFormatter::default()))
-            ->issuedBy('http://webserver:8080')
-            ->permittedFor('http://webserver:8080')
+            ->issuedBy(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL)
+            ->permittedFor(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL)
             ->issuedAt(new DateTimeImmutable())
             ->canOnlyBeUsedAfter(new DateTimeImmutable('- 10 minutes'))
             ->expiresAt(new DateTimeImmutable('+ 10 minutes'));
@@ -159,15 +158,7 @@ class TokenFacadeTest extends TestCase
      */
     private function createDomain(): Domain
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(
-            1,
-            'http://webserver:8080',
-            'domain',
-            'en',
-            $defaultTimeZone,
-            'http://webserver:8080',
-        );
+        $domainConfig = DomainConfigHelper::getDomainConfig();
         $setting = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 

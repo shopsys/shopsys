@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Payment;
 
-use DateTimeZone;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 class IndependentPaymentVisibilityCalculationTest extends TestCase
@@ -29,18 +28,10 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $this->domainMock = $this->createMock(Domain::class);
         $this->domainMock->method('getDomainConfigById')
             ->willReturn(
-                new DomainConfig(
-                    Domain::FIRST_DOMAIN_ID,
-                    '',
-                    '',
-                    'cs',
-                    $defaultTimeZone,
-                    '',
-                ),
+                DomainConfigHelper::getDomainConfig(),
             );
 
         $this->customerUserRoleResolverMock = $this->createMock(CustomerUserRoleResolver::class);

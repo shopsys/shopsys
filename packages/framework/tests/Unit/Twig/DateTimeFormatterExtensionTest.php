@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Twig;
 
 use DateTime;
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\CustomDateTimeFormatPatternRepositoryFactory;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
@@ -17,11 +15,10 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeFormatterExtensionTest extends TestCase
 {
-    private const string DISPLAY_TIME_ZONE = 'Europe/Prague';
-
     /**
      * @return array
      */
@@ -74,7 +71,7 @@ class DateTimeFormatterExtensionTest extends TestCase
      */
     protected function createDateTimeFormatter(): DateTimeFormatter
     {
-        $displayTimeZoneProvider = new DisplayTimeZoneProvider(self::DISPLAY_TIME_ZONE, $this->getMockedDomain());
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider(DomainConfigHelper::DEFAULT_TIMEZONE_STRING, $this->getMockedDomain());
         $dateTimeFormatPatternRepository = (new CustomDateTimeFormatPatternRepositoryFactory())->create();
 
         return new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
@@ -88,15 +85,7 @@ class DateTimeFormatterExtensionTest extends TestCase
         $settingMock = $this->getMockBuilder(Setting::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $dateTimeZone = new DateTimeZone(self::DISPLAY_TIME_ZONE);
-        $domainConfig = new DomainConfig(
-            1,
-            'http://example.com',
-            'name',
-            'en',
-            $dateTimeZone,
-            'http://example.com',
-        );
+        $domainConfig = DomainConfigHelper::getDomainConfig();
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
         return new Domain(

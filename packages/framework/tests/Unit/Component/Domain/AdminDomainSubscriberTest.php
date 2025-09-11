@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
@@ -16,26 +15,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class AdminDomainSubscriberTest extends TestCase
 {
-    public const string FIRST_DOMAIN_BASE_URL = 'http://example.com:8080';
-
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
     private function createFirstDomainConfig(): DomainConfig
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return new DomainConfig(
-            Domain::FIRST_DOMAIN_ID,
-            self::FIRST_DOMAIN_BASE_URL,
-            'First Domain',
-            'en',
-            $defaultTimeZone,
-            self::FIRST_DOMAIN_BASE_URL,
-        );
+        return DomainConfigHelper::getDomainConfig();
     }
 
     /**
@@ -43,18 +32,11 @@ class AdminDomainSubscriberTest extends TestCase
      */
     private function createFirstDomainConfigWithPostfix(): DomainConfig
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return new DomainConfig(
-            Domain::FIRST_DOMAIN_ID,
-            self::FIRST_DOMAIN_BASE_URL . '/en',
-            'First Domain EN',
-            'en',
-            $defaultTimeZone,
-            self::FIRST_DOMAIN_BASE_URL,
-            DomainConfig::TYPE_B2C,
-            true,
-            '/en',
+        return DomainConfigHelper::getDomainConfig(
+            url: DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/en',
+            name: 'First Domain EN',
+            locale: 'en',
+            postfix: '/en',
         );
     }
 
@@ -147,25 +129,25 @@ class AdminDomainSubscriberTest extends TestCase
             'basic admin path' => [
                 'requestUri' => 'http://other-domain.com/admin',
                 'pathInfo' => '/admin',
-                'expectedRedirectUrl' => self::FIRST_DOMAIN_BASE_URL . '/admin',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin',
                 'queryString' => null,
             ],
             'admin path with subpath' => [
                 'requestUri' => 'http://other-domain.com/admin/users',
                 'pathInfo' => '/admin/users',
-                'expectedRedirectUrl' => self::FIRST_DOMAIN_BASE_URL . '/admin/users',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users',
                 'queryString' => null,
             ],
             'admin path with query string' => [
                 'requestUri' => 'http://other-domain.com/admin/products?page=2',
                 'pathInfo' => '/admin/products',
-                'expectedRedirectUrl' => self::FIRST_DOMAIN_BASE_URL . '/admin/products?page=2',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/products?page=2',
                 'queryString' => 'page=2',
             ],
             'admin path with complex query' => [
                 'requestUri' => 'http://other-domain.com/admin/orders?status=new&sort=date',
                 'pathInfo' => '/admin/orders',
-                'expectedRedirectUrl' => self::FIRST_DOMAIN_BASE_URL . '/admin/orders?status=new&sort=date',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/orders?status=new&sort=date',
                 'queryString' => 'status=new&sort=date',
             ],
         ];
@@ -211,7 +193,7 @@ class AdminDomainSubscriberTest extends TestCase
         $response = $event->getResponse();
         $this->assertInstanceOf(RedirectResponse::class, $response);
         // Should redirect to base URL without postfix - admin is always at base domain
-        $this->assertEquals(self::FIRST_DOMAIN_BASE_URL . '/admin/users', $response->getTargetUrl());
+        $this->assertEquals(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users', $response->getTargetUrl());
     }
 
     public function testOnKernelRequestDoesNotRedirectWhenAlreadyOnCorrectUrl(): void
@@ -238,7 +220,7 @@ class AdminDomainSubscriberTest extends TestCase
         $request = $this->createMock(Request::class);
         $request
             ->method('getUri')
-            ->willReturn(self::FIRST_DOMAIN_BASE_URL . '/admin/users');
+            ->willReturn(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users');
         $request
             ->method('getPathInfo')
             ->willReturn('/admin/users');

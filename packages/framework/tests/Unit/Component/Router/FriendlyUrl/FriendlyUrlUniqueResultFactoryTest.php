@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router\FriendlyUrl;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -16,35 +14,17 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
-     */
-    private function getDomainConfigs(): array
-    {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return [
-            new DomainConfig(
-                Domain::FIRST_DOMAIN_ID,
-                'http://example.com',
-                'example.com',
-                'en',
-                $defaultTimeZone,
-                'http://example.com',
-            ),
-        ];
-    }
-
     public function testCreateNewUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
         $domain = new Domain(
-            $this->getDomainConfigs(),
+            [DomainConfigHelper::getDomainConfig()],
             $settingMock,
             $administratorFacadeMock,
         );
@@ -75,7 +55,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
         $domain = new Domain(
-            $this->getDomainConfigs(),
+            [DomainConfigHelper::getDomainConfig()],
             $settingMock,
             $administratorFacadeMock,
         );
@@ -109,7 +89,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
         $domain = new Domain(
-            $this->getDomainConfigs(),
+            [DomainConfigHelper::getDomainConfig()],
             $settingMock,
             $administratorFacadeMock,
         );

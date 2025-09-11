@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DomainTest extends TestCase
 {
@@ -27,16 +27,7 @@ class DomainTest extends TestCase
      */
     private static function createDomainConfigFirst(): DomainConfig
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return new DomainConfig(
-            Domain::FIRST_DOMAIN_ID,
-            'http://example.com:8080',
-            'example.com',
-            'cs',
-            $defaultTimeZone,
-            'http://example.com:8080',
-        );
+        return DomainConfigHelper::getDomainConfig();
     }
 
     /**
@@ -44,15 +35,12 @@ class DomainTest extends TestCase
      */
     private static function createDomainConfigSecond(): DomainConfig
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return new DomainConfig(
-            Domain::SECOND_DOMAIN_ID,
-            'http://example.org:8080',
-            'example.org',
-            'en',
-            $defaultTimeZone,
-            'http://example.org:8080',
+        return DomainConfigHelper::getDomainConfig(
+            id: Domain::SECOND_DOMAIN_ID,
+            url: 'http://example.org:8080',
+            name: 'example.org',
+            locale: 'en',
+            baseUrl: 'http://example.org:8080',
         );
     }
 
@@ -61,18 +49,12 @@ class DomainTest extends TestCase
      */
     private static function createDomainConfigWithPostfix(): DomainConfig
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
-        return new DomainConfig(
-            Domain::THIRD_DOMAIN_ID,
-            'http://example.com:8080/sk',
-            'example.com SK',
-            'sk',
-            $defaultTimeZone,
-            'http://example.com:8080',
-            DomainConfig::TYPE_B2C,
-            true,
-            '/sk',
+        return DomainConfigHelper::getDomainConfig(
+            id: Domain::THIRD_DOMAIN_ID,
+            url: DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/sk',
+            name: 'example.com SK',
+            locale: 'sk',
+            postfix: '/sk',
         );
     }
 
@@ -93,38 +75,25 @@ class DomainTest extends TestCase
      */
     private static function getDomainConfigsWithRootLast(): array
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
         return [
-            new DomainConfig(
-                self::TEST_DOMAIN_ID_4,
-                'http://example.com:8080/sk',
-                'SK Domain',
-                'sk',
-                $defaultTimeZone,
-                'http://example.com:8080',
-                DomainConfig::TYPE_B2C,
-                true,
-                '/sk',
+            DomainConfigHelper::getDomainConfig(
+                id: self::TEST_DOMAIN_ID_4,
+                url: DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/sk',
+                name: 'SK Domain',
+                locale: 'sk',
+                postfix: '/sk',
             ),
-            new DomainConfig(
-                self::TEST_DOMAIN_ID_5,
-                'http://example.com:8080/sk_SK',
-                'SK2 Domain',
-                'sk',
-                $defaultTimeZone,
-                'http://example.com:8080',
-                DomainConfig::TYPE_B2C,
-                true,
-                '/sk_SK',
+            DomainConfigHelper::getDomainConfig(
+                id: self::TEST_DOMAIN_ID_5,
+                url: DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/sk_SK',
+                name: 'SK2 Domain',
+                locale: 'sk',
+                postfix: '/sk_SK',
             ),
-            new DomainConfig(
-                self::TEST_DOMAIN_ID_6,
-                'http://example.com:8080',
-                'Root Domain',
-                'en',
-                $defaultTimeZone,
-                'http://example.com:8080',
+            DomainConfigHelper::getDomainConfig(
+                id: self::TEST_DOMAIN_ID_6,
+                name: 'Root Domain',
+                locale: 'en',
             ),
         ];
     }
@@ -196,7 +165,7 @@ class DomainTest extends TestCase
         return [
             'base domain without postfix - root path' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/',
                 'expectedDomainId' => Domain::FIRST_DOMAIN_ID,
                 'expectedLocale' => 'cs',
@@ -204,7 +173,7 @@ class DomainTest extends TestCase
             ],
             'base domain without postfix - any path' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/products',
                 'expectedDomainId' => Domain::FIRST_DOMAIN_ID,
                 'expectedLocale' => 'cs',
@@ -212,7 +181,7 @@ class DomainTest extends TestCase
             ],
             'base domain without postfix - path starting with another domain postfix' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/skkk',
                 'expectedDomainId' => Domain::FIRST_DOMAIN_ID,
                 'expectedLocale' => 'cs',
@@ -220,7 +189,7 @@ class DomainTest extends TestCase
             ],
             'base domain with postfix - exact postfix match' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk',
                 'expectedDomainId' => Domain::THIRD_DOMAIN_ID,
                 'expectedLocale' => 'sk',
@@ -228,7 +197,7 @@ class DomainTest extends TestCase
             ],
             'base domain with postfix - postfix with trailing path' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk/',
                 'expectedDomainId' => Domain::THIRD_DOMAIN_ID,
                 'expectedLocale' => 'sk',
@@ -236,7 +205,7 @@ class DomainTest extends TestCase
             ],
             'base domain with postfix - subpath under postfix' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk/products',
                 'expectedDomainId' => Domain::THIRD_DOMAIN_ID,
                 'expectedLocale' => 'sk',
@@ -244,7 +213,7 @@ class DomainTest extends TestCase
             ],
             'base domain with postfix - subpath with categories' => [
                 'domainConfigs' => $domainConfigs,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk/categories/electronics',
                 'expectedDomainId' => Domain::THIRD_DOMAIN_ID,
                 'expectedLocale' => 'sk',
@@ -260,7 +229,7 @@ class DomainTest extends TestCase
             ],
             'overlapping postfixes - /sk_SK wins over /sk' => [
                 'domainConfigs' => $domainConfigsWhereRootDomainIsDefinedAsLast,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk_SK/products',
                 'expectedDomainId' => self::TEST_DOMAIN_ID_5,
                 'expectedLocale' => 'sk',
@@ -268,7 +237,7 @@ class DomainTest extends TestCase
             ],
             'root domain last - specific /sk wins over root' => [
                 'domainConfigs' => $domainConfigsWhereRootDomainIsDefinedAsLast,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk',
                 'expectedDomainId' => self::TEST_DOMAIN_ID_4,
                 'expectedLocale' => 'sk',
@@ -276,7 +245,7 @@ class DomainTest extends TestCase
             ],
             'root domain last - specific /sk_SK wins over root' => [
                 'domainConfigs' => $domainConfigsWhereRootDomainIsDefinedAsLast,
-                'requestHost' => 'http://example.com:8080',
+                'requestHost' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL,
                 'requestPath' => '/sk_SK/products',
                 'expectedDomainId' => self::TEST_DOMAIN_ID_5,
                 'expectedLocale' => 'sk',
@@ -355,17 +324,14 @@ class DomainTest extends TestCase
 
     public function testGetAllLocales(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
             self::createDomainConfigFirst(),
             self::createDomainConfigSecond(),
-            new DomainConfig(
-                Domain::THIRD_DOMAIN_ID,
-                'http://example.cz:8080',
-                'example.cz',
-                'cs',
-                $defaultTimeZone,
-                'http://example.cz:8080',
+            DomainConfigHelper::getDomainConfig(
+                id: Domain::THIRD_DOMAIN_ID,
+                url: 'http://example.cz:8080',
+                name: 'example.cz',
+                baseUrl: 'http://example.cz:8080',
             ),
         ];
         $settingMock = $this->createMock(Setting::class);
