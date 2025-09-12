@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Order\Promotion\PromotionCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
@@ -25,12 +26,14 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Promotion\PromotionCalculation $promotionCalculator
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly PriceCalculation $priceCalculation,
         protected readonly PricingSetting $pricingSetting,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly PromotionCalculation $promotionCalculator,
     ) {
     }
 
@@ -70,6 +73,7 @@ class QuantifiedProductPriceCalculation
         }
 
         $totalPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat);
+        $totalPrice = $this->promotionCalculator->calculateTotalPrice($quantifiedProduct, $productPrice->getPrice(), $totalPrice);
 
         return new QuantifiedItemPrice($productPrice->getPrice(), $totalPrice, $product->getVatForDomain($domainId));
     }
