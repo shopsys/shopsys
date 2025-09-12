@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\FrameworkBundle\Unit\Component\Domain;
+namespace Tests\AdministrationBundle\Unit\Component\Domain;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\AdministrationBundle\Component\Domain\AdminDomainSubscriber;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainSubscriber;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider;

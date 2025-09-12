@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\Domain;
+namespace Shopsys\AdministrationBundle\Component\Domain;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
