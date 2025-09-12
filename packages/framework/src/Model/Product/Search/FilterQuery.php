@@ -624,6 +624,34 @@ class FilterQuery
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterOnlyInStockOrAllowedNegativeStock(): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'bool' => [
+                'should' => [
+                    [
+                        'term' => [
+                            'in_stock' => true,
+                        ],
+                    ],
+                    [
+                        'term' => [
+                            'is_allowed_negative_stock' => true,
+                        ],
+                    ],
+                ],
+                'minimum_should_match' => 1,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @param \DateTimeImmutable $sellingFrom
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */

@@ -120,4 +120,65 @@ class GiftPlanRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param int[] $mainProductIds
+     * @param int $domainId
+     * @return int[][]
+     */
+    public function findActiveGiftProductIdsByMainProductIds(array $mainProductIds, int $domainId): array
+    {
+        if ($mainProductIds === []) {
+            return [];
+        }
+
+        $now = new DateTime();
+
+        $qb = $this->getRepository()->createQueryBuilder('gp')
+            ->select('DISTINCT mp.id AS mainProductId, gift.id AS giftProductId')
+            ->innerJoin('gp.mainProducts', 'mp')
+            ->innerJoin('gp.giftProduct', 'gift')
+            ->where('mp.id IN (:mainProductIds)')
+            ->andWhere('gp.domainId = :domainId')
+            ->andWhere('(gp.validFrom IS NULL OR gp.validFrom < :now)')
+            ->andWhere('(gp.validTo IS NULL OR gp.validTo > :now)')
+            ->setParameter('mainProductIds', $mainProductIds)
+            ->setParameter('domainId', $domainId)
+            ->setParameter('now', $now)
+            ->orderBy('mp.id', 'ASC')
+            ->addOrderBy('gift.id', 'ASC');
+
+        $rows = $qb->getQuery()->getArrayResult();
+
+        $giftIdsIndexedByMainProductId = array_fill_keys(array_map('intval', $mainProductIds), []);
+
+        foreach ($rows as $row) {
+            $mainId = (int)$row['mainProductId'];
+            $giftId = (int)$row['giftProductId'];
+            $giftIdsIndexedByMainProductId[$mainId][] = $giftId;
+        }
+
+        foreach ($giftIdsIndexedByMainProductId as $mainId => $giftIds) {
+            $giftIdsIndexedByMainProductId[$mainId] = array_values(array_unique($giftIds));
+        }
+
+        return $giftIdsIndexedByMainProductId;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
+     */
+    public function findAll(): array
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
+     * @param int $giftProductId
+     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
+     */
+    public function findByGiftProductId(int $giftProductId): array
+    {
+        return $this->getRepository()->findBy(['giftProduct' => $giftProductId], ['id' => 'ASC']);
+    }
 }

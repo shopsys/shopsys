@@ -5,6 +5,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.generated';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import dynamic from 'next/dynamic';
@@ -14,11 +15,12 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { ProductGift } from '../Product/ProductGift';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 type AddToCartPopupProps = {
-    addedCartItem: TypeCartItemFragment;
+    addedCartItem: TypeCartItemWithGiftsFragment;
     key: string;
 };
 
@@ -85,6 +87,16 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                {product.gifts.length > 0 && (
+                    <>
+                        <p className="h3 mb-3">{t('Gifts')}</p>
+                        {product.gifts.map((gift, index) => (
+                            <ProductGift key={index} gift={gift} />
+                        ))}
+                    </>
+                )}
             </div>
 
             {isLuigisBoxActive && (

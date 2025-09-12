@@ -22,6 +22,7 @@ import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmPro
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { ProductGift } from '../../Blocks/Product/ProductGift';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -66,6 +67,17 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         />
 
                         <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
+                            {product.gifts.length > 0 && (
+                                <>
+                                    <p className="h3 mb-3">{t('Gifts')}</p>
+                                    <div>
+                                        {product.gifts.map((gift, index) => (
+                                            <ProductGift key={index} gift={gift} />
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+
                             <ProductDetailPrice productPrice={product.price} />
 
                             <ProductDetailAvailability

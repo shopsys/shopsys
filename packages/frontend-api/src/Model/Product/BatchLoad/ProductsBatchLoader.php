@@ -6,6 +6,8 @@ namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade;
 
 class ProductsBatchLoader
 {
@@ -17,10 +19,14 @@ class ProductsBatchLoader
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchProvider $productElasticsearchBatchProvider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade $giftPlanFacade
      */
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ProductElasticsearchBatchProvider $productElasticsearchBatchProvider,
+        protected readonly Domain $domain,
+        protected readonly GiftPlanFacade $giftPlanFacade,
     ) {
     }
 
@@ -140,5 +146,33 @@ class ProductsBatchLoader
         ksort($sortedItems);
 
         return $sortedItems;
+    }
+
+    /**
+     * @param int[] $productIds
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadProductGiftsByMainProductIds(array $productIds): Promise
+    {
+        $domainId = $this->domain->getId();
+        $giftProductIdsIndexedByMainProductId = $this->giftPlanFacade->findActiveGiftProductIdsByMainProductIds($productIds, $domainId);
+
+        $isNonGiftsFound = array_filter($giftProductIdsIndexedByMainProductId) === [];
+
+        if ($isNonGiftsFound) {
+            return $this->promiseAdapter->all(
+                array_map(fn () => [], $productIds),
+            );
+        }
+
+        $batchedByEntities = $this->productElasticsearchBatchProvider->getBatchedProductGiftsAndIndexedByProductsIds($giftProductIdsIndexedByMainProductId);
+
+        $result = [];
+
+        foreach ($productIds as $mainProductIndex => $mainProductId) {
+            $result[$mainProductIndex] = $batchedByEntities[ProductElasticsearchBatchRepository::PRODUCTS_KEY][$mainProductId] ?? [];
+        }
+
+        return $this->promiseAdapter->all($result);
     }
 }

@@ -40,5 +40,8 @@ fragment CartItemFragment on CartItem {
             name
         }
         vatPercent
+        gifts {
+            ...ProductGiftFragment
+        }
     }
 }

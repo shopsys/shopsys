@@ -100,3 +100,7 @@ ProductDecorator:
                 type: "[VideoToken!]!"
             vatPercent:
                 type: "String!"
+            gifts:
+                type: "[Product!]!"
+                description: "List of gift products"
+                resolve: '@=query("giftsByProductPromiseQuery", value)'

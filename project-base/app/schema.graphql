@@ -1224,6 +1224,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"
@@ -1987,6 +1989,8 @@ interface Product {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"
@@ -2485,6 +2489,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"
@@ -2834,6 +2840,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"

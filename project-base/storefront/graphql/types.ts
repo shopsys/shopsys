@@ -1408,6 +1408,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
@@ -2430,6 +2432,8 @@ export type TypeProduct = {
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
@@ -3192,6 +3196,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
@@ -3606,6 +3612,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */

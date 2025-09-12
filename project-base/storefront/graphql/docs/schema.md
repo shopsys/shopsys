@@ -5810,6 +5810,15 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
@@ -8594,6 +8603,15 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
@@ -9908,6 +9926,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
 
 </td>
 </tr>
@@ -13794,6 +13821,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
 
 </td>
 </tr>

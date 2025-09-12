@@ -77,4 +77,14 @@ class GiftPlanFacade
     {
         return $this->giftPlanRepository->findActiveGiftProductsByMainProducts($mainProducts, $domainId);
     }
+
+    /**
+     * @param int[] $mainProductIds
+     * @param int $domainId
+     * @return int[][]
+     */
+    public function findActiveGiftProductIdsByMainProductIds(array $mainProductIds, int $domainId): array
+    {
+        return $this->giftPlanRepository->findActiveGiftProductIdsByMainProductIds($mainProductIds, $domainId);
+    }
 }

@@ -11,7 +11,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Component\Locale\LocaleHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
@@ -54,7 +53,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
         $this->addUploadedFile(
             $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2),
             'example-file.pdf',
-            [LocaleHelper::LOCALE_EN => 'Example file'],
+            $this->createUploadedFileTranslatedNames('Example file'),
         );
 
         $this->addReferencedUploadedFiles($this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2), [1]);
