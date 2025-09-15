@@ -53,6 +53,12 @@ class Flag extends AbstractTranslatableEntity
     protected $visible;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $lockedForDeletion;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      */
     public function __construct(FlagData $flagData)
@@ -61,6 +67,7 @@ class Flag extends AbstractTranslatableEntity
 
         $this->translations = new ArrayCollection();
         $this->setData($flagData);
+        $this->lockedForDeletion = false;
     }
 
     /**
@@ -153,5 +160,13 @@ class Flag extends AbstractTranslatableEntity
     protected function createTranslation()
     {
         return new FlagTranslation();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLockedForDeletion()
+    {
+        return $this->lockedForDeletion;
     }
 }

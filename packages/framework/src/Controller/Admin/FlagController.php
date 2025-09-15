@@ -193,6 +193,17 @@ class FlagController extends AdminBaseController
             $flag = $this->flagFacade->getById($id);
             $fullName = $flag->getName();
 
+            if ($flag->isLockedForDeletion()) {
+                $this->addErrorFlashTwig(
+                    t('Flag <strong>{{ name }}</strong> cannot be deleted'),
+                    [
+                        'name' => $fullName,
+                    ],
+                );
+
+                return $this->redirectToRoute('admin_flag_list');
+            }
+
             $flagDependencies = $this->flagFacade->getFlagDependencies($flag->getId());
 
             if ($flagDependencies->hasSeoMixDependency || $flagDependencies->hasPromoCodeDependency) {

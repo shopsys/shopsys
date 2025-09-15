@@ -12,13 +12,14 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScope
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 
 class GiftFlagSynchronizerFacade
 {
-    public const FLAG_GIFT_UUID = '3b709b97-604d-462d-b045-885f126e78d2';
+    public const string FLAG_GIFT_UUID = '3b709b97-604d-462d-b045-885f126e78d2';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -30,6 +31,7 @@ class GiftFlagSynchronizerFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade $giftCartFacade
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -41,6 +43,7 @@ class GiftFlagSynchronizerFacade
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly GiftCartFacade $giftCartFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -49,30 +52,25 @@ class GiftFlagSynchronizerFacade
         $giftPlans = $this->giftPlanRepository->findAll();
 
         foreach ($giftPlans as $giftPlan) {
-            $this->refreshForGiftPlan($giftPlan);
+            foreach ($giftPlan->getMainProducts() as $mainProduct) {
+                foreach ($this->domain->getAllIds() as $domainId) {
+                    $this->recalculateGiftFlagForMainProductAndDomainId($mainProduct, $domainId);
+                }
+            }
         }
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan $giftPlan
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
      */
-    public function refreshForGiftPlan(GiftPlan $giftPlan): void
-    {
-        $domainId = $giftPlan->getDomainId();
-
-        foreach ($giftPlan->getMainProducts() as $mainProduct) {
-            $this->refreshForMainProductOnDomain($mainProduct, $domainId);
-        }
-    }
-
-    /**
-     * @param array $mainProducts
-     * @param int $domainId
-     */
-    public function refreshForMainProductsAndDomainId(array $mainProducts, int $domainId): void
+    public function dispatchMainProductForGriftFlagRecalculation(array $mainProducts): void
     {
         foreach ($mainProducts as $mainProduct) {
-            $this->refreshForMainProductOnDomain($mainProduct, $domainId);
+            $this->productRecalculationDispatcher->dispatchSingleProductId(
+                $mainProduct->getId(),
+                ProductRecalculationPriorityEnum::REGULAR,
+                [ProductExportScopeConfig::SCOPE_GIFT_FLAGS],
+            );
         }
     }
 
@@ -84,7 +82,19 @@ class GiftFlagSynchronizerFacade
         $giftPlans = $this->giftPlanRepository->findByGiftProductId($giftProductId);
 
         foreach ($giftPlans as $giftPlan) {
-            $this->refreshForGiftPlan($giftPlan);
+            $this->dispatchMainProductForGriftFlagRecalculation($giftPlan->getMainProducts());
+        }
+    }
+
+    /**
+     * @param int $mainProductId
+     */
+    public function recalculateGiftFlagForMainProductId(int $mainProductId): void
+    {
+        $mainProduct = $this->productFacade->getById($mainProductId);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $this->recalculateGiftFlagForMainProductAndDomainId($mainProduct, $domainId);
         }
     }
 
@@ -92,12 +102,11 @@ class GiftFlagSynchronizerFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
      * @param int $domainId
      */
-    public function refreshForMainProductOnDomain(Product $mainProduct, int $domainId): void
+    protected function recalculateGiftFlagForMainProductAndDomainId(Product $mainProduct, int $domainId): void
     {
         $shouldHaveFlag = $this->shouldHaveGiftFlag($mainProduct, $domainId);
 
-        $mainProductDomain = $mainProduct->getProductDomain($domainId);
-        $flags = $mainProductDomain->getFlags();
+        $flags = $mainProduct->getFlags($domainId);
 
         $giftFlag = $this->getGiftFlag();
 
@@ -115,7 +124,7 @@ class GiftFlagSynchronizerFacade
 
         if ($shouldHaveFlag && !$hasGiftFlag) {
             $flags[] = $giftFlag;
-            $mainProductDomain->setFlags($flags);
+            $mainProduct->setFlags($flags, $domainId);
             $changed = true;
         } elseif (!$shouldHaveFlag && $hasGiftFlag) {
             $filtered = [];
@@ -126,7 +135,7 @@ class GiftFlagSynchronizerFacade
                 }
             }
 
-            $mainProductDomain->setFlags($filtered);
+            $mainProduct->setFlags($filtered, $domainId);
             $changed = true;
         }
 
@@ -135,12 +144,6 @@ class GiftFlagSynchronizerFacade
         }
 
         $this->em->flush();
-
-        $this->productRecalculationDispatcher->dispatchSingleProductId(
-            $mainProduct->getId(),
-            ProductRecalculationPriorityEnum::REGULAR,
-            [ProductExportScopeConfig::SCOPE_FLAGS],
-        );
     }
 
     /**

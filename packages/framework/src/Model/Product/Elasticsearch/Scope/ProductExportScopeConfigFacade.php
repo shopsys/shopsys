@@ -69,6 +69,25 @@ class ProductExportScopeConfigFacade
 
     /**
      * @param string[] $exportScopes
+     * @return bool
+     */
+    public function shouldRecalculateGiftFlags(array $exportScopes): bool
+    {
+        if (count($exportScopes) === 0) {
+            return true;
+        }
+
+        foreach ($this->getMatchingRules($exportScopes) as $rule) {
+            if (in_array(ProductExportScopeConfig::PRECONDITION_GIFT_FLAG_RECALCULATION, $rule->productExportPreconditions, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string[] $exportScopes
      * @return \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule[]
      */
     protected function getMatchingRules(array $exportScopes): array

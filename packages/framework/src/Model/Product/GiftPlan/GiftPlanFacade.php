@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class GiftPlanFacade
 {
@@ -14,11 +13,13 @@ class GiftPlanFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanRepository $giftPlanRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFactory $giftPlanFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         protected readonly GiftPlanRepository $giftPlanRepository,
         protected readonly EntityManagerInterface $em,
         protected readonly GiftPlanFactory $giftPlanFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -41,6 +42,8 @@ class GiftPlanFacade
         $this->em->persist($giftPlan);
         $this->em->flush();
 
+        $this->eventDispatcher->dispatch(new GiftPlanEvent($giftPlan->getMainProducts()), GiftPlanEvent::CREATE);
+
         return $giftPlan;
     }
 
@@ -55,6 +58,8 @@ class GiftPlanFacade
         $giftPlan->edit($giftPlanData);
         $this->em->flush();
 
+        $this->eventDispatcher->dispatch(new GiftPlanEvent($giftPlan->getMainProducts()), GiftPlanEvent::UPDATE);
+
         return $giftPlan;
     }
 
@@ -64,8 +69,11 @@ class GiftPlanFacade
     public function delete(int $id): void
     {
         $giftPlan = $this->getById($id);
+        $mainProductIds = $giftPlan->getMainProducts();
         $this->em->remove($giftPlan);
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch(new GiftPlanEvent($mainProductIds), GiftPlanEvent::DELETE);
     }
 
     /**

@@ -106,7 +106,7 @@ class GiftCartFacade
      * @param int $domainId
      * @return bool
      */
-    protected function isGiftProductSellable(Product $product, PricingGroup $pricingGroup, int $domainId): bool
+    public function isGiftProductSellable(Product $product, PricingGroup $pricingGroup, int $domainId): bool
     {
         if ($product->getProductType() === ProductTypeEnum::TYPE_INQUIRY) {
             return false;
