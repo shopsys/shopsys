@@ -1,0 +1,33 @@
+name: Initiate mirror to GitLab
+on:
+    push:
+        branches:
+            - '[0-9]+.[0-9]+'
+            - 'alpha'
+jobs:
+    trigger_gitlab_pipeline:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Trigger GitLab Mirror Pipeline
+                run: |
+                    echo "Triggering GitLab mirror pipeline..."
+                    response=$(curl -s -X POST \
+                      -F token=$GITLAB_TRIGGER_TOKEN \
+                      -F ref=devel \
+                      -F "variables[MIRROR_ONLY]=true" \
+                      $GITLAB_TRIGGER_URL)
+                    if [ $? -ne 0 ]; then
+                        echo "❌ Failed to trigger pipeline"
+                        exit 1
+                    fi
+                    status=$(echo "$response" | jq -r '.status // "unknown"')
+                    if [ "$status" = "created" ]; then
+                        echo "✅ Pipeline triggered successfully"
+                    else
+                        echo "❌ Pipeline trigger failed with status: $status"
+                        echo "Response: $response"
+                        exit 1
+                    fi
+                env:
+                    GITLAB_TRIGGER_TOKEN: ${{ secrets.GITLAB_TRIGGER_TOKEN }}
+                    GITLAB_TRIGGER_URL: ${{ vars.GITLAB_TRIGGER_URL }}
