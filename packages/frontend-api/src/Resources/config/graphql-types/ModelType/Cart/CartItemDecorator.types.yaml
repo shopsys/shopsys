@@ -13,3 +13,12 @@ CartItemDecorator:
             quantity:
                 type: "Int!"
                 description: "Quantity of items in the cart"
+            paidQuantity:
+                type: "Int!"
+                description: "Quantity to be paid after applying X+Y promotion"
+            freeQuantity:
+                type: "Int!"
+                description: "Quantity of free items from X+Y promotion"
+            totalPriceBeforePromotion:
+                type: "Price!"
+                description: "Total line price without X+Y promotion (unit price × quantity)"

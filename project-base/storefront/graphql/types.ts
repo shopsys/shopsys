@@ -526,10 +526,16 @@ export type TypeCartInput = {
 /** Represent one item in the cart */
 export type TypeCartItem = {
   __typename?: 'CartItem';
+  /** Quantity of free items from X+Y promotion */
+  freeQuantity: Scalars['Int']['output'];
+  /** Quantity to be paid after applying X+Y promotion */
+  paidQuantity: Scalars['Int']['output'];
   /** Product in the cart */
   product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
+  /** Total line price without X+Y promotion (unit price × quantity) */
+  totalPriceBeforePromotion: TypePrice;
   /** Cart item UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -1433,6 +1439,12 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Localized promotion text, e.g. 'Buy X get Y free' */
+  promotionText: Maybe<Scalars['String']['output']>;
+  /** X value for X+Y free promotion (null when not set) */
+  promotionX: Maybe<Scalars['Int']['output']>;
+  /** Y value for X+Y free promotion (null when not set) */
+  promotionY: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
@@ -2452,6 +2464,12 @@ export type TypeProduct = {
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Localized promotion text, e.g. 'Buy X get Y free' */
+  promotionText: Maybe<Scalars['String']['output']>;
+  /** X value for X+Y free promotion (null when not set) */
+  promotionX: Maybe<Scalars['Int']['output']>;
+  /** Y value for X+Y free promotion (null when not set) */
+  promotionY: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
@@ -3212,6 +3230,12 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Localized promotion text, e.g. 'Buy X get Y free' */
+  promotionText: Maybe<Scalars['String']['output']>;
+  /** X value for X+Y free promotion (null when not set) */
+  promotionX: Maybe<Scalars['Int']['output']>;
+  /** Y value for X+Y free promotion (null when not set) */
+  promotionY: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
@@ -3625,6 +3649,12 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Localized promotion text, e.g. 'Buy X get Y free' */
+  promotionText: Maybe<Scalars['String']['output']>;
+  /** X value for X+Y free promotion (null when not set) */
+  promotionX: Maybe<Scalars['Int']['output']>;
+  /** Y value for X+Y free promotion (null when not set) */
+  promotionY: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */

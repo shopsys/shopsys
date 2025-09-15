@@ -97,3 +97,12 @@ ProductDecorator:
                 type: "[VideoToken!]!"
             vatPercent:
                 type: "String!"
+            promotionX:
+                type: "Int"
+                description: "X value for X+Y free promotion (null when not set)"
+            promotionY:
+                type: "Int"
+                description: "Y value for X+Y free promotion (null when not set)"
+            promotionText:
+                type: "String"
+                description: "Localized promotion text, e.g. 'Buy X get Y free'"

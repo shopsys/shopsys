@@ -92,6 +92,7 @@ class CartFacade
         $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
         $notOnStockQuantity = $this->productAvailabilityFacade->getNotOnStockQuantity($product, $this->domain->getId(), $quantity) ?? 0;
         $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat());
+        $newCartItem->setUnitPricesAtAddition($productPrice->getPrice());
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 

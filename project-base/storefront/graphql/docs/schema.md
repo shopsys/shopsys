@@ -3340,6 +3340,24 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.freequantity">freeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity of free items from X+Y promotion
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitem.paidquantity">paidQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity to be paid after applying X+Y promotion
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -3354,6 +3372,15 @@ Product in the cart
 <td>
 
 Quantity of items in the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitem.totalpricebeforepromotion">totalPriceBeforePromotion</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total line price without X+Y promotion (unit price × quantity)
 
 </td>
 </tr>
@@ -5934,6 +5961,33 @@ Product price
 <td colspan="2" valign="top"><strong id="mainvariant.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.promotiontext">promotionText</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized promotion text, e.g. 'Buy X get Y free'
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.promotionx">promotionX</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+X value for X+Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.promotiony">promotionY</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Y value for X+Y free promotion (null when not set)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="mainvariant.relatedproducts">relatedProducts</strong></td>
@@ -8711,6 +8765,33 @@ Product price
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.promotiontext">promotionText</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized promotion text, e.g. 'Buy X get Y free'
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.promotionx">promotionX</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+X value for X+Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.promotiony">promotionY</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Y value for X+Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.relatedproducts">relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -10023,6 +10104,33 @@ Product price
 <td colspan="2" valign="top"><strong id="variant.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.promotiontext">promotionText</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized promotion text, e.g. 'Buy X get Y free'
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.promotionx">promotionX</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+X value for X+Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.promotiony">promotionY</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Y value for X+Y free promotion (null when not set)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.relatedproducts">relatedProducts</strong></td>
@@ -13891,6 +13999,33 @@ Product price
 <td colspan="2" valign="top"><strong id="product.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.promotiontext">promotionText</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized promotion text, e.g. 'Buy X get Y free'
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.promotionx">promotionX</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+X value for X+Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.promotiony">promotionY</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Y value for X+Y free promotion (null when not set)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.relatedproducts">relatedProducts</strong></td>

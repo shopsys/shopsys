@@ -19,6 +19,9 @@ use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class PriceQuery extends AbstractQuery
 {
@@ -45,7 +48,60 @@ class PriceQuery extends AbstractQuery
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly PaymentPriceProvider $paymentPriceProvider,
         protected readonly GqlContextHelper $gqlContextHelper,
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @return int
+     */
+    public function freeQuantityByCartItemQuery(CartItem $cartItem): int
+    {
+        $product = $cartItem->getProduct();
+        if ($product === null || $product->getPromotionX() === null || $product->getPromotionY() === null) {
+            return 0;
+        }
+
+        $x = (int)$product->getPromotionX();
+        $y = (int)$product->getPromotionY();
+        $q = $cartItem->getQuantity();
+
+        $group = $x + $y;
+        $fullGroups = intdiv($q, $group);
+        $remainder = $q % $group;
+        $extra = max(0, min($remainder - $x, $y));
+        return (int)($fullGroups * $y + $extra);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @return int
+     */
+    public function paidQuantityByCartItemQuery(CartItem $cartItem): int
+    {
+        return $cartItem->getQuantity() - $this->freeQuantityByCartItemQuery($cartItem);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function totalPriceBeforePromotionByCartItemQuery(CartItem $cartItem): Price
+    {
+        $product = $cartItem->getProduct();
+
+        if ($product === null) {
+            return new Price(\Shopsys\FrameworkBundle\Component\Money\Money::zero(), \Shopsys\FrameworkBundle\Component\Money\Money::zero());
+        }
+
+        $basicProductPrice = $this->productCachedAttributesFacade->getProductBasicPrice($product);
+        $price = $basicProductPrice->getPrice();
+
+        return new Price(
+            $price->getPriceWithoutVat()->multiply($cartItem->getQuantity()),
+            $price->getPriceWithVat()->multiply($cartItem->getQuantity()),
+        );
     }
 
     /**

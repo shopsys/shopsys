@@ -393,6 +393,21 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getPromotionText(): ?string
+    {
+        if ($this->promotionX === null || $this->promotionY === null) {
+            return null;
+        }
+
+        return t('Buy %x% get %y% free', [
+            '%x%' => $this->promotionX,
+            '%y%' => $this->promotionY,
+        ]);
+    }
+
+    /**
      * @return int|null
      */
     public function getPromotionX()

@@ -67,6 +67,18 @@ class CartItem
     protected $uuid;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     */
+    protected $unitPriceWithoutVatAtAddition;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     */
+    protected $unitPriceWithVatAtAddition;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
@@ -190,5 +202,60 @@ class CartItem
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
+     */
+    public function setUnitPricesAtAddition($unitPrice): void
+    {
+        $this->unitPriceWithoutVatAtAddition = $unitPrice->getPriceWithoutVat();
+        $this->unitPriceWithVatAtAddition = $unitPrice->getPriceWithVat();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getTotalPriceBeforePromotion()
+    {
+        $withoutVat = $this->unitPriceWithoutVatAtAddition?->multiply($this->getQuantity()) ?? Money::zero();
+        $withVat = $this->unitPriceWithVatAtAddition?->multiply($this->getQuantity()) ?? Money::zero();
+
+        return new \Shopsys\FrameworkBundle\Model\Pricing\Price($withoutVat, $withVat);
+    }
+
+    /**
+     * @return int
+     */
+    public function getFreeQuantity(): int
+    {
+        $product = $this->getProduct();
+
+        if ($product->getPromotionX() === null || $product->getPromotionY() === null) {
+            return 0;
+        }
+
+        $x = (int)$product->getPromotionX();
+        $y = (int)$product->getPromotionY();
+
+        if ($x <= 0 || $y <= 0) {
+            return 0;
+        }
+
+        $q = $this->getQuantity();
+        $group = $x + $y;
+        $fullGroups = intdiv($q, $group);
+        $remainder = $q % $group;
+        $extra = max(0, min($remainder - $x, $y));
+
+        return (int)($fullGroups * $y + $extra);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaidQuantity(): int
+    {
+        return $this->getQuantity() - $this->getFreeQuantity();
     }
 }

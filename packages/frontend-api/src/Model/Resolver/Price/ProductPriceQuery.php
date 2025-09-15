@@ -39,6 +39,25 @@ class ProductPriceQuery extends AbstractQuery
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return string|null
+     */
+    public function promotionTextByProductQuery(Product $product): ?string
+    {
+        $x = $product->getPromotionX();
+        $y = $product->getPromotionY();
+
+        if ($x === null || $y === null) {
+            return null;
+        }
+
+        return t('Buy %x% get %y% free', [
+            '%x%' => $x,
+            '%y%' => $y,
+        ]);
+    }
+
+    /**
      * @param array|\Shopsys\FrameworkBundle\Model\Product\Product $data
      * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
      */
