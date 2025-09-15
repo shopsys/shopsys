@@ -16,6 +16,8 @@
         {% set entity = orderItem.transport %}
     {% elseif orderItem.isTypePayment and orderItem.payment is not null %}
         {% set entity = orderItem.payment %}
+    {% elseif orderItem.isTypeProductGift and orderItem.productGift is not null %}
+        {% set entity = orderItem.productGift %}
     {% endif %}
 
 
@@ -47,7 +49,7 @@
                                             <tr>
                                                 <td class="product-description">
                                                     <strong>{{ orderItem.name }}</strong><br>
-                                                    {% if orderItem.isTypeProduct %}
+                                                    {% if orderItem.isTypeProduct or orderItem.isTypeProductGift %}
                                                         {% trans into orderLocale %}Amount{% endtrans %}: {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }}<br>
 
                                                         {% if displayWithoutVat %}

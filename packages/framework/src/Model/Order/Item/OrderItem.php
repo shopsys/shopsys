@@ -410,6 +410,20 @@ class OrderItem
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $productGift
+     */
+    public function setProductGift($productGift): void
+    {
+        $this->checkTypeProductGift();
+
+        if ($productGift !== null && $productGift->isMainVariant()) {
+            throw new MainVariantCannotBeOrderedException();
+        }
+
+        $this->product = $productGift;
+    }
+
+    /**
      * @param string $type
      * @return bool
      */
@@ -481,6 +495,11 @@ class OrderItem
     protected function checkTypeProduct(): void
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT);
+    }
+
+    protected function checkTypeProductGift(): void
+    {
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 
     protected function checkTypeDiscount(): void

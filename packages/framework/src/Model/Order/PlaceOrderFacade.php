@@ -113,7 +113,7 @@ class PlaceOrderFacade
 
         $this->fillOrderItems($order, $orderData);
 
-        $order->setTotalPrices($orderData->totalPrice, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
+        $order->setTotalPrices($orderData->totalPrice, $orderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_PRODUCT, OrderItemTypeEnum::TYPE_PRODUCT_GIFT]));
 
         $this->em->flush();
 
@@ -176,6 +176,11 @@ class PlaceOrderFacade
     ): OrderItem {
         return match ($orderItemData->type) {
             OrderItemTypeEnum::TYPE_PRODUCT => $this->orderItemFactory->createProduct(
+                $orderItemData,
+                $order,
+                $orderItemData->product,
+            ),
+            OrderItemTypeEnum::TYPE_PRODUCT_GIFT => $this->orderItemFactory->createProductGift(
                 $orderItemData,
                 $order,
                 $orderItemData->product,
