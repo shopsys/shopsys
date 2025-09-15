@@ -10,6 +10,7 @@ import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
+import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -22,7 +23,6 @@ import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmPro
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
-import { ProductGift } from '../../Blocks/Product/ProductGift';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;

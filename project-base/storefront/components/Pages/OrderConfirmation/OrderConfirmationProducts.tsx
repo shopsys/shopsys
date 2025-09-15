@@ -1,4 +1,5 @@
 import { OrderItemDiscountCard } from 'components/Blocks/OrderItemDiscountCard/OrderItemDiscountCard';
+import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
@@ -30,6 +31,21 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                             fullName={item.name}
                             mainImage={item.product.mainImage}
                             price={item.product.price}
+                            quantity={item.quantity}
+                            unit={item.unit}
+                        />
+                    );
+                }
+
+                if (item.type === TypeOrderItemTypeEnum.ProductGift && item.product) {
+                    return (
+                        <OrderItemGiftCard
+                            key={item.uuid}
+                            availability={item.product.availability}
+                            baseGiftPrice={item.unitPrice.priceWithVat}
+                            categoryName={item.product.categories[0]?.name}
+                            fullName={item.name}
+                            mainImage={item.product.mainImage}
                             quantity={item.quantity}
                             unit={item.unit}
                         />

@@ -89,16 +89,10 @@ class QuantifiedProductPriceCalculation
         QuantifiedProduct $quantifiedProduct,
         int $domainId,
     ): QuantifiedItemPriceInterface {
-        $inputPrice = $this->giftPlanSettingFacade->getGiftPriceWithVat($domainId);
         $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $vat = $quantifiedProduct->getProduct()->getVatForDomain($domainId);
-        $basePrice = $this->basePriceCalculation->calculateRoundedBasePrice(
-            $inputPrice,
-            PricingSetting::PRICE_TYPE_WITH_VAT,
-            $vat,
-            $defaultCurrency,
-        );
 
+        $basePrice = $this->giftPlanSettingFacade->calculateBaseGiftPrice($domainId, $vat);
         $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $basePrice);
         $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $vat, $defaultCurrency);
         $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithVat($totalPriceWithVat, $totalPriceVatAmount);

@@ -433,10 +433,14 @@ input CartInput {
 
 "Represent one item in the cart"
 type CartItem {
+  "Base Gift price of the product"
+  baseGiftPrice: Money!
   "Product in the cart"
   product: Product!
   "Quantity of items in the cart"
   quantity: Int!
+  "Cart item type"
+  type: CartItemTypeEnum!
   "Cart item UUID"
   uuid: Uuid!
 }
@@ -445,6 +449,12 @@ type CartItemModificationsResult {
   cartItemsWithChangedQuantity: [CartItem!]!
   cartItemsWithModifiedPrice: [CartItem!]!
   noLongerListableCartItems: [CartItem!]!
+}
+
+"One of possible types of the cart item"
+enum CartItemTypeEnum {
+  product
+  productGift
 }
 
 type CartModificationsResult {
@@ -1694,6 +1704,7 @@ enum OrderItemTypeEnum {
   discount
   payment
   product
+  productGift
   rounding
   transport
 }

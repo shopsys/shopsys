@@ -152,6 +152,7 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
+    * [CartItemTypeEnum](#cartitemtypeenum)
     * [CategoryAutomatedFilterEnum](#categoryautomatedfilterenum)
     * [CustomerUserRoleEnum](#customeruserroleenum)
     * [FriendlyUrlRouteEnum](#friendlyurlrouteenum)
@@ -3384,6 +3385,15 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.basegiftprice">baseGiftPrice</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Base Gift price of the product
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -3398,6 +3408,15 @@ Product in the cart
 <td>
 
 Quantity of items in the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitem.type">type</strong></td>
+<td valign="top"><a href="#cartitemtypeenum">CartItemTypeEnum</a>!</td>
+<td>
+
+Cart item type
 
 </td>
 </tr>
@@ -12404,6 +12423,29 @@ Product availability status out of stock
 </tbody>
 </table>
 
+### CartItemTypeEnum
+
+One of possible types of the cart item
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>product</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>productGift</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### CategoryAutomatedFilterEnum
 
 Category automated filter types
@@ -12580,6 +12622,10 @@ One of possible types of the order item
 </tr>
 <tr>
 <td valign="top"><strong>product</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>productGift</strong></td>
 <td></td>
 </tr>
 <tr>

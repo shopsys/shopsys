@@ -1,7 +1,9 @@
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
+import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
+import { TypeCartItemTypeEnum } from 'graphql/types';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -25,18 +27,35 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
         <div className="vl:col-span-1 flex flex-col gap-2">
             <span className="h4">{t('Your order')}</span>
 
-            {cart.items.map((item) => (
-                <OrderItemProductCard
-                    key={item.uuid}
-                    availability={item.product.availability}
-                    categoryName={item.product.categories[0]?.name}
-                    fullName={item.product.fullName}
-                    mainImage={item.product.mainImage}
-                    price={item.product.price}
-                    quantity={item.quantity}
-                    unit={item.product.unit.name}
-                />
-            ))}
+            {cart.items.map((item) => {
+                if (item.type === TypeCartItemTypeEnum.ProductGift) {
+                    return (
+                        <OrderItemGiftCard
+                            key={item.uuid}
+                            availability={item.product.availability}
+                            baseGiftPrice={item.baseGiftPrice}
+                            categoryName={item.product.categories[0]?.name ?? ''}
+                            fullName={item.product.fullName}
+                            mainImage={item.product.mainImage}
+                            quantity={item.quantity}
+                            unit={item.product.unit.name}
+                        />
+                    );
+                }
+
+                return (
+                    <OrderItemProductCard
+                        key={item.uuid}
+                        availability={item.product.availability}
+                        categoryName={item.product.categories[0]?.name ?? ''}
+                        fullName={item.product.fullName}
+                        mainImage={item.product.mainImage}
+                        price={item.product.price}
+                        quantity={item.quantity}
+                        unit={item.product.unit.name}
+                    />
+                );
+            })}
 
             <div className="relative">
                 {isTransportOrPaymentLoading && (transport || payment) && (

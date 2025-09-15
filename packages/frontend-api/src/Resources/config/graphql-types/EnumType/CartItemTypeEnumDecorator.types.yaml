@@ -1,0 +1,10 @@
+CartItemTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of possible types of the cart item"
+        values:
+            product:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Cart\\Item\\CartItemTypeEnum::TYPE_PRODUCT")'
+            productGift:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Cart\\Item\\CartItemTypeEnum::TYPE_PRODUCT_GIFT")'

@@ -2,6 +2,8 @@ fragment CartItemFragment on CartItem {
     __typename
     uuid
     quantity
+    type
+    baseGiftPrice
     product {
         __typename
         id
@@ -40,8 +42,5 @@ fragment CartItemFragment on CartItem {
             name
         }
         vatPercent
-        gifts {
-            ...ProductGiftFragment
-        }
     }
 }

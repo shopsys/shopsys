@@ -537,10 +537,14 @@ export type TypeCartInput = {
 /** Represent one item in the cart */
 export type TypeCartItem = {
   __typename?: 'CartItem';
+  /** Base Gift price of the product */
+  baseGiftPrice: Scalars['Money']['output'];
   /** Product in the cart */
   product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
+  /** Cart item type */
+  type: TypeCartItemTypeEnum;
   /** Cart item UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -551,6 +555,12 @@ export type TypeCartItemModificationsResult = {
   cartItemsWithModifiedPrice: Array<TypeCartItem>;
   noLongerListableCartItems: Array<TypeCartItem>;
 };
+
+/** One of possible types of the cart item */
+export enum TypeCartItemTypeEnum {
+  Product = 'product',
+  ProductGift = 'productGift'
+}
 
 export type TypeCartModificationsResult = {
   __typename?: 'CartModificationsResult';
@@ -2090,6 +2100,7 @@ export enum TypeOrderItemTypeEnum {
   Discount = 'discount',
   Payment = 'payment',
   Product = 'product',
+  ProductGift = 'productGift',
   Rounding = 'rounding',
   Transport = 'transport'
 }
