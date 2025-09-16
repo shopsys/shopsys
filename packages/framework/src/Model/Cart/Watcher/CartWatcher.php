@@ -49,7 +49,7 @@ class CartWatcher
             $cartItem->setWatchedPrice($price->getPriceWithVat());
         }
 
-        $giftPrice = $this->giftPlanSettingFacade->getGiftPriceWithVat($this->domain->getId());
+        $giftPrice = $this->giftPlanSettingFacade->getInputGiftPrice($this->domain->getId());
 
         foreach ($cart->getProductGiftCartItems() as $cartItem) {
             if ($giftPrice->equals($cartItem->getWatchedPrice() ?? Money::zero())) {

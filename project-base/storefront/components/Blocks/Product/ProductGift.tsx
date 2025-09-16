@@ -1,5 +1,5 @@
-import { TIDs } from 'cypress/tids';
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { TypeProductGiftFragment } from 'graphql/requests/products/fragments/ProductGiftFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

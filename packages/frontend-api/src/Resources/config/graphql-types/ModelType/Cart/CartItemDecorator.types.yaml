@@ -16,6 +16,3 @@ CartItemDecorator:
             type:
                 type: "CartItemTypeEnum!"
                 description: "Cart item type"
-            baseGiftPrice:
-                type: "Money!"
-                description: "Base Gift price of the product"

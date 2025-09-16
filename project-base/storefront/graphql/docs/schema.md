@@ -3385,15 +3385,6 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="cartitem.basegiftprice">baseGiftPrice</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Base Gift price of the product
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -5825,6 +5816,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
 
 </td>
 </tr>
@@ -8622,6 +8622,15 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.gifts">gifts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -9945,6 +9954,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
 
 </td>
 </tr>
@@ -13867,6 +13885,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
 
 </td>
 </tr>

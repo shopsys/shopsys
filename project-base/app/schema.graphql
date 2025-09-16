@@ -433,8 +433,6 @@ input CartInput {
 
 "Represent one item in the cart"
 type CartItem {
-  "Base Gift price of the product"
-  baseGiftPrice: Money!
   "Product in the cart"
   product: Product!
   "Quantity of items in the cart"
@@ -1234,6 +1232,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
   "List of gift products"
   gifts: [Product!]!
   "Alternate links for hreflang meta tags"
@@ -2000,6 +2000,8 @@ interface Product {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
   "List of gift products"
   gifts: [Product!]!
   "Alternate links for hreflang meta tags"
@@ -2500,6 +2502,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
   "List of gift products"
   gifts: [Product!]!
   "Alternate links for hreflang meta tags"
@@ -2851,6 +2855,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
   "List of gift products"
   gifts: [Product!]!
   "Alternate links for hreflang meta tags"

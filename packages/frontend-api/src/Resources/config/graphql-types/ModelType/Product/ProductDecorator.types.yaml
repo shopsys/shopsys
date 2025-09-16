@@ -48,6 +48,10 @@ ProductDecorator:
                 type: "ProductPrice!"
                 description: "Product price"
                 resolve: '@=query("priceByProductQuery", value)'
+            giftPrice:
+                type: "ProductPrice!"
+                description: "Gift price for the product when is as gift"
+                resolve: '@=query("giftPriceByProductQuery", value)'
             images:
                 type: "[Image]!"
                 description: "Product images"

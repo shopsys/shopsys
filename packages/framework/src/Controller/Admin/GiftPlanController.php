@@ -243,7 +243,7 @@ class GiftPlanController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = (array)$form->getData();
-            $this->giftPlanSettingFacade->setGiftPriceWithVat($data[GiftPlanSettingFacade::GIFT_INPUT_PRICE], $selectedDomainId);
+            $this->giftPlanSettingFacade->setInputGiftPrice($data[GiftPlanSettingFacade::GIFT_INPUT_PRICE], $selectedDomainId);
 
             $this->addSuccessFlash(t('Gift price saved'));
 

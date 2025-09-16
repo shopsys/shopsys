@@ -43,7 +43,7 @@ class GiftCartFacade
     public function refreshProductGiftsInCart(Cart $cart, int $domainId): void
     {
         $cartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
-        $giftPrice = $this->giftPlanSettingFacade->getGiftPriceWithVat($domainId);
+        $giftPrice = $this->giftPlanSettingFacade->getInputGiftPrice($domainId);
 
         foreach ($cartItemSetupList as $giftCartItemSetup) {
             $giftProduct = $giftCartItemSetup->getGiftProduct();

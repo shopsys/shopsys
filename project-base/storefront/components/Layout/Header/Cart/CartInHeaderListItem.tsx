@@ -78,7 +78,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     </div>
                 )}
 
-                {isProductGift && isPriceVisible(baseGiftPrice) && (
+                {isProductGift && isPriceVisible(product) && (
                     <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
                         {formatPrice(mapPriceForCalculations(baseGiftPrice) * quantity)}
                     </div>

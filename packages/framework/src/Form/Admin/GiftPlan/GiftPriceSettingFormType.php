@@ -23,7 +23,7 @@ final class GiftPriceSettingFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(GiftPlanSettingFacade::GIFT_PRICE_WITH_VAT, MoneyType::class, [
+        $builder->add(GiftPlanSettingFacade::GIFT_INPUT_PRICE, MoneyType::class, [
             'scale' => 6,
             'currency' => $options['currency_code'],
             'constraints' => [

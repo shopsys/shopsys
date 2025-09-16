@@ -3,7 +3,6 @@ fragment CartItemFragment on CartItem {
     uuid
     quantity
     type
-    baseGiftPrice
     product {
         __typename
         id
@@ -29,6 +28,9 @@ fragment CartItemFragment on CartItem {
             ...AvailabilityFragment
         }
         price {
+            ...ProductPriceFragment
+        }
+        giftPrice {
             ...ProductPriceFragment
         }
         availableStoresCount
