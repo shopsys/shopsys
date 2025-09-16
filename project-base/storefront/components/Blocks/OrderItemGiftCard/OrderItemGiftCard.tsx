@@ -1,7 +1,8 @@
-import { OrderItemGiftPrice } from './OrderItemGiftPrice';
 import { Image } from 'components/Basic/Image/Image';
+import { OrderItemProductPrice } from 'components/Blocks/OrderItemProductCard/OrderItemProductPrice';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -14,7 +15,7 @@ type OrderItemGiftCardProps = {
     categoryName: string;
     quantity: number;
     unit: string | null;
-    baseGiftPrice: string;
+    price: TypeProductPriceFragment;
 };
 
 const OrderItemGiftCardComp: FC<OrderItemGiftCardProps> = ({
@@ -23,7 +24,7 @@ const OrderItemGiftCardComp: FC<OrderItemGiftCardProps> = ({
     categoryName,
     quantity,
     unit,
-    baseGiftPrice,
+    price,
     availability,
 }) => {
     return (
@@ -58,7 +59,7 @@ const OrderItemGiftCardComp: FC<OrderItemGiftCardProps> = ({
                 </div>
             </div>
 
-            <OrderItemGiftPrice baseGiftPrice={baseGiftPrice} quantity={quantity} unit={unit} />
+            <OrderItemProductPrice productPrice={price} quantity={quantity} unit={unit} />
         </li>
     );
 };

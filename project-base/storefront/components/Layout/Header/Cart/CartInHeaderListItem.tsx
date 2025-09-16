@@ -17,7 +17,7 @@ type CartInHeaderListItemProps = {
 };
 
 export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
-    cartItem: { product, uuid, quantity, type, baseGiftPrice },
+    cartItem: { product, uuid, quantity, type },
     onRemoveFromCart,
 }) => {
     const { t } = useTranslation();
@@ -78,9 +78,9 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     </div>
                 )}
 
-                {isProductGift && isPriceVisible(product) && (
+                {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
                     <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
-                        {formatPrice(mapPriceForCalculations(baseGiftPrice) * quantity)}
+                        {formatPrice(mapPriceForCalculations(product.giftPrice.priceWithVat) * quantity)}
                     </div>
                 )}
             </div>

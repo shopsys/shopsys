@@ -33,10 +33,10 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                         <OrderItemGiftCard
                             key={item.uuid}
                             availability={item.product.availability}
-                            baseGiftPrice={item.baseGiftPrice}
                             categoryName={item.product.categories[0]?.name ?? ''}
                             fullName={item.product.fullName}
                             mainImage={item.product.mainImage}
+                            price={item.product.giftPrice}
                             quantity={item.quantity}
                             unit={item.product.unit.name}
                         />

@@ -2,7 +2,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { CartItemGiftPrice } from 'components/Pages/Cart/CartItemGiftPrice';
 import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
@@ -24,7 +23,7 @@ type CartListItemProps = {
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
-    item: { product, quantity, uuid, type, baseGiftPrice },
+    item: { product, quantity, uuid, type },
     listIndex,
     onRemoveFromCart,
     onAddToCart,
@@ -127,16 +126,16 @@ export const CartListItem: FC<CartListItemProps> = ({
                             <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
                         </div>
                     )}
-                    {isProductGift && isPriceVisible(baseGiftPrice) && (
+                    {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
                         <div className="font-secondary vl:w-40 whitespace-nowrap">
-                            <span className="font-semibold">{formatPrice(baseGiftPrice)}</span>
+                            <span className="font-semibold">{formatPrice(product.giftPrice.priceWithVat)}</span>
                             <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
                         </div>
                     )}
                 </div>
 
                 {isProduct && <CartItemPrice productPrice={product.price} quantity={quantity} />}
-                {isProductGift && <CartItemGiftPrice baseGiftPrice={baseGiftPrice} quantity={quantity} />}
+                {isProductGift && <CartItemPrice productPrice={product.giftPrice} quantity={quantity} />}
 
                 <RemoveCartItemButton
                     className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"

@@ -42,10 +42,10 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                         <OrderItemGiftCard
                             key={item.uuid}
                             availability={item.product.availability}
-                            baseGiftPrice={item.unitPrice.priceWithVat}
                             categoryName={item.product.categories[0]?.name}
                             fullName={item.name}
                             mainImage={item.product.mainImage}
+                            price={item.product.giftPrice}
                             quantity={item.quantity}
                             unit={item.unit}
                         />
