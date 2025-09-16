@@ -25,4 +25,4 @@
 /package-lock.json
 
 /.claude/**/*.local.*
-CLAUDE.local.md
+/*.local.md
