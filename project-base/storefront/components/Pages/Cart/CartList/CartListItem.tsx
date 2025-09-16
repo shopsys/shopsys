@@ -22,7 +22,7 @@ type CartListItemProps = {
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
-    item: { product, quantity, uuid },
+    item: { product, quantity, uuid, paidQuantity, freeQuantity, totalPriceBeforePromotion },
     listIndex,
     onRemoveFromCart,
     onAddToCart,
@@ -120,7 +120,13 @@ export const CartListItem: FC<CartListItemProps> = ({
                     )}
                 </div>
 
-                <CartItemPrice productPrice={product.price} quantity={quantity} />
+                <CartItemPrice
+                    freeQuantity={freeQuantity}
+                    paidQuantity={paidQuantity}
+                    productPrice={product.price}
+                    quantity={quantity}
+                    totalPriceBeforePromotion={totalPriceBeforePromotion}
+                />
 
                 <RemoveCartItemButton
                     ariaLabel={t('Remove product {{ productName }} from cart', { productName: product.fullName })}

@@ -27,11 +27,14 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                             key={item.uuid}
                             availability={item.product.availability}
                             categoryName={item.product.categories[0]?.name}
+                            freeQuantity={item.freeQuantity}
                             fullName={item.name}
                             mainImage={item.product.mainImage}
+                            paidQuantity={item.paidQuantity}
                             price={item.product.price}
                             quantity={item.quantity}
                             unit={item.unit}
+                            unitPriceBeforePromotion={item.unitPriceBeforePromotion}
                         />
                     );
                 }

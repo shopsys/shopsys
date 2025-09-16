@@ -2,6 +2,7 @@ import { OrderItemProductPrice } from './OrderItemProductPrice';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { memo } from 'react';
@@ -16,6 +17,9 @@ type OrderItemProductCardProps = {
     quantity: number;
     unit: string | null;
     price: TypeProductPriceFragment;
+    paidQuantity?: number;
+    freeQuantity?: number;
+    unitPriceBeforePromotion?: TypePriceFragment | null;
 };
 
 const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
@@ -26,6 +30,9 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
     unit,
     price,
     availability,
+    paidQuantity,
+    freeQuantity,
+    unitPriceBeforePromotion,
 }) => {
     return (
         <li className="bg-background-more font-secondary flex flex-col gap-1 rounded-xl p-4">
@@ -59,7 +66,14 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
                 </div>
             </div>
 
-            <OrderItemProductPrice productPrice={price} quantity={quantity} unit={unit} />
+            <OrderItemProductPrice
+                freeQuantity={freeQuantity}
+                paidQuantity={paidQuantity}
+                productPrice={price}
+                quantity={quantity}
+                unit={unit}
+                unitPriceBeforePromotion={unitPriceBeforePromotion}
+            />
         </li>
     );
 };

@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderItemResolverMap extends ResolverMap
 {
@@ -48,6 +49,82 @@ class OrderItemResolverMap extends ResolverMap
                     }
 
                     return null;
+                },
+                'paidQuantity' => function (OrderItem $orderItem) {
+                    $product = $orderItem->getProduct();
+                    if ($product === null || !$orderItem->isTypeProduct()) {
+                        return $orderItem->getQuantity();
+                    }
+
+                    $promotionX = $product->getPromotionX();
+                    $promotionY = $product->getPromotionY();
+
+                    if ($promotionX === null || $promotionY === null) {
+                        return $orderItem->getQuantity();
+                    }
+
+                    $quantity = $orderItem->getQuantity();
+                    $fullPromotion = $promotionX + $promotionY;
+                    $fullGroups = intdiv($quantity, $fullPromotion);
+                    $remainder = $quantity % $fullPromotion;
+                    $extra = max(0, min($remainder - $promotionX, $promotionY));
+                    $freeQuantity = $fullGroups * $promotionY + $extra;
+
+                    return $quantity - $freeQuantity;
+                },
+                'freeQuantity' => function (OrderItem $orderItem) {
+                    $product = $orderItem->getProduct();
+                    if ($product === null || !$orderItem->isTypeProduct()) {
+                        return 0;
+                    }
+
+                    $promotionX = $product->getPromotionX();
+                    $promotionY = $product->getPromotionY();
+
+                    if ($promotionX === null || $promotionY === null) {
+                        return 0;
+                    }
+
+                    $quantity = $orderItem->getQuantity();
+                    $fullPromotion = $promotionX + $promotionY;
+                    $fullGroups = intdiv($quantity, $fullPromotion);
+                    $remainder = $quantity % $fullPromotion;
+                    $extra = max(0, min($remainder - $promotionX, $promotionY));
+
+                    return $fullGroups * $promotionY + $extra;
+                },
+                'unitPriceBeforePromotion' => function (OrderItem $orderItem) {
+                    $product = $orderItem->getProduct();
+                    if ($product === null || !$orderItem->isTypeProduct()) {
+                        return null;
+                    }
+
+                    $promotionX = $product->getPromotionX();
+                    $promotionY = $product->getPromotionY();
+
+                    if ($promotionX === null || $promotionY === null) {
+                        return null;
+                    }
+
+                    $quantity = $orderItem->getQuantity();
+                    $fullPromotion = $promotionX + $promotionY;
+                    $fullGroups = intdiv($quantity, $fullPromotion);
+                    $remainder = $quantity % $fullPromotion;
+                    $extra = max(0, min($remainder - $promotionX, $promotionY));
+                    $freeQuantity = $fullGroups * $promotionY + $extra;
+
+                    if ($freeQuantity === 0) {
+                        return null;
+                    }
+
+                    $totalPriceWithVat = $this->orderItemPriceCalculation->calculateTotalPrice($orderItem)->getPriceWithVat();
+                    $totalPriceWithoutVat = $this->orderItemPriceCalculation->calculateTotalPrice($orderItem)->getPriceWithoutVat();
+                    $unitPrice = $orderItem->getPrice();
+
+                    $originalTotalWithVat = $unitPrice->getPriceWithVat()->multiply($quantity);
+                    $originalTotalWithoutVat = $unitPrice->getPriceWithoutVat()->multiply($quantity);
+
+                    return new Price($unitPrice->getPriceWithoutVat(), $unitPrice->getPriceWithVat());
                 },
             ],
         ];

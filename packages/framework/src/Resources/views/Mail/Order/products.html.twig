@@ -72,6 +72,37 @@
                                                     {% endif %}
                                                 </td>
                                                 <td align="right" class="product-price">
+                                                    {# Calculate promotion #}
+                                                    {% set hasPromotion = false %}
+                                                    {% set paidQuantity = orderItem.quantity %}
+                                                    {% set freeQuantity = 0 %}
+                                                    {% set originalPriceWithVat = orderItemTotalPricesById[orderItem.id].priceWithVat %}
+                                                    {% set originalPriceWithoutVat = orderItemTotalPricesById[orderItem.id].priceWithoutVat %}
+
+                                                    {% if orderItem.isTypeProduct and orderItem.product is not null %}
+                                                        {% if orderItem.product.promotionX is not null and orderItem.product.promotionY is not null %}
+                                                            {% set promotionX = orderItem.product.promotionX %}
+                                                            {% set promotionY = orderItem.product.promotionY %}
+                                                            {% set fullPromotion = promotionX + promotionY %}
+                                                            {% set fullGroups = (orderItem.quantity / fullPromotion)|round(0, 'floor') %}
+                                                            {% set remainder = orderItem.quantity % fullPromotion %}
+                                                            {% set extra = max(0, min(remainder - promotionX, promotionY)) %}
+                                                            {% set freeQuantity = fullGroups * promotionY + extra %}
+                                                            {% set paidQuantity = orderItem.quantity - freeQuantity %}
+                                                            {% if freeQuantity > 0 %}
+                                                                {% set hasPromotion = true %}
+                                                                {% set originalPriceWithVat = orderItem.unitPriceWithVat.multiply(orderItem.quantity) %}
+                                                                {% set originalPriceWithoutVat = orderItem.unitPriceWithoutVat.multiply(orderItem.quantity) %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                    {% if hasPromotion and displayWithVat %}
+                                                        <span style="text-decoration: line-through; color: #dc2626; white-space: nowrap; padding-left: 10px;">
+                                                            {{ originalPriceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
+                                                        </span><br>
+                                                    {% endif %}
+
                                                     {% if displayWithoutVat %}
                                                         {% if not (displayBoth and isZeroTotalPrice) %}
                                                             {% if doNotDisplayBoth %}

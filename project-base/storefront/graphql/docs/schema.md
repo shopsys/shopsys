@@ -6927,6 +6927,15 @@ Catalog number of the order item product
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="orderitem.freequantity">freeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity of free items from X+Y promotion
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="orderitem.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6941,6 +6950,15 @@ Name of the order item
 <td>
 
 Order to which the order item belongs
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.paidquantity">paidQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity to be paid after applying X+Y promotion
 
 </td>
 </tr>
@@ -6995,6 +7013,15 @@ Unit of measurement used for the order item
 <td>
 
 Order item price per unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.unitpricebeforepromotion">unitPriceBeforePromotion</strong></td>
+<td valign="top"><a href="#price">Price</a></td>
+<td>
+
+Unit price without X+Y promotion
 
 </td>
 </tr>

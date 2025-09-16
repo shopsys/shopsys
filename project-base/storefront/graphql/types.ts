@@ -2048,10 +2048,14 @@ export type TypeOrderItem = {
   __typename?: 'OrderItem';
   /** Catalog number of the order item product */
   catnum: Maybe<Scalars['String']['output']>;
+  /** Quantity of free items from X+Y promotion */
+  freeQuantity: Scalars['Int']['output'];
   /** Name of the order item */
   name: Scalars['String']['output'];
   /** Order to which the order item belongs */
   order: TypeOrder;
+  /** Quantity to be paid after applying X+Y promotion */
+  paidQuantity: Scalars['Int']['output'];
   /** Product of the order item */
   product: Maybe<TypeProduct>;
   /** Quantity of order items in the order */
@@ -2064,6 +2068,8 @@ export type TypeOrderItem = {
   unit: Maybe<Scalars['String']['output']>;
   /** Order item price per unit */
   unitPrice: TypePrice;
+  /** Unit price without X+Y promotion */
+  unitPriceBeforePromotion: Maybe<TypePrice>;
   /** UUID of the order item */
   uuid: Scalars['Uuid']['output'];
   /** Applied VAT rate percentage applied to the order item */
