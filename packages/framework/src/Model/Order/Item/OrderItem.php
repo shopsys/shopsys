@@ -388,6 +388,16 @@ class OrderItem
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public function getProductGift()
+    {
+        $this->checkTypeProductGift();
+
+        return $this->product;
+    }
+
+    /**
      * @return bool
      */
     public function isTypeProductAndHasProduct()
@@ -438,6 +448,14 @@ class OrderItem
     public function isTypeProduct(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTypeProductGift(): bool
+    {
+        return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 
     /**

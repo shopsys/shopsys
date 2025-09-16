@@ -47,6 +47,10 @@ class OrderItemResolverMap extends ResolverMap
                         return $orderItem->getProduct();
                     }
 
+                    if ($orderItem->isTypeProductGift()) {
+                        return $orderItem->getProductGift();
+                    }
+
                     return null;
                 },
             ],

@@ -89,6 +89,8 @@ class OrderItemDataFactory
             $orderItemData->payment = $orderItem->getPayment();
         } elseif ($orderItem->isTypeProduct()) {
             $orderItemData->product = $orderItem->getProduct();
+        } elseif ($orderItem->isTypeProductGift()) {
+            $orderItemData->product = $orderItem->getProductGift();
         }
     }
 

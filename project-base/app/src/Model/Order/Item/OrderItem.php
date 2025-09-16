@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
  * @method addRelatedItem(\App\Model\Order\Item\OrderItem $relatedItem)
  * @method \App\Model\Order\Item\OrderItem[] getRelatedItems()
  * @method setProductGift(\App\Model\Product\Product|null $productGift)
+ * @method \App\Model\Product\Product|null getProductGift()
  */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem extends BaseOrderItem

@@ -41,7 +41,7 @@ class OrderPriceCalculation
             $priceWithVat = $priceWithVat->add($itemTotalPrice->getPriceWithVat());
             $priceWithoutVat = $priceWithoutVat->add($itemTotalPrice->getPriceWithoutVat());
 
-            if (!$orderItem->isTypeProduct()) {
+            if (!($orderItem->isTypeProduct() || $orderItem->isTypeProductGift())) {
                 continue;
             }
 
