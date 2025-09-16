@@ -4,6 +4,7 @@ import { bannersReducer } from './bannersUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
@@ -18,6 +19,7 @@ export type BannersSliderProps = {
 };
 
 export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
+    const { t } = useTranslation();
     const numItems = sliderItems.length;
     const [bannerSliderState, dispatchBannerSliderStateChange] = useReducer(bannersReducer, {
         sliderPosition: 0,
@@ -36,12 +38,9 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            startInterval();
-        }, SLIDER_AUTOMATIC_SLIDE_INTERVAL);
+        startInterval();
 
         return () => {
-            clearTimeout(timer);
             checkAndClearInterval();
         };
     }, []);
@@ -60,6 +59,15 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         checkAndClearInterval();
         dispatchBannerSliderStateChange({ type: 'MOVE_TO', slideToMoveTo });
         startInterval();
+    };
+
+    const moveToSlideWithKeyboard = (slideToMoveTo: number) => {
+        setTimeout(() => {
+            const bannerLink = document.getElementById(`banner-link-${slideToMoveTo}`);
+            if (bannerLink) {
+                bannerLink.focus();
+            }
+        }, 50);
     };
 
     const handlers = useSwipeable({
@@ -82,7 +90,13 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     className="group block rounded-t-xl rounded-b-none !no-underline select-text"
                     draggable={false}
                     href={sliderItems[bannerSliderState.sliderPosition].link}
-                    title={sliderItems[bannerSliderState.sliderPosition].name}
+                    id={`banner-link-${bannerSliderState.sliderPosition}`}
+                    aria-label={t('{{ slideName }}, slide {{ current }} of {{ total }}', {
+                        slideName: sliderItems[bannerSliderState.sliderPosition].name,
+                        current: bannerSliderState.sliderPosition + 1,
+                        total: sliderItems.length,
+                    })}
+                    onFocus={checkAndClearInterval}
                     onMouseEnter={checkAndClearInterval}
                     onMouseLeave={() => {
                         checkAndClearInterval();
@@ -137,6 +151,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                 index={index}
                                 isActive={isActive}
                                 moveToSlide={moveToSlide}
+                                moveToSlideWithKeyboard={moveToSlideWithKeyboard}
                                 slideInterval={SLIDER_AUTOMATIC_SLIDE_INTERVAL}
                                 sliderItem={sliderItem}
                                 totalItems={sliderItems.length}
