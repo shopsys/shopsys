@@ -1,6 +1,8 @@
 import Register from '../../common/utils/Register';
 
 export default class Product {
+    static defaultHeaderHeight = 100;
+
     static init($container) {
         Product.initializeSideNavigation($container);
         Product.initProductVideos($container);
@@ -8,21 +10,63 @@ export default class Product {
 
     static initializeSideNavigation($container) {
         const $productDetailNavigation = $container.find('.toc .nav');
-        const $topOffset = $('.page-header').offset().top;
+        const sections = [];
 
         $('#product_form h3').each(function () {
             const $title = $(this);
-            const $titleClone = $title.clone();
 
-            const $navigationItem = $(
-                `<span class="nav-link cursor-pointer"><span class="nav-link-title">${$titleClone.text()}</span></span>`,
-            );
+            const $navigationItem = $(`<span class="nav-link cursor-pointer">${$title.text()}</span>`);
             $productDetailNavigation.append($navigationItem);
 
-            $navigationItem.click(() => {
-                const scrollOffsetTop = $title.offset().top - $topOffset;
-                $('html, body').animate({ scrollTop: scrollOffsetTop }, 'slow');
+            sections.push({
+                $element: $title,
+                $navItem: $navigationItem,
             });
+
+            $navigationItem.click(() => {
+                const headerHeight = $('.page-header').outerHeight() || Product.defaultHeaderHeight;
+                const targetTop = $title.offset().top - headerHeight - 50;
+
+                $('html, body').animate(
+                    {
+                        scrollTop: targetTop,
+                    },
+                    500,
+                );
+            });
+        });
+
+        Product.initIntersectionObserver(sections);
+    }
+
+    static initIntersectionObserver(sections) {
+        if (sections.length === 0) return;
+
+        let currentActiveSection = null;
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    const section = sections.find(s => s.$element[0] === entry.target);
+                    if (!section) return;
+
+                    if (entry.isIntersecting) {
+                        if (currentActiveSection) {
+                            currentActiveSection.$navItem.removeClass('active');
+                        }
+                        section.$navItem.addClass('active');
+                        currentActiveSection = section;
+                    }
+                });
+            },
+            {
+                rootMargin: `-${Product.defaultHeaderHeight}px 0px -50% 0px`,
+                threshold: 0,
+            },
+        );
+
+        sections.forEach(section => {
+            observer.observe(section.$element[0]);
         });
     }
 
