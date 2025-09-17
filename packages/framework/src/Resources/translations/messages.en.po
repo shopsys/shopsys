@@ -292,6 +292,9 @@ msgstr ""
 msgid "Available payment methods"
 msgstr ""
 
+msgid "Available placeholders"
+msgstr ""
+
 msgid "Available shipping methods"
 msgstr ""
 
@@ -323,6 +326,9 @@ msgid "Bank payment confirmed by advice"
 msgstr ""
 
 msgid "Bank payment confirmed by statement"
+msgstr ""
+
+msgid "Bank transfer"
 msgstr ""
 
 msgid "Bank transfer not completed"
@@ -2570,6 +2576,9 @@ msgid "Promoted categories"
 msgstr ""
 
 msgid "Promoted products"
+msgstr ""
+
+msgid "QR Code"
 msgstr ""
 
 msgid "QR code"

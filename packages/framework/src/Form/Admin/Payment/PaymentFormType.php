@@ -195,6 +195,10 @@ final class PaymentFormType extends AbstractType
                 'required' => false,
                 'entry_type' => CKEditorType::class,
                 'label' => t('Instructions'),
+                'entry_options' => [
+                    'help' => $this->buildInstructionsHelpHtml(),
+                    'help_html' => true,
+                ],
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
@@ -424,5 +428,33 @@ final class PaymentFormType extends AbstractType
                 '%domains%' => implode(', ', $domainNames),
             ]),
         ]);
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    protected function getInstructionsPlaceholders(): array
+    {
+        return [
+            '{qr_code}' => t('QR Code'),
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildInstructionsHelpHtml(): string
+    {
+        $items = [];
+
+        foreach ($this->getInstructionsPlaceholders() as $placeholder => $desc) {
+            $items[] = sprintf('<li><code>%s</code> &ndash; %s</li>', $placeholder, $desc);
+        }
+
+        return sprintf(
+            '<div><h5>%s</h5><ul class="list-unstyled">%s</ul></div>',
+            t('Available placeholders'),
+            implode('', $items),
+        );
     }
 }

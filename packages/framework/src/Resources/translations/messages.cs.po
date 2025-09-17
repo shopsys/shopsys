@@ -292,6 +292,9 @@ msgstr "Dostupné"
 msgid "Available payment methods"
 msgstr "Dostupné platby"
 
+msgid "Available placeholders"
+msgstr ""
+
 msgid "Available shipping methods"
 msgstr "Dostupné dopravy"
 
@@ -324,6 +327,9 @@ msgstr "Bankovní platba potvrzena avízem"
 
 msgid "Bank payment confirmed by statement"
 msgstr "Bankovní platba potvrzena výpisem"
+
+msgid "Bank transfer"
+msgstr ""
 
 msgid "Bank transfer not completed"
 msgstr "Bankovní platba nebyla potvrzena"
