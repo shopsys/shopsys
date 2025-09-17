@@ -145,6 +145,23 @@ class PaymentsTest extends GraphQlTestCase
                 'goPayPaymentMethod' => null,
                 'vatPercent' => '0.000000',
             ],
+            [
+                'name' => t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => null,
+                'instructions' => t('Pay by bank transfer {qr_code}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'position' => 6,
+                'type' => 'bankTransfer',
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
+                'images' => [],
+                'transports' => [
+                    ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'goPayPaymentMethod' => null,
+                'vatPercent' => '0.000000',
+            ],
         ];
 
         $this->assertSame($arrayExpected, $responseData);

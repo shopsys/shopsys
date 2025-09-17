@@ -76,6 +76,21 @@ class PaymentData
      */
     public $hiddenByGoPay;
 
+    /**
+     * @var string[]|null[]
+     */
+    public $accountNumberByDomainId;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $ibanByDomainId;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $bicSwiftByDomainId;
+
     public function __construct()
     {
         $this->name = [];
@@ -90,5 +105,8 @@ class PaymentData
         $this->goPayPaymentMethodByDomainId = [];
         $this->hiddenByGoPay = [];
         $this->type = PaymentTypeEnum::TYPE_BASIC;
+        $this->accountNumberByDomainId = [];
+        $this->ibanByDomainId = [];
+        $this->bicSwiftByDomainId = [];
     }
 }

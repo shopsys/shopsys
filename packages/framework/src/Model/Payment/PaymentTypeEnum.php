@@ -10,6 +10,7 @@ class PaymentTypeEnum extends AbstractPaymentTypeEnum
 {
     public const string TYPE_BASIC = 'basic';
     public const string TYPE_GOPAY = 'goPay';
+    public const string TYPE_BANK_TRANSFER = 'bankTransfer';
 
     /**
      * @return array<string, string>
@@ -20,6 +21,7 @@ class PaymentTypeEnum extends AbstractPaymentTypeEnum
         return [
             t('Basic') => self::TYPE_BASIC,
             t('GoPay') => self::TYPE_GOPAY,
+            t('Bank transfer') => self::TYPE_BANK_TRANSFER,
         ];
     }
 }

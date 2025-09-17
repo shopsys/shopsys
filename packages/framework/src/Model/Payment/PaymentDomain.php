@@ -67,11 +67,32 @@ class PaymentDomain
     protected $hiddenByGoPay;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $accountNumber;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $iban;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $bicSwift;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null $goPayPaymentMethod
      * @param bool $hiddenByGoPay
+     * @param string|null $accountNumber
+     * @param string|null $iban
+     * @param string|null $bic
      */
     public function __construct(
         Payment $payment,
@@ -79,6 +100,9 @@ class PaymentDomain
         Vat $vat,
         ?GoPayPaymentMethod $goPayPaymentMethod = null,
         bool $hiddenByGoPay = false,
+        ?string $accountNumber = null,
+        ?string $iban = null,
+        ?string $bic = null,
     ) {
         $this->payment = $payment;
         $this->domainId = $domainId;
@@ -86,6 +110,9 @@ class PaymentDomain
         $this->enabled = true;
         $this->goPayPaymentMethod = $goPayPaymentMethod;
         $this->hiddenByGoPay = $hiddenByGoPay;
+        $this->accountNumber = $accountNumber;
+        $this->iban = $iban;
+        $this->bicSwift = $bic;
     }
 
     /**
@@ -158,5 +185,53 @@ class PaymentDomain
     public function isHiddenByGoPay()
     {
         return $this->hiddenByGoPay;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAccountNumber()
+    {
+        return $this->accountNumber;
+    }
+
+    /**
+     * @param string|null $accountNumber
+     */
+    public function setAccountNumber($accountNumber): void
+    {
+        $this->accountNumber = $accountNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param string|null $iban
+     */
+    public function setIban($iban): void
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBicSwift()
+    {
+        return $this->bicSwift;
+    }
+
+    /**
+     * @param string|null $bicSwift
+     */
+    public function setBicSwift($bicSwift): void
+    {
+        $this->bicSwift = $bicSwift;
     }
 }

@@ -2329,6 +2329,7 @@ export type TypePaymentSetupCreationData = {
 
 /** One of the possible methods of the payment type */
 export enum TypePaymentTypeEnum {
+  BankTransfer = 'bankTransfer',
   Basic = 'basic',
   GoPay = 'goPay'
 }

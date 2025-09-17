@@ -1891,6 +1891,7 @@ type PaymentSetupCreationData {
 
 "One of the possible methods of the payment type"
 enum PaymentTypeEnum {
+  bankTransfer
   basic
   goPay
 }

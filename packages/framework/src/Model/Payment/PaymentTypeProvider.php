@@ -21,8 +21,8 @@ class PaymentTypeProvider
     {
         $allIndexedByTranslations = [];
 
-        foreach ($this->paymentTypeEnums as $transportTypeEnum) {
-            $allIndexedByTranslations = array_merge($allIndexedByTranslations, $transportTypeEnum->getAllIndexedByTranslations());
+        foreach ($this->paymentTypeEnums as $paymentTypeEnum) {
+            $allIndexedByTranslations = array_merge($allIndexedByTranslations, $paymentTypeEnum->getAllIndexedByTranslations());
         }
 
         return $allIndexedByTranslations;

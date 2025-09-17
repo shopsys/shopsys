@@ -11,6 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
@@ -31,6 +32,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const string PAYMENT_GOPAY_CARD = 'payment_' . PaymentTypeEnum::TYPE_GOPAY;
     public const string PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
     public const string PAYMENT_LATER = 'payment_later';
+    public const string PAYMENT_BANK_TRANSFER = 'payment_bank_transfer';
 
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
@@ -125,6 +127,47 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
         $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = PaymentTypeEnum::TYPE_BANK_TRANSFER;
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+
+            $paymentData->enabled[$domainConfig->getId()] = true;
+            $paymentData->name[$locale] = t('Bank transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->instructions[$locale] = t('Pay by bank transfer {qr_code}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $this->setBankAccountDetailsToPaymentData($paymentData, $domainConfig);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
+        $this->createPayment(
+            self::PAYMENT_BANK_TRANSFER,
+            $paymentData,
+            [
+                TransportDataFixture::TRANSPORT_DRONE,
+                TransportDataFixture::TRANSPORT_CZECH_POST,
+                TransportDataFixture::TRANSPORT_PPL,
+                TransportDataFixture::TRANSPORT_PACKETERY,
+            ],
+        );
+    }
+
+    /**
+     * @param \App\Model\Payment\PaymentData $paymentData
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     */
+    private function setBankAccountDetailsToPaymentData(PaymentData $paymentData, DomainConfig $domainConfig): void
+    {
+        if ($domainConfig->getLocale() === 'cs') {
+            $paymentData->accountNumberByDomainId[$domainConfig->getId()] = '0123123123/0800';
+            $paymentData->ibanByDomainId[$domainConfig->getId()] = 'CZ8508000000000123123123';
+            $paymentData->bicSwiftByDomainId[$domainConfig->getId()] = 'GIBACZPX';
+        } else {
+            $paymentData->accountNumberByDomainId[$domainConfig->getId()] = '532013000';
+            $paymentData->ibanByDomainId[$domainConfig->getId()] = 'DE89370400440532013000';
+            $paymentData->bicSwiftByDomainId[$domainConfig->getId()] = 'COBADEFF';
+        }
     }
 
     /**

@@ -12599,6 +12599,10 @@ One of the possible methods of the payment type
 </thead>
 <tbody>
 <tr>
+<td valign="top"><strong>bankTransfer</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>basic</strong></td>
 <td></td>
 </tr>

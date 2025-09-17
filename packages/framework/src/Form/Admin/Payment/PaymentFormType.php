@@ -10,6 +10,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -29,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -137,6 +139,30 @@ final class PaymentFormType extends AbstractType
                 'required' => true,
                 'row_attr' => [
                     'class' => 'js-payment-gopay-payment-method',
+                ],
+            ])
+            ->add('accountNumberByDomainId', MultidomainType::class, [
+                'entry_type' => TextType::class,
+                'label' => t('Account number'),
+                'required' => true,
+                'row_attr' => [
+                    'class' => 'js-payment-bank-transfer',
+                ],
+            ])
+            ->add('ibanByDomainId', MultidomainType::class, [
+                'entry_type' => TextType::class,
+                'label' => t('IBAN'),
+                'required' => true,
+                'row_attr' => [
+                    'class' => 'js-payment-bank-transfer',
+                ],
+            ])
+            ->add('bicSwiftByDomainId', MultidomainType::class, [
+                'entry_type' => TextType::class,
+                'label' => t('BIC/Swift'),
+                'required' => true,
+                'row_attr' => [
+                    'class' => 'js-payment-bank-transfer',
                 ],
             ]);
 
@@ -247,8 +273,104 @@ final class PaymentFormType extends AbstractType
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
                     new Callback([$this, 'validateGopayPaymentMethod']),
+                    new Callback([$this, 'validateBankTransferType']),
                 ],
             ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateBankTransferType(PaymentData $paymentData, ExecutionContextInterface $context): void
+    {
+        if ($paymentData->type !== PaymentTypeEnum::TYPE_BANK_TRANSFER) {
+            return;
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if ($paymentData->enabled[$domainId] === false) {
+                continue;
+            }
+
+            $accountNumber = $paymentData->accountNumberByDomainId[$domainId] ?? null;
+
+            if ($accountNumber === null || trim((string)$accountNumber) === '') {
+                $context->buildViolation(
+                    t(
+                        'Please enter account number for domain %domainName%.',
+                        ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                )
+                    ->atPath('accountNumberByDomainId[' . $domainId . ']')
+                    ->addViolation();
+            } else {
+                $context->getValidator()
+                    ->inContext($context)
+                    ->atPath('accountNumberByDomainId[' . $domainId . ']')
+                    ->validate(
+                        $accountNumber,
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'Account number cannot be longer than {{ limit }} characters.',
+                        ]),
+                    );
+            }
+
+            $iban = $paymentData->ibanByDomainId[$domainId] ?? null;
+
+            if ($iban === null || trim((string)$iban) === '') {
+                $context->buildViolation(
+                    t(
+                        'Please enter IBAN for domain %domainName%.',
+                        ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                )
+                    ->atPath('ibanByDomainId[' . $domainId . ']')
+                    ->addViolation();
+            } else {
+                $context->getValidator()
+                    ->inContext($context)
+                    ->atPath('ibanByDomainId[' . $domainId . ']')
+                    ->validate($iban, new Constraints\Iban([
+                        'message' => 'Please enter a valid IBAN.',
+                    ]))
+                    ->validate(
+                        $iban,
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'IBAN cannot be longer than {{ limit }} characters',
+                        ]),
+                    );
+            }
+
+            $bicSwift = $paymentData->bicSwiftByDomainId[$domainId] ?? null;
+
+            if ($bicSwift === null || trim((string)$bicSwift) === '') {
+                $context->buildViolation(
+                    t(
+                        'Please enter BIC/SWIFT for domain %domainName%.',
+                        ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                )
+                    ->atPath('bicSwiftByDomainId[' . $domainId . ']')
+                    ->addViolation();
+            } else {
+                $context->getValidator()
+                    ->inContext($context)
+                    ->atPath('bicSwiftByDomainId[' . $domainId . ']')
+                    ->validate(
+                        $bicSwift,
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'BIC/Swift cannot be longer than {{ limit }} characters.',
+                        ]),
+                    );
+            }
+        }
     }
 
     /**
@@ -267,7 +389,13 @@ final class PaymentFormType extends AbstractType
             }
 
             if ($enabled && $paymentData->goPayPaymentMethodByDomainId[$domainId] === null) {
-                $context->buildViolation('Please select GoPay payment method for enabled domain ' . $this->domain->getDomainConfigById($domainId)->getName())
+                $context->buildViolation(
+                    t(
+                        'Please select GoPay payment method for enabled domain %domainName%.',
+                        ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                )
                     ->atPath('goPayPaymentMethodByDomainId[1]')
                     ->addViolation();
             }

@@ -419,6 +419,9 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
             $paymentDomain->setVat($paymentData->vatsIndexedByDomainId[$domainId]);
             $paymentDomain->setGoPayPaymentMethod($paymentData->goPayPaymentMethodByDomainId[$domainId] ?? null);
             $paymentDomain->setHiddenByGoPay($paymentData->hiddenByGoPay[$domainId] ?? false);
+            $paymentDomain->setAccountNumber($paymentData->accountNumberByDomainId[$domainId] ?? null);
+            $paymentDomain->setIban($paymentData->ibanByDomainId[$domainId] ?? null);
+            $paymentDomain->setBicSwift($paymentData->bicSwiftByDomainId[$domainId] ?? null);
         }
     }
 
@@ -436,6 +439,9 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
                 $paymentData->vatsIndexedByDomainId[$domainId],
                 $paymentData->goPayPaymentMethodByDomainId[$domainId] ?? null,
                 $paymentData->hiddenByGoPay[$domainId] ?? false,
+                $paymentData->accountNumberByDomainId[$domainId] ?? null,
+                $paymentData->ibanByDomainId[$domainId] ?? null,
+                $paymentData->bicSwiftByDomainId[$domainId] ?? null,
             );
             $this->domains->add($paymentDomain);
         }
@@ -516,5 +522,32 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function getVatForDomain(int $domainId): Vat
     {
         return $this->getPaymentDomain($domainId)->getVat();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getAccountNumber(int $domainId)
+    {
+        return $this->getPaymentDomain($domainId)->getAccountNumber();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getIban(int $domainId)
+    {
+        return $this->getPaymentDomain($domainId)->getIban();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getBicSwift(int $domainId)
+    {
+        return $this->getPaymentDomain($domainId)->getBicSwift();
     }
 }
