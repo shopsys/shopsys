@@ -18,11 +18,13 @@ class Mailer
      * @param \Symfony\Component\Mailer\MailerInterface $symfonyMailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailEmbedCollector $mailEmbedCollector
      */
     public function __construct(
         protected readonly MailerInterface $symfonyMailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly LoggerInterface $logger,
+        protected readonly MailEmbedCollector $mailEmbedCollector,
     ) {
     }
 
@@ -63,6 +65,9 @@ class Mailer
         );
 
         $email = new Email($domainId);
+
+        $body = $this->mailEmbedCollector->setEmbedsToMail($body, $email);
+
         $email
             ->subject($subject)
             ->from(new Address($messageData->fromEmail, $messageData->fromName))

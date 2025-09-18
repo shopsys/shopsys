@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\ContentPage;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
 
 class OrderContentPageFacade
 {
@@ -19,11 +20,13 @@ class OrderContentPageFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade $orderContentPageSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly OrderContentPageSettingFacade $orderContentPageSettingFacade,
+        protected readonly PaymentInstructionFacade $paymentInstructionFacade,
     ) {
     }
 
@@ -82,7 +85,7 @@ class OrderContentPageFacade
 
         $variables = [
             self::VARIABLE_TRANSPORT_INSTRUCTIONS => $order->getTransport()->getInstructions(),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
+            self::VARIABLE_PAYMENT_INSTRUCTIONS => $this->paymentInstructionFacade->getPaymentInstructionsForOrderSubmittedPage($order),
             self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
             self::VARIABLE_NUMBER => $order->getNumber(),
         ];

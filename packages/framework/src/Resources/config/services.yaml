@@ -686,6 +686,8 @@ services:
         arguments:
             $allowedAdminLocales: '%shopsys.allowed_admin_locales%'
 
+    Shopsys\FrameworkBundle\Model\Mail\MailEmbedCollector: ~
+
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration: ~
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade:
@@ -720,6 +722,8 @@ services:
     Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider:
         arguments:
             $paymentTypeEnums: !tagged shopsys.payment_type_enum
+
+    Shopsys\FrameworkBundle\Model\Payment\SpaydValidator: ~
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
 

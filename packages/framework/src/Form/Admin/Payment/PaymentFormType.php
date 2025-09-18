@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -45,6 +46,7 @@ final class PaymentFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider $paymentTypeProvider
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
@@ -52,6 +54,7 @@ final class PaymentFormType extends AbstractType
         private readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
         private readonly Domain $domain,
         private readonly PaymentTypeProvider $paymentTypeProvider,
+        private readonly PaymentInstructionFacade $paymentInstructionFacade,
     ) {
     }
 
@@ -431,23 +434,13 @@ final class PaymentFormType extends AbstractType
     }
 
     /**
-     * @return array<string,string>
-     */
-    protected function getInstructionsPlaceholders(): array
-    {
-        return [
-            '{qr_code}' => t('QR Code'),
-        ];
-    }
-
-    /**
      * @return string
      */
     protected function buildInstructionsHelpHtml(): string
     {
         $items = [];
 
-        foreach ($this->getInstructionsPlaceholders() as $placeholder => $desc) {
+        foreach ($this->paymentInstructionFacade->getInstructionsPlaceholders() as $placeholder => $desc) {
             $items[] = sprintf('<li><code>%s</code> &ndash; %s</li>', $placeholder, $desc);
         }
 

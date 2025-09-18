@@ -80,7 +80,7 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         }
     }
 
-    public function testCustomerUserCannotSeeGatewayPayments(): void
+    public function testCustomerUserCannotSeeOnlinePayments(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/PaymentsQuery.graphql');
 

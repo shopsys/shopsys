@@ -516,6 +516,14 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
+     * @return bool
+     */
+    public function isOnlinePayment(): bool
+    {
+        return $this->isGatewayPayment() || $this->type === PaymentTypeEnum::TYPE_BANK_TRANSFER;
+    }
+
+    /**
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
