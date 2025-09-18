@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
@@ -18,10 +18,12 @@ class InquiryGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -34,7 +36,7 @@ class InquiryGridFactory
         QueryBuilder $queryBuilder,
         Administrator $administrator,
     ): GridView {
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'i.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'i.id');
 
         $grid = $this->gridFactory->create('inquiryList', $dataSource, AdminRoleConstant::ROLE_INQUIRY);
 

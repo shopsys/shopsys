@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
@@ -19,11 +19,13 @@ class CurrencyGridFactory implements GridFactoryInterface
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -38,7 +40,7 @@ class CurrencyGridFactory implements GridFactoryInterface
         $queryBuilder
             ->select('c')
             ->from(Currency::class, 'c');
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'c.id');
 
         $grid = $this->gridFactory->create('currencyList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');

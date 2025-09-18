@@ -7,8 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
-use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult as PaginationResult;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 class QueryBuilderDataSource implements DataSourceInterface
@@ -18,12 +17,12 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
-     * @param string|null $hint
+     * @param array<string, mixed> $hints
      */
     public function __construct(
         protected readonly QueryBuilder $queryBuilder,
         protected readonly string $rowIdSourceColumnName,
-        protected readonly ?string $hint = SortableNullsWalker::class,
+        protected array $hints,
     ) {
     }
 
@@ -50,7 +49,7 @@ class QueryBuilderDataSource implements DataSourceInterface
         $queryPaginator = new QueryPaginator(
             $queryBuilder,
             GroupedScalarHydrator::HYDRATION_MODE,
-            $this->hint,
+            $this->hints,
         );
 
         return $queryPaginator->getResult($page, $limit, $this->getTotalRowsCount());
@@ -79,7 +78,7 @@ class QueryBuilderDataSource implements DataSourceInterface
             $queryPaginator = new QueryPaginator(
                 $this->queryBuilder,
                 GroupedScalarHydrator::HYDRATION_MODE,
-                $this->hint,
+                $this->hints,
             );
 
             $this->totalCount = $queryPaginator->getTotalCount();

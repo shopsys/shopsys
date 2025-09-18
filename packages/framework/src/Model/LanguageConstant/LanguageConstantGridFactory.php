@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
-use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
@@ -14,10 +14,12 @@ class LanguageConstantGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory
      */
     public function __construct(
         protected readonly LanguageConstantFacade $languageConstantFacade,
         protected readonly GridFactory $gridFactory,
+        protected readonly ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory,
     ) {
     }
 
@@ -34,7 +36,7 @@ class LanguageConstantGridFactory
             ? $this->getTranslationsWithSearch($originalTranslations, $userTranslations, $locale, mb_strtolower($search))
             : $this->getTranslations($originalTranslations, $userTranslations, $locale);
 
-        $grid = $this->gridFactory->create('languageConstantList', new ArrayWithPaginationDataSource($translations, 'key'), AdminRoleConstant::ROLE_LANGUAGE_CONSTANTS);
+        $grid = $this->gridFactory->create('languageConstantList', $this->arrayWithPaginationDataSourceFactory->create($translations, 'key'), AdminRoleConstant::ROLE_LANGUAGE_CONSTANTS);
         $grid->setDefaultOrder('key');
         $grid->enablePaging();
 

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 
 class SeoPageGridFactory
@@ -14,10 +14,12 @@ class SeoPageGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly SeoPageRepository $seoPageRepository,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -31,7 +33,7 @@ class SeoPageGridFactory
             ->andWhere('spd.domainId = :domainId')
             ->setParameter('domainId', $domainId);
 
-        $dataSource = new QueryBuilderDataSource(
+        $dataSource = $this->queryBuilderDataSourceFactory->create(
             $queryBuilder,
             'sp.id',
         );

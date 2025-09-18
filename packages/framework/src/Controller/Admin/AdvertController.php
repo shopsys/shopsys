@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -42,6 +42,7 @@ class AdvertController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory $advertDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly AdvertFacade $advertFacade,
@@ -53,6 +54,7 @@ class AdvertController extends AdminBaseController
         protected readonly AdvertDataFactory $advertDataFactory,
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
         protected readonly EntityManagerInterface $entityManager,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -118,7 +120,7 @@ class AdvertController extends AdminBaseController
             ->from(Advert::class, 'a')
             ->where('a.domainId = :selectedDomainId')
             ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId());
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             'a.id',
             function ($row) {

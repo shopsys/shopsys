@@ -72,17 +72,15 @@ And because we want to get data from the database, we use a data source created 
 
 ```diff
 + use Doctrine\ORM\EntityManagerInterface;
-
-+   /**
-+    * @var \Doctrine\ORM\EntityManagerInterface
-+    */
-+   protected $entityManager;
++ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 
 -   public function __construct(GridFactory $gridFactory)
-+   public function __construct(GridFactory $gridFactory, EntityManagerInterface $entityManager)
-    {
-        $this->gridFactory = $gridFactory;
-+       $this->entityManager = $entityManager;
+-   {
++   public function __construct(
++       protected readonly GridFactory $gridFactory,
++       protected readonly EntityManagerInterface $entityManager,
++       protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
++   ) {
     }
 
     /**
@@ -112,7 +110,6 @@ Now, let's implement `createAndGetDataSource` method that should be in the same 
 ```php
 use App\Model\Salesman\Salesman;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 
 // ...
 
@@ -126,7 +123,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
         $queryBuilder->select('s')
             ->from(Salesman::class, 's');
 
-        return new QueryBuilderDataSource($queryBuilder, 's.id');
+        return $this->queryBuilderDataSourceFactory->create($queryBuilder, 's.id');
     }
 ```
 

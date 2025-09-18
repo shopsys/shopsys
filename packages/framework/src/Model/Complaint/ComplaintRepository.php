@@ -51,10 +51,10 @@ class ComplaintRepository
             ->addSelect('cu.id as customerUserId')
             ->leftJoin('cmp.order', 'o')
             ->addSelect(
-                '(CASE WHEN ba.companyName IS NOT NULL
+                'CASE WHEN ba.companyName IS NOT NULL
                     THEN CONCAT(ba.companyName, \' - \', cu.lastName, \' \', cu.firstName)
                     ELSE CONCAT(cu.lastName, \' \', cu.firstName)
-                END) AS customerName',
+                END AS customerName',
             )
             ->addSelect('MAX(cst.name) AS statusName')
             ->join('cmp.status', 'cs')

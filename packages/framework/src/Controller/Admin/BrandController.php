@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -39,6 +39,7 @@ class BrandController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly BrandFacade $brandFacade,
@@ -48,6 +49,7 @@ class BrandController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly BrandDataFactory $brandDataFactory,
         protected readonly EntityManagerInterface $entityManager,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -102,7 +104,7 @@ class BrandController extends AdminBaseController
     public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'b.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'b.id');
 
         $grid = $this->gridFactory->create('brandList', $dataSource, AdminRoleConstant::ROLE_BRAND);
         $grid->enablePaging();

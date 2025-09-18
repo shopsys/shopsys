@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -29,11 +29,13 @@ class NewsletterController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly GridFactory $gridFactory,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -53,7 +55,7 @@ class NewsletterController extends AdminBaseController
             $quickSearchForm->getData(),
         );
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'u.id');
         $grid = $this->gridFactory->create('customerList', $dataSource, AdminRoleConstant::ROLE_NEWSLETTER);
         $grid->enablePaging();
 

@@ -8,8 +8,8 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ActionColumn;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecoratorFactory;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -55,6 +55,8 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecoratorFactory $moneyConvertingDataSourceDecoratorFactory
      */
     public function __construct(
         protected readonly CustomerUserDataFactory $customerUserDataFactory,
@@ -70,6 +72,8 @@ class CustomerController extends AdminBaseController
         protected readonly CustomerFacade $customerFacade,
         protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         protected readonly WatchdogFacade $watchdogFacade,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
+        protected readonly MoneyConvertingDataSourceDecoratorFactory $moneyConvertingDataSourceDecoratorFactory,
     ) {
     }
 
@@ -199,13 +203,13 @@ class CustomerController extends AdminBaseController
             $quickSearchForm->getData(),
         );
 
-        $innerDataSource = new QueryBuilderWithRowManipulatorDataSource(
+        $innerDataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             'id',
             $this->manipulateRow(...),
             null,
         );
-        $dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
+        $dataSource = $this->moneyConvertingDataSourceDecoratorFactory->create($innerDataSource, ['ordersSumPrice']);
 
         $grid = $this->gridFactory->create('customerList', $dataSource, AdminRoleConstant::ROLE_CUSTOMER);
         $grid->enablePaging();

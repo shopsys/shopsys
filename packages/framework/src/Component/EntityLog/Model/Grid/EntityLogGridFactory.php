@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 
 class EntityLogGridFactory
@@ -18,11 +18,13 @@ class EntityLogGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository $entityLogRepository
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter $resolvedChangesFormatter
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
         protected readonly EntityLogRepository $entityLogRepository,
         protected readonly ResolvedChangesFormatter $resolvedChangesFormatter,
+        protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
     ) {
     }
 
@@ -37,7 +39,7 @@ class EntityLogGridFactory
         $queryBuilder->andWhere('(el.action = :createAction AND el.parentEntityId IS NULL) OR el.action != :createAction');
         $queryBuilder->setParameter('createAction', EntityLogActionEnum::CREATE);
 
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
             'el.id',
             function ($row) {

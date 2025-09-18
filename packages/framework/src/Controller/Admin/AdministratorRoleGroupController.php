@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -33,12 +33,14 @@ class AdministratorRoleGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdministratorFacade $administratorFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -50,7 +52,7 @@ class AdministratorRoleGroupController extends AdminBaseController
     public function listAction(): Response
     {
         $queryBuilder = $this->administratorRoleGroupFacade->getAllNotSystemManagedQueryBuilder();
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'arg.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'arg.id');
 
         $grid = $this->gridFactory->create('administratorRoleGroupsList', $dataSource, AdminRoleConstant::ROLE_ADMINISTRATOR);
         $grid->setDefaultOrder('name');

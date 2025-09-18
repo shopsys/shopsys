@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -31,6 +31,7 @@ class FeedController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
+     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory
      */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
@@ -38,6 +39,7 @@ class FeedController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly FeedRegistry $feedRegistry,
         protected readonly FeedModuleRepository $feedModuleRepository,
+        protected readonly ArrayDataSourceFactory $arrayDataSourceFactory,
     ) {
     }
 
@@ -141,7 +143,7 @@ class FeedController extends AdminBaseController
             }
         }
 
-        $dataSource = new ArrayDataSource($feedsData, 'label');
+        $dataSource = $this->arrayDataSourceFactory->create($feedsData, 'label');
 
         $grid = $this->gridFactory->create('feedsList', $dataSource, AdminRoleConstant::ROLE_FEED);
 

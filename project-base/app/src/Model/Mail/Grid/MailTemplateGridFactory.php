@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory as BaseMailT
 
 /**
  * @property \App\Model\Mail\MailTemplateRepository $mailTemplateRepository
- * @method __construct(\App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration)
+ * @method __construct(\App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration, \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory)
  * @property \App\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration
  */
 class MailTemplateGridFactory extends BaseMailTemplateGridFactory

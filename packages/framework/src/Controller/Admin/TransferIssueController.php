@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -29,12 +29,14 @@ class TransferIssueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly TransferIssueFacade $transferIssueFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly AdministratorFacade $administratorFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -64,7 +66,7 @@ class TransferIssueController extends AdminBaseController
                     ->setParameter('transfer', $filteredTransfer);
             }
         }
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'ti.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'ti.id');
 
         $grid = $this->gridFactory->create('transferIssueList', $dataSource, AdminRoleConstant::ROLE_TRANSFER);
         $grid->enablePaging();

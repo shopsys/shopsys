@@ -10,7 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
@@ -21,11 +21,13 @@ class OrderStatusGridFactory implements GridFactoryInterface
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -42,7 +44,7 @@ class OrderStatusGridFactory implements GridFactoryInterface
             ->from(OrderStatus::class, 'os')
             ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'os.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'os.id');
 
         $grid = $this->gridFactory->create('orderStatusList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');

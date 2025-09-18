@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -36,6 +36,7 @@ class SliderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly SliderItemFacade $sliderItemFacade,
@@ -44,6 +45,7 @@ class SliderController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly SliderItemDataFactory $sliderItemDataFactory,
         protected readonly EntityManagerInterface $entityManager,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -61,7 +63,7 @@ class SliderController extends AdminBaseController
             ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId())
             ->orderBy('s.position')
             ->addOrderBy('s.id');
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 's.id');
 
         $grid = $this->gridFactory->create('sliderItemList', $dataSource, AdminRoleConstant::ROLE_SLIDER_ITEM);
         $grid->enableDragAndDrop(SliderItem::class);

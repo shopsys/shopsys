@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
-use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
@@ -33,6 +33,7 @@ class DomainController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
+     * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory $arrayDataSourceFactory
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -40,6 +41,7 @@ class DomainController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly DomainFacade $domainFacade,
         protected readonly ErrorExtractor $errorExtractor,
+        protected readonly ArrayDataSourceFactory $arrayDataSourceFactory,
     ) {
     }
 
@@ -82,7 +84,7 @@ class DomainController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $dataSource = new ArrayDataSource($this->loadData(), 'id');
+        $dataSource = $this->arrayDataSourceFactory->create($this->loadData(), 'id');
 
         $grid = $this->gridFactory->create('domainsList', $dataSource, SystemRole::ADMIN);
 

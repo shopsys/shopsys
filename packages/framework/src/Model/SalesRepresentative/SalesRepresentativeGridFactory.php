@@ -9,7 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class SalesRepresentativeGridFactory implements GridFactoryInterface
@@ -19,12 +19,14 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -36,7 +38,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
     public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'sr.id');
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'sr.id');
 
         $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');

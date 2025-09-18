@@ -42,10 +42,10 @@ In some cases, you may want to modify the query that is used to fetch the record
 protected function configureQuery(QueryBuilder $queryBuilder): void
 {
     $queryBuilder
-        ->addSelect('(CASE WHEN o.companyName IS NOT NULL
+        ->addSelect('CASE WHEN o.companyName IS NOT NULL
                 THEN o.companyName
                 ELSE CONCAT(o.lastName, \' \', o.firstName)
-            END) AS customerName')
+            END AS customerName')
         ->andWhere('o.deleted = :deleted')
         ->setParameter('deleted', false);
 }
