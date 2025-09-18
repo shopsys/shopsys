@@ -1,14 +1,16 @@
-import { ShowAutocompleteSearchPopupAction } from './AutocompleteSearch/ShowAutocompleteSearchPopupAction';
 import { AutocompleteSearch } from 'app/_components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
+import { ShowAutocompleteSearchPopupAction } from 'app/_components/Layout/Header/AutocompleteSearch/ShowAutocompleteSearchPopupAction';
 import { MenuIconic } from 'app/_components/Layout/Header/MenuIconic/MenuIconic';
 import { Navigation } from 'app/_components/Layout/Header/Navigation/Navigation';
+import { NavigationPlaceholder } from 'app/_components/Layout/Header/Navigation/NavigationPlaceholder';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { Logo } from 'components/Layout/Header/Logo/Logo';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
+import { Suspense } from 'react';
 
-export const Header = () => {
+export const Header = async () => {
     return (
         <header className="from-background-brand to-background-brand-less bg-gradient-to-tr" tid={TIDs.header}>
             <Webline>
@@ -32,7 +34,9 @@ export const Header = () => {
                     </div>
                 </div>
 
-                <Navigation />
+                <Suspense fallback={<NavigationPlaceholder />}>
+                    <Navigation />
+                </Suspense>
             </Webline>
         </header>
     );

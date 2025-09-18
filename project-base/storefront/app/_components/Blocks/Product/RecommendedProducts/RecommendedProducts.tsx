@@ -1,6 +1,7 @@
 import { RecommendedProductsContent } from 'app/_components/Blocks/Product/RecommendedProducts/RecommendedProductsContent';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { SkeletonModuleRecommendedProducts } from 'components/Blocks/Skeleton/SkeletonModuleRecommendedProducts';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeRecommendationType } from 'graphql/types';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
@@ -20,9 +21,9 @@ export const RecommendedProducts: FC<RecommendedProductsProps> = async ({ recomm
     return (
         <Suspense
             fallback={
-                <section>
+                <Webline>
                     <SkeletonModuleRecommendedProducts />
-                </section>
+                </Webline>
             }
         >
             <RecommendedProductsContent itemUuids={itemUuids} recommendationType={recommendationType} />

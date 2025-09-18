@@ -4,6 +4,7 @@ import { getRecommendedProductsQuery } from 'app/_queries/getRecommendedProducts
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
 import { getRecommenderClientIdentifier } from 'app/_utils/recommender/getRecommenderClientIdentifier';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -44,7 +45,7 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
     };
 
     return (
-        <section>
+        <Webline>
             <h3 className="mb-3">{t('Recommended for you')}</h3>
 
             <ProductSlider
@@ -64,6 +65,6 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
                     />
                 ))}
             </ProductSlider>
-        </section>
+        </Webline>
     );
 };

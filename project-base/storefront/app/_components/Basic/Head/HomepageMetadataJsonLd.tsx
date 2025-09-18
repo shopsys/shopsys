@@ -1,11 +1,10 @@
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { getInternationalizedStaticUrls } from 'app/_utils/getInternationalizedStaticUrls';
-
-type HomepageMetadataProps = {
-    url: string;
-};
+import { headers } from 'next/headers';
 
 // DOCS: https://nextjs.org/docs/14/app/building-your-application/optimizing/metadata#json-ld
-export const HomepageMetadataJsonLd: FC<HomepageMetadataProps> = async ({ url }) => {
+export const HomepageMetadataJsonLd: FC = async () => {
+    const { url } = getDomainConfig((await headers()).get('host')!);
     const [searchUrl] = await getInternationalizedStaticUrls(['/search']);
 
     const jsonLd = {
