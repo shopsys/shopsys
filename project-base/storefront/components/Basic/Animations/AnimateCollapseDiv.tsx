@@ -2,13 +2,9 @@ import { TIDs } from 'cypress/tids';
 import { HTMLMotionProps, m } from 'framer-motion';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 
-export const AnimateCollapseDiv: FC<HTMLMotionProps<'div'> & { tid?: TIDs; keyName?: string }> = ({
-    children,
-    className,
-    keyName,
-    tid,
-    ...props
-}) => (
+export const AnimateCollapseDiv: FC<
+    HTMLMotionProps<'div'> & { tid?: TIDs; keyName?: string; disableAnimation?: boolean }
+> = ({ children, className, keyName, tid, disableAnimation, ...props }) => (
     <m.div
         key={keyName}
         animate="open"
@@ -16,7 +12,7 @@ export const AnimateCollapseDiv: FC<HTMLMotionProps<'div'> & { tid?: TIDs; keyNa
         data-tid={tid}
         exit="closed"
         initial="closed"
-        variants={collapseExpandAnimation}
+        variants={disableAnimation ? undefined : collapseExpandAnimation}
         {...props}
     >
         {children}
