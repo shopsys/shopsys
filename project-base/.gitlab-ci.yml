@@ -474,7 +474,7 @@ test:gatling:
     rules:
         - if: '$CI_PIPELINE_SOURCE == "schedule"'
           when: never
-        - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "devel"'
+        - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH == "alpha"'
           when: manual
     allow_failure: true
     before_script:
