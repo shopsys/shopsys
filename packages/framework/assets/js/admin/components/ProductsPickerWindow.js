@@ -1,6 +1,7 @@
 import Translator from 'bazinga-translator';
 import Check from 'icons/tabler/check.svg';
 import Denied from 'icons/tabler/circle-x-filled.svg';
+import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class ProductsPickerWindow {
@@ -55,10 +56,27 @@ export default class ProductsPickerWindow {
             window.parent.ProductsPickerInstances[$(event.currentTarget).data('product-picker-instance-id')];
         this.markAddButtonAsAdded($(event.currentTarget));
         $(event.currentTarget).off('click.addProduct');
-        productsPicker.addProduct(
-            $(event.currentTarget).data('product-picker-product-id'),
-            $(event.currentTarget).data('product-picker-product-name'),
-        );
+
+        Ajax.ajax({
+            url: $(event.currentTarget).data('product-picker-product-image-url'),
+            method: 'POST',
+            data: {
+                productId: $(event.currentTarget).data('product-picker-product-id'),
+            },
+            success: data => {
+                productsPicker.addProduct(
+                    $(event.currentTarget).data('product-picker-product-id'),
+                    $(event.currentTarget).data('product-picker-product-name'),
+                    data.imageHtml,
+                );
+            },
+            error: () => {
+                productsPicker.addProduct(
+                    $(event.currentTarget).data('product-picker-product-id'),
+                    $(event.currentTarget).data('product-picker-product-name'),
+                );
+            },
+        });
 
         return false;
     }

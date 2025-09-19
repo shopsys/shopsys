@@ -43,6 +43,7 @@ export default class ProductsPicker {
             content: iframeContent,
             title: Translator.trans('Assign products'),
             size: 'xl',
+            buttons: [{ text: Translator.trans('Finish assigning') }],
         });
 
         return false;
@@ -118,11 +119,12 @@ export default class ProductsPicker {
         return this.findProductItemIndex(productId) !== null;
     }
 
-    addProduct(productId, productName) {
+    addProduct(productId, productName, productImageHtml) {
         const nextIndex = this.$itemsContainer.find('.js-products-picker-item').length;
         const itemHtml = this.$productsPicker.data('products-picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
         $item.find('.js-products-picker-item-product-name').text(productName);
+        $item.find('.js-products-picker-item-product-image').html(productImageHtml);
         $item.find('.js-products-picker-item-input').val(productId);
         this.$itemsContainer.append($item);
         this.initItem($item);
