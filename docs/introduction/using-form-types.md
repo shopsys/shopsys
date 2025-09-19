@@ -447,3 +447,47 @@ $builder->add($actionBar);
 !!! note
 
     For information about `position` option see [FormExtension](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
+
+## Form Input Symbols
+
+The administration form theme provides a convenient way to add symbols or text before or after form input fields using Bootstrap input groups.
+This feature works with any form widget that extends the `form_widget_simple` block.
+
+### Available Symbol Options
+
+| Option                 | Description                                | HTML Escaping                 |
+| ---------------------- | ------------------------------------------ | ----------------------------- |
+| `symbolAfterInput`     | Adds text or symbol after the input field  | Escaped (safe for plain text) |
+| `symbolBeforeInput`    | Adds text or symbol before the input field | Escaped (safe for plain text) |
+| `rawSymbolAfterInput`  | Adds HTML content after the input field    | Unescaped (allows HTML)       |
+| `rawSymbolBeforeInput` | Adds HTML content before the input field   | Unescaped (allows HTML)       |
+
+### Usage Examples
+
+#### Currency Symbols
+
+```twig
+{{ form_widget(form.price, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+```
+
+#### Unit Symbols
+
+```twig
+{{ form_widget(form.vatPercent, { symbolAfterInput: '%' }) }}
+{{ form_widget(form.weight, { symbolAfterInput: 'g'|trans }) }}
+```
+
+#### HTML Icons (using raw variants)
+
+```twig
+{{ form_widget(form.field, { rawSymbolAfterInput: info_icon('Help text') }) }}
+```
+
+#### Multiple Symbols
+
+```twig
+{{ form_widget(form.priceRange, {
+    symbolBeforeInput: '$',
+    symbolAfterInput: 'USD'
+}) }}
+```
