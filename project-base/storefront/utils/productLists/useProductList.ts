@@ -168,7 +168,7 @@ export const useProductList = (
     };
 
     return {
-        productListData,
+        productListData: !productListUuid ? undefined : productListData,
         isProductInList,
         removeList,
         toggleProductInList,
