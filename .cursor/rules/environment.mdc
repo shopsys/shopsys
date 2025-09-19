@@ -1,0 +1,317 @@
+---
+alwaysApply: true
+description: Complete development environment guide - commands, workflows, and troubleshooting
+---
+
+# Development Environment & Workflows
+
+## Quick Reference (Most Common Commands)
+
+### Essential Commands
+
+```bash
+# Start services
+mutagen-compose up -d
+
+# Full code check and fix
+make check-fix
+
+# Generate GraphQL schema
+make generate-schema
+```
+
+### Frontend Development
+
+```bash
+# Install dependencies
+mutagen-compose exec storefront pnpm install
+
+# Development server
+mutagen-compose exec storefront pnpm dev
+
+# Code quality (all-in-one)
+mutagen-compose exec storefront pnpm check--fix
+
+# Testing
+mutagen-compose exec storefront pnpm test
+
+# Bundle analysis
+mutagen-compose exec storefront pnpm bundle-analyzer
+
+# Generate translations
+mutagen-compose exec storefront pnpm translate
+```
+
+### Backend Development
+
+```bash
+# Install dependencies
+mutagen-compose exec php-fpm composer install
+
+# Fix code standards
+mutagen-compose exec php-fpm php phing standards-fix
+
+# Run PHPStan
+mutagen-compose exec php-fpm php phing phpstan
+
+# Database migration
+mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+
+# Create demo data (wipes existing database)
+mutagen-compose exec php-fpm php phing demo-data
+
+# Build assets
+mutagen-compose exec php-fpm php phing assets
+
+# Generate backend translations
+mutagen-compose exec php-fpm php phing translations-dump
+```
+
+## Key File Locations
+
+- **Frontend Code**: `project-base/storefront/`
+- **Backend Code**: `project-base/src/`
+- **React Components**: `project-base/storefront/components/`
+- **GraphQL Queries**: `project-base/storefront/graphql/requests/`
+- **Symfony Configuration**: `project-base/config/`
+
+## Essential Principles
+
+1. **Always use `mutagen-compose`** instead of `docker-compose`
+2. **Prefer Tailwind utility classes** over custom CSS
+3. **Use TypeScript strict mode** with explicit types
+4. **Run `make generate-schema`** after GraphQL changes
+5. **Handle loading/error states** in all React components
+6. **Use generated GraphQL hooks** in React components
+7. **Follow container/presenter pattern** for complex components
+
+## Docker Setup
+
+**ALWAYS use `mutagen-compose` instead of `docker-compose` in this project.**
+
+### Container Services
+
+- **php-fpm**: Backend PHP application
+- **storefront**: Frontend Next.js application
+- **webserver**: Nginx web server
+- **postgres**: PostgreSQL database
+- **redis**: Redis cache
+- **elasticsearch**: Search engine
+
+### Essential Commands
+
+```bash
+# Start development environment
+mutagen-compose up -d
+
+# Restart specific services
+mutagen-compose up -d --force-recreate storefront webserver
+
+# Container status and logs
+mutagen-compose ps
+mutagen-compose logs storefront
+mutagen-compose logs php-fpm
+
+# Full quality check and fix
+make check-fix
+
+# Generate GraphQL schema
+make generate-schema
+```
+
+## Daily Development Workflows
+
+### Starting Development Session
+
+```bash
+# 1. Start containers
+mutagen-compose up -d
+
+# 2. Install/update dependencies if needed
+mutagen-compose exec storefront pnpm install
+mutagen-compose exec php-fpm composer install
+
+# 3. Generate latest schema (if GraphQL changes)
+make generate-schema
+
+# 4. Build assets if needed
+mutagen-compose exec php-fpm php phing assets
+```
+
+### After Pulling Changes
+
+```bash
+# 1. Update dependencies
+mutagen-compose exec storefront pnpm install
+
+# 2. Run database migrations
+mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+
+# 3. Generate schema and translations
+make generate-schema
+mutagen-compose exec storefront pnpm translate
+mutagen-compose exec php-fpm php phing translations-dump
+
+# 4. Clear cache and rebuild assets
+mutagen-compose exec php-fpm php bin/console cache:clear
+mutagen-compose exec php-fpm php phing assets
+```
+
+### Before Committing
+
+```bash
+# Fix code standards and run tests
+mutagen-compose exec php-fpm php phing standards-fix
+mutagen-compose exec storefront pnpm check--fix
+mutagen-compose exec storefront pnpm test
+```
+
+## Database & Data Management
+
+```bash
+# Create demo data (wipes existing data)
+mutagen-compose exec php-fpm php phing demo-data
+
+# Create test database with demo data
+mutagen-compose exec php-fpm php phing test-db-demo
+
+# Run migrations
+mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+
+# Generate new migration
+mutagen-compose exec php-fpm php phing db-migrations-generate
+
+# Reindex Elasticsearch
+mutagen-compose exec php-fpm php phing elasticsearch-reindex
+```
+
+## Asset & Build Management
+
+```bash
+# Development assets with source maps
+mutagen-compose exec php-fpm php phing npm-dev
+
+# Watch for changes and rebuild
+mutagen-compose exec php-fpm php phing npm-watch
+
+# Production assets
+mutagen-compose exec php-fpm php phing npm
+mutagen-compose exec php-fpm php phing assets
+```
+
+## Translation Management
+
+```bash
+# Generate backend translations
+mutagen-compose exec php-fpm php phing translations-dump
+
+# Generate frontend translations
+mutagen-compose exec storefront pnpm translate
+```
+
+## Troubleshooting Workflows
+
+### When Something Doesn't Work
+
+```bash
+# 1. Restart problematic containers
+mutagen-compose up -d --force-recreate storefront webserver
+
+# 2. Clear caches
+mutagen-compose exec php-fpm php bin/console cache:clear
+
+# 3. Rebuild assets
+mutagen-compose exec php-fpm php phing assets
+
+# 4. Check container logs
+mutagen-compose logs storefront
+mutagen-compose logs php-fpm
+```
+
+### Complete Reset
+
+```bash
+# 1. Stop all containers
+mutagen-compose down
+
+# 2. Start fresh
+mutagen-compose up -d
+
+# 3. Recreate demo environment
+mutagen-compose exec php-fpm php phing demo-data
+```
+
+## Upgrade & Maintenance
+
+### Platform Upgrades
+
+```bash
+# Run upgrade generation (used during platform upgrades)
+mutagen-compose exec php-fpm php phing upgrade-generate
+
+# Update schema after upgrade
+make generate-schema
+
+# Update translations
+mutagen-compose exec storefront pnpm translate
+mutagen-compose exec php-fpm php phing translations-dump
+
+# Run migrations and rebuild
+mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+mutagen-compose exec php-fpm php phing assets
+```
+
+## Makefile Commands
+
+Use the [Makefile](mdc:Makefile) for common tasks:
+
+- `make generate-schema` - Generate GraphQL schema and types
+- `make check-fix` - Run all code checks and fixes
+- `make php-checks` - PHP coding standards and PHPStan
+- `make storefront-checks` - Frontend linting and type checking
+
+## Command Combinations for Efficiency
+
+### Full Environment Refresh
+
+```bash
+mutagen-compose exec php-fpm php phing demo-data && \
+mutagen-compose exec php-fpm php phing elasticsearch-reindex && \
+make generate-schema
+```
+
+### Complete Code Check
+
+```bash
+mutagen-compose exec php-fpm php phing standards-fix && \
+mutagen-compose exec storefront pnpm check--fix && \
+mutagen-compose exec storefront pnpm test
+```
+
+## Container Status & Logs
+
+```bash
+# Check container status
+mutagen-compose ps
+
+# View specific container logs
+mutagen-compose logs storefront
+mutagen-compose logs php-fpm
+mutagen-compose logs webserver
+
+# Follow logs in real-time
+mutagen-compose logs -f storefront
+```
+
+## Help Commands
+
+```bash
+# Available Makefile commands
+make help
+
+# Phing targets (backend)
+mutagen-compose exec php-fpm php phing -l
+
+# Available npm scripts (frontend)
+mutagen-compose exec storefront pnpm run
+```

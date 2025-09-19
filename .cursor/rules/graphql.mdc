@@ -1,0 +1,138 @@
+---
+description: GraphQL schema generation and development workflow
+---
+
+# GraphQL Schema Generation & Workflow
+
+## Overview
+
+The project uses GraphQL as the API layer between the Symfony backend and Next.js frontend with automatic code generation.
+
+## Schema Generation Process
+
+### Full Workflow (Recommended)
+
+```bash
+make generate-schema
+```
+
+This command:
+
+1. Validates GraphQL schema on backend (`php ./bin/console graphql:validate`)
+2. Generates `schema.graphql` file (`php phing frontend-api-generate-graphql-schema`)
+3. Copies schema to storefront
+4. Generates TypeScript types and hooks (`pnpm run gql`)
+5. Cleans up temporary files
+
+### Manual Steps (Development)
+
+```bash
+# Backend: Generate schema
+mutagen-compose exec php-fpm php phing frontend-api-generate-graphql-schema
+
+# Frontend: Generate types
+mutagen-compose exec storefront pnpm run gql
+```
+
+### Alternative Backend Schema Generation
+
+You can also generate the GraphQL schema directly using:
+
+```bash
+mutagen-compose exec php-fpm php bin/console graphql:validate
+mutagen-compose exec php-fpm php phing frontend-api-generate-graphql-schema
+```
+
+## File Structure
+
+### Backend GraphQL
+
+- **Schema Definition**: Defined in PHP resolvers and types
+- **Generated Schema**: [project-base/app/schema.graphql](mdc:project-base/app/schema.graphql)
+- **Resolvers**: Located in framework packages
+
+### Frontend GraphQL
+
+- **Query Files**: [project-base/storefront/graphql/requests/](mdc:project-base/storefront/graphql/requests/) - `.graphql` files
+- **Generated Files**: Same directory with `.generated.tsx` extension
+- **Schema Copy**: [project-base/storefront/schema.graphql](mdc:project-base/storefront/schema.graphql) (temporary)
+
+## Writing GraphQL Queries
+
+### Query File Example
+
+Create a new file: `project-base/storefront/graphql/requests/products/productDetail.graphql`
+
+```graphql
+query ProductDetail($uuid: Uuid!) {
+    product(uuid: $uuid) {
+        __typename
+        uuid
+        name
+        shortDescription
+        description
+        images {
+            name
+            url
+        }
+        price {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        availability {
+            name
+        }
+        categories {
+            name
+            slug
+        }
+    }
+}
+```
+
+### Using Generated Hooks
+
+After running `make generate-schema`, use the generated hook:
+
+```tsx
+import { useProductDetailQuery } from 'graphql/requests/products/productDetail.generated';
+
+const ProductDetail = ({ productUuid }: { productUuid: string }) => {
+    const [{ data, fetching, error }] = useProductDetailQuery({
+        variables: { uuid: productUuid },
+    });
+
+    if (fetching) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
+    if (!data?.product) return <div>Product not found</div>;
+
+    return (
+        <div className="space-y-4">
+            <h1 className="text-2xl font-bold">{data.product.name}</h1>
+            <p className="text-gray-600">{data.product.shortDescription}</p>
+            <div className="text-xl font-semibold">{data.product.price.priceWithVat}</div>
+        </div>
+    );
+};
+```
+
+## Development Workflow
+
+1. **Modify Backend Schema**: Update resolvers or types in PHP
+2. **Generate Schema**: Run `make generate-schema`
+3. **Write Frontend Queries**: Create `.graphql` files
+4. **Generate Types**: Schema generation creates TypeScript types
+5. **Use in Components**: Import and use generated hooks
+
+## Configuration Files
+
+- [project-base/storefront/codegen-config.ts](mdc:project-base/storefront/codegen-config.ts) - GraphQL Code Generator configuration
+- [project-base/storefront/schema-compress.js](mdc:project-base/storefront/schema-compress.js) - Schema optimization script
+
+## Tips
+
+- Always run `make generate-schema` after backend changes
+- Use fragments for reusable field sets
+- Generated hooks include TypeScript types automatically
+- Schema validation prevents runtime errors

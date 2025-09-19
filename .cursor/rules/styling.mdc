@@ -1,0 +1,424 @@
+---
+globs: project-base/storefront/**/*.{ts,tsx,css}
+description: CSS and styling patterns for Tailwind and custom styles
+---
+
+# Styling Patterns & CSS Guidelines
+
+## Tailwind CSS Best Practices
+
+### Utility-First Approach
+
+**ALWAYS prefer Tailwind utilities over custom CSS:**
+
+```tsx
+// ✅ Excellent - Tailwind utilities
+const ProductCard = () => (
+    <article className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md">
+        <div className="aspect-square overflow-hidden">
+            <img
+                className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                src="/product.jpg"
+                alt="Product"
+            />
+        </div>
+        <div className="p-4">
+            <h3 className="line-clamp-2 text-lg font-semibold text-gray-900">Product Name</h3>
+            <p className="mt-2 text-2xl font-bold text-blue-600">$99.99</p>
+        </div>
+    </article>
+);
+
+// ❌ Avoid - Custom CSS classes
+const ProductCard = () => (
+    <article className="product-card">
+        <div className="product-image-wrapper">
+            <img className="product-image" src="/product.jpg" alt="Product" />
+        </div>
+        <div className="product-content">
+            <h3 className="product-title">Product Name</h3>
+            <p className="product-price">$99.99</p>
+        </div>
+    </article>
+);
+```
+
+### Responsive Design Patterns
+
+```tsx
+// ✅ Mobile-first responsive design
+const ResponsiveGrid = () => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+        {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+        ))}
+    </div>
+);
+
+// ✅ Responsive typography
+const HeroSection = () => (
+    <section className="py-12 lg:py-20">
+        <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl xl:text-6xl">Welcome to Our Store</h1>
+        <p className="mt-4 text-base sm:text-lg lg:text-xl">Discover amazing products</p>
+    </section>
+);
+
+// ✅ Responsive spacing and sizing
+const Container = ({ children }: { children: ReactNode }) => (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="py-8 lg:py-16">{children}</div>
+    </div>
+);
+```
+
+### Component-Specific Styling
+
+```tsx
+// ✅ Button component with variants
+interface ButtonProps {
+    variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+    size?: 'sm' | 'md' | 'lg';
+    fullWidth?: boolean;
+}
+
+const Button: FC<ButtonProps> = ({ variant = 'primary', size = 'md', fullWidth = false, children, ...props }) => {
+    const baseClasses =
+        'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+
+    const variantClasses = {
+        primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+        secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500',
+        ghost: 'text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
+        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    };
+
+    const sizeClasses = {
+        sm: 'px-3 py-1.5 text-sm',
+        md: 'px-4 py-2 text-base',
+        lg: 'px-6 py-3 text-lg',
+    };
+
+    const widthClasses = fullWidth ? 'w-full' : '';
+
+    return (
+        <button className={twMerge(baseClasses, variantClasses[variant], sizeClasses[size], widthClasses)} {...props}>
+            {children}
+        </button>
+    );
+};
+```
+
+## Custom CSS Guidelines (When Necessary)
+
+### Component Scoped CSS
+
+Only create custom CSS when Tailwind utilities are insufficient:
+
+```css
+/* components/ProductGallery.module.css */
+.gallery {
+    @apply grid grid-cols-1 gap-4;
+}
+
+.thumbnail {
+    @apply cursor-pointer rounded border-2 border-transparent transition-colors;
+}
+
+.thumbnail:hover {
+    @apply border-blue-300;
+}
+
+.thumbnail.active {
+    @apply border-blue-500 ring-2 ring-blue-200;
+}
+
+/* Complex animations not easily achievable with Tailwind */
+.slideIn {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+```
+
+### Global CSS (Minimal Usage)
+
+Use global CSS only for base styles and complex layouts:
+
+```css
+/* styles/globals.css */
+
+/* Base styles that extend Tailwind */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans text-gray-900 antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-semibold leading-tight;
+    }
+}
+
+/* Component layer for complex reusable patterns */
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    }
+}
+
+/* Utilities for project-specific needs */
+@layer utilities {
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+}
+```
+
+## Advanced Styling Patterns
+
+### Dynamic Classes with Conditions
+
+```tsx
+// ✅ Conditional styling patterns
+const Alert: FC<{ type: 'success' | 'warning' | 'error'; children: ReactNode }> = ({ type, children }) => {
+    const baseClasses = 'rounded-lg p-4 text-sm';
+    const typeClasses = {
+        success: 'bg-green-50 text-green-800 border border-green-200',
+        warning: 'bg-yellow-50 text-yellow-800 border border-yellow-200',
+        error: 'bg-red-50 text-red-800 border border-red-200',
+    };
+
+    return <div className={twMerge(baseClasses, typeClasses[type])}>{children}</div>;
+};
+
+// ✅ State-based styling
+const ToggleButton: FC<{ active: boolean; onClick: () => void }> = ({ active, onClick }) => (
+    <button
+        onClick={onClick}
+        className={twMerge(
+            'px-4 py-2 rounded-lg font-medium transition-colors',
+            active ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+        )}
+    >
+        Toggle
+    </button>
+);
+```
+
+### Layout Patterns
+
+```tsx
+// ✅ Flexible container layouts
+const PageLayout: FC<{ children: ReactNode; sidebar?: ReactNode }> = ({ children, sidebar }) => (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-8 py-8 lg:flex-row lg:gap-12">
+            {sidebar && (
+                <aside className="w-full lg:w-80 lg:flex-shrink-0">
+                    <div className="sticky top-4">{sidebar}</div>
+                </aside>
+            )}
+            <main className="flex-1 min-w-0">{children}</main>
+        </div>
+    </div>
+);
+
+// ✅ Card layouts with proper spacing
+const CardGrid: FC<{ children: ReactNode }> = ({ children }) => (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{children}</div>
+);
+
+const Card: FC<{ children: ReactNode; className?: string }> = ({ children, className }) => (
+    <div className={twMerge('rounded-lg border bg-white p-6 shadow-sm transition-shadow hover:shadow-md', className)}>
+        {children}
+    </div>
+);
+```
+
+### Form Styling Patterns
+
+```tsx
+// ✅ Consistent form styling
+const FormField: FC<{
+    label: string;
+    error?: string;
+    required?: boolean;
+    children: ReactNode;
+}> = ({ label, error, required, children }) => (
+    <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">
+            {label}
+            {required && <span className="text-red-500">*</span>}
+        </label>
+        {children}
+        {error && <p className="text-sm text-red-600">{error}</p>}
+    </div>
+);
+
+const Input = forwardRef<HTMLInputElement, InputProps>(({ error, className, ...props }, ref) => (
+    <input
+        ref={ref}
+        className={twMerge(
+            'block w-full rounded-lg border px-3 py-2 shadow-sm transition-colors focus:outline-none focus:ring-2',
+            error
+                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+                : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500',
+            'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
+            className,
+        )}
+        {...props}
+    />
+));
+```
+
+## Animation and Transitions
+
+### Tailwind Transitions
+
+```tsx
+// ✅ Smooth transitions with Tailwind
+const AnimatedCard = () => (
+    <div className="transform rounded-lg bg-white p-6 shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-lg">
+        <h3 className="text-lg font-semibold transition-colors hover:text-blue-600">Hover me</h3>
+    </div>
+);
+
+// ✅ Loading states with animations
+const LoadingButton: FC<{ loading: boolean }> = ({ loading, children }) => (
+    <button className="relative inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-white transition-opacity disabled:opacity-50">
+        {loading && (
+            <div className="absolute inset-0 flex items-center justify-center">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+            </div>
+        )}
+        <span className={loading ? 'invisible' : 'visible'}>{children}</span>
+    </button>
+);
+```
+
+### CSS Animations for Complex Effects
+
+```css
+/* For complex animations not possible with Tailwind utilities */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.pulse-slow {
+    animation: pulse 2s ease-in-out infinite;
+}
+```
+
+## Accessibility & Styling
+
+### Focus States
+
+```tsx
+// ✅ Proper focus management
+const AccessibleButton: FC<ButtonProps> = ({ children, ...props }) => (
+    <button
+        className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        {...props}
+    >
+        {children}
+    </button>
+);
+
+// ✅ Skip links for accessibility
+const SkipLink: FC = () => (
+    <a
+        href="#main-content"
+        className="sr-only bg-blue-600 px-4 py-2 text-white focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
+    >
+        Skip to main content
+    </a>
+);
+```
+
+## Performance Considerations
+
+### CSS Bundle Optimization
+
+```bash
+# Purge unused Tailwind classes in production
+# Automatic with Next.js production builds
+
+# Analyze CSS bundle size
+mutagen-compose exec storefront pnpm run build
+mutagen-compose exec storefront pnpm run bundle-analyzer
+```
+
+### Efficient Class Usage
+
+```tsx
+// ✅ Extract repeated class combinations
+const cardStyles = 'rounded-lg border bg-white p-6 shadow-sm';
+const buttonStyles = 'rounded-lg px-4 py-2 font-medium transition-colors';
+
+// ✅ Use CSS variables for dynamic theming
+const ThemeProvider: FC<{ theme: Theme; children: ReactNode }> = ({ theme, children }) => (
+    <div
+        style={{
+            '--primary-color': theme.primaryColor,
+            '--secondary-color': theme.secondaryColor,
+        }}
+        className="[--primary-color:theme(colors.blue.600)] [--secondary-color:theme(colors.gray.600)]"
+    >
+        {children}
+    </div>
+);
+```
+
+## Best Practices Summary
+
+1. **Prefer Tailwind utilities** over custom CSS (95% of cases)
+2. **Use responsive design** with mobile-first approach
+3. **Implement consistent spacing** with Tailwind's spacing scale
+4. **Handle focus states** properly for accessibility
+5. **Use CSS modules** for component-specific styles when needed
+6. **Optimize for performance** by avoiding unused styles
+7. **Maintain design system** consistency with reusable components
+8. **Test responsive behavior** at all breakpoints
+9. **Use semantic HTML** with appropriate styling
+10. **Monitor bundle size** and optimize CSS delivery

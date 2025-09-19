@@ -1,0 +1,313 @@
+---
+description: Testing frameworks and essential testing patterns
+---
+
+# Testing Basics & Frameworks
+
+## Test-Driven Development Workflow
+
+### Before Refactoring/Changes
+
+**Always check for existing tests before making significant changes:**
+
+1. **Analyze existing code** - Check if the code being modified has tests
+2. **If no tests exist** - Ask user: _"I notice there are no tests for [component/function] that I'm about to refactor. Would you like me to create tests first to ensure the refactoring doesn't break existing functionality?"_
+3. **After user confirmation** - Create baseline tests that verify current behavior
+4. **Proceed with changes** - Make the refactoring/modifications
+5. **Verify tests pass** - Ensure changes don't break functionality
+
+### After New Implementation
+
+**Always offer to create tests for new functionality:**
+
+1. **After implementing new features** - Ask user: _"I've implemented [feature/component]. Would you like me to create tests for this new functionality? This would include [unit/component/integration] tests to ensure reliability."_
+2. **After user confirmation** - Create comprehensive tests covering the new code
+
+### When to Apply This Workflow
+
+- ✅ New components, hooks, utilities
+- ✅ Business logic or data processing
+- ✅ API endpoints or GraphQL resolvers
+- ✅ Complex refactoring
+- ✅ Bug fixes that add new logic
+- ❌ Minor styling changes
+- ❌ Text/copy updates
+- ❌ Simple configuration changes
+
+## Frontend Testing (Vitest + React Testing Library)
+
+### Test Commands
+
+```bash
+# Run tests
+mutagen-compose exec storefront pnpm test
+
+# Update test snapshots
+mutagen-compose exec storefront pnpm test--update
+
+# Run tests in watch mode
+mutagen-compose exec storefront pnpm test--watch
+```
+
+### Component Testing Pattern
+
+```tsx
+import { render, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
+import { ProductCard } from './ProductCard';
+
+describe('ProductCard', () => {
+    const mockProduct = {
+        uuid: '123',
+        name: 'Test Product',
+        price: { priceWithVat: '99.99', currency: { code: 'USD' } },
+    };
+
+    it('renders product information correctly', () => {
+        render(<ProductCard product={mockProduct} onAddToCart={vi.fn()} />);
+
+        expect(screen.getByText('Test Product')).toBeInTheDocument();
+        expect(screen.getByText('$99.99')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
+    });
+
+    it('handles user interactions', async () => {
+        const mockOnAddToCart = vi.fn();
+        const user = userEvent.setup();
+
+        render(<ProductCard product={mockProduct} onAddToCart={mockOnAddToCart} />);
+
+        const addButton = screen.getByRole('button', { name: /add to cart/i });
+        await user.click(addButton);
+
+        expect(mockOnAddToCart).toHaveBeenCalledWith(mockProduct.uuid);
+    });
+});
+```
+
+### Mocking GraphQL
+
+```tsx
+import { vi } from 'vitest';
+
+// Mock GraphQL hooks
+vi.mock('graphql/requests/products.generated', () => ({
+    useProductDetailQuery: vi.fn(() => [
+        {
+            data: { product: mockProduct },
+            fetching: false,
+            error: null,
+        },
+    ]),
+}));
+```
+
+## Backend Testing (PHPUnit)
+
+### Test Commands
+
+```bash
+# All backend tests
+mutagen-compose exec php-fpm php phing tests
+
+# Specific test types
+mutagen-compose exec php-fpm php phing tests-unit
+mutagen-compose exec php-fpm php phing tests-functional
+
+# Run specific test
+mutagen-compose exec php-fpm php vendor/bin/phpunit tests/App/Unit/Model/Product/ProductTest.php
+```
+
+### Unit Test Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\App\Unit\Model\Product;
+
+use App\Model\Product\Product;
+use App\Model\Product\ProductData;
+use PHPUnit\Framework\TestCase;
+
+class ProductTest extends TestCase
+{
+    public function testProductCreationWithValidData(): void
+    {
+        // Arrange
+        $productData = new ProductData();
+        $productData->name = 'Test Product';
+        $productData->catnum = 'TEST001';
+
+        // Act
+        $product = new Product($productData);
+
+        // Assert
+        $this->assertSame('Test Product', $product->getName());
+        $this->assertSame('TEST001', $product->getCatnum());
+    }
+}
+```
+
+### Functional Test Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\App\Functional\Model\Product;
+
+use App\Model\Product\ProductFacade;
+use App\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Test\TestCase;
+
+class ProductFacadeTest extends TestCase
+{
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
+
+    public function testCreate(): void
+    {
+        $productData = new ProductData();
+        $productData->name = 'Test Product';
+
+        $product = $this->productFacade->create($productData);
+
+        $this->assertNotNull($product->getId());
+        $this->assertSame('Test Product', $product->getName());
+    }
+}
+```
+
+## Acceptance Testing (Cypress)
+
+### Test Commands
+
+```bash
+# Run all acceptance tests (containerized)
+make run-acceptance-tests-base
+
+# Open Cypress GUI for debugging
+make open-acceptance-tests-base
+```
+
+**Important**: Only run Cypress locally when explicitly requested by the user. The standard workflow uses Docker containers through the make commands above.
+
+### Cypress Test Pattern
+
+```typescript
+describe('Product Detail Page', () => {
+    beforeEach(() => {
+        cy.visit('/product/test-product');
+    });
+
+    it('displays product information', () => {
+        cy.get('[data-testid="product-name"]').should('contain', 'Test Product');
+        cy.get('[data-testid="product-price"]').should('contain', '$99.99');
+        cy.get('[data-testid="add-to-cart-button"]').should('be.visible');
+    });
+
+    it('allows adding product to cart', () => {
+        cy.get('[data-testid="add-to-cart-button"]').click();
+        cy.get('[data-testid="cart-notification"]').should('contain', 'Product added to cart');
+    });
+});
+```
+
+## GraphQL API Testing
+
+### Frontend API Tests
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\FrontendApiBundle\Functional\Product;
+
+use Shopsys\FrameworkBundle\Test\TestCase;
+
+class ProductTest extends TestCase
+{
+    public function testProductQuery(): void
+    {
+        $query = '
+            query {
+                product(uuid: "' . $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1')->getUuid() . '") {
+                    name
+                    price {
+                        priceWithVat
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+
+        $this->assertResponseContainsArrayOfDataForGraphQlQuery($query, $response);
+        $this->assertArrayHasKey('product', $response['data']);
+        $this->assertNotEmpty($response['data']['product']['name']);
+    }
+}
+```
+
+## Testing Best Practices
+
+### Frontend Testing
+
+1. **Test user behavior**, not implementation details
+2. **Use data-testid** attributes for reliable element selection
+3. **Mock external dependencies** (GraphQL, APIs)
+4. **Test accessibility** with screen reader queries
+5. **Use waitFor** for asynchronous operations
+
+### Backend Testing
+
+1. **Use `@inject` annotation** instead of `$this->getContainer()->get()`
+2. **Test business logic** in unit tests
+3. **Test integration** in functional tests
+4. **Use fixtures** for consistent test data
+5. **Test both success and error cases**
+
+### Test Organization
+
+```
+tests/
+├── App/
+│   ├── Unit/              # Pure unit tests
+│   ├── Functional/        # Database integration tests
+│   └── Smoke/            # Basic smoke tests
+├── FrontendApiBundle/     # GraphQL API tests
+└── cypress/              # E2E acceptance tests
+```
+
+## Test Data Management
+
+### Using Fixtures
+
+```php
+// Reference test data in tests
+$product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+```
+
+### Creating Test Data
+
+```php
+protected function setUp(): void
+{
+    parent::setUp();
+
+    $this->productData = new ProductData();
+    $this->productData->name = 'Test Product';
+}
+```
+
+## Configuration
+
+- **Frontend**: `project-base/storefront/vitest.config.ts`
+- **Backend**: `project-base/phpunit.xml`
+- **Acceptance**: `project-base/tests/cypress.config.ts`

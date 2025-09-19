@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+---
+
+# Shopsys Project Structure Guide
+
+This is a monorepo for the Shopsys e-commerce platform with clear separation between backend and frontend.
+
+## Main Directories
+
+- **Backend (PHP/Symfony)**: [project-base/](mdc:project-base/) - The main PHP application
+    - [project-base/src/](mdc:project-base/src/) - Application source code
+    - [project-base/config/](mdc:project-base/config/) - Symfony configuration
+    - [project-base/tests/](mdc:project-base/tests/) - Backend tests
+    - [project-base/app/](mdc:project-base/app/) - Application configuration and resources
+
+- **Frontend (React/Next.js)**: [project-base/storefront/](mdc:project-base/storefront/) - The Next.js storefront
+    - [project-base/storefront/components/](mdc:project-base/storefront/components/) - React components
+    - [project-base/storefront/graphql/](mdc:project-base/storefront/graphql/) - GraphQL queries and generated types
+    - [project-base/storefront/pages/](mdc:project-base/storefront/pages/) - Next.js pages
+    - [project-base/storefront/styles/](mdc:project-base/storefront/styles/) - Stylesheets and Tailwind CSS
+    - [project-base/storefront/utils/](mdc:project-base/storefront/utils/) - Utility functions
+    - [project-base/storefront/types/](mdc:project-base/storefront/types/) - TypeScript type definitions
+
+- **Packages**: [packages/](mdc:packages/) - Reusable packages and bundles
+    - [packages/framework/](mdc:packages/framework/) - Core Shopsys framework
+    - [packages/frontend-api/](mdc:packages/frontend-api/) - GraphQL API for frontend
+    - [packages/coding-standards/](mdc:packages/coding-standards/) - Code style rules
+
+- **Documentation**: [docs/](mdc:docs/) - Project documentation
+
+## Key Configuration Files
+
+- [project-base/composer.json](mdc:project-base/composer.json) - PHP dependencies
+- [project-base/storefront/package.json](mdc:project-base/storefront/package.json) - Node.js dependencies
+- [docker-compose.yml](mdc:docker-compose.yml) - Docker services configuration
+- [Makefile](mdc:Makefile) - Common development commands
+
+## Entry Points
+
+- Backend: [project-base/src/](mdc:project-base/src/) contains the main application code
+- Frontend: [project-base/storefront/pages/](mdc:project-base/storefront/pages/) contains Next.js pages
+- API: GraphQL schema is generated at [project-base/app/schema.graphql](mdc:project-base/app/schema.graphql)

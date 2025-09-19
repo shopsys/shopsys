@@ -1,0 +1,393 @@
+---
+globs: project-base/storefront/**/*.{ts,tsx,js,jsx}
+description: Comprehensive frontend development guide for React/Next.js/TypeScript
+---
+
+# Frontend Development (React/Next.js/TypeScript)
+
+## Technology Stack
+
+- **Framework**: Next.js 15 with React 18 (Pages Router)
+- **Language**: TypeScript 5.3+ (strict mode)
+- **Styling**: Tailwind CSS 4 (PREFER utilities over custom CSS)
+- **State Management**: Zustand for global state
+- **GraphQL**: urql with automatic code generation
+- **Forms**: React Hook Form + Yup validation
+- **Testing**: Vitest + React Testing Library
+
+## Essential Commands
+
+```bash
+# Development server
+mutagen-compose exec storefront pnpm dev
+
+# Code quality (all-in-one)
+mutagen-compose exec storefront pnpm check--fix
+
+# Individual quality checks
+mutagen-compose exec storefront pnpm typecheck
+mutagen-compose exec storefront pnpm lint--fix
+mutagen-compose exec storefront pnpm format
+
+# Testing & Analysis
+mutagen-compose exec storefront pnpm test
+mutagen-compose exec storefront pnpm bundle-analyzer
+
+# Translations & GraphQL
+mutagen-compose exec storefront pnpm translate
+make generate-schema
+```
+
+## Component Architecture
+
+### Component Organization
+
+```
+components/
+├── Basic/           # Reusable UI (Button, Input, Modal)
+├── Blocks/          # Content blocks (Hero, ProductList)
+├── Forms/           # Form components (ContactForm, LoginForm)
+├── Layout/          # Layout components (Header, Footer, Navigation)
+├── Pages/           # Page-specific components
+└── Hocs/           # Higher-order components and providers
+```
+
+### Component Patterns
+
+```tsx
+// ✅ Basic component with proper TypeScript
+interface ProductCardProps {
+    product: Product;
+    onAddToCart?: (productUuid: string) => void;
+    showPrice?: boolean;
+}
+
+export const ProductCard: FC<ProductCardProps> = ({ product, onAddToCart, showPrice = true }) => {
+    // ✅ Early returns for conditional rendering
+    if (!product) return null;
+
+    // ✅ Memoized event handlers
+    const handleAddToCart = useCallback(() => {
+        onAddToCart?.(product.uuid);
+    }, [onAddToCart, product.uuid]);
+
+    return (
+        <div className="group relative rounded-lg border bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+            <ProductImage product={product} />
+            {showPrice && <ProductPrice price={product.price} />}
+            <Button onClick={handleAddToCart}>Add to Cart</Button>
+        </div>
+    );
+};
+```
+
+### Container/Presenter Pattern
+
+```tsx
+// ✅ Container (data logic)
+export const ProductListContainer: FC = () => {
+    const [{ data, fetching, error }] = useProductListQuery();
+    const [filters, setFilters] = useFilters();
+
+    if (error) return <ErrorMessage error={error} />;
+    if (fetching) return <ProductListSkeleton />;
+
+    return <ProductListPresenter products={data?.products || []} filters={filters} onFiltersChange={setFilters} />;
+};
+
+// ✅ Presenter (UI only)
+export const ProductListPresenter: FC<ProductListPresenterProps> = ({ products, filters, onFiltersChange }) => (
+    <div className="grid gap-6">
+        <ProductFilters filters={filters} onChange={onFiltersChange} />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((product) => (
+                <ProductCard key={product.uuid} product={product} />
+            ))}
+        </div>
+    </div>
+);
+```
+
+### Custom Hooks
+
+```tsx
+// ✅ Custom data fetching hook
+interface UseProductOptions {
+    enabled?: boolean;
+    refetchOnMount?: boolean;
+}
+
+export const useProduct = (slug: string, options: UseProductOptions = {}) => {
+    const { enabled = true, refetchOnMount = true } = options;
+
+    const [result] = useProductDetailQuery({
+        variables: { urlSlug: slug },
+        pause: !enabled,
+        requestPolicy: refetchOnMount ? 'cache-and-network' : 'cache-first',
+    });
+
+    return {
+        product: result.data?.product,
+        loading: result.fetching,
+        error: result.error,
+        refetch: result.reexecuteQuery,
+    };
+};
+```
+
+## GraphQL Integration
+
+### Generated Hooks Usage
+
+```tsx
+import { useProductDetailQuery } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
+
+export const ProductDetail: FC<{ productSlug: string }> = ({ productSlug }) => {
+    const [{ data, fetching, error }] = useProductDetailQuery({
+        variables: { urlSlug: productSlug },
+    });
+
+    if (error) return <ErrorMessage error={error} />;
+    if (fetching) return <ProductDetailSkeleton />;
+    if (!data?.product) return <NotFoundMessage />;
+
+    return <ProductDetailContent product={data.product} />;
+};
+```
+
+### Error Handling
+
+```tsx
+// ✅ GraphQL error boundary
+const GraphQLErrorBoundary: FC<{ error: CombinedError }> = ({ error }) => {
+    const isNotFound = error.graphQLErrors.some((e) => e.extensions?.code === 'NOT_FOUND');
+
+    if (isNotFound) return <NotFoundPage />;
+    if (error.networkError) return <NetworkErrorMessage retry={() => window.location.reload()} />;
+
+    return <ErrorPage message={getDisplayErrorMessage(error)} />;
+};
+```
+
+## State Management (Zustand)
+
+```tsx
+// ✅ Zustand store pattern
+interface CartStore {
+    items: CartItem[];
+    addItem: (product: Product) => void;
+    removeItem: (uuid: string) => void;
+    clearCart: () => void;
+}
+
+export const useCartStore = create<CartStore>((set, get) => ({
+    items: [],
+    addItem: (product) =>
+        set((state) => ({
+            items: [...state.items, { ...product, quantity: 1 }],
+        })),
+    removeItem: (uuid) =>
+        set((state) => ({
+            items: state.items.filter((item) => item.uuid !== uuid),
+        })),
+    clearCart: () => set({ items: [] }),
+}));
+
+// ✅ Usage in component
+const CartSummary = () => {
+    const { items } = useCartStore();
+    return (
+        <div>
+            {items.map((item) => (
+                <CartItem key={item.uuid} item={item} />
+            ))}
+        </div>
+    );
+};
+```
+
+## Forms with React Hook Form
+
+```tsx
+// ✅ Form with validation
+const contactSchema = yup.object({
+    email: yup.string().email().required('Email is required'),
+    message: yup.string().min(10).required('Message is required'),
+});
+
+export const ContactForm: FC = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: yupResolver(contactSchema),
+    });
+
+    const onSubmit = async (data: ContactFormData) => {
+        try {
+            await submitContactForm(data);
+            showSuccessMessage('Message sent successfully!');
+        } catch (error) {
+            showErrorMessage('Failed to send message');
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+                <input
+                    {...register('email')}
+                    type="email"
+                    className="w-full rounded border p-2"
+                    placeholder="Your email"
+                />
+                {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
+            </div>
+            <button
+                type="submit"
+                disabled={isSubmitting}
+                className="rounded bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
+            >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
+        </form>
+    );
+};
+```
+
+## Performance Optimization
+
+### Memoization
+
+```tsx
+// ✅ Memo for expensive components
+const ExpensiveComponent = memo<Props>(({ data, onAction }) => {
+    const expensiveValue = useMemo(() => {
+        return data.reduce((acc, item) => acc + item.complexCalculation, 0);
+    }, [data]);
+
+    const memoizedCallback = useCallback(
+        (item: Item) => {
+            onAction(item);
+        },
+        [onAction],
+    );
+
+    return (
+        <div>
+            <span>{expensiveValue}</span>
+            {data.map((item) => (
+                <ItemComponent key={item.id} item={item} onClick={memoizedCallback} />
+            ))}
+        </div>
+    );
+});
+```
+
+### Code Splitting
+
+```tsx
+// ✅ Dynamic imports for performance
+const AdminPanel = dynamic(() => import('./AdminPanel'), {
+    loading: () => <ComponentSkeleton />,
+    ssr: false, // Client-side only if needed
+});
+
+const ConditionalComponent = () => {
+    const { user } = useAuth();
+
+    if (!user?.isAdmin) return null;
+
+    return (
+        <Suspense fallback={<LoadingSpinner />}>
+            <AdminPanel />
+        </Suspense>
+    );
+};
+```
+
+### Component Deferring
+
+```tsx
+import { useDeferredValue, startTransition } from 'react';
+
+// ✅ Defer expensive filtering
+const ProductSearch = () => {
+    const [query, setQuery] = useState('');
+    const deferredQuery = useDeferredValue(query);
+
+    const filteredProducts = useMemo(() => {
+        return products.filter((product) => product.name.toLowerCase().includes(deferredQuery.toLowerCase()));
+    }, [products, deferredQuery]);
+
+    const handleSearchChange = (value: string) => {
+        startTransition(() => {
+            setQuery(value);
+        });
+    };
+
+    return (
+        <>
+            <SearchInput onChange={handleSearchChange} />
+            <ProductList products={filteredProducts} />
+        </>
+    );
+};
+```
+
+## Testing Patterns
+
+### Component Testing
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
+
+describe('ProductCard', () => {
+    const mockProduct = {
+        uuid: '123',
+        name: 'Test Product',
+        price: { priceWithVat: '99.99', currency: { code: 'USD' } },
+    };
+
+    it('renders product information correctly', () => {
+        render(<ProductCard product={mockProduct} onAddToCart={vi.fn()} />);
+
+        expect(screen.getByText('Test Product')).toBeInTheDocument();
+        expect(screen.getByText('$99.99')).toBeInTheDocument();
+    });
+
+    it('handles add to cart click', async () => {
+        const mockOnAddToCart = vi.fn();
+        render(<ProductCard product={mockProduct} onAddToCart={mockOnAddToCart} />);
+
+        const addButton = screen.getByRole('button', { name: /add to cart/i });
+        await user.click(addButton);
+
+        expect(mockOnAddToCart).toHaveBeenCalledWith(mockProduct.uuid);
+    });
+});
+```
+
+## Best Practices
+
+1. **TypeScript**: Use strict mode, explicit types, no `any`
+2. **Tailwind**: Prefer utility classes over custom CSS
+3. **Performance**: Use React.memo(), useMemo(), useCallback() appropriately
+4. **GraphQL**: Always handle loading, error, and empty states
+5. **Testing**: Test user interactions, not implementation details
+6. **Code Splitting**: Lazy load non-critical components
+7. **Error Boundaries**: Implement granular error handling
+8. **Accessibility**: Use semantic HTML and proper ARIA attributes
+9. **Bundle Analysis**: Monitor size with `pnpm bundle-analyzer`
+10. **State Management**: Keep state as close to where it's used as possible
+
+## Router System Detection
+
+**Important**: Check folder structure before making routing changes:
+
+- **Pages Router** (current): Look for `project-base/storefront/pages/` directory
+- **App Router** (migration branches): Look for `project-base/storefront/app/` directory
+
+Different systems have different conventions for file-based routing, layouts, API routes, and metadata.

@@ -1,0 +1,243 @@
+---
+globs: project-base/**/*.php
+description: Essential backend patterns and commands for PHP/Symfony
+---
+
+# Backend Development Basics (PHP/Symfony)
+
+## Technology Stack
+
+- **Framework**: Symfony 6.4
+- **Language**: PHP 8.3
+- **ORM**: Doctrine ORM
+- **GraphQL**: Overblog GraphQL Bundle
+- **Database**: PostgreSQL
+
+## Essential Commands
+
+```bash
+# Code quality
+mutagen-compose exec php-fpm php phing standards-fix
+mutagen-compose exec php-fpm php phing phpstan
+
+# Database operations
+mutagen-compose exec php-fpm php bin/console doctrine:migrations:migrate
+mutagen-compose exec php-fpm php phing demo-data
+
+# GraphQL schema generation
+mutagen-compose exec php-fpm php phing frontend-api-generate-graphql-schema
+mutagen-compose exec php-fpm php bin/console graphql:validate
+
+# Translations and assets
+mutagen-compose exec php-fpm php phing translations-dump
+mutagen-compose exec php-fpm php phing assets
+```
+
+## Core Architecture Patterns
+
+### Entity Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Product;
+
+use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
+
+/**
+ * @ORM\Entity
+ */
+final class Product extends BaseProduct
+{
+    // Custom fields and methods
+}
+```
+
+### Repository Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Product;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
+
+class ProductRepository extends BaseProductRepository
+{
+    /**
+     * @param int $categoryId
+     * @return Product[]
+     */
+    public function findByCategory(int $categoryId): array
+    {
+        return $this->getProductRepository()
+            ->createQueryBuilder('p')
+            ->join('p.categories', 'c')
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+}
+```
+
+### Facade Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Product;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
+
+class ProductFacade extends BaseProductFacade
+{
+    /**
+     * @param ProductData $productData
+     * @return Product
+     */
+    public function create(ProductData $productData): Product
+    {
+        $product = $this->productFactory->create($productData);
+
+        $this->em->persist($product);
+        $this->em->flush();
+
+        $this->productRecalculationDispatcher->dispatchProductIds([$product->getId()]);
+
+        return $product;
+    }
+}
+```
+
+### Form Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Form\Admin;
+
+use App\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType as BaseProductFormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+final class ProductFormType extends BaseProductFormType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        parent::buildForm($builder, $options);
+
+        $builder->add('customField', TextType::class, [
+            'label' => t('Custom Field'),
+            'required' => false,
+        ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => ProductData::class,
+        ]);
+    }
+}
+```
+
+### Security/RBAC Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\Admin;
+
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Symfony\Component\Routing\Attribute\Route;
+
+// Set default role for the entire controller
+#[ForRole('ROLE_PRODUCT')]
+class ProductController extends AdminBaseController
+{
+    #[Route(path: '/product/list', name: 'admin_product_list')]
+    #[CanView] // Inherits ROLE_PRODUCT
+    public function listAction(): Response
+    {
+        // ...
+    }
+
+    #[Route(path: '/product/edit/{id}', name: 'admin_product_edit')]
+    #[CanEdit] // Inherits ROLE_PRODUCT
+    public function editAction(int $id): Response
+    {
+        // ...
+    }
+}
+```
+
+## Key Principles
+
+1. **Always extend base classes** from the framework
+2. **Use final classes** in project-base (not in packages)
+3. **Use private visibility** in project-base (protected in packages)
+4. **Follow Data-Entity-Repository-Facade pattern**
+5. **Use proper type hints** and return types everywhere
+6. **Always dispatch recalculations** after product changes
+7. **Consider domain context** for multi-domain setup
+
+## Testing Pattern
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\App\Functional\Model\Product;
+
+use App\Model\Product\Product;
+use App\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Test\TestCase;
+
+class ProductFacadeTest extends TestCase
+{
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
+
+    public function testCreate(): void
+    {
+        $productData = new ProductData();
+        $productData->name = 'Test Product';
+
+        $product = $this->productFacade->create($productData);
+
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertSame('Test Product', $product->getName());
+    }
+}
+```
+
+## Best Practices
+
+1. **Extend framework classes** instead of creating from scratch
+2. **Use `@inject` annotation** in tests instead of `$this->getContainer()->get()`
+3. **Follow PSR-12** coding standards
+4. **Use PHPStan level 8** for static analysis
+5. **Always validate GraphQL schema** after changes
+6. **Use translations** with `t()` function
+7. **Handle multi-domain context** properly
