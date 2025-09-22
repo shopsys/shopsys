@@ -66,7 +66,7 @@ const OrderItemGiftCardComp: FC<OrderItemGiftCardProps> = ({
                 </div>
             </div>
 
-            <OrderItemProductPrice productPrice={price} quantity={quantity} unit={unit} />
+            <OrderItemProductPrice freeQuantity={null} productPrice={price} quantity={quantity} unit={unit} />
         </li>
     );
 };

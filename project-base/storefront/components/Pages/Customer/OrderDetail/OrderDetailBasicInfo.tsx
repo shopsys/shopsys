@@ -164,9 +164,12 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
                             key={orderItem.name}
-                            isDiscount={orderItem.type === TypeOrderItemTypeEnum.Discount}
                             orderItem={orderItem}
                             orderUuid={order.uuid}
+                            isDiscount={
+                                orderItem.type === TypeOrderItemTypeEnum.Discount ||
+                                orderItem.type === TypeOrderItemTypeEnum.Promotion
+                            }
                         />
                     ))}
                 </div>

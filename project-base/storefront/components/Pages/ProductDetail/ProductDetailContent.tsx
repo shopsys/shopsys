@@ -101,6 +101,16 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                             <DeferredComparisonAndWishlistButtons product={product} />
                         </div>
+                        {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (
+                            <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
+                                <div className="text-text-accent text-sm font-semibold">
+                                    {t('Buy {{ count }} pieces', { count: product.promotionBuyQuantity })}{' '}
+                                    {t('and receive {{ count }} pieces for free.', {
+                                        count: product.promotionFreeQuantity,
+                                    })}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </Webline>
 
