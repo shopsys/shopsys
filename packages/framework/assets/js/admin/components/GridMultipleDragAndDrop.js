@@ -3,6 +3,7 @@ import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class GridMultipleDragAndDrop {
     constructor($content) {
@@ -36,6 +37,8 @@ export default class GridMultipleDragAndDrop {
             data: data,
             dataType: 'json',
             success: () => {
+                FormChangeInfo.removeInfo();
+
                 // eslint-disable-next-line no-new
                 new ModalWindow({
                     content: Translator.trans('Order saved'),
@@ -80,6 +83,7 @@ export default class GridMultipleDragAndDrop {
 
     onUpdate($content) {
         $content.find('.js-multiple-grids-save-all-button').prop('disabled', false);
+        FormChangeInfo.showInfo();
         this.toggleRowHolders($content);
     }
 

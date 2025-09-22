@@ -3,7 +3,7 @@ import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import formChangeInfo from './FormChangeInfo';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class GridDragAndDrop {
     constructor($content) {
@@ -50,8 +50,10 @@ export default class GridDragAndDrop {
     highlightChanges($grid, highlight) {
         if (highlight) {
             $grid.find('.js-drag-and-drop-grid-submit').prop('disabled', false);
+            FormChangeInfo.showInfo();
         } else {
             $grid.find('.js-drag-and-drop-grid-submit').prop('disabled', true);
+            FormChangeInfo.removeInfo();
         }
     }
 
@@ -64,12 +66,12 @@ export default class GridDragAndDrop {
             $gridSaveButtons.hide();
 
             $gridsOnPage.on('update', () => {
-                formChangeInfo.showInfo();
+                FormChangeInfo.showInfo();
                 $saveAllButton.prop('disabled', false);
             });
 
             $gridsOnPage.on('save', () => {
-                formChangeInfo.removeInfo();
+                FormChangeInfo.removeInfo();
                 $saveAllButton.prop('disabled', true);
             });
 

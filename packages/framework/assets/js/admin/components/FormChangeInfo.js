@@ -26,9 +26,10 @@ export default class FormChangeInfo {
             }
         });
 
-        $(window).on('beforeunload', () => {
+        $(window).on('beforeunload', event => {
             if (FormChangeInfo.isInfoShown && !FormChangeInfo.isFormSubmitted) {
-                return Translator.trans('You have unsaved changes!');
+                event.preventDefault();
+                event.returnValue = true;
             }
         });
     }
@@ -47,23 +48,22 @@ export default class FormChangeInfo {
 
     static showInfo() {
         const textToShow = Translator.trans("You have made changes, don't forget to save them!");
-        const $fixedBarIn = $('[data-js-fixed-bar]');
-        const $infoDiv = $fixedBarIn.find('#js-form-change-info');
-        if (!FormChangeInfo.isInfoShown) {
-            $fixedBarIn.prepend(
-                `<div class="col-md-auto">
-                    <div id="js-form-change-info" class="d-flex align-items-center h-100 gap-2">
-                        <span class="icon-wrapper">${InfoCircle}</span>
-                        <span class="small">${textToShow}</span>
-                    </div>
-                </div>`,
-            );
-        } else {
-            $infoDiv.text = textToShow;
+        const $unsavedChangesContainer = $('[data-js-unsaved-changes-container]');
+
+        if (FormChangeInfo.isInfoShown || $unsavedChangesContainer.length === 0) {
+            return;
         }
-        if ($fixedBarIn.length > 0) {
-            FormChangeInfo.isInfoShown = true;
-        }
+
+        $unsavedChangesContainer.prepend(
+            `<div class="col-md-auto">
+                <div id="js-form-change-info" class="d-flex align-items-center h-100 gap-2">
+                    <span class="icon-wrapper">${InfoCircle}</span>
+                    <span class="small">${textToShow}</span>
+                </div>
+            </div>`,
+        );
+
+        FormChangeInfo.isInfoShown = true;
     }
 
     static removeInfo() {
