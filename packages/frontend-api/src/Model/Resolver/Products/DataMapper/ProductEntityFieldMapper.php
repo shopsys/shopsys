@@ -366,4 +366,22 @@ class ProductEntityFieldMapper
     {
         return $product->getVatForDomain($this->domain->getId())->getPercent();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return int|null
+     */
+    public function getPromotionBuyQuantity(Product $product): ?int
+    {
+        return $product->getPromotionXy()?->getBuyQuantity();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return int|null
+     */
+    public function getPromotionFreeQuantity(Product $product): ?int
+    {
+        return $product->getPromotionXy()?->getFreeQuantity();
+    }
 }

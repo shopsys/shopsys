@@ -501,6 +501,16 @@
             },
             "vat_percent": {
                 "type": "text"
+            },
+            "promotion": {
+                "properties": {
+                    "buy_quantity": {
+                        "type": "integer"
+                    },
+                    "free_quantity": {
+                        "type": "integer"
+                    }
+                }
             }
         }
     }

@@ -19,6 +19,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
@@ -102,7 +104,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $domainId = $domainConfig->getId();
 
         $discountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
-            $productItem->getTotalPrice(),
+            $this->getItemTotalPriceWithAppliedPromotions($productItem),
             (float)$productItem->vatPercent,
             (float)$promoCodeLimit->getDiscount(),
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
@@ -143,5 +145,29 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
             $this->numberFormatterExtension->formatPercent($promoCodeLimit->getDiscount(), $locale),
             $productItem->name,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $item
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    protected function getItemTotalPriceWithAppliedPromotions(OrderItemData $item): PriceInterface
+    {
+        $totalPrice = $item->getTotalPrice();
+
+        foreach ($item->relatedOrderItemsData as $itemData) {
+            if ($itemData->type !== OrderItemTypeEnum::TYPE_PROMOTION) {
+                continue;
+            }
+
+            $totalDiscountPrice = new Price(
+                $itemData->totalPriceWithoutVat,
+                $itemData->totalPriceWithVat,
+            );
+
+            $totalPrice = $totalPrice->add($totalDiscountPrice);
+        }
+
+        return $totalPrice;
     }
 }

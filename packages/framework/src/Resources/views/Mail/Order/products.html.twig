@@ -23,7 +23,7 @@
 
     {% if not orderItem.isTypeRounding and not orderItem.isTypeTransport and not orderItem.isTypePayment %}
         <tr>
-            <td style="{% if orderItem.isTypeDiscount %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px; position: relative;">
+            <td style="{% if orderItem.isTypeDiscount or orderItem.isTypePromotion %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px; position: relative;">
                 {% if orderItem.isTypeProductGift %}
                     <div style="position: absolute; top: 10px; left: 0; width: fit-content; max-width: 80px; background: linear-gradient(to right, #9333ea, #db2777); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 10;">
                         {% trans into orderLocale %}Gift{% endtrans %}

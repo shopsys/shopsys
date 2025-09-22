@@ -48,6 +48,9 @@ class FlagsTest extends GraphQlTestCase
                 'name' => t('Product gift', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
             [
+                'name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
                 'name' => t('Sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
         ];

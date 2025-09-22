@@ -69,6 +69,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'selling_from' => null,
             'product_videos' => [],
             'vat_percent' => '0',
+            'promotion' => null,
         ];
 
         $converter = new ProductElasticsearchConverter();
@@ -150,6 +151,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'selling_from' => null,
             'product_videos' => [],
             'vat_percent' => '0',
+            'promotion' => null,
         ];
 
         $converter = new ProductElasticsearchConverter();

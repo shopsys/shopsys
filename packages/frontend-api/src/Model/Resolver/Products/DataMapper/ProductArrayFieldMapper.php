@@ -358,4 +358,22 @@ class ProductArrayFieldMapper
     {
         return $data['vat_percent'];
     }
+
+    /**
+     * @param array $data
+     * @return int|null
+     */
+    public function getPromotionBuyQuantity(array $data): ?int
+    {
+        return $data['promotion']['buy_quantity'];
+    }
+
+    /**
+     * @param array $data
+     * @return int|null
+     */
+    public function getPromotionFreeQuantity(array $data): ?int
+    {
+        return $data['promotion']['free_quantity'];
+    }
 }

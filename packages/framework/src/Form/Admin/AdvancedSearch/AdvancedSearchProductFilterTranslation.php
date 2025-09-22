@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCalculatedSelling
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCatnumFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductHasPromotionXyFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductPartnoFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductUponInquiryFilter;
@@ -21,6 +22,7 @@ class AdvancedSearchProductFilterTranslation extends AdvancedSearchFilterTransla
 
         $this->addFilterTranslation(ProductCatnumFilter::NAME, t('Catalog number'));
         $this->addFilterTranslation(ProductFlagFilter::NAME, t('Flag'));
+        $this->addFilterTranslation(ProductHasPromotionXyFilter::NAME, t('Has X+Y promotion'));
         $this->addFilterTranslation(ProductNameFilter::NAME, t('Product name'));
         $this->addFilterTranslation(ProductPartnoFilter::NAME, t('PartNo (serial number)'));
         $this->addFilterTranslation(ProductCalculatedSellingDeniedFilter::NAME, t('Excluded from sale'));

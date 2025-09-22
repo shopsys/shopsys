@@ -37,6 +37,7 @@ class ProductDataFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository $productVideoRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
      */
     public function __construct(
         protected readonly UnitFacade $unitFacade,
@@ -54,6 +55,7 @@ class ProductDataFactory
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
         protected readonly ProductVideoDataFactory $productVideoDataFactory,
         protected readonly ProductVideoRepository $productVideoRepository,
+        protected readonly ProductPromotionXyDataFactory $productPromotionXyDataFactory,
     ) {
     }
 
@@ -85,6 +87,8 @@ class ProductDataFactory
      */
     protected function fillNew(ProductData $productData): void
     {
+        $productData->promotionXyData = $this->productPromotionXyDataFactory->create();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->shortDescriptionUsp1ByDomainId[$domainId] = null;
             $productData->shortDescriptionUsp2ByDomainId[$domainId] = null;
@@ -183,6 +187,9 @@ class ProductDataFactory
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
         $productData->unit = $product->getUnit();
+        $productData->promotionXyData = $product->getPromotionXy() === null ?
+            null :
+            $this->productPromotionXyDataFactory->createFromEntity($product->getPromotionXy());
 
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();

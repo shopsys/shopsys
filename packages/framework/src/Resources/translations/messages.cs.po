@@ -439,6 +439,9 @@ msgstr "Hromadná úprava byla provedena"
 msgid "Bulk promo code generation"
 msgstr "Hromadné generování kupónu"
 
+msgid "Buy quantity"
+msgstr "Kupované množství"
+
 msgid "By flag"
 msgstr "Dle příznaku"
 
@@ -1591,6 +1594,9 @@ msgstr "Zaslání zapomenutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategorie čtvrtého sloupce"
 
+msgid "Free quantity"
+msgstr "Množství zdarma"
+
 msgid "Free shipping and payment"
 msgstr "Doprava a platba zdarma"
 
@@ -1662,6 +1668,9 @@ msgstr "Skupina"
 
 msgid "HTML code"
 msgstr "HTML kód"
+
+msgid "Has X+Y promotion"
+msgstr "Má akci X+Y"
 
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
@@ -2650,6 +2659,15 @@ msgstr "Promované produkty"
 msgid "QR code"
 msgstr "QR kód"
 
+msgid "Promotion X + Y free"
+msgstr "Akce X + Y zdarma"
+
+msgid "Promotion can be set on specific variant."
+msgstr "Akce může být nastavena na konkrétní variantě."
+
+msgid "Promotion {{ x }} + {{ y }} free"
+msgstr "Akce {{ x }} + {{ y }} zdarma"
+
 msgid "RGB Hex"
 msgstr "RGB Hex"
 
@@ -3594,4 +3612,7 @@ msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vy
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
+
+msgid "Product with X + Y free promotion"
+msgstr "Produkt s akcí X + Y zdarma"
 

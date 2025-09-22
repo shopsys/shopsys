@@ -165,6 +165,13 @@ class Product extends AbstractTranslatableEntity
     protected $weight;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy")
+     * @ORM\JoinColumn(name="promotion_xy_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $promotionXy;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @ORM\JoinTable(name="product_excluded_transports")
@@ -383,6 +390,36 @@ class Product extends AbstractTranslatableEntity
     public function getEan()
     {
         return $this->ean;
+    }
+
+    /**
+     * @param int $quantity
+     * @return int
+     */
+    public function calculateFreeQuantity($quantity)
+    {
+        if ($this->promotionXy === null) {
+            return 0;
+        }
+
+        $buyQuantity = $this->promotionXy->getBuyQuantity();
+        $freeQuantity = $this->promotionXy->getFreeQuantity();
+
+        $totalPromotionsSize = $buyQuantity + $freeQuantity;
+
+        $numberOfAppliedFullPromotions = intdiv($quantity, $totalPromotionsSize);
+        $remainder = $quantity % $totalPromotionsSize;
+        $extra = max(0, min($remainder - $buyQuantity, $freeQuantity));
+
+        return $numberOfAppliedFullPromotions * $freeQuantity + $extra;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     */
+    public function getPromotionXy()
+    {
+        return $this->promotionXy;
     }
 
     /**
@@ -813,6 +850,14 @@ class Product extends AbstractTranslatableEntity
     public function getProductType()
     {
         return $this->productType;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
+     */
+    public function setPromotionXy($promotionXy)
+    {
+        $this->promotionXy = $promotionXy;
     }
 
     /**

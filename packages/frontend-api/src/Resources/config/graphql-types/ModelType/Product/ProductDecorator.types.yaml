@@ -108,3 +108,9 @@ ProductDecorator:
                 type: "[Product!]!"
                 description: "List of gift products"
                 resolve: '@=query("giftsByProductPromiseQuery", value)'
+            promotionBuyQuantity:
+                type: "Int"
+                description: "Quantity required to qualify for the buy X + Y free promotion (null when not set)"
+            promotionFreeQuantity:
+                type: "Int"
+                description: "Quantity given for free in the buy X + Y free promotion (null when not set)"

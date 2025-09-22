@@ -145,6 +145,7 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
         $builder->add($this->createStocksGroup($builder, $product));
+        $builder->add($this->createPromotionGroup($builder, $product));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsUspGroup($builder));
@@ -246,6 +247,8 @@ final class ProductFormType extends AbstractType
             ]);
         }
 
+        $flagsIdsWithPromotionXy = $this->flagFacade->getFlagsIdsWithPromotionXy();
+
         $builderBasicInformationGroup
             ->add('flagsByDomainId', MultidomainType::class, [
                 'entry_type' => ChoiceType::class,
@@ -253,6 +256,15 @@ final class ProductFormType extends AbstractType
                     'choices' => $this->flagFacade->getAll(),
                     'choice_label' => 'name',
                     'choice_value' => 'id',
+                    'choice_attr' => function ($flag) use ($flagsIdsWithPromotionXy) {
+                        if (in_array($flag->getId(), $flagsIdsWithPromotionXy, true)) {
+                            return [
+                                'disabled' => 'disabled',
+                            ];
+                        }
+
+                        return [];
+                    },
                     'multiple' => true,
                     'expanded' => true,
                 ],
@@ -557,6 +569,33 @@ final class ProductFormType extends AbstractType
         }
 
         return $builderPricesGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createPromotionGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
+    {
+        $promotionGroup = $builder->create('promotionGroup', GroupType::class, [
+            'label' => t('Promotion X + Y free'),
+        ]);
+
+        if ($this->isProductMainVariant($product)) {
+            $promotionGroup->add('promotionInfo', DisplayOnlyType::class, [
+                'data' => t('Promotion can be set on specific variant.'),
+            ]);
+
+            return $promotionGroup;
+        }
+
+        $promotionGroup->add('promotionXyData', ProductPromotionXyType::class, [
+            'label' => false,
+            'required' => false,
+        ]);
+
+        return $promotionGroup;
     }
 
     /**

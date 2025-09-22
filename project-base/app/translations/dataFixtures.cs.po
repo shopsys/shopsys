@@ -103,6 +103,9 @@ msgstr "36\" Philips CRT [V]"
 msgid "36\" Philips [V]"
 msgstr "36\" Philips [V]"
 
+msgid "3840×2160 (4K UHD)"
+msgstr ""
+
 msgid "4 W"
 msgstr "4 W"
 
@@ -399,6 +402,9 @@ msgstr "Knihy"
 
 msgid "Bookworm"
 msgstr "Knihomolové"
+
+msgid "Bundle promotion – buy three and get one Samsung Smart TV for free."
+msgstr "Promo balíček – kupte tři a získejte jeden Samsung Smart TV zdarma."
 
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
 msgstr "Zadáním e-mailu níže si můžete stáhnout své osobní a jiné informace (například historii objednávek) z našeho internetového obchodu. Pro ověření vaší totožnosti vám po zadání e-mailové adresy bude zaslán e-mail s odkazem. Klikem na odkaz se dostanete na stránku s s možností stažení těchto informací ve strojově čitelném formátu - půjde o údaje evidované k dané e-mailové adrese na této doméně internetového obchodu."
@@ -1006,6 +1012,9 @@ msgstr "LG E410 Optimus L1 II White"
 msgid "Limited user"
 msgstr "Limitovaný uživatel"
 
+msgid "Limited-time Samsung Smart TV promotion. Purchase three televisions and receive the fourth one free thanks to the 3+1 promotion automatically applied in the cart."
+msgstr "Časově omezená nabídka Samsung Smart TV. Nakupte tři televizory a čtvrtý získáte zdarma díky akci 3+1, která se vám automaticky odečte v košíku."
+
 msgid "Localization"
 msgstr "Lokalizace"
 
@@ -1461,6 +1470,9 @@ msgstr "Samsung Galaxy Core 2 (SM-G355) - černý"
 
 msgid "Samsung Galaxy Core Plus (SM-G350) - white"
 msgstr "Samsung Galaxy Core Plus (SM-G350) - bílý"
+
+msgid "Samsung Smart TV 3+1 Promo Pack"
+msgstr "Samsung Smart TV 3+1 Promo Balíček"
 
 msgid "Samsung T27D590EW"
 msgstr "Samsung T27D590EW"

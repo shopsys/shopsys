@@ -58,6 +58,8 @@ class ProductExportFieldProvider
     public const string SELLING_FROM = 'selling_from';
     public const string PRODUCT_VIDEOS = 'product_videos';
 
+    public const string PROMOTION = 'promotion';
+
     /**
      * @return string[]
      */

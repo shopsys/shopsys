@@ -223,6 +223,11 @@ class ProductData
      */
     public $productVideosData;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData|null
+     */
+    public $promotionXyData;
+
     public function __construct()
     {
         $this->name = [];
@@ -257,5 +262,6 @@ class ProductData
         $this->excludedTransports = [];
         $this->productType = ProductTypeEnum::TYPE_BASIC;
         $this->productVideosData = [];
+        $this->promotionXyData = null;
     }
 }

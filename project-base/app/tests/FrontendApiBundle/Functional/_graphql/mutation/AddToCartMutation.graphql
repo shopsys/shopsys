@@ -54,6 +54,8 @@ mutation AddToCart(
             }
             items {
                 uuid
+                quantity
+                freeQuantity
                 product {
                     ...TestProductFragment
                     ... on Variant {

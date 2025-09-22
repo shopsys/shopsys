@@ -77,6 +77,7 @@ class FlagDataFactory
         $flagData->rgbColor = $flag->getRgbColor();
         $flagData->visible = $flag->isVisible();
         $flagData->uuid = $flag->getUuid();
+        $flagData->promotionXy = $flag->getPromotionXy();
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_flag_detail', $flag->getId());

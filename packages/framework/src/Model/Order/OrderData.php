@@ -348,6 +348,7 @@ class OrderData
             OrderItemTypeEnum::TYPE_PRODUCT,
             OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
             OrderItemTypeEnum::TYPE_DISCOUNT,
+            OrderItemTypeEnum::TYPE_PROMOTION,
         ]);
     }
 
@@ -359,7 +360,8 @@ class OrderData
         return $this->totalPrice
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])
-            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT]);
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT])
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PROMOTION]);
     }
 
     /**

@@ -146,6 +146,10 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
             }
         }
 
+        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PROMOTION) as $item) {
+            $totalPrice = $totalPrice->add($item->getTotalPrice());
+        }
+
         return $totalPrice;
     }
 
