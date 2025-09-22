@@ -537,6 +537,8 @@ export type TypeCartInput = {
 /** Represent one item in the cart */
 export type TypeCartItem = {
   __typename?: 'CartItem';
+  /** Quantity of free items from X+Y promotion */
+  freeQuantity: Scalars['Int']['output'];
   /** Product in the cart */
   product: TypeProduct;
   /** Quantity of items in the cart */
@@ -1450,6 +1452,10 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Quantity required to qualify for the buy X + Y free promotion (null when not set) */
+  promotionBuyQuantity: Maybe<Scalars['Int']['output']>;
+  /** Quantity given for free in the buy X + Y free promotion (null when not set) */
+  promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
@@ -2101,6 +2107,7 @@ export enum TypeOrderItemTypeEnum {
   Payment = 'payment',
   Product = 'product',
   ProductGift = 'productGift',
+  Promotion = 'promotion',
   Rounding = 'rounding',
   Transport = 'transport'
 }
@@ -2477,6 +2484,10 @@ export type TypeProduct = {
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Quantity required to qualify for the buy X + Y free promotion (null when not set) */
+  promotionBuyQuantity: Maybe<Scalars['Int']['output']>;
+  /** Quantity given for free in the buy X + Y free promotion (null when not set) */
+  promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
@@ -3243,6 +3254,10 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Quantity required to qualify for the buy X + Y free promotion (null when not set) */
+  promotionBuyQuantity: Maybe<Scalars['Int']['output']>;
+  /** Quantity given for free in the buy X + Y free promotion (null when not set) */
+  promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
@@ -3662,6 +3677,10 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   price: TypeProductPrice;
   productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
+  /** Quantity required to qualify for the buy X + Y free promotion (null when not set) */
+  promotionBuyQuantity: Maybe<Scalars['Int']['output']>;
+  /** Quantity given for free in the buy X + Y free promotion (null when not set) */
+  promotionFreeQuantity: Maybe<Scalars['Int']['output']>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
