@@ -2,11 +2,9 @@ import { OrderItem } from './OrderItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
-import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useRef } from 'react';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 
 type OrdersContentProps = {
@@ -17,7 +15,6 @@ type OrdersContentProps = {
 };
 
 export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, orders, totalCount, hasNextPage }) => {
-    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
     const { t } = useTranslation();
 
@@ -31,7 +28,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
     }
 
     return (
-        <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
+        <>
             {areOrdersFetching ? (
                 <SkeletonModuleCustomerOrders />
             ) : (
@@ -47,9 +44,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
                 </div>
             )}
 
-            <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
-                <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />
-            </PaginationProvider>
-        </div>
+            <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />
+        </>
     );
 };

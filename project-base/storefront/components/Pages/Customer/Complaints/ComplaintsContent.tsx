@@ -2,11 +2,9 @@ import { ComplaintItem } from './ComplaintItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/SkeletonModuleCustomerComplaints';
-import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useRef } from 'react';
 
 type ComplaintsContentProps = {
     areComplaintsFetching: boolean;
@@ -21,7 +19,6 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({
     totalCount,
     hasNextPage,
 }) => {
-    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
 
     if (!items?.length && !areComplaintsFetching) {
@@ -34,7 +31,7 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({
     }
 
     return (
-        <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
+        <>
             {areComplaintsFetching ? (
                 <SkeletonModuleCustomerComplaints />
             ) : (
@@ -43,9 +40,7 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({
                 </div>
             )}
 
-            <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
-                <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />
-            </PaginationProvider>
-        </div>
+            <Pagination hasNextPage={hasNextPage} pageSize={DEFAULT_ORDERS_SIZE} totalCount={totalCount || 0} />
+        </>
     );
 };
