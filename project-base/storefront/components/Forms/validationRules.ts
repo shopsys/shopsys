@@ -79,7 +79,7 @@ export const validateStreet = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter street'))
         .matches(
-            /^[a-zA-Z].*\s\d+(\/\d+)?[a-zA-Z]?$|^\d+(\/\d+)?[a-zA-Z]?\s.*[a-zA-Z]$/,
+            /^[\u00C0-\u017Fa-zA-Z].*\s\d+(\/\d+)?[\u00C0-\u017Fa-zA-Z]?$|^\d+(\/\d+)?[\u00C0-\u017Fa-zA-Z]?\s.*[\u00C0-\u017Fa-zA-Z]$/,
             t('Please enter a valid street. Examples: Street 123, Street 123/4'),
         )
         .max(
