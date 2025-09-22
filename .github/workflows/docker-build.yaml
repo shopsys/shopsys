@@ -13,6 +13,63 @@ concurrency:
     cancel-in-progress: true
 name: Docker build
 jobs:
+    check-upgrade-notes:
+        if: github.event_name == 'pull_request'
+        name: Check upgrade notes reference PR number
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+                    fetch-depth: 0
+            -   name: Validate upgrade notes first line format
+                env:
+                    PR_NUMBER: ${{ github.event.pull_request.number }}
+                    BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                    HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+                shell: bash
+                run: |
+                    if ! git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+                        git fetch --no-tags --depth=1 origin "${BASE_SHA}"
+                    fi
+
+                    NEW_FILES=$(git diff --diff-filter=A --name-only "${BASE_SHA}" "${HEAD_SHA}" -- 'upgrade-notes/')
+
+                    if [ -z "${NEW_FILES}" ]; then
+                        echo "No new files in upgrade-notes for this PR."
+                        exit 0
+                    fi
+
+                    EXPECTED_FRAGMENT="([#${PR_NUMBER}](https://github.com/shopsys/shopsys/pull/${PR_NUMBER}))"
+                    GREEN_CHECK=$'\033[32m✔\033[0m'
+                    RED_CROSS=$'\033[31m✖\033[0m'
+                    STATUS=0
+
+                    while IFS= read -r FILE; do
+                        if [ -z "${FILE}" ]; then
+                            continue
+                        fi
+
+                        if [ ! -f "${FILE}" ]; then
+                            printf '%s %s\n' "${RED_CROSS}" "${FILE}"
+                            echo "::error::Expected file ${FILE} to exist."
+                            STATUS=1
+                            continue
+                        fi
+
+                        FIRST_LINE=$(head -n 1 "${FILE}" | tr -d '\r' || true)
+
+                        if [[ "${FIRST_LINE}" != *"${EXPECTED_FRAGMENT}"* ]]; then
+                            printf '%s %s\n' "${RED_CROSS}" "${FILE}"
+                            echo "::error file=${FILE},line=1::First line must contain '${EXPECTED_FRAGMENT}'. Found '${FIRST_LINE}'."
+                            STATUS=1
+                        else
+                            printf '%s %s\n' "${GREEN_CHECK}" "${FILE}"
+                        fi
+                    done <<< "${NEW_FILES}"
+
+                    exit ${STATUS}
     variables:
         name: Prepare variables and artifacts
         runs-on: ubuntu-22.04
