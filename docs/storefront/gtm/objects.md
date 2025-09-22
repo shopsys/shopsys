@@ -181,3 +181,52 @@ export type GtmShippingInfoType = {
   transportExtra: string[]; // array of extra transport details
 };
 ```
+
+## SPECIAL_ARTICLE_GTM_TYPES
+
+Configuration object that maps specific article slugs to their corresponding GTM page types. This is used for articles that require special GTM tracking beyond the default `article_detail` type.
+
+```ts
+export const SPECIAL_ARTICLE_GTM_TYPES = Object.freeze({
+  '/about-us': GtmPageType.about, // English "About Us" page
+  '/o-nas': GtmPageType.about,    // Czech "About Us" page
+} as const);
+```
+
+### Usage
+
+The configuration is used by `getSpecialArticleGtmType()` function to determine if an article slug corresponds to a special GTM page type:
+
+```ts
+const gtmType = getSpecialArticleGtmType('/about-us'); // Returns GtmPageType.about
+const gtmType = getSpecialArticleGtmType('/regular-article'); // Returns null
+```
+
+### Current Mappings
+
+| Article Slug | GTM Page Type | Description |
+|-------------|---------------|-------------|
+| `/about-us` | `about` | English "About Us" page |
+| `/o-nas` | `about` | Czech "About Us" page |
+
+### For Administrators
+
+⚠️ **Important**: When you change article slugs in the admin interface, you **must** contact your developer to update this configuration to maintain correct GTM tracking.
+
+#### Steps when changing article slugs:
+
+1. **Before changing** - Note down the current slug
+2. **After changing** - Contact developer with:
+   - Old slug (e.g., `/about-us`)
+   - New slug (e.g., `/about-company`)
+   - Required GTM type (e.g., `about`)
+
+### For Developers
+
+#### Adding new special article types:
+
+1. Add the GTM page type to `GtmPageType` enum (if not already present)
+2. Add the mapping to `SPECIAL_ARTICLE_GTM_TYPES` in `gtm/types/objects.ts`
+3. Test the integration on both domains/languages
+4. Update this documentation
+

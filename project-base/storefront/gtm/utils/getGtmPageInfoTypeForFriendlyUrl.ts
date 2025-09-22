@@ -5,12 +5,13 @@ import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/Brand
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import {
-    GtmPageInfoType,
-    GtmPageInfoInterface,
-    GtmCategoryDetailPageInfoType,
     GtmBlogArticleDetailPageInfoType,
     GtmBrandDetailPageInfoType,
+    GtmCategoryDetailPageInfoType,
+    GtmPageInfoInterface,
+    GtmPageInfoType,
 } from 'gtm/types/objects';
+import { getSpecialArticleGtmType } from 'gtm/utils/getSpecialArticleGtmTypes';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
 export const getGtmPageInfoTypeForFriendlyUrl = (
@@ -33,9 +34,11 @@ export const getGtmPageInfoTypeForFriendlyUrl = (
         case 'Store':
             pageInfo.type = GtmPageType.store_detail;
             break;
-        case 'ArticleSite':
-            pageInfo.type = GtmPageType.article_detail;
+        case 'ArticleSite': {
+            const specialGtmType = getSpecialArticleGtmType(friendlyUrlPageData.slug);
+            pageInfo.type = specialGtmType ?? GtmPageType.article_detail;
             break;
+        }
         case 'BlogArticle':
             pageInfo = getPageInfoForBlogArticleDetailPage(pageInfo, friendlyUrlPageData);
             break;
