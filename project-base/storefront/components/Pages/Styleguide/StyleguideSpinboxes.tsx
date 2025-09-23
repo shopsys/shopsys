@@ -7,7 +7,7 @@ export const StyleguideSpinboxes: FC = () => {
 
     return (
         <StyleguideSection className="flex flex-col gap-3" title="Spinboxes">
-            <Spinbox defaultValue={1} id="1" min={1} ref={spinboxRef} size="small" step={1} />
+            <Spinbox defaultValue={1} id="1" max={5} min={1} ref={spinboxRef} size="small" step={1} />
         </StyleguideSection>
     );
 };

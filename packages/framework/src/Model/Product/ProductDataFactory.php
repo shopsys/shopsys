@@ -197,6 +197,7 @@ class ProductDataFactory
         $productData->excludedTransports = $product->getExcludedTransports();
         $productData->productType = $product->getProductType();
 
+        $productData->isAllowedNegativeStock = $product->isAllowedNegativeStock();
         $this->fillProductStockByProduct($productData, $product);
     }
 

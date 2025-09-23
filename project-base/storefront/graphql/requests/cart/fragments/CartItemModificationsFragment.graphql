@@ -6,4 +6,7 @@ fragment CartItemModificationsFragment on CartItemModificationsResult {
     cartItemsWithModifiedPrice {
         ...CartItemFragment
     }
+    cartItemsWithChangedQuantity {
+        ...CartItemFragment
+    }
 }

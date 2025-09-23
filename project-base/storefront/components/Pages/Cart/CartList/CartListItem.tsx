@@ -105,6 +105,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                     <Spinbox
                         defaultValue={quantity}
                         id={uuid}
+                        max={product.isAllowedNegativeStock ? null : product.stockQuantity}
                         min={1}
                         ref={spinboxRef}
                         size="large"

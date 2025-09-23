@@ -3382,6 +3382,11 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithchangedquantity">cartItemsWithChangedQuantity</strong></td>
+<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithmodifiedprice">cartItemsWithModifiedPrice</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
@@ -5826,6 +5831,15 @@ Product images
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.isallowednegativestock">isAllowedNegativeStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product allows purchasing more items than are currently in stock
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="mainvariant.isinquirytype">isInquiryType</strong></td>
@@ -8603,6 +8617,15 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.isallowednegativestock">isAllowedNegativeStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product allows purchasing more items than are currently in stock
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -9910,6 +9933,15 @@ Product images
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.isallowednegativestock">isAllowedNegativeStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product allows purchasing more items than are currently in stock
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.isinquirytype">isInquiryType</strong></td>
@@ -13783,6 +13815,15 @@ Product images
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.isallowednegativestock">isAllowedNegativeStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the product allows purchasing more items than are currently in stock
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.isinquirytype">isInquiryType</strong></td>

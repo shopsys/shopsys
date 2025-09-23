@@ -35,6 +35,9 @@ ProductDecorator:
             stockQuantity:
                 type: "Int"
                 description: "Count of quantity on stock"
+            isAllowedNegativeStock:
+                type: "Boolean!"
+                description: "Whether the product allows purchasing more items than are currently in stock"
             categories:
                 type: "[Category!]!"
                 description: "List of categories"

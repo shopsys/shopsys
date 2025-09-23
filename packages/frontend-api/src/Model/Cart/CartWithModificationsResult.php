@@ -32,6 +32,7 @@ class CartWithModificationsResult
     protected array $itemModifications = [
         'noLongerListableCartItems' => [],
         'cartItemsWithModifiedPrice' => [],
+        'cartItemsWithChangedQuantity' => [],
     ];
 
     /**
@@ -134,6 +135,14 @@ class CartWithModificationsResult
     public function addCartItemWithModifiedPrice(CartItem $cartItem): void
     {
         $this->itemModifications['cartItemsWithModifiedPrice'][] = $cartItem;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     */
+    public function addCartItemWithChangedQuantity(CartItem $cartItem): void
+    {
+        $this->itemModifications['cartItemsWithChangedQuantity'][] = $cartItem;
     }
 
     public function setCartHasRemovedProducts(): void
@@ -382,7 +391,8 @@ class CartWithModificationsResult
     protected function isSomeCartItemModified(): bool
     {
         return count($this->itemModifications['noLongerListableCartItems']) > 0
-            || count($this->itemModifications['cartItemsWithModifiedPrice']) > 0;
+            || count($this->itemModifications['cartItemsWithModifiedPrice']) > 0
+            || count($this->itemModifications['cartItemsWithChangedQuantity']) > 0;
     }
 
     /**

@@ -188,6 +188,7 @@ class ProductExportRepository
             ProductExportFieldProvider::UUID => $product->getUuid(),
             ProductExportFieldProvider::UNIT => $product->getUnit()->getName($locale),
             ProductExportFieldProvider::STOCK_QUANTITY => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
+            ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK => $product->isAllowedNegativeStock(),
             ProductExportFieldProvider::VARIANTS => $this->extractVariantIds($product),
             ProductExportFieldProvider::MAIN_VARIANT_ID => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             ProductExportFieldProvider::SEO_H1 => $product->getSeoH1($domainId),

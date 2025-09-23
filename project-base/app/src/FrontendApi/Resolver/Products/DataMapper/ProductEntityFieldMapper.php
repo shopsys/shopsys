@@ -56,6 +56,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat getVat(\App\Model\Product\Product $product)
  * @method string getSlug(\App\Model\Product\Product $product)
  * @method string getVatPercent(\App\Model\Product\Product $product)
+ * @method bool isAllowedNegativeStock(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {

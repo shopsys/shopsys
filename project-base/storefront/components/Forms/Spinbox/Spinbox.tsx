@@ -5,6 +5,7 @@ import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, KeyboardEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 import { useDebounce } from 'utils/useDebounce';
@@ -16,6 +17,7 @@ type SpinboxProps = {
     step: number;
     defaultValue: number;
     id: string;
+    max?: number | null;
     onChangeValueCallback?: (currentValue: number) => void;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
@@ -24,8 +26,10 @@ const isValidNumber = (value: number): boolean => !isNaN(value);
 const isWithinMaxLimit = (value: number): boolean => value <= MAX_CART_ITEM_QUANTITY;
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
-    ({ min, onChangeValueCallback, step, defaultValue, size = 'large' }, spinboxForwardedRef) => {
+    ({ min, max, onChangeValueCallback, step, defaultValue, size = 'large' }, spinboxForwardedRef) => {
         const { t } = useTranslation();
+
+        const resolvedMax = Math.min(max ?? MAX_CART_ITEM_QUANTITY, MAX_CART_ITEM_QUANTITY);
 
         const [value, setValue] = useState<number>();
         const [lastValidValue, setLastValidValue] = useState<number>(defaultValue);
@@ -65,18 +69,20 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
             const integerValue = Math.round(newValue);
 
-            if (integerValue > MAX_CART_ITEM_QUANTITY) {
-                const clampedValue = MAX_CART_ITEM_QUANTITY;
-                spinboxRef.current.valueAsNumber = clampedValue;
-                setValue(clampedValue);
-                setLastValidValue(clampedValue);
-                return;
-            }
-
             if (integerValue < min) {
                 spinboxRef.current.valueAsNumber = min;
                 setValue(min);
                 setLastValidValue(min);
+            } else if (integerValue > resolvedMax) {
+                spinboxRef.current.valueAsNumber = resolvedMax;
+                setValue(resolvedMax);
+                setLastValidValue(resolvedMax);
+
+                showInfoMessage(
+                    t('Maximum available quantity is {{ quantity }}. The quantity was adjusted.', {
+                        quantity: resolvedMax,
+                    }),
+                );
             } else {
                 spinboxRef.current.valueAsNumber = integerValue;
                 setValue(integerValue);
@@ -225,7 +231,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     aria-label={t('Quantity')}
                     data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
-                    max={MAX_CART_ITEM_QUANTITY}
+                    max={resolvedMax}
                     min={min}
                     ref={spinboxRef}
                     step={step}
@@ -250,7 +256,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
                 <SpinboxButton
                     ariaLabel={t('Increase quantity')}
-                    disabled={value === MAX_CART_ITEM_QUANTITY}
+                    disabled={value === resolvedMax}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}

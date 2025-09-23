@@ -271,6 +271,9 @@ msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak 
 msgid "All search results"
 msgstr "Všechny výsledky hledání"
 
+msgid "Allow negative stock"
+msgstr "Povolit nákup do mínusu"
+
 msgid "Alternate language domains"
 msgstr "Domény alternativních jazyků"
 
@@ -2232,6 +2235,9 @@ msgstr "IP adresa"
 
 msgid "Icon"
 msgstr "Ikona"
+
+msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
+msgstr "Pokud povolíte nákup do mínusu, je možné objednat více položek, než je aktuálně na skladě."
 
 msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr "Pokud nemůžete naskenovat QR kód, můžete ručně zadat následující tajný klíč:"

@@ -138,7 +138,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
         $expectedAddProductResultData = [
             'isNew' => false,
-            'addedQuantity' => $onStockQuantity,
+            'addedQuantity' => 2 * $onStockQuantity,
         ];
 
         self::assertEquals($expectedAddProductResultData, $existingCart['addProductResult']);
@@ -201,7 +201,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
         $expectedAddProductResultData = [
             'isNew' => false,
-            'addedQuantity' => $desiredQuantity,
+            'addedQuantity' => 2 * $desiredQuantity,
         ];
 
         self::assertEquals($expectedAddProductResultData, $existingCart['addProductResult']);

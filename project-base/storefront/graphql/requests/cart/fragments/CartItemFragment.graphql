@@ -21,6 +21,8 @@ fragment CartItemFragment on CartItem {
         mainImage {
             ...ImageFragment
         }
+        stockQuantity
+        isAllowedNegativeStock
         availability {
             ...AvailabilityFragment
         }

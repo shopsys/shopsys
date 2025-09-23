@@ -11,6 +11,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export type AddToCart = (
@@ -42,6 +43,22 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         }
 
         // EXTEND ADDING TO CART HERE
+
+        const addProductResult = addToCartActionResult.data?.AddToCart.addProductResult;
+
+        if (addProductResult && addProductResult.notOnStockQuantity > 0) {
+            const actualQuantity = addProductResult.cartItem.quantity;
+            const requestedQuantity = isAbsoluteQuantity ? quantity : initialQuantity + quantity;
+
+            if (actualQuantity < requestedQuantity) {
+                showInfoMessage(
+                    t('Product quantity was adjusted to available stock ({{ quantity }})', {
+                        quantity: actualQuantity,
+                    }),
+                    gtmMessageOrigin,
+                );
+            }
+        }
 
         if (addToCartActionResult.error) {
             showErrorMessage(t('Unable to add product to cart'), gtmMessageOrigin);

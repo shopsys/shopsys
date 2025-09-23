@@ -298,6 +298,15 @@ class ProductEntityFieldMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isAllowedNegativeStock(Product $product): bool
+    {
+        return $product->isAllowedNegativeStock();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return array
      */
     public function getStoreAvailabilities(Product $product): array

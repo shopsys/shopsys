@@ -509,6 +509,15 @@ final class ProductFormType extends AbstractType
                     'data' => t('The stock quantities are set for the product variants separately.'),
                 ]);
         } else {
+            $stockGroupBuilder->add('isAllowedNegativeStock', YesNoType::class, [
+                'required' => false,
+                'label' => t('Allow negative stock'),
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
+                ],
+            ]);
+
             $stockGroupBuilder->add('productStockData', CollectionType::class, [
                 'required' => false,
                 'entry_type' => ProductStockFormType::class,

@@ -184,6 +184,11 @@ class ProductData
     public $domainHidden;
 
     /**
+     * @var bool|null
+     */
+    public $isAllowedNegativeStock;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Stock\ProductStockData[]
      */
     public $productStockData;
@@ -226,6 +231,7 @@ class ProductData
         $this->sellingDenied = false;
         $this->hidden = false;
         $this->flagsByDomainId = [];
+        $this->isAllowedNegativeStock = true;
         $this->productStockData = [];
         $this->categoriesByDomainId = [];
         $this->variantAlias = [];
