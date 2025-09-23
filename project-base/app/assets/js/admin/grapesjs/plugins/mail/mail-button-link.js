@@ -1,9 +1,9 @@
 import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
-const linkPositionDataAttribute = 'data-link-position';
+const LINK_POSITION_DATA_ATTRIBUTE = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
-const textDataAttribute = 'data-text';
+const TEXT_DATA_ATRRIBUTE = 'data-text';
 
 export default grapesjs.plugins.add('mail-button-link', editor => {
     editor.Blocks.add('button-link', {
@@ -45,18 +45,18 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
 
         model: {
             init() {
-                this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
+                this.on(`change:attributes:${LINK_POSITION_DATA_ATTRIBUTE}`, this.handleLinkPositionChange);
                 this.on(`change:attributes:${BUTTON_COLOR_ATTRIBUTE}`, this.handleColorChange);
-                this.on(`change:attributes:${textDataAttribute}`, this.handleTextAttributeChange);
+                this.on(`change:attributes:${TEXT_DATA_ATRRIBUTE}`, this.handleTextAttributeChange);
             },
 
             handleLinkPositionChange(component) {
                 component.setStyle({
                     ...component.getStyle(),
                     margin:
-                        this.getAttributes()[linkPositionDataAttribute] === 'center'
+                        this.getAttributes()[LINK_POSITION_DATA_ATTRIBUTE] === 'center'
                             ? '0.75rem auto'
-                            : this.getAttributes()[linkPositionDataAttribute] === 'right'
+                            : this.getAttributes()[LINK_POSITION_DATA_ATTRIBUTE] === 'right'
                               ? '0.75rem 0 0.75rem auto'
                               : '0.75rem auto 0.75rem 0',
                 });
@@ -75,20 +75,20 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
             },
 
             handleTextAttributeChange(_element) {
-                const newText = this.getAttributes()[textDataAttribute];
+                const newText = this.getAttributes()[TEXT_DATA_ATRRIBUTE];
                 this.components(newText);
             },
 
             defaults: {
                 attributes: {
-                    [linkPositionDataAttribute]: 'center',
+                    [LINK_POSITION_DATA_ATTRIBUTE]: 'center',
                     [BUTTON_COLOR_ATTRIBUTE]: '#00C8B7',
-                    [textDataAttribute]: 'Insert your text here',
+                    [TEXT_DATA_ATRRIBUTE]: 'Insert your text here',
                 },
                 traits: [
                     {
                         type: 'input',
-                        name: textDataAttribute,
+                        name: TEXT_DATA_ATRRIBUTE,
                     },
                     {
                         type: 'input',
@@ -100,7 +100,7 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
                     },
                     {
                         type: 'select',
-                        name: linkPositionDataAttribute,
+                        name: LINK_POSITION_DATA_ATTRIBUTE,
                         options: [
                             {
                                 id: 'left',

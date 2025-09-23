@@ -1,5 +1,5 @@
 import grapesjs from 'grapesjs';
-import { linkPositionDataAttribute } from '../web/link';
+import { LINK_POSITION_DATA_ATTRIBUTE } from '../web/link';
 
 export default grapesjs.plugins.add('mail-custom-image', editor => {
     const imagePositionDataAttribute = 'data-image-position';
@@ -36,7 +36,7 @@ export default grapesjs.plugins.add('mail-custom-image', editor => {
                 element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
                     element.collection.parent.setAttributes({
-                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute],
+                        [LINK_POSITION_DATA_ATTRIBUTE]: this.getAttributes()[imagePositionDataAttribute],
                     });
                 }
             },
