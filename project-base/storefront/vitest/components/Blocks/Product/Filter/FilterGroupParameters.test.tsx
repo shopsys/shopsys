@@ -54,14 +54,18 @@ vi.mock('store/useSessionStore', () => ({
 
 vi.mock('framer-motion', async () => {
     const actual = (await vi.importActual('framer-motion')) as any;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const MotionDiv = ({ children, layout, layoutId, animate, exit, initial, transition, ...props }: any) => (
+        <div {...props}>{children}</div>
+    );
     return {
         ...(actual || {}),
         AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
         motion: {
-            div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+            div: MotionDiv,
         },
         m: {
-            div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+            div: MotionDiv,
         },
     };
 });
@@ -405,14 +409,14 @@ describe('FilterGroupParameters', () => {
         test('renders slider parameter', () => {
             render(<FilterGroupParameters {...defaultSliderProps} />);
 
-            const numberInputs = screen.getAllByRole('spinbutton');
+            const numberInputs = screen.getAllByRole('spinbutton', { hidden: true });
             expect(numberInputs).toHaveLength(2);
         });
 
         test('renders slider with correct current values', () => {
             render(<FilterGroupParameters {...defaultSliderProps} />);
 
-            const numberInputs = screen.getAllByRole('spinbutton');
+            const numberInputs = screen.getAllByRole('spinbutton', { hidden: true });
             expect(numberInputs[0]).toHaveValue(10);
         });
 
@@ -421,7 +425,7 @@ describe('FilterGroupParameters', () => {
 
             render(<FilterGroupParameters {...defaultSliderProps} />);
 
-            const numberInputs = screen.getAllByRole('spinbutton');
+            const numberInputs = screen.getAllByRole('spinbutton', { hidden: true });
             const minInput = numberInputs[0];
 
             await user.clear(minInput);
@@ -436,7 +440,7 @@ describe('FilterGroupParameters', () => {
 
             render(<FilterGroupParameters {...defaultSliderProps} />);
 
-            const numberInputs = screen.getAllByRole('spinbutton');
+            const numberInputs = screen.getAllByRole('spinbutton', { hidden: true });
             const maxInput = numberInputs[1];
 
             await user.clear(maxInput);
@@ -454,7 +458,7 @@ describe('FilterGroupParameters', () => {
 
             render(<FilterGroupParameters {...sliderWithoutUnit} />);
 
-            const numberInputs = screen.getAllByRole('spinbutton');
+            const numberInputs = screen.getAllByRole('spinbutton', { hidden: true });
             expect(numberInputs).toHaveLength(2);
         });
     });
@@ -707,7 +711,7 @@ describe('FilterGroupParameters', () => {
 
             render(<FilterGroupParameters {...defaultSliderProps} />);
 
-            const numberInputs = screen.getAllByRole('spinbutton');
+            const numberInputs = screen.getAllByRole('spinbutton', { hidden: true });
             const minInput = numberInputs[0];
             const maxInput = numberInputs[1];
 

@@ -15,6 +15,7 @@ export const usePageLoader = () => {
             Nprogress.start();
         }
     };
+
     const onRouteChangeStop = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
         updatePageLoadingState({ isPageLoading: false });
 

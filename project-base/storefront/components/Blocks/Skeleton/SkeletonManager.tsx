@@ -29,7 +29,7 @@ import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
 import { SkeletonPageUserConsent } from './SkeletonPageUserConsent';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { SkeletonEnum } from 'types/skeletons';
@@ -49,6 +49,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     const redirectPageType = useSessionStore((s) => s.redirectPageType);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const pageType = redirectPageType ?? pageTypeOverride;
+    const [showSkeleton, setShowSkeleton] = useState(false);
 
     useEffect(() => {
         if (pageTypeOverride) {
@@ -59,10 +60,13 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     useEffect(() => {
         if (isPageLoading) {
             window.scrollTo({ top: 0 });
+            setShowSkeleton(true);
+        } else {
+            setShowSkeleton(false);
         }
     }, [isPageLoading]);
 
-    if (!isPageLoading && !isFetchingData) {
+    if (!showSkeleton && !isFetchingData) {
         return <>{children}</>;
     }
 

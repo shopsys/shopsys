@@ -401,6 +401,7 @@
     "Overview": "Prehľad",
     "page {{ currentPage }} from {{ totalPages }}": "stránka {{ currentPage }} z {{ totalPages }}",
     "page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}": "page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}",
+    "Page loading": "Načítanie stránky",
     "Pagination navigation": "Navigace stránkování",
     "Paid": "Zaplatené",
     "Parameters": "Parametry",

@@ -1,3 +1,5 @@
+import { RouteAccessibilityManager } from 'components/Layout/RouteAccessibilityManager';
+import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
@@ -71,7 +73,10 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                             <GtmProvider>
                                 <MotionConfig reducedMotion="user">
                                     <LazyMotion features={framerMotionPlugins}>
-                                        <AppPageContent Component={Component} pageProps={pageProps} />
+                                        <RouteAccessibilityManager>
+                                            <RouteAnnouncer />
+                                            <AppPageContent Component={Component} pageProps={pageProps} />
+                                        </RouteAccessibilityManager>
                                     </LazyMotion>
                                 </MotionConfig>
                             </GtmProvider>
