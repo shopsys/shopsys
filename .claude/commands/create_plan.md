@@ -49,26 +49,27 @@ Then wait for the user's input.
     - Use the **codebase-locator** agent to find all files related to the task
     - Use the **codebase-analyzer** agent to understand how the current implementation works
 
-   These agents understand the Shopsys monorepo structure and will:
-    - Find relevant source files in both framework and project layers
-    - Identify inheritance patterns (project extends framework base classes)
-    - Focus on the correct directories for monorepo architecture
-    - Trace data flow across both layers
+   These agents understand Shopsys architecture and will:
+    *Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
+    *Apply development principles (CLAUDE.md ## Core Development Principles)*
+    - Find relevant source files in the monorepo
+    - Identify extension patterns (project extends package base classes)
+    - Trace data flow through the codebase
     - Return detailed explanations with file:line references
     - Understand GraphQL/Frontend API and storefront patterns
 
-3. **Read all files identified by research tasks**:
+4. **Read all files identified by research tasks**:
     - After research tasks complete, read ALL files they identified as relevant
     - Read them FULLY into the main context
     - This ensures you have complete understanding before proceeding
 
-4. **Analyze and verify understanding**:
+5. **Analyze and verify understanding**:
     - Cross-reference the task requirements with actual code
     - Identify any discrepancies or misunderstandings
     - Note assumptions that need verification
     - Determine true scope based on codebase reality
 
-5. **Present informed understanding and focused questions**:
+6. **Present informed understanding and focused questions**:
    ```
    Based on the task description and my research of the codebase, I understand we need to [accurate summary].
 
@@ -365,23 +366,30 @@ Please review it and let me know:
 
 ## Common Patterns
 
-### For Database Changes:
-- Modify Doctrine entities in both layers (project extends framework base)
-- Generate migrations with `docker compose exec php-fpm php phing db-migrations-generate`
-- Update Repository methods in project layer (extending framework repository)
-- Add business logic to project Facade classes (extending framework facade)
-- Update forms and controllers as needed (mostly in framework layer)
+*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
+*Apply development principles (CLAUDE.md ## Core Development Principles)*
+*Use proper commands (CLAUDE.md ## Essential Development Commands)*
+*Note visibility/typing rules (CLAUDE.md ### project-base/packages folder rules)*
 
-### For New Features (Monorepo Pattern):
-- Research existing patterns in both `project-base/` and `packages/framework/`
-- Check if framework base classes exist to extend
-- Start with Entity (project extends BaseEntity from framework)
-- Create EntityDomain and EntityTranslation if multi-domain/translatable
-- Add EntityData and EntityDataFactory for form handling
-- Create Repository and Facade classes (project extends framework base)
-- Add FormType in framework layer (or extend existing)
-- Create Controller actions in framework layer
+### For Database Changes:
+- Create/modify Doctrine entities in framework packages (`packages/framework/src/Model/`)
+- Generate migrations with `docker compose exec php-fpm php phing db-migrations-generate`
+- Update Repository methods in framework packages
+- Add business logic to framework Facade classes
+- Update forms and controllers in framework packages
+- Only extend in project-base if customization is necessary (rare)
+
+### For New Features:
+- Research existing patterns in `packages/framework/` and other packages
+- Implement core functionality in framework packages:
+  - Entity, EntityDomain, EntityTranslation (if multi-domain/translatable)
+  - EntityData and EntityDataFactory for form handling
+  - Repository and Facade classes
+  - FormType in framework package
+  - Controller actions in framework package
+- Only create project-base extensions if customization is needed
 - Consider GraphQL resolvers in `project-base/app/src/FrontendApi/` if API needed
+- Consider storefront components in `project-base/storefront/` if UI needed
 
 ### For Refactoring:
 - Document current behavior

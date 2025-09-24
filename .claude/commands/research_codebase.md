@@ -22,9 +22,11 @@ Then wait for the user's research query.
 2. **Analyze and decompose the research question:**
     - Break down the user's query into composable research areas
     - Take time to ultrathink about the underlying patterns, connections, and architectural implications the user might be seeking
-    - Consider Shopsys monorepo architecture implications:
-      - Framework layer patterns vs project customizations
-      - Inheritance relationships and extension points
+    - Consider Shopsys architecture implications:
+      *Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
+      - Framework packages contain core implementations
+      - Project-base for configuration and rare extensions
+      - Extension relationships: Project extends Package base classes (when needed)
       - Multi-domain and translation support
       - GraphQL API and storefront integration
     - Identify specific components, patterns, or concepts to investigate
@@ -40,9 +42,10 @@ Then wait for the user's research query.
     - Use the **codebase-analyzer** agent to understand HOW specific code works
     - Use the **codebase-pattern-finder** agent if you need examples of similar implementations
     
-    These agents understand the Shopsys monorepo structure:
-    - They can navigate between project-base and packages/framework layers
-    - They recognize inheritance patterns (project extends framework)
+    These agents understand the Shopsys architecture (see CLAUDE.md for Package-First details):
+    - They prioritize packages/framework layers for core implementations
+    - They check project-base only for configuration and rare extensions
+    - They recognize extension patterns (project extends package)
     - They understand GraphQL, storefront, and multi-domain patterns
 
    **For Jira tickets (if relevant):**
@@ -170,10 +173,11 @@ Then wait for the user's research query.
     - ALWAYS wait for all sub-agents to complete before synthesizing (step 4)
     - ALWAYS gather metadata before writing the document (step 5 before step 6)
     - NEVER write the research document with placeholder values
-- **Monorepo awareness**: 
-    - Always consider both framework and project layers
-    - Look for inheritance patterns (project extends framework)
-    - Include GraphQL/Frontend API and storefront patterns when relevant
+- **Shopsys Architecture awareness** (see CLAUDE.md):
+    - Prioritize framework packages for core implementations and patterns
+    - Check project-base for configuration and rare extensions
+    - Look for extension patterns (project extends package)
+    - Include GraphQL/Frontend API and storefront patterns
     - Note multi-domain and translation support patterns
 - **Frontmatter consistency**:
     - Always include frontmatter at the beginning of research documents

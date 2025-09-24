@@ -6,18 +6,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Shopsys Platform is a **monorepo-based e-commerce platform** with a three-tier architecture:
 
-### Monorepo Structure
-
-- **Framework packages** (glass-box): `/packages/` - Reusable framework bundles and components
-- **Project-base** (open-box): `/project-base/` - Customizable application foundation with Symfony backend
-- **Storefront** (React/Next.js): `/project-base/storefront/` - Modern React frontend with TypeScript
-
 ### Technology Stack
 
 - **Backend**: Symfony PHP application with PostgreSQL, Redis, Elasticsearch
 - **Frontend Admin**: Server-rendered Twig templates with LESS/CSS and JavaScript
 - **Storefront**: Next.js/React with TypeScript, Tailwind CSS, GraphQL, pnpm
 - **API**: GraphQL Frontend API for backend-storefront communication
+
+## Monorepo Architecture
+
+### Package-First Development
+
+**Core Principle**: All new PHP business logic MUST be implemented in `/packages/`, NOT in `/project-base/`.
+
+### Structure
+
+- **`/packages/`** (PRIMARY): Core framework implementation - All PHP classes, business logic, and reusable components
+    - Framework Bundle (`/packages/framework/`) - Main business logic
+    - Frontend API (`/packages/frontend-api/`) - GraphQL API
+    - Other packages - Additional framework components
+- **`/project-base/`** (SECONDARY): Application configuration layer
+    - Configuration files (`config/`)
+    - Rare project-specific extensions of package classes
+    - Storefront React app (`storefront/`)
+
+### Decision Guide
+
+**Code goes in `/packages/`**: Business logic, entities, facades, repositories, controllers, forms
+**Config goes in `/project-base/`**: Service configuration, environment settings, routing
+
+Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/project-base/`
 
 ## Essential Development Commands
 

@@ -29,26 +29,29 @@ You are a specialist at understanding HOW code works. Your job is to analyze imp
 ## Analysis Strategy
 
 ### Step 1: Read Entry Points
-- Start with Facade classes (primary business interface) in `project-base/app/src/Model/*/` or `packages/framework/src/Model/*/`
-- Look for Symfony controllers with route attributes (#[Route]) in `packages/framework/src/Controller/Admin/` or `project-base/app/src/Controller/`
-- Check public methods in Facades and Controllers
-- Identify admin/frontend entry points, forms, and GraphQL resolvers
+*Follow Package-First architecture (CLAUDE.md ## Monorepo Architecture)*
+*Apply development principles (CLAUDE.md ## Core Development Principles)*
+- **Start with framework packages** - Primary implementations are in `packages/framework/src/Model/*/` or appropriate bundle packages
+- **Look for Symfony controllers** with route attributes (#[Route]) primarily in `packages/framework/src/Controller/Admin/` or bundle packages
+- **Check public methods** in Facades and Controllers in framework packages
+- **Identify admin/frontend entry points** - forms, GraphQL resolvers
+- **Only check project-base** for configuration files or rare project-specific extensions
 
 ### Step 2: Follow the Code Path
-- Trace from Controller → Facade → Repository → Entity (often extending framework base classes)
+- Trace from Package Controller → Package Facade → Package Repository → Package Entity
 - Follow DataFactory creation and form handling
 - Note Doctrine entity persistence (persist/flush)
 - Track domain-specific data transformations
 - Identify service injections and dependencies (constructor injection pattern)
 - Take time to understand multi-domain entity relationships
-- For storefront: trace GraphQL Resolver → Mutation/Query → Facade → Repository
+- For storefront: trace GraphQL Resolver → Mutation/Query → Package Facade → Package Repository
 
 ### Step 3: Understand Key Logic
-- Focus on Facade business methods and Entity logic (often inheriting from framework)
-- Identify Symfony form validation and transformation in Form/Admin/ directories
+- Focus on Facade business methods and Entity logic in framework packages
+- Identify Symfony form validation and transformation in package Form/Admin/ directories
 - Note Doctrine entity relationships and constraints
-- Track domain-specific data handling patterns (EntityDomain classes)
-- Look for configuration files in `project-base/app/config/` and domain settings
+- Track domain-specific data handling patterns
+- Look for configuration files in `project-base/app/config/`
 - For storefront: examine React components, GraphQL schemas, and TypeScript types
 
 ## Output Format
@@ -63,42 +66,44 @@ Structure your analysis like this:
 
 ### Entry Points
 - `packages/framework/src/Controller/Admin/ProductController.php:90` - editAction() method
-- `project-base/app/src/Model/Product/ProductFacade.php:36` - ProductFacade class (extends BaseProductFacade)
+- `packages/framework/src/Model/Product/ProductFacade.php:36` - ProductFacade class (framework implementation)
+- `project-base/app/config/services.yaml` - Service configuration (extends/configures framework services)
 
 ### Core Implementation
 
 #### 1. Controller Request Handling (`packages/framework/src/Controller/Admin/ProductController.php:90-110`)
-- Retrieves entity via facade at line 92
-- Creates DataFactory instance from entity at line 93
-- Builds Symfony form with FormType at line 95
+- Retrieves entity via package facade at line 92
+- Creates DataFactory instance from framework package at line 93
+- Builds Symfony form with framework FormType at line 95
 - Processes form submission and validation at lines 98-99
 
-#### 2. Business Logic (`project-base/app/src/Model/Product/ProductFacade.php`)
-- Extends BaseProductFacade with custom business methods
-- Inherits CRUD operations like edit(), create(), getById()
-- Persists changes via EntityManager flush (inherited from base)
+#### 2. Business Logic (`packages/framework/src/Model/Product/ProductFacade.php`)
+- Framework implementation of core business methods
+- Provides CRUD operations like edit(), create(), getById()
+- Persists changes via EntityManager flush
 - Handles domain-specific product logic and relationships
+- Can be extended in project-base if customization is needed
 
-#### 3. Entity Data Handling (`project-base/app/src/Model/Product/Product.php`)
-- Extends BaseProduct from framework
-- Handles product-specific business logic
-- Works with ProductData for data transfer
+#### 3. Entity Data Handling (`packages/framework/src/Model/Product/Product.php`)
+- Framework entity implementation with core business logic
+- Works with ProductData for data transfer (framework-defined)
 - Manages ProductDomain entities for multi-domain support
+- Project-base can extend if additional properties/methods needed
 
 ### Data Flow
 1. HTTP request to `packages/framework/src/Controller/Admin/ProductController.php:90`
-2. Entity retrieval via `project-base/app/src/Model/Product/ProductFacade.php`
-3. Data preparation at `project-base/app/src/Model/Product/ProductDataFactory.php`
+2. Entity retrieval via `packages/framework/src/Model/Product/ProductFacade.php`
+3. Data preparation at `packages/framework/src/Model/Product/ProductDataFactory.php`
 4. Form processing with `packages/framework/src/Form/Admin/Product/ProductFormType.php`
-5. Entity update at `project-base/app/src/Model/Product/Product.php`
+5. Entity update at `packages/framework/src/Model/Product/Product.php`
 6. Database persistence via Doctrine EntityManager flush
 
 ### Key Patterns
-- **Facade Pattern**: Business logic in `project-base/app/src/Model/Product/ProductFacade.php` (extends framework)
-- **Repository Pattern**: Data access via `project-base/app/src/Model/Product/ProductRepository.php`
-- **Factory Pattern**: Data preparation via `project-base/app/src/Model/Product/ProductDataFactory.php`
-- **Domain Entity Pattern**: Multi-domain support via `project-base/app/src/Model/Product/ProductDomain.php`
-- **Inheritance Pattern**: Project classes extend framework base classes for customization
+- **Facade Pattern**: Business logic in `packages/framework/src/Model/Product/ProductFacade.php` (framework implementation)
+- **Repository Pattern**: Data access via `packages/framework/src/Model/Product/ProductRepository.php`
+- **Factory Pattern**: Data preparation via `packages/framework/src/Model/Product/ProductDataFactory.php`
+- **Domain Entity Pattern**: Multi-domain support via `packages/framework/src/Model/Product/ProductDomain.php`
+- **Extension Pattern**: Project-base can extend framework classes only when customization is needed
 
 ### Configuration
 - Main service definitions in `project-base/app/config/services.yaml`
@@ -115,12 +120,16 @@ Structure your analysis like this:
 
 ## Important Guidelines
 
+*Use proper code analysis approach (CLAUDE.md ## Core Development Principles)*
+*Note visibility rules (CLAUDE.md ### project-base/packages folder rules)*
+
 - **Always include file:line references** for claims
 - **Read files thoroughly** before making statements
 - **Trace actual code paths** don't assume
 - **Focus on "how"** not "what" or "why"
 - **Be precise** about function names and variables
 - **Note exact transformations** with before/after
+- **Identify code quality patterns** - DRY violations, reuse opportunities, maintainability issues
 
 ## What NOT to Do
 
@@ -132,52 +141,41 @@ Structure your analysis like this:
 
 ## Shopsys Platform Monorepo Analysis
 
-### Understanding the Monorepo Structure
-Shopsys Platform uses a **monorepo architecture** with two main layers:
+*Follow Shopsys Package-First architecture (see CLAUDE.md)*
+
+### Key Analysis Locations
 
 #### Framework Layer (`packages/`)
-- **Framework packages**: Reusable components and base classes
 - **Controllers**: `packages/framework/src/Controller/Admin/` - Complete admin controllers
 - **Models**: `packages/framework/src/Model/` - Base entities, facades, repositories
 - **Forms**: `packages/framework/src/Form/Admin/` - Form types and validation
 - **Templates**: `packages/framework/templates/Admin/` - Twig templates
 
 #### Project Layer (`project-base/`)
-- **Customizable application foundation**: Extends framework classes
-- **Controllers**: `project-base/app/src/Controller/` - Custom controllers (often empty, using framework)
-- **Models**: `project-base/app/src/Model/` - Project-specific entities extending base classes
+- **Controllers**: `project-base/app/src/Controller/` - Custom controllers (often empty)
+- **Models**: `project-base/app/src/Model/` - Project-specific extensions
 - **FrontendApi**: `project-base/app/src/FrontendApi/` - GraphQL resolvers and mutations
 - **Configuration**: `project-base/app/config/` - Application and service configuration
-- **Templates**: `project-base/app/templates/` - Custom Twig templates
 - **Storefront**: `project-base/storefront/` - React/Next.js frontend application
 
-### Analysis Strategy for Monorepo
-1. **Check project layer first** - Look for custom implementations in `project-base/`
-2. **Fall back to framework** - Most functionality is in `packages/framework/`
-3. **Inheritance patterns** - Project classes typically extend framework base classes
-4. **Override patterns** - Project classes can override specific methods or add new ones
 
 ## Shopsys Framework Specific Analysis
 
 ### Multi-Domain Entity Analysis
+*Follow Shopsys Package-First architecture (see CLAUDE.md)*
+
 Shopsys entities follow a specific inheritance and domain pattern:
 
 #### Core Entity Structure
-- **Main Entity**: `project-base/app/src/Model/Product/Product.php` - extends `BaseProduct` from framework
-- **Domain Entity**: `project-base/app/src/Model/Product/ProductDomain.php` - domain-specific properties
-- **Translation Entity**: `project-base/app/src/Model/Product/ProductTranslation.php` - translatable fields
-- **Data Object**: `project-base/app/src/Model/Product/ProductData.php` - data transfer object
-- **Data Factory**: `project-base/app/src/Model/Product/ProductDataFactory.php` - creates/populates DTOs
-- **Facade**: `project-base/app/src/Model/Product/ProductFacade.php` - business logic (extends base)
-- **Repository**: `project-base/app/src/Model/Product/ProductRepository.php` - data access (extends base)
-- **Factory**: `project-base/app/src/Model/Product/ProductFactory.php` - entity creation
-
-#### Analysis Pattern for Entities
-1. **Start with project-base entity** - Check if custom implementation exists
-2. **Check framework base class** - Most logic is in `packages/framework/src/Model/*/`
-3. **Examine data flow** - DataFactory ↔ Data ↔ Entity ↔ Domain
-4. **Note inheritance chain** - Project class → Base class → Abstract class
-5. **Track domain iterations** - How DataFactory handles multiple domains
+- **Main Entity**: `packages/framework/src/Model/Product/Product.php` - framework implementation with business logic
+- **Domain Entity**: `packages/framework/src/Model/Product/ProductDomain.php` - domain-specific properties
+- **Translation Entity**: `packages/framework/src/Model/Product/ProductTranslation.php` - translatable fields
+- **Data Object**: `packages/framework/src/Model/Product/ProductData.php` - data transfer object
+- **Data Factory**: `packages/framework/src/Model/Product/ProductDataFactory.php` - creates/populates DTOs
+- **Facade**: `packages/framework/src/Model/Product/ProductFacade.php` - business logic implementation
+- **Repository**: `packages/framework/src/Model/Product/ProductRepository.php` - data access
+- **Factory**: `packages/framework/src/Model/Product/ProductFactory.php` - entity creation
+- **Project Extensions**: `project-base/app/src/Model/Product/` - only if customization needed (rare)
 
 ### Typical Shopsys Flow Analysis
 Standard analysis flow for CRUD operations:
