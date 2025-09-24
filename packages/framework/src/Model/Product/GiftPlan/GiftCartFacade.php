@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -25,6 +26,7 @@ class GiftCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -33,6 +35,7 @@ class GiftCartFacade
         protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -85,7 +88,7 @@ class GiftCartFacade
             $giftProducts = $giftProductsIndexedByMainProductIds[$item->getProduct()->getId()] ?? [];
 
             foreach ($giftProducts as $giftProduct) {
-                if (!$this->isGiftProductSellable($giftProduct, $pricingGroup, $domainId)) {
+                if (!$this->isGiftProductSellable($giftProduct, $pricingGroup, $item->getQuantity(), $domainId)) {
                     continue;
                 }
 
@@ -103,13 +106,30 @@ class GiftCartFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $quantity
      * @param int $domainId
      * @return bool
      */
-    public function isGiftProductSellable(Product $product, PricingGroup $pricingGroup, int $domainId): bool
-    {
+    public function isGiftProductSellable(
+        Product $product,
+        PricingGroup $pricingGroup,
+        int $quantity,
+        int $domainId,
+    ): bool {
         if ($product->getProductType() === ProductTypeEnum::TYPE_INQUIRY) {
             return false;
+        }
+
+        if (!$product->isAllowedNegativeStock()) {
+            $notOnStockQuantity = $this->productAvailabilityFacade->getNotOnStockQuantity(
+                $product,
+                $domainId,
+                $quantity,
+            ) ?? 0;
+
+            if ($notOnStockQuantity > 0 && $quantity - $notOnStockQuantity <= 0) {
+                return false;
+            }
         }
 
         $productVisibility = $this->productVisibilityFacade

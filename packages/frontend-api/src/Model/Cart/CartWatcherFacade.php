@@ -166,10 +166,16 @@ class CartWatcherFacade
             if ($newQuantity <= 0) {
                 $cart->removeItemById($cartItem->getId());
                 $this->em->remove($cartItem);
-                $this->cartWithModificationsResult->setCartHasRemovedProducts();
+
+                if ($cartItem->isProduct()) {
+                    $this->cartWithModificationsResult->setCartHasRemovedProducts();
+                }
             } else {
                 $cartItem->changeQuantity($newQuantity);
-                $this->cartWithModificationsResult->addCartItemWithChangedQuantity($cartItem);
+
+                if ($cartItem->isProduct()) {
+                    $this->cartWithModificationsResult->addCartItemWithChangedQuantity($cartItem);
+                }
             }
         }
     }

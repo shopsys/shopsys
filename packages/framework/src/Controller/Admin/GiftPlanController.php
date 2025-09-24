@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -44,6 +44,7 @@ class GiftPlanController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory
      */
     public function __construct(
         protected readonly GiftPlanFacade $giftPlanFacade,
@@ -55,6 +56,7 @@ class GiftPlanController extends AdminBaseController
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
     ) {
     }
 
@@ -134,10 +136,7 @@ class GiftPlanController extends AdminBaseController
             ->from(GiftPlan::class, 'gp')
             ->where('gp.domainId = :selectedDomainId')
             ->setParameter('selectedDomainId', $selectedDomainId);
-        $dataSource = new QueryBuilderDataSource(
-            $queryBuilder,
-            'gp.id',
-        );
+        $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'gp.id');
 
         $grid = $this->gridFactory->create('giftPlanList', $dataSource, AdminRoleConstant::ROLE_GIFT_PLAN);
         $grid->enablePaging();

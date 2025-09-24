@@ -159,7 +159,7 @@ class GiftFlagSynchronizerFacade
         foreach ($activeGiftPlans as $activeGiftPlan) {
             $giftProduct = $activeGiftPlan->getGiftProduct();
 
-            if ($this->giftCartFacade->isGiftProductSellable($giftProduct, $defaultPricingGroup, $domainId)) {
+            if ($this->giftCartFacade->isGiftProductSellable($giftProduct, $defaultPricingGroup, 1, $domainId)) {
                 return true;
             }
         }
