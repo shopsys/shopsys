@@ -54,10 +54,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const { t } = useTranslation();
     const step = useMemo(() => getStep(min, max), [min, max]);
 
-    const [minValueInput, setMinValueInput] = useState(min);
+    const [minValueInput, setMinValueInput] = useState<number | ''>(min);
     const [minValueThumb, setMinValueThumb] = useState(min);
 
-    const [maxValueInput, setMaxValueInput] = useState(max);
+    const [maxValueInput, setMaxValueInput] = useState<number | ''>(max);
     const [maxValueThumb, setMaxValueThumb] = useState(max);
 
     const range = useRef<HTMLDivElement>(null);
@@ -137,11 +137,15 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         window.getSelection()?.removeAllRanges();
     };
 
-    const onChangeMaxInputHandler: ChangeEventHandler<HTMLInputElement> = (event) =>
-        setMaxValueInput(parseFloat(event.currentTarget.value));
+    const onChangeMaxInputHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const value = event.currentTarget.value;
+        setMaxValueInput(value === '' ? '' : parseFloat(value));
+    };
 
-    const onChangeMinInputHandler: ChangeEventHandler<HTMLInputElement> = (event) =>
-        setMinValueInput(parseFloat(event.currentTarget.value));
+    const onChangeMinInputHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const value = event.currentTarget.value;
+        setMinValueInput(value === '' ? '' : parseFloat(value));
+    };
 
     const onEnterKeyDownHandler: KeyboardEventHandler<HTMLInputElement> = (event) =>
         event.key === 'Enter' && event.currentTarget.blur();
