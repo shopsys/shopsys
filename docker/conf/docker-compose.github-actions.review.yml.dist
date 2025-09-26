@@ -30,7 +30,8 @@ services:
             - php-fpm
         volumes:
             - web-volume:/var/www/html/project-base/app/web
-            - nginx-conf:/etc/nginx/conf.d/
+            - ./nginx.conf:/etc/nginx/templates/default.conf.template
+            - ./12-set-env-variables.envsh:/docker-entrypoint.d/12-set-env-variables.envsh
         labels:
             - traefik.backend=${BRANCH_NAME_ESCAPED}
             - traefik.http.routers.${BRANCH_NAME_ESCAPED}.rule=Host(${TRAEFIK_HOSTS})
@@ -52,7 +53,6 @@ services:
         image: php-fpm-image
         volumes:
             - web-volume:/var/www/html/project-base/app/web
-            - nginx-conf:/var/www/html/docker/nginx
             - postgres-conf:/var/www/html/project-base/app/docker/postgres
             - ./ci-www.conf:/usr/local/etc/php-fpm.d/www.conf
         depends_on:
@@ -203,7 +203,6 @@ services:
 
 volumes:
     web-volume:
-    nginx-conf:
     postgres-conf:
 
 networks:

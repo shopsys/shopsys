@@ -177,6 +177,16 @@ jobs:
                 with:
                     name: ci-www-conf
                     path: ./project-base/gitlab/php-fpm-conf/ci-www.conf
+            -   name: Upload nginx.conf to artifacts
+                uses: actions/upload-artifact@v4
+                with:
+                    name: nginx-conf
+                    path: ./project-base/docker/nginx/nginx.conf
+            -   name: Upload 12-set-env-variables.envsh to artifacts
+                uses: actions/upload-artifact@v4
+                with:
+                    name: 12-set-env-variables-envsh
+                    path: ./project-base/docker/nginx/12-set-env-variables.envsh
             -   name: Upload rabbitmq-vhost.sh to artifacts
                 uses: actions/upload-artifact@v4
                 with:
@@ -1103,6 +1113,16 @@ jobs:
                 uses: actions/download-artifact@v4
                 with:
                     name: ci-www-conf
+                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
+            -   name: Download nginx.conf from artifacts
+                uses: actions/download-artifact@v4
+                with:
+                    name: nginx-conf
+                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
+            -   name: Download 12-set-env-variables.envsh from artifacts
+                uses: actions/download-artifact@v4
+                with:
+                    name: 12-set-env-variables-envsh
                     path: ${{ needs.variables.outputs.BRANCH_NAME }}
             -   name: Download rabbitmq-vhost-sh from artifacts
                 uses: actions/download-artifact@v4

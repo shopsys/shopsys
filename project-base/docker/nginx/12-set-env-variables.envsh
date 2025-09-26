@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ -d /var/www/html/project-base/app/web ]; then
+    WEBSERVER_ROOT=/var/www/html/project-base/app/web
+else
+    WEBSERVER_ROOT=/var/www/html/web
+fi
+
+export WEBSERVER_ROOT
