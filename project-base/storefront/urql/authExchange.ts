@@ -32,9 +32,9 @@ const addAuthToOperation = (
     operation: Operation,
     context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
 ): Operation => {
-    const { accessToken } = getTokensFromCookies(context);
+    const { accessToken, refreshToken } = getTokensFromCookies(context);
 
-    if (!accessToken || isRefreshTokenMutation(operation)) {
+    if (!accessToken || !refreshToken || isRefreshTokenMutation(operation)) {
         return operation;
     }
 
