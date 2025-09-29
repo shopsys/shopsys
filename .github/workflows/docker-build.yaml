@@ -370,6 +370,16 @@ jobs:
                     docker compose exec storefront sh check-code-gen.sh
             -   name: Check standards
                 run: docker compose exec storefront pnpm run check
+            -   name: Check tailwind-for-admin styles are up to date
+                run: |
+                    docker compose exec storefront pnpm compile-tailwind-for-admin
+                    if [ -n "$(git status --porcelain)" ]; then
+                        echo "Tailwind admin styles are outdated. Run 'docker compose exec storefront pnpm compile-tailwind-for-admin' locally and commit the changes."
+                        git status -s
+                        exit 1
+                    else
+                        echo "Tailwind admin styles are up to date"
+                    fi
             -   name: Storefront container logs
                 if: ${{ failure() }}
                 run: docker compose logs storefront
