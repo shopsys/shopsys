@@ -95,6 +95,7 @@ class SideMenuBuilder
     public const string PRIVACY_POLICY = 'privacy_policy';
     public const string PERSONAL_DATA = 'personal_data';
     public const string USER_CONSENT_POLICY = 'user_consent_policy';
+    public const string AUTOCOMPLETE_SETTING = 'autocomplete';
     public const string ROOT_FILE = 'files';
     public const string LIST_FILE = 'files';
     public const string EDIT_FILE = 'edit';
@@ -611,6 +612,8 @@ class SideMenuBuilder
 
         $homepageMenu->addChild(static::LIST_PROMOTED_PRODUCT, ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
         $homepageMenu->addChild(static::LIST_PROMOTED_CATEGORY, ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
+
+        $menu->addChild(static::AUTOCOMPLETE_SETTING, ['route' => 'admin_autocomplete_setting', 'label' => t('Autocomplete favorites')]);
 
         $notificationBarMenu = $menu->addChild(static::LIST_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
         $notificationBarMenu->addChild(static::NEW_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);

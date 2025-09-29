@@ -93,11 +93,21 @@ class BrandRepository
      */
     public function getBrandsByIds(array $brandsIds): array
     {
-        $brandsQueryBuilder = $this->getBrandRepository()->createQueryBuilder('b')
-            ->select('b')
-            ->where('b.id IN (:brandIds)')
-            ->setParameter('brandIds', $brandsIds)
+        $brandsQueryBuilder = $this->getBrandsByIdsQueryBuilder($brandsIds)
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
+
+        return $brandsQueryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param int[] $brandIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsByIdsPreservingInputOrder(array $brandIds): array
+    {
+        $brandsQueryBuilder = $this->getBrandsByIdsQueryBuilder($brandIds)
+            ->addSelect('field(b.id, ' . implode(',', $brandIds) . ') AS HIDDEN relevance')
+            ->orderBy('relevance');
 
         return $brandsQueryBuilder->getQuery()->getResult();
     }
@@ -169,5 +179,17 @@ class BrandRepository
             ->join('b.translations', 'bt', Join::WITH, 'bt.locale = :locale')
             ->setParameter('domainId', $domainConfig->getId())
             ->setParameter('locale', $domainConfig->getLocale());
+    }
+
+    /**
+     * @param int[] $brandIds
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getBrandsByIdsQueryBuilder(array $brandIds): QueryBuilder
+    {
+        return $this->getBrandRepository()->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.id IN (:brandIds)')
+            ->setParameter('brandIds', $brandIds);
     }
 }
