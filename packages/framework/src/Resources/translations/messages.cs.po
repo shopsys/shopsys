@@ -424,6 +424,15 @@ msgstr "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla
 msgid "Blog category <strong>{{ name }}</strong> has been removed"
 msgstr "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
 
+msgid "Blog category is hidden on all domains"
+msgstr "Rubrika blogu je skrytá na všech doménách"
+
+msgid "Blog category is visible on all domains"
+msgstr "Rubrika blogu je viditelná na všech doménách"
+
+msgid "Blog category is visible on some domains"
+msgstr "Rubrika blogu je viditelná na některých doménách"
+
 msgid "Brand"
 msgstr "Značka"
 

@@ -424,6 +424,15 @@ msgstr ""
 msgid "Blog category <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
+msgid "Blog category is hidden on all domains"
+msgstr ""
+
+msgid "Blog category is visible on all domains"
+msgstr ""
+
+msgid "Blog category is visible on some domains"
+msgstr ""
+
 msgid "Brand"
 msgstr ""
 
@@ -2008,6 +2017,9 @@ msgstr ""
 msgid "Name %locale%"
 msgstr ""
 
+msgid "Name has not been entered in your current language"
+msgstr ""
+
 msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
 msgstr ""
 
@@ -2630,6 +2642,9 @@ msgid "Product name"
 msgstr ""
 
 msgid "Product name in default language is not entered"
+msgstr ""
+
+msgid "Product not in e-shop."
 msgstr ""
 
 msgid "Product saved in order"

@@ -345,4 +345,13 @@ class BlogCategoryFacade
     {
         return $this->blogCategoryRepository->findVisibleMainBlogCategoryIdOnDomain($this->domain->getId());
     }
+
+    /**
+     * @param int $domainsCount
+     * @return array<int, string>
+     */
+    public function getVisibilityOfBlogCategoriesIndexedById(int $domainsCount): array
+    {
+        return $this->blogCategoryRepository->getVisibilityOfBlogCategoriesIndexedById($domainsCount);
+    }
 }
