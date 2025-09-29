@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleGridFactory;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -36,6 +37,7 @@ class BlogArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleGridFactory $blogArticleGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly BlogArticleFacade $blogArticleFacade,
@@ -44,6 +46,7 @@ class BlogArticleController extends AdminBaseController
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly BlogArticleGridFactory $blogArticleGridFactory,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -65,6 +68,7 @@ class BlogArticleController extends AdminBaseController
         $queryBuilder = $this->blogArticleFacade->getQueryBuilderForQuickSearch(
             $selectedDomainId,
             $quickSearchForm->getData(),
+            $this->localization->getCurrentLocaleForTranslatableEntities(),
         );
 
         $grid = $this->blogArticleGridFactory->create($queryBuilder);
