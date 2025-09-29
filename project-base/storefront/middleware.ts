@@ -123,7 +123,7 @@ export const middleware: NextMiddleware = async (request) => {
 export const config = {
     matcher: [
         '/', // Explicitly match the homepage
-        '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|tailwind-for-admin|robots).*)',
+        '/((?!api|_next|favicon.ico|fonts|svg|images|locales|content/locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|tailwind-for-admin|robots).*)',
     ],
 };
 
