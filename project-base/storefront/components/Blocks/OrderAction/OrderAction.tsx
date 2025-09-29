@@ -8,7 +8,9 @@ import useTranslation from 'next-translate/useTranslation';
 type OrderActionProps = {
     buttonBack: string;
     buttonNext: string;
-    hasDisabledLook: boolean;
+    hasDisabledCursor?: boolean;
+    hasDisabledLook?: boolean;
+    isDisabled?: boolean;
     backStepClickHandler?: () => void;
     nextStepClickHandler?: () => void;
     shouldShowSpinnerOnNextStepButton?: boolean;
@@ -18,6 +20,8 @@ type OrderActionProps = {
 export const OrderAction: FC<OrderActionProps> = ({
     buttonBack,
     buttonNext,
+    isDisabled,
+    hasDisabledCursor,
     hasDisabledLook,
     backStepClickHandler,
     nextStepClickHandler,
@@ -41,7 +45,9 @@ export const OrderAction: FC<OrderActionProps> = ({
 
             <SubmitButton
                 aria-label={ariaLabelNextStep}
-                isWithDisabledLook={hasDisabledLook}
+                disabled={isDisabled}
+                hasDisabledCursor={hasDisabledCursor}
+                hasDisabledLook={isDisabled || hasDisabledLook}
                 size="xlarge"
                 tid={TIDs.blocks_orderaction_next}
                 onClick={nextStepClickHandler}

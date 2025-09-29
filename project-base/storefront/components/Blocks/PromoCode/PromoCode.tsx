@@ -73,7 +73,7 @@ export const PromoCode: FC = () => {
                             <SubmitButton
                                 aria-label={t('Submit form to apply promo code')}
                                 className="self-start"
-                                isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                hasDisabledCursor={!formProviderMethods.formState.isValid}
                                 size="xlarge"
                                 tid={TIDs.blocks_promocode_apply_button}
                                 variant="inverted"

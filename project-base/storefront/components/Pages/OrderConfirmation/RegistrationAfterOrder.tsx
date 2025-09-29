@@ -153,8 +153,8 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     <SubmitButton
                         aria-label={t('Submit form to create your new account')}
                         className="self-start"
-                        isDisabled={isInvalidRegistrationRef.current}
-                        isWithDisabledLook={!formProviderMethods.formState.isValid}
+                        hasDisabledCursor={!formProviderMethods.formState.isValid}
+                        hasDisabledLook={isInvalidRegistrationRef.current}
                         size="large"
                         tid={TIDs.registration_after_order_submit_button}
                     >

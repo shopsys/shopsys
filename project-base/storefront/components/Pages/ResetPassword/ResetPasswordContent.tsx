@@ -76,7 +76,7 @@ export const ResetPasswordContent: FC = () => {
                                 <FormButtonWrapper>
                                     <SubmitButton
                                         aria-label={t('Submit form to reset your password')}
-                                        isWithDisabledLook={invalid || value.length === 0}
+                                        hasDisabledCursor={invalid || value.length === 0}
                                     >
                                         {t('Reset password')}
                                     </SubmitButton>

@@ -115,7 +115,7 @@ export const ContactContent: FC = () => {
                                 <FormButtonWrapper>
                                     <SubmitButton
                                         aria-label={t('Submit form to send your message')}
-                                        isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                        hasDisabledCursor={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Send message')}
                                     </SubmitButton>

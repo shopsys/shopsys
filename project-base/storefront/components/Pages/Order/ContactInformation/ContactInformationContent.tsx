@@ -26,6 +26,9 @@ export const ContactInformationWrapper: FC = () => {
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
 
+    const isEmailPristine = !formProviderMethods.formState.dirtyFields.email;
+    const isEmailInvalid = !!formProviderMethods.formState.errors.email;
+
     return (
         <OrderContentWrapper activeStep={3}>
             <h1 className="sr-only">{t('Contact information')}</h1>
@@ -44,7 +47,9 @@ export const ContactInformationWrapper: FC = () => {
                         backStepClickHandler={goToPreviousStepFromContactInformationPage}
                         buttonBack={t('Back')}
                         buttonNext={t('Submit order')}
+                        hasDisabledCursor={!formProviderMethods.formState.isValid}
                         hasDisabledLook={!formProviderMethods.formState.isValid}
+                        isDisabled={isEmailPristine || isEmailInvalid}
                         shouldShowSpinnerOnNextStepButton={isCreatingOrder}
                     />
                 </Form>

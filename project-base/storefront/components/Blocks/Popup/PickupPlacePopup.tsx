@@ -56,7 +56,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                 <Button onClick={() => updatePortalContent(null)}>{t('Close')}</Button>
 
                 <Button
-                    isDisabled={selectedStoreUuid === ''}
+                    hasDisabledLook={selectedStoreUuid === ''}
                     tid={TIDs.pages_order_pickupplace_popup_confirm}
                     onClick={onConfirmPickupPlaceHandler}
                 >
