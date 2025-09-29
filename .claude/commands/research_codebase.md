@@ -37,11 +37,16 @@ Then wait for the user's research query.
     - Create multiple Task agents to research different aspects concurrently
     - We now have specialized agents that know how to do specific research tasks:
 
+   **For documentation research:**
+    - Use the **docs-researcher** agent to find relevant architectural guidance, patterns, and best practices from the docs/ folder
+    - This agent understands the documentation structure and can provide context for development decisions
+    - Especially useful for understanding conventions, configuration examples, and implementation approaches
+
    **For codebase research:**
     - Use the **codebase-locator** agent to find WHERE files and components live
     - Use the **codebase-analyzer** agent to understand HOW specific code works
     - Use the **codebase-pattern-finder** agent if you need examples of similar implementations
-    
+
     These agents understand the Shopsys architecture (see CLAUDE.md for Package-First details):
     - They prioritize packages/framework layers for core implementations
     - They check project-base only for configuration and rare extensions

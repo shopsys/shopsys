@@ -46,6 +46,7 @@ Then wait for the user's input.
 3. **Spawn initial research tasks to gather context**:
    Before asking the user any questions, use specialized agents to research in parallel:
 
+    - Use the **docs-researcher** agent to find relevant architectural guidance and implementation patterns from documentation
     - Use the **codebase-locator** agent to find all files related to the task
     - Use the **codebase-analyzer** agent to understand how the current implementation works
 
@@ -57,6 +58,7 @@ Then wait for the user's input.
     - Trace data flow through the codebase
     - Return detailed explanations with file:line references
     - Understand GraphQL/Frontend API and storefront patterns
+    - Provide documentation context and best practices
 
 4. **Read all files identified by research tasks**:
     - After research tasks complete, read ALL files they identified as relevant
@@ -103,6 +105,7 @@ After getting initial clarifications:
     - Use the right agent for each type of research:
 
    **For deeper investigation:**
+    - **docs-researcher** - To find documentation patterns and architectural guidance related to the feature
     - **codebase-locator** - To find more specific files (e.g., "find all files that handle [specific component]")
     - **codebase-analyzer** - To understand implementation details (e.g., "analyze how [system] works")
     - **codebase-pattern-finder** - To find similar features we can model after
