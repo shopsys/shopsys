@@ -119,19 +119,21 @@
         }
 
         iframe {
-            @apply my-8 max-w-full lg:my-10;
-
-            &:empty {
-                @apply min-h-52 w-full bg-emerald-100;
-            }
+            @apply my-6 max-w-full lg:my-8;
         }
 
         iframe:not(.gjs-iframe) {
-            @apply my-8 aspect-video w-full lg:my-10;
+            @apply my-6 aspect-video w-full lg:my-8;
+        }
 
-            &:empty {
-                @apply min-h-52 w-full bg-emerald-100;
-            }
+        iframe[src=''] {
+            @apply min-h-52 w-full bg-emerald-100;
+        }
+
+        iframe[src*='maps.google.com'] {
+            height: 366px !important;
+
+            @apply py-2;
         }
 
         video {
@@ -294,13 +296,5 @@
                 @apply min-h-52 w-full bg-emerald-100;
             }
         }
-    }
-}
-
-/* Safari iframe drag-drop fix: 6px gap enables "below" drop zone detection */
-@supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
-    [data-gjs-type='map'] iframe,
-    iframe[src*='maps.google.com'] {
-        height: calc(100% - 6px) !important;
     }
 }

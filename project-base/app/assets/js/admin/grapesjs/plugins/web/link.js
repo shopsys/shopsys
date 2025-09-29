@@ -1,6 +1,7 @@
 import grapesjs from 'grapesjs';
 
-export const linkPositionDataAttribute = 'data-link-position';
+export const LINK_POSITION_DATA_ATTRIBUTE = 'data-link-position';
+
 export default grapesjs.plugins.add('link', editor => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
@@ -14,19 +15,19 @@ export default grapesjs.plugins.add('link', editor => {
         isComponent: element => element.tagName === 'A',
         model: {
             init() {
-                this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
+                this.on(`change:attributes:${LINK_POSITION_DATA_ATTRIBUTE}`, this.handleLinkPositionChange);
             },
 
             handleLinkPositionChange(element) {
                 element.setClass([
                     'gjs-link-block',
-                    `image-position-${this.getAttributes()[linkPositionDataAttribute]}`,
+                    `image-position-${this.getAttributes()[LINK_POSITION_DATA_ATTRIBUTE]}`,
                 ]);
             },
 
             defaults: {
                 attributes: {
-                    [linkPositionDataAttribute]: 'left',
+                    [LINK_POSITION_DATA_ATTRIBUTE]: 'left',
                     class: ['image-position-left'],
                 },
                 traits: [
@@ -46,7 +47,7 @@ export default grapesjs.plugins.add('link', editor => {
                     },
                     {
                         type: 'select',
-                        name: linkPositionDataAttribute,
+                        name: LINK_POSITION_DATA_ATTRIBUTE,
                         options: [
                             {
                                 id: 'left',

@@ -1,9 +1,9 @@
 import grapesjs from 'grapesjs';
-import { linkPositionDataAttribute } from './link';
+import { LINK_POSITION_DATA_ATTRIBUTE } from './link';
+
+const IMAGE_POSITION_DATA_ATTRIBUTE = 'data-image-position';
 
 export default grapesjs.plugins.add('custom-image', editor => {
-    const imagePositionDataAttribute = 'data-image-position';
-
     editor.Blocks.add('image', {
         select: true,
         activate: true,
@@ -22,14 +22,14 @@ export default grapesjs.plugins.add('custom-image', editor => {
         extend: 'image',
         model: {
             init() {
-                this.on(`change:attributes:${imagePositionDataAttribute}`, this.handleImagePositionChange);
+                this.on(`change:attributes:${IMAGE_POSITION_DATA_ATTRIBUTE}`, this.handleImagePositionChange);
             },
 
             handleImagePositionChange(element) {
-                element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
+                element.setClass([`image-position-${this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE]}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
                     element.collection.parent.setAttributes({
-                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute],
+                        [LINK_POSITION_DATA_ATTRIBUTE]: this.getAttributes()[IMAGE_POSITION_DATA_ATTRIBUTE],
                     });
                 }
             },
@@ -55,13 +55,13 @@ export default grapesjs.plugins.add('custom-image', editor => {
                     },
                 },
                 attributes: {
-                    [imagePositionDataAttribute]: 'left',
+                    [IMAGE_POSITION_DATA_ATTRIBUTE]: 'left',
                     class: ['image-position-left'],
                 },
                 traits: [
                     {
                         type: 'select',
-                        name: imagePositionDataAttribute,
+                        name: IMAGE_POSITION_DATA_ATTRIBUTE,
                         options: [
                             {
                                 id: 'left',

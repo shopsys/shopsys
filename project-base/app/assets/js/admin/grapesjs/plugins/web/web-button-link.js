@@ -1,9 +1,9 @@
 import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 
-const linkPositionDataAttribute = 'data-link-position';
+const LINK_POSITION_DATA_ATTRIBUTE = 'data-link-position';
 const BUTTON_COLOR_ATTRIBUTE = 'backgroundColor';
-const textDataAttribute = 'data-text';
+const TEXT_DATA_ATTRIBUTE = 'data-text';
 
 export default grapesjs.plugins.add('web-button-link', editor => {
     editor.Blocks.add('button-link', {
@@ -21,15 +21,15 @@ export default grapesjs.plugins.add('web-button-link', editor => {
         isComponent: element => element.tagName === 'A',
         model: {
             init() {
-                this.on(`change:attributes:${linkPositionDataAttribute}`, this.handleLinkPositionChange);
+                this.on(`change:attributes:${LINK_POSITION_DATA_ATTRIBUTE}`, this.handleLinkPositionChange);
                 this.on(`change:attributes:${BUTTON_COLOR_ATTRIBUTE}`, this.handleColorChange);
-                this.on(`change:attributes:${textDataAttribute}`, this.handleTextAttributeChange);
+                this.on(`change:attributes:${TEXT_DATA_ATTRIBUTE}`, this.handleTextAttributeChange);
             },
 
             handleLinkPositionChange(element) {
                 element.setClass([
                     'gjs-button-link',
-                    `button-link-position-${this.getAttributes()[linkPositionDataAttribute]}`,
+                    `button-link-position-${this.getAttributes()[LINK_POSITION_DATA_ATTRIBUTE]}`,
                 ]);
             },
 
@@ -46,21 +46,21 @@ export default grapesjs.plugins.add('web-button-link', editor => {
             },
 
             handleTextAttributeChange(_element) {
-                const newText = this.getAttributes()[textDataAttribute];
+                const newText = this.getAttributes()[TEXT_DATA_ATTRIBUTE];
                 this.components(newText);
             },
 
             defaults: {
                 attributes: {
-                    [linkPositionDataAttribute]: 'center',
+                    [LINK_POSITION_DATA_ATTRIBUTE]: 'center',
                     [BUTTON_COLOR_ATTRIBUTE]: '#00C8B7',
-                    [textDataAttribute]: 'Insert your text here',
+                    [TEXT_DATA_ATTRIBUTE]: 'Insert your text here',
                     class: ['button-link-position-center'],
                 },
                 traits: [
                     {
                         type: 'input',
-                        name: textDataAttribute,
+                        name: TEXT_DATA_ATTRIBUTE,
                     },
                     {
                         type: 'input',
@@ -78,7 +78,7 @@ export default grapesjs.plugins.add('web-button-link', editor => {
                     },
                     {
                         type: 'select',
-                        name: linkPositionDataAttribute,
+                        name: LINK_POSITION_DATA_ATTRIBUTE,
                         options: [
                             {
                                 id: 'left',
