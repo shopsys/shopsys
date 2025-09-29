@@ -47,6 +47,12 @@ Then wait for the user's research query.
     - Use the **codebase-analyzer** agent to understand HOW specific code works
     - Use the **codebase-pattern-finder** agent if you need examples of similar implementations
 
+   **For pattern validation research:**
+    - ALWAYS use **codebase-pattern-finder** to find 3-5 concrete examples of similar implementations
+    - Focus on extracting exact namespace imports, method signatures, option configurations
+    - Validate form type options, security attribute patterns, interface names
+    - Get file:line references for all patterns to verify against framework conventions
+
     These agents understand the Shopsys architecture (see CLAUDE.md for Package-First details):
     - They prioritize packages/framework layers for core implementations
     - They check project-base only for configuration and rare extensions

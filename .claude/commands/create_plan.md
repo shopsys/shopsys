@@ -166,9 +166,27 @@ Once aligned on approach:
 
 2. **Get feedback on structure** before writing details
 
-### Step 4: Detailed Plan Writing
+### Step 4: Pattern Verification
 
-After structure approval:
+Before writing the detailed plan:
+
+1. **Validate implementation patterns** by spawning additional research tasks:
+   - Use **codebase-pattern-finder** to find 3-5 concrete examples of each component type you plan to implement
+   - For controllers: Verify security attribute usage (CanView, CanEdit parameter names)
+   - For forms: Validate form type options, namespace imports
+   - For fixtures: Check interface names (DependentFixtureInterface vs incorrect names)
+   - For entities/services: Verify inheritance patterns and method signatures
+   - Get file:line references for all patterns
+
+2. **Update plan approach** based on validated patterns:
+   - Incorporate exact namespace imports discovered
+   - Use verified method signatures and parameter names
+   - Follow established configuration patterns
+   - This prevents implementation errors by validating patterns before detailed planning
+
+### Step 5: Detailed Plan Writing
+
+After structure approval and pattern verification:
 
 1. **Write the plan** to `docs/plan/{descriptive_name}.md`
 2. **Use this template structure**:
@@ -267,7 +285,7 @@ After structure approval:
 - Similar implementation: `[file:line]`
 ```
 
-### Step 5: Sync and Review
+### Step 6: Sync and Review
 
 1. **Present the completed plan**:
    - The plan is ready for review in the docs/plans/ directory
@@ -332,6 +350,11 @@ Please review it and let me know:
    - Do NOT write the plan with unresolved questions
    - The implementation plan must be complete and actionable
    - Every decision must be made before finalizing the plan
+
+7. **Pattern Validation Before Writing**:
+   - ALWAYS validate implementation patterns using pattern-finder research before detailed planning
+   - Verify all component types you plan to implement have correct examples
+   - This prevents implementation errors by catching pattern issues early
 
 ## Success Criteria Guidelines
 
