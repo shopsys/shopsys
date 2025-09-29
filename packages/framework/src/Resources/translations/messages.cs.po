@@ -2008,8 +2008,8 @@ msgstr "Název"
 msgid "Name %locale%"
 msgstr "Název %locale%"
 
-msgid "Name in default language is not entered"
-msgstr "Název ve výchozím jazyce není vyplněn"
+msgid "Name has not been entered in your current language"
+msgstr "Název ve vašem aktuálním jazyce není vyplněn"
 
 msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
 msgstr "Pro zobrazení souboru na doméně musí být vyplněn název v odpovídajícím jazyce"
@@ -2634,6 +2634,9 @@ msgstr "Název produktu"
 
 msgid "Product name in default language is not entered"
 msgstr "Název zboží ve výchozím jazyce není vyplněn"
+
+msgid "Product not in e-shop."
+msgstr "Zboží se nenachází v eshopu."
 
 msgid "Product saved in order"
 msgstr "Zboží bylo uloženo do objednávky"

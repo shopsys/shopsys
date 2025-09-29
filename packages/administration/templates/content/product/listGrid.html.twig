@@ -33,7 +33,7 @@
         </span>
     {% endif %}
     {% block grid_value_cell_id_name_product_name %}
-        <a href="{{ url('admin_product_edit', { id: row.id }) }}">{{ row.name|productListDisplayNameByName }}</a>
+        <a href="{{ url('admin_product_edit', { id: row.id }) }}">{{ row.name|nameWithFallbackOnEmpty }}</a>
     {% endblock %}
 {% endblock %}
 

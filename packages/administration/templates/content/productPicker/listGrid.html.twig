@@ -3,7 +3,7 @@
 {% block grid_action_cell_type_edit %}{% endblock %}
 
 {% block grid_value_cell_id_name_product_name %}
-    {{ row.name|productListDisplayNameByName }}
+    {{ row.name|nameWithFallbackOnEmpty }}
 {% endblock %}
 
 {% block grid_value_cell_id_select %}

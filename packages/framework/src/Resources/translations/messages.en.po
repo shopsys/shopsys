@@ -2008,9 +2008,6 @@ msgstr ""
 msgid "Name %locale%"
 msgstr ""
 
-msgid "Name in default language is not entered"
-msgstr ""
-
 msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
 msgstr ""
 
