@@ -35,6 +35,15 @@ class AutocompleteFavoriteFacade
 
     /**
      * @param int $domainId
+     * @return int[]
+     */
+    public function getProductIdsForDomain(int $domainId): array
+    {
+        return $this->autocompleteFavoriteRepository->getProductIdsForDomain($domainId);
+    }
+
+    /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategoriesForDomain(int $domainId): array
@@ -44,11 +53,22 @@ class AutocompleteFavoriteFacade
 
     /**
      * @param int $domainId
+     * @param int $limit
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getVisibleCategoriesForDomain(int $domainId, int $limit): array
+    {
+        return $this->autocompleteFavoriteRepository->getVisibleCategoriesForDomain($domainId, $limit);
+    }
+
+    /**
+     * @param int $domainId
+     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    public function getBrandsForDomain(int $domainId): array
+    public function getBrandsForDomain(int $domainId, ?int $limit = null): array
     {
-        return $this->autocompleteFavoriteRepository->getBrandsForDomain($domainId);
+        return $this->autocompleteFavoriteRepository->getBrandsForDomain($domainId, $limit);
     }
 
     /**
@@ -68,7 +88,7 @@ class AutocompleteFavoriteFacade
      */
     protected function saveProductsForDomain(int $domainId, array $products): void
     {
-        $existingProducts = $this->autocompleteFavoriteRepository->getAllAutocompleteFavoriteProducts($domainId);
+        $existingProducts = $this->autocompleteFavoriteRepository->getAutocompleteFavoriteProducts($domainId);
 
         foreach ($existingProducts as $existingProduct) {
             $this->em->remove($existingProduct);
@@ -91,7 +111,7 @@ class AutocompleteFavoriteFacade
      */
     protected function saveCategoriesForDomain(int $domainId, array $categories): void
     {
-        $existingCategories = $this->autocompleteFavoriteRepository->getAllAutocompleteFavoriteCategories($domainId);
+        $existingCategories = $this->autocompleteFavoriteRepository->getAutocompleteFavoriteCategories($domainId);
 
         foreach ($existingCategories as $existingCategory) {
             $this->em->remove($existingCategory);
@@ -114,7 +134,7 @@ class AutocompleteFavoriteFacade
      */
     protected function saveBrandsForDomain(int $domainId, array $brands): void
     {
-        $existingBrands = $this->autocompleteFavoriteRepository->getAllAutocompleteFavoriteBrands($domainId);
+        $existingBrands = $this->autocompleteFavoriteRepository->getAutocompleteFavoriteBrands($domainId);
 
         foreach ($existingBrands as $existingBrand) {
             $this->em->remove($existingBrand);

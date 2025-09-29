@@ -2,6 +2,7 @@ Query:
     type: object
     inherits:
         - 'QueryDecorator'
+        - 'AutocompleteFavoritesQueryDecorator'
         - 'CategoryQuery'
         - 'SliderQuery'
         - 'OrderQuery'

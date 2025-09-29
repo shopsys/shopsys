@@ -62,6 +62,7 @@ final class AutocompleteFavoriteFormType extends AbstractType
             $builder->create('products', ProductsType::class, [
                 'required' => false,
                 'sortable' => true,
+                'allow_variants' => false,
                 'attr' => [
                     'placeholder' => t('Search and select products...'),
                 ],

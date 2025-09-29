@@ -1,0 +1,4 @@
+AutocompleteFavorites:
+    type: object
+    inherits:
+        - 'AutocompleteFavoritesDecorator'

@@ -62,7 +62,9 @@ class AutocompleteFavoriteDataFixture extends AbstractReferenceFixture implement
         $productsReferencesForDomain = [
             ProductDataFixture::PRODUCT_PREFIX . '1',
             ProductDataFixture::PRODUCT_PREFIX . '72',
-            ProductDataFixture::PRODUCT_PREFIX . '149',
+            ProductDataFixture::PRODUCT_PREFIX . '69', // main variant
+            ProductDataFixture::PRODUCT_PREFIX . '148', // variant
+            ProductDataFixture::PRODUCT_PREFIX . '76', // excluded from sale
         ];
 
         $products = [];
