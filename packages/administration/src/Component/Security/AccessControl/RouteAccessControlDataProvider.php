@@ -177,10 +177,21 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     {
         $adminRoutes = [];
         $adminPathPrefix = sprintf('/%s/', $this->adminUrl);
+        $adminRouteNamePrefixes = ['admin_', 'elfinder', 'ef_'];
 
         foreach ($routes as $routeName => $route) {
-            if (str_starts_with($routeName, 'admin_') || str_starts_with($route->getPath(), $adminPathPrefix)) {
+            if (str_starts_with($route->getPath(), $adminPathPrefix)) {
                 $adminRoutes[$routeName] = $route;
+
+                continue;
+            }
+
+            foreach ($adminRouteNamePrefixes as $adminRouteNamePrefix) {
+                if (str_starts_with($routeName, $adminRouteNamePrefix)) {
+                    $adminRoutes[$routeName] = $route;
+
+                    continue 2;
+                }
             }
         }
 
