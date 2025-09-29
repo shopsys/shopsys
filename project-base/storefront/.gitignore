@@ -39,6 +39,3 @@ yarn-error.log*
 /schema.graphql
 schema.graphql.json
 *.tsbuildinfo
-
-# generated tailwind for admin
-/public/tailwind-for-admin/
