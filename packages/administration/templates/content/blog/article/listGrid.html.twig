@@ -1,5 +1,9 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
+{% block grid_value_cell_id_name %}
+    {{ value|nameWithFallbackOnEmpty }}
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No blog articles found.'|trans }}
 {% endblock %}

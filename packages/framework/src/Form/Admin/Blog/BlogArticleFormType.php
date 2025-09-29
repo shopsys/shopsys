@@ -170,9 +170,7 @@ final class BlogArticleFormType extends AbstractType
 
         $builderSettingsGroup
             ->add('names', LocalizedType::class, [
-                'main_constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
-                ],
+                'required' => false,
                 'entry_options' => [
                     'required' => false,
                     'constraints' => [
