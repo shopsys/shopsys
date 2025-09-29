@@ -119,9 +119,7 @@ final class CategoryFormType extends AbstractType
 
         $builderSettingsGroup
             ->add('name', LocalizedType::class, [
-                'main_constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
-                ],
+                'required' => false,
                 'entry_options' => [
                     'required' => false,
                     'constraints' => [

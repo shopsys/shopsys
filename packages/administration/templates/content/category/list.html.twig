@@ -27,7 +27,7 @@
                 <li class="js-category-tree-item tree-item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
                     <div class="tree-item-content{{ disabledFormFields ? '' : ' js-category-tree-item-line' }}">
                         <div class="js-category-tree-item-line js-category-tree-item-handle tree-item-label text-truncate{% if isForAllDomains %} cursor-grab{% endif %}">
-                            {{ categoryWithPreloadedChildren.category.name }}
+                            {{ categoryWithPreloadedChildren.category.name|nameWithFallbackOnEmpty }}
                         </div>
 
                         <div class="tree-item-actions">
