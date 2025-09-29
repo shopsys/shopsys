@@ -52,6 +52,10 @@
             @apply mb-6 text-lg lg:mb-8 lg:text-lg;
         }
 
+        p a {
+            @apply text-lg lg:text-lg;
+        }
+
         a {
             @apply text-link-default underline transition-colors duration-200;
 
