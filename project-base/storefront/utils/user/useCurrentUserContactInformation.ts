@@ -55,6 +55,11 @@ const mergeContactInformation = (
             continue;
         }
 
+        const isEmailField = key === 'email';
+        if (isEmailField && !isUndefined && !isEmptyString) {
+            continue;
+        }
+
         const isFilledFromStorefront = !!contactInformationFromStore[key as keyof ContactInformation];
 
         if (((isUndefined || isEmptyString) && key in contactInformationFromApi) || isFilledFromStorefront) {
@@ -106,6 +111,7 @@ const mapCurrentCustomerContactInformationApiData = (
 
     return {
         ...apiCurrentCustomerUserData,
+        email: apiCurrentCustomerUserData.email,
         firstName: apiCurrentCustomerUserData.firstName ?? '',
         lastName: apiCurrentCustomerUserData.lastName ?? '',
         street: apiCurrentCustomerUserData.street ?? '',
