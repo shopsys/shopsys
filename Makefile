@@ -49,7 +49,7 @@ generate-schema-native: ## Generates GraphQL schema and frontend types (natively
 # ✅ Code Checks and Fixes (PHP and JS/TS)
 # ------------------------------------------------------------------------------
 
-check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations check-licenses ## Runs all code checks (backend & storefront) and attempts to fix issues
+check-fix: generate-schema php-checks php-translations storefront-checks storefront-translations storefront-styles-for-admin check-licenses ## Runs all code checks (backend & storefront) and attempts to fix issues
 
 php-checks: ## Runs PHP checks (coding standards, PHPStan) and attempts to fix issues
 	docker compose exec php-fpm php phing standards-fix phpstan
@@ -65,6 +65,9 @@ storefront-checks: ## Runs Storefront (JS/TS) checks and attempts to fix issues
 
 storefront-translations: ## Updates translation files of the storefront
 	docker compose exec storefront pnpm run translate
+
+storefront-styles-for-admin: ## Rebuilds the storefront styles for admin
+	docker compose exec storefront pnpm run compile-tailwind-for-admin
 
 check-schema: ## Checks if generated GraphQL schema is correct
 	docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
