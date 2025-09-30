@@ -119,7 +119,7 @@ export const fillRegistrationInfoAfterOrder = (password: string) => {
 };
 
 export const clickOnSendOrderButton = () => {
-    cy.getByTID([TIDs.blocks_orderaction_next]).click();
+    cy.getByTID([TIDs.blocks_orderaction_next]).should('be.visible').and('not.be.disabled').click();
 };
 
 export const mouseOverUserMenuButton = () => {
