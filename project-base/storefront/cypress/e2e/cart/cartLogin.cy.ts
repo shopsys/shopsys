@@ -107,7 +107,6 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         loginFromHeader(registrationInput.email, password);
         checkAndHideSuccessToast('Successfully logged in');
         cy.waitForStableAndInteractiveDOM();
-        cy.waitForHydration();
 
         goToCartPageFromHeader();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {

@@ -65,6 +65,7 @@ Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
     cy.get('.custom-loading-skeleton').should('not.exist');
     cy.get('#nprogress').should('not.exist');
     cy.getByTID([TIDs.loader]).should('not.exist');
+    cy.waitForHydration();
 
     return cy.waitForStableDOM();
 });

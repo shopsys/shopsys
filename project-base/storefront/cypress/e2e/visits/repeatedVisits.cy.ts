@@ -21,15 +21,10 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
 
     it('[Fast Homepage] 5 homepage visits without wait', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
-        cy.waitForHydration();
     });
 
     it('[Slow Product Detail] 5 product detail page visits with wait', () => {
@@ -47,15 +42,10 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
 
     it('[Fast Product Detail] 5 product detail page visits without wait', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
-        cy.waitForHydration();
     });
 
     it('[Slow Category Detail] 5 category detail page visits with wait', () => {
@@ -73,14 +63,9 @@ describe('Repeated Page Visits Tests (Defer Testing)', () => {
 
     it('[Fast Category Detail] 5 category detail page visits without wait', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
-        cy.waitForHydration();
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
-        cy.waitForHydration();
     });
 });
