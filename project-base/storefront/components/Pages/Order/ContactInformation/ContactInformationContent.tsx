@@ -13,20 +13,21 @@ import { Form, FormContentWrapper } from 'components/Forms/Form/Form';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, useWatch } from 'react-hook-form';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 
 export const ContactInformationWrapper: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const shouldDisplayContactInformationForm = useShouldDisplayContactInformationForm(formProviderMethods, formMeta);
     const { goToPreviousStepFromContactInformationPage } = useContactInformationPageNavigation();
     const { createOrder, isCreatingOrder } = useCreateOrder(formProviderMethods, formMeta);
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
 
-    const isEmailPristine = !formProviderMethods.formState.dirtyFields.email;
+    const isEmailPristine = !formProviderMethods.formState.dirtyFields.email && !emailValue;
     const isEmailInvalid = !!formProviderMethods.formState.errors.email;
 
     return (
