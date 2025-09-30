@@ -44,6 +44,7 @@ export type ProductItemProps = {
     textSize?: 'xs' | 'sm';
     textSizePrice?: 'base' | 'lg';
     allowKeyboardFocus?: boolean;
+    highlightBadgeText?: string;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -64,6 +65,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             textSizePrice = 'lg',
             onClick,
             allowKeyboardFocus = true,
+            highlightBadgeText,
         },
         ref,
     ) => {
@@ -79,9 +81,15 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border pb-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
                     'hover:border-border-less hover:bg-background-default',
+                    highlightBadgeText && 'border-2 border-red-600',
                     className,
                 )}
             >
+                {highlightBadgeText && (
+                    <span className="absolute top-2 left-2 z-10 rounded bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                        {highlightBadgeText}
+                    </span>
+                )}
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
                     className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
