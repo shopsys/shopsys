@@ -25,6 +25,7 @@ export enum TIDs {
     blocks_product_slider_promoted_products = 'blocks_product_slider_promoted_products',
     layout_header_search_autocomplete_input = 'layout_header_search_autocomplete_input',
     layout_header_search_autocomplete_popup_products = 'layout_header_search_autocomplete_popup_products',
+    layout_header_search_autocomplete_popup_favorites = 'layout_header_search_autocomplete_popup_favorites',
     search_results_heading = 'search_results_heading',
     blocks_product_addtocartpopup_product_name = 'blocks_product_addtocartpopup_product_name',
     basic_link = 'basic_link',

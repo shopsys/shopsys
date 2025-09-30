@@ -15,6 +15,7 @@
     * [ArticleEdge](#articleedge)
     * [ArticleLink](#articlelink)
     * [ArticleSite](#articlesite)
+    * [AutocompleteFavorites](#autocompletefavorites)
     * [Availability](#availability)
     * [BlogArticle](#blogarticle)
     * [BlogArticleConnection](#blogarticleconnection)
@@ -340,6 +341,15 @@ Returns list of searched articles and blog articles
 <td colspan="2" align="right" valign="top">searchInput</td>
 <td valign="top"><a href="#searchinput">SearchInput</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query.autocompletefavorites">autocompleteFavorites</strong></td>
+<td valign="top"><a href="#autocompletefavorites">AutocompleteFavorites</a>!</td>
+<td>
+
+Returns autocomplete favorites (products, categories, brands) configured for current domain
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="query.blogarticle">blogArticle</strong></td>
@@ -2435,6 +2445,50 @@ Text of article
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### AutocompleteFavorites
+
+Autocomplete favorites data structure
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="autocompletefavorites.brands">brands</strong></td>
+<td valign="top">[<a href="#brand">Brand</a>!]!</td>
+<td>
+
+Favorite brands for autocomplete
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="autocompletefavorites.categories">categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td>
+
+Favorite categories for autocomplete
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="autocompletefavorites.products">products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+Favorite products for autocomplete
 
 </td>
 </tr>

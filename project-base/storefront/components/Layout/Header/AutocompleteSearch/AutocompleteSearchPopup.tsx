@@ -1,3 +1,4 @@
+import { AutocompleteFavoritesResult } from './AutocompleteFavoritesResult';
 import { AutocompleteSearchArticlesResult } from './AutocompleteSearchArticlesResult';
 import { AutocompleteSearchBrandsResult } from './AutocompleteSearchBrandsResult';
 import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategoriesResult';
@@ -8,6 +9,7 @@ import { Tag } from 'components/Basic/Tag/Tag';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { m } from 'framer-motion';
+import { TypeAutocompleteFavoritesQuery } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
@@ -23,6 +25,8 @@ type AutocompleteProps = {
     autocompleteSearchQueryValue: string;
     onClosePopupCallback: () => void;
     areAutocompleteSearchDataFetching: boolean;
+    favoritesData: TypeAutocompleteFavoritesQuery | undefined;
+    showFavorites: boolean;
 };
 
 export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
@@ -30,6 +34,8 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     areAutocompleteSearchDataFetching,
     autocompleteSearchResults,
     onClosePopupCallback,
+    favoritesData,
+    showFavorites,
 }) => {
     const router = useRouter();
     const { t } = useTranslation();
@@ -44,6 +50,8 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
         productsSearch?.totalCount
     );
 
+    const showSearchResults = !showFavorites;
+
     return (
         <RemoveScroll>
             <m.div
@@ -56,18 +64,30 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                     'vl:max-h-[calc(98vh-120px)] max-h-[calc(85vh-169px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)]',
                 )}
             >
-                {areAutocompleteSearchDataFetching && <AutocompleteSkeleton />}
-
-                {!areAutocompleteSearchDataFetching && !isWithResults && (
-                    <div className="flex items-center">
-                        <IconImage alt="warning" icon="warning" />
-                        <span className="flex-1 pl-4 text-sm">
-                            {t('Could not find any results for the given query.')}
-                        </span>
-                    </div>
+                {showFavorites && (
+                    <AutocompleteFavoritesResult
+                        favoritesData={favoritesData}
+                        onClosePopupCallback={onClosePopupCallback}
+                    />
                 )}
 
-                {!areAutocompleteSearchDataFetching && isWithResults && (
+                {showSearchResults && (areAutocompleteSearchDataFetching || !autocompleteSearchResults) && (
+                    <AutocompleteSkeleton />
+                )}
+
+                {showSearchResults &&
+                    !areAutocompleteSearchDataFetching &&
+                    autocompleteSearchResults &&
+                    !isWithResults && (
+                        <div className="flex items-center">
+                            <IconImage alt="warning" icon="warning" />
+                            <span className="flex-1 pl-4 text-sm">
+                                {t('Could not find any results for the given query.')}
+                            </span>
+                        </div>
+                    )}
+
+                {showSearchResults && !areAutocompleteSearchDataFetching && isWithResults && (
                     <>
                         {productsSearch && (
                             <AutocompleteSearchProductsResult
