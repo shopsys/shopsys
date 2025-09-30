@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Front;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\NotFoundRedirectToStorefrontException;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -15,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PersonalDataController extends AbstractController
 {
@@ -92,6 +92,6 @@ class PersonalDataController extends AbstractController
             return $this->xmlResponse->getXmlResponse($fileName, $xmlContent);
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundRedirectToStorefrontException();
     }
 }
