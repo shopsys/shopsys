@@ -16,6 +16,7 @@ import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -137,7 +138,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                                       itemUuids: [productResponse.data.product.uuid],
                                       userIdentifier: cookiesStoreState.userIdentifier,
                                       recommendationType: TypeRecommendationType.ItemDetail,
-                                      recommenderClientIdentifier: getRecommenderClientIdentifier(context.resolvedUrl),
+                                      recommenderClientIdentifier: getRecommenderClientIdentifier(
+                                          FriendlyPagesDestinations.product,
+                                      ),
                                       limit: 10,
                                   },
                               },
