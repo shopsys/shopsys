@@ -32,7 +32,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
     formName,
 }) => {
     const {
-        fieldState: { invalid, error },
+        fieldState: { error },
         field,
     } = useController({ name, control });
     const passwordInputId = formName + '-' + name;
@@ -50,7 +50,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                 aria-label={passwordInputProps['aria-label']}
                 aria-labelledby={passwordInputProps['aria-labelledby']}
                 autoComplete={passwordInputProps.autoComplete}
-                hasError={invalid}
+                hasError={!!error}
                 id={passwordInputId}
                 inputSize={passwordInputProps.inputSize}
                 label={passwordInputProps.label}
