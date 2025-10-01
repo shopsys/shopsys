@@ -1,5 +1,5 @@
-import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
-import { Button } from 'components/Forms/Button/Button';
+import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ type DropzoneControlledProps = {
     disabled?: boolean;
 };
 
-const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
+export const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
     control,
     formName,
     name,
@@ -115,14 +115,13 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
                                         <span className={fileNameTwClass}>
                                             {file.name} - {formatBytes(file.size)}
                                         </span>
-                                        <Button
-                                            className="p-1"
-                                            hasDisabledLook={disabled}
-                                            variant="inverted"
+
+                                        <IconButton
+                                            Icon={TrashCanIcon}
+                                            disabled={disabled}
+                                            title={t('Remove file')}
                                             onClick={() => removeFile(file)}
-                                        >
-                                            <RemoveIcon className="w-2" />
-                                        </Button>
+                                        />
                                     </li>
                                 ))}
                             </ul>
@@ -133,5 +132,3 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
         />
     );
 };
-
-export default DropzoneControlled;

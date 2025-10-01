@@ -4,7 +4,6 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
@@ -75,20 +74,18 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                 <Form onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormColumn>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.email.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        label: formMeta.fields.email.label,
-                                        required: true,
-                                        type: 'email',
-                                        autoComplete: 'email',
-                                    }}
-                                />
-                            </FormColumn>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
+                            />
 
                             <CheckboxControlled
                                 control={formProviderMethods.control}
@@ -100,15 +97,13 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                                     required: true,
                                 }}
                             />
-
-                            <FormButtonWrapper>
-                                <SubmitButton
-                                    aria-label={t('Submit form to send your watchdog', { ns: 'accessibility' })}
-                                >
-                                    {t('Send')}
-                                </SubmitButton>
-                            </FormButtonWrapper>
                         </FormBlockWrapper>
+
+                        <FormButtonWrapper>
+                            <SubmitButton aria-label={t('Submit form to send your watchdog', { ns: 'accessibility' })}>
+                                {t('Send')}
+                            </SubmitButton>
+                        </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

@@ -1,4 +1,5 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -113,15 +114,14 @@ export const Popup: React.FC<PopupProps> = ({
                             </span>
 
                             {!hideCloseButton && (
-                                <button
-                                    aria-label={t('Close popup', { ns: 'accessibility' })}
-                                    className="text-icon-less hover:text-icon-default ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
-                                    ref={closeButtonRef}
-                                    tabIndex={0}
-                                    onClick={handleClosePopup}
-                                >
-                                    <RemoveIcon className="size-6" />
-                                </button>
+                                <IconButton
+                                    Icon={RemoveIcon}
+                                    ariaLabel={t('Close popup', { ns: 'accessibility' })}
+                                    buttonRef={closeButtonRef}
+                                    className="ml-auto"
+                                    title={t('Close popup')}
+                                    onClick={() => updatePortalContent(null)}
+                                />
                             )}
                         </div>
 

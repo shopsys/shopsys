@@ -1,13 +1,14 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
-import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeCartItemTypeEnum } from 'graphql/types';
-import { MouseEventHandler, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -18,7 +19,7 @@ import { useDebounce } from 'utils/useDebounce';
 type CartListItemProps = {
     item: TypeCartItemFragment;
     listIndex: number;
-    onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
+    onRemoveFromCart: () => void;
     onAddToCart: AddToCart;
 };
 
@@ -156,14 +157,16 @@ export const CartListItem: FC<CartListItemProps> = ({
                     <CartItemPrice freeQuantity={0} productPrice={product.giftPrice} quantity={quantity} />
                 )}
 
-                <RemoveCartItemButton
-                    className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"
+                <IconButton
+                    Icon={RemoveIcon}
+                    className="vl:static absolute top-2.5 right-2.5 flex items-center"
+                    tid={TIDs.pages_cart_removecartitembutton}
                     title={t('Remove product from cart')}
                     ariaLabel={t('Remove from cart product {{ productName }}', {
                         ns: 'accessibility',
                         productName: product.fullName,
                     })}
-                    onRemoveFromCart={onRemoveFromCart}
+                    onClick={onRemoveFromCart}
                 />
             </section>
         </li>

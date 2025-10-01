@@ -27,10 +27,11 @@ const CategoryBestsellersComp: FC<CategoryBestsellersProps> = ({ products }) => 
     const showLessLabel = t('Show less');
     const ariaLabel = isCollapsed
         ? t('Show {{ count }} more bestseller {{ items }}', {
+              ns: 'accessibility',
               count: showMoreCount,
               items: itemsLabel,
           })
-        : t('Show less');
+        : t('Show less', { ns: 'accessibility' });
 
     useEffect(() => {
         if (shouldFocusNewItem && !isCollapsed && listRef.current) {

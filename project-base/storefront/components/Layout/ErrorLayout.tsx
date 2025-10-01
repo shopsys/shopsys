@@ -16,7 +16,7 @@ export const ErrorLayout: FC = ({ children }) => {
 
             <main
                 aria-label={t('Error page content', { ns: 'accessibility' })}
-                className="mt-4 mb-10 flex flex-col gap-4"
+                className="animate-in mt-4 mb-10 flex flex-col gap-4"
                 id="main-content"
             >
                 {children}

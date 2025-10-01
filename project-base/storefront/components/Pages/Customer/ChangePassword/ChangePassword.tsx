@@ -85,16 +85,12 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.oldPassword.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                                 passwordInputProps={{
                                     label: formMeta.fields.oldPassword.label,
                                     autoComplete: 'current-password',
                                     'aria-labelledby': 'change-password-form-description',
                                 }}
-                                render={(passwordInput) => (
-                                    <FormColumn>
-                                        <FormLine bottomGap>{passwordInput}</FormLine>
-                                    </FormColumn>
-                                )}
                             />
 
                             <FormColumn>
@@ -102,22 +98,26 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.newPassword.name}
-                                    render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPassword.label,
                                         autoComplete: 'new-password',
                                     }}
+                                    render={(passwordInput) => (
+                                        <FormLine className="col-span-2">{passwordInput}</FormLine>
+                                    )}
                                 />
 
                                 <PasswordInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.newPasswordConfirm.name}
-                                    render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPasswordConfirm.label,
                                         autoComplete: 'new-password-confirm',
                                     }}
+                                    render={(passwordInput) => (
+                                        <FormLine className="col-span-2">{passwordInput}</FormLine>
+                                    )}
                                 />
                             </FormColumn>
                         </FormBlockWrapper>

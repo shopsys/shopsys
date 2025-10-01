@@ -1,6 +1,6 @@
 import { BillingAddress } from './BillingAddress';
-import { CompanyCustomer } from './CompanyCustomer';
 import { DeliveryAddress } from './DeliveryAddress';
+import { NewsletterSubscription } from './NewsletterSubscription';
 import { PersonalData } from './PersonalData';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -95,17 +95,17 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                 <FormContentWrapper>
                     <PersonalData />
 
-                    {currentCustomerUser.companyCustomer && <CompanyCustomer />}
-
-                    <BillingAddress />
+                    <BillingAddress companyCustomer={currentCustomerUser.companyCustomer} />
 
                     <DeliveryAddress
                         defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}
                         deliveryAddresses={currentCustomerUser.deliveryAddresses}
                     />
 
+                    <NewsletterSubscription />
+
                     {canManagePersonalData && (
-                        <FormButtonWrapper className="mt-0 pb-6">
+                        <FormButtonWrapper>
                             <SubmitButton
                                 aria-label={t('Submit form to save changes in your profile', { ns: 'accessibility' })}
                                 hasDisabledLook={isSubmitting}

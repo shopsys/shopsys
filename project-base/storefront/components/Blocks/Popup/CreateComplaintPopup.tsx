@@ -1,11 +1,12 @@
 import { Loader } from 'components/Basic/Loader/Loader';
+import { AddressList } from 'components/Blocks/AddressList/AddressList';
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import DropzoneControlled from 'components/Forms/Dropzone/DropzoneControlled';
+import { DropzoneControlled } from 'components/Forms/Dropzone/DropzoneControlled';
 import { Form, FormContentWrapper, FormBlockWrapper, FormHeading, FormButtonWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
@@ -17,7 +18,7 @@ import { useCreateComplaint } from 'graphql/requests/complaints/mutations/Create
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { ComplaintFormType } from 'types/form';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
@@ -44,7 +45,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     const [, createComplaint] = useCreateComplaint();
     const user = useCurrentCustomerData();
 
-    const defaultDeliveryAddressChecked = user?.deliveryAddresses[0]?.uuid || '';
+    const defaultDeliveryAddressChecked = user?.defaultDeliveryAddress?.uuid || user?.deliveryAddresses[0]?.uuid || '';
     const isCreationWithoutOrder = orderUuid === null;
     const [formProviderMethods] = useComplaintForm(
         defaultDeliveryAddressChecked,
@@ -56,6 +57,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     const formMeta = useComplaintFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
     const complaintResolutionsAsOptions = useComplaintResolutionsAsSelectOptions();
+    const [showNewAddressForm, setShowNewAddressForm] = useState(false);
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0) {
@@ -63,18 +65,29 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         }
     }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
 
-    const [deliveryAddressUuid] = useWatch({
-        name: [formMeta.fields.deliveryAddressUuid.name],
-        control: formProviderMethods.control,
-    });
-
-    const [resolution] = useWatch({
-        name: [formMeta.fields.resolution.name],
+    const [deliveryAddressUuid, resolution] = useWatch({
+        name: [formMeta.fields.deliveryAddressUuid.name, formMeta.fields.resolution.name],
         control: formProviderMethods.control,
     });
 
     const isNewDeliveryAddressSelected = deliveryAddressUuid === '';
     const isMoneyBackResolutionSelected = isResolutionMoneyReturn(resolution);
+
+    const handleChangeDeliveryAddressForComplaint = (value: string) => {
+        setValue(formMeta.fields.deliveryAddressUuid.name, value);
+        setShowNewAddressForm(false);
+    };
+
+    const handleShowNewAddressForm = () => {
+        setValue(formMeta.fields.deliveryAddressUuid.name, '');
+        setShowNewAddressForm(true);
+    };
+
+    useEffect(() => {
+        if (deliveryAddressUuid === '' && !showNewAddressForm) {
+            setShowNewAddressForm(true);
+        }
+    }, [deliveryAddressUuid, showNewAddressForm]);
 
     const createComplaintHandler: SubmitHandler<ComplaintFormType> = async (complaintFormData) => {
         blurInput();
@@ -90,18 +103,22 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
             },
         ];
 
+        const selectedDeliveryAddress =
+            user?.deliveryAddresses &&
+            user.deliveryAddresses.find((address) => address.uuid === complaintFormData.deliveryAddressUuid);
+
         const deliveryAddress =
-            user?.deliveryAddresses && user.deliveryAddresses.length > 0 && !isNewDeliveryAddressSelected
+            selectedDeliveryAddress && !isNewDeliveryAddressSelected
                 ? {
                       uuid: null,
-                      firstName: user.deliveryAddresses[0].firstName,
-                      lastName: user.deliveryAddresses[0].lastName,
-                      companyName: user.deliveryAddresses[0].companyName,
-                      street: user.deliveryAddresses[0].street,
-                      city: user.deliveryAddresses[0].city,
-                      postcode: user.deliveryAddresses[0].postcode,
-                      telephone: user.deliveryAddresses[0].telephone,
-                      country: user.deliveryAddresses[0].country.code,
+                      firstName: selectedDeliveryAddress.firstName,
+                      lastName: selectedDeliveryAddress.lastName,
+                      companyName: selectedDeliveryAddress.companyName,
+                      street: selectedDeliveryAddress.street,
+                      city: selectedDeliveryAddress.city,
+                      postcode: selectedDeliveryAddress.postcode,
+                      telephone: selectedDeliveryAddress.telephone,
+                      country: selectedDeliveryAddress.country.code,
                   }
                 : {
                       uuid: null,
@@ -157,7 +174,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.manualDocumentNumber.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.manualDocumentNumber.label,
                                         required: true,
@@ -166,13 +183,15 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     }}
                                 />
                             )}
-                            <p className="h5 mb-2">{orderItem?.name ?? t('Complaint item')}</p>
+
+                            <p className="h5">{orderItem?.name ?? t('Complaint item')}</p>
+
                             {isCreationWithoutOrder && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.manualComplaintItemName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.manualComplaintItemName.label,
                                         required: true,
@@ -181,12 +200,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     }}
                                 />
                             )}
+
                             {isCreationWithoutOrder && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.manualComplaintItemCatnum.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.manualComplaintItemCatnum.label,
                                         required: false,
@@ -195,11 +215,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     }}
                                 />
                             )}
+
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.quantity.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.quantity.label,
                                     required: true,
@@ -208,6 +229,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     disabled: isSubmitting,
                                 }}
                             />
+
                             <TextareaControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
@@ -221,8 +243,10 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 }}
                             />
                         </FormBlockWrapper>
+
                         <FormBlockWrapper>
                             <FormHeading>{t('Attachments')}</FormHeading>
+
                             <DropzoneControlled
                                 required
                                 control={formProviderMethods.control}
@@ -233,13 +257,15 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 render={(dropzone) => <FormLine>{dropzone}</FormLine>}
                             />
                         </FormBlockWrapper>
+
                         <FormBlockWrapper>
                             <FormHeading>{t('Email')}</FormHeading>
+
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.email.label,
                                     required: true,
@@ -248,8 +274,10 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 }}
                             />
                         </FormBlockWrapper>
+
                         <FormBlockWrapper>
                             <FormHeading>{t('Resolution')}</FormHeading>
+
                             <Controller
                                 name={formMeta.fields.resolution.name}
                                 render={({ fieldState: { error }, field }) => (
@@ -271,12 +299,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     </>
                                 )}
                             />
+
                             {isMoneyBackResolutionSelected && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.bankAccountNumber.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.bankAccountNumber.label,
                                         required: true,
@@ -286,69 +315,60 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                 />
                             )}
                         </FormBlockWrapper>
+
                         <FormBlockWrapper>
                             <FormHeading>{t('Delivery address')}</FormHeading>
-                            <div className="flex w-full flex-col gap-y-5">
-                                <RadiobuttonGroup
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.deliveryAddressUuid.name}
-                                    radiobuttons={
-                                        user!.deliveryAddresses.length > 0
-                                            ? [
-                                                  ...user!.deliveryAddresses.map((deliveryAddress) => ({
-                                                      label: (
-                                                          <p className="flex flex-col">
-                                                              <strong className="mr-1">
-                                                                  {deliveryAddress.firstName} {deliveryAddress.lastName}
-                                                              </strong>
-                                                              <span>{deliveryAddress.companyName}</span>
-                                                              <span>{deliveryAddress.telephone}</span>
-                                                              <span>
-                                                                  {deliveryAddress.street}, {deliveryAddress.city},{' '}
-                                                                  {deliveryAddress.postcode}
-                                                              </span>
-                                                              <span>{deliveryAddress.country.name}</span>
-                                                          </p>
-                                                      ),
-                                                      value: deliveryAddress.uuid,
-                                                      labelWrapperClassName: 'flex-row-reverse',
-                                                      disabled: isSubmitting,
-                                                  })),
-                                                  {
-                                                      label: (
-                                                          <p>
-                                                              <span className="font-bold">
-                                                                  {t('Different delivery address')}
-                                                              </span>
-                                                          </p>
-                                                      ),
-                                                      value: '',
-                                                      id: 'new-delivery-address',
-                                                      labelWrapperClassName: 'flex-row-reverse',
-                                                      disabled: isSubmitting,
-                                                  },
-                                              ]
-                                            : []
-                                    }
-                                    render={(radiobutton, key) => (
-                                        <div
-                                            key={key}
-                                            className="border-border-default bg-background-default relative flex w-full flex-wrap rounded-sm border-2 p-5"
-                                        >
-                                            {radiobutton}
-                                        </div>
-                                    )}
-                                />
-                            </div>
-                            {isNewDeliveryAddressSelected && (
+
+                            {user && user.deliveryAddresses.length > 0 && !showNewAddressForm && (
                                 <>
-                                    <FormColumn className="mt-4">
+                                    <AddressList
+                                        hideAddAddressAction
+                                        defaultDeliveryAddress={user.defaultDeliveryAddress}
+                                        deliveryAddresses={user.deliveryAddresses}
+                                        orderSelectAddressHandler={handleChangeDeliveryAddressForComplaint}
+                                        orderSelectedAddress={deliveryAddressUuid ?? undefined}
+                                    />
+
+                                    <Button
+                                        className="self-start"
+                                        size="small"
+                                        variant="secondary"
+                                        onClick={handleShowNewAddressForm}
+                                    >
+                                        {t('Add different delivery address')}
+                                    </Button>
+                                </>
+                            )}
+
+                            {(showNewAddressForm || !user || user.deliveryAddresses.length === 0) && (
+                                <>
+                                    {user && user.deliveryAddresses.length > 0 && (
+                                        <Button
+                                            className="self-start"
+                                            size="small"
+                                            variant="secondary"
+                                            onClick={() => {
+                                                setShowNewAddressForm(false);
+                                                setValue(
+                                                    formMeta.fields.deliveryAddressUuid.name,
+                                                    user.defaultDeliveryAddress?.uuid ||
+                                                        user.deliveryAddresses[0]?.uuid ||
+                                                        '',
+                                                );
+                                            }}
+                                        >
+                                            {t('Select from existing addresses')}
+                                        </Button>
+                                    )}
+
+                                    <FormColumn>
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.firstName.name}
-                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                            render={(textInput) => (
+                                                <FormLine className="col-span-2">{textInput}</FormLine>
+                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.firstName.label,
                                                 required: true,
@@ -357,11 +377,14 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                                 disabled: isSubmitting,
                                             }}
                                         />
+
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.lastName.name}
-                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                            render={(textInput) => (
+                                                <FormLine className="col-span-2">{textInput}</FormLine>
+                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.lastName.label,
                                                 required: true,
@@ -371,11 +394,30 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             }}
                                         />
                                     </FormColumn>
+
+                                    <FormColumn>
+                                        <TextInputControlled
+                                            control={formProviderMethods.control}
+                                            formName={formMeta.formName}
+                                            name={formMeta.fields.telephone.name}
+                                            render={(textInput) => (
+                                                <FormLine className="col-span-2">{textInput}</FormLine>
+                                            )}
+                                            textInputProps={{
+                                                label: formMeta.fields.telephone.label,
+                                                required: true,
+                                                type: 'tel',
+                                                autoComplete: 'tel',
+                                                disabled: isSubmitting,
+                                            }}
+                                        />
+                                    </FormColumn>
+
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.companyName.name}
-                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                        render={(textInput) => <FormLine>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.companyName.label,
                                             type: 'text',
@@ -383,24 +425,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             disabled: isSubmitting,
                                         }}
                                     />
-                                    <TextInputControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.telephone.name}
-                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                        textInputProps={{
-                                            label: formMeta.fields.telephone.label,
-                                            required: true,
-                                            type: 'tel',
-                                            autoComplete: 'tel',
-                                            disabled: isSubmitting,
-                                        }}
-                                    />
+
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.street.name}
-                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                        render={(textInput) => <FormLine>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.street.label,
                                             required: true,
@@ -409,12 +439,15 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             disabled: isSubmitting,
                                         }}
                                     />
+
                                     <FormColumn>
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.city.name}
-                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                            render={(textInput) => (
+                                                <FormLine className="col-span-3">{textInput}</FormLine>
+                                            )}
                                             textInputProps={{
                                                 label: formMeta.fields.city.label,
                                                 required: true,
@@ -423,14 +456,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                                 disabled: isSubmitting,
                                             }}
                                         />
+
                                         <TextInputControlled
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.postcode.name}
                                             render={(textInput) => (
-                                                <FormLine bottomGap isSmallInput>
-                                                    {textInput}
-                                                </FormLine>
+                                                <FormLine className="col-start-4">{textInput}</FormLine>
                                             )}
                                             textInputProps={{
                                                 label: formMeta.fields.postcode.label,
@@ -442,43 +474,46 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                             }}
                                         />
                                     </FormColumn>
-                                    <FormLine>
-                                        <Controller
-                                            name={formMeta.fields.country.name}
-                                            render={({ fieldState: { error }, field }) => (
-                                                <>
-                                                    <Select
-                                                        isRequired
-                                                        ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                                        isDisabled={isSubmitting}
-                                                        label={formMeta.fields.country.label}
-                                                        options={countriesAsSelectOptions}
-                                                        tid={formMeta.formName + '-' + formMeta.fields.country.name}
-                                                        activeOption={countriesAsSelectOptions.find(
-                                                            (option) => option.value === field.value.value,
-                                                        )}
-                                                        onSelectOption={field.onChange}
-                                                    />
-                                                    <FormLineError error={error} inputType="select" />
-                                                </>
-                                            )}
-                                        />
-                                    </FormLine>
+
+                                    <FormColumn>
+                                        <FormLine className="col-span-3">
+                                            <Controller
+                                                name={formMeta.fields.country.name}
+                                                render={({ fieldState: { error }, field }) => (
+                                                    <>
+                                                        <Select
+                                                            isRequired
+                                                            ariaLabel={t('Select country', { ns: 'accessibility' })}
+                                                            isDisabled={isSubmitting}
+                                                            label={formMeta.fields.country.label}
+                                                            options={countriesAsSelectOptions}
+                                                            tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                                            activeOption={countriesAsSelectOptions.find(
+                                                                (option) => option.value === field.value.value,
+                                                            )}
+                                                            onSelectOption={field.onChange}
+                                                        />
+                                                        <FormLineError error={error} inputType="select" />
+                                                    </>
+                                                )}
+                                            />
+                                        </FormLine>
+                                    </FormColumn>
                                 </>
                             )}
-
-                            <FormButtonWrapper>
-                                <SubmitButton aria-label={t('Submit your complaint', { ns: 'accessibility' })}>
-                                    {isSubmitting ? (
-                                        <>
-                                            <Loader className="h-4 w-4" /> {t('Sending...')}
-                                        </>
-                                    ) : (
-                                        t('Send complaint')
-                                    )}
-                                </SubmitButton>
-                            </FormButtonWrapper>
                         </FormBlockWrapper>
+
+                        <FormButtonWrapper>
+                            <SubmitButton aria-label={t('Submit your complaint', { ns: 'accessibility' })}>
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader className="size-4" /> {t('Sending...')}
+                                    </>
+                                ) : (
+                                    t('Send complaint')
+                                )}
+                            </SubmitButton>
+                        </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>
