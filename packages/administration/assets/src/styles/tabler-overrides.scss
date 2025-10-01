@@ -55,3 +55,8 @@ textarea.form-control.is-invalid {
     background-color: var(--tblr-bg-surface-secondary);
     color: var(--tblr-secondary);
 }
+
+// fix small icon alignment in table cells
+.table td .icon-sm {
+    vertical-align: text-bottom;
+}
