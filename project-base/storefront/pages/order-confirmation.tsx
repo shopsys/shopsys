@@ -29,14 +29,14 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export type OrderConfirmationUrlQuery = {
-    orderUuid: string | undefined;
-    companyNumber: string | undefined;
-    orderEmail: string | undefined;
-    orderPaymentType: TypePaymentTypeEnum | undefined;
-    orderUrlHash?: string | undefined;
-    orderPaymentStatusPageValidityHash: string | undefined;
-};
+export type OrderConfirmationUrlQuery = Partial<{
+    orderUuid: string;
+    companyNumber: string;
+    orderEmail: string;
+    orderPaymentType: TypePaymentTypeEnum;
+    orderUrlHash?: string;
+    orderPaymentStatusPageValidityHash: string;
+}>;
 
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();

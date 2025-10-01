@@ -2,6 +2,7 @@ import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
 import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
+import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -23,27 +24,39 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
 }) => {
     const [initiatedPaymentGate, setInitiatedPaymentGate] = useState(!requiresAction);
     const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<TypeGoPayCreatePaymentSetup | undefined>(undefined);
+    const router = useRouter();
     const [, payOrder] = usePayOrderMutation();
     const { t } = useTranslation();
     const wasPaidRef = useRef(false);
 
     useEffect(() => {
         if (!wasPaidRef.current && initiatedPaymentGate) {
-            payOrder({ orderUuid }).then((payOrderResult) => {
-                if (payOrderResult.error?.graphQLErrors) {
-                    for (const error of payOrderResult.error.graphQLErrors) {
-                        showErrorMessage(
-                            error.message.includes('Max transaction count reached')
-                                ? t('Max transaction count reached')
-                                : error.message,
-                        );
-                    }
-                    setInitiatedPaymentGate(false);
-                    return;
-                }
+            router
+                .replace(
+                    {
+                        pathname: router.pathname,
+                        query: router.query,
+                    },
+                    undefined,
+                    { shallow: true },
+                )
+                .then(() => {
+                    payOrder({ orderUuid }).then((payOrderResult) => {
+                        if (payOrderResult.error?.graphQLErrors) {
+                            for (const error of payOrderResult.error.graphQLErrors) {
+                                showErrorMessage(
+                                    error.message.includes('Max transaction count reached')
+                                        ? t('Max transaction count reached')
+                                        : error.message,
+                                );
+                            }
+                            setInitiatedPaymentGate(false);
+                            return;
+                        }
 
-                setGoPayPaymentSetup(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined);
-            });
+                        setGoPayPaymentSetup(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? undefined);
+                    });
+                });
             wasPaidRef.current = true;
         }
     }, [initiatedPaymentGate]);
