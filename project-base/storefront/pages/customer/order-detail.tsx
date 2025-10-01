@@ -22,6 +22,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
+import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -71,6 +72,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     },
                 };
             }
+
             const client = createClient({
                 t,
                 ssrExchange,
@@ -79,13 +81,16 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const orderResponse: OperationResult<TypeOrderDetailQuery, TypeOrderDetailQueryVariables> = await client!
-                .query(OrderDetailQueryDocument, {
-                    orderNumber: context.query.orderNumber,
-                })
-                .toPromise();
+            let orderUuid = null;
 
-            const orderUuid = orderResponse.data?.order?.uuid;
+            if (isUserLoggedInSSR(client)) {
+                const orderResponse: OperationResult<TypeOrderDetailQuery, TypeOrderDetailQueryVariables> = await client
+                    .query(OrderDetailQueryDocument, {
+                        orderNumber: context.query.orderNumber,
+                    })
+                    .toPromise();
+                orderUuid = orderResponse.data?.order?.uuid;
+            }
 
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
                 authenticationConfig: {
