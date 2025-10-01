@@ -31,8 +31,8 @@ $allowedImageSizes = [16, 24, 32, 48, 64, 96, 128, 256, 480, 768, 1024, 1440];
 sort($allowedImageSizes);
 
 $resize = $_GET['resize'] ?? 'fit';
-$width = findExactOrClosestLargerOrLargestImageSize(isset($_GET['width']) ? max(0, (int) $_GET['width']) : 0, $allowedImageSizes);
-$height = findExactOrClosestLargerOrLargestImageSize(isset($_GET['height']) ? max(0, (int) $_GET['height']) : 0, $allowedImageSizes);
+$width = findExactOrClosestLargerOrLargestImageSize(isset($_GET['width']) ? max(0, (int)$_GET['width']) : 0, $allowedImageSizes);
+$height = findExactOrClosestLargerOrLargestImageSize(isset($_GET['height']) ? max(0, (int)$_GET['height']) : 0, $allowedImageSizes);
 $gravity = 'no';
 $enlarge = 0;
 
@@ -50,12 +50,14 @@ if ($CDN_DOMAIN === '//' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
     # see https://support.vshosting.cz/en/CDN/manipulating-images-in-cdn/
     $ttl = 1209600;
 
-    $keyBin = pack("H*" , $CDN_API_KEY);
+    $keyBin = pack("H*", $CDN_API_KEY);
+
     if (empty($keyBin)) {
         die('Key expected to be hex-encoded string');
     }
 
-    $saltBin = pack("H*" , $CDN_API_SALT);
+    $saltBin = pack("H*", $CDN_API_SALT);
+
     if (empty($saltBin)) {
         die('Salt expected to be hex-encoded string');
     }
@@ -64,7 +66,7 @@ if ($CDN_DOMAIN === '//' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
 
     $encodedUrl = rtrim(strtr(base64_encode($IMAGE_URL), '+/', '-_'), '=');
     $path = "/{$resize}/{$width}/{$height}/{$gravity}/{$enlarge}/{$encodedUrl}.{$extension}";
-    $signature = rtrim(strtr(base64_encode(hash_hmac('sha256', $saltBin."/".$ttl."/".$path, $keyBin, true)), '+/', '-_'), '=');
+    $signature = rtrim(strtr(base64_encode(hash_hmac('sha256', $saltBin . "/" . $ttl . "/" . $path, $keyBin, true)), '+/', '-_'), '=');
 
     $imageUrl = sprintf("%s/zoh4eiLi/IMG/%d/%s%s", $CDN_DOMAIN, $ttl, $signature, $path);
 }
@@ -72,7 +74,8 @@ if ($CDN_DOMAIN === '//' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
 try {
     getImageFromUrl($imageUrl);
 } catch (Throwable $throwable) {
-    header("HTTP/1.0 404 Not Found");
+    render404();
+
     exit;
 }
 
@@ -88,7 +91,7 @@ function getImageFromUrl(string $url): void
         CURLOPT_USERAGENT => 'ImageProxy/1.0',
         CURLOPT_HTTPHEADER => [
             'Accept: ' . $_SERVER['HTTP_ACCEPT'],
-        ]
+        ],
     ]);
     $image = curl_exec($ch);
     $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
@@ -96,7 +99,7 @@ function getImageFromUrl(string $url): void
     curl_close($ch);
 
     if ($statusCode !== 200 || !$image) {
-        header("HTTP/1.0 404 Not Found");
+        render404();
         exit;
     }
 
@@ -118,6 +121,7 @@ function getImageFromUrl(string $url): void
     header("ETag: $etag");
 
     echo $image;
+
     exit;
 }
 
@@ -132,14 +136,24 @@ function getExtension(string $url): string
     return 'jpeg';
 }
 
-function findExactOrClosestLargerOrLargestImageSize(int $requestedImageSize, array $allowedImageSizes) {
+function findExactOrClosestLargerOrLargestImageSize(int $requestedImageSize, array $allowedImageSizes): int
+{
     if ($requestedImageSize === 0) {
         return 0;
     }
+
     foreach ($allowedImageSizes as $size) {
         if ($requestedImageSize <= $size) {
             return $size;
         }
     }
+
     return end($allowedImageSizes);
+}
+
+function render404(): void
+{
+    header('HTTP/1.1 404 Not Found');
+
+    echo 'File not found';
 }
