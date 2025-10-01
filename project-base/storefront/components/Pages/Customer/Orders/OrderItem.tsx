@@ -1,4 +1,5 @@
 import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
+import { OrderItemProducts } from './OrderItemProducts';
 import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
@@ -26,6 +27,11 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
+
+    const orderLink = {
+        pathname: customerOrderDetailUrl,
+        query: { orderNumber: order.number },
+    };
 
     const showRepeatOrderButton =
         canCreateOrder &&
@@ -82,6 +88,8 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                 <OrderItemRowInfo title={t('Transport')}>
                     <ElementWithImage image={order.transport.mainImage?.url} name={order.transport.name} />
                 </OrderItemRowInfo>
+
+                <OrderItemProducts items={order.productItems} orderLink={orderLink} />
             </div>
 
             <div className="flex shrink-0 gap-4">
@@ -101,22 +109,20 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
 
                 {notPaid && (
                     <LinkButton
+                        href={orderLink}
                         type="orderDetail"
                         variant="primary"
                         aria-label={t('Repeat payment for order number {{ orderNumber }}', {
                             ns: 'accessibility',
                             orderNumber: order.number,
                         })}
-                        href={{
-                            pathname: customerOrderDetailUrl,
-                            query: { orderNumber: order.number },
-                        }}
                     >
                         {t('Repeat payment')}
                     </LinkButton>
                 )}
 
                 <LinkButton
+                    href={orderLink}
                     tid={TIDs.my_orders_link_ + listIndex}
                     type="orderDetail"
                     variant="secondary"
@@ -124,10 +130,6 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         ns: 'accessibility',
                         orderNumber: order.number,
                     })}
-                    href={{
-                        pathname: customerOrderDetailUrl,
-                        query: { orderNumber: order.number },
-                    }}
                 >
                     {t('Detail')}
                 </LinkButton>
