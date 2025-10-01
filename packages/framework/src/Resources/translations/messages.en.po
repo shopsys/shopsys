@@ -280,6 +280,12 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
+msgid "Autocomplete favorites"
+msgstr ""
+
+msgid "Autocomplete favorites successfully saved for the selected domain."
+msgstr ""
+
 msgid "Automated filters"
 msgstr ""
 
@@ -1442,6 +1448,15 @@ msgid "External bridge ID"
 msgstr ""
 
 msgid "Facebook URL"
+msgstr ""
+
+msgid "Favorite Brands"
+msgstr ""
+
+msgid "Favorite Categories"
+msgstr ""
+
+msgid "Favorite Products"
 msgstr ""
 
 msgid "Feed"
@@ -2729,6 +2744,9 @@ msgid "Save warehouse settings"
 msgstr ""
 
 msgid "Schedule"
+msgstr ""
+
+msgid "Search and select products..."
 msgstr ""
 
 msgid "Second column categories"
