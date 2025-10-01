@@ -114,7 +114,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.email.label,
                                     required: mode === 'add',
@@ -123,12 +123,13 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                     autoComplete: 'email',
                                 }}
                             />
+
                             <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.firstName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -136,11 +137,12 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                         autoComplete: 'given-name',
                                     }}
                                 />
+
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.lastName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -149,18 +151,22 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                     }}
                                 />
                             </FormColumn>
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.telephone.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                textInputProps={{
-                                    label: formMeta.fields.telephone.label,
-                                    required: true,
-                                    type: 'tel',
-                                    autoComplete: 'tel',
-                                }}
-                            />
+
+                            <FormColumn>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.telephone.name}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.telephone.label,
+                                        required: true,
+                                        type: 'tel',
+                                        autoComplete: 'tel',
+                                    }}
+                                />
+                            </FormColumn>
+
                             <Controller
                                 name={formMeta.fields.roleGroup.name}
                                 render={({ fieldState: { error }, field }) => (
@@ -184,18 +190,19 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                     </>
                                 )}
                             />
-                            <FormButtonWrapper>
-                                <SubmitButton
-                                    aria-label={
-                                        mode === 'edit'
-                                            ? t('Submit form to save user changes', { ns: 'accessibility' })
-                                            : t('Submit form to add new user', { ns: 'accessibility' })
-                                    }
-                                >
-                                    {mode === 'edit' ? t('Save user') : t('Add user')}
-                                </SubmitButton>
-                            </FormButtonWrapper>
                         </FormBlockWrapper>
+
+                        <FormButtonWrapper>
+                            <SubmitButton
+                                aria-label={
+                                    mode === 'edit'
+                                        ? t('Submit form to save user changes', { ns: 'accessibility' })
+                                        : t('Submit form to add new user', { ns: 'accessibility' })
+                                }
+                            >
+                                {mode === 'edit' ? t('Save user') : t('Add user')}
+                            </SubmitButton>
+                        </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

@@ -4,30 +4,8 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 
-type FormLineProps = NativeProps & {
-    bottomGap?: boolean;
-    isHalfWidthInput?: boolean;
-    isSmallInput?: boolean;
-};
-
-export const FormLine: FC<FormLineProps> = ({
-    bottomGap,
-    children,
-    className,
-    isHalfWidthInput,
-    isSmallInput,
-    ...props
-}) => (
-    <div
-        className={twMergeCustom(
-            'flex-1',
-            bottomGap && 'pb-2.5',
-            isHalfWidthInput && 'vl:w-1/2 vl:pr-1.5',
-            isSmallInput && 'vl:w-[220px] w-[150px] flex-none',
-            className,
-        )}
-        {...props}
-    >
+export const FormLine: FC<NativeProps> = ({ children, className, ...props }) => (
+    <div className={twMergeCustom('w-full', className)} {...props}>
         {children}
     </div>
 );

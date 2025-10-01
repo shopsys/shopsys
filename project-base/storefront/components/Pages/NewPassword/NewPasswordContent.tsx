@@ -133,12 +133,13 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.newPassword.name}
-                                    render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                                     passwordInputProps={{
                                         label: formMeta.fields.newPassword.label,
                                         'aria-labelledby': 'new-password-form-description',
                                     }}
                                 />
+
                                 <PasswordInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -148,15 +149,16 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                         label: formMeta.fields.newPasswordConfirm.label,
                                     }}
                                 />
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        aria-label={t('Submit form to set your new password', { ns: 'accessibility' })}
-                                        hasDisabledCursor={!!error || newPasswordValue.length === 0}
-                                    >
-                                        {t('Set new password')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
                             </FormBlockWrapper>
+
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    aria-label={t('Submit form to set your new password', { ns: 'accessibility' })}
+                                    hasDisabledCursor={!!error || newPasswordValue.length === 0}
+                                >
+                                    {t('Set new password')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

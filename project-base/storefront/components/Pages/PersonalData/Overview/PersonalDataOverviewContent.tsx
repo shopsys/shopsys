@@ -80,16 +80,17 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                                         'aria-labelledby': 'personal-data-overview-content',
                                     }}
                                 />
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        aria-label={t('Submit form to send your personal data overview request', {
-                                            ns: 'accessibility',
-                                        })}
-                                    >
-                                        {t('Send')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
                             </FormBlockWrapper>
+
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    aria-label={t('Submit form to send your personal data overview request', {
+                                        ns: 'accessibility',
+                                    })}
+                                >
+                                    {t('Send')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

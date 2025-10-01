@@ -49,9 +49,10 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <div data-tid={TIDs.pages_order_transport}>
                 <h2 className="h4 mb-3">{t('Choose transport')}</h2>
 
-                <ul>
-                    <fieldset>
-                        <legend className="sr-only">{t('Choose transport type')}</legend>
+                <fieldset>
+                    <legend className="sr-only">{t('Choose transport type')}</legend>
+
+                    <ul>
                         <AnimatePresence initial={false}>
                             {!!transport && (
                                 <AnimateCollapseDiv
@@ -88,8 +89,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 </AnimateCollapseDiv>
                             )}
                         </AnimatePresence>
-                    </fieldset>
-                </ul>
+                    </ul>
+                </fieldset>
 
                 <AnimatePresence initial={false}>
                     {!!transport && transports.length > 1 && (
@@ -119,35 +120,38 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                         <fieldset>
                             <legend className="sr-only">{t('Choose payment type')}</legend>
-                            <AnimatePresence initial={false}>
-                                {!!payment && (
-                                    <AnimateCollapseDiv
-                                        className="relative !block"
-                                        disableAnimation={transport.payments.length === 1 ? true : false}
-                                        keyName="payment-selected"
-                                    >
-                                        <PaymentListItem isActive changePayment={changePayment} payment={payment} />
-                                    </AnimateCollapseDiv>
-                                )}
-                            </AnimatePresence>
 
-                            <AnimatePresence initial={false}>
-                                {!payment && (
-                                    <AnimateCollapseDiv
-                                        className="relative !block"
-                                        disableAnimation={transport.payments.length === 1 ? true : false}
-                                        keyName="payment-list"
-                                    >
-                                        {transport.payments.map((paymentItem) => (
-                                            <PaymentListItem
-                                                key={paymentItem.uuid}
-                                                changePayment={changePayment}
-                                                payment={paymentItem}
-                                            />
-                                        ))}
-                                    </AnimateCollapseDiv>
-                                )}
-                            </AnimatePresence>
+                            <ul>
+                                <AnimatePresence initial={false}>
+                                    {!!payment && (
+                                        <AnimateCollapseDiv
+                                            className="relative !block"
+                                            disableAnimation={transport.payments.length === 1 ? true : false}
+                                            keyName="payment-selected"
+                                        >
+                                            <PaymentListItem isActive changePayment={changePayment} payment={payment} />
+                                        </AnimateCollapseDiv>
+                                    )}
+                                </AnimatePresence>
+
+                                <AnimatePresence initial={false}>
+                                    {!payment && (
+                                        <AnimateCollapseDiv
+                                            className="relative !block"
+                                            disableAnimation={transport.payments.length === 1 ? true : false}
+                                            keyName="payment-list"
+                                        >
+                                            {transport.payments.map((paymentItem) => (
+                                                <PaymentListItem
+                                                    key={paymentItem.uuid}
+                                                    changePayment={changePayment}
+                                                    payment={paymentItem}
+                                                />
+                                            ))}
+                                        </AnimateCollapseDiv>
+                                    )}
+                                </AnimatePresence>
+                            </ul>
                         </fieldset>
 
                         <AnimatePresence initial={false}>
@@ -168,7 +172,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 };
 
-type ResetButtonProps = { text: string; onClick: () => void };
+type ResetButtonProps = { text: string; onClick: () => void; tid: string };
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid }) => (
     <button

@@ -140,7 +140,7 @@ export const useRegistrationFormMeta = (
                 },
                 [customerFieldName]: {
                     name: customerFieldName,
-                    label: t('You will shop with us as'),
+                    label: t('I will shop as'),
                     errorMessage: errors.customer?.message,
                 },
                 telephone: {

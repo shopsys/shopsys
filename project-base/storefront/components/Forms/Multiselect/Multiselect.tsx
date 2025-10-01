@@ -207,7 +207,7 @@ export function MultiSelect<T extends string | number = string>({
                         {selectedOptions.map((selected) => (
                             <Tag
                                 key={selected.value}
-                                ariaLabel={t('Remove')}
+                                ariaLabel={t('Remove', { ns: 'accessibility' })}
                                 className="group/tag"
                                 onClick={() => handleRemoveSelected(selected)}
                             >

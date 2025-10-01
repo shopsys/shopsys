@@ -1,19 +1,15 @@
-import { RegistrationAddress } from './RegistrationAddress';
-import { RegistrationCompany } from './RegistrationCompany';
+import { RegistrationAgreements } from './RegistrationAgreements';
+import { RegistrationBillingAddress } from './RegistrationBillingAddress';
 import { RegistrationPassword } from './RegistrationPassword';
 import { RegistrationUser } from './RegistrationUser';
 import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
-import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
+import { Form, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
-import { AnimatePresence } from 'framer-motion';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { useRegistration } from 'utils/auth/useRegistration';
@@ -42,10 +38,9 @@ export const RegistrationContent: FC = () => {
         });
 
         handleFormErrors(registrationError, formProviderMethods, t, formMeta.messages.error);
+
         clearForm(registrationError, formProviderMethods, defaultValues);
     };
-
-    const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
@@ -55,7 +50,9 @@ export const RegistrationContent: FC = () => {
                 <h1>{t('New customer registration')}</h1>
 
                 <p className="sr-only" id="registration-form-description">
-                    {t('Registration form for registering a new customer. Please fill all required fields.')}
+                    {t('Registration form for registering a new customer. Please fill all required fields.', {
+                        ns: 'accessibility',
+                    })}
                 </p>
 
                 <FormProvider {...formProviderMethods}>
@@ -66,55 +63,20 @@ export const RegistrationContent: FC = () => {
                         <FormContentWrapper>
                             <RegistrationUser />
 
-                            <AnimatePresence initial={false}>
-                                {customerValue === 'companyCustomer' && (
-                                    <AnimateCollapseDiv className="!flex flex-col" keyName="registration-company-data">
-                                        <RegistrationCompany />
-                                    </AnimateCollapseDiv>
-                                )}
-                            </AnimatePresence>
-
                             <RegistrationPassword />
 
-                            <RegistrationAddress />
+                            <RegistrationBillingAddress />
 
-                            <FormBlockWrapper>
-                                <fieldset>
-                                    <legend className="sr-only">{t('Privacy policy')}</legend>
+                            <RegistrationAgreements />
 
-                                    <CheckboxControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.gdprAgreement.name}
-                                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                        checkboxProps={{
-                                            label: formMeta.fields.gdprAgreement.label,
-                                            required: true,
-                                        }}
-                                    />
-
-                                    <CheckboxControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.newsletterSubscription.name}
-                                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                        checkboxProps={{
-                                            label: formMeta.fields.newsletterSubscription.label,
-                                        }}
-                                    />
-                                </fieldset>
-
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        tid={TIDs.registration_submit_button}
-                                        aria-label={t('Submit form to sign up for new account', {
-                                            ns: 'accessibility',
-                                        })}
-                                    >
-                                        {t('Sign up')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
-                            </FormBlockWrapper>
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    aria-label={t('Submit form to sign up for new account', { ns: 'accessibility' })}
+                                    tid={TIDs.registration_submit_button}
+                                >
+                                    {t('Sign up')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

@@ -80,16 +80,17 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                         'aria-labelledby': 'personal-data-export-content',
                                     }}
                                 />
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        aria-label={t('Submit form to send your personal data export request', {
-                                            ns: 'accessibility',
-                                        })}
-                                    >
-                                        {t('Send')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
                             </FormBlockWrapper>
+
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    aria-label={t('Submit form to send your personal data export request', {
+                                        ns: 'accessibility',
+                                    })}
+                                >
+                                    {t('Send')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

@@ -1,28 +1,27 @@
+import { ContactInformationDeliveryAddressForm } from './ContactInformationDeliveryAddressForm';
+import { ContactInformationDeliveryPickUpAddress } from './ContactInformationDeliveryPickUpAddress';
+import { ContactInformationDeliveryPickUpForm } from './ContactInformationDeliveryPickUpForm';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { AddressList } from 'components/Blocks/AddressList/AddressList';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
-import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
-import { Select } from 'components/Forms/Select/Select';
-import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { AnimatePresence } from 'framer-motion';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
-import { SelectOptionType } from 'types/selectOptions';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationDeliveryAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
-    const { pickupPlace } = useCurrentCart();
+    const { transport, pickupPlace } = useCurrentCart();
     const user = useCurrentCustomerData();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -30,55 +29,27 @@ export const ContactInformationDeliveryAddress: FC = () => {
         name: [formMeta.fields.isDeliveryAddressDifferentFromBilling.name, formMeta.fields.deliveryAddressUuid.name],
         control: formProviderMethods.control,
     });
-    const showAddressSelection = !!user?.deliveryAddresses.length && !pickupPlace;
-    const countriesAsSelectOptions = useCountriesAsSelectOptions();
-    const isNewDeliveryAddressSelected = deliveryAddressUuid === 'new-delivery-address';
+    const isUserLoggedIn = useIsUserLoggedIn();
     const { canManagePersonalData } = useAuthorization();
 
-    const deliveryAddressesRadiobuttons = [
-        ...(user?.deliveryAddresses.map((deliveryAddress, index) => ({
-            label: (
-                <p className="flex flex-col">
-                    <strong className="mr-1">
-                        {deliveryAddress.firstName} {deliveryAddress.lastName}
-                    </strong>
-                    <span>{deliveryAddress.companyName}</span>
-                    <span>{deliveryAddress.telephone}</span>
-                    <span>
-                        {deliveryAddress.street}, {deliveryAddress.city}, {deliveryAddress.postcode}
-                    </span>
-                    <span>{deliveryAddress.country.name}</span>
-                </p>
-            ),
-            value: deliveryAddress.uuid,
-            id: index.toString(),
-            labelWrapperClassName: 'flex-row-reverse',
-        })) ?? []),
-    ];
+    const handleChangeDeliveryAddressForOrder = (value: string) => {
+        formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, value);
+        updateContactInformation({ deliveryAddressUuid: value });
+    };
 
-    if (canManagePersonalData) {
-        deliveryAddressesRadiobuttons.push({
-            label: (
-                <p>
-                    <span className="font-bold">{t('Different delivery address')}</span>
-                </p>
-            ),
-            value: 'new-delivery-address',
-            id: '-new-delivery-address',
-            labelWrapperClassName: 'flex-row-reverse',
-        });
-    }
+    useEffect(() => {
+        if (user?.defaultDeliveryAddress === undefined && user?.deliveryAddresses.length === 1) {
+            formProviderMethods.setValue(formMeta.fields.deliveryAddressUuid.name, user.deliveryAddresses[0].uuid);
+        }
+    }, [user?.defaultDeliveryAddress, user?.deliveryAddresses.length]);
 
     return (
         <FormBlockWrapper>
-            <FormHeading>{t('Delivery address')}</FormHeading>
+            <FormHeading>
+                {pickupPlace ? `${t('Personal pickup')} - ${transport?.name}: ${pickupPlace.name}` : ''}
+            </FormHeading>
 
-            {!!pickupPlace && (
-                <div className="mb-2">
-                    <strong>{t('Pickup place')}:</strong> {pickupPlace.name}, {pickupPlace.street},{' '}
-                    {pickupPlace.postcode} {pickupPlace.city}, {pickupPlace.country.name}
-                </div>
-            )}
+            <ContactInformationDeliveryPickUpAddress />
 
             <CheckboxControlled
                 control={formProviderMethods.control}
@@ -95,205 +66,26 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
             <AnimatePresence initial={false}>
                 {isDeliveryAddressDifferentFromBilling && (
-                    <>
-                        {showAddressSelection && (
-                            <AnimateCollapseDiv className="!block" keyName="different-delivery-address">
-                                <div className="flex w-full flex-col">
-                                    <RadiobuttonGroup
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.deliveryAddressUuid.name}
-                                        radiobuttons={deliveryAddressesRadiobuttons}
-                                        render={(radiobutton, key) => (
-                                            <div
-                                                key={key}
-                                                className="border-border-default bg-background-default relative mt-4 flex w-full flex-wrap rounded-sm border-2 p-5"
-                                            >
-                                                {radiobutton}
-                                            </div>
-                                        )}
-                                        onChange={(event) =>
-                                            updateContactInformation({ deliveryAddressUuid: event.currentTarget.value })
-                                        }
-                                    />
-                                </div>
-                            </AnimateCollapseDiv>
+                    <AnimateCollapseDiv className="!block">
+                        {!pickupPlace && isUserLoggedIn && (
+                            <>
+                                <p className="h4 mb-5">{t('Choose delivery address')}</p>
+
+                                <AddressList
+                                    defaultDeliveryAddress={user?.defaultDeliveryAddress}
+                                    deliveryAddresses={user?.deliveryAddresses ?? []}
+                                    orderSelectAddressHandler={handleChangeDeliveryAddressForOrder}
+                                    orderSelectedAddress={deliveryAddressUuid}
+                                />
+                            </>
                         )}
 
-                        {canManagePersonalData &&
-                            (!user?.deliveryAddresses.length || isNewDeliveryAddressSelected || !!pickupPlace) && (
-                                <AnimateCollapseDiv className="!block" keyName="different-address">
-                                    <FormColumn className="mt-4">
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            name={formMeta.fields.deliveryFirstName.name}
-                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                            textInputProps={{
-                                                label: formMeta.fields.deliveryFirstName.label,
-                                                required: true,
-                                                type: 'text',
-                                                autoComplete: 'given-name',
-                                                onChange: (event) => {
-                                                    updateContactInformation({
-                                                        deliveryFirstName: event.currentTarget.value,
-                                                    });
-                                                },
-                                            }}
-                                        />
+                        {!pickupPlace && !isUserLoggedIn && canManagePersonalData && (
+                            <ContactInformationDeliveryAddressForm />
+                        )}
 
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            name={formMeta.fields.deliveryLastName.name}
-                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                            textInputProps={{
-                                                label: formMeta.fields.deliveryLastName.label,
-                                                required: true,
-                                                type: 'text',
-                                                autoComplete: 'family-name',
-                                                onChange: (event) =>
-                                                    updateContactInformation({
-                                                        deliveryLastName: event.currentTarget.value,
-                                                    }),
-                                            }}
-                                        />
-                                    </FormColumn>
-
-                                    {!pickupPlace && (
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            name={formMeta.fields.deliveryCompanyName.name}
-                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                            textInputProps={{
-                                                label: formMeta.fields.deliveryCompanyName.label,
-                                                type: 'text',
-                                                autoComplete: 'organization',
-                                                onChange: (event) =>
-                                                    updateContactInformation({
-                                                        deliveryCompanyName: event.currentTarget.value,
-                                                    }),
-                                            }}
-                                        />
-                                    )}
-
-                                    <TextInputControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.deliveryTelephone.name}
-                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                        textInputProps={{
-                                            label: formMeta.fields.deliveryTelephone.label,
-                                            required: true,
-                                            type: 'tel',
-                                            autoComplete: 'tel',
-                                            onChange: (event) =>
-                                                updateContactInformation({
-                                                    deliveryTelephone: event.currentTarget.value,
-                                                }),
-                                        }}
-                                    />
-
-                                    {!pickupPlace && (
-                                        <>
-                                            <TextInputControlled
-                                                control={formProviderMethods.control}
-                                                formName={formMeta.formName}
-                                                name={formMeta.fields.deliveryStreet.name}
-                                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                                textInputProps={{
-                                                    label: formMeta.fields.deliveryStreet.label,
-                                                    required: true,
-                                                    type: 'text',
-                                                    autoComplete: 'street-address',
-                                                    onChange: (event) =>
-                                                        updateContactInformation({
-                                                            deliveryStreet: event.currentTarget.value,
-                                                        }),
-                                                }}
-                                            />
-
-                                            <FormColumn>
-                                                <TextInputControlled
-                                                    control={formProviderMethods.control}
-                                                    formName={formMeta.formName}
-                                                    name={formMeta.fields.deliveryCity.name}
-                                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                                    textInputProps={{
-                                                        label: formMeta.fields.deliveryCity.label,
-                                                        required: true,
-                                                        type: 'text',
-                                                        autoComplete: 'address-level2',
-                                                        onChange: (event) =>
-                                                            updateContactInformation({
-                                                                deliveryCity: event.currentTarget.value,
-                                                            }),
-                                                    }}
-                                                />
-
-                                                <TextInputControlled
-                                                    control={formProviderMethods.control}
-                                                    formName={formMeta.formName}
-                                                    name={formMeta.fields.deliveryPostcode.name}
-                                                    render={(textInput) => (
-                                                        <FormLine bottomGap isSmallInput>
-                                                            {textInput}
-                                                        </FormLine>
-                                                    )}
-                                                    textInputProps={{
-                                                        label: formMeta.fields.deliveryPostcode.label,
-                                                        required: true,
-                                                        type: 'text',
-                                                        autoComplete: 'postal-code',
-                                                        inputMode: 'numeric',
-                                                        onChange: (event) =>
-                                                            updateContactInformation({
-                                                                deliveryPostcode: event.currentTarget.value,
-                                                            }),
-                                                    }}
-                                                />
-                                            </FormColumn>
-
-                                            <FormLine>
-                                                <Controller
-                                                    name={formMeta.fields.deliveryCountry.name}
-                                                    render={({ fieldState: { error }, field }) => (
-                                                        <>
-                                                            <Select
-                                                                isRequired
-                                                                ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                                                label={formMeta.fields.deliveryCountry.label}
-                                                                activeOption={countriesAsSelectOptions.find(
-                                                                    (option) => option.value === field.value.value,
-                                                                )}
-                                                                options={countriesAsSelectOptions.map((option) => ({
-                                                                    ...option,
-                                                                    id: option.value + '-my-id',
-                                                                }))}
-                                                                tid={
-                                                                    formMeta.formName +
-                                                                    '-' +
-                                                                    formMeta.fields.deliveryCountry.name
-                                                                }
-                                                                onSelectOption={(...selectOnChangeEventData) => {
-                                                                    field.onChange(...selectOnChangeEventData);
-                                                                    updateContactInformation({
-                                                                        deliveryCountry:
-                                                                            selectOnChangeEventData[0] as SelectOptionType,
-                                                                    });
-                                                                }}
-                                                            />
-                                                            <FormLineError error={error} inputType="select" />
-                                                        </>
-                                                    )}
-                                                />
-                                            </FormLine>
-                                        </>
-                                    )}
-                                </AnimateCollapseDiv>
-                            )}
-                    </>
+                        {pickupPlace && canManagePersonalData && <ContactInformationDeliveryPickUpForm />}
+                    </AnimateCollapseDiv>
                 )}
             </AnimatePresence>
         </FormBlockWrapper>

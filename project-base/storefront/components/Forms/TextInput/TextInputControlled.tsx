@@ -21,6 +21,7 @@ type TextInputControlledProps = {
         | 'inputMode'
         | 'aria-label'
         | 'aria-labelledby'
+        | 'hasWarning'
     >;
     control: Control<any>;
     formName: string;
@@ -65,6 +66,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
                 {...textInputProps}
                 {...field}
                 hasError={!!error}
+                hasWarning={textInputProps.hasWarning}
                 id={textInputId}
                 onBlur={onBlurHandler}
                 onChange={onChangeHandler}

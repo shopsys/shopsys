@@ -70,7 +70,7 @@ export const ContactContent: FC = () => {
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.name.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.name.label,
                                         required: true,
@@ -79,11 +79,12 @@ export const ContactContent: FC = () => {
                                         'aria-labelledby': 'contact-form-description',
                                     }}
                                 />
+
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.email.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.email.label,
                                         required: true,
@@ -91,17 +92,19 @@ export const ContactContent: FC = () => {
                                         autoComplete: 'email',
                                     }}
                                 />
+
                                 <TextareaControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.message.name}
-                                    render={(textarea) => <FormLine bottomGap>{textarea}</FormLine>}
+                                    render={(textarea) => <FormLine>{textarea}</FormLine>}
                                     textareaProps={{
                                         label: formMeta.fields.message.label,
                                         required: true,
                                         rows: 4,
                                     }}
                                 />
+
                                 <CheckboxControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -112,15 +115,16 @@ export const ContactContent: FC = () => {
                                         required: true,
                                     }}
                                 />
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        aria-label={t('Submit form to send your message', { ns: 'accessibility' })}
-                                        hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                    >
-                                        {t('Send message')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
                             </FormBlockWrapper>
+
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    aria-label={t('Submit form to send your message', { ns: 'accessibility' })}
+                                    hasDisabledCursor={!formProviderMethods.formState.isValid}
+                                >
+                                    {t('Send message')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

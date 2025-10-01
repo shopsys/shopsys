@@ -1,6 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderLayout } from 'components/Layout/OrderLayout';
-import { ContactInformationWrapper } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
+import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     AdvertsQueryDocument,
     TypeAdvertsQueryVariables,
@@ -24,7 +24,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
 
             <OrderLayout page="contact-information">
-                <ContactInformationWrapper />
+                <ContactInformationContent />
             </OrderLayout>
         </>
     );

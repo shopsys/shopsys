@@ -76,27 +76,25 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                 <Form onSubmit={formProviderMethods.handleSubmit(inquiryHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormColumn>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.email.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        label: formMeta.fields.email.label,
-                                        required: true,
-                                        type: 'email',
-                                        autoComplete: 'email',
-                                    }}
-                                />
-                            </FormColumn>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
+                            />
 
                             <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.firstName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -104,11 +102,12 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                         autoComplete: 'given-name',
                                     }}
                                 />
+
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.lastName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -118,24 +117,26 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 />
                             </FormColumn>
 
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.telephone.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                textInputProps={{
-                                    label: formMeta.fields.telephone.label,
-                                    required: true,
-                                    type: 'tel',
-                                    autoComplete: 'tel',
-                                }}
-                            />
+                            <FormColumn>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.telephone.name}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.telephone.label,
+                                        required: true,
+                                        type: 'tel',
+                                        autoComplete: 'tel',
+                                    }}
+                                />
+                            </FormColumn>
 
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.companyName.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.companyName.label,
                                     type: 'text',
@@ -143,27 +144,29 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                 }}
                             />
 
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.companyNumber.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                textInputProps={{
-                                    label: formMeta.fields.companyNumber.label,
-                                    type: 'text',
-                                }}
-                            />
+                            <FormColumn>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.companyNumber.name}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.companyNumber.label,
+                                        type: 'text',
+                                    }}
+                                />
 
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.companyTaxNumber.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                textInputProps={{
-                                    label: formMeta.fields.companyTaxNumber.label,
-                                    type: 'text',
-                                }}
-                            />
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.companyTaxNumber.name}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.companyTaxNumber.label,
+                                        type: 'text',
+                                    }}
+                                />
+                            </FormColumn>
 
                             <TextareaControlled
                                 control={formProviderMethods.control}
@@ -175,15 +178,13 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                                     rows: 4,
                                 }}
                             />
-
-                            <FormButtonWrapper>
-                                <SubmitButton
-                                    aria-label={t('Submit form to send your inquiry', { ns: 'accessibility' })}
-                                >
-                                    {t('Send')}
-                                </SubmitButton>
-                            </FormButtonWrapper>
                         </FormBlockWrapper>
+
+                        <FormButtonWrapper>
+                            <SubmitButton aria-label={t('Submit form to send your inquiry', { ns: 'accessibility' })}>
+                                {t('Send')}
+                            </SubmitButton>
+                        </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

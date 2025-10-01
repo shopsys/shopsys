@@ -121,7 +121,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.firstName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.firstName.label,
                                         required: true,
@@ -129,11 +129,12 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                         autoComplete: 'given-name',
                                     }}
                                 />
+
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.lastName.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.lastName.label,
                                         required: true,
@@ -142,34 +143,39 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                     }}
                                 />
                             </FormColumn>
+
+                            <FormColumn>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.telephone.name}
+                                    render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.telephone.label,
+                                        required: true,
+                                        type: 'tel',
+                                        autoComplete: 'tel',
+                                    }}
+                                />
+                            </FormColumn>
+
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.companyName.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.companyName.label,
                                     type: 'text',
                                     autoComplete: 'organization',
                                 }}
                             />
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.telephone.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                textInputProps={{
-                                    label: formMeta.fields.telephone.label,
-                                    required: true,
-                                    type: 'tel',
-                                    autoComplete: 'tel',
-                                }}
-                            />
+
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.street.name}
-                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
                                 textInputProps={{
                                     label: formMeta.fields.street.label,
                                     required: true,
@@ -177,12 +183,13 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                     autoComplete: 'street-address',
                                 }}
                             />
+
                             <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.city.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.city.label,
                                         required: true,
@@ -190,15 +197,12 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                         autoComplete: 'address-level2',
                                     }}
                                 />
+
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.postcode.name}
-                                    render={(textInput) => (
-                                        <FormLine bottomGap isSmallInput>
-                                            {textInput}
-                                        </FormLine>
-                                    )}
+                                    render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.postcode.label,
                                         required: true,
@@ -208,35 +212,39 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                     }}
                                 />
                             </FormColumn>
-                            <FormLine>
-                                <Controller
-                                    name={formMeta.fields.country.name}
-                                    render={({ fieldState: { error }, field }) => (
-                                        <>
-                                            <Select
-                                                isRequired
-                                                ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                                label={formMeta.fields.country.label}
-                                                options={countriesAsSelectOptions}
-                                                tid={formMeta.formName + '-' + formMeta.fields.country.name}
-                                                activeOption={countriesAsSelectOptions.find(
-                                                    (option) => option.value === field.value.value,
-                                                )}
-                                                onSelectOption={field.onChange}
-                                            />
-                                            <FormLineError error={error} inputType="select" />
-                                        </>
-                                    )}
-                                />
-                            </FormLine>
-                            <FormButtonWrapper>
-                                <SubmitButton
-                                    aria-label={t('Submit form to save delivery address', { ns: 'accessibility' })}
-                                >
-                                    {t('Save')}
-                                </SubmitButton>
-                            </FormButtonWrapper>
+
+                            <FormColumn>
+                                <FormLine className="col-span-3">
+                                    <Controller
+                                        name={formMeta.fields.country.name}
+                                        render={({ fieldState: { error }, field }) => (
+                                            <>
+                                                <Select
+                                                    isRequired
+                                                    ariaLabel={t('Select country', { ns: 'accessibility' })}
+                                                    label={formMeta.fields.country.label}
+                                                    options={countriesAsSelectOptions}
+                                                    tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                                    activeOption={countriesAsSelectOptions.find(
+                                                        (option) => option.value === field.value.value,
+                                                    )}
+                                                    onSelectOption={field.onChange}
+                                                />
+                                                <FormLineError error={error} inputType="select" />
+                                            </>
+                                        )}
+                                    />
+                                </FormLine>
+                            </FormColumn>
                         </FormBlockWrapper>
+
+                        <FormButtonWrapper>
+                            <SubmitButton
+                                aria-label={t('Submit form to save delivery address', { ns: 'accessibility' })}
+                            >
+                                {t('Save')}
+                            </SubmitButton>
+                        </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

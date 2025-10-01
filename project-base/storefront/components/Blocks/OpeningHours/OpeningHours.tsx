@@ -2,17 +2,15 @@ import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { TIDs } from 'cypress/tids';
 import { TypeOpeningHours } from 'graphql/types';
 import { Fragment } from 'react';
-import { twJoin } from 'tailwind-merge';
 import { formatAccessibleTime } from 'utils/accessibility/formatAccessibleTime';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
 
-export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHours'] | TypeOpeningHours }> = ({
-    openingHours,
-    className,
-}) => {
+export const OpeningHours: FC<{
+    openingHours: StoreOrPacketeryPoint['openingHours'] | TypeOpeningHours;
+}> = ({ openingHours, className }) => {
     const { t, lang } = useTranslation();
     const { formatDate } = useFormatDate();
 
@@ -99,7 +97,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                             key={dayOfWeek}
                             aria-current={isToday ? 'date' : undefined}
                             aria-label={dayAriaText}
-                            className={twJoin(
+                            className={twMergeCustom(
                                 'flex flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
                                 isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
