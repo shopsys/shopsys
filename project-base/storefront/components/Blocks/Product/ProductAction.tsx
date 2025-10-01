@@ -1,20 +1,11 @@
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
-import { Button } from 'components/Forms/Button/Button';
+import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
-import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-
-const InquiryPopup = dynamic(
-    () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
-    {
-        ssr: false,
-    },
-);
 
 type ProductActionProps = {
     product: TypeListedProductFragment;
@@ -40,7 +31,6 @@ export const ProductAction: FC<ProductActionProps> = ({
     skipKeyboardNavigation = false,
 }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canCreateOrder } = useAuthorization();
 
     if (product.isSellingDenied) {
@@ -48,14 +38,12 @@ export const ProductAction: FC<ProductActionProps> = ({
     }
 
     if (!product.isMainVariant && product.isInquiryType) {
-        const openInquiryPopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            e.stopPropagation();
-            updatePortalContent(<InquiryPopup productUuid={product.uuid} />);
-        };
         return (
-            <Button size={buttonSize} tabIndex={skipKeyboardNavigation ? -1 : 0} onClick={openInquiryPopup}>
-                {t('Inquire')}
-            </Button>
+            <ProductInquiryButton
+                buttonSize={buttonSize}
+                productUuid={product.uuid}
+                skipKeyboardNavigation={skipKeyboardNavigation}
+            />
         );
     }
 

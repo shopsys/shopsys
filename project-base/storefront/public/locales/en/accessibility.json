@@ -1,7 +1,8 @@
 {
+    " for {{ price }}": " for {{ price }}",
     "Add product {{ productName }} to comparison": "Add product {{ productName }} to comparison",
     "Add product {{ productName }} to wishlist": "Add product {{ productName }} to wishlist",
-    "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}": "Add {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }} to cart",
+    "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }}": "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }}",
     "Address": "Address",
     "Breadcrumb navigation": "Breadcrumb navigation",
     "Call sales representative": "Call sales representative",
@@ -10,6 +11,8 @@
     "Cart items list": "Cart items list",
     "Checkout steps navigation": "Checkout steps navigation",
     "Choose payment {{ paymentName }}": "Choose payment {{ paymentName }}",
+    "Choose payment {{ paymentName }} for {{ price }}": "Choose payment {{ paymentName }} for {{ price }}",
+    "Choose transport {{ transportName }}": "Choose transport {{ transportName }}",
     "Choose transport {{ transportName }} for {{ price }}": "Choose transport {{ transportName }} for {{ price }}",
     "Clear all active filters": "Clear all active filters",
     "Clear search input": "Clear search input",
@@ -74,6 +77,7 @@
     "Go to user consent update page": "Go to user consent update page",
     "Go to wishlist page": "Go to wishlist page",
     "Go to Youtube": "Go to Youtube",
+    "Great choice! We have added your item to the cart. You can now proceed to checkout or continue shopping.": "Great choice! We have added your item to the cart. You can now proceed to checkout or continue shopping.",
     "Increase quantity": "Increase quantity",
     "Loading search results": "Loading search results",
     "Mail to {{email}}": "Mail to {{email}}",
@@ -183,6 +187,5 @@
     "View complaint images in gallery": "View complaint images in gallery",
     "Visit Shopsys.com": "Visit Shopsys.com",
     "Write to us": "Write to us",
-    "You are on {{pageTitle}} page": "You are on {{pageTitle}} page",
-    "You have added quantity {{quantity}} {{unit}} to your cart for {{priceInfo}}. You can now proceed to checkout or continue shopping": "You have added quantity {{quantity}} {{unit}} to your cart for {{priceInfo}}. You can now proceed to checkout or continue shopping"
+    "You are on {{pageTitle}} page": "You are on {{pageTitle}} page"
 }

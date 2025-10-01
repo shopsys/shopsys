@@ -1,7 +1,8 @@
 {
+    " for {{ price }}": " za {{ price }}",
     "Add product {{ productName }} to comparison": "Přidat produkt {{ productName }} do porovnání",
     "Add product {{ productName }} to wishlist": "Přidat produkt {{ productName }} do oblíbených produktů",
-    "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}": "Přidat do košíku {{ productName }}, množství {{ quantity }} {{ unit }} za {{ price }}",
+    "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }}": "Přidat do košíku {{ productName }}, množství {{ quantity }} {{ unit }}",
     "Address": "Adresa",
     "Breadcrumb navigation": "Navigace z kolečka",
     "Call sales representative": "Zavolat obchodnímu zástupci",
@@ -10,6 +11,8 @@
     "Cart items list": "Seznam položek košíku",
     "Checkout steps navigation": "Navigace v krocích objednávky",
     "Choose payment {{ paymentName }}": "Vybrat platbu {{ paymentName }}",
+    "Choose payment {{ paymentName }} for {{ price }}": "Vybrat platbu {{ paymentName }} za {{ price }}",
+    "Choose transport {{ transportName }}": "Vybrat dopravu {{ transportName }}",
     "Choose transport {{ transportName }} for {{ price }}": "Vybrat dopravu {{ transportName }} za {{ price }}",
     "Clear all active filters": "Vymazat všechny aktivní filtry",
     "Clear search input": "Vyčistit vyhledávací pole",
@@ -74,6 +77,7 @@
     "Go to user consent update page": "Přejít na stránku aktualizace uživatelského souhlasu",
     "Go to wishlist page": "Přejít na stránku oblíbených produktů",
     "Go to Youtube": "Přejít na Youtube",
+    "Great choice! We have added your item to the cart. You can now proceed to checkout or continue shopping.": "Výborný výběr! Přidali jsme váš produkt do košíku. Nyní můžete pokračovat do objednávky nebo pokračovat v nákupu.",
     "Increase quantity": "Zvýšit množství",
     "Loading search results": "Načítání výsledků hledání",
     "Mail to {{email}}": "Poslat e-mail na {{email}}",
@@ -183,6 +187,5 @@
     "View complaint images in gallery": "Zobrazit obrázky reklamace v galerii",
     "Visit Shopsys.com": "Navštivte Shopsys.com",
     "Write to us": "Napište nám",
-    "You are on {{pageTitle}} page": "Jste na stránce {{pageTitle}}",
-    "You have added quantity {{quantity}} {{unit}} to your cart for {{priceInfo}}. You can now proceed to checkout or continue shopping": "Přidali jste do košíku {{quantity}} {{unit}} za {{priceInfo}}. Nyní můžete pokračovat k objednávce nebo pokračovat v nákupu."
+    "You are on {{pageTitle}} page": "Jste na stránce {{pageTitle}}"
 }

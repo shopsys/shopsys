@@ -1553,7 +1553,7 @@ msgid "Promo codes"
 msgstr "Slevové kupóny"
 
 msgid "Promo codes - generated batches"
-msgstr "Slevoé kupóny - vygenerované dávky"
+msgstr "Slevové kupóny - vygenerované dávky"
 
 msgid "Promoted categories"
 msgstr "Promované kategorie"
