@@ -114,7 +114,13 @@
             "name": {
                 "type": "text",
                 "analyzer": "edge_ngram_without_diacritic",
-                "search_analyzer": "full_without_diacritic"
+                "search_analyzer": "full_without_diacritic",
+                "fields": {
+                    "full_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_without_diacritic"
+                    }
+                }
             },
             "text": {
                 "type": "text",

@@ -14,78 +14,60 @@ class CategoriesSearchTest extends GraphQlTestCase
     {
         $userIdentifier = Uuid::uuid4()->toString();
 
-        $query = '
-            query {
-                categoriesSearch(searchInput: { search: "audio", userIdentifier: "' . $userIdentifier . '" }) {
-                    edges {
-                        node {
-                            name
-                        }
-                    }
-                }
-            }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoriesSearch.graphql', [
+            'search' => 'audio',
+            'userIdentifier' => $userIdentifier,
+        ]);
 
         $categoriesExpected = [
             ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 
-        $this->assertCategories($query, $categoriesExpected);
+        $this->assertCategories($response, $categoriesExpected);
     }
 
-    public function testSearchWithFirstProduct(): void
+    public function testSearchWithFirstCategory(): void
     {
         $userIdentifier = Uuid::uuid4()->toString();
 
-        $query = '            
-            query {
-                categoriesSearch(first: 1, searchInput: { search: "a", userIdentifier: "' . $userIdentifier . '" }) {
-                    edges {
-                        node {
-                            name
-                        }
-                    }
-                }
-            }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoriesSearch.graphql', [
+            'first' => 1,
+            'search' => 't',
+            'userIdentifier' => $userIdentifier,
+        ]);
 
         $categoriesExpected = [
-            ['name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
+            ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 
-        $this->assertCategories($query, $categoriesExpected);
+        $this->assertCategories($response, $categoriesExpected);
     }
 
     public function testSearchWithLastCategory(): void
     {
         $userIdentifier = Uuid::uuid4()->toString();
 
-        $query = '            
-            query {
-                categoriesSearch(last: 1, searchInput: { search: "' . t('audio', [], Translator::TESTS_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '", userIdentifier: "' . $userIdentifier . '"}) {
-                    edges {
-                        node {
-                            name
-                        }
-                    }
-                }
-            }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoriesSearch.graphql', [
+            'last' => 1,
+            'search' => t('audio', [], Translator::TESTS_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            'userIdentifier' => $userIdentifier,
+        ]);
 
         $categoriesExpected = [
             ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 
-        $this->assertCategories($query, $categoriesExpected);
+        $this->assertCategories($response, $categoriesExpected);
     }
 
     /**
-     * @param string $query
+     * @param array $response
      * @param array $categories
      * @param bool $found
      */
-    protected function assertCategories(string $query, array $categories, bool $found = true): void
+    protected function assertCategories(array $response, array $categories, bool $found = true): void
     {
         $graphQlType = 'categoriesSearch';
-
-        $response = $this->getResponseContentForQuery($query);
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);

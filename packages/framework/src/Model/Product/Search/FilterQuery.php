@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -733,8 +734,31 @@ class FilterQuery
      * @param string $text
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
+    protected function simpleSearch(string $text): self
+    {
+        $clone = clone $this;
+
+        $clone->match = [
+            'match_phrase_prefix' => [
+                'searching_names.full_without_diacritic' => [
+                    'query' => $text,
+                ],
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @param string $text
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
     public function search(string $text): self
     {
+        if (mb_strlen($text) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
+            return $this->simpleSearch($text);
+        }
+
         $clone = clone $this;
 
         $clone->match = [

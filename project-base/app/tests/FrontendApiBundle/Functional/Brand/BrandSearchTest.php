@@ -14,13 +14,10 @@ class BrandSearchTest extends GraphQlTestCase
     {
         $userIdentifier = Uuid::uuid4()->toString();
 
-        $query = '
-            query {
-                brandSearch(searchInput: { search: "de", userIdentifier: "' . $userIdentifier . '"}) {
-                    name
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/BrandSearch.graphql', [
+            'search' => 'de',
+            'userIdentifier' => $userIdentifier,
+        ]);
 
         $expected = [
             'data' => [
@@ -31,6 +28,6 @@ class BrandSearchTest extends GraphQlTestCase
             ],
         ];
 
-        $this->assertQueryWithExpectedArray($query, $expected);
+        $this->assertEquals($expected, $response);
     }
 }

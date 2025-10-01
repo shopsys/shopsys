@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
+use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ArticlesSearchTest extends GraphQlTestCase
 {
-    public function testSearchArticles()
+    public function testSearchArticles(): void
     {
         $userIdentifier = Uuid::uuid4()->toString();
-
-        $query = '
-            query {
-                articlesSearch(searchInput: { search: "Dina", userIdentifier: "' . $userIdentifier . '" }) {
-                    __typename
-                    name
-                }
-            }';
-
         $firstDomainLocale = $this->getFirstDomainLocale();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ArticlesSearch.graphql', [
+            'search' => 'Dina',
+            'userIdentifier' => $userIdentifier,
+        ]);
+
         $arrayExpected = [
             'data' => [
                 'articlesSearch' => [
@@ -38,6 +37,23 @@ class ArticlesSearchTest extends GraphQlTestCase
             ],
         ];
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertEquals($arrayExpected, $response);
+    }
+
+    public function testSearchWorksForShortSearchTerms(): void
+    {
+        $firstDomainLocale = $this->getFirstDomainLocale();
+        $userIdentifier = Uuid::uuid4()->toString();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ArticlesSearch.graphql', [
+            'search' => '1',
+            'userIdentifier' => $userIdentifier,
+        ]);
+
+        $expectedFirstArticle = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE, BlogArticle::class);
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'articlesSearch');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'articlesSearch');
+        $this->assertSame($expectedFirstArticle->getName($firstDomainLocale), $responseData[0]['name']);
     }
 }

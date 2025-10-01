@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 
 /**
@@ -27,6 +26,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdAscending()
  * @method \App\Model\Product\Search\FilterQuery filterOnlySellable()
  * @method \App\Model\Product\Search\FilterQuery filterBySellingFrom(\DateTimeImmutable $sellingFrom)
+ * @method \App\Model\Product\Search\FilterQuery simpleSearch(string $text)
+ * @method \App\Model\Product\Search\FilterQuery search(string $text)
  */
 class FilterQuery extends BaseFilterQuery
 {

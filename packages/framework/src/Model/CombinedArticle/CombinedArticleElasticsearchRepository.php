@@ -8,6 +8,7 @@ use Elasticsearch\Client;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 
@@ -147,8 +148,48 @@ class CombinedArticleElasticsearchRepository
      * @param int|null $limit
      * @return array
      */
+    protected function getSimpleSearchQuery(string $searchText, int $domainId, ?int $limit = null): array
+    {
+        $query = [
+            'index' => $this->getCombinedArticleIndex($domainId),
+            'body' => [
+                'from' => 0,
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            $this->getCombinedArticlesCondition(),
+                            [
+                                'match_phrase_prefix' => [
+                                    'name.full_without_diacritic' => [
+                                        'query' => $searchText,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        if ($limit !== null) {
+            $query['body']['size'] = $limit;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param string $searchText
+     * @param int $domainId
+     * @param int|null $limit
+     * @return array
+     */
     protected function getSearchQuery(string $searchText, int $domainId, ?int $limit = null): array
     {
+        if (mb_strlen($searchText) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
+            return $this->getSimpleSearchQuery($searchText, $domainId, $limit);
+        }
+
         $query = [
             'index' => $this->getCombinedArticleIndex($domainId),
             'body' => [

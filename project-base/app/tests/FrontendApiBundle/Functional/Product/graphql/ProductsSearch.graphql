@@ -1,0 +1,9 @@
+query ProductsSearch($search: String!, $userIdentifier: Uuid!) {
+    productsSearch (first: 5, searchInput: { search: $search, isAutocomplete: false, userIdentifier: $userIdentifier }) {
+        edges {
+            node {
+                name
+            }
+        }
+    }
+}
