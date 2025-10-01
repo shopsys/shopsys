@@ -55,7 +55,12 @@ vi.mock('store/useSessionStore', () => ({
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
     default: () => ({
-        t: (key: string) => key,
+        t: (key: string, options?: { ns?: string; parameterName?: string }) => {
+            if (key === 'Filter by parameter {{ parameterName }}' && options?.parameterName) {
+                return `Filter by parameter ${options.parameterName}`;
+            }
+            return key;
+        },
     }),
 }));
 
