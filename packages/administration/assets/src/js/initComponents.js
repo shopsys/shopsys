@@ -14,6 +14,17 @@ function initSelect($container) {
                 no_backspace_delete: {},
                 no_active_items: {},
             },
+            onDropdownOpen: dropdown => {
+                const bounding = dropdown.getBoundingClientRect();
+                const bottomOffset = 50; // Arbitrary offset to prevent dropdown from being too close to the bottom
+
+                if (bounding.bottom > (window.innerHeight || document.documentElement.clientHeight) - bottomOffset) {
+                    dropdown.classList.add('dropup');
+                }
+            },
+            onDropdownClose: dropdown => {
+                dropdown.classList.remove('dropup');
+            },
         };
 
         if (el.hasAttribute('multiple')) {
