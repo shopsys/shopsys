@@ -6,6 +6,7 @@ import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/Pr
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
 
 type OrderItemGiftCardProps = {
@@ -27,8 +28,14 @@ const OrderItemGiftCardComp: FC<OrderItemGiftCardProps> = ({
     price,
     availability,
 }) => {
+    const { t } = useTranslation();
+
     return (
-        <li className="bg-background-more font-secondary flex flex-col gap-1 rounded-xl p-4">
+        <li className="bg-background-more font-secondary relative flex flex-col gap-1 rounded-xl p-4">
+            <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+                {t('Gift')}
+            </div>
+
             <div className="isolate flex items-center gap-2.5">
                 <Image
                     alt={generateProductImageAlt(fullName, categoryName)}

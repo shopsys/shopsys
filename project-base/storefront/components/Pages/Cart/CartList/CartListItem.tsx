@@ -56,6 +56,12 @@ export const CartListItem: FC<CartListItemProps> = ({
                 className="bg-background-more vl:flex-nowrap vl:p-5 relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-4"
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
+                {isProductGift && (
+                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+                        {t('Gift')}
+                    </div>
+                )}
+
                 <div className="vl:basis-auto vl:items-center vl:pr-0 vl:pt-0 flex basis-full gap-2.5 pt-6 pr-8">
                     <div className="flex size-20 shrink-0">
                         <ExtendedNextLink
