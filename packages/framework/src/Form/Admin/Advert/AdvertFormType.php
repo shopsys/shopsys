@@ -9,6 +9,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
+use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -139,7 +140,7 @@ final class AdvertFormType extends AbstractType
             ]);
 
         $imageConstraints = [
-            new Constraints\NotBlank([
+            new MustUploadFile([
                 'message' => 'Choose image',
                 'groups' => [self::VALIDATION_GROUP_TYPE_IMAGE],
             ]),
