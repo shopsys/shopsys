@@ -5,6 +5,7 @@ export default class Product {
 
     static init($container) {
         Product.initializeSideNavigation($container);
+        Product.initBackToTopButton();
         Product.initProductVideos($container);
     }
 
@@ -31,7 +32,7 @@ export default class Product {
                     {
                         scrollTop: targetTop,
                     },
-                    500,
+                    300,
                 );
             });
         });
@@ -45,28 +46,67 @@ export default class Product {
         let currentActiveSection = null;
 
         const observer = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    const section = sections.find(s => s.$element[0] === entry.target);
-                    if (!section) return;
+            () => {
+                const visibleSectionsInViewport = sections.filter(section => {
+                    const rect = section.$element[0].getBoundingClientRect();
 
-                    if (entry.isIntersecting) {
-                        if (currentActiveSection) {
-                            currentActiveSection.$navItem.removeClass('active');
-                        }
-                        section.$navItem.addClass('active');
-                        currentActiveSection = section;
-                    }
+                    return rect.top < window.innerHeight && rect.bottom > Product.defaultHeaderHeight;
                 });
+
+                const closestToTopSection = visibleSectionsInViewport.reduce(
+                    (closest, section) => {
+                        const rect = section.$element[0].getBoundingClientRect();
+                        const distance = Math.abs(rect.top - Product.defaultHeaderHeight);
+
+                        return distance < closest.distance ? { section, distance } : closest;
+                    },
+                    { section: null, distance: Infinity },
+                ).section;
+
+                if (closestToTopSection && closestToTopSection !== currentActiveSection) {
+                    if (currentActiveSection) {
+                        currentActiveSection.$navItem.removeClass('active');
+                    }
+
+                    closestToTopSection.$navItem.addClass('active');
+                    currentActiveSection = closestToTopSection;
+                }
             },
             {
-                rootMargin: `-${Product.defaultHeaderHeight}px 0px -50% 0px`,
+                rootMargin: `-${Product.defaultHeaderHeight}px 0px -25% 0px`,
                 threshold: 0,
             },
         );
 
         sections.forEach(section => {
             observer.observe(section.$element[0]);
+        });
+    }
+
+    static initBackToTopButton() {
+        const $backToTopButton = $('#back-to-top-button');
+
+        if ($backToTopButton.length === 0) return;
+
+        const headerHeight = Product.defaultHeaderHeight;
+
+        $backToTopButton.on('click', () => {
+            $('html, body').animate(
+                {
+                    scrollTop: 0,
+                },
+                300,
+            );
+        });
+
+        $(window).on('scroll', () => {
+            const scrollTop = $(window).scrollTop();
+
+            if (scrollTop > headerHeight + 100) {
+                $backToTopButton.removeClass('d-none');
+            } else {
+                $backToTopButton.addClass('d-none');
+            }
         });
     }
 
