@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g><g transform="matrix(6.25,0,0,6.25,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160"><svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 160 160" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#566CB2;stroke-width:15;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:#0E009E;}
+	.st2{fill:#FCBE46;}
+	.st3{fill:#FDBD46;}
+</style>
+<path class="st0" d="M154.1,79"></path>
+<polygon class="st1" points="60,100 20,60 60,20 70.6,30.6 41.2,60 70.6,89.4 "></polygon>
+<g>
+	<path class="st2" d="M160,80h-15c0-35.8-29.1-65-65-65V0C124.1,0,160,35.9,160,80z"></path>
+	<path class="st2" d="M80,160c-44.1,0-80-35.9-80-80h15c0,35.8,29.1,65,65,65V160z"></path>
+</g>
+<polygon class="st1" points="100,140 89.4,129.4 118.7,100 89.4,70.6 100,60 140,100 "></polygon>
+</svg></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1052)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(5,0,0,5,100,100)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160"><svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 160 160" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#566CB2;stroke-width:15;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:#0E009E;}
+	.st2{fill:#FCBE46;}
+	.st3{fill:#FDBD46;}
+</style>
+<path class="st0" d="M154.1,79"></path>
+<polygon class="st1" points="60,100 20,60 60,20 70.6,30.6 41.2,60 70.6,89.4 "></polygon>
+<g>
+	<path class="st2" d="M160,80h-15c0-35.8-29.1-65-65-65V0C124.1,0,160,35.9,160,80z"></path>
+	<path class="st2" d="M80,160c-44.1,0-80-35.9-80-80h15c0,35.8,29.1,65,65,65V160z"></path>
+</g>
+<polygon class="st1" points="100,140 89.4,129.4 118.7,100 89.4,70.6 100,60 140,100 "></polygon>
+</svg></svg></g></g><defs><clipPath id="SvgjsClipPath1052"><rect width="1000" height="1000" x="0" y="0" rx="500" ry="500"></rect></clipPath></defs></svg></g></svg>
