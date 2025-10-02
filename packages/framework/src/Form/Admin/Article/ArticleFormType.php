@@ -123,6 +123,9 @@ final class ArticleFormType extends AbstractType
                 ],
                 'label' => t('URL'),
                 'trim' => true,
+                'row_attr' => [
+                    'data-js-article-type-content' => 'link',
+                ],
             ])
             ->add('text', GrapesJsType::class, [
                 'required' => true,
@@ -134,6 +137,9 @@ final class ArticleFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Content'),
+                'row_attr' => [
+                    'data-js-article-type-content' => 'site',
+                ],
             ])
             ->add('createdAt', DatePickerType::class, [
                 'required' => true,
@@ -141,10 +147,16 @@ final class ArticleFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter date of creation']),
                 ],
                 'label' => t('Creation date'),
+                'row_attr' => [
+                    'data-js-article-type-content' => 'site',
+                ],
             ]);
 
         $builderSeoData = $builder->create('seo', GroupType::class, [
             'label' => t('SEO'),
+            'row_attr' => [
+                'data-js-article-type-content' => 'site',
+            ],
         ]);
 
         $builderSeoData
