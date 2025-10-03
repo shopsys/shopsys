@@ -169,6 +169,9 @@ msgstr "Přehled článků"
 msgid "Authentication code"
 msgstr "Ověřovací kód"
 
+msgid "Awesome"
+msgstr "Úžasné"
+
 msgid "Back to dashboard"
 msgstr "Zpět na nástěnku"
 
@@ -1084,6 +1087,9 @@ msgstr "Měrné jednotky"
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
 
+msgid "Medium"
+msgstr "Střední"
+
 msgid "Modifications"
 msgstr "Úpravy"
 
@@ -1804,6 +1810,9 @@ msgstr "Prodejny"
 msgid "Street"
 msgstr "Ulice"
 
+msgid "Strong"
+msgstr "Silné"
+
 msgid "Successfully uploaded"
 msgstr "Úspěšně nahráno"
 
@@ -2050,6 +2059,9 @@ msgstr "V"
 msgid "Vats"
 msgstr "DPH"
 
+msgid "Very Weak"
+msgstr "Velmi slabé"
+
 msgid "View allowed recipients."
 msgstr "Zobrazit povolené příjemce."
 
@@ -2082,6 +2094,9 @@ msgstr "Přehled hlídacích psů"
 
 msgid "We have nothing to show you at this url."
 msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
+
+msgid "Weak"
+msgstr "Slabé"
 
 msgid "Wednesday"
 msgstr "Středa"

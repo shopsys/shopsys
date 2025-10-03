@@ -9,3 +9,5 @@ import './utils/copyToClipboard';
 import './utils/recommendedLength';
 import './utils/modalWindow';
 import './utils/confirmWindow';
+import './utils/passwordStrengthCalculator';
+import './passwordWithStrengthInput';

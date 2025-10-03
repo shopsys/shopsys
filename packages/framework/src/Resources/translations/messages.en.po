@@ -2263,7 +2263,7 @@ msgstr ""
 msgid "Password has been successfully set."
 msgstr ""
 
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
+msgid "Password has to include <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"upper\">uppercase letters</span>, <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"lower\">lowercase letters</span>, <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"number\">numbers</span> and must be <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"length\">longer than 10 characters</span>."
 msgstr ""
 
 msgid "Payment <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"

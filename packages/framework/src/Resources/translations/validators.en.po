@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid ""
+msgstr ""
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
@@ -191,9 +194,6 @@ msgid "Password cannot be same as email"
 msgstr ""
 
 msgid "Password cannot be same as part of email before at sign"
-msgstr ""
-
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
 msgstr ""
 
 msgid "Passwords do not match"

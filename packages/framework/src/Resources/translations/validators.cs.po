@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid ""
+msgstr ""
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
@@ -192,9 +195,6 @@ msgstr "Heslo nesmí být stejné jako přihlašovací e-mail."
 
 msgid "Password cannot be same as part of email before at sign"
 msgstr "Heslo nesmí být stejné jako část e-mailu před zavináčem."
-
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr "Heslo musí obsahovat velká písmena, malá písmena, číslice a musí být delší než 10 znaků."
 
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
