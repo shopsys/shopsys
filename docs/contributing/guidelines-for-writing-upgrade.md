@@ -2,6 +2,9 @@
 
 Keep in mind that upgrade instructions are written for users who might not understand our system well, so the more clear they are, the more helpful they are.
 
+- If you are using Claude Code, you can leverage `/generate-upgrade-notes` slash command to generate the upgrade notes, however, make sure to review and edit the generated content as needed.
+    - The best practice is to create the pull request first and then use the command as it uses the pull request link to analyze the changes.
+    - The command works best with `gh` CLI tool ([installation guide](https://github.com/cli/cli#installation)) as the primary method, but also works without it via GitHub web API, or can analyze local branch changes as a fallback.
 - Our users work in a clone of project-base, and even when they do the upgrade, their project-base still needs to be upgraded.
   Every time you change/add anything in the project-base, write upgrade instruction how to repeat this work.
     - for anything with docker, phing, frontend, config, etc.
@@ -15,3 +18,4 @@ Keep in mind that upgrade instructions are written for users who might not under
     - describe all the BC breaks and provide information on how to handle them
         - e.g. _"Method MyClass::oldMethod() was removed, use MyClass::newMethod() instead"_
         - you do not need to explicitly mention changes that are easily discoverable by the standard checks or static analysis, e.g., adding a new dependency into a class constructor.
+        - also, it is not the purpose of the upgrade notes to describe the feature itself (developers can read that in the linked pull request), only the changes that need to be done in the project
