@@ -8,3 +8,4 @@ else
 fi
 
 export WEBSERVER_ROOT
+export ADMIN_URL="${ADMIN_URL:=admin}"
