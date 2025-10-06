@@ -220,3 +220,8 @@ The installation script automatically configures the `LOCAL_PATH_TO_PROJECT_ROOT
 For macOS and Windows users, no further configuration is needed. Linux requires additional installation of [phpstorm-url-handler](https://github.com/sanduhrs/phpstorm-url-handler) as stated in the [Symfony docs](https://symfony.com/doc/current/reference/configuration/framework.html#ide).
 
 If you're using a different IDE than PHPStorm, you need to update environment variables `SYMFONY_IDE_URL_FORMAT` and `TRACY_DEBUGGER_IDE_URL_FORMAT` in your `.env.local` file to match your IDE's URL format.
+
+## Where can I find upgrading notes for a specific version?
+
+Each version of Shopsys Platform has its own upgrading notes file located in the [root of the repository](https://github.com/shopsys/shopsys) in the `UPGRADE-x.y.md` file.
+To find the desired version, you need to switch to the proper branch, see [What is new and how to upgrade](../index.md#what-is-new-and-how-to-upgrade) section for more information.
