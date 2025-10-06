@@ -1,28 +1,39 @@
 import {
+    RobotsTxtQueryDocument,
     TypeRobotsTxtQuery,
     TypeRobotsTxtQueryVariables,
-    RobotsTxtQueryDocument,
 } from 'graphql/requests/robotsTxt/RobotsTxtQuery.generated';
 import { createClient } from 'urql/createClient';
-import { getDomainConfig } from 'utils/domain/domainConfig';
+import { getPublicConfigProperty } from 'utils/config/getNextConfig';
+import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
+import { getHostFromDomain, getLocalePrefix } from 'utils/domain/domainUtils';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { Url } from 'utils/staticUrls/getInternationalizedStaticUrl';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 // mandatory for Next although it's not used
 const Robots: FC = (): null => {
     return null;
 };
+const domains = getPublicConfigProperty('domains', []) as DomainConfigType[];
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, ssrExchange }) => async (context) => {
-    const domain = context.req.headers.host!;
-    const domainConfig = getDomainConfig(domain);
+    const domainConfig = getDomainConfig(context);
+
+    // Return 404 if robots.txt is accessed from a domain with locale suffix
+    if (getLocalePrefix(domainConfig) !== '') {
+        return {
+            notFound: true,
+        };
+    }
+
     const client = await createClient({
-        publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+        domainConfig,
         ssrExchange,
         redisClient,
         context,
@@ -36,53 +47,70 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, s
     const res = context.res;
 
     res.setHeader('Content-Type', 'text/plain');
-    res.write(
-        getRobotsTxtContent(
-            domainConfig.url,
-            domainConfig.domainId,
-            robotsTxtResponse.data?.settings?.seo.robotsTxtContent,
-        ),
-    );
+    res.write(getRobotsTxtContent(domainConfig, robotsTxtResponse.data?.settings?.seo.robotsTxtContent));
     res.end();
 
     return { props: {} };
 });
 
 const getRobotsTxtContent = (
-    domain: string,
-    domainId: number,
+    currentDomainConfig: DomainConfigType,
     robotsTxtContentFromAdmin: string | null | undefined,
 ): string => {
-    const staticUrlsToNoIndex = getInternationalizedStaticUrls(
-        [
-            '/cart',
-            '/new-password',
-            '/search',
-            '/order-confirmation',
-            '/order-payment-confirmation',
-            '/personal-data-export',
-            '/personal-data-overview',
-            '/order/contact-information',
-            '/order/transport-and-payment',
-            '/grapesjs-template',
-            '/_feedback',
-            { url: '/order-detail/:urlHash', param: '*' },
-        ],
-        domain,
-    );
-    const [customerUrl] = getInternationalizedStaticUrls(['/customer'], domain);
+    const host = getHostFromDomain(currentDomainConfig.url);
+    const currentDomainHost = new URL(currentDomainConfig.url).host;
+    const domainId = currentDomainConfig.domainId;
+
+    // Find all domains with the same base URL (host)
+    const domainsWithSameHost = domains.filter((domainConfig) => {
+        const domainConfigHost = new URL(domainConfig.url).host;
+
+        return domainConfigHost === currentDomainHost;
+    });
+
+    const urlsToInternationalize = [
+        '/cart',
+        '/new-password',
+        '/search',
+        '/order-confirmation',
+        '/order-payment-confirmation',
+        '/personal-data-export',
+        '/personal-data-overview',
+        '/order/contact-information',
+        '/order/transport-and-payment',
+        '/grapesjs-template',
+        '/_feedback',
+        '/styleguide',
+        { url: '/order-detail/:urlHash', param: '*' },
+    ] as Url[];
+
+    // Aggregate static URLs from all domains with the same host
+    const staticUrlsToNoIndex = domainsWithSameHost.flatMap((domainConfig) => {
+        const internationalizedUrls = getInternationalizedStaticUrls(urlsToInternationalize, domainConfig.url);
+        const localePrefixUrl = getLocalePrefix(domainConfig);
+
+        return internationalizedUrls.map((url) => `${localePrefixUrl}${url}`);
+    });
+
+    // Aggregate customer URLs from all domains with the same host
+    const customerUrlsToNoIndex = domainsWithSameHost.flatMap((domainConfig) => {
+        const [customerUrl] = getInternationalizedStaticUrls(['/customer'], domainConfig.url);
+        const localePrefixUrl = getLocalePrefix(domainConfig);
+
+        return `${localePrefixUrl}${customerUrl}/*`;
+    });
 
     return `User-Agent: *
-    ${staticUrlsToNoIndex.map((page) => `\nDisallow: ${page}`).join('')}
-Disallow: ${customerUrl}/*
+${staticUrlsToNoIndex.map((page) => `\nDisallow: ${page}`).join('')}
+${customerUrlsToNoIndex.map((customerUrl) => `\nDisallow: ${customerUrl}`).join('')}
 Disallow: *?${FILTER_QUERY_PARAMETER_NAME}=
 Disallow: *?${LOAD_MORE_QUERY_PARAMETER_NAME}=
 Disallow: *?${SORT_QUERY_PARAMETER_NAME}=
 Disallow: /*?width=
 ${robotsTxtContentFromAdmin || ''}
 
-Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap.xml
-Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap_image.xml`;
+Sitemap: ${host}content/sitemaps/domain_${domainId}_sitemap.xml
+Sitemap: ${host}content/sitemaps/domain_${domainId}_sitemap_image.xml`;
 };
 
 export default Robots;

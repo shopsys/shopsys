@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Localization;
 
 use DateTime;
-use DateTimeZone;
 use IntlDateFormatter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeFormatterTest extends TestCase
 {
@@ -77,10 +76,16 @@ class DateTimeFormatterTest extends TestCase
         $settingMock = $this->getMockBuilder(Setting::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $dateTimeZone = new DateTimeZone($dateTimeZoneString);
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $domainConfig = DomainConfigHelper::getDomainConfig(
+            dateTimeZoneString: $dateTimeZoneString,
+        );
+
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
     }
 }

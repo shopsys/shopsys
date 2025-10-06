@@ -9,15 +9,13 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 
 class WatchdogDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    private const ATTRIBUTE_EMAIL_KEY = 'email';
-    private const ATTRIBUTE_DOMAIN_KEY = 'domainId';
-    private const ATTRIBUTE_PRODUCT_KEY = 'productId';
+    private const string ATTRIBUTE_EMAIL_KEY = 'email';
+    private const string ATTRIBUTE_PRODUCT_KEY = 'productId';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
@@ -45,82 +43,66 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
     {
         return [
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'yolande.liliane@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '1',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'emma.smith@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '1',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'john.doe@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '3',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'jane.doe@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '4',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'alice.jones@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '5',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'robert.brown@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '6',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'charlie.white@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '7',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'lucy.adams@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '8',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'george.evans@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '1',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'olivia.martin@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '10',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'james.wilson@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '11',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'sophia.moore@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '12',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'henry.jackson@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '13',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'mia.thomas@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '14',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::SECOND_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'liam.harris@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '15',
             ],
             [
-                self::ATTRIBUTE_DOMAIN_KEY => Domain::FIRST_DOMAIN_ID,
                 self::ATTRIBUTE_EMAIL_KEY => 'amelia.clark@example.com',
                 self::ATTRIBUTE_PRODUCT_KEY => '16',
             ],
@@ -129,12 +111,13 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
 
     /**
      * @param array $data
+     * @param int $domainId
      */
-    private function createWatchdogFromArray(array $data): void
+    private function createWatchdogFromArray(array $data, int $domainId): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $data[self::ATTRIBUTE_PRODUCT_KEY]);
 
-        $watchdogData = $this->watchdogDataFactory->createByDomainId($data[self::ATTRIBUTE_DOMAIN_KEY]);
+        $watchdogData = $this->watchdogDataFactory->createByDomainId($domainId);
         $watchdogData->email = $data[self::ATTRIBUTE_EMAIL_KEY];
         $watchdogData->product = $product;
 
@@ -148,8 +131,10 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
 
     private function createWatchdogs(): void
     {
-        foreach ($this->getDataForWatchdogs() as $data) {
-            $this->createWatchdogFromArray($data);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            foreach ($this->getDataForWatchdogs() as $data) {
+                $this->createWatchdogFromArray($data, $domainId);
+            }
         }
     }
 

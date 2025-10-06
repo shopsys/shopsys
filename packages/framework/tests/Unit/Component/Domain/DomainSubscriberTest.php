@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
@@ -26,10 +27,16 @@ class DomainSubscriberTest extends TestCase
 
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
 
-        $domain = new Domain([], $settingMock, $administratorFacadeMock);
+        $domain = new Domain(
+            [],
+            $settingMock,
+            $administratorFacadeMock,
+        );
 
-        $domainSubscriber = new DomainSubscriber($domain);
+
+        $domainSubscriber = new DomainSubscriber($domain, $contextResolverMock);
         $domainSubscriber->onKernelRequest($event);
     }
 
@@ -46,8 +53,9 @@ class DomainSubscriberTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $domainMock->expects($this->once())->method('getId');
+        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
 
-        $domainSubscriber = new DomainSubscriber($domainMock);
+        $domainSubscriber = new DomainSubscriber($domainMock, $contextResolverMock);
         $domainSubscriber->onKernelRequest($event);
     }
 
@@ -67,7 +75,9 @@ class DomainSubscriberTest extends TestCase
         $domainMock->expects($this->once())->method('getId')->willThrowException($exception);
         $domainMock->expects($this->once())->method('switchDomainByRequest')->with($this->equalTo(new Request()));
 
-        $domainSubscriber = new DomainSubscriber($domainMock);
+        $contextResolverMock = $this->createMock(ContextResolverInterface::class);
+
+        $domainSubscriber = new DomainSubscriber($domainMock, $contextResolverMock);
         $domainSubscriber->onKernelRequest($event);
     }
 }

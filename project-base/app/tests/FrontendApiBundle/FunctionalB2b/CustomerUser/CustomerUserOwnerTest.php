@@ -215,14 +215,15 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrdersQuery.graphql');
         $responseData = $this->getResponseDataForGraphQlType($response, 'orders');
+        $domainId = $this->domain->getId();
 
         $expectedOrders = [
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 31, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 29, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 30, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 26, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 27, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
+            ['uuid' => $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 6, $domainId, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL],
+            ['uuid' => $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 4, $domainId, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
+            ['uuid' => $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 5, $domainId, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
+            ['uuid' => $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $domainId, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_USER_EMAIL],
+            ['uuid' => $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 1, $domainId, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
+            ['uuid' => $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 2, $domainId, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
         ];
 
         $this->assertSame(6, $responseData['totalCount']);
@@ -239,7 +240,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
      */
     public function testGetAnotherCustomerUserOrderDetail(): void
     {
-        $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class);
+        $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $this->domain->getId(), Order::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrderQuery.graphql', [
             'orderUuid' => $anotherUserOrder->getUuid(),
         ]);
@@ -290,7 +291,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
      */
     public function testCreateComplaintMutationIsAllowedForAnotherUserOrder(): void
     {
-        $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class);
+        $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $this->domain->getId(), Order::class);
         $orderItems = $anotherUserOrder->getItems();
         $orderItem = reset($orderItems);
         $response = $this->getResponseContentForGql(

@@ -100,7 +100,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
      */
     public function testGetAnotherCustomerUserOrderDetailQueryReturnsNotFound(): void
     {
-        $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 26, Order::class);
+        $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 1, $this->domain->getId(), Order::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrderQuery.graphql', [
             'orderUuid' => $anotherUserOrder->getUuid(),
         ]);
@@ -167,7 +167,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
      */
     public function testCreateComplaintForAnotherUserOrderIsNotAllowed(): void
     {
-        $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 26, Order::class);
+        $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 1, $this->domain->getId(), Order::class);
         $response = $this->getCreateComplaintResponse($anotherUserOrder);
 
         $this->assertAccessDeniedError($response);
@@ -179,7 +179,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
      */
     public function testCreateComplaintIsAllowedForOwnOrder(): void
     {
-        $thisUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class);
+        $thisUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $this->domain->getId(), Order::class);
         $response = $this->getCreateComplaintResponse($thisUserOrder);
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');

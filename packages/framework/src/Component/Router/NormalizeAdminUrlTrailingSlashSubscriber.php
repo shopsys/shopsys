@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,15 +15,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
-class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
+class NormalizeAdminUrlTrailingSlashSubscriber implements EventSubscriberInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $currentDomainRouter
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
      */
     public function __construct(
-        protected readonly CurrentDomainRouter $currentDomainRouter,
+        protected readonly AdministrationRouter $administrationRouter,
         protected readonly TransformStringHelper $transformStringHelper,
+        protected readonly ContextResolverInterface $contextResolver,
     ) {
     }
 
@@ -41,14 +45,16 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($event->getThrowable() instanceof NotFoundHttpException) {
-            $pathInfo = $event->getRequest()->getPathInfo();
-            $pathInfo = $this->transformStringHelper->addOrRemoveTrailingSlashFromString($pathInfo);
+        if (!$this->contextResolver->isCurrentContext(AdminContext::class) || !$event->getThrowable() instanceof NotFoundHttpException) {
+            return;
+        }
 
-            // prevents invalid redirection if request URL is http://host/index.php as $pathInfo is empty in that case
-            if ($pathInfo !== '') {
-                $this->redirectToExistingPath($pathInfo, $event);
-            }
+        $pathInfo = $event->getRequest()->getPathInfo();
+        $pathInfo = $this->transformStringHelper->addOrRemoveTrailingSlashFromString($pathInfo);
+
+        // prevents invalid redirection if request URL is http://host/index.php as $pathInfo is empty in that case
+        if ($pathInfo !== '') {
+            $this->redirectToExistingPath($pathInfo, $event);
         }
     }
 
@@ -59,7 +65,7 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
     protected function redirectToExistingPath(string $newPath, ExceptionEvent $event): void
     {
         try {
-            $this->currentDomainRouter->match($newPath);
+            $this->administrationRouter->match($newPath);
 
             $uri = $event->getRequest()->getUri();
             $httpHost = $event->getRequest()->getHttpHost();

@@ -6,17 +6,22 @@ namespace Shopsys\FrameworkBundle\Component\Context;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class AdminContext extends AbstractContext
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider $adminUrlProvider
+     * @param \Shopsys\FrameworkBundle\Component\Context\ResolveContextHelper $resolveContextHelper
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param string[] $adminRoutePrefixes
+     * @param string[] $additionalAdminPathPrefixes
      */
     public function __construct(
+        private readonly AdminUrlProvider $adminUrlProvider,
+        private readonly ResolveContextHelper $resolveContextHelper,
         private readonly RequestStack $requestStack,
-        private readonly array $adminRoutePrefixes = [],
+        private readonly array $additionalAdminPathPrefixes = [],
     ) {
     }
 
@@ -41,8 +46,16 @@ final class AdminContext extends AbstractContext
             return false;
         }
 
-        $route = $request->attributes->get('_route', '');
+        return $this->isPathMatchingAdminPattern($request->getPathInfo());
+    }
 
-        return is_string($route) && Utils::strStartsWithAny($route, $this->adminRoutePrefixes);
+    /**
+     * @param string $pathinfo
+     * @return bool
+     */
+    private function isPathMatchingAdminPattern(string $pathinfo): bool
+    {
+        return Utils::strStartsWithAny($pathinfo, $this->additionalAdminPathPrefixes) ||
+            $this->resolveContextHelper->requestPathMatchesPattern($this->adminUrlProvider->getAdminUrl(), $pathinfo);
     }
 }

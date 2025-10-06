@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -16,6 +17,7 @@ export const useComparison = () => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const domainConfig = useDomainConfig();
 
     const { productListData, removeList, isProductInList, toggleProductInList, isProductListFetching } = useProductList(
         TypeProductListTypeEnum.Comparison,
@@ -24,22 +26,22 @@ export const useComparison = () => {
             addProductSuccess: (result) => {
                 updatePortalContent(<ProductComparePopup />);
                 updateComparisonUuid(result?.uuid ?? null);
-                dispatchBroadcastChannel('refetchComparedProducts');
+                dispatchBroadcastChannel('refetchComparedProducts', domainConfig.domainId);
             },
             removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
             removeSuccess: () => {
                 showSuccessMessage(t('Comparison products have been cleaned.'));
                 updateComparisonUuid(null);
-                dispatchBroadcastChannel('reloadPage');
+                dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
             },
             removeProductError: () => showErrorMessage(t('Unable to remove product from comparison.')),
             removeProductSuccess: (result) => {
                 if (!result) {
                     updateComparisonUuid(null);
-                    dispatchBroadcastChannel('reloadPage');
+                    dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
                 }
                 showSuccessMessage(t('Product has been removed from your comparison.'));
-                dispatchBroadcastChannel('refetchComparedProducts');
+                dispatchBroadcastChannel('refetchComparedProducts', domainConfig.domainId);
             },
         },
     );

@@ -1,9 +1,12 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getCookies, setCookie } from 'cookies-next';
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
-import { getProtocol, getIsHttps } from 'utils/requestProtocol';
+import { getCookieName } from 'utils/cookies/cookieNaming';
+import { DomainConfigType } from 'utils/domain/domainConfig';
+import { getIsHttps } from 'utils/requestProtocol';
 import { v4 as uuidV4 } from 'uuid';
 import { createStore } from 'zustand/vanilla';
 
@@ -19,11 +22,9 @@ type CookiesStoreActions = {
 
 export type CookiesStore = CookiesStoreState & CookiesStoreActions;
 
-type CookiesType = {
-    cookiesStore: string;
+const getCookiesStoreName = (domainConfig: DomainConfigType): string => {
+    return getCookieName('cookiesStore', domainConfig.domainId);
 };
-
-const COOKIES_STORE_NAME = 'cookiesStore' as const;
 const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
 
 const userSnapEnabledDefaultValue = getPublicConfigProperty('userSnapEnabledDefaultValue', false) ?? false;
@@ -34,8 +35,15 @@ const getDefaultInitState = (): CookiesStoreState => ({
     isUserSnapEnabled: userSnapEnabledDefaultValue,
 });
 
-export const getCookiesStoreState = (context?: GetServerSidePropsContext): CookiesStoreState => {
-    const { cookiesStore } = getCookies({ ...context, secure: getIsHttps(getProtocol(context)) }) as CookiesType;
+export const getCookiesStoreState = (
+    domainConfig: DomainConfigType,
+    context?: GetServerSidePropsContext,
+): CookiesStoreState => {
+    const cookiesStoreName = getCookiesStoreName(domainConfig);
+
+    const cookies = getCookies(context) as Record<string, string>;
+
+    const cookiesStore = cookies[cookiesStoreName];
     const newState = getDefaultInitState();
 
     if (!cookiesStore) {
@@ -73,10 +81,17 @@ const removeIncorrectCookiesStoreProperties = (
 export const useCookiesStoreSync = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { setCookiesStoreState, ...storeValues } = useCookiesStore((state) => state);
+    const domainConfig = useDomainConfig();
 
     useEffect(() => {
-        setCookie(COOKIES_STORE_NAME, storeValues, { maxAge: THIRTY_DAYS_IN_SECONDS, secure: getIsHttps() });
-    }, [storeValues]);
+        const cookiesStoreName = getCookiesStoreName(domainConfig);
+
+        setCookie(cookiesStoreName, storeValues, {
+            maxAge: THIRTY_DAYS_IN_SECONDS,
+            secure: getIsHttps(),
+            path: '/',
+        });
+    }, [storeValues, domainConfig]);
 };
 
 export const createCookiesStore = (cookieStoreFromServer: CookiesStoreState) =>

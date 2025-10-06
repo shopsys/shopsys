@@ -1,0 +1,7 @@
+{% extends '@OverblogGraphiQL/GraphiQL/index.html.twig' %}
+
+{% block body_script %}
+    {% set endpointPrefix = getDomain().getPostfix() %}
+    {% set endpoint = endpointPrefix is not null ? endpointPrefix ~ endpoint : endpoint %}
+    {{ parent() }}
+{% endblock body_script %}

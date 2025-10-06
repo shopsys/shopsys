@@ -157,6 +157,8 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
                 __DIR__ . '/packages/framework/src/Model/Sitemap/SitemapListener.php',
                 __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainDataCreatorTest.php',
+                __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainTest.php',
+                __DIR__ . '/packages/framework/tests/Unit/Component/Router/DomainRouterFactoryTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Mail/EnvelopeListenerTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php',

@@ -10,6 +10,7 @@ use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -19,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
-use Symfony\Component\Routing\RouterInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Twig\Environment;
 
@@ -58,7 +58,9 @@ class OrderMailTest extends TransactionFunctionalTestCase
 
     public function testGetMessageByOrder(): void
     {
-        $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $routerMock = $this->getMockBuilder(DomainRouter::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)

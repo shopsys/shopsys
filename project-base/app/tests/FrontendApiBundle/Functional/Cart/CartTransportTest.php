@@ -71,7 +71,7 @@ class CartTransportTest extends GraphQlTestCase
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
             'images' => [
                 [
-                    'url' => $this->getFullUrlPath('/content-test/images/transport/58.jpg'),
+                    'url' => $this->getBaseUrlPath('/content-test/images/transport/58.jpg'),
                     'name' => TransportDataFixture::TRANSPORT_PERSONAL,
                 ],
             ],

@@ -90,7 +90,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
         $container->registerForAutoconfiguration(CategoryAutomatedFilterInterface::class)
             ->addTag('shopsys.category_automated_filter');
 
-        $this->setAdminContextRoutePrefixes($config['admin_context_route_prefixes'], $container);
+        $this->setAdminContextPathPrefixes($config['admin_context_additional_path_prefixes'], $container);
     }
 
     /**
@@ -137,12 +137,14 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     }
 
     /**
-     * @param string[] $adminRoutePrefixes
+     * @param string[] $additionalAdminPathPrefixes
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    protected function setAdminContextRoutePrefixes(array $adminRoutePrefixes, ContainerBuilder $container): void
-    {
+    protected function setAdminContextPathPrefixes(
+        array $additionalAdminPathPrefixes,
+        ContainerBuilder $container,
+    ): void {
         $container->getDefinition(AdminContext::class)
-            ->setArgument('$adminRoutePrefixes', $adminRoutePrefixes);
+            ->setArgument('$additionalAdminPathPrefixes', $additionalAdminPathPrefixes);
     }
 }

@@ -5,6 +5,7 @@ The Storefront is a client for consuming and displaying data from [Frontend API]
 - [Setup Storefront](./setup-storefront.md)
 - [Project Structure](./project-structure.md)
 - [Dependecies](./dependecies.md)
+- [Domain Configuration](./domain-configuration.md)
 - [Coding Standarts](./coding-standards.md)
 - [Typescript](./typescript.md)
 - [Tailwind CSS](./tailwind.md)

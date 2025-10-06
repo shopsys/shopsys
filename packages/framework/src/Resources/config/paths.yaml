@@ -1,4 +1,5 @@
 parameters:
     shopsys.framework.resources_dir: "%shopsys.framework.root_dir%/src/Resources"
+    shopsys.router.administration.cache_dir: "%kernel.cache_dir%/routing/administration"
     shopsys.router.domain.cache_dir: "%kernel.cache_dir%/routing/base"
     shopsys.router.localized.cache_dir: "%kernel.cache_dir%/routing/localized"

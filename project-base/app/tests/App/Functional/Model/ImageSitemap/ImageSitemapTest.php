@@ -40,17 +40,24 @@ class ImageSitemapTest extends ApplicationTestCase
         $sitemapDir = $this->parameterBag->get('kernel.project_dir') . $this->parameterBag->get('shopsys.sitemaps_dir');
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            if ($this->domain->isMainDomainWithinSameBaseUrlGroup($domainConfig) === false) {
+                continue;
+            }
+
             $domainId = $domainConfig->getId();
-            $filename = $sitemapDir . '/domain_' . $domainId . '_sitemap_image.products.xml';
-            $xml = simplexml_load_file($filename);
 
-            $expectedRegular = $this->getExpectedXmlRegex($domainConfig);
-            $unexpectedNotMainImage = $this->getUnexpectedNotMainXml($domainConfig);
-            $unexpectedNotNotVisibleProduct = $this->getUnexpectedNotVisibleXml($domainConfig);
+            foreach ($this->domain->getAllWithSameBaseUrl($domainConfig) as $relevantDomainConfig) {
+                $filename = sprintf('%s/domain_%d_sitemap_image.%s.xml', $sitemapDir, $domainId, $this->imageSitemapFacade->getProductsSectionName($relevantDomainConfig));
+                $xml = simplexml_load_file($filename);
 
-            $this->assertMatchesRegularExpression($expectedRegular, $xml->asXML());
-            $this->assertStringNotContainsStringIgnoringCase($unexpectedNotMainImage, $xml->asXML());
-            $this->assertStringNotContainsStringIgnoringCase($unexpectedNotNotVisibleProduct, $xml->asXML());
+                $expectedRegular = $this->getExpectedXmlRegex($relevantDomainConfig);
+                $unexpectedNotMainImage = $this->getUnexpectedNotMainXml($relevantDomainConfig);
+                $unexpectedNotNotVisibleProduct = $this->getUnexpectedNotVisibleXml($relevantDomainConfig);
+
+                $this->assertMatchesRegularExpression($expectedRegular, $xml->asXML());
+                $this->assertStringNotContainsStringIgnoringCase($unexpectedNotMainImage, $xml->asXML());
+                $this->assertStringNotContainsStringIgnoringCase($unexpectedNotNotVisibleProduct, $xml->asXML());
+            }
         }
     }
 
@@ -61,10 +68,11 @@ class ImageSitemapTest extends ApplicationTestCase
     private function getExpectedXmlRegex(DomainConfig $domainConfig): string
     {
         $urlPattern = preg_quote($domainConfig->getUrl(), '~');
+        $basUrlPattern = preg_quote($domainConfig->getBaseUrl(), '~');
         $television = $this->transformStringHelper->stringToFriendlyUrlSlug(t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
         $plasma = $this->transformStringHelper->stringToFriendlyUrlSlug(t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
 
-        return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $urlPattern . '/content-test/images/product/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc></image\:image></url>~';
+        return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $basUrlPattern . '/content-test/images/product/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc></image\:image></url>~';
     }
 
     /**

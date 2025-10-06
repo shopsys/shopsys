@@ -28,9 +28,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class CompanyOrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     private const string UUID_NAMESPACE = '0338e624-c961-4475-a29d-c90080d02d1f';
-    public const string ORDER_PREFIX = 'order_';
-    public const string COMPANY_ORDER_1 = 'company_order_1';
-    public const string COMPANY_ORDER_2 = 'company_order_2';
+    public const string COMPANY_ORDER_PREFIX = 'company_order_';
 
     /**
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
@@ -69,6 +67,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
      */
     private function loadOrders(int $domainId): void
     {
+        $referenceSuffix = 0;
         $companyCustomer = $this->getReferenceForDomain(CompanyDataFixture::SHOPSYS_COMPANY, $domainId, Customer::class);
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
@@ -91,6 +90,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             TransportDataFixture::TRANSPORT_PERSONAL,
             PaymentDataFixture::PAYMENT_GOPAY_CARD,
             $customerUser,
+            ++$referenceSuffix,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -113,6 +113,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             TransportDataFixture::TRANSPORT_PERSONAL,
             PaymentDataFixture::PAYMENT_CARD,
             $customerUser,
+            ++$referenceSuffix,
         );
 
         $customerUser = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_USER_EMAIL, $domainId, CustomerUser::class);
@@ -133,9 +134,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             TransportDataFixture::TRANSPORT_CZECH_POST,
             PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
             $customerUser,
+            ++$referenceSuffix,
         );
-
-        $this->addReference(self::COMPANY_ORDER_1, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
@@ -153,9 +153,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             TransportDataFixture::TRANSPORT_PPL,
             PaymentDataFixture::PAYMENT_CARD,
             $customerUser,
+            ++$referenceSuffix,
         );
-
-        $this->addReference(self::COMPANY_ORDER_2, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
@@ -175,6 +174,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             TransportDataFixture::TRANSPORT_PERSONAL,
             PaymentDataFixture::PAYMENT_CASH,
             $customerUser,
+            ++$referenceSuffix,
         );
 
         $customerUser = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, $domainId, CustomerUser::class);
@@ -194,6 +194,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             TransportDataFixture::TRANSPORT_PPL,
             PaymentDataFixture::PAYMENT_CARD,
             $customerUser,
+            ++$referenceSuffix,
         );
     }
 
@@ -202,7 +203,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
      * @param array<string, int> $products
      * @param string $transportReferenceName
      * @param string $paymentReferenceName
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param int $referenceSuffix
      * @return \App\Model\Order\Order
      */
     private function createOrder(
@@ -210,7 +212,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         array $products,
         string $transportReferenceName,
         string $paymentReferenceName,
-        ?CustomerUser $customerUser = null,
+        CustomerUser $customerUser,
+        int $referenceSuffix,
     ): Order {
         $uniqueOrderHash = $orderData->domainId . '-';
 
@@ -238,8 +241,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
 
         $order = $this->placeOrderFacade->createOrderOnly($orderData);
 
-        $referenceName = self::ORDER_PREFIX . $order->getId();
-        $this->addReference($referenceName, $order);
+        $referenceName = self::COMPANY_ORDER_PREFIX . $referenceSuffix;
+        $this->addReferenceForDomain($referenceName, $order, $orderData->domainId);
 
         return $order;
     }

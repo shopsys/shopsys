@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class BlogArticleRepository
 {
@@ -24,12 +25,14 @@ class BlogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly TransformStringHelper $transformStringHelper,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -112,7 +115,7 @@ class BlogArticleRepository
     public function getQueryBuilderForQuickSearch(?int $domainId, QuickSearchFormData $searchData): QueryBuilder
     {
         if ($domainId === null) {
-            $locale = $this->domain->getLocale();
+            $locale = $this->localization->getCurrentLocaleForTranslatableEntities();
             $queryBuilder = $this->getAllBlogArticlesByLocaleQueryBuilder($locale);
         } else {
             $locale = $this->domain->getDomainConfigById($domainId)->getLocale();

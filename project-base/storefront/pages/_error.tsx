@@ -31,7 +31,7 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statu
 ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
     const middlewareStatusCode = Number.parseInt(context.res.getHeader(MIDDLEWARE_STATUS_CODE_KEY) || '');
     const middlewareStatusMessage = context.res.getHeader(MIDDLEWARE_STATUS_MESSAGE_KEY);
-    const cookiesStoreState = getCookiesStoreState(context);
+    const cookiesStoreState = getCookiesStoreState(domainConfig, context);
 
     const serverSideProps = await initServerSideProps({ context, redisClient, domainConfig, t });
     const statusCode = middlewareStatusCode || context.res.statusCode || 500;

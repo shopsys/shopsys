@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -13,21 +12,31 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DomainRouterFactoryTest extends TestCase
 {
-    public function testGetRouter()
+    public function testGetRouter(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.com:8080', 'example', 'en', $defaultTimeZone);
+        $domainConfig = DomainConfigHelper::getDomainConfig(
+            id: Domain::THIRD_DOMAIN_ID,
+            locale: 'en',
+        );
+
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
 
         $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
@@ -66,19 +75,19 @@ class DomainRouterFactoryTest extends TestCase
 
         $requestStackMock = $this->createMock(RequestStack::class);
         $containerMock = $this->createMock(ContainerInterface::class);
+        $transformStringHelper = $this->createMock(TransformStringHelper::class);
 
         $domainRouterFactory = new DomainRouterFactory(
             'routerConfiguration',
             $localizedRouterFactoryMock,
             $friendlyUrlRouterFactoryMock,
             $domain,
+            $transformStringHelper,
             $requestStackMock,
             $containerMock,
             __DIR__,
         );
 
-        $router = $domainRouterFactory->getRouter(Domain::THIRD_DOMAIN_ID);
-
-        $this->assertInstanceOf(RouterInterface::class, $router);
+        $domainRouterFactory->getRouter(Domain::THIRD_DOMAIN_ID);
     }
 }

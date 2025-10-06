@@ -1,0 +1,15 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Google Shopping product feed"
+msgstr "Feed produktov pre Google Shopping"
+
+msgid "Google Shopping product feed is not optimized for selling to Australia, Czechia, France, Germany, Italy, Netherlands, Spain, Switzerland, the UK, and the US. It is caused by missing 'shipping' attribute."
+msgstr "Feed produktov pre Google Shopping nie je optimalizovaný pre predaj v Austrálii, Česku, Francúzsku, Nemecku, Itálii, Holandsku, Španielsku, Švajčiarsku, Veľkej Británii a USA. Dôvodom je chýbajúci atribút 'shipping'."
+
+msgid "Show in feed"
+msgstr "Zobraziť vo feede"
+

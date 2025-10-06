@@ -8,7 +8,6 @@ import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 let ssrExchange: SSRExchange | null = null;
 
 export const UrqlWrapper: FC<{ pageProps: ServerSidePropsType }> = ({ children, pageProps }) => {
-    const { publicGraphqlEndpoint } = pageProps.domainConfig;
     const { t } = useTranslation();
 
     const client = useMemo(() => {
@@ -21,7 +20,7 @@ export const UrqlWrapper: FC<{ pageProps: ServerSidePropsType }> = ({ children, 
             ssrExchange.restoreData(pageProps.urqlState);
         }
 
-        return createClient({ t, ssrExchange, publicGraphqlEndpoint });
+        return createClient({ t, ssrExchange, domainConfig: pageProps.domainConfig });
     }, [pageProps.urqlState]);
 
     return <Provider value={client}>{children}</Provider>;

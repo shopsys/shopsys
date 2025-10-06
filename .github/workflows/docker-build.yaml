@@ -1085,7 +1085,7 @@ jobs:
             -   name: Set ENV variables required for review
                 run: |
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
-                    echo "HOSTS=${HOST}, cz.${HOST}" >> $GITHUB_ENV
+                    echo "HOSTS=${HOST}, cz.${HOST}, ${HOST}/sk" >> $GITHUB_ENV
             -   name: Download docker-compose.review.yml from artifacts
                 uses: actions/download-artifact@v4
                 with:
@@ -1139,6 +1139,7 @@ jobs:
                         :globe_with_meridians: Live Preview:
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                          - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}/sk
                     delete-previous-comment: false
     build-successful:
         if: |

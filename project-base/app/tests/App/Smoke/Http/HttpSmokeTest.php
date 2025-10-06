@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Smoke\Http;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\HttpSmokeTesting\HttpSmokeTestCase;
 use Shopsys\HttpSmokeTesting\RouteConfigCustomizer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -13,15 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HttpSmokeTest extends HttpSmokeTestCase
 {
-    #[Override]
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        static::getContainer()->get(Domain::class)
-            ->switchDomainById(Domain::FIRST_DOMAIN_ID);
-    }
-
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */

@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order;
 
-use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
@@ -43,6 +41,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class OrderFacadeHeurekaTest extends TestCase
 {
@@ -151,11 +150,14 @@ class OrderFacadeHeurekaTest extends TestCase
      */
     private function createDomain(): Domain
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone);
+        $domainConfig = DomainConfigHelper::getDomainConfig();
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $this->createMock(Setting::class), $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $this->createMock(Setting::class),
+            $administratorFacadeMock,
+        );
     }
 
     /**

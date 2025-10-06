@@ -30,7 +30,7 @@ class CdnFacade
      */
     public function resolveDomainUrlForAssets(DomainConfig $domainConfig): string
     {
-        return $this->cdnDomain ?? $domainConfig->getUrl();
+        return $this->cdnDomain ?? $domainConfig->getBaseUrl();
     }
 
     /**

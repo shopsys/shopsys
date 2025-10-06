@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry\Mail;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Mailer\MailerHelper;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Inquiry\Inquiry;
@@ -41,6 +42,7 @@ class InquiryMail
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Image\ProductImageFacade $productImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Mailer\MailerHelper $mailerHelper
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -48,6 +50,7 @@ class InquiryMail
         protected readonly Domain $domain,
         protected readonly ProductImageFacade $productImageFacade,
         protected readonly MailerHelper $mailerHelper,
+        protected readonly AdministrationRouter $administrationRouter,
     ) {
     }
 
@@ -129,7 +132,7 @@ class InquiryMail
     {
         return [
             ...$this->getBodyVariablesReplacements($inquiry),
-            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID)->generate(
+            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->administrationRouter->generate(
                 'admin_inquiry_detail',
                 ['id' => $inquiry->getId()],
                 UrlGeneratorInterface::ABSOLUTE_URL,

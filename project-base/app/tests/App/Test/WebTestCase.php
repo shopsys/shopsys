@@ -269,9 +269,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      */
     protected function createRequest(): Request
     {
-        $uri = $this->getLocalizedPathOnFirstDomainByRouteName('admin_login');
-
-        $request = Request::create($uri);
+        $request = Request::create('/');
         /** @var \Symfony\Component\HttpFoundation\Session\SessionFactory $sessionFactory */
         $sessionFactory = static::$kernel->getContainer()->get('test.service_container')->get('session.factory');
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */

@@ -7,8 +7,8 @@ namespace Tests\FrontendApiBundle\Functional\Navigation;
 use App\Component\FriendlyUrl\FriendlyUrlRouteEnum;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class NavigationTest extends GraphQlTestCase
@@ -179,7 +179,7 @@ class NavigationTest extends GraphQlTestCase
             [
                 'id' => $this->getReference($categoryReferenceName, Category::class)->getId(),
             ],
-            UrlGeneratorInterface::ABSOLUTE_PATH,
+            DomainRouter::SLUG,
         );
     }
 }

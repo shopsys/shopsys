@@ -15,6 +15,7 @@ function deploy() {
     DOMAINS=(
         DOMAIN_HOSTNAME_1
         DOMAIN_HOSTNAME_2
+        DOMAIN_HOSTNAME_3
     )
 
     ENABLE_AUTOSCALING=true

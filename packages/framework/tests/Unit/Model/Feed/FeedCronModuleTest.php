@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Feed;
 
-use DateTimeZone;
 use Monolog\Handler\NullHandler;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
@@ -18,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Symfony\Bridge\Monolog\Logger;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class FeedCronModuleTest extends TestCase
@@ -41,10 +40,14 @@ class FeedCronModuleTest extends TestCase
         $feedModuleRepositoryMock->expects($this->any())->method('getAllScheduledFeedModules')->willReturn([$feedModule1, $feedModule2]);
         $feedModuleRepositoryMock->expects($this->any())->method('getFeedModuleByNameAndDomainId')->willReturn($feedModule1);
 
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $defaultTimeZone);
+        $domainConfig = DomainConfigHelper::getDomainConfig();
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)
             ->disableOriginalConstructor()

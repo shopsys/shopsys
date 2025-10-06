@@ -63,7 +63,7 @@ class UploadedFileExtension extends AbstractExtension
      */
     public function getUploadedFileUrl(UploadedFile $uploadedFile): string
     {
-        return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
+        return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), $uploadedFile);
     }
 
     /**
@@ -72,7 +72,7 @@ class UploadedFileExtension extends AbstractExtension
      */
     public function getCustomerUploadedFileUrl(CustomerUploadedFile $customerUploadedFile): string
     {
-        return $this->customerUploadedFileFacade->getCustomerUploadedFileDownloadUrl($this->domain->getCurrentDomainConfig(), $customerUploadedFile);
+        return $this->customerUploadedFileFacade->getCustomerUploadedFileDownloadUrl($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), $customerUploadedFile);
     }
 
     /**

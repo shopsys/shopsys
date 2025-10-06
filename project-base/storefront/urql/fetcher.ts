@@ -93,10 +93,12 @@ export const fetcher =
             }
 
             const body = removeDirectiveFromQuery(init.body, [CACHE_REGEXP, FRIENDLY_URL_REGEXP]);
-            const host = (init.headers ? new Headers(init.headers) : new Headers()).get('OriginalHost');
+            const headers = init.headers ? new Headers(init.headers) : new Headers();
+            const host = headers.get('OriginalHost');
+            const locale = headers.get('Locale');
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const hash = `${getRedisPrefixPattern()}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
-
+            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${locale && locale !== 'default' ? locale + ':' : ''}`;
+            const hash = `${key}${md5(body).toString().substring(0, 7)}`;
             const fromCache = await redisClient.get(hash);
 
             if (fromCache !== null) {

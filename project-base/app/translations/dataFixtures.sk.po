@@ -1,0 +1,2157 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "%brandName% SEO H1"
+msgstr "%brandName% SEO H1"
+
+msgid "%brandName% SEO Title"
+msgstr "%brandName% SEO Názov"
+
+msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
+msgstr "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
+
+msgid "100 Czech crowns ticket"
+msgstr "Lístok za 100 českých korún"
+
+msgid "123.8x58.6 mm"
+msgstr "123,8x58,6 mm"
+
+msgid "1366×768 (HD Ready)"
+msgstr "1366×768 (HD Ready)"
+
+msgid "1920×1080 (Full HD)"
+msgstr "1920×1080 (Full HD)"
+
+msgid "2 litre coffeemakers in sale"
+msgstr "2 litrové kávovary v akci"
+
+msgid "2000 DPI"
+msgstr "2000 DPI"
+
+msgid "21,5\" Hyundai 22MT44"
+msgstr "21,5\" Hyundai 22MT44"
+
+msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
+msgstr "22\" Sencor SLE 22F46DM4 HELLO KITTY"
+
+msgid "220 x 250 x 9 mm"
+msgstr "220 x 250 x 9 mm"
+
+msgid "24\" Philips CRT [V]"
+msgstr "24\" Philips CRT [V]"
+
+msgid "24\" Philips [V]"
+msgstr "24\" Philips [V]"
+
+msgid "240 x 205 x 15 mm"
+msgstr "240 x 205 x 15 mm"
+
+msgid "2400x600"
+msgstr "2400x600"
+
+msgid "255 x 255 x 15"
+msgstr "255 x 255 x 15"
+
+msgid "27\" Hyundai PLASMA [V]"
+msgstr "27\" Hyundai PLASMA [V]"
+
+msgid "27\" Hyundai T27D590EY"
+msgstr "27\" Hyundai T27D590EY"
+
+msgid "27\" Hyundai T27D590EZ"
+msgstr "27\" Hyundai T27D590EZ"
+
+msgid "27\" Hyundai [V]"
+msgstr "27\" Hyundai [V]"
+
+msgid "295 x 240 x 15 mm <br /> cartridge with active carbon"
+msgstr "295 x 240 x 15 mm <br /> náplnč s aktívnym uhlíkom"
+
+msgid "295 x 245 x 15 mm <br /> cartridge with active carbon"
+msgstr "295 x 245 x 15 mm <br /> náplnč s aktívnym uhlíkom"
+
+msgid "2W"
+msgstr "2W"
+
+msgid "30\" Hyundai 22MT44D"
+msgstr "30\" Hyundai 22MT44D"
+
+msgid "310 x 285 x 15 mm"
+msgstr "310 x 285 x 15 mm"
+
+msgid "310 x 480 x 10"
+msgstr "310 x 480 x 10"
+
+msgid "32\" Philips 32PFL4308"
+msgstr "32\" Philips 32PFL4308"
+
+msgid "320 x 300 x 10 mm"
+msgstr "320 x 300 x 10 mm"
+
+msgid "36\" Hyundai PLASMA [V]"
+msgstr "36\" Hyundai PLASMA [V]"
+
+msgid "36\" Hyundai [V]"
+msgstr "36\" Hyundai [V]"
+
+msgid "36\" Philips CRT [V]"
+msgstr "36\" Philips CRT [V]"
+
+msgid "36\" Philips [V]"
+msgstr "36\" Philips [V]"
+
+msgid "4 W"
+msgstr "4 W"
+
+msgid "426x306x145 mm"
+msgstr "426x306x145 mm"
+
+msgid "440 x 345 x 40 mm"
+msgstr "440 x 345 x 40 mm"
+
+msgid "449x304x152 mm"
+msgstr "449x304x152 mm"
+
+msgid "47 \"LG 47LA790V Luxury TV from the South Korean company LG bears 47LA790S. At first glance its beautiful design that pleases the eye of every lover of pure and precise shapes."
+msgstr "47\" LG 47LA790V Luxusná televízia od južokórejskej spoločnosti LG nazývaná 47LA790S. Na prvý pohľad upozôrňuje jej krásny dizajn, ktorý têši okom každého milovníka čistých a presných tvarov."
+
+msgid "47\" LG 47LA790V (FHD)"
+msgstr "47\" LG 47LA790V (FHD)"
+
+msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
+msgstr "480 x 310 x 10 mm <br /> <br /> Filter je potrebné upraviť nožnicami tak, aby pokryl celú plochu tukového filtra."
+
+msgid "480 x 310 x 10 mm. The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
+msgstr "480 x 310 x 10 mm. Filter je potrebné upraviť nožnicami tak, aby pokryl celú plochu tukového filtra."
+
+msgid "4800x1200"
+msgstr "4800x1200"
+
+msgid "495 x 200 x 8 mm"
+msgstr "495 x 200 x 8 mm"
+
+msgid "51,5\" Sencor [V]"
+msgstr "51,5\" Sencor [V]"
+
+msgid "54\" Philips CRT [V]"
+msgstr "54\" Philips CRT [V]"
+
+msgid "54\" Philips [V]"
+msgstr "54\" Philips [V]"
+
+msgid "60\" Sencor [V]"
+msgstr "60\" Sencor [V]"
+
+msgid "800 × 480 px"
+msgstr "800 × 480 px"
+
+msgid "80x70x70 mm"
+msgstr "80x70x70 mm"
+
+msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
+msgstr "<b>Zvolili ste platenú bránu GoPay, bude vám zobrazená platebná brána.</b>"
+
+msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
+msgstr "<b>Zvolili ste platbu kreditnou kartou. Prosím, dokončte ju do dvoch pracovných dní.</b>"
+
+msgid "<div class=\"gjs-text-ckeditor\"><p>Blog article text for search testing, the search phrase is &#34;Dina&#34;.</p></div>"
+msgstr "<div class=\"gjs-text-ckeditor\"><p>Text blog článku na testovanie vyhľadávania, vyhľadávaná fráza je &#34;Dina&#34;.</p></div>"
+
+msgid "<h1>Your order has been cancelled</h1> Dear customer,<br/> <br/> your order has been cancelled.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaša objednávka bola zrušená</h1> Vážený zákazník,<br/> <br/> vaša objednávka bola zrušená.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Dátum a čas vytvorenia: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena vrátane DPH: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+
+msgid "<h1>Your order has been completed</h1> Dear customer,<br/> <br/> your order has been successfully completed.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaša objednávka bola dokončená</h1> Vážený zákazník,<br/> <br/> vaša objednávka bola úspešne dokončená.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Dátum a čas vytvorenia: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena vrátane DPH: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+
+msgid "<h1>Your order has been placed successfully</h1> Dear customer,<br/> <br/> you will be contacted when the order state changes.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses} <a style=\"margin:0.75rem auto;display:flex;height:fit-content;width:fit-content;cursor:pointer;align-items:center;justify-content:center;gap:0.5rem;border-radius:0.5rem;border:2px solid #00C8B7;background-color:#00C8B7;padding:7px 12px;text-align:center;font-weight:500;line-height:18px;text-decoration:none;outline:none;transition:all 0.2s ease;color:#fff;\" data-link-position=\"center\" class=\"gjs-button-link button-link-position-center\" title=\"Order detail\" href=\"{order_detail_url}\" > <div class=\"gjs-text-ckeditor text\" data-gjs-type=\"text\">Order detail</div> </a> <br/>"
+msgstr "<h1>Vaša objednávka bola úspešne odoslaná</h1> Vážený zákazník,<br/> <br/> budete kontaktovaný pri zmene stavu objednávky.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Dátum a čas vytvorenia: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena vrátane DPH: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+
+msgid "<h1>Your order is being processed</h1> Dear customer,<br/> <br/> we have started processing your order.<br/> <br/> Order number: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaša objednávka sa spracúva</h1> Vážený zákazník,<br/> <br/> začali sme spracúvať vašu objednávku.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\" tabindex=\"0\">{number}</a><br/> Dátum a čas vytvorenia: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena vrátane DPH: <span style=\"white-space: nowrap;\">{total_price_with_vat}</span></h3> {rounding_info}<br/> {addresses}"
+
+msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
+msgstr "<h2> Kuchárska kniha </h2> <br /> <br /> <p> Čo sa dá uvariť v parnej rúre? <br /> Používanie parného hrnca Concept je prekvapivo všestranné. Môže sa použiť na prípravu predkrmov, polievok, mäsa, rýb, zeleniny, vegetariánskych jedál, knedlíkov, ryže, ovocia a dezertov. <br /> 75 strán kuchárskych kníh Concept - varte zdravo na pare - obsahuje recepty s praktickými postupmi. Každý recept obsahuje: </p> <br /> <br /> <p> Zoznam ingrediencií </p> <br /> <p> Postup </p> <br /> <p> Pre koľko ľudí </p > <br /> <p> Čas prípravy </p> <br /> <p> Stupeň obtiažnosti </p> <br /> <p> + čas + teplota </p> <br /> <br /> Spod pokličiek vám dávame niekoľko tipov - Špargľa s tuniakovým nálevom, losos vo vermutu, polievka minestrone, kurča s mätou prekvapenie Kapustné listy plnené mletým mäsom, grilovaný kotlet so zeleninou, zemiaky pečené s modrou plesňou, hruška s čokoládovou omáčkou, pražené mandle a zmrzlina atď."
+
+msgid "<h2> Specifications: </h2> <ul> <li> Height: 140 mm </li> <li> Width: 600 mm </li> <li> Depth: 470 mm </li> <li> Accessories: backflow preventer </li> <li> White execution </li> <li> Top towing - the possibility of recirculation </li> <li> Controls - slider slider </li> <li> 3 levels of performance </li> <li> Max. Performance: 185 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> Textile grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 1x textile filter 61990026, 1x carbon filter 61990028 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Net weight: 4 , 5 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 1.5 m </li> </ul>"
+msgstr "<h2> Špecifikácie: </h2> <ul> <li> Výška: 140 mm </li> <li> Šírka: 600 mm </li> <li> Hĺbka: 470 mm </li> <li> Príslušenstvo: spätný ventil </li> <li> Biele prevedenie </li> <li> Vrchné ťahanie - možnosť recirkulácie </li> <li> Ovládanie - posuvný regulátor </li> <li> 3 úrovne výkonu </li> <li> Max. výkon: 185 m3 / h. </li> <li> Max. hlučnosť na najvyššej úrovni 66 db (A) </li> <li> Žiarovka 40 W </li> <li> Textilný tukový filter </li> <li> priemer: 120 mm </li> </ul> <h2> Podrobný popis: </h2> <ul> <li> Voliteľné príslušenstvo: 1x textilný filter 61990026, 1x uhlíkový filter 61990028 </li> <li> 1 motor / ventilátor </li> <li> Minimálna vzdialenosť od elektrickej dosky 650 mm </li> <li> Minimálna vzdialenosť od plynovej dosky: 750 mm </li> <li> Čistá hmotnosť: 4,5 kg </li> <li> Napätie: 230 V ~ 50Hz </li> <li> Výkon: 150 W </li> <li> Dĺžka kábla: 1,5 m </li> </ul>"
+
+msgid "<h2>47 \"LG 47LA790V</h2>> Luxury TV from the South Korean company LG bears <strong> 47LA790S </strong>. At first glance its <strong> beautiful design </strong> That pleases the eye of every lover of pure and precise shapes. Inside the TV is hidden except <strong> M13 dual-core processor </strong> number of extra features. I so belong to the energy class <strong> A + </strong> . Micro Pixel Control function is performed local dimming backlight and thus significantly <strong> reduces </strong> up to 64 W. This is so gigantic screen with really great. <br> <br> This TV is considerate to your eyes because of the image <strong> eliminates the annoying flicker </strong> caused by conventional 3D glasses, and you so you can enjoy long evenings of film <strong> without fatigue and eye pain </strong> . User-friendly environment allows <strong> adjust the 3D depth effect </strong> and yourself, you can choose whether you prefer comfort or deeper experience when watching 3D content. You could very well happen that while watching a football match <strong> flips the ball right into your living room </strong> Because special functions for image conversion<strong> improve any broadcasting the third dimension </strong> . <br> <br> Avid gamers will appreciate the <strong> Dual Play </strong> When television broadcasts two separate 2D images and each player using glasses to see their part to the full screen area. No more worry when a split screen. <strong> Intel WiDi </strong> (Wireless Display), respectively. wireless transmission of video and audio, allows quick and easy connection of TVs and laptops without cables or an Internet connection. It is very convenient and fast you'll love this feature."
+msgstr "<h2>47 \"LG 47LA790V</h2>> Luxusná televízia od južnokórejskej spoločnosti LG s označením <strong> 47LA790S </strong>. Na prvý pohľad upúta jej <strong> krásny dizajn </strong>, ktorý poteší oko každého milovníka čistých a presných tvarov. Vo vnútri televízie je ukrytý okrem <strong> M13 dvojjadrového procesora </strong> množstvo ďalších funkcií. Patrí tak do energetickej triedy <strong> A + </strong> . Funkcia Micro Pixel Control vykonáva miestne stmavenie podsvietenia a tak významne <strong> znižuje </strong> až 64 W. Takto gigantická obrazovka s naozaj skvelým. <br> <br> Táto televízia je ohľaduplná k vašim očiam, pretože z obrazu <strong> eliminuje nepríjemné blikanie </strong> spôsobené bežnými 3D okuliarmi, a tak si môžete vychutnať dlhé filmové večery <strong> bez únavy a bolesti očí </strong> . Používateľsky prívetivé prostredie umožňuje <strong> upraviť 3D efekt hĺbky </strong> a sami si môžete vybrať, či uprednostňujete pohodlie alebo hlbší zážitok pri sledovaní 3D obsahu. Môže sa vám stať, že pri sledovaní futbalového zápasu sa <strong> lopta prevalí priamo do vašej obývačky </strong> Pretože špeciálne funkcie na konverziu obrazu <strong> vylepšujú akékoľvek vysielanie do tretieho rozmeru </strong> . <br> <br> Zapálení hráči ocenia <strong> Dual Play </strong> Keď televízia vysiela dva samostatné 2D obrazy a každý hráč pomocou okuliarov vidí svoju časť na celej obrazovke. Už sa nemusíte trápiť rozdeľovanou obrazovkou. <strong> Intel WiDi </strong> (Wireless Display), respektíve bezdrôtový prenos videa a zvuku, umožňuje rýchle a jednoduché pripojenie televízií a notebookov bez káblov alebo internetového pripojenia. Je to veľmi pohodlné a rýchle, túto funkciu si zamilujete."
+
+msgid "<h2>A4tech X710BK</h2>Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages. News is a key 3XFire that in one pressing regulating a triple clicks. The mouse has five options to set up the sensor sensitivity and in steps 400, 600, 1200, 1600 and 2000 DPI. The mouse has an ergonomic design, it connects via high-speed USB interface and is equipped with 16 Kb internal memory that is possible with the Oscar Mouse Editor to record scripts to control your favorite games. It is fully compatible with all modern operating systems including Windows Vista. <br><br><strong> Specifications: </strong><br><br><strong> Interface: </strong><br> USB 2.0 <br> Reduction in PS/2 <br><br><strong> OS Compatibility: </strong><br> Microsoft Windows 2000/XP/2003/Vista"
+msgstr "<h2>A4tech X710BK</h2>Herná počítačová myš má päť tlačidiel a rolovacie tlačidlo pre jednoduchšie prehliadanie dokumentov alebo internetových stránok. Novinkou je kláves 3XFire, ktorý jedným stlačením reguluje trojité kliknutie. Myš má päť možností nastavenia citlivosti snímača v krokoch 400, 600, 1200, 1600 a 2000 DPI. Myš má ergonomický dizajn, pripája sa cez vysokorýchlostné USB rozhranie a je vybavená 16 Kb internou pamäťou, ktorá je možná s Oscar Mouse Editor na nahrávanie skriptov na ovládanie vašich obľúbených hier. Je plne kompatibilná so všetkými modernými operačnými systémami vrátane Windows Vista. <br><br><strong> Špecifikácie: </strong><br><br><strong> Rozhranie: </strong><br> USB 2.0 <br> Redukcia na PS/2 <br><br><strong> Kompatibilita OS: </strong><br> Microsoft Windows 2000/XP/2003/Vista"
+
+msgid "<h2>Canon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr "<h2>Canon EH-22L</h2> Vysokej kvality, elegantné, mäkké a pritom spoľahlivo chráni značkové puzdro pre váš digitálny fotoaparát Canon CANON EOS 650D alebo 700D. Poskytuje ochranu počas cestovania pred prachom, škrabancami a inými negatívnymi vplyvmi. Máte tiež fotoaparát pripravený na dosah ruky. Hodí sa do jednotky s objektívom 18-55 mm."
+
+msgid "<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr "<h2>Canon EH-22L</h2>Vysokej kvality, elegantné, mäkké a pritom spoľahlivo chrániace značkové puzdro pre váš digitálny fotoaparát Canon CANON EOS 650D alebo 700D. Poskytuje ochranu počas cestovania pred prachom, škrabancami a inými negatívnymi vplyvmi. Máte tiež fotoaparát pripravený na dosah ruky. Hodí sa do jednotky s objektívom 18-55 mm."
+
+msgid "<h2>Canon PIXMA MG2450</h2><p>Stylish and affordable, accessible multifunction devices for the home. Easy <strong> printing, scanning and copying </strong> in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print <strong> FINE technology </strong> Which guarantee excellent print quality. The printer has a system of four ink colors hidden in two ink cartridges, which provide easy user service and stable print quality throughout the life. <strong> You can reach the XL cartridges </strong> FINE, which provide significantly greater number of print pages between ink replacement. This is ideal if you are printing large volumes.<br><br>Software <strong> My Image Garden </strong> will reveal the full range of functions PIXMA printers. It offers solutions for the layout and printing photos, scanning, and access to online services. Due to advanced features such as face detection, it will scan all the pictures on your computer (even those long forgotten), and compile them into great designs to print. Service <strong> CREATIVE PARK PREMIUM</strong> you can download and print photos, images and artwork from internationally recognized photographers and artists. Create greeting cards, calendars or stunning 3D paper products, such as the space shuttle Endeavour.</p>"
+msgstr "<h2>Canon PIXMA MG2450</h2><p>Štýlové a cenovo dostupné, prístupné multifunkčné zariadenia pre domácnosť. Jednoduché <strong> tlač, skenovanie a kopírovanie </strong> v jednom zariadení zaberie oveľa menej miesta a ušetríte peniaze ako pri kúpe jednotlivých komponentov. Tlačiareň používa inovatívnu tlačovú <strong> FINE technológiu </strong>, ktorá zaručuje výbornú kvalitu tlače. Tlačiareň má systém štyroch farieb atrámentu skrytých v dvoch atrámentových kazetach, ktoré poskytujú jednoduchú užívateľskú údržbu a stabilnú kvalitu tlače po celý život. <strong> Môžete si zaobstarať XL kazety </strong> FINE, ktoré poskytujú významne väčší počet vytlačených stránok medzi výmenou atrámentu. To je ideálne, ak tlačíte veľké objemy.<br><br>Softvér <strong> My Image Garden </strong> odhalí celú škálu funkcií PIXMA tlačiarňí. Ponúka riešenia pre rozloženie a tlač fotografií, skenovanie a prístup k online službám. Díky pokročilým funkciám, ako je rozpoznávanie tvárí, preskenuje všetky obrázky na vašom počítači (aj tie dávno zabudúť), a zlepí ich do skvelých návrhov na tlač. Služba <strong> CREATIVE PARK PREMIUM</strong> vám umožňuje stiahnuť a vytlačiť fotografie, obrázky a umelecké diela od medzinárodne uznávaných fotografov a umelcov. Vytvorte pozdrávky, kalendáre alebo ohromujúce 3D papierdôstky, ako je kozmický raketoplon Endeavour.</p>"
+
+msgid "<h2>Canon PIXMA MG3350 black</h2><p>Features of modern and elegantly prepared MFPs<strong> s new wireless capabilities</strong>. Function <strong>automatic two-sided printing</strong> printing on both sides, which saves paper while producing professional looking documents. The printer uses<strong> ChromaLife100 ink system </strong>with four colors of ink hidden <strong>two print cartridges</strong>That provide easy user service and stable print quality throughout the life. You reach for XL FINE cartridges provide printing multiple pages significantly between individual ink replacement. This is ideal if you often print.<br><br>Do smart device application download <strong>Canon PIXMA Printing Solutions</strong> a straight print or scan. In addition, you can check the printer status and ink levels. They also supported services <strong>Apple AirPrint</strong> and access to the Internet and <strong>Google Cloud Print</strong>. Software <strong>My Image Garden</strong> has a solution for organizing and printing photos, scanning, and access to online services. Due to advanced features such as face detection, you will always find exactly what you're looking for.<br><br><strong>Additional information:</strong><br><br><strong>Print:</strong><br>Technology: 4-ink (in 2 packs) ChromaLife100 system, the head of FINE (2 pl)<br>Borderless printing: A4, Letter, 20 x 25 cm, 13 x 18 cm, 10 x 15 cm<br>Automatic two-sided printing: A4, A5, B5, Letter<br>Printing from Application PIXMA Printing Solutions, Google Cloud Print, Apple AirPrint</p>"
+msgstr "<h2>Canon PIXMA MG3350 čierná</h2><p>Funkcie moderných a elegantne pripravených MFP<strong> s novými bezdrôtovými schopnosťami</strong>. Funkcia <strong>automatická obojstranná tlač</strong> tlačí na obe strany, čo šetrí papier pri vytváraní profesionálne vyzerajúcich dokumentov. Tlačiareň používa<strong> ChromaLife100 atrámentový systém </strong>so štyrmi farbami atrámentu skrytými v <strong>dvoch tlačových kazetach</strong>, ktoré poskytujú jednoduchú užívateľskú údržbu a stabilnú kvalitu tlače po celý život. Môžete siahnuť po XL FINE kazetach, ktoré poskytujú významne viac stránok tlače medzi jednotlivými výmenami atrámentu. To je ideálne, ak často tlačíte.<br><br>Do inteligentného zariadenia si stiahnite aplikáciu <strong>Canon PIXMA Printing Solutions</strong> a priamo tlačte alebo skenujte. Okrem toho môžete skontrolovať stav tlačiarne a úroveň atrámentu. Podporované sú tiež služby <strong>Apple AirPrint</strong> a prístup na internet a <strong>Google Cloud Print</strong>. Softvér <strong>My Image Garden</strong> má riešenie na organizáciu a tlač fotografií, skenovanie a prístup k online službám. Díky pokročilým funkciám, ako je rozpoznávanie tvárí, vždy nájdete presne to, čo hľadáte.<br><br><strong>Ďalšie informácie:</strong><br><br><strong>Tlač:</strong><br>Technológia: 4-atrámentový (v 2 balíkôch) ChromaLife100 systém, hlava FINE (2 pl)<br>Tlač bez okrajov: A4, Letter, 20 x 25 cm, 13 x 18 cm, 10 x 15 cm<br>Automatická obojstranná tlač: A4, A5, B5, Letter<br>Tlač z aplikácie PIXMA Printing Solutions, Google Cloud Print, Apple AirPrint</p>"
+
+msgid "<h2>Canon PIXMA MG3350 black</h2><p>Features of modern and elegantly prepared MFPs<strong> s new wireless capabilities</strong>. Function <strong>automatic two-sided printing</strong> printing on both sides, which saves paper while producing professional looking documents. The printer uses<strong> ChromaLife100 ink system </strong>with four colors of ink hidden <strong>two print cartridges</strong>That provide easy user service and stable print quality throughout the life. You reach for XL FINE cartridges provide printing multiple pages significantly between individual ink replacement. This is ideal if you often print.<br><br>Do smart device application download <strong>Canon PIXMA Printing Solutions</strong> a straight print or scan. In addition, you can check the printer status and ink levels. They also supported services <strong>Apple AirPrint</strong> and access to the Internet and <strong>Google Cloud Print</strong>. Software <strong>My Image Garden</strong> has a solution for organizing and printing photos, scanning, and access to online services. Due to advanced features such as face detection, you will always find exactly what you're looking for.<br><strong>Additional information:</strong><br><strong>Print:</strong><br>Technology: 4-ink (in 2 packs) ChromaLife100 system, the head of FINE (2 pl)<br>Borderless printing: A4, Letter, 20 x 25 cm, 13 x 18 cm, 10 x 15 cm<br>Automatic two-sided printing: A4, A5, B5, Letter<br>Printing from Application PIXMA Printing Solutions, Google Cloud Print, Apple AirPrint</p>"
+msgstr "<h2>Canon PIXMA MG3350 čierná</h2><p>Funkcie moderných a elegantne pripravených MFP<strong> s novými bezdrôtovými schopnosťami</strong>. Funkcia <strong>automatická obojstranná tlač</strong> tlačí na obe strany, čo šetrí papier pri vytváraní profesionálne vyzerajúcich dokumentov. Tlačiareň používa<strong> ChromaLife100 atrámentový systém </strong>so štyrmi farbami atrámentu skrytými v <strong>dvoch tlačových kazetach</strong>, ktoré poskytujú jednoduchú užívateľskú údržbu a stabilnú kvalitu tlače po celý život. Môžete siahnuť po XL FINE kazetach, ktoré poskytujú významne viac stránok tlače medzi jednotlivými výmenami atrámentu. To je ideálne, ak často tlačíte.<br><br>Do inteligentného zariadenia si stiahnite aplikáciu <strong>Canon PIXMA Printing Solutions</strong> a priamo tlačte alebo skenujte. Okrem toho môžete skontrolovať stav tlačiarne a úroveň atrámentu. Podporované sú tiež služby <strong>Apple AirPrint</strong> a prístup na internet a <strong>Google Cloud Print</strong>. Softvér <strong>My Image Garden</strong> má riešenie na organizáciu a tlač fotografií, skenovanie a prístup k online službám. Díky pokročilým funkciám, ako je rozpoznávanie tvárí, vždy nájdete presne to, čo hľadáte.<br><strong>Ďalšie informácie:</strong><br><strong>Tlač:</strong><br>Technológia: 4-atrámentový (v 2 balíkôch) ChromaLife100 systém, hlava FINE (2 pl)<br>Tlač bez okrajov: A4, Letter, 20 x 25 cm, 13 x 18 cm, 10 x 15 cm<br>Automatická obojstranná tlač: A4, A5, B5, Letter<br>Tlač z aplikácie PIXMA Printing Solutions, Google Cloud Print, Apple AirPrint</p>"
+
+msgid "<h2>D-Link DGS-105/E</h2>The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more. The switch is equipped with five Gigabit Ethernet ports with auto-sensing speeds, so you shall always have the best performance. To communicate without delay and smooth video streaming has integrated <strong> QoS optimization </strong> . <br><br> Switch functions quickly and easily without complicated setting. But <strong> consistently low power </strong> detect used ports, and if stopping traffic enters Sleep mode. <strong> Rugged metal body is sufficient for cooling without fan </strong> . Together with its small size you can find a place almost anywhere. Also available is a set of <strong> wall mounting </strong> and it can also protect against theft Kensington."
+msgstr "<h2>D-Link DGS-105/E</h2>Switch poskytuje nákladovo efektívny spôsob vytvorenia malej siete alebo rozšírenia existujúcich. Pripojte nielen počítače, ale aj rad sieťových zariadení, ako sú IP kamery, sieťové tlačiarne a ďalšie. Switch je vybavený päť Gigabit Ethernet portmi s automatickým rozpoznávaním rýchlostí, takže budete mať vždy najlepší výkon. Pre komunikáciu bez oneskorenia a plynulé streamovanie videa má integrovanú <strong> QoS optimalizáciu </strong> . <br><br> Switch funguje rýchlo a jednoduše bez komplikovaného nastavovania. Ale <strong> konzistentne nízka spotreba </strong> rozpozná používané porty, a ak sa zastaví premnávka, vstupuje do režimu spánku. <strong> Pevná kovová kontrukcia je dostatočná na chladenie bez ventilátora </strong> . Spolu s malou veľkosťou si nájdete miesto takmer kdeľvek. K dispozícii je tiež súprava na <strong> nastenni montáž </strong> a môže ho chrániť aj proti kradnutiu Kensington."
+
+msgid "<h2>Defender SPK-480</h2><strong>Defender SPK 480</strong>, two portable and practical&nbsp;<strong>2\" broadband&nbsp;</strong>speakers. They have&nbsp;<strong>4 watt output&nbsp;</strong>and are powered by USB. They're made of durable plastic and their&nbsp;compact size is&nbsp;<strong>portable&nbsp;</strong>and easy to fit into any bag or backpack. The speakers connect to notebooks or portable music players via the built-in 3.5 mm jack. Each speaker features its own volume control, and they can be placed near monitors without disturbing image quality due to their magnetic shielding. The silver and black&nbsp;design is simple and modern."
+msgstr "<h2>Defender SPK-480</h2><strong>Defender SPK 480</strong>, dva prenosné a praktické&nbsp;<strong>2\" širokopásmové&nbsp;</strong>reproduktory. Majú&nbsp;<strong>4 wattový výsok&nbsp;</strong>a sú napájané cez USB. Sú vyrobené z odolnej plastiky a ich&nbsp;kompaktná veľkosť je&nbsp;<strong>prenosná&nbsp;</strong>a ľahko sa vmesť do akéjkoľvek tašky alebo batohu. Reproduktory sa pripojú k notebookom alebo prenosným hudobným prehrievačom cez vstavovaný 3,5 mm jack. Každý reproduktor má vlastné ovládanie hlasitosti a môžu byť umiestnené blízko monitorov bez narušenia kvality obrazu díky ich magnetickému tieneniu. Strieborno-čierny&nbsp;dizajn je jednoduchý a moderný."
+
+msgid "<h2>DéLonghi ECAM 44.660.B</h2><p>Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker.&nbsp; A built in special hot steam/water jet automatically prepares a thick milk froth for cappuccino and tea. Drip coffee lovers can also press their own coffee.</p><h3>Magic Milk Menu button</h3><p><br>A special function is the Milk Menu button, which gives you a choice of milk-based beverages. In addition to the classic cappuccino, latte macchiato, or Latte, you can prepare rare drinks such as Espresso macchiato and a flat white. For a quick and easy treat, you can prepare hot cocoa or a cup of frothed milk, and the size of the beverage can be adjusted based on the cup.&nbsp;&nbsp;</p>"
+msgstr "<h2>DéLonghi ECAM 44.660.B</h2><p>Začnite ráno s vašim obľúbeným nápojom s automatickým kávovarom DeLonghi ECAM 44.660.B Eletta.&nbsp; Vstavovaný špeciálny horúci parny/vodný prond automaticky pripraví hustku mliekovej peny pre cappuccino a čaj. Milovníci prekvapkovej kávy si môžu tiež vytlačiť vlastnú kávu.</p><h3>Magické tlačidlo Milk Menu</h3><p><br>Špeciálnou funkciou je tlačidlo Milk Menu, ktoré vám dáva výber mliekovych nápojov. Okrem klasického cappuccina, latte macchiato alebo Latte môžete pripravovas vzajatné nápoje ako Espresso macchiato a flat white. Pre rýchle a jednoduché potešenie môžete pripraviť horúce kakao alebo šálku spenieho mlieka, a veľkosť nápoja môže byť upravená podľa šálky.&nbsp;&nbsp;</p>"
+
+msgid "<h2>GENIUS SP-M120 black</h2><p align=\"justify\"> Sleek and compact stereo speakers in combination of black and metallic surface. Speakers provide basic computer sound system with an output of 2 W RMS. On the front is virtually placed in a large volume control, but not forgotten even the popular headphone jack. <br><strong> Specifications: <br> Performance: <br></strong> 2 x 1 W RMS <br><strong> Frequency Range: </strong> 100 Hz - 20KHz <br><strong> Signal/noise ratio: </strong> 75 db <br><strong> Dimensions: </strong> 50 x 90 mm </p>"
+msgstr "<h2>GENIUS SP-M120 čierné</h2><p align=\"justify\"> Elegantné a kompaktné stereo reproduktory v kombinácii čierneho a metalického povrchu. Reproduktory poskytujú základný počítačový zvukový systém s výstupom 2 W RMS. Na prednej strane je prakticky umiestnený veľký regulátor hlasitosti, ale nezabudá sa ani na obľúbený jack pre slúšadla. <br><strong> Špecifikácie: <br> Výkon: <br></strong> 2 x 1 W RMS <br><strong> Frekvenčný rozsah: </strong> 100 Hz - 20KHz <br><strong> Pomer signál/šum: </strong> 75 db <br><strong> Rozmery: </strong> 50 x 90 mm </p>"
+
+msgid "<h2>GIGABYTE GK-KM7580 Black</h2>Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color. The keyboard has 15 multimedia keys for quick access to the Internet, email and other applications. The multimedia keys also used for various tasks (volume control, ...). Optical mouse has a sensor with a resolution of 500 to 1000 DPI resolution can be switched. Mouse fits both the left and the right hand. Wireless communication provides a miniature USB receiver for keyboard and mouse. This set will contrast nicely on any desk. <br><br><strong> Specifications: </strong> <br><br><strong> Multimedia keys: </strong><br> 15 hotkeys <br><br><strong> Interface: </strong><br> USB receiver <br><br><strong> Communication: </strong><br> wireless, 2.4 GHz band <br><br><strong> Power: </strong><br> Keyboard: 2x AAA <br> Mouse: 2x AAA"
+msgstr "<h2>GIGABYTE GK-KM7580 Čierná</h2>Kvalitna súprava klávesnice a optickej myši od Gigabyte. Oba komponenty sú farebne zlaené do elegantnéj leskéj čiernej farby. Klávesnica má 15 multimediálnych klávesov pre rýchly prístup na internet, email a iné aplikácie. Multimediálne kkávesy sa tiež používajú na rôzne úlohy (ovládanie hlasitosti, ...). Optická myš má snímač s rozlíšením 500 až 1000 DPI, rozlíšenie sa dá prepínať. Myš sa hodí pre ľavú aj pravú ruku. Bezdrôtovú komunikáciu zajišťuje miniatúrný USB prijemač pre klávesnicu a myš. Táto sada sa päkne vyjme na akémkoľvek stole. <br><br><strong> Špecifikácie: </strong> <br><br><strong> Multimediálne klávesy: </strong><br> 15 rýchlych klávesov <br><br><strong> Rozhranie: </strong><br> USB prijemač <br><br><strong> Komunikácia: </strong><br> bezdrôtová, 2,4 GHz pásmo <br><br><strong> Napájanie: </strong><br> Klávesnica: 2x AAA <br> Myš: 2x AAA"
+
+msgid "<h2>Genius SP-HF150 Black</h2>Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers. It is powered only by the USB port. Yet they can generate high power 4 W RMS. The sound of the smaller 2.5 \"drives is airy, yet does not lack sufficient bass fundament. All of the elegant veneer finish imitating a hidden volume control. <br><strong><br> Specifications: </strong><br><br><strong> Sound characteristics: </strong><br> Power: 2 x 2 W RMS <br> Drivers: 2.5 \"(širokpásmové) <br> Frequency range: 200 to 20 000 Hz <br> Signal-to-Noise Ratio: 70 db <br><br><strong> Connectors: </strong><br> 3.5 mm audio <br> USB for power"
+msgstr "<h2>Genius SP-HF150 Čierné</h2>Kompaktné reproduktory Genius SP-HF150 sú perfektným príslussstvom pre prenosné poňditače. Sú napájané iba cez USB port. Pritom dokážú vygenerovať vysoký výkon 4 W RMS. Zvuk menších 2,5 \" membán je vzdušný, aj tak nechýba dostatočný basový základ. Všetko v elegantnom laminátovom dokončení imitujúcom skryté ovládanie hlasitosti. <br><strong><br> Špecifikácie: </strong><br><br><strong> Zvukové charakteristiky: </strong><br> Výkon: 2 x 2 W RMS <br> Membány: 2,5 \"(širokopásmové) <br> Frekvenčný rozsah: 200 až 20 000 Hz <br> Pomer signál/šum: 70 db <br><br><strong> Konektory: </strong><br> 3,5 mm audio <br> USB pre napájanie"
+
+msgid "<h2>Genius SlimStar i222 CZ+SK Black</h2>GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design. It will decorate your desk at home or in the office. In addition to the standard layout will delight and a large variety of function keys that enhance control of the internet, email and also a multimedia player. Low profile you use for long periods still feel comfortable. The computer keyboard GENIUS LuxeMate I222 connects via USB interface.<br><br><strong>Specifications:<br><br>Type: </strong>conduction<br><strong>Layout: </strong>Czech<br><strong>Interface: </strong><br>USB<br><strong>Design:</strong><br>Apple design"
+msgstr "<h2>Genius SlimStar i222 CZ+SK Čierná</h2>GENIUS LuxeMate I222 je štýlová čierná klávesnica, ktorá na prvý pohľad láka na použitie vašim Apple dizajnom. Ozdobu vaš stol doma alebo v kancelárii. Okrem štandardného rozloženia poteší aj veľká rado funďných klávesov, ktoré vylepšujú ovládanie internetu, emailu a tak tiež multimediálneho prehrievača. Nízky profil vám umožní používať na dlhé obdobia a stále sa cítiť pohodlne. Počítačová klávesnica GENIUS LuxeMate I222 sa pripája cez USB rozhranie.<br><br><strong>Špecifikácie:<br><br>Typ: </strong>vedenie<br><strong>Rozloženie: </strong>České<br><strong>Rozhranie: </strong><br>USB<br><strong>Dizajn:</strong><br>Apple dizajn"
+
+msgid "<h2>JURA IMPRESSA Z9 One Touch TFT Pianoblack</h2><p> Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design. The purpose is always the most advanced technology to achieve real, authentic results. The powerful device has intuitive controls and except large 3.5 \"TFT color display. Together with rotary dial allows you to choose between 11 specialties and goes to prepare any coffee you can think of. With the coffee a la carte, allowing you to quickly change settings according to your needs, your options are almost limitless. </p><p> For an authentic experience and to ensure optimal conditions for coffee are two Thermoblocks. The first coffee and hot water, the second is intended to couple. With every cup of coffee is also possible to set the correct brewing temperature, amount of water and grind. Mill technology + Aroma is quiet and up to twice faster than previously used. Grains of coffee while grinding so much heat and so there is no negative influence of taste of coffee. </p><p> Foam crown in drinks Latte macchiato, cappuccino and other specialty are the world extremely popular. Automatic coffee machine in the model IMPRESSA Z9 One Touch is a distinctive design with a combination of pure luxury and sophistication. But technology also has a soft foam that each of trendy coffee specialties will adjust fluffy crown. S cappuccino outlets, which can be adjusted up to 153 mm, there is no problem to use a glass or a latte macchiato. Formed with Swiss precision and elegance with which you prepare the perfect espresso, cappuccino or caffe latte. </p><p> You will enjoy a very low power consumption. If the espresso is separated from the mains power switch, patented innovation JURY Zero Energy Switch (zero energy consumption) will remove any energy at all. Before turning off the espresso is automatically purged and cleansed, which provides him with long life. The unique geometry with finer teeth grinding and new technology supports the lower noise machine when grinding coffee. </p>"
+msgstr "JURA Impressa J9 TFT Carbon Automatický kávovar/espresso, farebný LCD"
+
+msgid "<h2>Logitech S-120 Speaker System</h2> Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players, and other devices. They are connected via standard stereo jack 3,5 mm. The speakers have a frequency response of 50 Hz to 20 kHz. Easily accessible controls are located on the side of the right speaker with headphone outlet. <br><br><b> Specifications: </b><br><strong><br> Performance: <br></strong> 2.3 W (2 x 1.15 W RMS) <br><br><strong> Frequency response: <br></strong> 50 Hz to 20 kHz <br>"
+msgstr "<h2>Logitech S-120 Speaker System</h2> Moderné stereo reproduktory v štýlovom čiernom dizajne, s výkonom 2,3 W, vhodné len pre stolové počítače a notebooky, ale aj pre CD alebo MP3 prehrávače a iné zariadenia. Pripájajú sa cez štandardný stereo jack 3,5 mm. Reproduktory majú frekvenčnú odozvu 50 Hz až 20 kHz. Ľahko dostupné ovládače sa nachádzajú na bočnej strane pravého reproduktora s výstupom pre slúchadlá. <br><br><b> Špecifikácie: </b><br><strong><br> Výkon: <br></strong> 2,3 W (2 x 1,15 W RMS) <br><br><strong> Frekvenčná odozva: <br></strong> 50 Hz až 20 kHz <br>"
+
+msgid "<h2>Nikon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Nikon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr "<h2>Nikon EH-22L</h2> Vysokokvalitné, elegantné, mäkké a pritom spoľahlivo chrániace značkové puzdro pre váš digitálny fotoaparát Nikon CANON EOS 650D alebo 700D. Poskytuje ochranu počas cestovania pred prachom, škrabancami a inými negatívnymi vplyvmi. Fotoaparát máte taktiež pripravený po ruke. Vhodné pre fotoaparát s objektívom 18-55 mm."
+
+msgid "<h2>Steam iron Concept ZN8009 wattage 2200 Watt security system AUTO - SHUT OFF lets much easier and more convenient ironing. </h2> Its other advantage is easy operation and many other practical functions and features, such as 3 m long supply cable through which you will not have to move ironing. Specifications: <ul> <li> Stainless steel soleplate </li><li> Even steam dosage: 20 g / min </li><li> Auto-off function AUTO SHUT-OFF Audible : turn off after 30 seconds in horizontal position and after 8 minutes in the vertical position irons </li><li> The water tank: 300 ml </li><li> Airbrush </li><li> The anti-drip ANTI-DRIP </li><li> Self-cleaning function Self Clean </li><li> The descaling function ANTI-CALC </li><li> Vertical steam </li><li> Notification light </li><li> Thermostat </li><li> 3 m power cable (with swivel 360 °) </li><li> Color: blue + silver </li><li> Power consumption: 2200 W </li><li> Voltage: 230 V </li> </ul> <br/>Accessories: container to refill their water"
+msgstr "<h2>Parná žehlička Concept ZN8009 s výkonom 2200 Watt a bezpečnostným systémom AUTO - SHUT OFF umožňuje oveľa jednoduchšie a pohodlnejšie žehlenie. </h2> Ďalšou výhodou je jednoduché ovládanie a množstvo ďalších praktických funkcií a vlastností, ako napríklad 3 m dlhý napájací kábel, vďaka ktorému nebudete musieť presúvať žehličku. Špecifikácie: <ul> <li> Nerezová žehliaca plocha </li><li> Rovnomerné dávkovanie pary: 20 g / min </li><li> Funkcia automatického vypnutia AUTO SHUT-OFF so zvukovým signálom: vypnutie po 30 sekundách vo vodorovnej polohe a po 8 minútach vo vertikálnej polohe žehličky </li><li> Nádržka na vodu: 300 ml </li><li> Rozprašovač </li><li> Funkcia proti kvapkaniu ANTI-DRIP </li><li> Funkcia samočistenia Self Clean </li><li> Funkcia odstraňovania vodného kameňa ANTI-CALC </li><li> Vertikálna para </li><li> Signalizačná kontrolka </li><li> Termostat </li><li> 3 m napájací kábel (s otočným pripojením 360 °) </li><li> Farba: modrá + strieborná </li><li> Príkon: 2200 W </li><li> Napätie: 230 V </li> </ul> <br/>Príslušenstvo: nádoba na dopĺňanie vody"
+
+msgid "<p> A perfectly clean glass ceramic cooktop without leaving stains and does not endanger the environment. </p><br /> <ul> <li> <strong> remove </strong> leftover food, grease, nicotine coating and many other impurities </li><li> <strong> does not harm </strong> rubber and plastics </li><li> <strong> does not </strong> AOX - Adsorbable organic halogens </li><li> biologically <strong> degradable </strong> by OECD </li></ul><br />"
+msgstr "<p>Dokonale čistí sklokeramické dosky bez zanechania škvŕn a neohrozuje životné prostredie.</p><ul><li><strong>odstraňuje</strong> zvyšky potravín, tuku, nikotínový povlak a mnoho ďalších nečistôt</li><li><strong>nepoškodzuje</strong> gumu a umelú hmotu</li><li><strong>neobsahuje </strong>AOX - Adsorbovateľné organické viazané halogény</li><li>biologicky <strong>odbúrateľné</strong> podľa OECD</li></ul>"
+
+msgid "<p> Enjoy quick cooking with special cooking HI-LIGHT zones which warms almost immediately. </p> Reasons to opt just for built-in ceramic plate Concept SDV-3360:<br /> <ol> <li> The built-in ceramic hob SDV-3360 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - will protect you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 50mm </li><li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, orthogonal edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 46 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> Circular HI-LIGHT </li><li> The diameter of the front left plates: 200 mm </li><li> Input left front plate: 1800 W </li><li> <strong> Rear left hotplate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> Input right rear plates : 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5500-6600 W </li><li> Weight: 9 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
+msgstr "<p> Vychutnajte si rýchle varenie so špeciálnymi varnými zónami HI-LIGHT, ktoré sa zahrievajú takmer okamžite. </p> Dôvody pre voľbu práve vstavánej keramickej dosky Concept SDV-3360:<br /> <ol> <li> Vstavaná keramická varná doska SDV-3360 vás prekvapí <strong> praktickým dotykovým ovládaním </strong>. </li><li> Špeciálne radiátory varných zón <strong> HI-LIGHT </strong> sa dokážu zahriať na maximum v priebehu pár sekúnd. </li><li> <strong> Indikátor zvyškového tepla H </strong> - ochráni vás pred nepríjemnými popáleniami. Signalizuje zvyškovú teplotu varnej zóny aj po vypnutí. </li><li> Ak chcete priamo vybrať čas, ktorý chcete variť, určite využite možnosť <strong> odloženého vypnutia </strong>. </li></ol><br /> <h2> Špecifikácie: </h2><br /> <ul> <li> Výška: 50mm </li><li> Šírka: 590 mm </li><li> Hĺbka: 520 mm </li><li> Sklokeramika </li><li> Príslušenstvo čistiaca škrabka </li><li> Dotykové ovládanie </li><li> Indikátor zvyškového tepla - H </li><li> Bez rámu, pravouhlé hrany Uzemnené </li><li> 4 varné zóny </li><li> Funkcia automatického vypnutia - EXTRA BEZPEČNÉ </li><li> Odložené vypnutie </li><li> Pípanie </li><li> Ovládací panel vpredu v strede </li><li> Detská poistka </li><li> Stav ON </li></ul><br /> <h2> Podrobnosti: </h2><br /> <ul> <li> Rozmery pre inštaláciu (VxŠxH): 46 x 560 x 490 mm </li><li> Hlavný vypínač </li><li> <strong> Ľavá predná doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer ľavej prednej dosky: 200 mm </li><li> Príkon ľavej prednej dosky: 1800 W </li><li> <strong> Ľavá zadná varná doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer ľavej zadnej dosky 165 mm </li><li> Príkon ľavej zadnej dosky: 1200 W </li><li> <strong> Pravá zadná doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer pravej zadnej dosky: 200mm </li><li> Príkon pravej zadnej dosky : 1800 W </li><li> <strong> Pravá predná doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer pravej prednej dosky 165 mm </li><li> Príkon pravej prednej dosky: 1200 W </li><li> Max.príkon-el .: 5500-6600 W </li><li> Hmotnosť: 9 kg </li><li> Napätie: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
+
+msgid "<p> Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it is required records or quickly usable labels. The printer boasts a very easy to use, ensuring a perfect look label width from 3.5 mm to 18 mm. You can create labels, barcodes, labels for folders, address and shipping labels, or labels on CD and DVD media. Everything can be created by using the keyboard directly to the printer manual. <br><br> The printer is in addition to ease of use and versatility also very fast. It can print up to 2 cm plate for one second. Very please direct thermal printing technology, which reduces the cost of toner and ink. The printer can be powered by AC adapter, rechargeable battery or alkaline batteries 6 x AA. <br><br><strong> Additional information: </strong><br><br><strong> Print technology: </strong><br> Thermal </p><p><strong> Width TZ tapes: </strong> 3.5/6/9/12/18 (mm) <br><strong> Display: </strong><br> 16 characters x 2 lines <br><strong> Print speed: </strong><br> 20 mm/s <br><strong> Odsřih: </strong><br> handmade <br><strong> Font style: </strong><br> 14 <br><br><strong> Symbols: </strong><br> 617<br><br><strong> Characters in mind: </strong><br> 2800 <br><br><strong> Other features: </strong><br> vertical printing, barcode printing <br><br><strong> Possible sources of supply: </strong><br> AC adapter AD-E001 - (not included) <br> rechargeable battery BA-E001 - (not included) <br> Alkaline Batteries 6 x AA - (not included) <br><strong> Package Contents: </strong><br> Printer PT-H300 <br> starting tape TZe-241 (18 mm black on white, length 4 m) <br> documentation </p>"
+msgstr "<p> Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it je povinné records or quickly usable labels. The printer boasts a very easy to use, ensuring a perfect look label width from 3.5 mm to 18 mm. You can create labels, barcodes, labels for folders, address and shipping labels, or labels on CD and DVD media. Everything can be created by using the keyboard directly to the printer manual. <br><br> The printer is in addition to ease of use and versatility also very fast. It can print up to 2 cm plate for one second. Very please direct thermal printing technology, which reduces the cost of toner and ink. The printer can be powered by AC adapter, rechargeable battery or alkaline batteries 6 x AA. <br><br><strong> Additional information: </strong><br><br><strong> Print technology: </strong><br> Thermal </p><p><strong> Width TZ tapes: </strong> 3.5/6/9/12/18 (mm) <br><strong> Display: </strong><br> 16 characters x 2 lines <br><strong> Print speed: </strong><br> 20 mm/s <br><strong> Odsřih: </strong><br> handmade <br><strong> Font style: </strong><br> 14 <br><br><strong> Symbols: </strong><br> 617<br><br><strong> Characters in mind: </strong><br> 2800 <br><br><strong> Other features: </strong><br> vertical printing, barcode printing <br><br><strong> Possible sources of supply: </strong><br> AC adapter AD-E001 - (not included) <br> rechargeable battery BA-E001 - (not included) <br> Alkaline Batteries 6 x AA - (not included) <br><strong> Package Contents: </strong><br> Printer PT-H300 <br> starting tape TZe-241 (18 mm black on white, length 4 m) <br> documentation </p>"
+
+msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
+msgstr "<p> Je pre vás bezpečnosť vás a vašich blízkych tak dôležitá ako pre nás? V takom prípade ocení u varnej dosky SDV-3460 funkciu indikátorov zvyškového tepla - H, ktorá ochráni vás a vašich blízkych pred nepríjemnými popáleninami. Indikátor zvyškového tepla signalizuje zvyškovú teplotu varnej zóny aj po vypnutí. </p><br /> <h2> Dôvody pre voľbu práve vstavánej keramickej dosky Concept SDV-3460: </h2><br /> <ol> <li> Vstavaná keramická varná doska SDV-3460 vás prekvapí <strong> praktickým dotykovým ovládaním </strong>. </li><li> Špeciálne radiátory varných zón <strong> HI-LIGHT </strong> sa dokážu zahriať na maximum v priebehu pár sekúnd. </li><li> <strong> Indikátor zvyškového tepla H </strong> - ochráni vás pred nepríjemnými popáleniami. Signalizuje zvyškovú teplotu varnej zóny aj po vypnutí. </li><li> Ak chcete priamo vybrať čas, ktorý chcete variť, určite využite možnosť <strong> odloženého vypnutia </strong>. </li></ol><br /> <h2> Špecifikácie: </h2><br /> <ul> <li> Výška: 60 mm </li> <li> Šírka: 590 mm </li><li> Hĺbka: 520 mm </li><li> Sklokeramika </li><li> Príslušenstvo čistiaca škrabka </li><li> Dotykové ovládanie </li><li> Indikátor zvyškového tepla - H </li><li> Bez rámu, šikmé hrany Uzemnené </li><li> 4 varné zóny </li><li> Funkcia automatického vypnutia - EXTRA BEZPEČNÉ </li><li> Odložené vypnutie </li><li> Pípanie </li><li> Ovládací panel vpredu v strede </li><li> Detská poistka </li><li> Stav ON </li></ul><br /> <h2> Podrobnosti: </h2><br /> <ul> <li> Rozmery pre inštaláciu (VxŠxH): 50 x 560 x 490 mm </li><li> Hlavný vypínač </li><li> <strong> Ľavá predná doska: </strong> </li><li> Priemer ľavých predných dosiek: 165x265 mm </li><li> Príkon ľavej prednej dosky: 1100/2000 W </li><li> <strong> Zadná ľavá doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer ľavej zadnej dosky 165 mm </li><li> Príkon ľavej zadnej dosky: 1200 W </li><li> <strong> Pravá zadná doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer pravej zadnej dosky: 200mm </li><li> príkon pravej zadnej dosky: 1800 W </li><li> <strong> Pravá predná doska: </strong> Okrúhla HI-LIGHT </li><li> Priemer pravej prednej dosky: 165 mm </li><li> Príkon pravej prednej dosky: 1200 W </li><li> Max.príkon-el .: 5700-6800 W </li><li> Hmotnosť: 10 kg </li><li> Napätie: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
+
+msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
+msgstr "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and by malo byť at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
+
+msgid "<p><strong>CD/DVD/Blu-ray/HD-DVD</strong>is an affordable program for burning CD/DVD/Blu-ray/HD-DVD media. Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk.<br><br>Worth mentioning is also the fact that<strong> for its operation baking does not use any components of Windows</strong> or other manufacturers. Its functionality is not needed any external libraries or DLL. This makes the software provides high stability, even if your system is corrupted Windows. <strong>This gives you the ability to backup before reinstalling Broken System</strong>. The program is completely in the Czech language.</p>"
+msgstr "<p><strong>CD/DVD/Blu-ray/HD-DVD</strong> je cenovo dostupný program na napaľovanie CD/DVD/Blu-ray/HD-DVD médií. Intuitívne ovládanie umožňuje jednoduché používanie aj pre začiatočníka v tejto oblasti. Ďalšou veľkou výhodou je použitie technológie napaľovania \"on the fly\", ktorá šetrí nielen váš čas, ale aj kapacitu disku, pretože proces nevytvára žiadne úložné (dočasné) súbory na vašom pevnom disku.<br><br>Za zmienku stojí aj skutočnosť, že<strong> pre svoju činnosť nepotrebuje žiadne komponenty Windows</strong> ani iných výrobcov. Jeho funkcionalita nepotrebuje žiadne externé knižnice alebo DLL. To robí softvér vysoko stabilným aj v prípade, že je váš systém Windows poškodený. <strong>To vám dáva možnosť zálohovania pred preinštalovaním poškodeného systému</strong>. Program je kompletne v českom jazyku.</p>"
+
+msgid "<p>Article text for search testing, the search phrase is &#34;Dina&#34;.</p>"
+msgstr "<p>Text článku na testovanie vyhľadávania, vyhľadávaná fráza je &#34;Dina&#34;.</p>"
+
+msgid "<p>Hewlett-Packard was founded in the difficult times of the Great Depression. The founders were a pair of friends whose name the company still proudly bears. They started their business in an unobtrusive garage near the city of Palo Alto. It is now a national monument. HP’s success lay not in copying existing products, but in the ability and courage to come up with something new.</p><p>The first commercial triumph was an oscillator that surpassed all competition in quality, yet sold at a quarter of the price. In 1968, HP released their first desktop computer - a desktop calculator. The company currently manufactures products primarily related to computer technology - computers and laptops, printers, scanners, digital cameras, servers, and last but not least, calculators.</p><p>Unless otherwise indicated in the product description, packaging does not contain a USB interface cable.</p>"
+msgstr "<p>Hewlett-Packard bol založený v ťažkých časoch Veľkej hospodárskej krízy. Zakladateľmi boli dvaja priatelia, ktorých meno spoločnosť stále hrdо nesie. Svoju firmu začali v nenápadnej garáži neďaleko mesta Palo Alto. Teraz je to národná pamiatka. Úspech HP nespočíval v kopírovaní existujúcich produktov, ale v schopnosti a odvážení prísť s niečím novým.</p><p>Prvým komerčným triumfom bol oscilátor, ktorý v kvalite prekonával všetku konkurenciu, predával sa však za štvrtinu ceny. V roku 1968 HP vydal svoj prvý stolný počítač - stolnú kalkulačku. Spoločnosť v súčasnosti vyrába produkty primárne súvisiace s počítačovou technikou - počítače a laptopy, tlačiarne, skenery, digitálne fotoaparáty, servery a v neposlednom rade kalkulačky.</p><p>Pokiaľ nie je v opise produktu uvedené inak, balenie neobsahuje USB rozhraniový kábel.</p>"
+
+msgid "<p>Meet the latest generation of LED TVs Philips, which include the thin<strong>Smart TV running Android.</strong> Gets you a fine painting, innovative technologies, including image processing Ambilight and honest materials used in production. It features cutting-edge design structures with an eye for detail that fits into modern interiors. Like basis was inclined central pedestal that represents the geometric pun. On TV it will always look nice even when switched off. </p><p> <strong>The main advantages:</strong> </p><ul><li> Ambilight backlighting - projecting a glow on the wall </li><li> Sharp and smooth image </li><li> Android operating system with applications </li><li> Internet connection </li><li> Remote control with keyboard </li></ul><div data-act=\"block\" contenteditable=\"false\"><div data-act=\"edit\" style=\"position: relative;\" contenteditable=\"false\"><h3> Superior picture </h3><p> <strong>Ambilight backlighting will forever change your perception of television.</strong> This is a unique technology that expands the display area outside the boundaries of the panel itself. 2 Sided glow lit from two sides of the screen to the surrounding walls and creates a breathtaking effect. Natural Motion technology ensures smooth and crisp moving images without blur by increasing the number of frames per second to double. It's handy for example when movie action scenes or sports broadcasts. </p><p> <strong>Micro Dimming Pro conveys a realistic visual experience day and night.</strong> It uses a light sensor and a special software to optimize the contrast of the screen on the basis of light conditions in the environment. The image is analyzed 6400 in different zones, thereby providing authentic and undisturbed experience. Sharp moving images with breathtaking contrast, detail and depth ensure Pixel Precise HD. </p></div></div><div data-act=\"block\" contenteditable=\"false\"><div data-act=\"edit\" style=\"position: relative;\" contenteditable=\"false\"><h3> Android - richer television viewing experience </h3><p> Built-in WiFi module, and an Ethernet port expands the possibilities of television. <strong>Are you tired of watching okoukaných series?</strong> Then drop into online content. Waiting for you Archives TV stations, social networks, YouTube and other corners of the Internet via a web browser. Smart TV is based on Android OS 5.0 (Lollipop), has pre-installed applications and more can be found at Google Play. Use remote control with keyboard for easy typing text or even voice control. Advantage based on Android is also always up to date firmware. And all of you will be taken without waiting for a nimble run television is not only the old operating system, but also 2jádrový processor. </p></div></div><h3> Saving operation </h3><p> Manufacturer did not forget to decent connective equipment. It includes a quartet of HDMI connectors, one Scart and a trio of USB connectors for recording or playback of content by connecting USB disks. There is also support for HbbTV function or even suspend broadcasts EPG 8 days. Tuners are represented DVB-T / T2 / C and television unequivocal advantage of the economic operation. <strong>The TV comes to energy class A +,</strong> and for a very decent cuts only 45 kWh. </p><p><strong>Additional information:</strong> </p><p> <strong>Picture Enhancement:</strong> <br> Natural Motion <br> 500Hz Perfect Motion Rate <br> Pixel Precise HD <br> Micro Dimming Pro </p><p> <strong>Smart TV:</strong> <br> User interaction - multiroom Client and Server, SimplyShare, certified Wi-Fi Certified Miracast <br> Interactive television - HbbTV <br> Program - Suspension of television broadcasting, USB recording <br> Applications SmartTV - Online video store, open an Internet browser, Social TV service, Spotify, TV on Demand, YouTube <br> Easy Installation - Automatic detection equipment Philips Connection Wizard equipment, Network Setup Wizard, the Setup Wizard <br> Easy to use - Universal Smart Menu button, on-screen User Guide <br> Firmware upgradeable - Guide cars. update, Firmware upgradeable via USB, Firmware Update online <br> Screen Format Adjustments - Basic - Fill Screen, Fit to Screen, Advanced - Pan, Zoom, Stretch <br> Philips TV Remote - Applications Channels, Control, NowOnTV, TV guide, Video on demand <br> Remote control - Keyboard </p><p> <strong>Ambilight:</strong> <br> Versions of Ambilight - 2 pages <br> Ambilight - The adaptation of the color of walls, Lounge Mode, Game Mode, Ambilight + hue </p><p> <strong>Multimedia applications:</strong> <br> Video playback formats - Containers: AVI, MKV, H264 / MPEG-4 AVC, MPEG-1, MPEG-2, MPEG-4, WMV9 / VC1, HEVC <br> Format Support subtitles - .SMI, .SRT, .ssa, .SUB, .TXT, .ass <br> Play music formats - AAC, MP3, WAV, WMA (v2 to v9.2), PRO-WMA (v9 and v10) <br> Picture Playback Formats - JPEG, BMP, GIF, JPS, PNG, PNS, BMS, MIT </p><p> <strong style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Connectivity:</strong><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">4 x HDMI</span> <span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">1 x Scart (RGB / CVBS)</span> <span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">3 x USB</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Wireless Dual Band Wi-Fi Direct, Integrated Wi-Fi 11n 2 × 2</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Other connections: Antenna IEC75, Common Interface Plus (CI +), Ethernet-LAN ??RJ-45, Digital audio output (optical), Audio L / R, Audio Input (DVI), Headphone out, Service connector, the connector Satellite</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">HDMI features - Audio Return Channel</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">EasyLink (HDMI-CEC) - Pass the remote control signal, System audio control, System standby, One touch play</span> </p><p> <strong>Supplied</strong> <br> Remote control <br> 2 x AAA Batteries <br> Table top stand <br> Power cable <br> Quick start guide use <br> Brochure Legal and safety information </p>"
+msgstr "<p>Spoznajte najnovšiu generáciu LED TV Philips, ktoré zahŕňajú tenký<strong>Smart TV s operačným systémom Android.</strong> Získate vynikajúci obraz, inovatívne technológie, vrátane spracovania obrazu Ambilight a poctivé materiály použité vo výrobe. Vyznačuje sa špičkovým dizajnérskym riešením s okom pre detaily, ktoré sa hodí do moderných interiérov. Ako základ bol použitý naklonený centrálny podstavec, ktorý predstavuje geometrický prvok. Na TV bude vždy vyzerať pekne aj keď je vypnutá. </p><p> <strong>Hlavné výhody:</strong> </p><ul><li> Ambilight podsvietenie - premietanie žiary na stenu </li><li> Ostrý a plynulý obraz </li><li> Operačný systém Android s aplikáciami </li><li> Pripojenie k internetu </li><li> Diaľkové ovládanie s klávesnicou </li></ul><div data-act=\"block\" contenteditable=\"false\"><div data-act=\"edit\" style=\"position: relative;\" contenteditable=\"false\"><h3> Vynikajúci obraz </h3><p> <strong>Ambilight podsvietenie navždy zmení vaše vnímanie televízie.</strong> Toto je jedinečná technológia, ktorá rozširuje zobrazovaciu plochu za hranice samotného panela. 2-stranné svietenie osvetľuje z dvoch strán obrazovky na okolité steny a vytvára ohromujúci efekt. Technológia Natural Motion zabezpečuje plynulé a ostré pohyblivé obrázky bez rozmazania zvýšením počtu snímok za sekundu na dvojnásobok. Je to užitočné napríklad pri akčných scénach filmu alebo športových prenosoch. </p><p> <strong>Micro Dimming Pro poskytuje realistický vizuálny zážitok deň i noc.</strong> Používa svetelný senzor a špeciálny softvér na optimalizáciu kontrastu obrazovky na základe svetelných podmienok v prostredí. Obraz je analyzovaný v 6400 rôznych zónach, čím sa poskytuje autentický a nerušený zážitok. Ostré pohyblivé obrázky s úchvatným kontrastom, detailmi a hĺbkou zabezpečuje Pixel Precise HD. </p></div></div><div data-act=\"block\" contenteditable=\"false\"><div data-act=\"edit\" style=\"position: relative;\" contenteditable=\"false\"><h3> Android - bohatší zážitok z sledovania televízie </h3><p> Vstavaný WiFi modul a Ethernet port rozširuje možnosti televízie. <strong>Už vás unavujú okukané seriály?</strong> Potom prejdite na online obsah. Čakajú na vás archívy TV staníc, sociálne siete, YouTube a ďalšie kútiky internetu cez webový prehliadač. Smart TV je založená na Android OS 5.0 (Lollipop), má predinštalované aplikácie a ďalšie môžete nájsť v Google Play. Použite diaľkové ovládanie s klávesnicou pre jednoduché písanie textu alebo dokonca hlasové ovládanie. Výhodou založenou na Androide je aj vždy aktuálny firmware. A všetko vám bude fungovať bez čakania vďaka rýchlemu behu televízie s nielen starým operačným systémom, ale aj 2-jadrovým procesorom. </p></div></div><h3> Úsporná prevádzka </h3><p> Výrobca nezabudol na slušné pripájacie zariadenie. Obsahuje kvartet HDMI konektorov, jeden Scart a trio USB konektorov na nahrávanie alebo prehrávanie obsahu pripojením USB diskov. K dispozícii je aj podpora funkcie HbbTV alebo dokonca pozastavenie vysielania EPG 8 dní. Tunery sú zastúpené DVB-T / T2 / C a televízia má jednoznačnú výhodu ekonomickej prevádzky. <strong>TV patrí do energetickej triedy A +,</strong> a za veľmi slušné rezy len 45 kWh. </p><p><strong>Dodatočné informácie:</strong> </p><p> <strong>Vylepšenie obrazu:</strong> <br> Natural Motion <br> 500Hz Perfect Motion Rate <br> Pixel Precise HD <br> Micro Dimming Pro </p><p> <strong>Smart TV:</strong> <br> Používateľská interakcia - multiroom klient a server, SimplyShare, certifikovaná Wi-Fi Certified Miracast <br> Interaktívna televízia - HbbTV <br> Program - Pozastavenie televizného vysielania, USB nahrávanie <br> Aplikácie SmartTV - Online video obchod, otvorenie internetového prehliadača, Social TV služba, Spotify, TV na požiadanie, YouTube <br> Jednoduchá inštalácia - Automatická detekcia zariadenia Philips Connection Wizard, Sprievodca nastavením siete, Sprievodca nastavením <br> Jednoduché použitie - Univerzálne tlačidlo Smart Menu, obrazová používateľská príručka <br> Upgradovateľný firmware - Sprievodca automatickými aktualizáciami, Upgradovateľný firmware cez USB, Online aktualizácia firmwaru <br> Nastavenie formátu obrazovky - Základné - Vyplniť obrazovku, Prispôsobiť obrazovke, Pokročilé - Posun, Zoom, Roztiahnutie <br> Philips TV Remote - Aplikácie Kanály, Ovládanie, NowOnTV, TV sprievodca, Video na požiadanie <br> Diaľkové ovládanie - Klávesnica </p><p> <strong>Ambilight:</strong> <br> Verzie Ambilight - 2 strany <br> Ambilight - Prispôsobenie farby stien, Lounge Mode, Game Mode, Ambilight + hue </p><p> <strong>Multimediálne aplikácie:</strong> <br> Formáty prehrávania videa - Kontajnery: AVI, MKV, H264 / MPEG-4 AVC, MPEG-1, MPEG-2, MPEG-4, WMV9 / VC1, HEVC <br> Podpora formátu titulkov - .SMI, .SRT, .ssa, .SUB, .TXT, .ass <br> Formáty prehrávania hudby - AAC, MP3, WAV, WMA (v2 do v9.2), PRO-WMA (v9 a v10) <br> Formáty prehrávania obrázkov - JPEG, BMP, GIF, JPS, PNG, PNS, BMS, MIT </p><p> <strong style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Konektivita:</strong><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">4 x HDMI</span> <span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">1 x Scart (RGB / CVBS)</span> <span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">3 x USB</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Bezdrôtové duálne pásmo Wi-Fi Direct, Integrované Wi-Fi 11n 2 × 2</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Ďalšie pripojenia: Anténa IEC75, Common Interface Plus (CI +), Ethernet-LAN RJ-45, Digitálny audio výstup (optický), Audio L / R, Audio vstup (DVI), Výstup slúchadiel, Servisný konektor, satelitný konektor</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">HDMI funkcie - Audio Return Channel</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">EasyLink (HDMI-CEC) - Prenos signálu diaľkového ovládania, Ovládanie systémového zvuku, Systémový pohotovostný režim, Jedno dotykom prehrávanie</span> </p><p> <strong>Dodávané</strong> <br> Diaľkové ovládanie <br> 2 x AAA batérie <br> Stolný podstavec <br> Napájací kábel <br> Stručná príručka na použitie <br> Brožúra Právne a bezpečnostné informácie </p>"
+
+msgid "<p>Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</p>"
+msgstr "<p>Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</p>"
+
+msgid "<p>This product is not an independently functional unit and may require professional installation.</p>"
+msgstr "<p>Tento produkt nie je samostatne funkčná jednotka a môže vyžadovať profesionálnu inštaláciu.</p>"
+
+msgid "<ul><li> Type nozzles: Universal </li><li> Diameter: 32 mm </li><li> Turbobrush Big </li></ul>"
+msgstr "<ul><li> Typ hubice: Univerzálna </li><li> Priemer: 32 mm </li><li> Turbobrush Big </li></ul>"
+
+msgid "A"
+msgstr "A"
+
+msgid "A and micro B"
+msgstr "A a micro B"
+
+msgid "A book is a set of written, printed, illustrated, or blank sheets, made of ink, paper, parchment, or other materials, fastened together to hinge at one side. A single sheet within a book is a leaf, and each side of a leaf is a page. A set of text-filled or illustrated pages produced in electronic format is known as an electronic book, or e-book."
+msgstr "Kniha je súbor písaných, tlačených, ilustrovaných alebo prázdnych listov vyrobených z atramentu, papiera, pergamenu alebo iných materiálov, spojených dokopy tak, aby sa otáčali na jednej strane. Jeden list v knihe je list a každá strana listu je stránka. Súbor textových alebo ilustrovaných stránok vyrobených v elektronickom formáte je známy ako elektronická kniha alebo e-kniha."
+
+msgid "A cable HDMI - HDMI AM / M 2 m gold-plated connector High Speed HDMI Cable with Ethernet 1.4 support 1080p FULL HD"
+msgstr "Kábel HDMI - HDMI AM / M 2 m pozlátený konektor High Speed HDMI kábel s Ethernet 1.4 podporou 1080p FULL HD"
+
+msgid "A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both."
+msgstr "Fotoaparát je optický nástroj na nahrávanie alebo zachytávanie obrázkov, ktoré môžu byť uložené lokálne, prenášané na iné miesto alebo oboje."
+
+msgid "A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools made for agriculture and horticulture. Garden tools can also be hand tools and power tools."
+msgstr "Záhradné náradie je akýkoľvek z mnohých nástrojov vyrobených pre záhrady a záhradníctvo a prekrýva sa s radou nástrojov vyrobených pre poľnohospodárstvo a záhradníctvo. Záhradné náradie môže byť aj ručné náradie a elektrické náradie."
+
+msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
+msgstr "Osobný počítač (PC) je univerzálny počítač, ktorého veľkosť, schopnosti a pôvodná predajná cena ho robia užitočným pre jednotlivcov a je určený na priame ovládanie koncovým používateľom bez zasahovania počítačových modelov zdieľania času, ktoré umožnili väčším, drahším minipočítačom a mainframovým systémom byť používané mnohými ľuďmi, obvykle súčasne."
+
+msgid "A printer is a peripheral which makes a persistent human readable representation of graphics or text on paper or similar physical media."
+msgstr "Tlačiareň je periférne zariadenie, ktoré vytvára trvalé človekom čitateľné zobrazenie grafiky alebo textu na papieri alebo podobnom fyzickom médiu."
+
+msgid "A telephone is a telecommunications device that permits two or more users to conduct a conversation when they are too far apart to be heard directly. A telephone converts sound, typically and most efficiently the human voice, into electronic signals suitable for transmission via cables or other transmission media over long distances, and replays such signals simultaneously in audible form to its user."
+msgstr "Telefón je telekomunikačné zariadenie, ktoré umožňuje dvom alebo viacerým používateľom viesť rozhovor, keď sú príliš ďaleko od seba na to, aby boli počuť priamo. Telefón prevádza zvuk, typicky a najefektívnejšie ľudský hlas, na elektronické signály vhodné na prenos cez káble alebo iné prenosové médiá na veľké vzdialenosti a prehrá takéto signály súčasne v počuteľnej forme svojmu používateľovi."
+
+msgid "A toy is an item that can be used for play. Toys are generally played with by children and pets. Playing with toys is an enjoyable means of training young children for life in society. Different materials are used to make toys enjoyable to all ages."
+msgstr "Hračka je predmet, ktorý sa môže použiť na hru. S hračkami sa všeobecne hrajú deti a domáce zvieratá. Hranie sa s hračkami je príjemný spôsob tréningu malých detí na život v spoločnosti. Rôzne materiály sa používajú na to, aby boli hračky príjemné pre všetky vekové kategórie."
+
+msgid "A3"
+msgstr "A3"
+
+msgid "A4"
+msgstr "A4"
+
+msgid "A4tech X710BK Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages."
+msgstr "A4tech X710BK Hrací počítačová myš má päť tlačítok a rolovací tlačítko pre jednoduchšie prehliadané dokumentov alebo internetových stránok."
+
+msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
+msgstr "A4tech myš X-710BK, OSCAR Game, 2000DPI, čierna,"
+
+msgid "About us"
+msgstr "O nás"
+
+msgid "Accountant"
+msgstr "Účtovník"
+
+msgid "Action"
+msgstr "Akcia"
+
+msgid "Active"
+msgstr "Aktívny"
+
+msgid "Active/Passive"
+msgstr "Aktívny/Pasívny"
+
+msgid "Adaptive Sync Technology"
+msgstr "Technológia Adaptive Sync"
+
+msgid "Administrator reset password request"
+msgstr "Žiadosť o obnovenie hesla administrátora"
+
+msgid "All kind of electronic devices."
+msgstr "Všetky druhy elektronických zariadení."
+
+msgid "Annual energy consumption"
+msgstr "Ročná spotreba energie"
+
+msgid "Apple iPhone 5S 64GB, gold"
+msgstr "Apple iPhone 5S 64GB, zlatý"
+
+msgid "Aquila Aquagym non-carbonated spring water"
+msgstr "Aquila Aquagym nesýtená prameňová voda"
+
+msgid "Aquila Aquagym non-carbonated spring water, description."
+msgstr "Aquila Aquagym nesýtená prameňová voda, popis."
+
+msgid "Article for search testing"
+msgstr "Článok na testovanie vyhľadávania"
+
+msgid "BROTHER PT-H300"
+msgstr "BROTHER PT-H300"
+
+msgid "Become one of us"
+msgstr "Staňte sa jedným z nás"
+
+msgid "Blog article example %counter% %locale%"
+msgstr "Príklad článku blogu %counter% %locale%"
+
+msgid "Blog article example %counter% %locale% - H1"
+msgstr "Príklad článku blogu %counter% %locale% - H1"
+
+msgid "Blog article example %counter% %locale% - Meta description"
+msgstr "Príklad článku blogu %counter% %locale% - Meta popis"
+
+msgid "Blog article for products testing"
+msgstr "Článok blogu na testovanie produktov"
+
+msgid "Blog article for search testing"
+msgstr "Článok blogu na testovanie vyhľadávania"
+
+msgid "Blue wednesday"
+msgstr "Modrá streda"
+
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+msgid "Book 55 best programs for burning CDs and DVDs"
+msgstr "Kniha 55 najlepších programov na vypáľovanie CD a DVD"
+
+msgid "Book Computer for Dummies Digital Photography II"
+msgstr "Kniha Počítač pre lami Digitálna fotografia II"
+
+msgid "Book of procedures for dealing with traffic accidents"
+msgstr "Kniha postupov pre riešenie dopravnej nehody"
+
+msgid "Book of traditional Czech fairy tales"
+msgstr "Kniha tradičných českých rozprávok"
+
+msgid "Book scoring system and traffic regulations"
+msgstr "Kniha bodového systému a dopravných predpisov"
+
+msgid "Books"
+msgstr "Knihy"
+
+msgid "Bookworm"
+msgstr "Knihomoľ"
+
+msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
+msgstr "Zadaním e-mailu nižšie si môžete stiahnuť svoje osobné a ostatné údaje (napríklad históriu objednávok) z nášho internetového obchodu. Po zadaní e-mailovej adresy vám bude zaslaný e-mail s odkazom na overenie vašej identity. Kliknutím na odkaz sa dostanete na stránku, kde si budete môcť tieto informácie stiahnuť v čitateľnom formáte - budú to údaje registrované k danej e-mailovej adrese v tomto internetovom obchode."
+
+msgid "By entering an email below, you can view your personal information that we register in our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page listing all the personal details we have connected to your email address."
+msgstr "Zadaním e-mailu nižšie si môžete zobraziť svoje osobné údaje, ktoré evidujeme v našom internetovom obchode. Po zadaní e-mailovej adresy vám bude zaslaný e-mail s odkazom na overenie vašej identity. Kliknutím na odkaz sa dostanete na stránku so zoznamom všetkých osobných údajov, ktoré máme spojené s vašou e-mailovou adresou."
+
+msgid "CD-R VERBATIM 210MB"
+msgstr "CD-R VERBATIM 210MB"
+
+msgid "CRT"
+msgstr "CRT"
+
+msgid "Camera type"
+msgstr "Typ fotoaparátu"
+
+msgid "Cameras & Photo"
+msgstr "Fotoaparáty a foto"
+
+msgid "Canceled"
+msgstr "Zrušené"
+
+msgid "Canon EH-22L"
+msgstr "Canon EH-22L"
+
+msgid "Canon EH-22L. High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
+msgstr "Canon EH-22L. Vysokokvalitné, elegantné, mäkké a zároveň spoláhlivo chrániace originálne puzdro pre váš digitálny fotoaparát Canon EOS 650D alebo 700D."
+
+msgid "Canon EH-22M"
+msgstr "Canon EH-22M"
+
+msgid "Canon EOS 700D"
+msgstr "Canon EOS 700D"
+
+msgid "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
+msgstr "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Kvalitný digitálny fotoaparát s CMOS senzorom s rozlíšením 18 megapixelov"
+
+msgid "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light"
+msgstr "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Kvalitný digitálny fotoaparát s CMOS senzorom s rozlíšením 18 megapixelov, ktorý umožňuje snímanie špičkových fotografií v profesionálnom štýle. Inovatívne spracovanie obrazu DIGIC 5 zabezpečuje výkonný výsledok v akejkoľvek situácii. Vysoký rozsah citlivosti až do ISO 12800 vám umožní zachytiť skvelé snímky aj pri slabom osvetlení"
+
+msgid "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light, even without a flash. Automatic smart scene mode analyzes the scene and automatically selects the best settings for the camera. View images, focus, or even pictures can be taken using a 3 \"touch screen TFT Clear View II with a whopping resolution of 1.04 million pixels and a vari-angle. With this camera out of you in a moment become a professional cameraman. It makes it possible to shoot stunning movies in Full HD 1080p. Hybrid AF technology enables continuous focus during movie shooting and using the built-in microphone ozvučíme your images are high quality stereo sound. Autofocus system comprising nine cross-type AF points to capture fast-moving objects without any blurring. Thanks to continuous shooting at up to 5 frames per second, you'll never miss a crucial moment for getting the best picture possible.The HDR Backlight Control mode, the camera takes three different exposures and combines them into one, in order to preserve details in shadows and areas with high brightness. In Night Scene mode, the camera takes the hand of multiple images at high shutter speeds and combining them together and thus prevents blurring. Captured images and videos simply adding it to an SD Memory Card, SDHC and SDXC, thanks to the integrated connector is miniHDMI you can conveniently viewed on your LCD or plasma TV. The camera can buy a wide range of lenses, flashes and accessories that are compatible with the EOS system."
+msgstr "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Kvalitný digitálny fotoaparát s CMOS senzorom s rozlíšením 18 megapixelov, ktorý je určený na záber špičkových fotografií v profesionálnom štýle. Inovatívne spracovanie obrazu DIGIC 5 zabezpečuje výkon v každej situácii. Vysoký rozsah citlivosti až do ISO 12800 vám umožňuje zachátiť skvelé obrázky aj pri slabom osvetlení, dokonca aj bez blesku. Automatický inteligentný režim scény analyzuje scénu a automaticky vyberie najlepšie nastavenia pre fotoaparát. Prezeranie obrázkov, zaostrovanie alebo dokonca snímanie fotografii je možné pomocou 3 \" dotykového displeja TFT Clear View II s úhvatným rozlíšením 1,04 milióna pixelov a vári-angle. S týmto fotoaparátom sa z vás v momente stane profesionálny kameraman. Umožňuje snímať ohromujúce filmy v Full HD 1080p. Technológia Hybrid AF umožňuje nepretržité zaostrovanie počas nahrávania videa a pomocou vstavaného mikrofónu ozvučíme vaše zábery kvalitným stereo zvukom. Systém automatického zaostrovania obsahujúci deväť krížových AF bodov na zachytenie rýchlo sa pohybujúcich objektov bez akejkoľvek neostrost. Vďaka nepretržitému snímaniu až 5 snímok za sekundu nikdy nezmeškáte rozhodujúci okamih pre získanie najlepšej možnej fotografie. V režime HDR Backlight Control fotoaparát sníma tri rôzne expozície a kombinuje ich do jednej, aby sa zachovali detaily v tieňoch a oblastiach s vysokou jasnosou. V režime Nočná scéna fotoaparát sníma z ruky viacero obrázkov pri vysokej rýchlosti uzávierky a kombinuje ich dohromady, čím zabraňuje rozmazaniu. Zachytené obrázky a videá jednoducho uložíte na pamäťovú kartu SD, SDHC a SDXC, vďaka integrovanému konektoru miniHDMI ich môžete pohodlne prehrajať na vašej LCD alebo plazmovej TV. K fotoaparátu môžete dokúpiť širokú škálu objektívov, bleskov a príslušenstva, ktoré sú kompatibilné so systémom EOS."
+
+msgid "Canon EOS 700E"
+msgstr "Canon EOS 700E"
+
+msgid "Canon MG3550"
+msgstr "Canon MG3550"
+
+msgid "Canon MG3650"
+msgstr "Canon MG3650"
+
+msgid "Canon PIXMA MG2450"
+msgstr "Canon PIXMA MG2450"
+
+msgid "Canon PIXMA MG2650"
+msgstr "Canon PIXMA MG2650"
+
+msgid "Canon PIXMA iP7250"
+msgstr "Canon PIXMA iP7250"
+
+msgid "Canon PIXMA iP7350"
+msgstr "Canon PIXMA iP7350"
+
+msgid "Cap with air conditioning, convenient for hot days."
+msgstr "Šiltovka s klimatizáciou, pohodná na horúce dni."
+
+msgid "Cap with solar-powered fan, white"
+msgstr "Šiltovka so solárnym ventilatorom, biela"
+
+msgid "Capacity"
+msgstr "Kapacita"
+
+msgid "Cash"
+msgstr "Hotovosť"
+
+msgid "Cash on delivery"
+msgstr "Dobierka"
+
+msgid "Catalog"
+msgstr "Katalóg"
+
+msgid "Catalog user"
+msgstr "Katalógový používateľ"
+
+msgid "Christmas Day"
+msgstr "Prvý sviat vianočný"
+
+msgid "Christmas Eve"
+msgstr "Štedrý večer"
+
+msgid "Circumaural"
+msgstr "Circumaural"
+
+msgid "Cleaner 3in1 stainless steel appliances (4039286078461)"
+msgstr "Čistič 3v1 na nerĚavejú oceľ spotrebiče (4039286078461)"
+
+msgid "Coarse grater blade RM-3240/3250"
+msgstr "Hrubé strúhacie čepiele RM-3240/3250"
+
+msgid "Coffee Machines"
+msgstr "Kávovary"
+
+msgid "Coffeemakers or coffee machines are cooking appliances used to brew coffee. While there are many different types of coffeemakers using a number of different brewing principles, in the most common devices, coffee grounds are placed in a paper or metal filter inside a funnel, which is set over a glass or ceramic coffee pot, a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is than heated up to the boiling point, and directed into the funnel."
+msgstr "Kávovary alebo kávostroje sú kuchynské spotrebiče používané na prípravu kávy. Hoci existuje mnoho rôznych typov kávovarov používajúcich množstvo odlišných princípov varenia, v najbežnejších zariadeniach je mletá káva umiestnená do papierového alebo kovového filtra vo vnútri nálevky, ktorá je postavená nad sklenenú alebo keramickú kanvicu na kávu, nádobu na varenie z rodiny konvíc. Studená voda sa naleje do samostatnej komory, kde sa následne ohreje na bod varu a je vedená do nálevky."
+
+msgid "Collection of classical Czech fairy tales."
+msgstr "Zbierka klasických českých rozprávok."
+
+msgid "Color"
+msgstr "Farba"
+
+msgid "Color printing"
+msgstr "Farebná tlač"
+
+msgid "Compact Design, Big Value"
+msgstr "Kompaktný dizajn, veľká hodnota"
+
+msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
+msgstr "Kompaktné reproduktory Genius SP-HF150 sú perfektným príslušenstvom pre prenosné počítače."
+
+msgid "Complaint"
+msgstr "Reklamcia"
+
+msgid "Connection method"
+msgstr "Spôsob pripojenia"
+
+msgid "Connectivity at Your Fingertips"
+msgstr "Pripojenie na dosáh ruky"
+
+msgid "Connectors"
+msgstr "Konektory"
+
+msgid "Construction"
+msgstr "Konštrukcia"
+
+msgid "Cooperation"
+msgstr "Spolupráca"
+
+msgid "Coupon valued to 100 Czech crowns."
+msgstr "Kupón v hodnote 100 českých korún."
+
+msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
+msgstr "Kupón v hodnote 100 českých korún. Môžete ho prepočítať v ktoromkoľvek zmeňárňovom úřade"
+
+msgid "Cover"
+msgstr "Obal"
+
+msgid "Credit card"
+msgstr "Kreditná karta"
+
+msgid "Crevice nozzle VP-4290"
+msgstr "Štrbinová hubica VP-4290"
+
+msgid "Customer activation"
+msgstr "Aktivácia zákazníka"
+
+msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
+msgstr "Cyklocomputer – cyklonavigácia s prednastavenými mapami, farebný displej 3\", tréningové programy, WiFi"
+
+msgid "Czech"
+msgstr "Český"
+
+msgid "Czech Heritage Certified"
+msgstr "Český certifikát tradičného dedičstva"
+
+msgid "Czech post"
+msgstr "Česká pošta"
+
+msgid "Czech republic"
+msgstr "Česká republika"
+
+msgid "Czech state post service."
+msgstr "Česká štátna poštová služba."
+
+msgid "D-Link"
+msgstr "D-Link"
+
+msgid "DVB-T"
+msgstr "DVB-T"
+
+msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift"
+msgstr "DVB-T Prijímač HD - MPEG4, MPEG2, USB nahrávanie, timeshift"
+
+msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift, EPG, HDMI 1.3, USB, SCART, coaxial output, power antenna 5V/50mA"
+msgstr "DVB-T Prijímač HD - MPEG4, MPEG2, USB nahrávanie, timeshift, EPG, HDMI 1.3, USB, SCART, koaxiálny výstup, napájanie antény 5V/50mA"
+
+msgid "DeLonghi ECAM 44.660 B Eletta Plus"
+msgstr "DeLonghi ECAM 44.660 B Eletta Plus"
+
+msgid "Dear administrator,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
+msgstr "Vážený administrátor,<br/><br/> môžete si nastaviť nové heslo pomocou tohto <a href=\"{new_password_url}\" tabindex=\"0\">odkazu</a>.<br/><br/> S pozdravom"
+
+msgid "Dear customer,<br/> <br/> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all thepersonal details which we have in evidence in our online store {domain}.<br/> <br/> To overview your personal information please click <a href=\"{url}\" tabindex=\"0\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
+msgstr "Vážený zákazník,<br/> <br/> na základe vášho e-mailu {email} vám posielame odkaz na vaše osobné údaje. Kliknutím na odkaz nižšie sa dostanete na stránku so zoznamom všetkých osobných údajov, ktoré máme evidované v našom internetovom obchode {domain}.<br/> <br/> Pre zobrazenie vašich osobných informácií kliknite <a href=\"{url}\" tabindex=\"0\">sem</a>.<br/> Odkaz je platný nasledujúcich 24 hodín.<br/> <br/> S pozdravom<br /> Tím {domain}"
+
+msgid "Dear customer,<br/> <br/> you can finish registration and set new password via this <a href=\"{activation_url}\" tabindex=\"0\">link</a>.<br/> <br/> Best regards"
+msgstr "Vážený zákazník,<br/> <br/> registráciu môžete dokončiť a nastaviť si nové heslo cez tento <a href=\"{activation_url}\" tabindex=\"0\">odkaz</a>.<br/> <br/> S pozdravom"
+
+msgid "Dear customer,<br/> <br/> your registration is completed.<br/> <br/> Name: {first_name} {last_name}<br /> Email: {email}<br/> <br/> E-shop: <a href=\"{url}\" tabindex=\"0\">link</a><br /> Login page: <a href=\"{login_page}\" tabindex=\"0\">Log in</a><br/> <br/> Best regards"
+msgstr "Vážený zákazník,<br/> <br/> vaša registrácia je dokončená.<br/> <br/> Meno: {first_name} {last_name}<br /> E-mail: {email}<br/> <br/> E-shop: <a href=\"{url}\" tabindex=\"0\">odkaz</a><br /> Prihlasovacie okno: <a href=\"{login_page}\" tabindex=\"0\">Prihlásiť sa</a><br/> <br/> S pozdravom"
+
+msgid "Dear customer,<br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/> <br/> To download your personal information please click <a href=\"{url}\" tabindex=\"0\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
+msgstr "Vážený zákazník,<br/> na základe vášho e-mailu {email} vám posielame odkaz, kde si môžete stiahnuť vaše osobné údaje registrované v našom internetovom obchode v čitateľnom formáte. Kliknutím na odkaz sa dostanete na stránku, kde si budete môcť stiahnuť tieto informácie, ktoré máme evidované v našom internetovom obchode {domain}.<br/> <br/> Pre stiahnutie vašich osobných informácií kliknite <a href=\"{url}\" tabindex=\"0\">sem</a>.<br/> Odkaz je platný nasledujúcich 24 hodín.<br/> <br/> S pozdravom<br /> Tím {domain}"
+
+msgid "Dear customer,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\" tabindex=\"0\">link</a>.<br/><br/> Best regards"
+msgstr "Vážený zákazník,<br/><br/> môžete si nastaviť nové heslo pomocou tohto <a href=\"{new_password_url}\" tabindex=\"0\">odkazu</a>.<br/><br/> S pozdravom"
+
+msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
+msgstr "Hlboký pečiací plech ETV-2560/2860/2960 / 3160bc"
+
+msgid "Default variant - prefix"
+msgstr "Predvolený variant - predpona"
+
+msgid "Default variant - suffix"
+msgstr "Predvolený variant - prípona"
+
+msgid "Defender 2.0 SPK-480"
+msgstr "Defender 2.0 SPK-480"
+
+msgid "Defender SPK-480, easy to fit into any bag or backpack"
+msgstr "Defender SPK-480, ľahko sa zmestí do akéjkoľvek tašky alebo batohu"
+
+msgid "Demo advert"
+msgstr "Demo reklama"
+
+msgid "Demo category advert"
+msgstr "Demo kategória reklamy"
+
+msgid "Department stores services"
+msgstr "Služby obchodných domov"
+
+msgid "Determination"
+msgstr "Odhodlanie"
+
+msgid "Digital Camera - Waterproof, shockproof, freezeproof, 16.1 Mpx CCD"
+msgstr "Digitálny fotoaparát - Voddotrný, nárazuodrný, mrazuodrný, 16.1 Mpx CCD"
+
+msgid "Digital Camera - Waterproof, shockproof, freezeproof, 16.1 Mpx CCD, 4x zoom (29-108 mm), 2.7\" LCD display, Li-Ion, HD video, SD/SDHC/SDXC, time lapse recording, stabilizer"
+msgstr "Digitálny fotoaparát - Vodotesný, nárazuodolný, mrazuodolný, 16,1 Mpx CCD, 4x zoom (29-108 mm), 2,7\" LCD displej, Li-Ion, HD video, SD/SDHC/SDXC, časozberné nahrávanie, stabilizátor"
+
+msgid "Digital Camera CMOS 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video, histogram, HDR"
+msgstr "Digitálny fotoaparát CMOS 16 megapixelov, 24x zoom, 3,0\" LCD, Li-Ion, FullHD video, histogram, HDR"
+
+msgid "Digital Camera CMOS 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video, histogram, HDR, optical stabilizer, SD/SDHC/SDXC, face detection, USB"
+msgstr "Digitálny fotoaparát CMOS 16 megapixelov, 24x zoom, 3,0\" LCD, Li-Ion, FullHD video, histogram, HDR, optický stabilizátor, SD/SDHC/SDXC, detekcia tváre, USB"
+
+msgid "Digital Camera CMOS Exmor R1 20.2 megapixel, 3.6x zoom"
+msgstr "Digitálny fotoaparát CMOS Exmor R1 20,2 megapixelov, 3,6x zoom"
+
+msgid "Digital Camera CMOS Exmor R1 20.2 megapixel, 3.6x zoom (28-100 mm F1.8), Full HD video (1920 x 1080) 50p, 3 \"LCD, Li-Ion, MS DUO + \\u200b\\u200bSD/SDHC/SDXC, Face Detection, Intelligent stabilizer"
+msgstr "Digitálny fotoaparát CMOS Exmor R1 20,2 megapixelov, 3,6x zoom (28-100 mm F1.8), Full HD video (1920 x 1080) 50p, 3\" LCD, Li-Ion, MS DUO + SD/SDHC/SDXC, detekcia tváre, inteligentný stabilizátor"
+
+msgid "Digital Camera Nikon VH-520 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video"
+msgstr "Digitálny fotoaparát Nikon VH-520 16 megapixelov, 24x zoom, 3,0\" LCD, Li-Ion, FullHD video"
+
+msgid "Digital Camera Nikon VH-520 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video, histogram, HDR, optical stabilizer, SD/SDHC/SDXC, face detection, USB"
+msgstr "Digitálny fotoaparát Nikon VH-520 16 megapixelov, 24x zoom, 3,0\" LCD, Li-Ion, FullHD video, histogram, HDR, optický stabilizátor, SD/SDHC/SDXC, detekcia tváre, USB"
+
+msgid "Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery lif."
+msgstr "Digitálny hlasový záznamník Olympus VN-733PC sa vyznačuje predovšetkým intuitívnou obsluhou a dlhou výdržou batérie."
+
+msgid "Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery life . Its user offers 4 gigabytes internal memory and a new slot for microSD cards. O capacity certainly will not be a shortage in power saving mode, LP handle record up to 1600 hours of recording"
+msgstr "Digitálny hlasový záznamník Olympus VN-733PC sa vyznačuje predovšetkým intuitívnou obsluhou a dlhou výdržou batérie. Používateľovi ponúka 4 gigabajty internej pamäte a nový slot pre microSD karty. O kapacitu určite nebude núdza, v úspornom režime LP dokáže zaznamenať až 1600 hodín záznamu"
+
+msgid "Dimensions"
+msgstr "Rozmery"
+
+msgid "Discover the secret of people with us."
+msgstr "Objavte s nami tajomstvo ľudí."
+
+msgid "Display"
+msgstr "Displej"
+
+msgid "Display size"
+msgstr "Veľkosť displeja"
+
+msgid "Display type"
+msgstr "Typ displeja"
+
+msgid "Documentation"
+msgstr "Dokumentácia"
+
+msgid "Done"
+msgstr "Hotovo"
+
+msgid "Drone delivery"
+msgstr "Doručenie dronom"
+
+msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
+msgstr "DéLonghi ECAM 44.660.B. Začnite ráno so svojim obľúbeným nápojom s automatickým kávovarom DeLonghi ECAM 44.660.B Eletta"
+
+msgid "Ear Coupling"
+msgstr "Uchučenie na ucho"
+
+msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components."
+msgstr "Ľahká tlač, skenovanie a kopírovanie v jednom zariadení zaberá oveľa menej miesta a ušetríte peniaze oproti kúpe samostatných komponentov."
+
+msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print FINE technology Which guarantee excellent print quality."
+msgstr "Ľahká tlač, skenovanie a kopírovanie v jednom zariadení zaberá oveľa menej miesta a ušetríte peniaze oproti kúpe samostatných komponentov. Tlačiareň používa inovatívnu technológiu tlače FINE, ktorá zaručuje vynikajúcu kvalitu tlače."
+
+msgid "Eco-Friendly Printing"
+msgstr "Ekologická tlač"
+
+msgid "Electronic devices"
+msgstr "Elektronické zariadenia"
+
+msgid "Electronic stuff"
+msgstr "Elektronické veci"
+
+msgid "Electronics"
+msgstr "Elektronika"
+
+msgid "Electronics from most expensive"
+msgstr "Elektronika od najdrahšej"
+
+msgid "Electronics in black"
+msgstr "Elektronika v čiernej"
+
+msgid "Electronics in red"
+msgstr "Elektronika v červenej"
+
+msgid "Electronics with LED technology and size 30 inch in sale"
+msgstr "Elektronika s LED technológiou a veľkosťou 30 palčov v akcií"
+
+msgid "Electronics without HDMI in sale"
+msgstr "Elektronika bez HDMI v akcií"
+
+msgid "Elegant Hardcover Edition"
+msgstr "Eleganté vydanie s pevnou väzbou"
+
+msgid "Element arrangement"
+msgstr "Usporiadanie elementov"
+
+msgid "Endless Shopping Possibilities"
+msgstr "Nekonečné možnosti nákupov"
+
+msgid "Energy efficiency class"
+msgstr "Trieda energetickej účinnosti"
+
+msgid "Energy-Efficient Design"
+msgstr "Energeticky účinný dizajn"
+
+msgid "Enjoy quick cooking with special cooking HI-LIGHT zones"
+msgstr "Užite si rýchle varenie so špeciálnymi varnými zónami HI-LIGHT"
+
+msgid "Enter"
+msgstr "Vstúpiť"
+
+msgid "Ergonomic Excellence"
+msgstr "Ergonomická dokonatosť"
+
+msgid "Ergonomics"
+msgstr "Ergonómia"
+
+msgid "Expect delivery by the end of next month"
+msgstr "Očakávajte doručenie do konca nasledujúceho mesiaca"
+
+msgid "Explore our comprehensive documentation to get the most out of our platform. Find guides, tutorials, and detailed information to help you navigate and utilize all features effectively. Click the link to access the full documentation."
+msgstr "Preskúmajte našu úplnú dokumentáciu, aby ste z našej platformy čopakovali maximum. Nájdite príručky, tutoriály a podrobné informácie, ktoré vám pomôžu efektívne navigovať a využívať všetky funkcie. Kliknite na odkaz pre prístup k úplnéj dokumentácii."
+
+msgid "Extension rod plastic TM-4610"
+msgstr "Predlžovacia tyč plastová TM-4610"
+
+msgid "Features of modern and elegantly prepared MFPs with new wireless capabilities. Function automatic two-sided printing"
+msgstr "Funkcie moderných a elegantne pripravených MFP s novými bezdrôtovými schopnosťami. Funkcia automatickej obojstrannej tlače"
+
+msgid "Filter carbon OPK4290"
+msgstr "Filter s aktívnym uhlíkom OPK4290"
+
+msgid "Filter input VP-9161 / SF-9162 / SF-8210"
+msgstr "Vstupný filter VP-9161 / SF-9162 / SF-8210"
+
+msgid "First subsection %locale%"
+msgstr "Prvá podsekcia %locale%"
+
+msgid "First subsection %locale% - h1"
+msgstr "Prvá podsekcia %locale% - h1"
+
+msgid "Floor nozzle metal VP-9310"
+msgstr "Podlahová hubica kovová VP-9310"
+
+msgid "Floor nozzle metal yellow VP-9141ye"
+msgstr "Podlahová hubica kovová žltá VP-9141ye"
+
+msgid "Fluorescent green laces. Visible at any condition."
+msgstr "Fluorescenčné zelené šnúrovinky. Viditeľné za každých podmienok."
+
+msgid "Fluorescent laces, green"
+msgstr "Fluorescenčné šnúrovinky, zelené"
+
+msgid "Fold-up"
+msgstr "Skladacie"
+
+msgid "Food"
+msgstr "Jedlo"
+
+msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
+msgstr "Potrava je akákoľvek látka konzumovaná na poskytnutie výživovej podpory telu. Je zvyčajne rastlinného alebo živočíšneho pôvodu a obsahuje základné živiny, ako sú tuky, bielkoviny, vitamíny alebo minerály. Látka je prijímaná organizmom a asimilovaná bunkami organizmu na poskytnutie energie, udržanie života alebo stimuláciu rastu."
+
+msgid "For press"
+msgstr "Pre tlač"
+
+msgid "Frequently Asked Questions FAQ"
+msgstr "Často kladené otázky FAQ"
+
+msgid "Full HD Electronics with LED technology and USB"
+msgstr "Full HD elektronika s LED technológiou a USB"
+
+msgid "Functions"
+msgstr "Funkcie"
+
+msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
+msgstr "GENIUS LuxeMate I222 je štýlová čierna klávesnica, ktorá na prvý pohľad pozve k používaniu svojho Apple dizajnu."
+
+msgid "GHz"
+msgstr "GHz"
+
+msgid "GIGABYTE KM7580 CZ"
+msgstr "GIGABYTE KM7580 CZ"
+
+msgid "GPS module"
+msgstr "GPS modul"
+
+msgid "Gadgets"
+msgstr "Gadžety"
+
+msgid "Gaming mouse"
+msgstr "Hrací myš"
+
+msgid "Garden tools"
+msgstr "Záhradné náradie"
+
+msgid "Genius NetScroll 310 silver"
+msgstr "Genius NetScroll 310 striebro"
+
+msgid "Genius SP-U150X black-green"
+msgstr "Genius SP-U150X čierno-zelené"
+
+msgid "Genius SlimStar i820"
+msgstr "Genius SlimStar i820"
+
+msgid "Genius repro SP-M120 black"
+msgstr "Genius reproduktory SP-M120 čierny"
+
+msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
+msgstr "Čistič skla a sklokeramických dosky (4019786908123)"
+
+msgid "GoPay - Payment By Card"
+msgstr "GoPay - Platba kartou"
+
+msgid "GoPay - Quick Bank Account Transfer"
+msgstr "GoPay - Rýchly bankový prevod"
+
+msgid "Goods care"
+msgstr "Starostlivosť o tovar"
+
+msgid "GrapesJS page"
+msgstr "GrapesJS stránka"
+
+msgid "Growing"
+msgstr "Rastie"
+
+msgid "HDMI"
+msgstr "HDMI"
+
+msgid "HEPA filter CN-9240 (VP-9241)"
+msgstr "HEPA filter CN-9240 (VP-9241)"
+
+msgid "HEPA filter SF-9161 / SF-8210"
+msgstr "HEPA filter SF-9161 / SF-8210"
+
+msgid "HEPA filter VP-9241"
+msgstr "HEPA filter VP-9241"
+
+msgid "HEPA filter VP-9711/12"
+msgstr "HEPA filter VP-9711/12"
+
+msgid "HP Deskjet Ink Advantage 1515 (B2L57C)"
+msgstr "HP Deskjet Ink Advantage 1515 (B2L57C)"
+
+msgid "HP Deskjet Ink Advantage 1615 (B2L57C)"
+msgstr "HP Deskjet Ink Advantage 1615 (B2L57C)"
+
+msgid "HQ speakers from well known brand."
+msgstr "Vysokokvalitné reproduktory od známej značky."
+
+msgid "HTC Desire 816 White"
+msgstr "HTC Desire 816 White"
+
+msgid "Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it is required records or quickly usable labels. The printer boasts a very easy to us"
+msgstr "Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it je povinné records or quickly usable labels. The printer boasts a very easy to us"
+
+msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
+msgstr "Zažili ste niekedý nehodu a nevedeli ste, ako reagovať? Alebo sa na to chystáte? Táto kniha je presne pre vás!"
+
+msgid "Heading"
+msgstr "Nadpis"
+
+msgid "Height"
+msgstr "Výška"
+
+msgid "Hello Kitty TV"
+msgstr "Hello Kitty TV"
+
+msgid "Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD."
+msgstr "Hello Kitty TV, LED, 55 cm diagonála, 1920x1080 Full HD."
+
+msgid "Hello Kitty Television"
+msgstr "Hello Kitty televízor"
+
+msgid "Hello Kitty approved"
+msgstr "Hello Kitty schválené"
+
+msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
+msgstr "Hewlett-Packard bol založený v ťažkých časoch Veľkej hospodárskej krízy."
+
+msgid "Hewlett-Packard was founded in the difficult times of the Great Depression. The founders were a pair of friends whose name the company still proudly bears."
+msgstr "Hewlett-Packard bol založený v ťažkých časoch Veľkej hospodárskej krízy. Zakladateľmi boli dvaja priatelia, ktorých meno spoločnosť stále hrdо nesie."
+
+msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
+msgstr "Vysokokvalitné, elegantné, mäkké a zároveň spoláhlivo chrániace originálne puzdro pre váš digitálny fotoaparát Canon EOS 650D alebo 700D."
+
+msgid "Home Listening"
+msgstr "Domáce počúvanie"
+
+msgid "Hose VP-9241"
+msgstr "Hadica VP-9241"
+
+msgid "Hose VP-9310"
+msgstr "Hadica VP-9310"
+
+msgid "ISO"
+msgstr "ISO"
+
+msgid "Iconic Design"
+msgstr "Ikonický dizajn"
+
+msgid "If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses."
+msgstr "Ak budete cestovať autobusmi číslo 9, 13 a 24 z hlavnej stanice, vystúpte na zastávke Outlet Arena Moravia. Neexistuje tu železničná zastávka, ale je tu parkovisko pre kone."
+
+msgid "Immersive Full HD resolution"
+msgstr "Pútavé Full HD rozlíšenie"
+
+msgid "In Progress"
+msgstr "V procese"
+
+msgid "Innovative Technology"
+msgstr "Inovatívna technológia"
+
+msgid "Installment plan"
+msgstr "Splátkový plán"
+
+msgid "Interface"
+msgstr "Rozhranie"
+
+msgid "Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk."
+msgstr "Intuitívne ovládanie umožňuje jednoduché používanie aj pre začiatočníka v tejto oblasti. Ďalšou veľkou výhodou je použitie technológie napaľovania \"on the fly\", ktorá šetrí nielen váš čas, ale aj kapacitu disku, pretože proces nevytvára žiadne úložné (dočasné) súbory na vašom pevnom disku."
+
+msgid "Items on sale"
+msgstr "Tovary v akci"
+
+msgid "JURA Impressa J9 TFT Carbon"
+msgstr "JURA Impressa J9 TFT Carbon"
+
+msgid "Job at Shopsys"
+msgstr "Práca v Shopsys"
+
+msgid "Join our team and be part of an innovative company. Explore exciting career opportunities and grow with us!"
+msgstr "Pripojte sa k nášmu tímu a staňte sa súčasťou inovatívnej spoločnosti. Objavte vzrušujúce kariérne možnosti a rastite s nami!"
+
+msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
+msgstr "Kábel HDMI A - HDMI A M/M 2m pozlátené konektory High Speed HD"
+
+msgid "Knife potato RM-3240/3250"
+msgstr "Nôž na zemiaky RM-3240/3250"
+
+msgid "LCD"
+msgstr "LCD"
+
+msgid "LED"
+msgstr "LED"
+
+msgid "LG 22MT44D 21,5\""
+msgstr "LG 22MT44D 21,5\""
+
+msgid "LG 22MT44D 30\""
+msgstr "LG 22MT44D 30\""
+
+msgid "LG 22MT44D 51,5\""
+msgstr "LG 22MT44D 51,5\""
+
+msgid "LG 22MT44D 60\""
+msgstr "LG 22MT44D 60\""
+
+msgid "LG 47LA790W (FHD)"
+msgstr "LG 47LA790W (FHD)"
+
+msgid "LG 58LA790W (FHD)"
+msgstr "LG 58LA790W (FHD)"
+
+msgid "LG E410 Optimus L1 II White"
+msgstr "LG E410 Optimus L1 II White"
+
+msgid "Limited user"
+msgstr "Obmedzený používateľ"
+
+msgid "Localization"
+msgstr "Lokalizácia"
+
+msgid "Logitech S120 black"
+msgstr "Logitech S120 čierne"
+
+msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
+msgstr "Luxusný automatický kávovar Jura Impressa Z9 One Touch plný švajčiarskej presnosti a elegantnosti, ktorý nastavuje nové štandardy. Tento stroj vám prináša radosť na niekoľkých úrovniach, ako je kvalita kávy, jednoduché používanie a atraktívny dizajn."
+
+msgid "MB"
+msgstr "MB"
+
+msgid "MIO Cyclo 100, bicycle computer, 1,8\""
+msgstr "MIO Cyclo 100, cyklopočítač, 1,8\""
+
+msgid "Made in CZ"
+msgstr "Vyrobené v CZ"
+
+msgid "Made in DE"
+msgstr "Vyrobené v DE"
+
+msgid "Made in SK"
+msgstr "Vyrobené na SK"
+
+msgid "Magazine capacity for beans"
+msgstr "Kapacita zásobníka na zrná"
+
+msgid "Magical Journeys Await Within"
+msgstr "Magické cesty čakajú vo vnútri"
+
+msgid "Main blog page - %locale%"
+msgstr "Hlavná stránka blogu - %locale%"
+
+msgid "Main blog page - %locale% - H1"
+msgstr "Hlavná stránka blogu - %locale% - H1"
+
+msgid "Main blog page - %locale% - Title"
+msgstr "Hlavná stránka blogu - %locale% - Názov"
+
+msgid "Main blog page - %locale% - meta description"
+msgstr "Hlavná stránka blogu - %locale% - meta popis"
+
+msgid "Main information"
+msgstr "Základné informácie"
+
+msgid "Main information mouse"
+msgstr "Základné informácie myš"
+
+msgid "Material"
+msgstr "Materiál"
+
+msgid "Maximum size"
+msgstr "Maximálna veľkosť"
+
+msgid "Media type"
+msgstr "Typ média"
+
+msgid "Meet the latest generation of LED TVs Philips, which include the thin Smart TV running Android."
+msgstr "Oboznajte sa s najnovšou generáciou LED televízorov Philips, ktoré zahŕňajú tenké Smart TV so systémom Android."
+
+msgid "Memory card support"
+msgstr "Podpora pamäťových kariet"
+
+msgid "Metal grease filter OPK-4290"
+msgstr "Kovový tukový filter OPK-4290"
+
+msgid "Metal grease filter OPK-5660 / OPK-5760 / OPK-6690"
+msgstr "Kovový tukový filter OPK-5660 / OPK-5760 / OPK-6690"
+
+msgid "Metal grease filter OPV-3260"
+msgstr "Kovový tukový filter OPV-3260"
+
+msgid "Microsoft Basic Optical Mouse, black"
+msgstr "Microsoft Basic Optical Mouse, čierna"
+
+msgid "Milk reservoir capacity"
+msgstr "Kapacita nádrnky na mlieko"
+
+msgid "Million-euro toilet paper"
+msgstr "Miliónový toaletný papier"
+
+msgid "Mini CD-R 8 cm"
+msgstr "Mini CD-R 8 cm"
+
+msgid "Mobile Phones"
+msgstr "Mobilné telefóny"
+
+msgid "Mobile phone - Apple A7 with 64-bit architecture, 4\" Retina Touch display 1136x640, 32GB internal memory, WiFi 802.11a/b/g/n, Bluetooth 4.0, 8 Mpx camera with LED flash, GPS, Fingerprint sensor, iOS 7"
+msgstr "Apple iPhone 5S je zmysluplne vymyslený. Pečlivo zvážený. Precízne spracovaný. Nie je len tým, čo je technologicky možné. Ale tým, čo je technologicky užitočné. Nie je tým, čo príjde. Ale tým, čo by malo prísť. Inovovaný a opäť o veľa vylepšený smartphone od spoločnosti Apple, to je iPhone 5S."
+
+msgid "Mobile phone 4.5 \"800x480, processor, Quad-Core 1.2GHz, RAM 768 megabytes internal memory of 4GB"
+msgstr "Mobilný telefón 4,5\" 800x480, procesor, Quad-Core 1,2GHz, RAM 768 MB interná pamäť 4GB"
+
+msgid "Mobile phone 4.5 \"800x480, processor, Quad-Core 1.2GHz, RAM 768 megabytes internal memory of 4GB, microSD up to 64GB, 5 megapixel camera, GPS, WiFi, Bluetooth 4.0, NFC, 3G, microUSB, Li-Ion 2000 mAh, Android 4.4"
+msgstr "Smartphone,1.2GHz DC, Android 4.2, BT4.0, A-GPS, Wi-Fi 802.11b/g/n, 5Mpx kam., HSDPA/EDGE, GSM Quad-Band, 4GB flash, 768MB RAM, microSDHC slot, kapacitivý 4.3\" TFT LCD 480x800, Li-Ion 1800mAh, NFC, SK"
+
+msgid "Mobile phone 4.6 \"1280x720, Qualcomm MSM8960Pro 1.7 GHz"
+msgstr "Mobilný telefón 4,6\" 1280x720, Qualcomm MSM8960Pro 1,7 GHz"
+
+msgid "Mobile phone 4.6 \"1280x720, Qualcomm MSM8960Pro 1.7 GHz, 1GB RAM, 8GB 8MPx camera, GPS, WiFi, Bluetooth, FM, micro USB, Android 4.1"
+msgstr "Mobilný telefón pochádza z oficiálnej slovenskéj distribúcie, má slovenské menu a slovenskú dokumentáciu a je naň poskytovaná plná záruka ako u našej firmy, tak u výrobcu. Viac info na stránkach výrobcu."
+
+msgid "Mobile phone 4.7\" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0"
+msgstr "Model LG E410 Optimus L1 II zaujme používateľa elegantným vzhľadom rady L style a praktickou veľkosťou."
+
+msgid "Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players."
+msgstr "Moderné stereo reproduktory v štýlovom čiernom dizajne, s výkonom 2,3 W, vhodné len pre stolové počítače a notebooky, ale aj pre CD alebo MP3 prehrávače."
+
+msgid "Mouse game, 8200dpi laser sensor, 7 programmable buttons + 2D wheel 12000fps, 1ms response, EasyShift, USB, LED backlight, Turbo Core V2, Black"
+msgstr "Herná myš, 8200dpi laserový senzor, 7 programovateľných tlačidiel + 2D koliesko 12000fps, 1ms odozva, EasyShift, USB, LED podsvietenie, Turbo Core V2, čierna"
+
+msgid "Mpx"
+msgstr "Mpx"
+
+msgid "Multimedia"
+msgstr "Multimédiá"
+
+msgid "NFC"
+msgstr "NFC"
+
+msgid "NS-9020 Limpio/Clipper/Nino replacement paper bags for VP902/3/9010"
+msgstr "NS-9020 Limpio/Clipper/Nino náhradné papierové sáčky pre VP902/3/9010"
+
+msgid "NS-9030 Clipper replacement paper bags for VP-903/913"
+msgstr "NS-9030 Clipper náhradné papierové sáčky pre VP-903/913"
+
+msgid "NS-9040 Jumbo replacement paper bags for VP-9040"
+msgstr "NS-9040 Jumbo náhradné papierové sáčky pre VP-9040"
+
+msgid "NS-9310 Infant replacement bags of paper for the VP-9310"
+msgstr "NS-9310 Infant náhradné sáčky papierové pre VP-9310"
+
+msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
+msgstr "NS-9710 Prominent náhradné sáčky papierové pre VP-9711/12/13"
+
+msgid "New"
+msgstr "Nový"
+
+msgid "New [adjective]"
+msgstr "Nový [prídavné meno]"
+
+msgid "New computers with USB"
+msgstr "Nové počítače s USB"
+
+msgid "New driving rules and tips just for you!"
+msgstr "Nové pravidlá jazdy a tipy práve pre vás!"
+
+msgid "Newest toys in stock"
+msgstr "Najnovšie hračky na sklade"
+
+msgid "Nikon COS 700D"
+msgstr "Nikon COS 700D"
+
+msgid "Nikon DMC FT5EP"
+msgstr "Nikon DMC FT5EP"
+
+msgid "Nikon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light, even without a flash. Automatic smart scene mode analyzes the scene and automatically selects the best settings for the camera. View images, focus, or even pictures can be taken using a 3 \"touch screen TFT Clear View II with a whopping resolution of 1.04 million pixels and a vari-angle. With this camera out of you in a moment become a professional cameraman. It makes it possible to shoot stunning movies in Full HD 1080p. Hybrid AF technology enables continuous focus during movie shooting and using the built-in microphone ozvučíme your images are high quality stereo sound. Autofocus system comprising nine cross-type AF points to capture fast-moving objects without any blurring. Thanks to continuous shooting at up to 5 frames per second, you'll never miss a crucial moment for getting the best picture possible.The HDR Backlight Control mode, the camera takes three different exposures and combines them into one, in order to preserve details in shadows and areas with high brightness. In Night Scene mode, the camera takes the hand of multiple images at high shutter speeds and combining them together and thus prevents blurring. Captured images and videos simply adding it to an SD Memory Card, SDHC and SDXC, thanks to the integrated connector is miniHDMI you can conveniently viewed on your LCD or plasma TV. The camera can buy a wide range of lenses, flashes and accessories that are compatible with the EOS system."
+msgstr "Nikon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Kvalitný digitálny fotoaparát s CMOS senzorom s rozlíšením 18 megapixelov, ktorý je určený na záber špičkových fotografií v profesionálnom štýle. Inovatívne spracovanie obrazu DIGIC 5 zabezpečuje výkon v každej situácii. Vysoký rozsah citlivosti až do ISO 12800 vám umožňuje zachátiť skvelé obrázky aj pri slabom osvetlení, dokonca aj bez blesku. Automatický inteligentný režim scény analyzuje scénu a automaticky vyberie najlepšie nastavenia pre fotoaparát. Prezeranie obrázkov, zaostrovanie alebo dokonca snímanie fotografii je možné pomocou 3 \" dotykového displeja TFT Clear View II s úhvatným rozlíšením 1,04 milióna pixelov a vári-angle. S týmto fotoaparátom sa z vás v momente stane profesionálny kameraman. Umožňuje snímať ohromujúce filmy v Full HD 1080p. Technológia Hybrid AF umožňuje nepretržité zaostrovanie počas nahrávania videa a pomocou vstavaného mikrofónu ozvučíme vaše zábery kvalitným stereo zvukom. Systém automatického zaostrovania obsahujúci deväť krížových AF bodov na zachytenie rýchlo sa pohybujúcich objektov bez akejkoľvek neostrost. Vďaka nepretržitému snímaniu až 5 snímok za sekundu nikdy nezmeškáte rozhodujúci okamih pre získanie najlepšej možnej fotografie. V režime HDR Backlight Control fotoaparát sníma tri rôzne expozície a kombinuje ich do jednej, aby sa zachovali detaily v tieňoch a oblastiach s vysokou jasnosou. V režime Nočná scéna fotoaparát sníma z ruky viacero obrázkov pri vysokej rýchlosti uzávierky a kombinuje ich dohromady, čím zabraňuje rozmazaniu. Zachytené obrázky a videá jednoducho uložíte na pamäťovú kartu SD, SDHC a SDXC, vďaka integrovanému konektoru miniHDMI ich môžete pohodlne prehrajať na vašej LCD alebo plazmovej TV. K fotoaparátu môžete dokúpiť širokú škálu objektívov, bleskov a príslušenstva, ktoré sú kompatibilné so systémom EOS."
+
+msgid "Nikon ND-22L"
+msgstr "Nikon ND-22L"
+
+msgid "Nikon TS-800"
+msgstr "Nikon TS-800"
+
+msgid "Nikon VH-520"
+msgstr "Nikon VH-520"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "No Expiry"
+msgstr "Bez expirácie"
+
+msgid "No Obligations"
+msgstr "Bez záväzkov"
+
+msgid "Notification in the bar, notification of a new event."
+msgstr "Notifikácia v lište, upozornenie na novú akciu."
+
+msgid "Nozzle with brush VP-4290"
+msgstr "Hubica so štetkou VP-4290"
+
+msgid "Number of buttons"
+msgstr "Počet tlačítok"
+
+msgid "Number of colors"
+msgstr "Počet farieb"
+
+msgid "Number of processor cores"
+msgstr "Počet jadier procesora"
+
+msgid "OKI MC861cdxm"
+msgstr "OKI MC861cdxm"
+
+msgid "OKI MC861cdxn+ (01318206)"
+msgstr "OKI MC861cdxn+ (01318206)"
+
+msgid "OLYMPUS ME-34 Compact directional microphone suitable for recording lectures"
+msgstr "OLYMPUS ME-34 Kompaktný smerový mikrofon vhodný na nahrávanie prednášok"
+
+msgid "OLYMPUS VH-520"
+msgstr "OLYMPUS VH-520"
+
+msgid "OLYMPUS VH-620"
+msgstr "OLYMPUS VH-620"
+
+msgid "OPK44xx carbon filter / OPK-5690 / OPK5790 / OPO55xx"
+msgstr "Filter uhľíkový OPK44xx / OPK-5690 / OPK5790 / OPO55xx"
+
+msgid "OPK5660 carbon filter / OPK5760 / OPK6690"
+msgstr "Filter uhľíkový OPK5660 / OPK5760 / OPK6690"
+
+msgid "OPP-1060 Hood sub-mounting 60 cm"
+msgstr "OPP-1060 Odsaváč pary podstavný 60 cm"
+
+msgid "OPP-2060 Hood sub-mounting 60 cm"
+msgstr "OPP-2060 Odsaváč pary podstavný 60 cm"
+
+msgid "OPV-3260 Built-in retractable hood is 60 cm"
+msgstr "OPV-3260 Vestavný odsaváč výsuvý 60cm"
+
+msgid "Open"
+msgstr "Otvoriť"
+
+msgid "Optical"
+msgstr "Optická"
+
+msgid "Orava LT-823 C82B"
+msgstr "Orava LT-823 C82B"
+
+msgid "Orava LT-823 C82C"
+msgstr "Orava LT-823 C82C"
+
+msgid "Ordinary customer"
+msgstr "Bežný zákazník"
+
+msgid "Other"
+msgstr "Iné"
+
+msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
+msgstr "Spotrebná elektronika zahŕa elektronické zariadenia každodenného (alebo aspoň častého) použitia pre komunikáciu, v kancelárii i doma."
+
+msgid "Overall performance"
+msgstr "Celkový výkon"
+
+msgid "PANASONIC DMC FT5EP"
+msgstr "PANASONIC DMC FT5EP"
+
+msgid "PLASMA"
+msgstr "PLAZMA"
+
+msgid "POS cookbook_steam oven GB"
+msgstr "POS kuchynská kniha parnej rúry GB"
+
+msgid "PPL"
+msgstr "PPL"
+
+msgid "PRIMECOOLER PC-AD2 3D glasses"
+msgstr "PRIMECOOLER PC-AD2 3D okuliare"
+
+msgid "Packeta"
+msgstr "Packeta"
+
+msgid "Packeta delivery company"
+msgstr "Doručovacia spoločnosť Packeta"
+
+msgid "Pages count"
+msgstr "Počet stránok"
+
+msgid "Parallel port"
+msgstr "Paralelný port"
+
+msgid "Pay later"
+msgstr "Zaplatiť neskôr"
+
+msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
+msgstr "<p>Dokonale čistí, ošetruje a chráni nerezové plochy v jednom pracovnom kroku.</p><ul><li><strong>odstraňuje</strong> bez šmúh prach, špinu, odtlačky prstov a mastnotu</li><li>dlhotrvajúci ochranný film <strong>odpudzujúci</strong> vodu a zabraňujúci novému usadzovaniu špiny</li><li><strong>pôsobí</strong> antistaticky</li><li><strong>neobsahuje</strong> silikón</li></ul>"
+
+msgid "Personal Computers & accessories"
+msgstr "Osobné počítače a príslušenstvo"
+
+msgid "Personal collection"
+msgstr "Osobná kolekcia"
+
+msgid "Personal information export - {domain}"
+msgstr "Export osobných informácií - {domain}"
+
+msgid "Personal information overview - {domain}"
+msgstr "Prehľad osobných informácií - {domain}"
+
+msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles."
+msgstr "Fotografov sen. Hlavný fotoaparát s 13 megapixelmi a predný fotoaparát s 5 megapixelmi zaručujú fotky vo vysokom rozlíšení z každej strany. Ďaka vestavovaným nástrojom pre úpravu a zdieľanie môžete zachytiť pohyblivé obrázky v HD kvalite a kombinovať výsledky do zobrazenia z viac úhlov."
+
+msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles. Incredible design, giant 5,5palcový display with HD resolution, two front stereo speakers, customized channels with real-time information and a quad-core processor - all combine to form one of the best smartphones in the world."
+msgstr "Fotografov sen. Hlavný fotoaparát s 13 megapixelmi a predný fotoaparát s 5 megapixelmi zaručujú fotky vo vysokom rozlíšení z každej strany. Vďaka vstavaným nástrojom na úpravu a zdieľanie môžete zachytiť pohyblivé obrázky v HD a skombinovať výsledky na zobrazenie z viacerých uhlov. Neuveriteľný dizajn, obrovský 5,5palcový displej s HD rozlíšením, dva predné stereo reproduktory, prispôsobené kanály s informáciami v reálnom čase a štvorjadrový procesor - to všetko sa spája a tvorí jeden z najlepších smartfónov na svete."
+
+msgid "Pocket-friendly"
+msgstr "Šetrné k peňaženke"
+
+msgid "Pot holder, black"
+msgstr "Chyták na hrnce, čierny"
+
+msgid "Power supply"
+msgstr "Napájanie"
+
+msgid "Powerful color inkjet printer A4 size, quality photo printing"
+msgstr "Výkonná farebná atramentová tlačiareň, formát A4, kvalitný tlač fotografií"
+
+msgid "Powerful color inkjet printer A4 size, quality photo printing, high resolution up to 9600 x 2400dpi, the rate of up to 15 st. / Min in monochrome and up to 10 st. / Min in color, duplex printing, tray for up to 125 sheets, USB 2.0, WiFi 802.11b / g / n, possibility of printing discs. Canon PIXMA iP7250 is a compact portable printer for home or office thous. This is a quality color inkjet printer up to A4 with gentle tiskem.Má stylish and compact design with a hinged upper portion serving as a feeder print media. It is intended primarily for use as a small family or a printer portable printer - especially for printing photographs. It allows users to print documents and fotografií.Je equipped with precision 1 picolitre FINE for printing with tiny particles. It allows you to achieve resolutions up to 9600 x 2400dpi. The printer has five individual ink tanks with the ChromaLife100 + .Tiskárna can print borderless photos. Maximum print speed is 15 pages per minute in black and white or 10 in color. E.g. print borderless 10 x 15 cm photo takes about 21 seconds. The printer also offers direct disc printing and automatic two-sided tisk.Připojení to the computer is done via the USB 2.0 port or through a wireless interface, WiFi 802.11b / g / n. The printer has the dimensions 451 x 368 x 128 mm and weighs 6.6 kg. The included software for easy photo printing My Image Garden."
+msgstr "Výkonná farebná atramentová tlačiareň formátu A4, kvalitná tlač fotografií, vysoké rozlíšenie až 9600 x 2400dpi, rýchlosť až 15 str./min v monochróme a až 10 str./min farebne, obojstranná tlač, zásobník na až 125 hárkov, USB 2.0, WiFi 802.11b/g/n, možnosť tlače na disky. Canon PIXMA iP7250 je kompaktná prenosná tlačiareň pre domácnosť alebo kanceláriu. Ide o kvalitnú farebnú atramentovú tlačiareň až do formátu A4 s jemnou tlačou. Má štýlový a kompaktný dizajn s výklopnou hornou časťou slúžiacou ako podávač tlačových médií. Je určená predovšetkým na použitie ako malá rodinná tlačiareň alebo prenosná tlačiareň - špeciálne na tlač fotografií. Umožňuje používateľom tlačiť dokumenty a fotografie. Je vybavená precyznou technológiou FINE s 1 pikolitrovými kvapkami pre tlač s miniátrnymi časticami. Umožňuje dosiahnuť rozlíšenie až 9600 x 2400dpi. Tlačiareň má päť samostatných atramentových nádrží s technológiou ChromaLife100+. Tlačiareň dokáže tlačiť fotografie bez okrajov. Maximálna rýchlosť tlače je 15 strán za minútu čiernobielo alebo 10 farebne. Napr. tlač fotografie 10 x 15 cm bez okrajov trvá asi 21 sekúnd. Tlačiareň tiež ponúka priamu tlač na disky a automatickú obojstrannú tlač. Pripojenie k počítaču sa realizuje cez port USB 2.0 alebo cez bezdrôtové rozhranie WiFi 802.11b/g/n. Tlačiareň má rozmery 451 x 368 x 128 mm a váži 6,6 kg. Súčasťou je softvér pre jednoduchú tlač fotografií My Image Garden."
+
+msgid "Powerful color inkjet printer A4 size, quality photo printing, high resolution up to 9600 x 2400dpi, the rate of up to 15 st. / Min in monochrome and up to 10 st. / Min in color, duplex printing, tray for up to 125 sheets, USB 2.0, WiFi 802.11b / g / n, possibility of printing discs. Canon PIXMA iP7250 is a compact portable printer for home or office thous. This is a quality color inkjet printer up to A4 with gentle tiskem.Má stylish and compact design with a hinged upper portion serving as a feeder print media. It is intended primarily for use as a small family or a printer portable printer - especially for printing photographs. It allows users to print documents and fotografií.Je equipped with precision 1 picolitre FINE for printing with tiny particles. It allows you to achieve resolutions up to 9600 x 2400dpi. The printer has five individual ink tanks with the ChromaLife100 +. Printer can print borderless photos. Maximum print speed is 15 pages per minute in black and white or 10 in color. E.g. print borderless 10 x 15 cm photo takes about 21 seconds. The printer also offers direct disc printing and automatic two-sided tisk.Připojení to the computer is done via the USB 2.0 port or through a wireless interface, WiFi 802.11b / g / n. The printer has the dimensions 451 x 368 x 128 mm and weighs 6.6 kg. The included software for easy photo printing My Image Garden."
+msgstr "Výkonná farebná atramentová tlačiareň formátu A4, kvalitná tlač fotografií, vysoké rozlíšenie až 9600 x 2400dpi, rýchlosť až 15 str./min v monochróme a až 10 str./min farebne, obojstranná tlač, zásobník na až 125 hárkov, USB 2.0, WiFi 802.11b/g/n, možnosť tlače na disky. Canon PIXMA iP7250 je kompaktná prenosná tlačiareň pre domácnosť alebo kanceláriu. Ide o kvalitnú farebnú atramentovú tlačiareň až do formátu A4 s jemnou tlačou. Má štýlový a kompaktný dizajn s výklopnou hornou časťou slúžiacou ako podávač tlačových médií. Je určená predovšetkým na použitie ako malá rodinná tlačiareň alebo prenosná tlačiareň - špeciálne na tlač fotografií. Umožňuje používateľom tlačiť dokumenty a fotografie. Je vybavená precyznou technológiou FINE s 1 pikolitrovými kvapkami pre tlač s miniátrnymi časticami. Umožňuje dosiahnuť rozlíšenie až 9600 x 2400dpi. Tlačiareň má päť samostatných atramentových nádrží s technológiou ChromaLife100+. Tlačiareň dokáže tlačiť fotografie bez okrajov. Maximálna rýchlosť tlače je 15 strán za minútu čiernobielo alebo 10 farebne. Napr. tlač fotografie 10 x 15 cm bez okrajov trvá asi 21 sekúnd. Tlačiareň tiež ponúka priamu tlač na disky a automatickú obojstrannú tlač. Pripojenie k počítaču sa realizuje cez port USB 2.0 alebo cez bezdrôtové rozhranie WiFi 802.11b/g/n. Tlačiareň má rozmery 451 x 368 x 128 mm a váži 6,6 kg. Súčasťou je softvér pre jednoduchú tlač fotografií My Image Garden."
+
+msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers."
+msgstr "Táto USB myš funguje spoločhivo na témer akýkoľvek povrch a je uzpôsobená pre ovládanie pravou i ľavou rukou."
+
+msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
+msgstr "Táto USB myš funguje spoločhlivo na témer akýkoľvek povrch a je uzpôsobená pre ovládanie pravou i ľavou rukou."
+
+msgid "Premium Performance"
+msgstr "Prémiový výkon"
+
+msgid "PremiumCord micro USB, A-B, 1m"
+msgstr "PremiumCord micro USB, A-B, 1m"
+
+msgid "Pressure"
+msgstr "Tlak"
+
+msgid "Price hit"
+msgstr "Cenovka hit"
+
+msgid "Prime flour 1 kg"
+msgstr "Prvotriednna múka 1 kg"
+
+msgid "Prime flour for creating your own cake. Now with special discount."
+msgstr "Hladká múka pre tvorbu home-made pečených dobrôt. Teraz za špeciálnu cenu."
+
+msgid "Print resolution"
+msgstr "Rozlíšenie tlače"
+
+msgid "Print technology"
+msgstr "Technológia tlače"
+
+msgid "Printers"
+msgstr "Tlačiarne"
+
+msgid "Privacy policy"
+msgstr "Ochrana súkromia"
+
+msgid "Probably best value for your money"
+msgstr "Pravdepodobne najlepšia voľba"
+
+msgid "Processor frequency"
+msgstr "Frekvencia procesora"
+
+msgid "Promoted products"
+msgstr "Propagované produkty"
+
+msgid "Properties"
+msgstr "Vlastnosti"
+
+msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
+msgstr "Kvalitná digitálna zrkadlovka s CMOS snímačom s rozlíšením 18 megapixelov"
+
+msgid "Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color."
+msgstr "klávesnica s myšou, multimediálna, bezdrôtová rádiová 2.4GHz, nano príjmač na USB, 15 multimediálnych klávesov, dosah až 5m, napájanie klávesnice a myši 4x AAA, hmotnosť 518 a 60 gramov, klávesnica obsahuje slovenské znaky"
+
+msgid "Quick and Safe payment via bank account transfer."
+msgstr "Rýchla a bezpečná platba prevodom medzi účtmi."
+
+msgid "Quick, cheap and reliable!"
+msgstr "Rýchlo, lacno a spoločhlivo!"
+
+msgid "RAM"
+msgstr "RAM"
+
+msgid "ROCCAT Kone Pure Optical Gaming Mouse"
+msgstr "ROCCAT Kone Pure Optical Gaming Mouse"
+
+msgid "Recording on"
+msgstr "Nahrávanie na"
+
+msgid "Red and green paper glasses for watching"
+msgstr "papierové okuliare ružovo-zelené pre prehľiadanie 3D obrázkov alebo sledovanie 3D filmov"
+
+msgid "Reduced rate"
+msgstr "Prvá znížená sadzba"
+
+msgid "Reducing the diameter of 35 mm to 32 mm"
+msgstr "Redukcia priemeru z 35 mm na 32 mm"
+
+msgid "Reduction Avg. OPK OPO 150/120 mm"
+msgstr "Redukcia priem. OPK OPO 150/120mm"
+
+msgid "Reflective tape for safe movement on the road"
+msgstr "Reflexná páska pre bezpečný pohyb na ceste"
+
+msgid "Registration completed"
+msgstr "Registrácia bola dokončená"
+
+msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
+msgstr "Náhradný textilíny sáčok pre vysavače CONCEPT Sprinter - VP9070. Balenie: 1 ks"
+
+msgid "Reset password request"
+msgstr "Žiadosť o heslo"
+
+msgid "Resolution"
+msgstr "Rozlíšenie"
+
+msgid "Resolution of rear camera"
+msgstr "Rozlíšenie štandardnej zadnej kamery"
+
+msgid "Resolution of sensor"
+msgstr "Rozlíšenie snímača"
+
+msgid "Responsive and Reliable"
+msgstr "Vysoká odozva a spoločhlivosť"
+
+msgid "Right-handed"
+msgstr "Pravoruká"
+
+msgid "SDV 3360-built ceramic plate 60 cm"
+msgstr "SDV 3360-vstavaná keramická doska 60 cm"
+
+msgid "SDV 3460-built ceramic plate 60 cm"
+msgstr "SDV 3460-vstavaná keramická doska 60 cm"
+
+msgid "SLR"
+msgstr "SLR"
+
+msgid "SMS-9170 SMS IQ SPACE spare bags"
+msgstr "SMS-9170 SMS IQ SPACE náhradné vrecka"
+
+msgid "SONY DSCRX100"
+msgstr "SONY DSCRX100"
+
+msgid "SONY Xperia SP C5303"
+msgstr "SONY Xperia SP C5303"
+
+msgid "Sale"
+msgstr "Výpredož"
+
+msgid "Samsung Galaxy Core 2 (SM-G355) - black"
+msgstr "Samsung Galaxy Core 2 (SM-G355) - čierna"
+
+msgid "Samsung Galaxy Core Plus (SM-G350) - white"
+msgstr "Samsung Galaxy Core Plus (SM-G350) - biela"
+
+msgid "Samsung T27D590EW"
+msgstr "Samsung T27D590EW"
+
+msgid "Samsung T27D590EX"
+msgstr "Samsung T27D590EX"
+
+msgid "Samsung T27D590EY"
+msgstr "Samsung T27D590EY"
+
+msgid "Samsung T27D590EZ"
+msgstr "Samsung T27D590EZ"
+
+msgid "Samsung UE75HU7500 (UHD)"
+msgstr "Samsung UE75HU7500 (UHD)"
+
+msgid "Screen size"
+msgstr "Veľkosť obrazovky"
+
+msgid "Seamless Control"
+msgstr "Bezproblémové ovládanie"
+
+msgid "Second Christmas Day"
+msgstr "Druhý vianočný deň"
+
+msgid "Second reduced rate"
+msgstr "Druhá znížená sadzba"
+
+msgid "Second subsection %locale%"
+msgstr "Druhá podsekcia %locale%"
+
+msgid "Second subsection %locale% - h1"
+msgstr "Druhá podsekcia %locale% - h1"
+
+msgid "Sencor SDB 4002M4"
+msgstr "Sencor SDB 4002M4 (HDMI)"
+
+msgid "Sennheiser HD 700"
+msgstr "Sennheiser HD 700"
+
+msgid "Sensitivity"
+msgstr "Citlivosť"
+
+msgid "Shopsys Platform - Title page"
+msgstr "Shopsys Platform - Titulná stránka"
+
+msgid "Shopsys Platform - the best solution for your eshop."
+msgstr "Shopsys Platform - najlepšie riešenie pre váš internetový obchod."
+
+msgid "Side mount plates - few ETV-2860"
+msgstr "Bočný držiak plechov - pár ETV-2860"
+
+msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces."
+msgstr "myš optická, konektor USB, 1200dpi, vhodná pre notebooky"
+
+msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces. There are two classic buttons and the third with the paging function wheel. Genius NetScroll 310 is equipped with modern USB interface and finds use in conserving ambidextrous or in an office environment. <br><strong> Specifications: </strong><br><strong> Supported OS: </strong><br> Microsoft Windows 7, Vista, XP, 2003, 2000, 98SE <br> Mac OS 8.6 or later"
+msgstr "myš optická, konektor USB, 1200dpi, vhodná pre notebooky"
+
+msgid "Size and weight"
+msgstr "Rozmery a hmotnosť"
+
+msgid "Sleek and compact stereo speakers in combination of black and metallic surface."
+msgstr "Jednopásmové stereo reproduktory SP-M120 s celkovým hudobným výkonom 2 W, čierným lesklým povrchem a elegantným kovovým krytom."
+
+msgid "Slicer Pizza ETV-2860"
+msgstr "Krájač na pizzu ETV-2860"
+
+msgid "Slim Profile"
+msgstr "Tenký profil"
+
+msgid "Slovakia"
+msgstr "Slovensko"
+
+msgid "Snack"
+msgstr "Niečo na zub"
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Clipper VP 9030/31/32/33 a VP 9130/31/32"
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32. Packaging: 5 pieces of bags + input and output filter."
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Clipper VP 9030/31/32/33 a VP 9130/31/32. Balenie: 5 ks sáčkov + vstupný a výstupný filter."
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT INFANT VP 9310th Package: 5 pieces of bags + 2."
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT INFANT VP 9310. Balenie: 5 ks sáčkov + 2."
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Jumbo VP 9"
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Jumbo VP 9041"
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Jumbo VP 9,041th Package: 5 pieces of bags + input and output filter."
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Jumbo VP 9041. Balenie: 5 ks sáčkov + vstupný a výstupný filter."
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Limpio VP 9020/21"
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Limpio VP 9020/21"
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Limpio VP 9020/21, Clipper VP and VP 913_ 903_, Nino VP 9010 Packaging: 5 pieces of bags + input and output filter."
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Limpio VP 9020/21, Clipper VP 903_ a VP 913_, Nino VP 9010. Balenie: 5 ks sáčkov + vstupný a výstupný filter."
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Prominent VP 9711/12/13"
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Prominent VP 9711/12/13"
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Prominent VP 9711/12/13. Packaging: 5 pieces of bags + input and output filter."
+msgstr "Náhradné papierové sáčky pre vysavače CONCEPT Prominent VP 9711/12/13. Balenie: 5 ks sáčkov + vstupný a výstupný filter."
+
+msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB"
+msgstr "Kapesný reproduktor pre MP3 prehrávače, mobilné telefóny, počítače, notebooky, tablety atď."
+
+msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
+msgstr "Kapesný reproduktor pre MP3 prehrávače, mobilné telefóny, počítače, notebooky, tablety atď. Stačí vybaľ, zapojiť a spustiť prehrávanie. S týmto reproduktorom získate 360° zvukový zážitok na cestách."
+
+msgid "Special offers"
+msgstr "Špeciálne nabídky"
+
+msgid "Standard rate"
+msgstr "Štandardná sadzba"
+
+msgid "Store in Ostrava Přívoz"
+msgstr "Predajňa v Ostrave Prívoze"
+
+msgid "Store in Žilina"
+msgstr "Predajňa v Žiline"
+
+msgid "Store v Pardubice"
+msgstr "Predajňa v Pardubiciách"
+
+msgid "Suitable for all kinds of goods"
+msgstr "Vhodné pre všetky druhy tovaru"
+
+msgid "Super LCD"
+msgstr "Super LCD"
+
+msgid "Supported OS"
+msgstr "Podporovaný OS"
+
+msgid "System type"
+msgstr "Typ sústavy"
+
+msgid "TFT"
+msgstr "TFT"
+
+msgid "TK-9710 Turbo brush Prominent VP 971"
+msgstr "TK-9710 Turbo kartáč Prominent VP 971"
+
+msgid "TS-9080 replacement bag for textile VP-9080"
+msgstr "TS-9080 náhradný sáčok textilíny pre VP-9080"
+
+msgid "TS-9170 replacement bag for textile VP-9171"
+msgstr "TS-9170 náhradný sáčok textilíny pre VP-9171"
+
+msgid "TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr "TV CRT, 100Hz, úhlopriečka 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, reproduktory 16W, energetická trieda A +"
+
+msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD"
+msgstr "Televízia Cinema 3D SMART LED, úhlopriečka 119cm, MCI 700, FullHD 1920x1080"
+
+msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD, DVB-S / S2 / T / T2 / C, 3x HDMI, 3x USB, CI, SCART, MHL, LAN, HbbTV, WiFi, Miracast / WiDi, WebOS, Web browser, Dual Core, 2 pieces 3D glasses AG-F310, magical driver energ. Class A +"
+msgstr "Televízor Cinema 3D LED SMART uhlopriečka 119 cm, 700 MCI, 1920x1080 Full HD, DVB-S / S2 / T / T2 / C, 3x HDMI, 3x USB, CI, SCART, MHL, LAN, HbbTV, WiFi, Miracast / WiDi, WebOS, webový prehľaidač, dvojjadrový, 2 kusy 3D okuliarov AG-F310, čarovný ovládač energ. trieda A +"
+
+msgid "TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr "Televízia LED, 100Hz, úhlopriečka 32 palčov, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. trieda A+"
+
+msgid "TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr "Televízia LED, 100Hz, úhlopriečka 80cm, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. trieda A+"
+
+msgid "TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr "TV PLASMA, 100Hz, úhlopriečka 80cm, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. trieda A+"
+
+msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler"
+msgstr "Televízia SMART LED TV, úhlopriečka 147cm, 4K Ultra HD 3840x2160, 4K Upscaler"
+
+msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler, DVB-S2 / T2 / C, H.265, 3x HDMI, 3x USB, Scart, CI +, LAN, WiFi, Miracast, DLNA, MHL, HbbTV, Web browser, webOS 2.0, 2x10W speakers, magical MR15 driver, energ. Class A +"
+msgstr "Televízia SMART LED TV, úhlopriečka 147cm, 4K Ultra HD 3840x2160, 4K Upscaler, DVB-S2/T2/C, H.265, 3x HDMI, 3x USB, Scart, CI+, LAN, WiFi, Miracast, DLNA, MHL, HbbTV, webový prehliadač, webOS 2.0, repro 2x10W, magický ovládač MR15, energ. trieda A+"
+
+msgid "TV, audio"
+msgstr "Televízia, audio"
+
+msgid "TV, audio from the cheapest"
+msgstr "Televízia, audio od najlacnejších"
+
+msgid "TV, audio in sale"
+msgstr "Televízia, audio výpredaj"
+
+msgid "TV, audio plasma with HDMI"
+msgstr "Televízia, audio plasma s HDMI"
+
+msgid "Technology"
+msgstr "Technológie"
+
+msgid "Telescopic metal pipes VP-9161"
+msgstr "Trúbky teleskopické kovové VP-9161"
+
+msgid "Telescopic pipe VP918x VP802x"
+msgstr "Trúbka teleskopická VP918x VP802x"
+
+msgid "Television"
+msgstr "Televízia"
+
+msgid "Television Hyundai [M]"
+msgstr "Televízia Hyundai [M]"
+
+msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback"
+msgstr "Sencor SLE 22F46DM4 Hello Kitty je televízor LED pre tých, ktorí hľadá pre svoje deti niečo, čo majú rádi a čo by ich potešilo. Televízor s motívmi populárnej Hello Kitty a prevedenie v růžovej farbe vaše dieťa určite zaujme!"
+
+msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B"
+msgstr "Televízia LED, 55 cm úhlopriečka, 1920x1080 Full HD, DVB-T MPEG4 tuner s USB nahrávaním a prehrávaním (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, ružové prevedenie, energ. trieda B"
+
+msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner"
+msgstr "Televízia LED, úhlopriečka 82 cm, 1366x768, DVB-T/C MPEG4 tuner"
+
+msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI"
+msgstr "Televízia LED, úhlopriečka 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI, USB"
+
+msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI, USB, SCART, VGA, headphone jack, USB/HDD recording, hotel mode, Energ. Class A"
+msgstr "Televízia LED, úhlopriečka 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI, USB, SCART, VGA, sluchátkový výstup, USB/HDD nahrávanie, hotelový mód, energ. trieda B"
+
+msgid "Television Philips [M]"
+msgstr "Televízia Philips [M]"
+
+msgid "Television SMART 3D LED, 189 cm diagonal, CMR 1000 4K Ultra HD 3840x2160, DVB-S2 / T2 / C, 4x HDMI, 3x USB, CI +, LAN, WiFi, DLNA, MHL, HbbTV, Tizen OS, energ. Class A"
+msgstr "Ďaka technológii Color Brilliance uvidíte všetko presne tak, ako to príroda zamyšľala. Televízor podáva farebné odtiene s ohromújúcou presnosťou – ako keby ste boli súčasťou deja. Všetko, čo vidíte na obrazovke, je jasné a sýte. Farby ožívajú v nádhernéj intenzite a obraz vypadá prirodzene a verne. Teraz sa môžete ponoriť do mimoriadne živého obrazu UHD, ktorý je skutočne brilianný."
+
+msgid "Television SMART 3D LED, 189 cm diagonal."
+msgstr "Ďaka technológii Color Brilliance uvidíte všetko presne tak, ako to príroda zamyšľala."
+
+msgid "Television Sencor [M]"
+msgstr "Televízia Sencor [M]"
+
+msgid "Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080"
+msgstr "LED monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080, DVI, D-Sub, VESA 75x75, matný"
+
+msgid "Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A"
+msgstr "LED monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080, DVI, D-Sub, VESA 75x75, matný"
+
+msgid "Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms"
+msgstr "Televízny monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080"
+
+msgid "Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768"
+msgstr "Televízny monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080"
+
+msgid "Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A"
+msgstr "Televízny monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080, DVB-T/C tuner, 2x HDMI, USB, SCART, D-Sub, 2x5W repro, VESA 75x75, hotelový mód s USB cloning, energ. trieda A"
+
+msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
+msgstr "Televízia (z gréckeho tele – ďaleko a latinského vízie – vidieť) je široko používané jednosmervé diaľkové plošné vysielanie (tzv. broadcasting) a individuálne prijímanie televízneho vysielania – obrazu a zvuku do televízora. Výrazne prispîva k celkovej socializácii ľudí takmer po celom svete."
+
+msgid "Terms and conditions of department stores"
+msgstr "Obchodné podmienky obchodných domov"
+
+msgid "Terms and conditions of eshop"
+msgstr "Obchodné podmienky e-shopu"
+
+msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
+msgstr "Televízny monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP+, 2x HDMI, MHL, USB, CI, Scart, 2x 5W repro, diaľkový ovládač"
+
+msgid "The filter carbon OPK-4360/4390"
+msgstr "Filter uhľíkový OPK-4360/4390"
+
+msgid "The filter carbon OPK-7790"
+msgstr "Filter uhľíkový OPK-7790"
+
+msgid "The filter carbon OPP-1060"
+msgstr "Filter uhľíkový OPP-1060"
+
+msgid "The filter carbon OPP-2060"
+msgstr "Filter uhľíkový OPP-2060"
+
+msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
+msgstr "Minimálnou priestorovou náročnosťou vyniká podstavný odsaváč pary OPP-2060."
+
+msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
+msgstr "Štýlové kompatktaie multifunkčné zariadenie s Wi-Fi a jednoduchým mobilným tlačom."
+
+msgid "The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more."
+msgstr "Prvni, Druha, Treti"
+
+msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements"
+msgstr "Výsuvý odsaváč pary je veľmi elegantná a praktická varianta klasického odsaváča s minimálnou priestorovou náročnosťou"
+
+msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
+msgstr "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and by malo byť at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
+
+msgid "This is SEO meta description of brand %brandName%."
+msgstr "Toto je SEO meta popisok značky %brandName%."
+
+msgid "This is description of brand %brandName%."
+msgstr "Toto je popis značky %brandName%."
+
+msgid "This luminiscent tape might prevent you from dying."
+msgstr "Svietiaca reflexná páska pre bezpečný pohyb na ceste, ktorá zajístí ješte väčšiu viditeľnosť brusliarom, cyklistom alebo chodcom za zníženej viditeľnosti."
+
+msgid "This pot holder is used to hold pots. No more burnt kitchen tables!"
+msgstr "Koniec nemotornému odkládaniu hrncov na novú kuchynskú linku alebo na prkénko určené ku krájaniu zeleniny. Uľahčite týmto darkom partnerovi varenie."
+
+msgid "This product is not an independently functional unit and may require professional installation."
+msgstr "Prenosný pevný disk GT SuperSpeed USB 3.0 sa inspíruje dlhou históriou športových vozidiel"
+
+msgid "This slider item promotes our latest offers and updates. Stay tuned for more exciting news and promotions. Click the link to learn more!"
+msgstr "Tento posuvník propaguje naše najnovšie nabídky a aktualizácie. Buďte v obraze a sledujte ďalšie vzrušujúce novinky a akcie. Kliknite na odkaz a dozviete sa viac!"
+
+msgid "Ticket for 100 CZK"
+msgstr "Poukážka na 100 CZK"
+
+msgid "Ticket for 100 Czech crowns"
+msgstr "Poukážka na 100 korún českých"
+
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\" tabindex=\"0\">{tracking_number}</a>."
+msgstr "Chcete-li sledovať svoj balíček, kliknite na tento odkaz: <a href=\"{tracking_url}\">{tracking_number}</a>."
+
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\" tabindex=\"0\">{tracking_url}</a>."
+msgstr "Pre sledovanie Vašu zásielku kliknite na tento odkaz: <a href=\"{tracking_url}\">{tracking_url}</a>."
+
+msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
+msgstr "toaleták s potiskom bankoviek EURO, pocit z použitia tohto toaletného papiera dá zabudúnúť na akékoľvek trápenia spojené s finančnou krízou"
+
+msgid "Tomorrow will be 20% discount for all items"
+msgstr "Zajtra bude 20% zľava na všetky produkty"
+
+msgid "Toner for MC861/ 851, 7000 pages"
+msgstr "OKI MC861cdxn+, farebná A3 34/26 ppm ProQ2400 dpi PCL/PS,USB 2.0,LPT,LAN"
+
+msgid "Transport and payment"
+msgstr "Doprava a platba"
+
+msgid "Tube type: Universal. Diameter: 32mm."
+msgstr "Typ hubice: Univerzálna. Priemer: 32 mm."
+
+msgid "Tuner"
+msgstr "Tuner"
+
+msgid "Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big."
+msgstr "Typ hubice: Univerzálna. Priemer: 32 mm. Turbokartáč: Veľký."
+
+msgid "USB"
+msgstr "USB"
+
+msgid "Unforgettable Tales"
+msgstr "Nezabudnuteľné príbehy"
+
+msgid "Unleash Your Gaming Potential"
+msgstr "Povol otěze hrania"
+
+msgid "User"
+msgstr "Používateľ"
+
+msgid "User consent policy"
+msgstr "Správa osobných údajov"
+
+msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
+msgstr "Použitie parnej trúby Concept je prekvapivo všestranné. Možno v nej pripraviť predkrmy, polévky, maso, ryby, zeleninu, vegetariánske jedlá, knedlíky, ryžu, ovocie i dezerty."
+
+msgid "V"
+msgstr "V"
+
+msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
+msgstr "VERBATIM 1TB externý disk 2,5\" USB 3.0 GT SuperSpeed červený"
+
+msgid "VIP"
+msgstr "VIP"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Viewfinder type"
+msgstr "Typ hľadáčku"
+
+msgid "W"
+msgstr "W"
+
+msgid "Warranty"
+msgstr "Záruka"
+
+msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
+msgstr "Sledujte vysielanie v úžasnom rozlíšení Full HD a zároveň na tom istom štýlovom zariadení pracujte."
+
+msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work. TD590 Monitor allows you to quickly and easily switch between TV and computer monitor or test your multitasking skills and watch TV while working on a split screen. In addition, it offers flexible connectivity options to your entertainment and multimedia can be enjoyed to the fullest. This monitor is perfect for studio flats, rooms in dormitories and small living rooms. Why should you buy two devices when one can do it more?"
+msgstr "Sledujte vysielanie v úžasnom rozlíšení Full HD a zároveň na tom istom štýlovom zariadení pracujte. TD590 Monitor vám umožňuje rýchlo a jednoduše prepnúť medzi televíznym a počítačovým monitorom alebo otestovať vaše multitaskové schopnosti a pozrieť televíziu počas práce na rozdelenej obrazovke. Naviac ponúka flexibilné možnosti pripojenia, takže si vašu zábavu a multimédiá budete môcť vychutnať naplno. Tento monitor je perfektný pre garské byty, izby v koléjach a malé obývacie izby. Prečo by ste mali kúpiť dve zariadenia, akže jedno dokáže robiť viac?"
+
+msgid "Water reservoir capacity"
+msgstr "Kapacita zásobníka na vodu"
+
+msgid "We are looking forward to your visit."
+msgstr "Tešíme sa na vašu návštevu."
+
+msgid "Weight"
+msgstr "Hmotnosť"
+
+msgid "Well known USB cable with A and micro B connectors."
+msgstr "Známy USB kábel s konektormi A a micro B."
+
+msgid "Where to find us"
+msgstr "Kde nás nájdete"
+
+msgid "WiFi"
+msgstr "WiFi"
+
+msgid "Wide Color Gamut"
+msgstr "Široké farebné spektrum"
+
+msgid "Winch throttle silver VP-9711/12"
+msgstr "Klapka navíjáka striebrá VP-9711/12"
+
+msgid "Windows 2000/XP/Vista/7"
+msgstr "Windows 2000/XP/Vista/7"
+
+msgid "Wired"
+msgstr "Drôtový"
+
+msgid "Withdrawal from contract"
+msgstr "Odstúpenie od zmluvy"
+
+msgid "Xtreamer SW4"
+msgstr "Xtreamer SW4"
+
+msgid "Xtreamer SW4 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions"
+msgstr "Xtreamer SW4 je všestranný zábavný systém, ktorý prináša zábavu do vašej TV. Hry, filmy a množstvo ďalších funkcií"
+
+msgid "Xtreamer SW4 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions in HD quality"
+msgstr "Xtreamer SW4 je všestranný zábavný systém, ktorý prináša zábavu do vašej TV. Hry, filmy a množstvo ďalších funkcií v HD kvalite"
+
+msgid "Xtreamer SW5"
+msgstr "Xtreamer SW5"
+
+msgid "Xtreamer SW5 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions"
+msgstr "Xtreamer SW5 je všestranný zábavný systém, ktorý prináša zábavu do vašej TV. Hry, filmy a množstvo ďalších funkcií"
+
+msgid "Xtreamer SW5 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions in HD quality"
+msgstr "Xtreamer SW5 je všestranný zábavný systém, ktorý prináša zábavu do vašej TV. Hry, filmy a množstvo ďalších funkcií v HD kvalite"
+
+msgid "YENKEE YSP 1005WH white"
+msgstr "YENKEE YSP 1005WH biely"
+
+msgid "Yes"
+msgstr "Áno"
+
+msgid "You will be welcomed by friendly staff!"
+msgstr "Privíta vás priateľský personál!"
+
+msgid "Your order no. {number} has been cancelled"
+msgstr "Vaša objednávka č. {number} bola zrušená"
+
+msgid "Your order no. {number} has been completed"
+msgstr "Vaša objednávka č. {number} bola dokončená"
+
+msgid "Your order no. {number} has been placed"
+msgstr "Vaša objednávka č. {number} bola odoslaná"
+
+msgid "Your order no. {number} is being processed"
+msgstr "Vaša objednávka č. {number} sa spracúva"
+
+msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
+msgstr "ZN-8009 parná žehlička Ferrato nerezová oceľ 2200 Watt modrá"
+
+msgid "Zero rate"
+msgstr "Nulová sadzba"
+
+msgid "Zoom"
+msgstr "Zoom"
+
+msgid "bar"
+msgstr "bar"
+
+msgid "battery"
+msgstr "batéria"
+
+msgid "black"
+msgstr "čierna"
+
+msgid "classic"
+msgstr "klasické"
+
+msgid "cm"
+msgstr "cm"
+
+msgid "description - First subsection %locale%"
+msgstr "popis - Prvá podsekcia %locale%"
+
+msgid "description - Main blog page - %locale%"
+msgstr "popis - Hlavná stránka blogu - %locale%"
+
+msgid "description - Second subsection %locale%"
+msgstr "popis - Druhá podsekcia %locale%"
+
+msgid "description of 2 litre coffeemakers in sale seo category"
+msgstr "popis 2 litrových kávovarov v akci seo kategória"
+
+msgid "description of Electronics from most expensive seo category"
+msgstr "popis elektroniky od najdrahších seo kategória"
+
+msgid "description of Electronics in black seo category"
+msgstr "popis elektroniky v čiernom seo kategória"
+
+msgid "description of Electronics in red seo category"
+msgstr "popis elektroniky v červenom seo kategória"
+
+msgid "description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "popis Elektroniky s LED technológiou a veľkosťou 30 palčov v SEO kategórii výpredaj"
+
+msgid "description of Electronics without HDMI in sale seo category"
+msgstr "popis Elektroniky bez HDMI v SEO kategórii výpredaj"
+
+msgid "description of Full HD Electronics with LED technology and USB seo category"
+msgstr "popis Full HD Elektroniky s LED technológiou a USB v SEO kategórii"
+
+msgid "description of New computers with USB seo category"
+msgstr "popis Nové počítače s USB v SEO kategórii"
+
+msgid "description of TV, audio from the cheapest seo category"
+msgstr "popis TV, audio z najlacnejších v SEO kategórii"
+
+msgid "description of TV, audio in sale seo category"
+msgstr "popis TV, audio v SEO kategórii výpredaj"
+
+msgid "description of TV, audio plasma with HDMI seo category"
+msgstr "popis TV, audio plazma s HDMI v SEO kategórii"
+
+msgid "fits into VP812x VP9520"
+msgstr "hodí sa do VP812x VP9520"
+
+msgid "flash disk"
+msgstr "flash disk"
+
+msgid "g"
+msgstr "g"
+
+msgid "hardcover"
+msgstr "tvrdá väzba"
+
+msgid "in"
+msgstr "in"
+
+msgid "inkjet"
+msgstr "atrámentový"
+
+msgid "kW"
+msgstr "kW"
+
+msgid "kWh"
+msgstr "kWh"
+
+msgid "kg"
+msgstr "kg"
+
+msgid "l"
+msgstr "l"
+
+msgid "m"
+msgstr "m"
+
+msgid "media 210MB, 24min., writing speed 24x, slim box"
+msgstr "médium 210MB, 24min., rýchlosť zápisu 24x, tenké balenie"
+
+msgid "meta description of 2 litre coffeemakers in sale seo category"
+msgstr "meta popis 2 litrových kávovarov v akci seo kategória"
+
+msgid "meta description of Electronics from most expensive seo category"
+msgstr "meta popis elektroniky od najdrahších seo kategória"
+
+msgid "meta description of Electronics in black seo category"
+msgstr "meta popis elektroniky v čiernom seo kategória"
+
+msgid "meta description of Electronics in red seo category"
+msgstr "meta popis elektroniky v červenom seo kategória"
+
+msgid "meta description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "meta popis Elektroniky s LED technológiou a veľkosťou 30 palcov v SEO kategórii výpredaj"
+
+msgid "meta description of Full HD Electronics with LED technology and USB seo category"
+msgstr "meta popis Full HD Elektroniky s LED technológiou a USB v SEO kategórii"
+
+msgid "meta description of New computers with USB seo category"
+msgstr "meta popis Nové počítače s USB v SEO kategórii"
+
+msgid "meta description of TV, audio from the cheapest seo category"
+msgstr "meta popis TV, audio od najlacnejších seo kategória"
+
+msgid "meta description of TV, audio in sale seo category"
+msgstr "meta popis TV, audio v akci seo kategória"
+
+msgid "meta description of TV, audio plasma with HDMI seo category"
+msgstr "meta popis TV, audio plazma s HDMI v SEO kategórii"
+
+msgid "metal"
+msgstr "kov"
+
+msgid "ml"
+msgstr "ml"
+
+msgid "m³"
+msgstr "m³"
+
+msgid "one-slotted"
+msgstr "jednodrážkový"
+
+msgid "optical"
+msgstr "optický"
+
+msgid "paper"
+msgstr "papier"
+
+msgid "pcs"
+msgstr "ks"
+
+msgid "plasma"
+msgstr "plazma"
+
+msgid "plastic"
+msgstr "plast"
+
+msgid "red"
+msgstr "červená"
+
+msgid "short description of 2 litre coffeemakers in sale seo category"
+msgstr "krátky popis 2 litrových kávovarov v akci seo kategória"
+
+msgid "short description of Electronics from most expensive seo category"
+msgstr "krátky popis elektroniky od najdrahších seo kategória"
+
+msgid "short description of Electronics in black seo category"
+msgstr "krátky popis elektroniky v čiernom seo kategória"
+
+msgid "short description of Electronics in red seo category"
+msgstr "krátky popis elektroniky v červenom seo kategória"
+
+msgid "short description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "krátky popis Elektroniky s LED technológiou a veľkosťou 30 palcov v SEO kategórii výpredaj"
+
+msgid "short description of Electronics without HDMI in sale seo category"
+msgstr "krátky popis Elektroniky bez HDMI v SEO kategórii výpredaj"
+
+msgid "short description of Full HD Electronics with LED technology and USB seo category"
+msgstr "krátky popis Full HD Elektroniky s LED technológiou a USB v SEO kategórii"
+
+msgid "short description of New computers with USB seo category"
+msgstr "krátky popis Nové počítače s USB v SEO kategórii"
+
+msgid "short description of TV, audio from the cheapest seo category"
+msgstr "krátky popis TV, audio od najlacnejších seo kategória"
+
+msgid "short description of TV, audio in sale seo category"
+msgstr "krátky popis TV, audio v akci seo kategória"
+
+msgid "short description of TV, audio plasma with HDMI seo category"
+msgstr "krátky popis TV, audio plasma s HDMI seo kategória"
+
+msgid "t"
+msgstr "t"
+
+msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
+msgstr "Slovenská pošta sa pokúsi doručiť vašu zásielku včas, ale nepodarí sa jej to a napriek stálej prítomnosti vašej osoby doma vás nezastihne a budete si musieť vyzdvihnúť zásielku osobne na prepážke. Tu však musíte vydržať nekonečne dlhý rad a večne nevľúdnú pani poštárku."
+
+msgid "title"
+msgstr "názov"
+
+msgid "title - Blog article example %counter% %locale%"
+msgstr "názov - Príklad blogového článku %counter% %locale%"
+
+msgid "title - First subsection %locale%"
+msgstr "názov - Prvá podsekcia %locale%"
+
+msgid "title - Second subsection %locale%"
+msgstr "názov - Druhá podsekcia %locale%"
+
+msgid "title of 2 litre coffeemakers in sale seo category"
+msgstr "názov 2 litrových kávovarov v akci seo kategória"
+
+msgid "title of Electronics from most expensive seo category"
+msgstr "názov elektroniky od najdrahších seo kategória"
+
+msgid "title of Electronics in black seo category"
+msgstr "názov elektroniky v čiernom seo kategória"
+
+msgid "title of Electronics in red seo category"
+msgstr "názov Elektroniky v červenej seo kategórii"
+
+msgid "title of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "názov Elektroniky s LED technológiou a veľkosťou 30 palcov v SEO kategórii výpredaj"
+
+msgid "title of Full HD Electronics with LED technology and USB seo category"
+msgstr "názov Full HD Elektroniky s LED technológiou a USB v SEO kategórii"
+
+msgid "title of New computers with USB seo category"
+msgstr "názov Nové počítače s USB v SEO kategórii"
+
+msgid "title of TV, audio from the cheapest seo category"
+msgstr "názov TV, audio od najlacnejších seo kategória"
+
+msgid "title of TV, audio in sale seo category"
+msgstr "názov TV, audio v akciové seo kategórii"
+
+msgid "title of TV, audio plasma with HDMI seo category"
+msgstr "názov TV, audio plazma s HDMI v SEO kategórii"
+
+msgid "white"
+msgstr "biela"
+
+msgid "wood"
+msgstr "drevo"
+
+msgid "years"
+msgstr "roky"
+
+msgid "| Demo eshop"
+msgstr "| Demo eshop"
+

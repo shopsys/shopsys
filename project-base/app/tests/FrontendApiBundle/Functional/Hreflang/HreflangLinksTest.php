@@ -149,6 +149,7 @@ class HreflangLinksTest extends GraphQlTestCase
     ): void {
         $entity = $this->getReference($entityReference);
         $secondDomainId = 2;
+        $thirdDomainId = 3;
 
         if ($graphQlType === 'blogArticle') {
             $this->markTestSkipped('Cron module export changed has to be run before to obtain proper data. This test may be enabled after blog articles are exported via queue.');
@@ -171,6 +172,10 @@ class HreflangLinksTest extends GraphQlTestCase
                 [
                     'hreflang' => $this->domain->getDomainConfigById($secondDomainId)->getLocale(),
                     'href' => $this->getUrlByRouteNameAndEntityId($routeName, $secondDomainId, $entity),
+                ],
+                [
+                    'hreflang' => $this->domain->getDomainConfigById($thirdDomainId)->getLocale(),
+                    'href' => $this->getUrlByRouteNameAndEntityId($routeName, $thirdDomainId, $entity),
                 ],
             ],
         ];

@@ -1,0 +1,239 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\AdministrationBundle\Unit\Component\Domain;
+
+use PHPUnit\Framework\TestCase;
+use Shopsys\AdministrationBundle\Component\Domain\AdminDomainSubscriber;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
+
+class AdminDomainSubscriberTest extends TestCase
+{
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+     */
+    private function createFirstDomainConfig(): DomainConfig
+    {
+        return DomainConfigHelper::getDomainConfig();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+     */
+    private function createFirstDomainConfigWithPostfix(): DomainConfig
+    {
+        return DomainConfigHelper::getDomainConfig(
+            url: DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/en',
+            name: 'First Domain EN',
+            locale: 'en',
+            postfix: '/en',
+        );
+    }
+
+    public function testOnKernelRequestIgnoresNonAdminContext(): void
+    {
+        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $domain = $this->createMock(Domain::class);
+        $contextResolver = $this->createMock(ContextResolverInterface::class);
+
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+
+        $request = new Request();
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
+
+        $contextResolver
+            ->expects($this->once())
+            ->method('isCurrentContext')
+            ->with(AdminContext::class)
+            ->willReturn(false);
+
+        $domain
+            ->expects($this->never())
+            ->method('getDomainConfigById');
+
+        $subscriber->onKernelRequest($event);
+
+        $this->assertNull($event->getResponse());
+    }
+
+    /**
+     * @dataProvider adminRedirectDataProvider
+     * @param string $requestUri
+     * @param string $pathInfo
+     * @param string $expectedRedirectUrl
+     * @param string|null $queryString
+     */
+    public function testOnKernelRequestRedirectsToFirstDomain(
+        string $requestUri,
+        string $pathInfo,
+        string $expectedRedirectUrl,
+        ?string $queryString = null,
+    ): void {
+        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider
+            ->method('getAdminUrl')
+            ->willReturn('admin');
+
+        $domain = $this->createMock(Domain::class);
+        $domain
+            ->method('getDomainConfigById')
+            ->with(Domain::FIRST_DOMAIN_ID)
+            ->willReturn($this->createFirstDomainConfig());
+
+        $contextResolver = $this->createMock(ContextResolverInterface::class);
+        $contextResolver
+            ->method('isCurrentContext')
+            ->with(AdminContext::class)
+            ->willReturn(true);
+
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+
+        $request = $this->createMock(Request::class);
+        $request
+            ->method('getUri')
+            ->willReturn($requestUri);
+        $request
+            ->method('getPathInfo')
+            ->willReturn($pathInfo);
+        $request
+            ->method('getQueryString')
+            ->willReturn($queryString);
+
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
+
+        $subscriber->onKernelRequest($event);
+
+        $response = $event->getResponse();
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals($expectedRedirectUrl, $response->getTargetUrl());
+    }
+
+    /**
+     * @return array<string, array{requestUri: string, pathInfo: string, expectedRedirectUrl: string, queryString: string|null}>
+     */
+    public static function adminRedirectDataProvider(): array
+    {
+        return [
+            'basic admin path' => [
+                'requestUri' => 'http://other-domain.com/admin',
+                'pathInfo' => '/admin',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin',
+                'queryString' => null,
+            ],
+            'admin path with subpath' => [
+                'requestUri' => 'http://other-domain.com/admin/users',
+                'pathInfo' => '/admin/users',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users',
+                'queryString' => null,
+            ],
+            'admin path with query string' => [
+                'requestUri' => 'http://other-domain.com/admin/products?page=2',
+                'pathInfo' => '/admin/products',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/products?page=2',
+                'queryString' => 'page=2',
+            ],
+            'admin path with complex query' => [
+                'requestUri' => 'http://other-domain.com/admin/orders?status=new&sort=date',
+                'pathInfo' => '/admin/orders',
+                'expectedRedirectUrl' => DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/orders?status=new&sort=date',
+                'queryString' => 'status=new&sort=date',
+            ],
+        ];
+    }
+
+    public function testOnKernelRequestWithFirstDomainPostfixRedirectsToBaseUrl(): void
+    {
+        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider
+            ->method('getAdminUrl')
+            ->willReturn('admin');
+
+        $domain = $this->createMock(Domain::class);
+        $domain
+            ->method('getDomainConfigById')
+            ->with(Domain::FIRST_DOMAIN_ID)
+            ->willReturn($this->createFirstDomainConfigWithPostfix());
+
+        $contextResolver = $this->createMock(ContextResolverInterface::class);
+        $contextResolver
+            ->method('isCurrentContext')
+            ->with(AdminContext::class)
+            ->willReturn(true);
+
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+
+        $request = $this->createMock(Request::class);
+        $request
+            ->method('getUri')
+            ->willReturn('http://other-domain.com/admin/users');
+        $request
+            ->method('getPathInfo')
+            ->willReturn('/admin/users');
+        $request
+            ->method('getQueryString')
+            ->willReturn(null);
+
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
+
+        $subscriber->onKernelRequest($event);
+
+        $response = $event->getResponse();
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        // Should redirect to base URL without postfix - admin is always at base domain
+        $this->assertEquals(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users', $response->getTargetUrl());
+    }
+
+    public function testOnKernelRequestDoesNotRedirectWhenAlreadyOnCorrectUrl(): void
+    {
+        $adminUrlProvider = $this->createMock(AdminUrlProvider::class);
+        $adminUrlProvider
+            ->method('getAdminUrl')
+            ->willReturn('admin');
+
+        $domain = $this->createMock(Domain::class);
+        $domain
+            ->method('getDomainConfigById')
+            ->with(Domain::FIRST_DOMAIN_ID)
+            ->willReturn($this->createFirstDomainConfig());
+
+        $contextResolver = $this->createMock(ContextResolverInterface::class);
+        $contextResolver
+            ->method('isCurrentContext')
+            ->with(AdminContext::class)
+            ->willReturn(true);
+
+        $subscriber = new AdminDomainSubscriber($adminUrlProvider, $domain, $contextResolver);
+
+        $request = $this->createMock(Request::class);
+        $request
+            ->method('getUri')
+            ->willReturn(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL . '/admin/users');
+        $request
+            ->method('getPathInfo')
+            ->willReturn('/admin/users');
+        $request
+            ->method('getQueryString')
+            ->willReturn(null);
+
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
+
+        $subscriber->onKernelRequest($event);
+
+        // Should not set any response since request is already on correct URL
+        $this->assertNull($event->getResponse());
+    }
+}

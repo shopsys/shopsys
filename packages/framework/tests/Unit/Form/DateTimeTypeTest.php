@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Form;
 
 use DateTime;
-use DateTimeZone;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -16,6 +14,7 @@ use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeTypeTest extends TypeTestCase
 {
@@ -56,7 +55,7 @@ class DateTimeTypeTest extends TypeTestCase
     #[Override]
     protected function getExtensions(): array
     {
-        $displayTimeZone = 'Europe/Prague';
+        $displayTimeZone = DomainConfigHelper::DEFAULT_TIMEZONE_STRING;
         $displayTimeZoneProvider = new DisplayTimeZoneProvider($displayTimeZone, $this->getMockedDomain($displayTimeZone));
 
         $dateTimeType = new DateTimeType($displayTimeZoneProvider);
@@ -75,10 +74,15 @@ class DateTimeTypeTest extends TypeTestCase
         $settingMock = $this->getMockBuilder(Setting::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $dateTimeZone = new DateTimeZone($dateTimeZoneString);
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $domainConfig = DomainConfigHelper::getDomainConfig(
+            dateTimeZoneString: $dateTimeZoneString,
+        );
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
+        return new Domain(
+            [$domainConfig],
+            $settingMock,
+            $administratorFacadeMock,
+        );
     }
 }

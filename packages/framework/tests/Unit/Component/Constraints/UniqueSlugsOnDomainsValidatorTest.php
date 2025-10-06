@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Constraints;
 
-use DateTimeZone;
 use Override;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -15,8 +14,8 @@ use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 {
@@ -26,16 +25,30 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     #[Override]
     protected function createValidator()
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'name2', 'en', $defaultTimeZone),
+            DomainConfigHelper::getDomainConfig(
+                url: 'http://example.cz',
+                name: 'name1',
+                baseUrl: 'http://example.cz',
+            ),
+            DomainConfigHelper::getDomainConfig(
+                id: Domain::SECOND_DOMAIN_ID,
+                name: 'name2',
+                locale: 'en',
+            ),
         ];
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
 
-        $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
+        $routerMock = $this->getMockBuilder(DomainRouter::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $routerMock->method('match')->willReturnCallback(function ($path) {
             if ($path !== '/existing-url/') {
                 throw new ResourceNotFoundException();
@@ -53,7 +66,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryMock);
     }
 
-    public function testValidateSameSlugsOnDifferentDomains()
+    public function testValidateSameSlugsOnDifferentDomains(): void
     {
         $values = [
             [
@@ -71,7 +84,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testValidateDuplicateSlugsOnSameDomain()
+    public function testValidateDuplicateSlugsOnSameDomain(): void
     {
         $values = [
             [
@@ -93,7 +106,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidateExistingSlug()
+    public function testValidateExistingSlug(): void
     {
         $values = [
             [

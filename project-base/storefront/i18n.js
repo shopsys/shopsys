@@ -33,8 +33,8 @@ module.exports = {
     pages: {
         '*': ['common'],
     },
-    locales: ['en', 'cs'],
-    defaultLocale: 'en',
+    locales: ['default', 'en', 'cs', 'sk'],
+    defaultLocale: 'default',
     localeDetection: false,
     serializeConfig: false,
     defaultNS: 'common',

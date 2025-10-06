@@ -70,6 +70,31 @@ Set the url address for the domain in `config/domains_urls.yaml`.
 
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#21-enable-second-domain-optional)
 
+##### Domain URLs with Postfixes
+
+!!! note
+
+    You can configure domains with postfixes in the URL path.
+    This allows e.g. multiple locales to share the same base domain with different URL paths.
+
+**Configuration Structure:**
+
+- `url`: Full domain URL including postfix (e.g., `http://127.0.0.1:8000/sk`)
+- `baseUrl`: Automatically extracted base URL (e.g., `http://127.0.0.1:8000`)
+- `postfix`: Automatically extracted path segment (e.g., `/sk`)
+
+**Example configuration in `config/domains_urls.yaml`:**
+
+```yaml
+domains_urls:
+    - id: 1
+      url: http://127.0.0.1:8000
+    - id: 2
+      url: http://127.0.0.1:8000/cs
+    - id: 3
+      url: http://127.0.0.1:8000/sk
+```
+
 #### 2.3 Locale settings
 
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
@@ -175,7 +200,39 @@ php phing domains-db-functions-create
 Demo data of Shopsys Platform are prepared only for `en` and `cs` locales.
 If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
-#### 3.6 Locale in administration
+#### 3.6 Administration Domain Access Restrictions
+
+!!! note
+
+    **Administration is only accessible from the first domain (ID 1).** All admin requests from other domains are automatically redirected to the first domain.
+
+**Behavior with Domain Postfixes:**
+
+- Admin is always accessible from the base URL of the first domain (without postfix)
+- Even if the first domain has a postfix (e.g., `http://127.0.0.1:8000/en`), admin access is at `http://127.0.0.1:8000/admin` (base URL)
+- Access attempts from other domains are redirected to the first domain's base URL
+
+**Admin URL Configuration:**
+
+- Admin path is configurable via `%admin_url%` DI parameter (default: `admin`)
+- All admin URLs use this path: `http://first-domain/{admin_url}/...`
+- Example: If `%admin_url%` is set to `administration`, admin is at `http://127.0.0.1:8000/administration`
+- This setting affects both redirect behavior and admin route generation
+
+**Admin Routes Configuration:**
+
+- `AdministrationRouter` handles URL generation within admin context
+- Admin routes are defined in `config/routes-administration/shopsys_admin.yaml`
+- All admin routes use `prefix: /%admin_url%` to respect the configurable admin path
+- Routes include framework controllers, project controllers, and administration routes from other packages (e.g., frontend-api)
+
+!!! note
+
+    - **No "current domain config" exists within administration**
+    - Methods like `$this->domain->getId()` will throw `NoDomainSelectedException` in admin context
+    - Use domain-specific methods or explicitly specify domain ID in admin code, e.g. `$this->domain->getDomainConfigById(1)`
+
+#### 3.7 Locale in administration
 
 Administration uses the `en` locale by default for every newly created administrator.
 This means that all the static texts are in English. Furthermore, all data translations (e.g. the product names in the administration list) are presented in the `en` locale.
@@ -188,7 +245,7 @@ The first locale in the list is the default one.
 
 You can change administration translations by adding messages into your `translations/messages.xx.po`.
 
-#### 3.7 Sorting in different locales
+#### 3.8 Sorting in different locales
 
 Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).  
 Every domain needs to have `language` parameter for field `name.keyword` in `src/Resources/definition/product/*.json` set in order to sort correctly for given locale.
@@ -209,7 +266,7 @@ An example for domain that uses English language:
 }
 ```
 
-#### 3.8 Default application locale
+#### 3.9 Default application locale
 
 In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g., `Product::getName()` and you get the proper translation.
 However, sometimes, there is no request (i.e. in CLI commands) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.

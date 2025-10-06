@@ -93,7 +93,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const client = createClient({
                 t,
                 ssrExchange,
-                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                domainConfig,
                 redisClient,
                 context,
             });
@@ -130,6 +130,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagDetailResponse.data?.flag,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                     urlSlug,
                 );
 
@@ -142,6 +143,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagProductsResponse.data?.products,
                     context.res,
                     domainConfig.url,
+                    context.locale,
                     urlSlug,
                 );
 

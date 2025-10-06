@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Product;
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -31,8 +32,22 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        $inquiryProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '45');
+        $inquiryProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '45', Product::class);
 
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            if ($domainId === Domain::FIRST_DOMAIN_ID) {
+                $this->loadDataForFirstDomain($inquiryProduct);
+            } else {
+                $this->loadDataForOtherDomains($domainId, $inquiryProduct);
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $inquiryProduct
+     */
+    private function loadDataForFirstDomain(Product $inquiryProduct)
+    {
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Mark';
         $inquiryData->lastName = 'Spencer';
@@ -413,8 +428,15 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->product = $inquiryProduct;
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:04:51');
         $this->inquiryFacade->create($inquiryData);
+    }
 
-        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
+    /**
+     * @param int $domainId
+     * @param \App\Model\Product\Product $inquiryProduct
+     */
+    private function loadDataForOtherDomains(int $domainId, Product $inquiryProduct): void
+    {
+        $inquiryData = $this->inquiryDataFactory->create($domainId);
         $inquiryData->firstName = 'Lily';
         $inquiryData->lastName = 'Foster';
         $inquiryData->email = 'lily.foster@example.com';
@@ -427,7 +449,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:22:14');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
+        $inquiryData = $this->inquiryDataFactory->create($domainId);
         $inquiryData->firstName = 'Gabriel';
         $inquiryData->lastName = 'Griffin';
         $inquiryData->email = 'gabriel.griffin@example.com';
@@ -441,7 +463,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:15:41');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
+        $inquiryData = $this->inquiryDataFactory->create($domainId);
         $inquiryData->firstName = 'Sophia';
         $inquiryData->lastName = 'Evans';
         $inquiryData->email = 'sophia.evans@example.com';
@@ -454,7 +476,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:18:11');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
+        $inquiryData = $this->inquiryDataFactory->create($domainId);
         $inquiryData->firstName = 'Ethan';
         $inquiryData->lastName = 'Bailey';
         $inquiryData->email = 'ethan.bailey@example.com';
@@ -467,7 +489,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 17:42:37');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
+        $inquiryData = $this->inquiryDataFactory->create($domainId);
         $inquiryData->firstName = 'Madison';
         $inquiryData->lastName = 'Perry';
         $inquiryData->email = 'madison.perry@example.com';

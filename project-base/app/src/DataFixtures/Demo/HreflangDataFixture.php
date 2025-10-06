@@ -25,13 +25,12 @@ class HreflangDataFixture extends AbstractReferenceFixture
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        if (
-            !$this->domainsForDataFixtureProvider->isDomainIdAllowed(1) ||
-            !$this->domainsForDataFixtureProvider->isDomainIdAllowed(2)
-        ) {
-            return;
+        $allowedDomainIds = $this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds();
+
+        if (count($allowedDomainIds) < 2) {
+            return; // hreflang is not applicable for a single domain
         }
 
-        $this->seoSettingFacade->setAllAlternativeDomains([[1, 2]]);
+        $this->seoSettingFacade->setAllAlternativeDomains([$allowedDomainIds]);
     }
 }

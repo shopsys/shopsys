@@ -5,8 +5,12 @@ const GtmHeadScript = dynamic(() => import('gtm/GtmHeadScript').then((component)
     ssr: false,
 });
 
-export const DeferredGtmHeadScript: FC = () => {
+export type DeferredGtmHeadScriptProps = {
+    gtmId: string | undefined;
+};
+
+export const DeferredGtmHeadScript: FC<DeferredGtmHeadScriptProps> = ({ gtmId }) => {
     const shouldRender = useDeferredRender('gtm_head_script');
 
-    return shouldRender ? <GtmHeadScript /> : null;
+    return shouldRender ? <GtmHeadScript gtmId={gtmId} /> : null;
 };

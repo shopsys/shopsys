@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
-use DateTimeZone;
 use phpmock\MockBuilder;
 use phpmock\phpunit\PHPMock;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator;
@@ -22,17 +20,17 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class DomainDataCreatorTest extends TestCase
 {
     use PHPMock;
 
-    public function testCreateNewDomainsDataNoNewDomain()
+    public function testCreateNewDomainsDataNoNewDomain(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
+            DomainConfigHelper::getDomainConfig(),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -42,7 +40,12 @@ class DomainDataCreatorTest extends TestCase
             ->with($this->equalTo(Setting::DOMAIN_DATA_CREATED), $this->equalTo(1))
             ->willReturn(true);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+        );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
         $multidomainEntityDataCreatorMock = $this->createMock(MultidomainEntityDataCreator::class);
@@ -68,10 +71,8 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(0, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataOneNewDomain()
+    public function testCreateNewDomainsDataOneNewDomain(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
         $builder = new MockBuilder();
         $builder->setNamespace('\\Shopsys\\FrameworkBundle\\Component\\Domain')->setName('t')->setFunction(
             function () {
@@ -81,8 +82,10 @@ class DomainDataCreatorTest extends TestCase
         $tFunctionMock = $builder->build();
 
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
+            DomainConfigHelper::getDomainConfig(),
+            DomainConfigHelper::getDomainConfig(
+                id: Domain::SECOND_DOMAIN_ID,
+            ),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -98,7 +101,12 @@ class DomainDataCreatorTest extends TestCase
                 throw new SettingValueNotFoundException();
             });
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+        );
 
         $settingValueRepositoryMock = $this->createMock(SettingValueRepository::class);
         $settingValueRepositoryMock
@@ -153,22 +161,12 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(1, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataNewLocale()
+    public function testCreateNewDomainsDataNewLocale(): void
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfigWithDataCreated = new DomainConfig(
-            Domain::FIRST_DOMAIN_ID,
-            'http://example.com:8080',
-            'example',
-            'cs',
-            $defaultTimeZone,
-        );
-        $domainConfigWithNewLocale = new DomainConfig(
-            Domain::SECOND_DOMAIN_ID,
-            'http://example.com:8080',
-            'example',
-            'en',
-            $defaultTimeZone,
+        $domainConfigWithDataCreated = DomainConfigHelper::getDomainConfig();
+        $domainConfigWithNewLocale = DomainConfigHelper::getDomainConfig(
+            id: Domain::SECOND_DOMAIN_ID,
+            locale: 'en',
         );
         $domainConfigs = [
             $domainConfigWithDataCreated,

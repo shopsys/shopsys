@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Form\Admin\Country;
 
-use DateTimeZone;
 use Override;
 use ReflectionClass;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Country\CountryFormType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -24,6 +22,7 @@ use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validation;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 class CountryFormTypeTest extends TypeTestCase
@@ -133,11 +132,12 @@ class CountryFormTypeTest extends TypeTestCase
 
         $this->domain = $this->createMock(Domain::class);
 
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en', $defaultTimeZone),
+            DomainConfigHelper::getDomainConfig(),
+            DomainConfigHelper::getDomainConfig(
+                id: Domain::SECOND_DOMAIN_ID,
+                locale: 'en',
+            ),
         ];
 
         $this->domain->method('getAll')->willReturn($domainConfigs);
@@ -163,7 +163,7 @@ class CountryFormTypeTest extends TypeTestCase
         $this->countryFacade->method('getAll')->willReturn([$country]);
 
         $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
-        $this->urlGenerator->method('generate')->willReturn('https://example.com');
+        $this->urlGenerator->method('generate')->willReturn(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL);
 
         parent::setUp();
     }

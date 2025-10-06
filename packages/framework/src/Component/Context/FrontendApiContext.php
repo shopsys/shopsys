@@ -11,9 +11,11 @@ final class FrontendApiContext extends AbstractContext
 {
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Shopsys\FrameworkBundle\Component\Context\ResolveContextHelper $resolveContextHelper
      */
     public function __construct(
         private readonly RequestStack $requestStack,
+        private readonly ResolveContextHelper $resolveContextHelper,
     ) {
     }
 
@@ -38,6 +40,6 @@ final class FrontendApiContext extends AbstractContext
             return false;
         }
 
-        return in_array($request->attributes->get('_route'), ['overblog_graphql_endpoint', 'overblog_graphql_batch_endpoint'], true);
+        return $this->resolveContextHelper->requestPathMatchesPattern('graphql', $request->getPathInfo());
     }
 }

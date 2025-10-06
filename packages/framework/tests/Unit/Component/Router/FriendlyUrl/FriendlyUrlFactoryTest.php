@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router\FriendlyUrl;
 
-use DateTimeZone;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -16,10 +14,11 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class FriendlyUrlFactoryTest extends TestCase
 {
-    public function testCreateForAllDomains()
+    public function testCreateForAllDomains(): void
     {
         $routeName = 'route_name';
         $entityId = 7;
@@ -47,7 +46,7 @@ class FriendlyUrlFactoryTest extends TestCase
         }
     }
 
-    public function testCreateForAllDomainsFailsForSingleDomainRoute()
+    public function testCreateForAllDomainsFailsForSingleDomainRoute(): void
     {
         $routeName = 'route_name';
         $entityId = 7;
@@ -69,14 +68,22 @@ class FriendlyUrlFactoryTest extends TestCase
      */
     private function getFriendlyUrlFactory(): FriendlyUrlFactory|MockObject
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs', $defaultTimeZone),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example.com', 'en', $defaultTimeZone),
+            DomainConfigHelper::getDomainConfig(),
+            DomainConfigHelper::getDomainConfig(
+                id: Domain::SECOND_DOMAIN_ID,
+                locale: 'en',
+            ),
         ];
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
-        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
+
+        $domain = new Domain(
+            $domainConfigs,
+            $settingMock,
+            $administratorFacadeMock,
+        );
+
         $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlFactory = $this->getMockBuilder(FriendlyUrlFactory::class)

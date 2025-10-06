@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     TypeLoginMutationVariables,
     TypeLoginMutation,
@@ -18,6 +19,7 @@ export const useLogin = () => {
     const [, loginMutation] = useLoginMutation();
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const handleActionsAfterLogin = useHandleActionsAfterLogin();
+    const domainConfig = useDomainConfig();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
         const loginResult = await loginMutation({
@@ -29,7 +31,7 @@ export const useLogin = () => {
             const accessToken = loginResult.data.Login.tokens.accessToken;
             const refreshToken = loginResult.data.Login.tokens.refreshToken;
 
-            setTokensToCookies(accessToken, refreshToken);
+            setTokensToCookies(accessToken, refreshToken, domainConfig);
 
             handleActionsAfterLogin(loginResult.data.Login.showCartMergeInfo, rewriteUrl);
         }
@@ -46,6 +48,7 @@ export const useHandleActionsAfterLogin = () => {
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const router = useRouter();
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
+    const domainConfig = useDomainConfig();
 
     const handleActionsAfterLogin = (showCartMergeInfo: boolean, rewriteUrl: string | undefined) => {
         updateCartUuid(null);
@@ -54,7 +57,7 @@ export const useHandleActionsAfterLogin = () => {
         updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
         updateUserEntryState('login');
 
-        dispatchBroadcastChannel('reloadPage');
+        dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
         if (rewriteUrl) {
             router.replace(rewriteUrl).then(() => router.reload());
         } else {

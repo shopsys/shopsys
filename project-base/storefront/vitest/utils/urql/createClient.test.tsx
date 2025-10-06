@@ -13,7 +13,7 @@ vi.mock('urql/fetcher', () => ({
 
 vi.mock('next/config', () => ({
     default: () => ({
-        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/graphql/' },
+        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/' },
         publicRuntimeConfig: {
             errorDebuggingLevel: 'no-debug',
             domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
@@ -39,7 +39,17 @@ describe('createClient test', () => {
     afterEach(cleanup);
 
     test('created client (and URQL) do not filter out Redis cache directive on the client (in component)', async () => {
-        const publicGraphqlEndpoint = 'https://test.ts/graphql/';
+        const mockDomainConfig = {
+            publicGraphqlEndpoint: 'https://test.ts/graphql/',
+            defaultLocale: 'en',
+            url: 'https://test.ts',
+            currencyCode: 'USD',
+            fallbackTimezone: 'UTC',
+            domainId: 1,
+            mapSetting: { latitude: 0, longitude: 0, zoom: 10 },
+            isLuigisBoxActive: false,
+            type: 'b2c' as any,
+        };
 
         const UrqlWrapper: FC = ({ children }) => {
             return (
@@ -47,7 +57,7 @@ describe('createClient test', () => {
                     value={createClient({
                         t: () => 'foo' as any,
                         ssrExchange: ssrExchange(),
-                        publicGraphqlEndpoint,
+                        domainConfig: mockDomainConfig,
                         redisClient: mockRedisClient,
                     })}
                 >
@@ -72,7 +82,7 @@ describe('createClient test', () => {
 
         await waitFor(() => {
             expect(mockRequestWithFetcher).toBeCalledWith(
-                expect.stringContaining(publicGraphqlEndpoint + OPERATION_NAME),
+                expect.stringContaining(mockDomainConfig.publicGraphqlEndpoint + OPERATION_NAME),
                 expect.objectContaining({
                     method: 'GET',
                     headers: expect.objectContaining({
@@ -85,19 +95,29 @@ describe('createClient test', () => {
     });
 
     test('created client (and URQL) do not filter out Redis cache directive on the server', async () => {
-        const publicGraphqlEndpoint = 'https://test.ts/graphql/';
+        const mockDomainConfig = {
+            publicGraphqlEndpoint: 'https://test.ts/graphql/',
+            defaultLocale: 'en',
+            url: 'https://test.ts',
+            currencyCode: 'USD',
+            fallbackTimezone: 'UTC',
+            domainId: 1,
+            mapSetting: { latitude: 0, longitude: 0, zoom: 10 },
+            isLuigisBoxActive: false,
+            type: 'b2c' as any,
+        };
 
         const client = createClient({
             t: () => 'foo' as any,
             ssrExchange: ssrExchange(),
-            publicGraphqlEndpoint,
+            domainConfig: mockDomainConfig,
             redisClient: mockRedisClient,
         });
 
         await client.query(QUERY_OBJECT, undefined).toPromise();
 
         expect(mockRequestWithFetcher).toBeCalledWith(
-            expect.stringContaining(publicGraphqlEndpoint + OPERATION_NAME),
+            expect.stringContaining(mockDomainConfig.publicGraphqlEndpoint + OPERATION_NAME),
             expect.objectContaining({
                 method: 'GET',
                 headers: expect.objectContaining({

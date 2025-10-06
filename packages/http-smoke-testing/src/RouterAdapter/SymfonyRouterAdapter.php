@@ -13,6 +13,7 @@ use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RouteInfo;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -97,6 +98,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     #[Override]
     public function generateUri(RequestDataSet $requestDataSet): ?string
     {
-        return $this->router->generate($requestDataSet->getRouteName(), $requestDataSet->getParameters());
+        return $this->router->generate($requestDataSet->getRouteName(), $requestDataSet->getParameters(), UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

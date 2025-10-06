@@ -44,13 +44,17 @@ class ImageSitemapFacade
     public function generateForAllDomains(): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
+            if ($this->domain->isMainDomainWithinSameBaseUrlGroup($domainConfig) === false) {
+                continue;
+            }
+
             $this->entityManager->clear();  // For load all translations correctly, we must run clear.
             $section = (string)$domainConfig->getId();
 
             $domainSitemapDumper = $this->imageSitemapDumperFactory->createForImagesForDomain($domainConfig->getId());
             $domainSitemapDumper->dump(
                 $this->sitemapsDir,
-                $domainConfig->getUrl() . $this->sitemapsUrlPrefix . '/',
+                $domainConfig->getBaseUrl() . $this->sitemapsUrlPrefix . '/',
                 $section,
             );
         }
@@ -92,5 +96,20 @@ class ImageSitemapFacade
         } while ($productsCount > 0);
 
         return $imageSitemapItems;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return string
+     */
+    public function getProductsSectionName(DomainConfig $domainConfig): string
+    {
+        $sectionName = 'products';
+
+        if ($domainConfig->getPostfix() !== null) {
+            $sectionName .= '_' . trim($domainConfig->getPostfix(), '/');
+        }
+
+        return $sectionName;
     }
 }

@@ -6,7 +6,7 @@ import { PERSIST_STORE_NAME, products, user } from 'fixtures/demodata';
 Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?: number) => {
     const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
 
-    return cy.getCookie('accessToken').then((cookie) => {
+    return cy.getCookie('accessToken-1').then((cookie) => {
         const accessToken = cookie?.value;
         let cartUuid: string | null = null;
 
@@ -47,7 +47,7 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
 Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
     const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
 
-    return cy.getCookie('accessToken').then((cookie) => {
+    return cy.getCookie('accessToken-1').then((cookie) => {
         const accessToken = cookie?.value;
         let cartUuid: string | null = null;
 
@@ -100,7 +100,7 @@ Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickup
         );
     }
 
-    return cy.getCookie('accessToken').then((cookie) => {
+    return cy.getCookie('accessToken-1').then((cookie) => {
         const accessToken = cookie?.value;
         let cartUuid: string | null = null;
 
@@ -155,7 +155,7 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
         );
     }
 
-    return cy.getCookie('accessToken').then((cookie) => {
+    return cy.getCookie('accessToken-1').then((cookie) => {
         const accessToken = cookie?.value;
         let cartUuid: string | null = null;
 
@@ -225,8 +225,8 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
             if (shouldLogin) {
                 expect(registrationResponse.tokens.accessToken).to.be.a('string').and.not.be.empty;
                 expect(registrationResponse.tokens.refreshToken).to.be.a('string').and.not.be.empty;
-                cy.setCookie('accessToken', registrationResponse.tokens.accessToken, { path: '/' });
-                cy.setCookie('refreshToken', registrationResponse.tokens.refreshToken, {
+                cy.setCookie('accessToken-1', registrationResponse.tokens.accessToken, { path: '/' });
+                cy.setCookie('refreshToken-1', registrationResponse.tokens.refreshToken, {
                     expiry: Math.floor(Date.now() / 1000) + 3600 * 24 * 14,
                     path: '/',
                 });
@@ -275,10 +275,10 @@ Cypress.Commands.add('login', (email = user.email, password = user.password) => 
 
                 cy.log('Customer login - ' + user.email);
                 if (accessToken) {
-                    cy.setCookie('accessToken', accessToken, { log: false });
+                    cy.setCookie('accessToken-1', accessToken, { log: false });
                 }
                 if (refreshToken) {
-                    cy.setCookie('refreshToken', refreshToken, { log: false });
+                    cy.setCookie('refreshToken-1', refreshToken, { log: false });
                 }
             });
 
@@ -286,8 +286,8 @@ Cypress.Commands.add('login', (email = user.email, password = user.password) => 
     }
 
     cy.log('Customer login - ' + user.email);
-    cy.setCookie('accessToken', accessToken, { log: false });
-    cy.setCookie('refreshToken', refreshToken, { log: false });
+    cy.setCookie('accessToken-1', accessToken, { log: false });
+    cy.setCookie('refreshToken-1', refreshToken, { log: false });
 });
 
 Cypress.Commands.add('logout', () => {
@@ -298,7 +298,7 @@ Cypress.Commands.add('logout', () => {
         );
     }
 
-    return cy.getCookie('accessToken').then((cookie) => {
+    return cy.getCookie('accessToken-1').then((cookie) => {
         const accessToken = cookie?.value;
 
         return cy
@@ -319,8 +319,8 @@ Cypress.Commands.add('logout', () => {
             })
             .then((logoutResponse) => {
                 expect(logoutResponse.body.data.Logout).to.be.true;
-                cy.clearCookie('accessToken');
-                cy.clearCookie('refreshToken');
+                cy.clearCookie('accessToken-1');
+                cy.clearCookie('refreshToken-1');
             });
     });
 });
@@ -333,7 +333,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
         );
     }
 
-    return cy.getCookie('accessToken').then((cookie) => {
+    return cy.getCookie('accessToken-1').then((cookie) => {
         const accessToken = cookie?.value;
         let cartUuid: string | null = null;
 

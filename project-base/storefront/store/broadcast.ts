@@ -8,17 +8,20 @@ export type Broadcast = <
 >(
     f: StateCreator<T, Mps, Mcs>,
     name: string,
+    domainId: number,
 ) => StateCreator<T, Mps, Mcs>;
 
-type BroadcastImpl = <T>(f: StateCreator<T, [], []>, name: string) => StateCreator<T, [], []>;
+type BroadcastImpl = <T>(f: StateCreator<T, [], []>, name: string, domainId: number) => StateCreator<T, [], []>;
 
-const broadcastImpl: BroadcastImpl = (f, name) => (set, get, store) => {
+const broadcastImpl: BroadcastImpl = (f, name, domainId) => (set, get, store) => {
     type Item = { [key: string]: unknown };
     if (!isClient || !('BroadcastChannel' in window)) {
         return f(set, get, store);
     }
 
-    const channel = new BroadcastChannel(name);
+    // Create domain-specific channel name
+    const channelName = `${name}-${domainId}`;
+    const channel = new BroadcastChannel(channelName);
 
     const onSet: typeof set = (...args) => {
         const previous = get() as Item;
@@ -39,7 +42,7 @@ const broadcastImpl: BroadcastImpl = (f, name) => (set, get, store) => {
     };
 
     channel.onmessage = (messageEvent) => {
-        if ((messageEvent.data as { sync: string }).sync === name) {
+        if ((messageEvent.data as { sync: string }).sync === channelName) {
             // Remove all functions and symbols from the store
             const state = Object.entries(get() as Item).reduce((obj, [key, val]) => {
                 let newObj = { ...obj };

@@ -11,6 +11,7 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { createClient } from 'urql/createClient';
+import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -36,7 +37,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const client = createClient({
                 t,
                 ssrExchange,
-                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                domainConfig,
                 redisClient,
                 context,
             });
@@ -65,7 +66,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 return {
                     redirect: {
                         statusCode: 302,
-                        destination: redirectUrl,
+                        destination: getBasePathWithLocale(redirectUrl, context.locale),
                     },
                 };
             }

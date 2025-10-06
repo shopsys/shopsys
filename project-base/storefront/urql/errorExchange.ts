@@ -6,6 +6,7 @@ import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isFlashMessageError, isNoLogError } from 'utils/errors/applicationErrors';
 import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
@@ -17,7 +18,7 @@ import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { pipe, tap } from 'wonka';
 
 export const getErrorExchange =
-    (t: Translate, context?: GetServerSidePropsContext | NextPageContext): Exchange =>
+    (t: Translate, domainConfig: DomainConfigType, context?: GetServerSidePropsContext | NextPageContext): Exchange =>
     ({ forward }) => {
         return (operations$) => {
             return pipe(
@@ -49,7 +50,7 @@ export const getErrorExchange =
 
                     const isAuthError = error.response?.status === 401;
                     if (isAuthError) {
-                        removeTokensFromCookies(context);
+                        removeTokensFromCookies(domainConfig, context);
 
                         return;
                     }

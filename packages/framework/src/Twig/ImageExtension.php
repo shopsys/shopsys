@@ -104,18 +104,17 @@ class ImageExtension extends AbstractExtension
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param array $attributes
-     * @param int|null $domainId
+     * @param int $domainId
      * @return string
      */
-    public function getImageHtml(object $imageOrEntity, array $attributes = [], ?int $domainId = null): string
-    {
+    public function getImageHtml(
+        object $imageOrEntity,
+        array $attributes = [],
+        int $domainId = Domain::FIRST_DOMAIN_ID,
+    ): string {
         $this->preventDefault($attributes);
 
-        if ($domainId !== null) {
-            $domainConfig = $this->domain->getDomainConfigById($domainId);
-        } else {
-            $domainConfig = $this->domain->getCurrentDomainConfig();
-        }
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
 
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
@@ -150,7 +149,7 @@ class ImageExtension extends AbstractExtension
      */
     protected function getEmptyImageUrl(DomainConfig $domainConfig): string
     {
-        return $domainConfig->getUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
+        return $domainConfig->getBaseUrl() . $this->frontDesignImageUrlPrefix . '/' . static::NOIMAGE_FILENAME;
     }
 
     /**

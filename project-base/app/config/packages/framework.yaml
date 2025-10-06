@@ -8,7 +8,7 @@ framework:
     csrf_protection: ~
     form:
         legacy_error_messages: false
-    fragments: ~
+    fragments: ~ # We rely on the default path configuration ("/_fragment"). If this is changed, it must be reflected in Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlMatcher::IGNORED_INTERNAL_ROUTE constant.
     http_method_override: true
     ide: '%env(SYMFONY_IDE_URL_FORMAT)%&/var/www/html/>%env(LOCAL_PATH_TO_PROJECT_ROOT)%/'
     profiler:

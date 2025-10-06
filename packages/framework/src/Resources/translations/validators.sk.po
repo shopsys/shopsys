@@ -1,0 +1,681 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr "\"Platné do\" musí byť väčšie ako \"Platné od\""
+
+msgid "Address {{ url }} already exists."
+msgstr "Adresa {{ url }} už existuje."
+
+msgid "Administrator with email \"{{ value }}\" is already registered"
+msgstr "Správca s e-mailom \"{{ value }}\" je už zaregistrovaný"
+
+msgid "Administrator with user name \"{{ value }}\" is already registered"
+msgstr "Správca s používateľským menom \"{{ value }}\" je už zaregistrovaný"
+
+msgid "Amount of money should be greater than or equal to zero."
+msgstr "Suma penáz musí byť väčšia alebo rovná nule."
+
+msgid "Amount of money should be greater to zero."
+msgstr "Suma penáz musí byť väčšia ako nula."
+
+msgid "At least two domains must be selected"
+msgstr "Musia byť vybrané aspoň dve domény"
+
+msgid "Bank account number can contain only letters, numbers, slashes and dashes"
+msgstr "Číslo bankového účtu môže obsahovať len písmená, čísla, lomítka a pomĺčky"
+
+msgid "Bank account number cannot be longer than {{ limit }} characters"
+msgstr "Číslo bankového účtu nemôže byť dlþhšie ako {{ limit }} znakov"
+
+msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
+msgstr "Fakturačné číslo spoločnosti {{ company_number }} už existuje pre doménu {{ domain_id }}."
+
+msgid "Catalog number cannot be longer than {{ limit }} characters"
+msgstr "Katalógové číslo nemôže byť dlþhšie ako {{ limit }} znakov"
+
+msgid "Choose image"
+msgstr "Vyberte obrázok"
+
+msgid "City name cannot be longer than {{ limit }} characters"
+msgstr "Názov mesta nemôže byť dlþhší ako {{ limit }} znakov"
+
+msgid "Company name cannot be longer than {{ limit }} characters"
+msgstr "Názov spoločnosti nemôže byť dlþhší ako {{ limit }} znakov"
+
+msgid "Country code cannot be longer than {{ limit }} characters"
+msgstr "Kód krajiny nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Country code with this code already exists"
+msgstr "Krajina s týmto kódom už existuje"
+
+msgid "Country name cannot be longer than {{ limit }} characters"
+msgstr "Názov krajiny nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}."
+msgstr "Krajina s kódom {{ country_code }} neexistuje. Dostupné kódy krajín sú {{ available_country_codes }}."
+
+msgid "Description background color must be a valid hexadecimal color code e.g. #fff or #ffffff"
+msgstr "Farba pozadia popisu musí byť platný hexadecimálny kód farby napr. #fff alebo #ffffff"
+
+msgid "EAN cannot be longer than {{ limit }} characters"
+msgstr "EAN nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Email cannot be longer than {{ limit }} characters"
+msgstr "E-mail nemôže byť dlþhší ako {{ limit }} znakov"
+
+msgid "Email subject cannot be longer than {{ limit }} characters"
+msgstr "Predmet e-mailu nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Email {{ email }} is already registered"
+msgstr "E-mail {{ email }} je už zaregistrovaný"
+
+msgid "Enter date in DD.MM.YYYY format"
+msgstr "Zadajte dátum vo formáte DD.MM.YYYY"
+
+msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
+msgstr "Zadaný RGB Hex má neplatný formát. Platné formáty sú #336699 alebo #ABC."
+
+msgid "External ID cannot be longer than {{ limit }} characters"
+msgstr "Externé ID nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "External bridge ID cannot be longer than {{ limit }} characters"
+msgstr "Externé bridge ID nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Field must contain {{ needle }}."
+msgstr "Pole musí obsahovať {{ needle }}."
+
+msgid "Fields must not be identical"
+msgstr "Polia nesmú byť identické"
+
+msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
+msgstr "Prípona súboru {{ value }} nie je medzi povolenými príponami. Povolené prípony sú {{ extensions }}."
+
+msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
+msgstr "Prípona súboru {{ value }} je príliš dlhá. Mala by mať {{ limit }} znakov alebo menej."
+
+msgid "File name cannot be longer than {{ limit }} characters"
+msgstr "Názov súboru nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "First name cannot be longer than {{ limit }} characters"
+msgstr "Meno nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "First name of contact person cannot be longer than {{ limit }} characters"
+msgstr "Meno kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Flag \"{{ flagName }}\" is selected multiple times."
+msgstr "Príznak \"{{ flagName }}\" je vybraný viackrát."
+
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgstr "Farba príznaku musí byť v platnom hexadecimálnom kóde napr. #3333ff"
+
+msgid "Flag name cannot be longer than {{ limit }} characters"
+msgstr "Názov príznaku nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Full name cannot be longer than {{ limit }} characters"
+msgstr "Celé meno nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Heading (H1) cannot be longer than {{ limit }} characters"
+msgstr "Nadpis (H1) nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Heureka API must be {{ limit }} characters"
+msgstr "Heureka API musí mať {{ limit }} znakov"
+
+msgid "Identification number cannot be longer than {{ limit }} characters"
+msgstr "Identifikačné číslo nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Image can be only in JPG or PNG format"
+msgstr "Obrázok môže byť len vo formáte JPG alebo PNG"
+
+msgid "Image can be only in JPG, GIF or PNG format"
+msgstr "Obrázok môže byť len vo formáte JPG, GIF alebo PNG"
+
+msgid "Image can be only in PNG format"
+msgstr "Obrázok môže byť len vo formáte PNG"
+
+msgid "Invalid header in the CSV file. Use following columns: {{ columns }}"
+msgstr "Neplatná hlavička v CSV súbore. Použite nasledujúce stĺpce: {{ columns }}"
+
+msgid "Invalid whitelist pattern."
+msgstr "Neplatný vzor whitelistu."
+
+msgid "Last name cannot be longer than {{ limit }} characters"
+msgstr "Priezvisko nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Last name of contact person cannot be longer than {{ limit }} characters"
+msgstr "Priezvisko kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Link must be valid URL address"
+msgstr "Odkaz musí byť platná URL adresa"
+
+msgid "Name cannot be longer than {{ limit }} characters"
+msgstr "Názov nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Opacity must be between {{ min }} and {{ max }}"
+msgstr "Priehľadnosť musí byť medzi {{ min }} a {{ max }}"
+
+msgid "Opening hours setting is not valid"
+msgstr "Nastavenie otváracích hodín nie je platné"
+
+msgid "Parameter group name cannot be longer than {{ limit }} characters"
+msgstr "Názov skupiny parametrov nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Parameter group with this name already exists for the locale \"%locale%\"."
+msgstr "Skupina parametrov s týmto názvom už existuje pre jazyk \"%locale%\"."
+
+msgid "Parameter name cannot be longer than {{ limit }} characters"
+msgstr "Názov parametra nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Parameter value cannot be longer than {{ limit }} characters"
+msgstr "Hodnota parametra nemôže byť dlhšia ako {{ limit }} znakov"
+
+msgid "Parameter value must be numeric"
+msgstr "Hodnota parametra musí byť číselná"
+
+msgid "Parameter value must be of type {{ type }}"
+msgstr "Hodnota parametra musí byť typu {{ type }}"
+
+msgid "Parameter with this name already exists for the locale \"%locale%\"."
+msgstr "Parameter s týmto názvom už existuje pre jazyk \"%locale%\"."
+
+msgid "Parameter {{ parameterName }} is used more than once"
+msgstr "Parameter {{ parameterName }} je použitý viackrát"
+
+msgid "Part number cannot be longer than {{ limit }} characters"
+msgstr "Číslo dielu nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Password cannot be local part of email."
+msgstr "Heslo nemôže byť miestnou časťou e-mailu."
+
+msgid "Password cannot be same as email"
+msgstr "Heslo nemôže byť rovnaké ako e-mail"
+
+msgid "Password cannot be same as part of email before at sign"
+msgstr "Heslo nemôže byť rovnaké ako časť e-mailu pred znakom @"
+
+msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
+msgstr "Heslo musí obsahovať veľké písmená, malé písmená, číslice a musí byť dlhšie ako 10 znakov."
+
+msgid "Passwords do not match"
+msgstr "Heslá sa nezhodujú"
+
+msgid "Please choose advertisement area"
+msgstr "Prosím, vyberte reklamný priestor"
+
+msgid "Please choose advertisement type"
+msgstr "Prosím, vyberte typ reklamy"
+
+msgid "Please choose article placement"
+msgstr "Prosím, vyberte umiestnenie článku"
+
+msgid "Please choose country"
+msgstr "Prosím, vyberte krajinu"
+
+msgid "Please choose default unit"
+msgstr "Prosím, vyberte predvolenú jednotku"
+
+msgid "Please choose flag"
+msgstr "Prosím, vyberte príznak"
+
+msgid "Please choose image"
+msgstr "Prosím, vyberte obrázok"
+
+msgid "Please choose parameter"
+msgstr "Prosím, vyberte parameter"
+
+msgid "Please choose type of limitation"
+msgstr "Prosím, vyberte typ obmedzenia"
+
+msgid "Please choose unit"
+msgstr "Prosím, vyberte jednotku"
+
+msgid "Please choose visibility"
+msgstr "Prosím, vyberte viditeľnosť"
+
+msgid "Please enter HTML code for advertisement area"
+msgstr "Prosím, zadajte HTML kód pre reklamný priestor"
+
+msgid "Please enter URL"
+msgstr "Prosím, zadajte URL"
+
+msgid "Please enter VAT in correct format."
+msgstr "Prosím, zadajte DPH v správnom formáte."
+
+msgid "Please enter VAT name"
+msgstr "Prosím, zadajte názov DPH"
+
+msgid "Please enter VAT rate"
+msgstr "Prosím, zadajte sadzbu DPH"
+
+msgid "Please enter a whole number."
+msgstr "Prosím, zadajte celé číslo."
+
+msgid "Please enter an ID"
+msgstr "Prosím, zadajte ID"
+
+msgid "Please enter article content"
+msgstr "Prosím, zadajte obsah článku"
+
+msgid "Please enter article name"
+msgstr "Prosím, zadajte názov článku"
+
+msgid "Please enter at least one discount limit"
+msgstr "Prosím, zadajte aspoň jeden limit zľavy"
+
+msgid "Please enter at least one price"
+msgstr "Prosím, zadajte aspoň jednu cenu"
+
+msgid "Please enter bank account number"
+msgstr "Prosím, zadajte číslo bankového účtu"
+
+msgid "Please enter city"
+msgstr "Prosím, zadajte mesto"
+
+msgid "Please enter code"
+msgstr "Prosím, zadajte kód"
+
+msgid "Please enter company name"
+msgstr "Prosím, zadajte názov spoločnosti"
+
+msgid "Please enter complaint status name in all languages"
+msgstr "Prosím, zadajte názov stavu reklamácie vo všetkých jazykoch"
+
+msgid "Please enter country code"
+msgstr "Prosím, zadajte kód krajiny"
+
+msgid "Please enter country name"
+msgstr "Prosím, zadajte názov krajiny"
+
+msgid "Please enter currency code"
+msgstr "Prosím, zadajte kód meny"
+
+msgid "Please enter currency exchange rate"
+msgstr "Prosím, zadajte výmenný kurz meny"
+
+msgid "Please enter currency minimum fraction digits"
+msgstr "Prosím, zadajte minimálny počet desatinných miest meny"
+
+msgid "Please enter date"
+msgstr "Prosím, zadajte dátum"
+
+msgid "Please enter date of creation"
+msgstr "Prosím, zadajte dátum vytvorenia"
+
+msgid "Please enter default VAT"
+msgstr "Prosím, zadajte predvolenú DPH"
+
+msgid "Please enter default currency"
+msgstr "Prosím, zadajte predvolenú menu"
+
+msgid "Please enter default pricing group"
+msgstr "Prosím, zadajte predvolenú cenovú skupinu"
+
+msgid "Please enter description"
+msgstr "Prosím, zadajte popis"
+
+msgid "Please enter description box background color"
+msgstr "Prosím, zadajte farbu pozadia poľa s popisom"
+
+msgid "Please enter description box opacity"
+msgstr "Prosím, zadajte priehľadnosť poľa s popisom"
+
+msgid "Please enter discount percentage"
+msgstr "Prosím, zadajte percentuálnu zľavu"
+
+msgid "Please enter email"
+msgstr "Prosím, zadajte e-mail"
+
+msgid "Please enter email address"
+msgstr "Prosím, zadajte e-mailovú adresu"
+
+msgid "Please enter email content"
+msgstr "Prosím, zadajte obsah e-mailu"
+
+msgid "Please enter entry price type"
+msgstr "Prosím, zadajte typ vstupnej ceny"
+
+msgid "Please enter first name"
+msgstr "Prosím, zadajte meno"
+
+msgid "Please enter first name of contact person"
+msgstr "Prosím, zadajte meno kontaktnej osoby"
+
+msgid "Please enter flag color"
+msgstr "Prosím, zadajte farbu príznaku"
+
+msgid "Please enter flag name in all languages"
+msgstr "Prosím, zadajte názov príznaku vo všetkých jazykoch"
+
+msgid "Please enter full name"
+msgstr "Prosím, zadajte celé meno"
+
+msgid "Please enter identification number"
+msgstr "Prosím, zadajte identifikačné číslo"
+
+msgid "Please enter last name"
+msgstr "Prosím, zadajte priezvisko"
+
+msgid "Please enter last name of contact person"
+msgstr "Prosím, zadajte priezvisko kontaktnej osoby"
+
+msgid "Please enter limit from"
+msgstr "Prosím, zadajte limit od"
+
+msgid "Please enter link"
+msgstr "Prosím, zadajte odkaz"
+
+msgid "Please enter link URL"
+msgstr "Prosím, zadajte URL odkazu"
+
+msgid "Please enter login"
+msgstr "Prosím, zadajte prihlásenie"
+
+msgid "Please enter name"
+msgstr "Prosím, zadajte názov"
+
+msgid "Please enter name of advertisement area"
+msgstr "Prosím, zadajte názov reklamného priestoru"
+
+msgid "Please enter navigation item name"
+msgstr "Prosím, zadajte názov položky navigácie"
+
+msgid "Please enter notification bar content"
+msgstr "Prosím, zadajte obsah notifikačnej lišty"
+
+msgid "Please enter number of rounding places for price without VAT"
+msgstr "Prosím, zadajte počet desatinných miest pre cenu bez DPH"
+
+msgid "Please enter number."
+msgstr "Prosím, zadajte číslo."
+
+msgid "Please enter order status name in all languages"
+msgstr "Prosím, zadajte názov stavu objednávky vo všetkých jazykoch"
+
+msgid "Please enter page URL"
+msgstr "Prosím, zadajte URL stránky"
+
+msgid "Please enter page name"
+msgstr "Prosím, zadajte názov stránky"
+
+msgid "Please enter parameter group name"
+msgstr "Prosím, zadajte názov skupiny parametrov"
+
+msgid "Please enter parameter name"
+msgstr "Prosím, zadajte názov parametra"
+
+msgid "Please enter parameter value"
+msgstr "Prosím, zadajte hodnotu parametra"
+
+msgid "Please enter password"
+msgstr "Prosím, zadajte heslo"
+
+msgid "Please enter postcode"
+msgstr "Prosím, zadajte PSČ"
+
+msgid "Please enter price"
+msgstr "Prosím, zadajte cenu"
+
+msgid "Please enter price in correct format (positive number with decimal separator)"
+msgstr "Prosím, zadajte cenu v správnom formáte (kladné číslo s desatinným oddeľovačom)"
+
+msgid "Please enter pricing group name"
+msgstr "Prosím, zadajte názov cenovej skupiny"
+
+msgid "Please enter product list name"
+msgstr "Prosím, zadajte názov zoznamu produktov"
+
+msgid "Please enter promo code"
+msgstr "Prosím, zadajte promo kód"
+
+msgid "Please enter quantity"
+msgstr "Prosím, zadajte množstvo"
+
+msgid "Please enter role name"
+msgstr "Prosím, zadajte názov roly"
+
+msgid "Please enter selling price type"
+msgstr "Prosím, zadajte typ predajnej ceny"
+
+msgid "Please enter street"
+msgstr "Prosím, zadajte ulicu"
+
+msgid "Please enter subject"
+msgstr "Prosím, zadajte predmet"
+
+msgid "Please enter telephone number"
+msgstr "Prosím, zadajte telefónne číslo"
+
+msgid "Please enter the filename"
+msgstr "Prosím, zadajte názov súboru"
+
+msgid "Please enter the number of delivery days."
+msgstr "Prosím, zadajte počet dní doručenia."
+
+msgid "Please enter the positive value."
+msgstr "Prosím, zadajte kladnú hodnotu."
+
+msgid "Please enter the quantity."
+msgstr "Prosím, zadajte množstvo."
+
+msgid "Please enter the whole number."
+msgstr "Prosím, zadajte celé číslo."
+
+msgid "Please enter time"
+msgstr "Prosím, zadajte čas"
+
+msgid "Please enter total price with VAT"
+msgstr "Prosím, zadajte celkovú cenu s DPH"
+
+msgid "Please enter total price without VAT"
+msgstr "Prosím, zadajte celkovú cenu bez DPH"
+
+msgid "Please enter unit name in all languages"
+msgstr "Prosím, zadajte názov jednotky vo všetkých jazykoch"
+
+msgid "Please enter unit price with VAT"
+msgstr "Prosím, zadajte jednotkovú cenu s DPH"
+
+msgid "Please enter unit price without VAT"
+msgstr "Prosím, zadajte jednotkovú cenu bez DPH"
+
+msgid "Please enter username"
+msgstr "Prosím, zadajte používateľské meno"
+
+msgid "Please enter valid 3-digit currency code according to ISO 4217 standard (uppercase)"
+msgstr "Prosím, zadajte platný 3-miestny kód meny podľa štandardu ISO 4217 (veľké písmená)"
+
+msgid "Please enter valid email"
+msgstr "Prosím, zadajte platný e-mail"
+
+msgid "Please enter valid from date"
+msgstr "Prosím, zadajte dátum platnosti od"
+
+msgid "Please enter valid to date"
+msgstr "Prosím, zadajte dátum platnosti do"
+
+msgid "Please enter video ID"
+msgstr "Prosím, zadajte ID videa"
+
+msgid "Please enter warehouse name"
+msgstr "Prosím, zadajte názov skladu"
+
+msgid "Please enter whitelist pattern."
+msgstr "Prosím, zadajte vzor whitelistu."
+
+msgid "Please enter zip code"
+msgstr "Prosím, zadajte PSČ"
+
+msgid "Please upload a CSV file"
+msgstr "Prosím, nahrajte CSV súbor"
+
+msgid "Please upload a file."
+msgstr "Prosím, nahrajte súbor."
+
+msgid "Please use each limit only once"
+msgstr "Prosím, použite každý limit len raz"
+
+msgid "Previously selected main URL dos not exist any more"
+msgstr "Predtým vybraná hlavná URL už neexistuje"
+
+msgid "Price must be greater or equal to zero"
+msgstr "Cena musí byť väčšia alebo rovná nule"
+
+msgid "Price must be greater to zero"
+msgstr "Cena musí byť väčšia ako nula"
+
+msgid "Product list name cannot be longer than {{ limit }} characters"
+msgstr "Názov zoznamu produktov nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Product name cannot be longer than {{ limit }} characters"
+msgstr "Názov produktu nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Product parameters are duplicate."
+msgstr "Parametre produktu sú duplicitné."
+
+msgid "Product prefix name cannot be longer than {{ limit }} characters"
+msgstr "Predpona názvu produktu nemôže byť dlhšia ako {{ limit }} znakov"
+
+msgid "Product suffix name cannot be longer than {{ limit }} characters"
+msgstr "Prípona názvu produktu nemôže byť dlhšia ako {{ limit }} znakov"
+
+msgid "Product with catnum {{ catnum }} not found"
+msgstr "Produkt s katalógovým číslom {{ catnum }} nebol nájdený"
+
+msgid "Product with entered catalog number already exists"
+msgstr "Produkt so zadaným katalógovým číslom už existuje"
+
+msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
+msgstr "Promo kód \"%invalidPromoCode%\" nie je dostupný pre cenovú skupinu s ID \"%pricingGroupId%\"."
+
+msgid "Promo code \"%promoCode%\" is already applied."
+msgstr "Promo kód \"%promoCode%\" je už použitý."
+
+msgid "Promo code \"%promoCode%\" is available for registered customer user only."
+msgstr "Promo kód \"%promoCode%\" je dostupný len pre registrovaných zákazníkov."
+
+msgid "Promo code \"%promoCode%\" is no longer valid."
+msgstr "Promo kód \"%promoCode%\" už nie je platný."
+
+msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
+msgstr "Promo kód \"%promoCode%\" nie je použiteľný s aktuálnou celkovou cenou košíka."
+
+msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
+msgstr "Promo kód \"%promoCode%\" nie je platný pre žiadny produkt v košíku."
+
+msgid "Promo code \"%promoCode%\" is not yet valid."
+msgstr "Promo kód \"%promoCode%\" ešte nie je platný."
+
+msgid "Quantity must be an integer"
+msgstr "Množstvo musí byť celé číslo"
+
+msgid "Quantity must be greater than {{ compared_value }}"
+msgstr "Množstvo musí byť väčšie ako {{ compared_value }}"
+
+msgid "Quantity of \"%itemName%\" item must not be greater than the ordered quantity (%orderedQuantity%)"
+msgstr "Množstvo položky \"%itemName%\" nesmie byť väčšie ako objednané množstvo (%orderedQuantity%)"
+
+msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
+msgstr "Cieľ presmerovania musí byť relatívna cesta (s lomítkom na začiatku) alebo absolútna cesta začínajúca protokolom (http:// alebo https://)"
+
+msgid "Same description is used on another domain"
+msgstr "Rovnaký popis je použitý na inej doméne"
+
+msgid "Same title complement is used on another domain"
+msgstr "Rovnaký doplnok titulku je použitý na inej doméne"
+
+msgid "Same title is used on another domain"
+msgstr "Rovnaký titulok je použitý na inej doméne"
+
+msgid "Seo page with slug {{ pageSlug }} already exists"
+msgstr "SEO stránka so slugom {{ pageSlug }} už existuje"
+
+msgid "Slug can contain only letters, numbers, hyphens, underscores and slashes"
+msgstr "Slug môže obsahovať len písmená, čísla, pomlčky, podčiarkovníky a lomítka"
+
+msgid "Status name cannot be longer than {{ limit }} characters"
+msgstr "Názov stavu nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Store with this external ID already exists"
+msgstr "Obchod s týmto externým ID už existuje"
+
+msgid "Street name cannot be longer than {{ limit }} characters"
+msgstr "Názov ulice nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Tax number cannot be longer than {{ limit }} characters"
+msgstr "Daňové číslo nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Telephone number cannot be longer than {{ limit }} characters"
+msgstr "Telefónne číslo nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "The \"{{ value }}\" value of \"{{ fieldName }}\" field must be unique"
+msgstr "Hodnota \"{{ value }}\" poľa \"{{ fieldName }}\" musí byť jedinečná"
+
+msgid "The amount of money should be {{ limit }} or less."
+msgstr "Suma peňazí by mala byť {{ limit }} alebo menej."
+
+msgid "The amount of money should be {{ limit }} or more."
+msgstr "Suma peňazí by mala byť {{ limit }} alebo viac."
+
+msgid "The email is already registered on given domain."
+msgstr "E-mail je už zaregistrovaný na danej doméne."
+
+msgid "This field must be empty"
+msgstr "Toto pole musí byť prázdne"
+
+msgid "This value is not a valid email address."
+msgstr "Táto hodnota nie je platná e-mailová adresa."
+
+msgid "Unit name cannot be longer than {{ limit }} characters"
+msgstr "Názov jednotky nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
+msgstr "Nahraný súbor je príliš veľký ({{ size }} {{ suffix }}). Maximálna veľkosť súboru je {{ limit }} {{ suffix }}."
+
+msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
+msgstr "Nahraný obrázok je príliš veľký ({{ size }} {{ suffix }}). Maximálna veľkosť obrázka je {{ limit }} {{ suffix }}."
+
+msgid "Username cannot be longer than {{ limit }} characters"
+msgstr "Používateľské meno nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "VAT name cannot be longer than {{ limit }} characters"
+msgstr "Názov DPH nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Value must not be neither of following: {{ array }}"
+msgstr "Hodnota nesmie byť žiadna z nasledujúcich: {{ array }}"
+
+msgid "Values are duplicate."
+msgstr "Hodnoty sú duplicitné."
+
+msgid "Variable {{ needle }} is required"
+msgstr "Premenná {{ needle }} je povinná"
+
+msgid "Variant alias cannot be longer than {{ limit }} characters"
+msgstr "Alias variantu nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Warehouse name cannot be longer than {{ limit }} characters"
+msgstr "Názov skladu nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Warehouse with this external code already exists"
+msgstr "Sklad s týmto externým kódom už existuje"
+
+msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."
+msgstr "Zadali ste rovnaký produkt dvakrát. V zozname bestsellerov môže byť produkt len raz. Prosím, opravte to a potom znovu uložte formulár."
+
+msgid "You have to select any domain."
+msgstr "Musíte vybrať nejakú doménu."
+
+msgid "Zip code cannot be longer than {{ limit }} characters"
+msgstr "PSČ nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "column {{ column_name }} cannot be empty"
+msgstr "stĺpec {{ column_name }} nemôže byť prázdny"
+
+msgid "column {{ column_name }} must be greater than 0"
+msgstr "stĺpec {{ column_name }} musí byť väčší ako 0"
+
+msgid "column {{ column_name }} must be number, {{ value }} provided"
+msgstr "stĺpec {{ column_name }} musí byť číslo, zadané bolo {{ value }}"
+

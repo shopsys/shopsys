@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+
+msgid "Bank account number can contain only letters, numbers, slashes and dashes"
+msgstr "Číslo bankového účtu môže obsahovať iba písmená, čísla, lomítka a pomlčky"
+
+msgid "Bank account number cannot be longer than {{ limit }} characters"
+msgstr "Číslo bankového účtu nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Billing address company number {{ company_number }} already exists. Contact customer support."
+msgstr "IČO spoločnosti {{ company_number }} na fakturačnej adrese už existuje. Kontaktujte zákaznícku podporu."
+
+msgid "City name cannot be longer than {{ limit }} characters"
+msgstr "Názov mesta nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Company name cannot be longer than {{ limit }} characters"
+msgstr "Názov spoločnosti nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Complaint item catnum cannot be longer than {{ limit }} characters"
+msgstr "Katalógové číslo reklamovaného produktu nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Complaint item name cannot be longer than {{ limit }} characters"
+msgstr "Názov reklamovaného produktu nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Complaint item name is required"
+msgstr "Názov reklamovaného produktu je povinný"
+
+msgid "Customer role group cannot be changed."
+msgstr "Skupina rolí zákazníka sa nedá zmeniť."
+
+msgid "Customer role group not found."
+msgstr "Skupina rolí zákazníka nebola nájdená."
+
+msgid "Description is required"
+msgstr "Popis je povinný"
+
+msgid "Email cannot be longer than {{ limit }} characters"
+msgstr "E-mail nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Email is not filled"
+msgstr "E-mail nie je vyplnený"
+
+msgid "Email is not valid"
+msgstr "E-mail nie je platný"
+
+msgid "Error occurred while uploading file."
+msgstr "Pri nahrávaní súboru došlo k chybe."
+
+msgid "First name cannot be longer than {{ limit }} characters"
+msgstr "Meno nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "First name of contact person cannot be longer than {{ limit }} characters"
+msgstr "Meno kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Identification number cannot be longer than {{ limit }} characters"
+msgstr "IČO nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Last name cannot be longer than {{ limit }} characters"
+msgstr "Priezvisko nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Last name of contact person cannot be longer than {{ limit }} characters"
+msgstr "Priezvisko kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "New password must be at least {{ limit }} characters long"
+msgstr "Nové heslo musí mať najmenej {{ limit }} znakov"
+
+msgid "Old password must be at least {{ limit }} characters long"
+msgstr "Staré heslo musí mať najmenej {{ limit }} znakov"
+
+msgid "Order is required"
+msgstr "Objednávka je povinná"
+
+msgid "Order item is required"
+msgstr "Položka objednávky je povinná"
+
+msgid "Order or document number cannot be longer than {{ limit }} characters"
+msgstr "Číslo objednávky alebo dokladu nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Order or document number is required"
+msgstr "Číslo objednávky alebo dokladu je povinné"
+
+msgid "Password must be at least {{ limit }} characters long"
+msgstr "Heslo musí mať najmenej {{ limit }} znakov"
+
+msgid "Payment cannot be changed"
+msgstr "Platba sa nedá zmeniť"
+
+msgid "Payment must be set in cart before sending the order"
+msgstr "Platba musí byť nastavená v košíku pred odoslaním objednávky"
+
+msgid "Payment with provided UUID is not available"
+msgstr "Platba s uvedeným UUID nie je dostupná"
+
+msgid "Payment {{ paymentUuid }} cannot be used with SWIFT {{ swift }}"
+msgstr "Platba {{ paymentUuid }} sa nedá použiť so SWIFT kódom {{ swift }}"
+
+msgid "Payment {{ paymentUuid }} is not available for order {{ orderUuid }}"
+msgstr "Platba {{ paymentUuid }} nie je dostupná pre objednávku {{ orderUuid }}"
+
+msgid "Pickup place with provided UUID is not available"
+msgstr "Výdajné miesto s uvedeným UUID nie je dostupné"
+
+msgid "Please attach files"
+msgstr "Prosím, priložte súbory"
+
+msgid "Please check Tax number format"
+msgstr "Prosím, skontrolujte formát DIČ"
+
+msgid "Please choose a valid combination of transport and payment"
+msgstr "Prosím, vyberte platnú kombináciu dopravy a platby"
+
+msgid "Please choose country"
+msgstr "Prosím, vyberte krajinu"
+
+msgid "Please enter city"
+msgstr "Prosím, zadajte mesto"
+
+msgid "Please enter company name"
+msgstr "Prosím, zadajte názov spoločnosti"
+
+msgid "Please enter email"
+msgstr "Prosím, zadajte e-mail"
+
+msgid "Please enter first name"
+msgstr "Prosím, zadajte meno"
+
+msgid "Please enter first name of contact person"
+msgstr "Prosím, zadajte meno kontaktnej osoby"
+
+msgid "Please enter identification number"
+msgstr "Prosím, zadajte IČO"
+
+msgid "Please enter last name"
+msgstr "Prosím, zadajte priezvisko"
+
+msgid "Please enter last name of contact person"
+msgstr "Prosím, zadajte priezvisko kontaktnej osoby"
+
+msgid "Please enter new password"
+msgstr "Prosím, zadajte nové heslo"
+
+msgid "Please enter old password"
+msgstr "Prosím, zadajte staré heslo"
+
+msgid "Please enter only numbers and the + character"
+msgstr "Prosím, zadajte iba čísla a znak +"
+
+msgid "Please enter only numbers and the + sign"
+msgstr "Prosím, zadajte iba čísla a znak +"
+
+msgid "Please enter order URL hash"
+msgstr "Prosím, zadajte hash objednávky"
+
+msgid "Please enter quantity"
+msgstr "Prosím, zadajte množstvo"
+
+msgid "Please enter street"
+msgstr "Prosím, zadajte ulicu"
+
+msgid "Please enter telephone number"
+msgstr "Prosím, zadajte telefónne číslo"
+
+msgid "Please enter the message"
+msgstr "Prosím, zadajte správu"
+
+msgid "Please enter uuid"
+msgstr "Prosím, zadajte UUID"
+
+msgid "Please enter valid email"
+msgstr "Prosím, zadajte platný e-mail"
+
+msgid "Please enter your city"
+msgstr "Prosím, zadajte vaše mesto"
+
+msgid "Please enter your email address"
+msgstr "Prosím, zadajte vašu e-mailovú adresu"
+
+msgid "Please enter your name"
+msgstr "Prosím, zadajte vaše meno"
+
+msgid "Please enter your postal code"
+msgstr "Prosím, zadajte vaše PSČ"
+
+msgid "Please enter your street"
+msgstr "Prosím, zadajte vašu ulicu"
+
+msgid "Please enter zip code"
+msgstr "Prosím, zadajte PSČ"
+
+msgid "Please fill in numbers only"
+msgstr "Prosím, vyplňte iba čísla"
+
+msgid "Postcode cannot be longer than {{ limit }} characters"
+msgstr "PSČ nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Promo code is already applied in the current cart."
+msgstr "Promocódový kód je už použitý v aktuálnom košíku."
+
+msgid "Promo code is available for registered customers only."
+msgstr "Promocódový kód je dostupný iba pre registrovaných zákazníkov."
+
+msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
+msgstr "Promocódový kód nie je dostupný pre vašu cenovú skupinu. Možno ste zabudli sa prihlásiť."
+
+msgid "Quantity must be an integer"
+msgstr "Množstvo musí byť celé číslo"
+
+msgid "Quantity must be greater than 0"
+msgstr "Množstvo musí byť väčšie ako 0"
+
+msgid "Resolution is required"
+msgstr "Spôsob riešenia je povinný"
+
+msgid "Selected complaint resolution is not supported"
+msgstr "Vybraný spôsob riešenia reklamácie nie je podporovaný"
+
+msgid "Selected complaint resolution requires bank account number to be filled"
+msgstr "Vybraný spôsob riešenia reklamácie vyžaduje vyplnenie čísla bankového účtu"
+
+msgid "Selected payment price has changed"
+msgstr "Cena vybranej platby sa zmenila"
+
+msgid "Selected pickup place is not available"
+msgstr "Vybrané výdajné miesto nie je dostupné"
+
+msgid "Selected transport is not available"
+msgstr "Vybraná doprava nie je dostupná"
+
+msgid "Selected transport needs to have pickup place identifier set"
+msgstr "Vybraná doprava vyžaduje nastavenie identifikátora výdajného miesta"
+
+msgid "Selected transport price has changed"
+msgstr "Cena vybranej dopravy sa zmenila"
+
+msgid "Selected transport weight limit has been exceeded"
+msgstr "Hmotnostný limit vybranej dopravy bol prekročený"
+
+msgid "Street and house number must contain a number"
+msgstr "Ulica a číslo domu musí obsahovať číslo"
+
+msgid "Street and house number must contain letters"
+msgstr "Ulica a číslo domu musí obsahovať písmená"
+
+msgid "Street cannot be longer than {{ limit }} characters"
+msgstr "Ulica nemôže byť dlhšia ako {{ limit }} znakov"
+
+msgid "Street name cannot be longer than {{ limit }} characters"
+msgstr "Názov ulice nemôže byť dlhší ako {{ limit }} znakov"
+
+msgid "Tax number cannot be longer than {{ limit }} characters"
+msgstr "DIČ nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Telephone number cannot be longer than {{ limit }} characters"
+msgstr "Telefónne číslo nemôže byť dlhšie ako {{ limit }} znakov"
+
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr "Telefónne číslo nemôže byť kratšie ako {{ limit }} znakov"
+
+msgid "The file {{ fileName }} is too big."
+msgstr "Súbor {{ fileName }} je príliš veľký."
+
+msgid "The payment is not allowed in combination with already selected transport"
+msgstr "Táto platba nie je povolená v kombinácii s už vybratou dopravou"
+
+msgid "The promo code can only be used for a higher total price."
+msgstr "Promocódový kód sa dá použiť iba pri vyššej celkovej cene."
+
+msgid "The promo code is no longer valid. Check it, please."
+msgstr "Promocódový kód už nie je platný. Prosím, skontrolujte ho."
+
+msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
+msgstr "Promocódový kód sa nedá použiť na žiaden z produktov vo vašom košíku. Prosím, skontrolujte ho."
+
+msgid "The promo code is not valid or it has been already used. Check it, please."
+msgstr "Promocódový kód nie je platný alebo už bol použitý. Prosím, skontrolujte ho."
+
+msgid "The promo code is not valid yet. Check it, please."
+msgstr "Promocódový kód ešte nie je platný. Prosím, skontrolujte ho."
+
+msgid "The transport is not allowed in combination with already selected payment"
+msgstr "Táto doprava nie je povolená v kombinácii s už vybratou platbou"
+
+msgid "There are no products in the cart"
+msgstr "V košíku nie sú žiadne produkty"
+
+msgid "This email is already registered"
+msgstr "Tento e-mail je už zaregistrovaný"
+
+msgid "Transport must be set in cart before sending the order"
+msgstr "Doprava musí byť nastavená v košíku pred odoslaním objednávky"
+
+msgid "Transport with provided UUID is not available"
+msgstr "Doprava s uvedeným UUID nie je dostupná"
+
+msgid "Type of file {{ fileName }} is unsupported."
+msgstr "Typ súboru {{ fileName }} nie je podporovaný."
+
+msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
+msgstr "Musíte byť prihlásený, ak chcete zadať UUID dodacej adresy v objednávke"
+
+msgid "Zip code cannot be longer than {{ limit }} characters"
+msgstr "PSČ nemôže byť dlhšie ako {{ limit }} znakov"
+

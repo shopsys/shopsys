@@ -30,11 +30,13 @@ class ResetPasswordMailFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
-    public function sendMail(Administrator $administrator)
+    public function sendMail(Administrator $administrator): void
     {
+        $domainId = $this->domain->getFirstDomainIdMatchingAdminSelectedLocale($administrator);
+
         $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
             ResetPasswordMail::MAIL_TEMPLATE_NAME,
-            $this->domain->getId(),
+            $domainId,
         );
 
         $this->sendMailTemplate($mailTemplate, $administrator);
