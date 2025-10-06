@@ -108,7 +108,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         <FormButtonWrapper className="mt-0 pb-6">
                             <SubmitButton
                                 aria-label={t('Submit form to save changes in your profile')}
-                                isDisabled={isSubmitting}
+                                hasDisabledLook={isSubmitting}
                             >
                                 {t('Save profile')}
                             </SubmitButton>

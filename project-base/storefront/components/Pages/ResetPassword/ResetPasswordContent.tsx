@@ -24,7 +24,7 @@ export const ResetPasswordContent: FC = () => {
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
 
     const {
-        fieldState: { invalid },
+        fieldState: { error },
         field: { value },
     } = useController({ name: formMeta.fields.email.name, control: formProviderMethods.control });
 
@@ -76,7 +76,7 @@ export const ResetPasswordContent: FC = () => {
                                 <FormButtonWrapper>
                                     <SubmitButton
                                         aria-label={t('Submit form to reset your password')}
-                                        isWithDisabledLook={invalid || value.length === 0}
+                                        hasDisabledCursor={!!error || value.length === 0}
                                     >
                                         {t('Reset password')}
                                     </SubmitButton>

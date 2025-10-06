@@ -36,7 +36,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
     isWithoutFormLineError,
 }) => {
     const {
-        fieldState: { invalid, error },
+        fieldState: { error },
         field,
     } = useController({ name, control });
     const textInputId = formName + '-' + name;
@@ -64,7 +64,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
             <TextInput
                 {...textInputProps}
                 {...field}
-                hasError={invalid}
+                hasError={!!error}
                 id={textInputId}
                 onBlur={onBlurHandler}
                 onChange={onChangeHandler}

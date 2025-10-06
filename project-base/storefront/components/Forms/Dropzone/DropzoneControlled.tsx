@@ -117,7 +117,7 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
                                         </span>
                                         <Button
                                             className="p-1"
-                                            isDisabled={disabled}
+                                            hasDisabledLook={disabled}
                                             variant="inverted"
                                             onClick={() => removeFile(file)}
                                         >

@@ -123,7 +123,7 @@ describe('Contact Information Page Tests', () => {
 
             fillCustomerInformationInThirdStep('123', ' changed', ' changed');
             clearPostcodeInThirdStep();
-            fillBillingAdressInThirdStep(' changed', ' changed', '29292');
+            fillBillingAdressInThirdStep(' changed 123', ' changed', '29292');
             fillInNoteInThirdStep(orderNote);
             loseFocus();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {

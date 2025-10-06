@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 export const SubmitButton: FC<ButtonProps> = forwardRef(
     (
-        { children, isDisabled: isDisabledDefault, ...props },
+        { children, hasDisabledLook: isDisabledDefault, disabled, ...props },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _,
     ) => {
@@ -12,10 +12,12 @@ export const SubmitButton: FC<ButtonProps> = forwardRef(
 
         // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        const isDisabled = isDisabledDefault || formProviderMethods?.formState.isSubmitting;
+        const isFormSubmitting = formProviderMethods?.formState.isSubmitting || false;
+        const hasDisabledLook = isDisabledDefault || isFormSubmitting;
+        const isDisabled = disabled || isFormSubmitting;
 
         return (
-            <Button {...props} isDisabled={isDisabled} type="submit">
+            <Button {...props} disabled={isDisabled} hasDisabledLook={hasDisabledLook} type="submit">
                 {children}
             </Button>
         );

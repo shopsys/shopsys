@@ -10,9 +10,9 @@ export const LinkButton: FC<LinkButtonProps> = ({
     className,
     size = 'medium',
     variant = 'primary',
-    isDisabled,
+    hasDisabledLook,
     children,
-    isWithDisabledLook,
+    hasDisabledCursor,
     type,
     ...props
 }) => {
@@ -22,7 +22,7 @@ export const LinkButton: FC<LinkButtonProps> = ({
             tid={tid}
             type={type}
             className={twMergeCustom(
-                getButtonClassName(variant, size, isDisabled, isWithDisabledLook),
+                getButtonClassName(variant, size, hasDisabledLook, hasDisabledCursor),
                 'no-underline hover:no-underline',
                 className,
             )}

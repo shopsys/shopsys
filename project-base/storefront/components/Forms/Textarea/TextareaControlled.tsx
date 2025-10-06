@@ -13,7 +13,7 @@ type TextareaControlledProps = {
 
 export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, control, formName, textareaProps }) => {
     const {
-        fieldState: { invalid, error },
+        fieldState: { error },
         field,
     } = useController({ name, control });
     const textareaId = formName + '-' + name;
@@ -41,7 +41,7 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
             <Textarea
                 {...textareaProps}
                 {...field}
-                hasError={invalid}
+                hasError={!!error}
                 id={textareaId}
                 onBlur={onBlurHandler}
                 onChange={onChangeHandler}

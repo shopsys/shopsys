@@ -37,7 +37,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const login = useLogin();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
-        fieldState: { invalid: isNewPasswordInvalid },
+        fieldState: { error },
         field: { value: newPasswordValue },
     } = useController({ name: formMeta.fields.newPasswordConfirm.name, control: formProviderMethods.control });
 
@@ -151,7 +151,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                 <FormButtonWrapper>
                                     <SubmitButton
                                         aria-label={t('Submit form to set your new password')}
-                                        isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
+                                        hasDisabledCursor={!!error || newPasswordValue.length === 0}
                                     >
                                         {t('Set new password')}
                                     </SubmitButton>

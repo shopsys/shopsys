@@ -41,6 +41,8 @@ export const TransportAndPaymentContent: FC = () => {
     const { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage } =
         useTransportAndPaymentPageNavigation(validationMessages);
 
+    const isDisabled = hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInOrder;
+
     return (
         <OrderLayout
             isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsFetching}
@@ -67,10 +69,8 @@ export const TransportAndPaymentContent: FC = () => {
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}
+                    isDisabled={isDisabled}
                     nextStepClickHandler={goToNextStepFromTransportAndPaymentPage}
-                    hasDisabledLook={
-                        hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInOrder
-                    }
                     shouldShowSpinnerOnNextStepButton={
                         (isChangingTransportInCart || isChangingPaymentInOrder) && !!transport && !!payment
                     }

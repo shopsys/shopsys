@@ -2,16 +2,14 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 
-type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>;
-
 export type ButtonBaseProps = {
-    isDisabled?: boolean;
-    isWithDisabledLook?: boolean;
+    hasDisabledLook?: boolean;
+    hasDisabledCursor?: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     variant?: 'primary' | 'secondary' | 'inverted' | 'transparent';
 };
 
-export type ButtonProps = ButtonBaseProps & NativeButtonProps;
+export type ButtonProps = ButtonBaseProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button: FC<ButtonProps> = forwardRef(
     (
@@ -19,8 +17,9 @@ export const Button: FC<ButtonProps> = forwardRef(
             children,
             tid,
             className,
-            isDisabled,
-            isWithDisabledLook,
+            disabled,
+            hasDisabledLook,
+            hasDisabledCursor,
             size = 'medium',
             variant = 'primary',
             type = 'button',
@@ -31,10 +30,14 @@ export const Button: FC<ButtonProps> = forwardRef(
     ) => {
         return (
             <button
-                className={twMergeCustom(getButtonClassName(variant, size, isDisabled, isWithDisabledLook), className)}
                 data-tid={tid}
+                disabled={disabled}
                 tabIndex={0}
                 type={type}
+                className={twMergeCustom(
+                    getButtonClassName(variant, size, hasDisabledLook, hasDisabledCursor),
+                    className,
+                )}
                 {...props}
             >
                 {children}
@@ -46,8 +49,8 @@ export const Button: FC<ButtonProps> = forwardRef(
 export const getButtonClassName = (
     variant: ButtonBaseProps['variant'],
     size: ButtonBaseProps['size'],
-    isDisabled: ButtonBaseProps['isDisabled'],
-    isWithDisabledLook: ButtonBaseProps['isWithDisabledLook'],
+    hasDisabledLook: ButtonBaseProps['hasDisabledLook'],
+    hasDisabledCursor: ButtonBaseProps['hasDisabledCursor'],
 ) => {
     return twJoin(
         'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-button text-center font-bold font-secondary transition-all hover:no-underline',
@@ -58,41 +61,41 @@ export const getButtonClassName = (
         size === 'xlarge' && 'px-4 py-2.5 text-sm sm:px-5 sm:py-3.5 sm:text-lg',
         variant === 'primary' && [
             'outline-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'hover:outline-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'active:outline-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
-            isDisabled &&
+            hasDisabledLook &&
                 'outline-button-primary-border-disabled bg-button-primary-bg-disabled text-button-primary-text-disabled',
         ],
         variant === 'secondary' && [
             'outline-button-secondary-border-default bg-button-secondary-bg-default text-button-secondary-text-default',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'hover:outline-button-secondary-border-hovered hover:bg-button-secondary-bg-hovered hover:text-button-secondary-text-hovered',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'active:outline-button-secondary-border-active active:bg-button-secondary-bg-active active:text-button-secondary-text-active',
-            isDisabled &&
+            hasDisabledLook &&
                 'outline-button-secondary-border-disabled bg-button-secondary-bg-disabled text-button-secondary-text-disabled',
         ],
         variant === 'inverted' && [
             'outline-button-inverted-border-default bg-button-inverted-bg-default text-button-inverted-text-default',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'hover:outline-button-inverted-border-hovered hover:bg-button-inverted-bg-hovered hover:text-button-inverted-text-hovered',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'active:outline-button-inverted-border-active active:bg-button-inverted-bg-active active:text-button-inverted-text-active',
-            isDisabled &&
+            hasDisabledLook &&
                 'outline-button-inverted-border-disabled bg-button-inverted-bg-disabled text-button-inverted-text-disabled',
         ],
         variant === 'transparent' && [
             'outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'hover:outline-button-transparent-border-disabled hover:bg-button-transparent-bg-hovered hover:text-button-transparent-text-hovered',
-            !isDisabled &&
+            !hasDisabledLook &&
                 'active:outline-button-transparent-border-active active:bg-button-transparent-bg-active active:text-button-transparent-text-active',
-            isDisabled &&
+            hasDisabledLook &&
                 'outline-button-transparent-border-disabled bg-button-transparent-bg-disabled text-button-transparent-text-disabled',
         ],
-        (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
+        (hasDisabledLook || hasDisabledCursor) && 'cursor-no-drop',
     );
 };
 

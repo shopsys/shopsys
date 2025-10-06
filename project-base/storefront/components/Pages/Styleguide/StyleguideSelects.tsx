@@ -2,7 +2,7 @@ import { StyleguideSection } from './StyleguideElements';
 import { MultiSelect } from 'components/Forms/Multiselect/Multiselect';
 import { Select } from 'components/Forms/Select/Select';
 import useTranslation from 'next-translate/useTranslation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SelectOptionType } from 'types/selectOptions';
 
 export const COMBO_BOX_PAGE_SIZE = 5;
@@ -25,6 +25,8 @@ export const StyleguideSelects: FC = () => {
     const [selectedMultiOptionsWithCombobox, setSelectedMultiOptionsWithCombobox] = useState<
         SelectOptionType<string>[]
     >([colourOptions[3], colourOptions[4]]);
+
+    const [searchValueMultiselect, setSearchValueMultiselect] = useState('');
 
     const generateInfiniteOptions = (pageNum: number): ColourOption[] => {
         const itemsPerPage = 5;
@@ -79,9 +81,7 @@ export const StyleguideSelects: FC = () => {
                 tid="styleguide-selects-combobox-select"
                 comboBoxConfig={{
                     searchValue,
-                    setSearchValue: (value) => {
-                        setSearchValue(value);
-                    },
+                    setSearchValue,
                 }}
                 onResetSelect={() => setSelectedComboBoxOption(null)}
                 onSelectOption={(value) => {
@@ -123,10 +123,8 @@ export const StyleguideSelects: FC = () => {
                 tid="styleguide-multiselect-with-combobox"
                 comboBoxConfig={{
                     placeholder: t('Search'),
-                    searchValue,
-                    setSearchValue: (value) => {
-                        setSearchValue(value);
-                    },
+                    searchValue: searchValueMultiselect,
+                    setSearchValue: setSearchValueMultiselect,
                 }}
                 onChange={setSelectedMultiOptionsWithCombobox}
             />

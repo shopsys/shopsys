@@ -125,7 +125,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                         <FormButtonWrapper className="mt-0 pb-6">
                             <SubmitButton
                                 aria-label={t('Submit form to change your password')}
-                                isDisabled={isSubmitting}
+                                hasDisabledLook={isSubmitting}
                             >
                                 {t('Change password')}
                             </SubmitButton>

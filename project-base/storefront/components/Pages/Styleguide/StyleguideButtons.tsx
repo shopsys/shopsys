@@ -2,6 +2,11 @@ import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 import { Button } from 'components/Forms/Button/Button';
 
 export const StyleguideButtons: FC = () => {
+    const onButtonClick = (variant: string) => {
+        // eslint-disable-next-line no-alert
+        alert(`${variant} button clicked`);
+    };
+
     return (
         <StyleguideSection className="flex flex-col gap-5" title="Buttons">
             <StyleguideSubSection className="flex flex-wrap gap-3" title="Variants">
@@ -18,13 +23,37 @@ export const StyleguideButtons: FC = () => {
             </StyleguideSubSection>
 
             <StyleguideSubSection className="flex flex-wrap gap-3" title="Disabled">
-                <Button isDisabled variant="primary">
+                <Button disabled hasDisabledLook variant="primary" onClick={() => onButtonClick('Primary')}>
                     Primary
                 </Button>
-                <Button isDisabled variant="secondary">
+                <Button disabled hasDisabledLook variant="secondary" onClick={() => onButtonClick('Secondary')}>
                     Secondary
                 </Button>
-                <Button isDisabled variant="inverted">
+                <Button disabled hasDisabledLook variant="inverted" onClick={() => onButtonClick('Inverted')}>
+                    Inverted
+                </Button>
+            </StyleguideSubSection>
+
+            <StyleguideSubSection className="flex flex-wrap gap-3" title="Disabled look only (clickable)">
+                <Button hasDisabledLook variant="primary" onClick={() => onButtonClick('Primary')}>
+                    Primary
+                </Button>
+                <Button hasDisabledLook variant="secondary" onClick={() => onButtonClick('Secondary')}>
+                    Secondary
+                </Button>
+                <Button hasDisabledLook variant="inverted" onClick={() => onButtonClick('Inverted')}>
+                    Inverted
+                </Button>
+            </StyleguideSubSection>
+
+            <StyleguideSubSection className="flex flex-wrap gap-3" title="Disabled cursor only (clickable)">
+                <Button hasDisabledCursor variant="primary" onClick={() => onButtonClick('Primary')}>
+                    Primary
+                </Button>
+                <Button hasDisabledCursor variant="secondary" onClick={() => onButtonClick('Secondary')}>
+                    Secondary
+                </Button>
+                <Button hasDisabledCursor variant="inverted" onClick={() => onButtonClick('Inverted')}>
                     Inverted
                 </Button>
             </StyleguideSubSection>
