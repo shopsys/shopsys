@@ -31,7 +31,7 @@
         </span>
     {% else %}
         {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
-            <a href="{{ findUrlByDomainId('front_product_detail', { id: product.id }, getDomain().id) }}">
+            <a href="{{ findUrlByDomainId('front_product_detail', { id: product.id }, getFirstDomain().id) }}">
                 <span class="in-icon in-icon--visible">{{ ux_icon('visible') }}</span>
             </a>
         {% else %}
