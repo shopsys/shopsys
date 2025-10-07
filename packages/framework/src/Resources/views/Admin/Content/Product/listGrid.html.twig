@@ -48,7 +48,7 @@
     {% else %}
         {% if row.isVisible %}
             {% apply spaceless %}
-                <a href="{{ findUrlByDomainId('front_product_detail', { id: row.id }, getDomain().id) }}">
+                <a href="{{ findUrlByDomainId('front_product_detail', { id: row.id }, getFirstDomain().id) }}">
                     <span class="in-icon in-icon--visible">{{ ux_icon('visible') }}</span>
                 </a>
             {% endapply %}

@@ -973,8 +973,8 @@
                         {% endfor %}
                     </select>
             {% else %}
-                <strong class="form-line__label">{{ getDomain().url }}</strong>
-                <input type="hidden" {{ block('widget_attributes') }} value="{{ getDomain().id }}" />
+                <strong class="form-line__label">{{ getFirstDomain().url }}</strong>
+                <input type="hidden" {{ block('widget_attributes') }} value="{{ getFirstDomain().id }}" />
             {% endif %}
         </div>
     </div>

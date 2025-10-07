@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
@@ -43,6 +44,7 @@ class DomainExtension extends AbstractExtension
             new TwigFunction('domainIcon', $this->getDomainIconHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('isMultidomain', $this->isMultidomain(...)),
             new TwigFunction('getDomainUrlByLocale', $this->getDomainUrlByLocale(...)),
+            new TwigFunction('getFirstDomain', $this->getFirstDomainConfig(...)),
         ];
     }
 
@@ -126,5 +128,13 @@ class DomainExtension extends AbstractExtension
         }
 
         throw new NoDomainSelectedException('Domain for locale `' . $locale . '` not found;');
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+     */
+    public function getFirstDomainConfig(): DomainConfig
+    {
+        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
     }
 }
