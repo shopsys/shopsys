@@ -350,6 +350,22 @@ class ProductController extends AdminBaseController
     }
 
     /**
+     * @param int $productId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/product/sellability/{productId}')]
+    #[RequireRole(SystemRole::ADMIN)]
+    public function sellabilityAction(int $productId): Response
+    {
+        $product = $this->productFacade->getById($productId);
+
+        return $this->render('@ShopsysAdministration/content/product/sellabilityItems.html.twig', [
+            'product' => $product,
+            'domains' => $this->domain->getAdminEnabledDomains(),
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */

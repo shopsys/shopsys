@@ -97,7 +97,7 @@ class ProductDataFactory
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = null;
             $productData->flagsByDomainId[$domainId] = [];
             $productData->orderingPriorityByDomainId[$domainId] = 0;
-            $productData->saleExclusion[$domainId] = false;
+            $productData->domainSellingDenied[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
         }
 
@@ -169,7 +169,7 @@ class ProductDataFactory
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = $product->getShortDescriptionUsp5($domainId);
             $productData->flagsByDomainId[$domainId] = $product->getFlags($domainId);
             $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
-            $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
+            $productData->domainSellingDenied[$domainId] = $product->isSellingDeniedOnDomain($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
         }
 

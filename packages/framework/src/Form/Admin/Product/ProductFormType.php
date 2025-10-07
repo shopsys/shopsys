@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -144,8 +143,8 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantHelp));
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
-        $builder->add($this->createStocksGroup($builder, $product));
         $builder->add($this->createPromotionGroup($builder, $product));
+        $builder->add($this->createStocksGroup($builder, $product));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsUspGroup($builder));
@@ -402,20 +401,10 @@ final class ProductFormType extends AbstractType
                     'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
                 ),
             ])
-            ->add('saleExclusion', MultidomainType::class, [
+            ->add('domainSellingDenied', MultidomainType::class, [
                 'label' => 'Exclude from sale on domains',
                 'entry_type' => YesNoType::class,
             ]);
-
-        if (
-            $product !== null
-            && $product->getCalculatedSellingDenied()
-        ) {
-            $builderDisplayAvailabilityGroup
-                ->add('productCalculatedSellingDeniedInfo', MessageType::class, [
-                    'data' => t('Product is excluded from the sale'),
-                ]);
-        }
 
         if ($this->isProductVariant($product)) {
             $builderDisplayAvailabilityGroup

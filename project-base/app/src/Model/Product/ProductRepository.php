@@ -32,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  * @method \App\Model\Product\Product[] findAllByCatnums(string[] $catnums)
+ * @method array<int,bool> getCalculatedSellingDeniedPerDomainIds(\App\Model\Product\Product $product)
  */
 class ProductRepository extends BaseProductRepository
 {

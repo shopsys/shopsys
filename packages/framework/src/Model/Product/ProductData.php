@@ -176,7 +176,7 @@ class ProductData
     /**
      * @var bool[]
      */
-    public $saleExclusion;
+    public $domainSellingDenied;
 
     /**
      * @var bool[]|null[]
@@ -257,7 +257,7 @@ class ProductData
         $this->shortDescriptionUsp3ByDomainId = [];
         $this->shortDescriptionUsp4ByDomainId = [];
         $this->shortDescriptionUsp5ByDomainId = [];
-        $this->saleExclusion = [];
+        $this->domainSellingDenied = [];
         $this->domainHidden = [];
         $this->excludedTransports = [];
         $this->productType = ProductTypeEnum::TYPE_BASIC;

@@ -178,8 +178,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SPECIAL_PRICES => $this->extractSpecialPrices($domainId, $product),
             ProductExportFieldProvider::PARAMETERS => $this->extractParameters($locale, $product),
             ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
-            ProductExportFieldProvider::CALCULATED_SELLING_DENIED => $product->getCalculatedSellingDenied(),
-            ProductExportFieldProvider::SELLING_DENIED => $product->isSellingDenied(),
+            ProductExportFieldProvider::SELLING_DENIED => $product->isCalculatedSellingDenied($domainId),
             ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
             ProductExportFieldProvider::IS_MAIN_VARIANT => $product->isMainVariant(),
             ProductExportFieldProvider::IS_VARIANT => $product->isVariant(),
@@ -201,7 +200,6 @@ class ProductExportRepository
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
-            ProductExportFieldProvider::IS_SALE_EXCLUSION => $product->getSaleExclusion($domainId),
             ProductExportFieldProvider::SELLING_FROM => $product->getSellingFrom()?->format('Y-m-d H:i:s'),
             ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
                 return [

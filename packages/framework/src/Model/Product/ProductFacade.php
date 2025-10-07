@@ -547,8 +547,8 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return array
      */
-    public function getSellabilityPerDomainIds(Product $product): array
+    public function getCalculatedSellingDeniedPerDomainIds(Product $product): array
     {
-        return $this->productRepository->getSellabilityPerDomainIds($product);
+        return $this->productRepository->getCalculatedSellingDeniedPerDomainIds($product);
     }
 }

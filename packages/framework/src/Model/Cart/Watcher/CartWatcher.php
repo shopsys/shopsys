@@ -88,7 +88,7 @@ class CartWatcher
                         $this->domain->getId(),
                     );
 
-                if (!$productVisibility->isVisible() || $product->getCalculatedSellingDenied()) {
+                if (!$productVisibility->isVisible() || $product->isCalculatedSellingDenied($this->domain->getId())) {
                     $notListableItems[] = $item;
 
                     continue;

@@ -4,15 +4,25 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormTypeInterface;
 
 class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'productCalculatedSellingDenied';
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     */
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
+    }
 
     /**
      * {@inheritdoc}
@@ -54,17 +64,29 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
-        foreach ($rulesData as $index => $ruleData) {
-            $sellingDenied = $ruleData->operator === self::OPERATOR_IS;
+        $existsDql = $this->em->createQueryBuilder()
+            ->select('1')
+            ->from(ProductDomain::class, 'pds')
+            ->where('pds.product = p.id')
+            ->andWhere('pds.calculatedSellingDenied = true')
+            ->getDQL();
 
-            $parameterName = 'calculatedsellingDenied_' . $index;
-            $queryBuilder->andWhere('p.calculatedSellingDenied = :' . $parameterName)
-                ->setParameter($parameterName, $sellingDenied);
+        foreach ($rulesData as $ruleData) {
+            if ($ruleData->operator === self::OPERATOR_IS) {
+                $queryBuilder->andWhere('EXISTS (' . $existsDql . ')');
+            }
+
+            if ($ruleData->operator !== self::OPERATOR_IS_NOT) {
+                continue;
+            }
+
+            $queryBuilder->andWhere('NOT EXISTS (' . $existsDql . ')');
         }
     }
 }

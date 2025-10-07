@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
@@ -33,7 +34,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant3productData = $this->productDataFactory->createFromProduct($variant3);
 
         foreach ($this->domain->getAll() as $domainConfig) {
-            $variant3productData->saleExclusion[$domainConfig->getId()] = true;
+            $variant3productData->domainSellingDenied[$domainConfig->getId()] = true;
         }
         $this->productFacade->edit($variant3->getId(), $variant3productData);
 
@@ -46,10 +47,10 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant3 = $this->productFacade->getById(148);
         $mainVariant = $this->productFacade->getById(69);
 
-        $this->assertTrue($variant1->getCalculatedSellingDenied());
-        $this->assertFalse($variant2->getCalculatedSellingDenied());
-        $this->assertFalse($variant3->getCalculatedSellingDenied());
-        $this->assertFalse($mainVariant->getCalculatedSellingDenied());
+        $this->assertTrue($variant1->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse($variant2->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant3->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse($mainVariant->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
     }
 
     public function testCalculateSellingDeniedForProductNotSellableVariants(): void
@@ -92,13 +93,13 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant6 = $this->productFacade->getById(151);
         $mainVariant = $this->productFacade->getById(69);
 
-        $this->assertTrue($variant1->getCalculatedSellingDenied());
-        $this->assertTrue($variant2->getCalculatedSellingDenied());
-        $this->assertTrue($variant3->getCalculatedSellingDenied());
-        $this->assertTrue($variant4->getCalculatedSellingDenied());
-        $this->assertTrue($variant5->getCalculatedSellingDenied());
-        $this->assertTrue($variant6->getCalculatedSellingDenied());
-        $this->assertTrue($mainVariant->getCalculatedSellingDenied());
+        $this->assertTrue($variant1->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant2->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant3->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant4->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant5->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant6->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($mainVariant->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
     }
 
     public function testCalculateSellingDeniedForProductNotSellableMainVariant(): void
@@ -117,9 +118,9 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant2 = $this->productFacade->getById(54);
         $mainVariant = $this->productFacade->getById(69);
 
-        $this->assertTrue($variant1->getCalculatedSellingDenied());
-        $this->assertTrue($variant2->getCalculatedSellingDenied());
-        $this->assertTrue($mainVariant->getCalculatedSellingDenied());
+        $this->assertTrue($variant1->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($variant2->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($mainVariant->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
     }
 
     public function testPropagationCalculatedSaleExclusionToCalculateSellingDeniedForVariant(): void
@@ -143,8 +144,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant1 = $this->productFacade->getById(53);
 
         foreach ($this->domain->getAll() as $domainConfig) {
-            $this->assertTrue($variant1->getCalculatedSaleExclusion($domainConfig->getId()));
+            $this->assertTrue($variant1->isCalculatedSellingDenied($domainConfig->getId()));
         }
-        $this->assertTrue($variant1->getCalculatedSellingDenied());
     }
 }

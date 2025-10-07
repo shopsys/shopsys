@@ -122,7 +122,7 @@ class ProductEntityFieldMapper
      */
     public function isSellingDenied(Product $product): bool
     {
-        return $product->getCalculatedSellingDenied();
+        return $product->isCalculatedSellingDenied($this->domain->getId()) === true;
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
@@ -88,12 +89,6 @@ class Product extends AbstractTranslatableEntity
      * @ORM\Column(type="boolean")
      */
     protected $sellingDenied;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $calculatedSellingDenied;
 
     /**
      * @var bool
@@ -216,7 +211,6 @@ class Product extends AbstractTranslatableEntity
         $this->ean = $productData->ean;
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
-        $this->calculatedSellingDenied = true;
 
         $this->variants = new ArrayCollection();
 
@@ -464,11 +458,21 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param mixed|null $domainId
      * @return bool
      */
-    public function getCalculatedSellingDenied()
+    public function isSellingDeniedOnDomain($domainId = null)
     {
-        return $this->calculatedSellingDenied;
+        return $this->getProductDomain($domainId)->isSellingDenied();
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function isCalculatedSellingDenied($domainId)
+    {
+        return $this->getProductDomain($domainId)->isCalculatedSellingDenied();
     }
 
     /**
@@ -565,12 +569,17 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
-     * @param int $domainId
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]> $flagsByDomainId
      */
-    public function setFlags(array $flags, int $domainId): void
+    public function setFlags($flagsByDomainId)
     {
-        $this->getProductDomain($domainId)->setFlags($flags);
+        foreach ($this->domains as $domain) {
+            if (!array_key_exists($domain->getDomainId(), $flagsByDomainId)) {
+                continue;
+            }
+
+            $domain->setFlags($flagsByDomainId[$domain->getDomainId()]);
+        }
     }
 
     /**
@@ -754,7 +763,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
             $productDomain->setVat($productData->productInputPricesByDomain[$domainId]->vat);
-            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
+            $productDomain->setSellingDenied($productData->domainSellingDenied[$domainId]);
             $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3ByDomainId[$domainId]);
@@ -772,13 +781,17 @@ class Product extends AbstractTranslatableEntity
      */
     protected function getProductDomain(int $domainId)
     {
-        foreach ($this->domains as $domain) {
-            if ($domain->getDomainId() === $domainId) {
-                return $domain;
-            }
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('domainId', $domainId))
+            ->setMaxResults(1);
+
+        $result = $this->domains->matching($criteria)->first();
+
+        if ($result === false) {
+            throw new ProductDomainNotFoundException($domainId, $this->id);
         }
 
-        throw new ProductDomainNotFoundException($domainId, $this->id);
+        return $result;
     }
 
     /**
@@ -833,15 +846,6 @@ class Product extends AbstractTranslatableEntity
     public function getSeoMetaDescription(int $domainId)
     {
         return $this->getProductDomain($domainId)->getSeoMetaDescription();
-    }
-
-    /**
-     * @param int $domainId
-     * @return  bool
-     */
-    public function getSaleExclusion(int $domainId)
-    {
-        return $this->getProductDomain($domainId)->getSaleExclusion();
     }
 
     /**
@@ -1053,5 +1057,33 @@ class Product extends AbstractTranslatableEntity
     public function isAllowedNegativeStock()
     {
         return $this->isAllowedNegativeStock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSellableOnAllDomains(): bool
+    {
+        foreach ($this->domains as $domain) {
+            if ($domain->isCalculatedSellingDenied()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSellableOnAnyDomain(): bool
+    {
+        foreach ($this->domains as $domain) {
+            if (!$domain->isCalculatedSellingDenied()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

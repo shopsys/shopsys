@@ -61,6 +61,29 @@
                 {{ ux_icon(visibilityIcon) }}
             </span>
         </span>
+
+        <span data-bs-toggle="popover"
+              data-bs-trigger="click"
+              data-bs-html="true"
+              data-bs-content="{{ 'Loading'|trans }}..."
+              data-bs-container="body"
+              data-content-url="{{ url('admin_product_sellability', {productId: row.id}) }}"
+              class="position-relative cursor-pointer"
+        >
+            {% if row.sellingDeniedDomainsCount == getDomainsCount() %}
+                {% set sellabilityClass = 'text-secondary' %}
+                {% set sellabilityIcon = 'cart-off' %}
+            {% elseif row.isVisibleOnSomeDomain %}
+                {% set sellabilityClass = 'text-orange' %}
+                {% set sellabilityIcon = 'cart' %}
+            {% else %}
+                {% set sellabilityClass = 'text-green' %}
+                {% set sellabilityIcon = 'cart' %}
+            {% endif %}
+            <span class="{{ sellabilityClass }}">
+                {{ ux_icon(sellabilityIcon) }}
+            </span>
+        </span>
     {% else %}
         {% if row.isVisible %}
             <a href="{{ findUrlByDomainId('front_product_detail', { id: row.id }, getFirstDomain().id) }}">
@@ -69,13 +92,19 @@
         {% else %}
             {{ ux_icon('invisible') }}
         {% endif %}
-    {% endif %}
-    {% if row.calculatedSellingDenied %}
+
+        {% if row.sellingDeniedDomainsCount > 0 %}
+            {% set sellabilityIcon = 'cart-off' %}
+            {% set sellabilityTitleTitle = 'Product excluded from sale'|trans %}
+        {% else %}
+            {% set sellabilityIcon = 'cart' %}
+            {% set sellabilityTitleTitle = 'Product is sellable'|trans %}
+        {% endif %}
         <span data-bs-toggle="popover"
               data-bs-trigger="hover"
-              data-bs-content="{{ 'Product excluded from sale'|trans }}"
+              data-bs-content="{{ sellabilityTitleTitle }}"
         >
-            {{ ux_icon('cart-off') }}
+            {{ ux_icon(sellabilityIcon) }}
         </span>
     {% endif %}
 {% endblock %}

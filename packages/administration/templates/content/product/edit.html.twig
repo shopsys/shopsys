@@ -7,6 +7,7 @@
 
 {% block btn_wrapper %}
     {{ block('product_visibilities') }}
+    {{ block('product_sellability') }}
 {% endblock %}
 
 {% block product_visibilities %}
@@ -32,6 +33,33 @@
     >
         <button type="button" class="btn btn-link dropdown-toggle {{ visibilityClass }}" data-bs-toggle="dropdown">
             {{ ux_icon(visibilityIcon) }} {{ 'Preview'|trans }}
+        </button>
+    </div>
+{% endblock %}
+
+{% block product_sellability %}
+    {% if product.isSellableOnAllDomains() %}
+        {% set sellabilityClass = 'text-green' %}
+        {% set sellabilityIcon = 'cart' %}
+    {% elseif product.isSellableOnAnyDomain() %}
+        {% set sellabilityClass = 'text-orange' %}
+        {% set sellabilityIcon = 'cart' %}
+    {% else %}
+        {% set sellabilityClass = 'text-secondary' %}
+        {% set sellabilityIcon = 'cart-off' %}
+    {% endif %}
+
+    <div class="dropdown"
+         data-bs-toggle="popover"
+         data-bs-trigger="click"
+         data-bs-html="true"
+         data-bs-content="{{ 'Loading'|trans }}..."
+         data-bs-container="body"
+         data-bs-placement="left"
+         data-content-url="{{ url('admin_product_sellability', {productId: product.id}) }}"
+    >
+        <button type="button" class="btn btn-link dropdown-toggle {{ sellabilityClass }}" data-bs-toggle="dropdown">
+            {{ ux_icon(sellabilityIcon) }} {{ 'Preview'|trans }}
         </button>
     </div>
 {% endblock %}

@@ -130,7 +130,6 @@ class ProductExportRepository extends BaseProductExportRepository
             BaseProductExportFieldProvider::FLAGS => $this->extractFlagsForDomain($domainId, $product),
             ProductExportFieldProvider::MAIN_CATEGORY_PATH => $this->extractMainCategoryPath($product, $domainId, $locale),
             BaseProductExportFieldProvider::PARAMETERS => $this->extractParametersIncludedVariants($product, $locale, $domainId),
-            BaseProductExportFieldProvider::CALCULATED_SELLING_DENIED => $product->getCalculatedSaleExclusion($domainId),
             ProductExportFieldProvider::USPS => $product->getAllNonEmptyShortDescriptionUsp($domainId),
             ProductExportFieldProvider::SEARCHING_NAMES => $this->extractSearchingNames($product, $domainId, $locale),
             ProductExportFieldProvider::SEARCHING_DESCRIPTIONS => $this->extractSearchingDescriptions($product, $domainId),

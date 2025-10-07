@@ -690,14 +690,7 @@ class FilterQuery
 
         $clone->filters[] = [
             'term' => [
-                'calculated_selling_denied' => false,
-            ],
-        ];
-
-        // exclusion on current domain
-        $clone->filters[] = [
-            'term' => [
-                'is_sale_exclusion' => false,
+                'selling_denied' => false,
             ],
         ];
 
