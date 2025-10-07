@@ -439,6 +439,9 @@ msgstr "Hromadné upravovanie dokončené"
 msgid "Bulk promo code generation"
 msgstr "Hromadné generovanie promo kódov"
 
+msgid "Buy quantity"
+msgstr "Kupované množstvo"
+
 msgid "By flag"
 msgstr "Podľa značky"
 
@@ -1591,6 +1594,15 @@ msgstr "Zaslanie zabudnutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategórie štvrtého stĺpca"
 
+msgid "Free from order value"
+msgstr "Zadarmo od hodnoty objednávky"
+
+msgid "Free from order value"
+msgstr "Zadarmo od hodnoty objednávky"
+
+msgid "Free quantity"
+msgstr "Množstvo zadarmo"
+
 msgid "Free shipping and payment"
 msgstr "Bezplatná doprava a platba"
 
@@ -1662,6 +1674,9 @@ msgstr "Skupina"
 
 msgid "HTML code"
 msgstr "HTML kód"
+
+msgid "Has X+Y promotion"
+msgstr "Má akciu X+Y zdarma"
 
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
@@ -2572,14 +2587,23 @@ msgstr "Produkt detail URL"
 msgid "Product gift"
 msgstr "Darčekový produkt"
 
+msgid "Product excluded from sale"
+msgstr "Produkt vylúčený z predaja"
+
+msgid "Product excluded from sale on all domains"
+msgstr "Produkt vylúčený z predaja na všetkých doménach"
+
+msgid "Product excluded from sale on some domains"
+msgstr "Produkt vylúčený z predaja na niektorých doménach"
+
 msgid "Product image URL"
 msgstr "Produkt image URL"
 
 msgid "Product in order"
 msgstr "Produkt v objednávke"
 
-msgid "Product is excluded from the sale"
-msgstr "Produkt je vylúčený z predaja"
+msgid "Product is included for sale on all domains"
+msgstr "Produkt je zahrnutý v predaji na všetkých doménach"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavná varianta."
@@ -2604,6 +2628,9 @@ msgstr "Skladové množstvo produktu"
 
 msgid "Product type"
 msgstr "Typ produktu"
+
+msgid "Product with X + Y free promotion"
+msgstr "Produkt s akciou X + Y zadarmo"
 
 msgid "Products"
 msgstr "Produkty"
@@ -2649,6 +2676,33 @@ msgstr "Propagované produkty"
 
 msgid "QR code"
 msgstr "QR kód"
+
+msgid "Quantity"
+msgstr "Množstvo"
+
+msgid "Quick product search"
+msgstr "Rýchle vyhľadávanie v produktoch"
+
+msgid "Quick search"
+msgstr "Rýchle hľadanie"
+
+msgid "Promotion X + Y free"
+msgstr "Akcia X + Y zadarmo"
+
+msgid "Promotion can be set on specific variant."
+msgstr "Akcia sa nastavuje na konkrétné variantě."
+
+msgid "Promotion {{ x }} + {{ y }} free"
+msgstr "Akcia {{ x }} + {{ y }} zadarmo"
+
+msgid "Quantity"
+msgstr "Množstvo"
+
+msgid "Quick product search"
+msgstr "Rýchle vyhľadávanie v produktoch"
+
+msgid "Quick search"
+msgstr "Rýchle hľadanie"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -2922,6 +2976,9 @@ msgstr "Vybraný sklad neexistuje."
 
 msgid "Selected watchdog does not exist."
 msgstr "Vybraný hlídací pes neexistuje."
+
+msgid "Sellability on each domain"
+msgstr "Predajnosť na každej doméne"
 
 msgid "Selling end date"
 msgstr "Dátum stáhnutia"

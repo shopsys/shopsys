@@ -2581,14 +2581,23 @@ msgstr "URL detailu produktu"
 msgid "Product gift"
 msgstr "Dárkový produkt"
 
+msgid "Product excluded from sale"
+msgstr "Zboží je vyřazeno z prodeje"
+
+msgid "Product excluded from sale on all domains"
+msgstr "Zboží je vyřazeno z prodeje na všech doménách"
+
+msgid "Product excluded from sale on some domains"
+msgstr "Zboží je vyřazeno z prodeje na některých doménách"
+
 msgid "Product image URL"
 msgstr "URL obrázku produktu"
 
 msgid "Product in order"
 msgstr "Zboží v objednávce"
 
-msgid "Product is excluded from the sale"
-msgstr "Produkt je vyřazen z prodeje"
+msgid "Product is included for sale on all domains"
+msgstr "Zboží je zahrnuto do prodeje na všech doménách"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavní variantou."
@@ -2613,6 +2622,9 @@ msgstr "Počet kusů skladem"
 
 msgid "Product type"
 msgstr "Typ produktu"
+
+msgid "Product with X + Y free promotion"
+msgstr "Produkt s akcí X + Y zdarma"
 
 msgid "Products"
 msgstr "Zboží"
@@ -2940,6 +2952,9 @@ msgstr "Vybraný sklad neexistuje."
 
 msgid "Selected watchdog does not exist."
 msgstr "Vybraný hlídací pes neexistuje."
+
+msgid "Sellability on each domain"
+msgstr "Prodejnost na doménách"
 
 msgid "Selling end date"
 msgstr "Datum stažení"
@@ -3612,7 +3627,4 @@ msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vy
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
-
-msgid "Product with X + Y free promotion"
-msgstr "Produkt s akcí X + Y zdarma"
 

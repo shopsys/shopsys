@@ -2581,13 +2581,22 @@ msgstr ""
 msgid "Product gift"
 msgstr ""
 
+msgid "Product excluded from sale"
+msgstr ""
+
+msgid "Product excluded from sale on all domains"
+msgstr ""
+
+msgid "Product excluded from sale on some domains"
+msgstr ""
+
 msgid "Product image URL"
 msgstr ""
 
 msgid "Product in order"
 msgstr ""
 
-msgid "Product is excluded from the sale"
+msgid "Product is included for sale on all domains"
 msgstr ""
 
 msgid "Product is main variant."
@@ -2612,6 +2621,9 @@ msgid "Product stock quantity"
 msgstr ""
 
 msgid "Product type"
+msgstr ""
+
+msgid "Product with X + Y free promotion"
 msgstr ""
 
 msgid "Products"
@@ -2939,6 +2951,9 @@ msgid "Selected warehouse does not exist."
 msgstr ""
 
 msgid "Selected watchdog does not exist."
+msgstr ""
+
+msgid "Sellability on each domain"
 msgstr ""
 
 msgid "Selling end date"
@@ -3611,8 +3626,5 @@ msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%c
 msgstr ""
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
-msgstr ""
-
-msgid "Product with X + Y free promotion"
 msgstr ""
 

@@ -103,6 +103,9 @@ msgstr "36\" Philips CRT [V]"
 msgid "36\" Philips [V]"
 msgstr "36\" Philips [V]"
 
+msgid "3840×2160 (4K UHD)"
+msgstr "3840×2160 (4K UHD)"
+
 msgid "4 W"
 msgstr "4 W"
 
@@ -399,6 +402,9 @@ msgstr "Knihy"
 
 msgid "Bookworm"
 msgstr "Knihomoľ"
+
+msgid "Bundle promotion – buy three and get one Samsung Smart TV for free."
+msgstr "Balíková akcia – kúpte tri a získajte jeden Samsung Smart TV zadarmo."
 
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
 msgstr "Zadaním e-mailu nižšie si môžete stiahnuť svoje osobné a ostatné údaje (napríklad históriu objednávok) z nášho internetového obchodu. Po zadaní e-mailovej adresy vám bude zaslaný e-mail s odkazom na overenie vašej identity. Kliknutím na odkaz sa dostanete na stránku, kde si budete môcť tieto informácie stiahnuť v čitateľnom formáte - budú to údaje registrované k danej e-mailovej adrese v tomto internetovom obchode."
@@ -1006,6 +1012,9 @@ msgstr "LG E410 Optimus L1 II White"
 msgid "Limited user"
 msgstr "Obmedzený používateľ"
 
+msgid "Limited-time Samsung Smart TV promotion. Purchase three televisions and receive the fourth one free thanks to the 3+1 promotion automatically applied in the cart."
+msgstr "Časovo obmedzená akcia na Samsung Smart TV. Pri kúpe troch televízorov získate štvrtý zadarmo vďaka akcii 3+1, ktorá sa automaticky uplatní v košíku."
+
 msgid "Localization"
 msgstr "Lokalizácia"
 
@@ -1461,6 +1470,9 @@ msgstr "Samsung Galaxy Core 2 (SM-G355) - čierna"
 
 msgid "Samsung Galaxy Core Plus (SM-G350) - white"
 msgstr "Samsung Galaxy Core Plus (SM-G350) - biela"
+
+msgid "Samsung Smart TV 3+1 Promo Pack"
+msgstr "Samsung Smart TV 3+1 Promo Balíček"
 
 msgid "Samsung T27D590EW"
 msgstr "Samsung T27D590EW"
