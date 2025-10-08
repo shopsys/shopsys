@@ -9,13 +9,13 @@ import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { m } from 'framer-motion';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { twJoin } from 'tailwind-merge';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { fadeAnimation } from 'utils/animations/animationVariants';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type AutocompleteProps = {

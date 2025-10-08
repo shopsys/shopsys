@@ -2611,6 +2611,9 @@ msgstr "Sufix názvu"
 msgid "Names"
 msgstr "Názvy (web)"
 
+msgid "Namespace"
+msgstr "Jmenný prostor"
+
 msgid "Navigation"
 msgstr "Navigace"
 

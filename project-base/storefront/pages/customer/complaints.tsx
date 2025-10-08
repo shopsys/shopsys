@@ -18,9 +18,9 @@ import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useComplaintsData } from 'utils/complaints/useComplaintsData';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -60,7 +60,7 @@ const ComplaintsPage: FC = () => {
                 {canCreateComplaint && (
                     <div className="flex gap-y-2">
                         <LinkButton
-                            aria-label={t('Go to new complaint page')}
+                            aria-label={t('Go to new complaint page', { ns: 'accessibility' })}
                             size="small"
                             type="complaintNew"
                             href={{
@@ -79,7 +79,7 @@ const ComplaintsPage: FC = () => {
                     </div>
                 )}
                 <SearchInput
-                    ariaLabelForSearchButton={t('Search for a product you complained about')}
+                    ariaLabelForSearchButton={t('Search for a product you complained about', { ns: 'accessibility' })}
                     className="border-input-border-default w-full border"
                     label={t('Search for a product you complained about')}
                     shouldShowSpinnerInInput={complaintsDataFetching}

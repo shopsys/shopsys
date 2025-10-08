@@ -85,10 +85,8 @@ export const useTransportChangeInSelect = (
     const openPickupPlacePopup = (updatedTransportUuid: string) => {
         const updatedTransport = transports?.find((transport) => transport.uuid === updatedTransportUuid);
 
-        if (isPacketeryTransport(updatedTransport?.transportTypeCode)) {
-            if (updatedTransport) {
-                openPacketeryPopup(updatedTransport);
-            }
+        if (updatedTransport && isPacketeryTransport(updatedTransport.transportTypeCode)) {
+            openPacketeryPopup(updatedTransport);
         }
 
         if (updatedTransport?.isPersonalPickup) {

@@ -9,7 +9,6 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TIDs } from 'cypress/tids';
 import { useCouldBeCustomerRegisteredQuery } from 'graphql/requests/customer/queries/CouldBeCustomerRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
@@ -18,6 +17,7 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useRegistration } from 'utils/auth/useRegistration';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
@@ -151,7 +151,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     </fieldset>
 
                     <SubmitButton
-                        aria-label={t('Submit form to create your new account')}
+                        aria-label={t('Submit form to create your new account', { ns: 'accessibility' })}
                         className="self-start"
                         hasDisabledCursor={!formProviderMethods.formState.isValid}
                         hasDisabledLook={isInvalidRegistrationRef.current}

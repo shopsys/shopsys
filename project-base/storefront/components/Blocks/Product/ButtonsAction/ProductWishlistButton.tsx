@@ -1,8 +1,8 @@
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
-import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
@@ -32,11 +32,10 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             aria-label={
                 isProductInWishlist
                     ? t('Remove product {{ productName }} from wishlist', {
+                          ns: 'accessibility',
                           productName: productName,
                       })
-                    : t('Add product {{ productName }} to wishlist', {
-                          productName: productName,
-                      })
+                    : t('Add product {{ productName }} to wishlist', { ns: 'accessibility', productName: productName })
             }
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',

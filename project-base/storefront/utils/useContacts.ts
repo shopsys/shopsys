@@ -1,4 +1,4 @@
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const useContacts = (): { phone: string; openingHours: string; email: string; emailSubtitle: string } => {
     const { t } = useTranslation();

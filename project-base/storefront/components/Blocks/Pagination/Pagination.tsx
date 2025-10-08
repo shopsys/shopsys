@@ -1,10 +1,10 @@
 import { Button } from 'components/Forms/Button/Button';
 import { usePaginationContext } from 'components/providers/PaginationProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { Fragment, MouseEventHandler, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -75,7 +75,7 @@ export const Pagination: FC<PaginationProps> = ({
                 </Button>
             )}
 
-            <nav aria-label={t('Pagination navigation')} className="ml-auto">
+            <nav aria-label={t('Pagination navigation', { ns: 'accessibility' })} className="ml-auto">
                 <div className="flex gap-1">
                     {paginationButtons.map((pageNumber, index, array) => {
                         const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
@@ -134,7 +134,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
         return (
             <Tag
                 aria-current={isActive ? 'page' : undefined}
-                aria-label={!isActive ? t('Go to page {{ page }}', { page: children }) : undefined}
+                aria-label={!isActive ? t('Go to page {{ page }}', { ns: 'accessibility', page: children }) : undefined}
                 href={href}
                 tabIndex={0}
                 className={twJoin(

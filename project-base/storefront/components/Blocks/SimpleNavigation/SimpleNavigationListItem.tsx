@@ -2,9 +2,9 @@ import { getLinkType } from './simpleNavigationUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -28,7 +28,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
 
     return (
         <ExtendedNextLink
-            aria-label={t('Go to category {{ categoryName }}', { categoryName: listedItem.name })}
+            aria-label={t('Go to category {{ categoryName }}', { ns: 'accessibility', categoryName: listedItem.name })}
             data-tid={tid}
             href={href}
             title={t('Go to category')}

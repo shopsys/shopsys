@@ -4,9 +4,9 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type PersonalDataDetailContentProps = {
@@ -298,7 +298,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                         <Cell>{item.productName}</Cell>
                                                     </Row>
                                                     <Row>
-                                                        <CellMinor>{t('Quantity')}</CellMinor>
+                                                        <CellMinor>{t('Quantity', { ns: 'accessibility' })}</CellMinor>
                                                         <Cell>{item.quantity}</Cell>
                                                     </Row>
                                                     <Row>

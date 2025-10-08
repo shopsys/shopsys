@@ -2,8 +2,8 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
-import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrderSummaryProps = {
     isTransportOrPaymentLoading?: boolean;

@@ -10,7 +10,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
@@ -18,6 +17,7 @@ import { NewPasswordFormType } from 'types/form';
 import { useLogin } from 'utils/auth/useLogin';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -150,7 +150,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                                 />
                                 <FormButtonWrapper>
                                     <SubmitButton
-                                        aria-label={t('Submit form to set your new password')}
+                                        aria-label={t('Submit form to set your new password', { ns: 'accessibility' })}
                                         hasDisabledCursor={!!error || newPasswordValue.length === 0}
                                     >
                                         {t('Set new password')}

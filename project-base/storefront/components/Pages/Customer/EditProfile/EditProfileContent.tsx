@@ -11,12 +11,12 @@ import {
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useChangeCompanyDataMutation } from 'graphql/requests/customer/mutations/ChangeCompanyDataMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type EditProfileContentProps = {
@@ -107,7 +107,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     {canManagePersonalData && (
                         <FormButtonWrapper className="mt-0 pb-6">
                             <SubmitButton
-                                aria-label={t('Submit form to save changes in your profile')}
+                                aria-label={t('Submit form to save changes in your profile', { ns: 'accessibility' })}
                                 hasDisabledLook={isSubmitting}
                             >
                                 {t('Save profile')}

@@ -4,10 +4,10 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type BreadcrumbsProps = {
@@ -32,7 +32,10 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
         <Webline className="mb-4">
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
-            <nav aria-label={t('Breadcrumb navigation')} className={twMergeCustom(breadcrumbsTwClass, className)}>
+            <nav
+                aria-label={t('Breadcrumb navigation', { ns: 'accessibility' })}
+                className={twMergeCustom(breadcrumbsTwClass, className)}
+            >
                 <ArrowIcon aria-hidden="true" className="text-icon-less size-4 rotate-90 lg:hidden" />
 
                 <BreadcrumbsLink href="/" skeletonType="homepage">

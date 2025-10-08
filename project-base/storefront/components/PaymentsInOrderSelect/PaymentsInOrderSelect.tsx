@@ -6,9 +6,9 @@ import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateway
 import { useOrderAvailablePaymentsQuery } from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { TypePaymentTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type PaymentsInOrderSelectProps = {

@@ -4,8 +4,8 @@ import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon
 import { WarehouseBoxPackageIcon } from 'components/Basic/Icon/WarehouseBoxPackageIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPacketeryTransport } from 'utils/packetery';
 
 type OrderCustomerInfoProps = {
@@ -24,10 +24,8 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                     {order.firstName} {order.lastName}
                 </span>
                 <ExtendedNextLink
+                    aria-label={t('Send email to {{ email }}', { ns: 'accessibility', email: order.email })}
                     href={`mailto:${order.email}`}
-                    aria-label={t('Send email to {{ email }}', {
-                        email: order.email,
-                    })}
                     className={twJoin(
                         'text-text-default overflow-x-auto text-sm whitespace-nowrap underline hover:no-underline',
                         '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',

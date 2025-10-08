@@ -14,12 +14,12 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { usePathname } from 'next/navigation';
 import { memo, useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 import { useFocusTrap } from 'utils/useFocusTrap';
@@ -65,7 +65,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
 
     return (
         <div
-            aria-label={t('User account information')}
+            aria-label={t('User account information', { ns: 'accessibility' })}
             className={twMergeCustom('flex flex-col gap-3', className)}
             ref={contentRef}
         >
@@ -84,12 +84,12 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                 </span>
             </div>
 
-            <nav aria-label={t('User account navigation')}>
+            <nav aria-label={t('User account navigation', { ns: 'accessibility' })}>
                 <ul className="flex max-h-[87dvh] flex-col gap-2">
                     {(canCreateOrder || canViewCompanyOrders) && (
                         <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerOrdersUrl}>
                             <MenuIconicSubItemLink
-                                ariaLabel={t('Go to my orders page')}
+                                ariaLabel={t('Go to my orders page', { ns: 'accessibility' })}
                                 href={customerOrdersUrl}
                                 isActive={pathname === customerOrdersUrl}
                                 tid={TIDs.user_menu_my_orders_link}
@@ -105,7 +105,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                     {(canCreateComplaint || canViewCompanyComplaints) && (
                         <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerComplaintsUrl}>
                             <MenuIconicSubItemLink
-                                ariaLabel={t('Go to my complaints page')}
+                                ariaLabel={t('Go to my complaints page', { ns: 'accessibility' })}
                                 href={customerComplaintsUrl}
                                 isActive={pathname === customerComplaintsUrl}
                                 tid={TIDs.user_menu_my_complaints_link}
@@ -121,7 +121,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
                     {canManageUsers && (
                         <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerUsersUrl}>
                             <MenuIconicSubItemLink
-                                ariaLabel={t('Go to customer users page')}
+                                ariaLabel={t('Go to customer users page', { ns: 'accessibility' })}
                                 href={customerUsersUrl}
                                 isActive={pathname === customerUsersUrl}
                                 type="customer-users"
@@ -135,7 +135,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
 
                     <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerEditProfileUrl}>
                         <MenuIconicSubItemLink
-                            ariaLabel={t('Go to edit profile page')}
+                            ariaLabel={t('Go to edit profile page', { ns: 'accessibility' })}
                             href={customerEditProfileUrl}
                             isActive={pathname === customerEditProfileUrl}
                             tid={TIDs.user_menu_edit_profile_link}
@@ -149,7 +149,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
 
                     <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === wishlistUrl}>
                         <MenuIconicSubItemLink
-                            ariaLabel={t('Go to wishlist page')}
+                            ariaLabel={t('Go to wishlist page', { ns: 'accessibility' })}
                             href={wishlistUrl}
                             isActive={pathname === wishlistUrl}
                             type="wishlist"
@@ -162,7 +162,7 @@ const UserMenuComp: FC<UserMenuProps> = ({ className, hideFocusTrap }) => {
 
                     <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerChangePasswordUrl}>
                         <MenuIconicSubItemLink
-                            ariaLabel={t('Go to change password page')}
+                            ariaLabel={t('Go to change password page', { ns: 'accessibility' })}
                             href={customerChangePasswordUrl}
                             isActive={pathname === customerChangePasswordUrl}
                             tid={TIDs.user_menu_change_password_link}

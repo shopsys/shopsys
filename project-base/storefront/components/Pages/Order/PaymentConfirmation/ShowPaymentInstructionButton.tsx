@@ -1,8 +1,8 @@
 import { Button } from 'components/Forms/Button/Button';
 import { useSetOrderPaymentStatusPageValidityHashMutation } from 'graphql/requests/orders/mutations/SetOrderPaymentStatusPageValidityHashMutation.generated';
-import useTranslation from 'next-translate/useTranslation';
 import Script from 'next/script';
 import { useState } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ShowPaymentInstructionButtonProps = {
     href: string;

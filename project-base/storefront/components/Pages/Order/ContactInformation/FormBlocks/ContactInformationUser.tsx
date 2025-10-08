@@ -3,10 +3,10 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationUser: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);

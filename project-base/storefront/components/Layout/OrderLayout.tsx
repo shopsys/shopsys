@@ -5,9 +5,9 @@ import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityN
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
 import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrderLayoutProps = {
     page: 'transport-and-payment' | 'contact-information';
@@ -33,7 +33,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                 </header>
 
                 <main
-                    aria-label={t('Order process main content')}
+                    aria-label={t('Order process main content', { ns: 'accessibility' })}
                     className="mt-4 mb-10 flex flex-col"
                     id="main-content"
                 >
@@ -46,7 +46,10 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer aria-label={t('Site information')} className="bg-background-accent-less mt-auto h-fit">
+                <footer
+                    aria-label={t('Site information', { ns: 'accessibility' })}
+                    className="bg-background-accent-less mt-auto h-fit"
+                >
                     <Footer simpleFooter />
                 </footer>
             </div>

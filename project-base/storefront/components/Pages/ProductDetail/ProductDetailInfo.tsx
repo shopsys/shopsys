@@ -1,7 +1,7 @@
 import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailContentProps = {
     namePrefix: string | null;
@@ -43,11 +43,14 @@ export const ProductDetailInfo: FC<ProductDetailContentProps> = ({
                         <span>{t('Brand')}: </span>
 
                         <ExtendedNextLink
-                            aria-label={t('Go to brand page of {{ brandName }}', { brandName: brand.name })}
                             className="text-sm"
                             href={brand.slug}
                             title={t('Go to brand page')}
                             type="brand"
+                            aria-label={t('Go to brand page of {{ brandName }}', {
+                                ns: 'accessibility',
+                                brandName: brand.name,
+                            })}
                         >
                             {brand.name}
                         </ExtendedNextLink>

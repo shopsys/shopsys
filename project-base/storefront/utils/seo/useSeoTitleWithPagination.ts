@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 

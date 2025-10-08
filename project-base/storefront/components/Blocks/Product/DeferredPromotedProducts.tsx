@@ -3,8 +3,8 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { usePromotedProductsQuery } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const SkeletonModulePromotedProducts = dynamic(() =>

@@ -12,12 +12,12 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateWatchdogMutation } from 'graphql/requests/watchDog/mutations/CreateWatchdogMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmCreateWatchdotEventHandler } from 'gtm/handlers/onGtmCreateWatchdotEventHandler';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -68,6 +68,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
             title={t('Watchdog')}
             ariaDescription={t(
                 'This product is on watchdog. Please fill in your email below to be notified when the product becomes available.',
+                { ns: 'accessibility' },
             )}
         >
             <FormProvider {...formProviderMethods}>
@@ -101,7 +102,9 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                             />
 
                             <FormButtonWrapper>
-                                <SubmitButton aria-label={t('Submit form to send your watchdog')}>
+                                <SubmitButton
+                                    aria-label={t('Submit form to send your watchdog', { ns: 'accessibility' })}
+                                >
                                     {t('Send')}
                                 </SubmitButton>
                             </FormButtonWrapper>

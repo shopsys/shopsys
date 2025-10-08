@@ -2,7 +2,7 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { SkeletonPageBrandsOverview } from 'components/Blocks/Skeleton/SkeletonPageBrandsOverview';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useBrandsQuery } from 'graphql/requests/brands/queries/BrandsQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const BrandsContent: FC = () => {
     const { t } = useTranslation();

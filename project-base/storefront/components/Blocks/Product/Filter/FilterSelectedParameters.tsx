@@ -4,12 +4,12 @@ import { Flag } from 'components/Basic/Flag/Flag';
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
@@ -61,7 +61,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                             <SelectedParametersList keyName="filter-only-in-stock">
                                 <SelectedParametersName>{t('Availability')}</SelectedParametersName>
                                 <SelectedParametersListItem
-                                    ariaLabel={t('Remove filter Availability only goods in stock')}
+                                    ariaLabel={t('Remove filter Availability only goods in stock', {
+                                        ns: 'accessibility',
+                                    })}
                                     onClick={() => updateFilterInStockQuery(false)}
                                 >
                                     {t('Only goods in stock')}
@@ -75,6 +77,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                 <SelectedParametersName>{t('Price')}</SelectedParametersName>
                                 <SelectedParametersListItem
                                     ariaLabel={t('Remove filter Price from {{ minimalPrice }} to {{ maximalPrice }}', {
+                                        ns: 'accessibility',
                                         minimalPrice: formatPrice(currentFilter.minimalPrice ?? 0),
                                         maximalPrice: formatPrice(currentFilter.maximalPrice ?? 0),
                                     })}
@@ -112,6 +115,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                             <SelectedParametersListItem
                                                 key={checkedBrand.brand.uuid}
                                                 ariaLabel={t('Remove filter Brand {{ filterName }}', {
+                                                    ns: 'accessibility',
                                                     filterName: checkedBrand.brand.name,
                                                 })}
                                                 onClick={() => updateFilterBrandsQuery(checkedBrand.brand.uuid)}
@@ -131,6 +135,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     <SelectedParametersListItem
                                         key={checkedFlag.flag.uuid}
                                         ariaLabel={t('Remove filter Flag {{ filterName }}', {
+                                            ns: 'accessibility',
                                             filterName: checkedFlag.flag.name,
                                         })}
                                         onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
@@ -192,6 +197,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                             ariaLabel={t(
                                                 'Remove parameter range from {{ minValue }} to {{ maxValue }} from group {{ groupName }}',
                                                 {
+                                                    ns: 'accessibility',
                                                     minValue:
                                                         selectedParameter.minimalValue ||
                                                         selectedParameterOptions.minimalValue,
@@ -223,6 +229,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                                 ariaLabel={t(
                                                     'Remove parameter {{ value }} from group {{ groupName }}',
                                                     {
+                                                        ns: 'accessibility',
                                                         value: selectedValue.text,
                                                         groupName: selectedParameterOptions.name,
                                                     },
@@ -249,7 +256,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         })}
 
                         <button
-                            aria-label={t('Clear all active filters')}
+                            aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                             className="font-secondary text-link-default hover:text-link-hovered cursor-pointer rounded-sm text-sm font-semibold underline"
                             tabIndex={0}
                             type="button"

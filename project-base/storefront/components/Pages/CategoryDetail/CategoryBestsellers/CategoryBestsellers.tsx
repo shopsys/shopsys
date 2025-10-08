@@ -4,9 +4,9 @@ import { AnimatePresence } from 'framer-motion';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { memo, useState, useRef, useEffect } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const NUMBER_OF_VISIBLE_ITEMS = 3;
 

@@ -8,8 +8,8 @@ import {
     TypePersonalDataDetailQueryVariables,
 } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { NextPage } from 'next';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';

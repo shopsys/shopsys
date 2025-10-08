@@ -3,9 +3,9 @@ import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
 import { AnimatePresence, m } from 'framer-motion';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type MenuItem = {
     name: string;
@@ -41,7 +41,7 @@ export const MobileMenu: FC = () => {
                 {isMenuOpened && (
                     <m.div
                         animate={{ translateX: '0%' }}
-                        aria-label={t('Mobile navigation menu')}
+                        aria-label={t('Mobile navigation menu', { ns: 'accessibility' })}
                         exit={{ translateX: '-100%' }}
                         initial={{ translateX: '-100%' }}
                         role="navigation"

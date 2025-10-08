@@ -5,11 +5,11 @@ import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInf
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationSendOrderButton: FC = () => {
     const { t } = useTranslation();
@@ -38,7 +38,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                         lnk1: termsAndConditionsArticleUrl ? (
                             <Link
                                 isExternal
-                                aria-label={t('Go to terms and conditions article')}
+                                aria-label={t('Go to terms and conditions article', { ns: 'accessibility' })}
                                 href={termsAndConditionsArticleUrl}
                                 target="_blank"
                             />
@@ -48,7 +48,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                         lnk2: privacyPolicyArticleUrl ? (
                             <Link
                                 isExternal
-                                aria-label={t('Go to privacy policy article')}
+                                aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
                                 href={privacyPolicyArticleUrl}
                                 target="_blank"
                             />

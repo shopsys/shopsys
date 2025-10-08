@@ -1,6 +1,6 @@
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
 import { useContacts } from 'utils/useContacts';
 
@@ -16,7 +16,7 @@ export const HeaderContact: FC = () => {
                     <PhoneIcon className="text-text-inverted w-5" />
 
                     <a
-                        aria-label={t('Call us')}
+                        aria-label={t('Call us', { ns: 'accessibility' })}
                         className="text-text-inverted hover:text-text-inverted rounded-md font-bold no-underline focus-visible:ring-1"
                         href={'tel:' + cleanPhone}
                         tid={TIDs.simple_header_contact}

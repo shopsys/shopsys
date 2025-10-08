@@ -5,9 +5,9 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const PersonalData: FC = () => {
     const { t } = useTranslation();

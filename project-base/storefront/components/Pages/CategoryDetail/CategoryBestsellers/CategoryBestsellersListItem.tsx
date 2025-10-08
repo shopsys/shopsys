@@ -9,7 +9,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;
@@ -31,11 +31,14 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     return (
         <ExtendedNextLink
             preventRedirectOnTextSelection
-            aria-label={t('Go to bestseller product page of {{ productName }}', { productName: product.fullName })}
             className="hover:bg-background-default flex items-center justify-between gap-5 gap-y-4 rounded-md p-3 no-underline transition-colors hover:no-underline"
             draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+            aria-label={t('Go to bestseller product page of {{ productName }}', {
+                ns: 'accessibility',
+                productName: product.fullName,
+            })}
             onMouseUp={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
         >
             <div className="flex w-20 shrink-0">

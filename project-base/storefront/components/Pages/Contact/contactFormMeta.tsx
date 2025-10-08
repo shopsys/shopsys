@@ -4,12 +4,12 @@ import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validatio
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormType] => {

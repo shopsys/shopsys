@@ -1,8 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailAvailabilityListProps = {
     storeAvailabilities: TypeStoreAvailabilityFragment[];
@@ -40,6 +40,7 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     href={storeAvailability.store.slug}
                                     type="store"
                                     aria-label={t('Store detail for {{storeName}}', {
+                                        ns: 'accessibility',
                                         storeName: storeAvailability.store.storeName,
                                     })}
                                 >

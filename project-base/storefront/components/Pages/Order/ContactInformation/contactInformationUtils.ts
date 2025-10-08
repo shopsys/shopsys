@@ -24,7 +24,6 @@ import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandl
 import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
 import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { SubmitHandler, UseFormReturn, useWatch } from 'react-hook-form';
@@ -36,6 +35,7 @@ import { OperationResult } from 'urql';
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';

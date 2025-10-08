@@ -13,7 +13,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
@@ -22,6 +21,7 @@ import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationContent: FC = () => {
     const { t } = useTranslation();
@@ -106,8 +106,10 @@ export const RegistrationContent: FC = () => {
 
                                 <FormButtonWrapper>
                                     <SubmitButton
-                                        aria-label={t('Submit form to sign up for new account')}
                                         tid={TIDs.registration_submit_button}
+                                        aria-label={t('Submit form to sign up for new account', {
+                                            ns: 'accessibility',
+                                        })}
                                     >
                                         {t('Sign up')}
                                     </SubmitButton>

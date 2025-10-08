@@ -2,9 +2,9 @@ import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, KeyboardEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
@@ -213,7 +213,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 )}
             >
                 <SpinboxButton
-                    ariaLabel={t('Decrease quantity')}
+                    ariaLabel={t('Decrease quantity', { ns: 'accessibility' })}
                     disabled={value === min}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
@@ -229,7 +229,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 <input
                     aria-hidden
                     aria-describedby="quantity-input-description"
-                    aria-label={t('Quantity')}
+                    aria-label={t('Quantity', { ns: 'accessibility' })}
                     data-tid={TIDs.spinbox_input}
                     defaultValue={defaultValue}
                     max={resolvedMax}
@@ -256,7 +256,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 </span>
 
                 <SpinboxButton
-                    ariaLabel={t('Increase quantity')}
+                    ariaLabel={t('Increase quantity', { ns: 'accessibility' })}
                     disabled={value === resolvedMax}
                     size={size}
                     tid={TIDs.forms_spinbox_increase}

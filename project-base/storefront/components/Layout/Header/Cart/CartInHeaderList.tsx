@@ -5,11 +5,11 @@ import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTranspor
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useFocusTrap } from 'utils/useFocusTrap';
 
@@ -55,7 +55,7 @@ export const CartInHeaderList: FC = () => {
                 </div>
 
                 <LinkButton
-                    aria-label={t('Go to cart page')}
+                    aria-label={t('Go to cart page', { ns: 'accessibility' })}
                     className="ml-auto whitespace-nowrap"
                     href={cartUrl}
                     size="small"

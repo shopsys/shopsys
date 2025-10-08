@@ -14,11 +14,13 @@ class LanguageConstantGridFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory
      */
     public function __construct(
         protected readonly LanguageConstantFacade $languageConstantFacade,
         protected readonly GridFactory $gridFactory,
+        protected readonly LanguageConstantRepository $languageConstantRepository,
         protected readonly ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory,
     ) {
     }
@@ -30,17 +32,21 @@ class LanguageConstantGridFactory
      */
     public function create(string $locale, ?string $search = null): Grid
     {
-        $originalTranslations = $this->languageConstantFacade->getOriginalTranslationsByLocaleIndexedByKey($locale);
-        $userTranslations = $this->languageConstantFacade->getUserTranslationsByLocaleIndexedByKey($locale);
+        $allOriginalTranslations = $this->languageConstantFacade->getAllOriginalTranslationsByLocaleIndexedByNamespace($locale);
+        $allUserTranslations = $this->languageConstantFacade->getAllUserTranslationsByLocaleIndexedByNamespacedKey($locale);
         $translations = $search !== null
-            ? $this->getTranslationsWithSearch($originalTranslations, $userTranslations, $locale, mb_strtolower($search))
-            : $this->getTranslations($originalTranslations, $userTranslations, $locale);
+            ? $this->getTranslationsWithSearch($allOriginalTranslations, $allUserTranslations, $locale, mb_strtolower($search))
+            : $this->getTranslations($allOriginalTranslations, $allUserTranslations, $locale);
 
         $grid = $this->gridFactory->create('languageConstantList', $this->arrayWithPaginationDataSourceFactory->create($translations, 'key'), AdminRoleConstant::ROLE_LANGUAGE_CONSTANTS);
         $grid->setDefaultOrder('key');
         $grid->enablePaging();
 
         $grid->addColumn('locale', 'locale', t('Language'));
+
+        $grid
+            ->addColumn('namespace', 'namespace', t('Namespace'), true)
+            ->setClassAttribute('table-col table-col-10');
         $grid
             ->addColumn('key', 'key', t('Key'), true)
             ->setClassAttribute('table-col table-col-30');
@@ -51,9 +57,15 @@ class LanguageConstantGridFactory
             ->addColumn('userTranslation', 'userTranslation', t('User translation'), true)
             ->setClassAttribute('table-col table-col-30');
 
-        $grid->addEditActionColumn('admin_languageconstant_edit', ['key' => 'key']);
+        $grid->addEditActionColumn('admin_languageconstant_edit', [
+            'key' => 'key',
+            'namespace' => 'namespace',
+        ]);
         $grid
-            ->addDeleteActionColumn('admin_languageconstant_delete', ['key' => 'key'])
+            ->addDeleteActionColumn('admin_languageconstant_delete', [
+                'key' => 'key',
+                'namespace' => 'namespace',
+            ])
             ->setConfirmMessage(t('Do you really want to remove this language constant translation?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/LanguageConstant/listGrid.html.twig');
@@ -62,54 +74,66 @@ class LanguageConstantGridFactory
     }
 
     /**
-     * @param string[] $originalTranslations
-     * @param string[] $userTranslations
+     * @param array<string, string[]> $allOriginalTranslations
+     * @param string[] $allUserTranslations
      * @param string $locale
-     * @return array<int, array{key: string, locale: string, originalTranslation: string, userTranslation: string}>
+     * @return array<int, array{key: string, locale: string, namespace: string, originalTranslation: string, userTranslation: string}>
      */
-    protected function getTranslations(array $originalTranslations, array $userTranslations, string $locale): array
-    {
+    protected function getTranslations(
+        array $allOriginalTranslations,
+        array $allUserTranslations,
+        string $locale,
+    ): array {
         $translations = [];
 
-        foreach ($originalTranslations as $key => $originalTranslation) {
-            $translations[] = [
-                'key' => $key,
-                'locale' => $locale,
-                'originalTranslation' => $originalTranslation,
-                'userTranslation' => $userTranslations[$key] ?? '',
-            ];
+        foreach ($allOriginalTranslations as $namespace => $originalTranslations) {
+            foreach ($originalTranslations as $key => $originalTranslation) {
+                // Create a namespace-specific key for user translations lookup
+                $namespacedKey = $this->languageConstantRepository->createNamespacedKey($namespace, (string)$key);
+                $translations[] = [
+                    'key' => $key,
+                    'locale' => $locale,
+                    'namespace' => $namespace,
+                    'originalTranslation' => $originalTranslation,
+                    'userTranslation' => $allUserTranslations[$namespacedKey] ?? '',
+                ];
+            }
         }
 
         return $translations;
     }
 
     /**
-     * @param string[] $originalTranslations
-     * @param string[] $userTranslations
+     * @param array<string, string[]> $allOriginalTranslations
+     * @param string[] $allUserTranslations
      * @param string $locale
      * @param string $search
-     * @return array<int, array{key: string, locale: string, originalTranslation: string, userTranslation: string}>
+     * @return array<int, array{key: string, locale: string, namespace: string, originalTranslation: string, userTranslation: string}>
      */
     protected function getTranslationsWithSearch(
-        array $originalTranslations,
-        array $userTranslations,
+        array $allOriginalTranslations,
+        array $allUserTranslations,
         string $locale,
         string $search,
     ): array {
         $translations = [];
 
-        foreach ($originalTranslations as $key => $originalTranslation) {
-            $userTranslation = $userTranslations[$key] ?? '';
+        foreach ($allOriginalTranslations as $namespace => $originalTranslations) {
+            foreach ($originalTranslations as $key => $originalTranslation) {
+                $namespacedKey = $this->languageConstantRepository->createNamespacedKey($namespace, (string)$key);
+                $userTranslation = $allUserTranslations[$namespacedKey] ?? '';
 
-            if (str_contains(mb_strtolower((string)$key), $search) ||
-                str_contains(mb_strtolower($originalTranslation), $search) ||
-                str_contains(mb_strtolower($userTranslation), $search)) {
-                $translations[] = [
-                    'key' => $key,
-                    'locale' => $locale,
-                    'originalTranslation' => $originalTranslation,
-                    'userTranslation' => $userTranslation,
-                ];
+                if (str_contains(mb_strtolower((string)$key), $search) ||
+                    str_contains(mb_strtolower($originalTranslation), $search) ||
+                    str_contains(mb_strtolower($userTranslation), $search)) {
+                    $translations[] = [
+                        'key' => $key,
+                        'locale' => $locale,
+                        'namespace' => $namespace,
+                        'originalTranslation' => $originalTranslation,
+                        'userTranslation' => $userTranslation,
+                    ];
+                }
             }
         }
 

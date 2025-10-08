@@ -6,11 +6,11 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const BillingAddress: FC = () => {
     const { t } = useTranslation();
@@ -90,7 +90,7 @@ export const BillingAddress: FC = () => {
                         <>
                             <Select
                                 isRequired
-                                ariaLabel={t('Select country')}
+                                ariaLabel={t('Select country', { ns: 'accessibility' })}
                                 isDisabled={!canManageCompanyData}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}

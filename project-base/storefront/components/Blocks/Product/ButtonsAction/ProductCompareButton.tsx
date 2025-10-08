@@ -1,6 +1,6 @@
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductCompareButtonProps = {
@@ -29,9 +29,11 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             aria-label={
                 isProductInComparison
                     ? t('Remove product {{ productName }} from comparison', {
+                          ns: 'accessibility',
                           productName: productName,
                       })
                     : t('Add product {{ productName }} to comparison', {
+                          ns: 'accessibility',
                           productName: productName,
                       })
             }

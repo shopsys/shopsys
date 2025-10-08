@@ -1,8 +1,8 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductListTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useProductList } from 'utils/productLists/useProductList';
 import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductListUuid';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';

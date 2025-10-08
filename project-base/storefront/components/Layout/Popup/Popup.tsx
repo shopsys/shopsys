@@ -1,11 +1,11 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { useFocusTrap } from 'utils/useFocusTrap';
 import { useKeypress } from 'utils/useKeyPress';
@@ -118,7 +118,7 @@ export const Popup: React.FC<PopupProps> = ({
 
                             {!hideCloseButton && (
                                 <button
-                                    aria-label={t('Close popup')}
+                                    aria-label={t('Close popup', { ns: 'accessibility' })}
                                     className="text-icon-less hover:text-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
                                     ref={closeButtonRef}
                                     tabIndex={0}

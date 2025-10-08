@@ -9,19 +9,16 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
     default: () => ({
-        t: (key: string, params?: any) => {
-            if (key === 'products count') {
-                return params?.count === 1 ? 'product' : 'products';
-            }
-            return key;
-        },
+        t: (key: string, params?: any) =>
+            key === 'products count' ? (params?.count === 1 ? 'product' : 'products') : key,
     }),
 }));
 
 vi.mock('framer-motion', () => ({
     AnimatePresence: ({ children }: any) => children,
     motion: {
-        div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        div: ({ children, layout, ...props }: any) => <div {...props}>{children}</div>,
     },
 }));
 

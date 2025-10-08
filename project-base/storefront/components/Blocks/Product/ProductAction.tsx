@@ -5,9 +5,9 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 const InquiryPopup = dynamic(
     () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
@@ -70,6 +70,7 @@ export const ProductAction: FC<ProductActionProps> = ({
                 tabIndex={skipKeyboardNavigation ? -1 : 0}
                 type="productMainVariant"
                 aria-label={t('Go to page with product variants of {{ productName }}', {
+                    ns: 'accessibility',
                     productName: product.fullName,
                 })}
             >

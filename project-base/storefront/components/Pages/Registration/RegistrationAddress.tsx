@@ -5,11 +5,11 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationAddress: FC = () => {
     const { t } = useTranslation();
@@ -86,7 +86,7 @@ export const RegistrationAddress: FC = () => {
                             <>
                                 <Select
                                     isRequired
-                                    ariaLabel={t('Select country')}
+                                    ariaLabel={t('Select country', { ns: 'accessibility' })}
                                     label={formMeta.fields.country.label}
                                     options={countriesAsSelectOptions}
                                     tid={formMeta.formName + '-' + formMeta.fields.country.name}

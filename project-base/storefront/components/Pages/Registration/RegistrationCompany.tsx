@@ -2,9 +2,9 @@ import { FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationCompany: FC = () => {
     const { t } = useTranslation();

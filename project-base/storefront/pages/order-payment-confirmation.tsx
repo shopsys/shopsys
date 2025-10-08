@@ -18,9 +18,9 @@ import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/Payments
 import { useOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { useOrderPaymentPageContentQuery } from 'graphql/requests/orders/queries/OrderPaymentPageContentQuery.generated';
 import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentContentPageStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';

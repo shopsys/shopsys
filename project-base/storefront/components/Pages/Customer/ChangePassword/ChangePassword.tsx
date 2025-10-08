@@ -9,12 +9,12 @@ import {
 } from 'components/Pages/Customer/ChangePassword/changePasswordFormMeta';
 import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { SubmitHandler, FormProvider } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { ChangePasswordFormType } from 'types/form';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { clearForm } from 'utils/forms/clearForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -124,7 +124,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
 
                         <FormButtonWrapper className="mt-0 pb-6">
                             <SubmitButton
-                                aria-label={t('Submit form to change your password')}
+                                aria-label={t('Submit form to change your password', { ns: 'accessibility' })}
                                 hasDisabledLook={isSubmitting}
                             >
                                 {t('Change password')}

@@ -1,7 +1,7 @@
 import { Footer } from './Footer/Footer';
 import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
 import { Header } from './Header/Header';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ErrorLayout: FC = ({ children }) => {
     const { t } = useTranslation();
@@ -14,11 +14,18 @@ export const ErrorLayout: FC = ({ children }) => {
                 <Header simpleHeader />
             </header>
 
-            <main aria-label={t('Error page content')} className="mt-4 mb-10 flex flex-col gap-4" id="main-content">
+            <main
+                aria-label={t('Error page content', { ns: 'accessibility' })}
+                className="mt-4 mb-10 flex flex-col gap-4"
+                id="main-content"
+            >
                 {children}
             </main>
 
-            <footer aria-label={t('Site information')} className="bg-background-accent-less mt-auto h-fit">
+            <footer
+                aria-label={t('Site information', { ns: 'accessibility' })}
+                className="bg-background-accent-less mt-auto h-fit"
+            >
                 <Footer simpleFooter />
             </footer>
         </div>

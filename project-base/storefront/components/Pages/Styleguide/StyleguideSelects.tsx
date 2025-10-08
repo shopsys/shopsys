@@ -1,9 +1,9 @@
 import { StyleguideSection } from './StyleguideElements';
 import { MultiSelect } from 'components/Forms/Multiselect/Multiselect';
 import { Select } from 'components/Forms/Select/Select';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { SelectOptionType } from 'types/selectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const COMBO_BOX_PAGE_SIZE = 5;
 
@@ -45,7 +45,7 @@ export const StyleguideSelects: FC = () => {
         <StyleguideSection className="flex max-w-96 flex-col gap-3" title="Selects">
             <Select
                 activeOption={selectedBasicOption}
-                ariaLabel={t('Select basic')}
+                ariaLabel={t('Select basic', { ns: 'accessibility' })}
                 label="Basic select"
                 options={colourOptions}
                 tid="styleguide-selects-basic-select"
@@ -55,7 +55,7 @@ export const StyleguideSelects: FC = () => {
             <Select
                 isLoading
                 activeOption={selectedBasicOption}
-                ariaLabel={t('Select loading')}
+                ariaLabel={t('Select loading', { ns: 'accessibility' })}
                 label="Loading select"
                 options={colourOptions}
                 tid="styleguide-selects-basic-select"
@@ -65,7 +65,7 @@ export const StyleguideSelects: FC = () => {
             <Select
                 isDisabled
                 activeOption={null}
-                ariaLabel={t('Select disabled')}
+                ariaLabel={t('Select disabled', { ns: 'accessibility' })}
                 label="Disabled select"
                 options={[]}
                 tid="styleguide-selects-disabled-select"
@@ -74,7 +74,7 @@ export const StyleguideSelects: FC = () => {
 
             <Select
                 activeOption={selectedComboBoxOption}
-                ariaLabel={t('Select combobox')}
+                ariaLabel={t('Select combobox', { ns: 'accessibility' })}
                 label="ComboBox select"
                 options={colourOptions}
                 placeholder={selectedComboBoxOption?.label || t('Search')}
@@ -92,7 +92,7 @@ export const StyleguideSelects: FC = () => {
 
             <Select
                 activeOption={selectedInfiniteOption}
-                ariaLabel={t('Select infinite')}
+                ariaLabel={t('Select infinite', { ns: 'accessibility' })}
                 label="Infinite scroll select"
                 options={infiniteOptions}
                 tid="styleguide-selects-infinite-select"

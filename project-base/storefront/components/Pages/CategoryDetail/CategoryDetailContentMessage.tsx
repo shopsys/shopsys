@@ -1,5 +1,5 @@
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const CategoryDetailContentMessage: FC = () => {
     const { t } = useTranslation();

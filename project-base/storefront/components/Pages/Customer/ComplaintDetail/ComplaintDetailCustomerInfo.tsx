@@ -3,8 +3,8 @@ import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
 import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ComplaintDetailCustomerInfoProps = {
     complaint: TypeComplaintDetailFragment;

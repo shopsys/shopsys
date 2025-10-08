@@ -2,9 +2,9 @@ import { SortingBarProps } from './SortingBar';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { SkeletonModuleFilterAndSortingBar } from 'components/Blocks/Skeleton/SkeletonModuleFilterAndSortingBar';
 import { Button } from 'components/Forms/Button/Button';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const SortingBar = dynamic(() => import('./SortingBar').then((component) => component.SortingBar), {
@@ -23,7 +23,7 @@ export const DeferredFilterAndSortingBar: FC<SortingBarProps> = ({ ...sortingBar
             <Button
                 aria-controls="filter-panel"
                 aria-expanded={isFilterPanelOpen}
-                aria-label={t('Open product filters')}
+                aria-label={t('Open product filters', { ns: 'accessibility' })}
                 className="vl:hidden w-full flex-1 justify-start sm:w-auto"
                 variant="secondary"
                 onClick={() => setIsFilterPanelOpen(true)}

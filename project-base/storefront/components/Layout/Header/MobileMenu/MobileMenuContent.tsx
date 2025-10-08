@@ -5,9 +5,9 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimationSequence, useAnimate, useReducedMotion } from 'framer-motion';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type MenuItem = {
     name: string;

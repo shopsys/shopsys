@@ -1,7 +1,7 @@
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { Provider, SSRExchange, ssrExchange as createSsrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isClient } from 'utils/isClient';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 

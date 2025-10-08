@@ -11,13 +11,13 @@ import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInf
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationDeliveryAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
@@ -262,7 +262,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         <>
                                                             <Select
                                                                 isRequired
-                                                                ariaLabel={t('Select country')}
+                                                                ariaLabel={t('Select country', { ns: 'accessibility' })}
                                                                 label={formMeta.fields.deliveryCountry.label}
                                                                 activeOption={countriesAsSelectOptions.find(
                                                                     (option) => option.value === field.value.value,

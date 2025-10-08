@@ -4,10 +4,10 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { StoreSelect } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/StoreSelect';
 import { TIDs } from 'cypress/tids';
 import { useTransportStoresQuery } from 'graphql/requests/transports/queries/TransportStoresQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type PickupPlacePopupProps = {

@@ -5,7 +5,7 @@ import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 

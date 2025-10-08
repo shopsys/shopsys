@@ -2,7 +2,7 @@ import { MenuItem } from './MobileMenuContent';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type DropdownMenuListProps = {
     navigationItem: MenuItem;

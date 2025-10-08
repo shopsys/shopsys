@@ -4,11 +4,18 @@ module.exports = {
     indentation: 4,
     keepRemoved: false,
     useKeysAsDefaultValue: (locale) => locale === 'en',
+    functions: ['t'],
     lexers: {
         jsx: [
             {
                 lexer: 'JsxLexer',
-                attr: 'i18nKey', // Attribute for the keys
+                attr: 'i18nKey',
+            },
+        ],
+        default: [
+            {
+                lexer: 'JsxLexer',
+                attr: 'i18nKey',
             },
         ],
     },
@@ -17,6 +24,8 @@ module.exports = {
     output: 'public/locales/$LOCALE/$NAMESPACE.json',
     namespaceSeparator: false,
     keySeparator: false,
+    contextSeparator: false,
+    pluralSeparator: '_',
     input: [
         '../components/**/*.{ts,tsx}',
         '../connectors/**/*.{ts,tsx}',
@@ -26,5 +35,5 @@ module.exports = {
         '../utils/**/*.{ts,tsx}',
     ],
     sort: true,
-    verbose: false,
+    verbose: true,
 };

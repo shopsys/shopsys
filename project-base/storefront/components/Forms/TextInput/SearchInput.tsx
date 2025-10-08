@@ -2,9 +2,9 @@ import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange', never>;
@@ -74,7 +74,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {!!value && !shouldShowSpinnerInInput && (
                 <button
-                    aria-label={t('Clear search input')}
+                    aria-label={t('Clear search input', { ns: 'accessibility' })}
                     className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
                     tabIndex={0}
                     title={t('Clear search')}
@@ -86,7 +86,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             )}
             {shouldShowSpinnerInInput && (
                 <SpinnerIcon
-                    aria-label={t('Loading search results')}
+                    aria-label={t('Loading search results', { ns: 'accessibility' })}
                     className="text-icon-less absolute top-1/2 right-3 size-5 -translate-y-1/2"
                 />
             )}

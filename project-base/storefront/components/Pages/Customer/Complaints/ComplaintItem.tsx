@@ -3,9 +3,9 @@ import { Image } from 'components/Basic/Image/Image';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -40,6 +40,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                                 href={complaintItem.items[0].product.slug}
                                 type="product"
                                 aria-label={t('Go to product {{productName}}', {
+                                    ns: 'accessibility',
                                     productName: complaintItem.items[0].productName,
                                 })}
                             >
@@ -57,6 +58,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                                 <ExtendedNextLink
                                     type="complaintDetail"
                                     aria-label={t('Go to complaint number {{complaintNumber}}', {
+                                        ns: 'accessibility',
                                         complaintNumber: complaintItem.number,
                                     })}
                                     href={{
@@ -87,6 +89,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                     size="small"
                     type="complaintDetail"
                     aria-label={t('Go to complaint number {{complaintNumber}}', {
+                        ns: 'accessibility',
                         complaintNumber: complaintItem.number,
                     })}
                     href={{

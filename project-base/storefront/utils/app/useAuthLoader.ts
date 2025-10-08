@@ -1,11 +1,11 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getCookies } from 'cookies-next';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getCookieName } from 'utils/cookies/cookieNaming';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getIsHttps } from 'utils/requestProtocol';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';

@@ -9,10 +9,10 @@ import { useFilterShowLess } from './utils/useFilterShowLess';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { createAriaParameter } from 'utils/accessibility/createAriaParameter';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 

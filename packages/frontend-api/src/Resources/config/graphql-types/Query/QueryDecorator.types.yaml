@@ -412,10 +412,6 @@ QueryDecorator:
                     urlSlug:
                         type: "String"
                 description: "Returns store filtered using UUID or URL slug"
-            languageConstants:
-                type: '[LanguageConstant!]!'
-                resolve: "@=query('languageConstantsQuery')"
-                description: "Return user translated language constants for current domain locale"
             notificationBars:
                 type: '[NotificationBar!]'
                 resolve: "@=query('notificationBarsQuery')"

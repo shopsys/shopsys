@@ -5,10 +5,10 @@ import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
@@ -69,6 +69,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 aria-haspopup="listbox"
                 variant="inverted"
                 aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
+                    ns: 'accessibility',
                     currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
                 })}
                 className={twJoin(
@@ -85,7 +86,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
             </Button>
 
             <div
-                aria-label={t('Sort options')}
+                aria-label={t('Sort options', { ns: 'accessibility' })}
                 id="sort-dropdown"
                 role="listbox"
                 className={twJoin(
@@ -112,8 +113,14 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                             isActive={isSelectedSortOption}
                             ariaLabel={
                                 isSelectedSortOption
-                                    ? t('Sorted by {{ sortOption }}', { sortOption: sortOptionsLabels[sortOption] })
-                                    : t('Sort by {{ sortOption }}', { sortOption: sortOptionsLabels[sortOption] })
+                                    ? t('Sorted by {{ sortOption }}', {
+                                          ns: 'accessibility',
+                                          sortOption: sortOptionsLabels[sortOption],
+                                      })
+                                    : t('Sort by {{ sortOption }}', {
+                                          ns: 'accessibility',
+                                          sortOption: sortOptionsLabels[sortOption],
+                                      })
                             }
                             onClick={() => handleChangeSort(sortOption)}
                         >

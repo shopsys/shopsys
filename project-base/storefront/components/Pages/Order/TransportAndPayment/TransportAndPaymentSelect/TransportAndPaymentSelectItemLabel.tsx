@@ -5,9 +5,9 @@ import { getDeliveryMessage } from 'components/Pages/Order/TransportAndPayment/t
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 

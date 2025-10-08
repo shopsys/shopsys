@@ -3,9 +3,9 @@ import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeSalesRepresentative } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const SalesRepresentative: FC = () => {
     const { t } = useTranslation();
@@ -44,7 +44,7 @@ export const SalesRepresentative: FC = () => {
                 <div className="mt-2 flex items-center gap-2">
                     <PhoneIcon className="size-6" />
                     <a
-                        aria-label={t('Call sales representative')}
+                        aria-label={t('Call sales representative', { ns: 'accessibility' })}
                         className="text-text-default rounded-md text-sm font-semibold no-underline"
                         href={`tel:${telephone}`}
                         tabIndex={0}
@@ -58,7 +58,7 @@ export const SalesRepresentative: FC = () => {
                 <div className="flex items-center gap-2">
                     <MailIcon className="size-6" />
                     <a
-                        aria-label={t('Send email to sales representative')}
+                        aria-label={t('Send email to sales representative', { ns: 'accessibility' })}
                         href={`mailto:${email}`}
                         tabIndex={0}
                         className={twJoin(

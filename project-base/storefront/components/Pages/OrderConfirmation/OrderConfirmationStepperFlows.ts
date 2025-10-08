@@ -2,7 +2,7 @@ import { CheckboxCheckedIcon } from 'components/Basic/Icon/CheckboxCheckedIcon';
 import { PackageDeliveredIcon } from 'components/Basic/Icon/PackageDeliveredIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export enum FlowTypesEnum {
     PaymentAwaiting = 'paymentAwaiting',

@@ -19,12 +19,12 @@ import {
 } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, RegistrationFormType] => {
@@ -208,7 +208,7 @@ export const useRegistrationFormMeta = (
                                 lnk1: privacyPolicyArticleUrl ? (
                                     <Link
                                         isExternal
-                                        aria-label={t('Go to privacy policy article')}
+                                        aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
                                         className="inline text-sm"
                                         href={privacyPolicyArticleUrl}
                                         target="_blank"

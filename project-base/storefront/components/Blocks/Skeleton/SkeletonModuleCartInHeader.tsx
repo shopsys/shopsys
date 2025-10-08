@@ -1,7 +1,7 @@
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { CartCount } from 'components/Layout/Header/Cart/CartCount';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const SkeletonModuleCartInHeader: FC = () => {
     const { t } = useTranslation();

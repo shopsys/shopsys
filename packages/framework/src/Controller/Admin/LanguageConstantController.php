@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Form\Admin\LanguageConstant\LanguageConstantFormType
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\Exception\LanguageConstantNotFoundException;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory;
@@ -76,8 +77,9 @@ class LanguageConstantController extends AdminBaseController
     public function editAction(Request $request): Response
     {
         $key = $request->query->get('key');
+        $namespace = $request->query->get('namespace', LanguageConstant::NAMESPACE_COMMON);
         $locale = $this->getSelectedLocale();
-        $translation = $this->languageConstantFacade->getOriginalTranslationsByLocaleIndexedByKey($locale)[$key] ?? null;
+        $translation = $this->languageConstantFacade->getOriginalTranslationsByLocaleIndexedByKey($locale, $namespace)[$key] ?? null;
 
         if ($translation === null) {
             $this->addErrorFlashTwig(
@@ -90,8 +92,8 @@ class LanguageConstantController extends AdminBaseController
             return $this->redirectToRoute('admin_languageconstant_list');
         }
 
-        $constant = $this->languageConstantFacade->findByKey($key);
-        $constantData = $this->languageConstantDataFactory->createFromDataOrLanguageConstant($key, $locale, $translation, $constant);
+        $constant = $this->languageConstantFacade->findByKey($key, $namespace);
+        $constantData = $this->languageConstantDataFactory->createFromDataOrLanguageConstant($key, $locale, $translation, $constant, $namespace);
 
         $form = $this->createForm(LanguageConstantFormType::class, $constantData)->handleRequest($request);
 
@@ -103,7 +105,7 @@ class LanguageConstantController extends AdminBaseController
                     t('Language constant translation <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
                         'name' => $constant->getKey(),
-                        'url' => $this->generateUrl('admin_languageconstant_edit', ['key' => $constant->getKey()]),
+                        'url' => $this->generateUrl('admin_languageconstant_edit', ['key' => $constant->getKey(), 'namespace' => $constant->getNamespace()]),
                     ],
                 );
             } catch (LanguageConstantNotFoundException $exception) {
@@ -115,7 +117,7 @@ class LanguageConstantController extends AdminBaseController
                 );
             }
 
-            $this->languageConstantFacade->generateLanguageConstantFile($locale);
+            $this->languageConstantFacade->generateAllNamespaceFiles($locale);
 
             return $this->redirectToRoute('admin_languageconstant_list');
         }
@@ -139,12 +141,13 @@ class LanguageConstantController extends AdminBaseController
     public function deleteAction(Request $request): Response
     {
         $key = $request->query->get('key');
-        $constant = $this->languageConstantFacade->findByKey($key);
+        $namespace = $request->query->get('namespace', LanguageConstant::NAMESPACE_COMMON);
+        $constant = $this->languageConstantFacade->findByKey($key, $namespace);
 
         if ($constant !== null) {
             try {
-                $this->languageConstantFacade->delete($key, $this->getSelectedLocale());
-                $this->languageConstantFacade->generateLanguageConstantFile($this->getSelectedLocale());
+                $this->languageConstantFacade->delete($key, $this->getSelectedLocale(), $namespace);
+                $this->languageConstantFacade->generateAllNamespaceFiles($this->getSelectedLocale());
 
                 $this->addSuccessFlashTwig(
                     t('Language constant translation <strong>{{ name }}</strong> deleted'),

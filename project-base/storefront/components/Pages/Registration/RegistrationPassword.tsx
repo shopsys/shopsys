@@ -3,9 +3,9 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationPassword: FC = () => {
     const { t } = useTranslation();

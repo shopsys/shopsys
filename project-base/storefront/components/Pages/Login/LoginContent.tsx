@@ -1,6 +1,6 @@
 import { LoginForm } from 'components/Blocks/Login/LoginForm';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const LoginContent: FC = () => {
     const { t } = useTranslation();

@@ -1321,15 +1321,6 @@ export type TypeImage = {
   url: Scalars['String']['output'];
 };
 
-/** Represents a single user translation of language constant */
-export type TypeLanguageConstant = {
-  __typename?: 'LanguageConstant';
-  /** Translation key */
-  key: Scalars['String']['output'];
-  /** User translation */
-  translation: Scalars['String']['output'];
-};
-
 /** Represents an internal link */
 export type TypeLink = {
   __typename?: 'Link';
@@ -2735,8 +2726,6 @@ export type TypeQuery = {
   flags: Maybe<Array<TypeFlag>>;
   /** Check if email is registered */
   isCustomerUserRegistered: Scalars['Boolean']['output'];
-  /** Return user translated language constants for current domain locale */
-  languageConstants: Array<TypeLanguageConstant>;
   /** Returns last order of the user or null if no order was placed yet */
   lastOrder: Maybe<TypeOrder>;
   /** Returns complete navigation menu */

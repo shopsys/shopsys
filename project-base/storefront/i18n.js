@@ -31,16 +31,16 @@ const logException = async (e) => {
 
 module.exports = {
     pages: {
-        '*': ['common'],
+        '*': ['common', 'accessibility'],
     },
     locales: ['default', 'en', 'cs', 'sk'],
     defaultLocale: 'default',
     localeDetection: false,
     serializeConfig: false,
     defaultNS: 'common',
+    nsSeparator: false,
     keySeparator: false,
     logBuild: process.env.APP_ENV !== 'production',
-    nsSeparator: false,
     loader: false,
     skipInitialProps: true,
     loaderName: 'getServerSideProps',

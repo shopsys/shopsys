@@ -8,11 +8,11 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
@@ -59,7 +59,7 @@ export const CartInHeader: FC = ({ className }) => {
             <div
                 aria-expanded={isActive}
                 aria-haspopup="menu"
-                aria-label={t('Show cart popup')}
+                aria-label={t('Show cart popup', { ns: 'accessibility' })}
                 data-tid={TIDs.header_cart}
                 role="button"
                 tabIndex={!cart?.items.length ? -1 : 0}
@@ -123,7 +123,7 @@ export const CartInHeader: FC = ({ className }) => {
                     aria-controls="cart-popup"
                     aria-expanded={isActive}
                     aria-haspopup="menu"
-                    aria-label={t('Show cart popup')}
+                    aria-label={t('Show cart popup', { ns: 'accessibility' })}
                     role="button"
                     tabIndex={-1}
                     title={t('Cart')}

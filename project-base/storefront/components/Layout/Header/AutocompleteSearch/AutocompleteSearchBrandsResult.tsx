@@ -3,7 +3,7 @@ import { AUTOCOMPLETE_BRAND_LIMIT } from './constants';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type AutocompleteSearchBrandsResultProps = {
     brandSearch: TypeAutocompleteSearchQuery['brandSearch'];

@@ -1,8 +1,8 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { useCurrentCart } from './useCurrentCart';
 import { handleCartModifications } from 'connectors/cart/Cart';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const useReloadCart = (): void => {

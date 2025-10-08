@@ -5,9 +5,9 @@ import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModul
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
@@ -33,7 +33,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        aria-label={t('Go to all articles page')}
+                        aria-label={t('Go to all articles page', { ns: 'accessibility' })}
                         className="font-secondary text-text-inverted hover:text-text-inverted text-sm font-semibold tracking-wide no-underline hover:underline"
                         href={blogUrl}
                         type="blogCategory"

@@ -3,8 +3,8 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmMessageType } from 'gtm/enums/GtmMessageType';
 import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, useEffect, useMemo } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ErrorPopupProps = {
     fields: {
@@ -54,11 +54,16 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = Gtm
 
     return (
         <Popup
-            ariaDescription={`${t('This form contains validation errors that must be corrected before you can continue.')} ${mappedAriaLabel}`}
             className="w-11/12 max-w-lg"
             contentClassName="overflow-y-auto"
             role="alertdialog"
             title={t('Please check inserted details')}
+            ariaDescription={`${t(
+                'This form contains validation errors that must be corrected before you can continue.',
+                {
+                    ns: 'accessibility',
+                },
+            )} ${mappedAriaLabel}`}
         >
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>

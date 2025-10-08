@@ -26,10 +26,16 @@ class CleanStorefrontCacheFacade
 
     /**
      * @param string $locale
+     * @param string|null $namespace
      */
-    public function cleanStorefrontTranslationCache(string $locale = ''): void
+    public function cleanStorefrontTranslationCache(string $locale = '', ?string $namespace = null): void
     {
-        $keyPattern = 'translates:' . $locale . '*';
+        if ($namespace !== null) {
+            $keyPattern = 'translates:' . $locale . ':' . $namespace . '*';
+        } else {
+            $keyPattern = 'translates:' . $locale . '*';
+        }
+
         $this->cleanStorefrontCacheByKeyPattern($keyPattern);
     }
 

@@ -3,8 +3,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { getLinkType } from 'components/Blocks/SimpleNavigation/simpleNavigationUtils';
 import { TIDs } from 'cypress/tids';
 import { TypePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -35,9 +35,12 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                         className={twJoin(index === 0 && categoriesLength > 4 && 'vl:col-span-2 vl:row-span-2')}
                     >
                         <ExtendedNextLink
-                            aria-label={t('Go to category {{ categoryName }}', { categoryName: category.name })}
                             href={href}
                             type={linkType}
+                            aria-label={t('Go to category {{ categoryName }}', {
+                                ns: 'accessibility',
+                                categoryName: category.name,
+                            })}
                             className={twMergeCustom(
                                 'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition',
                                 'border-background-more bg-background-more text-text-default border',

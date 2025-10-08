@@ -2,8 +2,8 @@ import { OrderItemDiscountCard } from 'components/Blocks/OrderItemDiscountCard/O
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import React from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type OrderConfirmationProductsProps = {
     items: TypeOrderDetailItemFragment[] | undefined;

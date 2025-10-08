@@ -2611,6 +2611,9 @@ msgstr "Prípona názvu"
 msgid "Names"
 msgstr "Názvy"
 
+msgid "Namespace"
+msgstr "Menný priestor"
+
 msgid "Navigation"
 msgstr "Navigácia"
 

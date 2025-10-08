@@ -1,6 +1,6 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeStoreOpeningStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OpeningStatusProps = {

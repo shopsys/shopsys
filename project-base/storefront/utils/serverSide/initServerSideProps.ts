@@ -203,6 +203,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             ...(await loadNamespaces({
                 locale: domainConfig.defaultLocale,
                 pathname: trimmedUrlWithoutQueryParams,
+                namespaces: ['common', 'accessibility'],
             })),
             domainConfig,
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993

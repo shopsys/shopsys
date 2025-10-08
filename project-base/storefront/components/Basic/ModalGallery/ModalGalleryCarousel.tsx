@@ -3,9 +3,9 @@ import { Image } from 'components/Basic/Image/Image';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ModalGalleryCarouselProps = {
     items: (TypeVideoTokenFragment | TypeImageFragment | TypeFileFragment)[];
@@ -34,7 +34,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                 return (
                     <li key={index} ref={itemsRefs[index]}>
                         <div
-                            aria-label={t('Select image from gallery')}
+                            aria-label={t('Select image from gallery', { ns: 'accessibility' })}
                             role="button"
                             tabIndex={0}
                             title={t('Select image')}

@@ -5,9 +5,9 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type ComplaintDetailComplaintItemProps = {
@@ -55,7 +55,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     )}
 
                     <span>
-                        {t('Quantity')}: {complaintItem.quantity}
+                        {t('Quantity', { ns: 'accessibility' })}: {complaintItem.quantity}
                     </span>
 
                     {complaintOrder ? (
@@ -100,7 +100,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     return (
                         <li key={index}>
                             <div
-                                aria-label={t('View complaint images in gallery')}
+                                aria-label={t('View complaint images in gallery', { ns: 'accessibility' })}
                                 role="button"
                                 tabIndex={0}
                                 title={t('Open gallery')}

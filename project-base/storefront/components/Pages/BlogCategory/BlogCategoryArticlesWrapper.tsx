@@ -5,8 +5,8 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useBlogCategoryArticlesData } from 'utils/loadMore/useBlogCategoryArticlesData';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 

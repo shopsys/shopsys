@@ -1,8 +1,8 @@
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { Button } from 'components/Forms/Button/Button';
-import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const UserNavigation: FC = () => {
     const { t } = useTranslation();

@@ -1,8 +1,8 @@
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductComparisonBodyProps = {
     comparedProducts: TypeProductInProductListFragment[];

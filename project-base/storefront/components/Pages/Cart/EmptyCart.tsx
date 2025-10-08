@@ -1,6 +1,6 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const EmptyCart: FC = () => {
     const { t } = useTranslation();

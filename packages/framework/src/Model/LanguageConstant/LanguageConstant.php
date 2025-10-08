@@ -12,13 +12,15 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @ORM\Table(name="language_constants", uniqueConstraints={
- *     @ORM\UniqueConstraint(name="language_constants_key", columns={"key"})
+ *     @ORM\UniqueConstraint(name="language_constants_key_namespace", columns={"key", "namespace"})
  * })
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation translation(?string $locale = null)
  */
 class LanguageConstant extends AbstractTranslatableEntity
 {
+    public const string NAMESPACE_COMMON = 'common';
+
     /**
      * @var int
      * @ORM\Id
@@ -34,6 +36,12 @@ class LanguageConstant extends AbstractTranslatableEntity
     protected $key;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $namespace;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation>
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation")
      */
@@ -45,6 +53,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     public function __construct(LanguageConstantData $languageConstantData)
     {
         $this->key = $languageConstantData->key;
+        $this->namespace = $languageConstantData->namespace;
         $this->translations = new ArrayCollection();
         $this->translation($languageConstantData->locale)->setTranslation($languageConstantData->userTranslation);
     }
@@ -63,6 +72,14 @@ class LanguageConstant extends AbstractTranslatableEntity
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
     }
 
     /**
