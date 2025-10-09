@@ -99,4 +99,6 @@ export enum TIDs {
     blog_article_publication_date = 'blog_article_publication_date',
     footer_copyright = 'footer_copyright',
     error_page = 'error_page',
+    blocks_addresslist_addresscard_ = 'blocks_addresslist_addresscard_',
+    blocks_addresslist_add_address_button = 'blocks_addresslist_add_address_button',
 }

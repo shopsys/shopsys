@@ -3,6 +3,7 @@ import { EditAddressAction } from './Actions/EditAddressAction';
 import { SetDefaultAddressAction } from './Actions/SetDefaultAddressAction';
 import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
+import { TIDs } from 'cypress/tids';
 import { DeliveryAddressType } from 'types/customer';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -26,6 +27,7 @@ export const AddressCard: FC<AddressCardProps> = ({
     const { canManagePersonalData } = useAuthorization();
     const isDefaultAddress = defaultDeliveryAddress?.uuid === address.uuid;
     const orderSelectionMode = orderSelectAddressHandler !== undefined;
+    const addressIndex = address.uuid;
 
     const handleSelectDeliveryAddress = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (!orderSelectAddressHandler) {
@@ -49,6 +51,7 @@ export const AddressCard: FC<AddressCardProps> = ({
 
     return (
         <div
+            data-tid={`${TIDs.blocks_addresslist_addresscard_}${addressIndex}`}
             role="button"
             tabIndex={0}
             aria-label={

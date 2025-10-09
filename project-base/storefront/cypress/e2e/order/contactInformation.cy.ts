@@ -4,12 +4,13 @@ import {
     checkThatContactInformationWasRemovedFromLocalStorage,
     checkTransportSelectionIsNotVisible,
     checkTransportSelectionIsVisible,
-    clearAndFillDeliveryAdressInThirdStep,
     clearPostcodeInThirdStep,
     fillBillingAdressInThirdStep,
     fillCustomerInformationInThirdStep,
     fillEmailInThirdStep,
     fillInNoteInThirdStep,
+    clickAddNewAddressButton,
+    fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
 import { customer1, deliveryAddress, orderNote, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
@@ -143,8 +144,8 @@ describe('Contact Information Page Tests', () => {
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-        loseFocus();
+        clickAddNewAddressButton();
+        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form before logout', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });

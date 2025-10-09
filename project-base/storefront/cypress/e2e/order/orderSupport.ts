@@ -11,7 +11,7 @@ import {
     url,
 } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
-import { changeElementText, checkUrl } from 'support';
+import { changeElementText, checkAndHideSuccessToast, checkUrl } from 'support';
 import { TIDs } from 'tids';
 
 export const fillEmailInThirdStep = (email: string) => {
@@ -292,4 +292,39 @@ export const repeatOrderFromOrderDetail = (withMerge?: boolean) => {
     } else if (withMerge === false) {
         cy.getByTID([TIDs.repeat_order_dont_merge_carts_button]).click();
     }
+};
+
+export const selectDeliveryAddressCard = (addressIndex: number = 0) => {
+    cy.get(`[data-tid^="${TIDs.blocks_addresslist_addresscard_}"]`).eq(addressIndex).click();
+};
+
+export const clickAddNewAddressButton = () => {
+    cy.getByTID([TIDs.blocks_addresslist_add_address_button]).click();
+    cy.waitForStableAndInteractiveDOM();
+};
+
+export const fillAndSaveNewDeliveryAddressInPopup = (deliveryAddress: {
+    firstName: string;
+    lastName: string;
+    company: string;
+    phone: string;
+    street: string;
+    city: string;
+    postCode: string;
+}) => {
+    cy.get('#delivery-address-form-firstName').clear().type(deliveryAddress.firstName);
+    cy.get('#delivery-address-form-lastName').clear().type(deliveryAddress.lastName);
+    cy.get('#delivery-address-form-companyName').clear().type(deliveryAddress.company);
+    cy.get('#delivery-address-form-telephone').clear().type(deliveryAddress.phone);
+    cy.get('#delivery-address-form-street').clear().type(deliveryAddress.street);
+    cy.get('#delivery-address-form-city').clear().type(deliveryAddress.city);
+    cy.get('#delivery-address-form-postcode').clear({ force: true }).type(deliveryAddress.postCode, { force: true });
+
+    cy.get('#delivery-address-form-country').realClick();
+    cy.realPress('{downarrow}');
+    cy.realPress('{enter}');
+
+    cy.contains('button', 'Save').click();
+    cy.waitForStableAndInteractiveDOM();
+    checkAndHideSuccessToast('Your delivery address has been created');
 };
