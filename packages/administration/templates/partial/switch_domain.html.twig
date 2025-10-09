@@ -1,0 +1,23 @@
+{% if domainConfigs|length > 1 %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title text-secondary">{{ 'Switch domain'|trans }}</div>
+            <div class="btn-list " role="tablist">
+                {% for domainConfig in domainConfigs %}
+                    {% if domainConfig.id == selectedDomainId %}
+                        <span class="btn active">
+                            {{ domain_icon(domainConfig.id) }}
+                            {{ domainConfig.name }}
+                        </span>
+                    {% else %}
+                        <a class="btn"
+                           href="{{ url('admin_domain_selectdomain', {id: domainConfig.id}) }}">
+                            {{ domain_icon(domainConfig.id) }}
+                            {{ domainConfig.name }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

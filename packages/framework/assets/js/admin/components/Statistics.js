@@ -32,8 +32,7 @@ export default class Statistics {
                     display: false,
                 },
                 title: {
-                    display: true,
-                    text: $chartCanvas.data('chart-title'),
+                    display: false,
                 },
             },
         });

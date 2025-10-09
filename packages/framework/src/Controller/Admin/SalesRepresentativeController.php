@@ -56,7 +56,7 @@ class SalesRepresentativeController extends AdminBaseController
     {
         $grid = $this->salesRepresentativeGridFactory->create(AdminRoleConstant::ROLE_SALES_REPRESENTATIVE);
 
-        return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/salesRepresentative/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -91,7 +91,7 @@ class SalesRepresentativeController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/salesRepresentative/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -140,7 +140,7 @@ class SalesRepresentativeController extends AdminBaseController
             ]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/salesRepresentative/edit.html.twig', [
             'form' => $form->createView(),
             'salesRepresentative' => $salesRepresentative,
         ]);

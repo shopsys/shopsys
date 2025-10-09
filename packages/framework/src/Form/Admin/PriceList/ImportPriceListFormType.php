@@ -65,8 +65,8 @@ final class ImportPriceListFormType extends AbstractType
             ->add('domainId', DomainType::class, [
                 'required' => true,
                 'label' => t('Domain'),
-                'attr' => [
-                    'class' => 'js-import-price-list-domain-id',
+                'row_attr' => [
+                    'data-js-import-price-list-domain-id' => null,
                 ],
             ])
             ->add('name', TextType::class, [

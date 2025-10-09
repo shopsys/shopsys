@@ -1,0 +1,8 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Edit domain icon'|trans }} {{ domain.name }}{% endblock %}
+{% block h1 %}{{ 'Edit domain icon'|trans }} {{ domain.name }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}

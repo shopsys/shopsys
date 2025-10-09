@@ -7,9 +7,9 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Module;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,7 +23,9 @@ final class ModulesFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('modules', FormType::class)
+            ->add('modules', GroupType::class, [
+                'label' => t('Modules'),
+            ])
             ->add('actionBar', ActionBarType::class, [
                 'save_label' => t('Save changes'),
             ]);

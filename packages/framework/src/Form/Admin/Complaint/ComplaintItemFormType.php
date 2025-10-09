@@ -33,7 +33,6 @@ final class ComplaintItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter description']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('quantity', IntegerType::class, [
                 'constraints' => [
@@ -42,7 +41,6 @@ final class ComplaintItemFormType extends AbstractType
                         ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}'],
                     ),
                 ],
-                'error_bubbling' => true,
             ]);
     }
 

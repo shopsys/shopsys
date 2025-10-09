@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class MailWhitelist {
     static init($container) {
@@ -13,8 +10,7 @@ export default class MailWhitelist {
             const $collection = $(this).closest('.js-mail-whitelist');
 
             const $item = $(this).closest('.js-mail-whitelist-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-mail-whitelist', index);
+            FormChangeInfo.showInfo();
             $item.remove();
 
             MailWhitelist.refreshCount($collection);
@@ -36,7 +32,7 @@ export default class MailWhitelist {
             $collection.append($item);
             new Register().registerNewContent($item);
 
-            addNewItemToCollection('.js-mail-whitelist', index);
+            FormChangeInfo.showInfo();
             MailWhitelist.refreshCount($collection);
 
             return false;

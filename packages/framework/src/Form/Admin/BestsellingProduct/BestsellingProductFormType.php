@@ -7,10 +7,10 @@ namespace Shopsys\FrameworkBundle\Form\Admin\BestsellingProduct;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Constraints;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductType;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,7 +24,8 @@ final class BestsellingProductFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('products', FormType::class, [
+            ->add('products', GroupType::class, [
+                'label' => t('Bestselling products'),
                 'error_bubbling' => true,
                 'constraints' => [
                     new Constraints\UniqueCollection([
@@ -43,7 +44,14 @@ final class BestsellingProductFormType extends AbstractType
             $builder->get('products')
                 ->add((string)$i, ProductType::class, [
                     'required' => false,
-                    'placeholder' => null,
+                    'label' => $i + 1,
+                    'label_attr' => [
+                        'class' => 'col-auto',
+                    ],
+                    'row_attr' => [
+                        'class' => 'input-group',
+                    ],
+                    'placeholder' => '-- auto filled --',
                     'enableRemove' => true,
                 ]);
         }
@@ -58,7 +66,6 @@ final class BestsellingProductFormType extends AbstractType
         $resolver->setDefaults([
             'attr' => [
                 'novalidate' => 'novalidate',
-                'class' => 'js-no-validate',
             ],
         ]);
     }

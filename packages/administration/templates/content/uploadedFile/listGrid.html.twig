@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No files found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'files'|trans %}
+    {{ parent() }}
+{% endblock %}

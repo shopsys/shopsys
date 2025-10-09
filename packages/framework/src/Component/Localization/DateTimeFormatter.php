@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Localization;
 
-use DateTime;
+use DateTimeInterface;
 use IntlDateFormatter;
 use Override;
 
@@ -25,10 +25,10 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param int $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param string|null $locale
-     * @return string|bool
+     * @return string|false
      */
     #[Override]
-    public function format(DateTime $value, $dateType, $timeType, $locale)
+    public function format(DateTimeInterface $value, $dateType, $timeType, $locale): string|false
     {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,
@@ -43,12 +43,12 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $locale
+     * @param string|null $locale
      * @param int|null $dateType
      * @param int|null $timeType
      * @return string|null
      */
-    protected function getCustomPattern($locale, $dateType, $timeType)
+    protected function getCustomPattern(?string $locale, ?int $dateType, ?int $timeType): ?string
     {
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern(
             $locale,
@@ -56,12 +56,6 @@ class DateTimeFormatter implements DateTimeFormatterInterface
             $timeType,
         );
 
-        if ($dateTimePattern !== null) {
-            $pattern = $dateTimePattern->getPattern();
-        } else {
-            $pattern = null;
-        }
-
-        return $pattern;
+        return $dateTimePattern?->getPattern();
     }
 }

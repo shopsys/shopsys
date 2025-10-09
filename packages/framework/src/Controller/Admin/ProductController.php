@@ -125,7 +125,7 @@ class ProductController extends AdminBaseController
             'domains' => $this->domain->getAll(),
         ];
 
-        return $this->render('@ShopsysFramework/Admin/Content/Product/edit.html.twig', $viewParameters);
+        return $this->render('@ShopsysAdministration/content/product/edit.html.twig', $viewParameters);
     }
 
     /**
@@ -167,7 +167,7 @@ class ProductController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Product/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/product/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -225,7 +225,7 @@ class ProductController extends AdminBaseController
 
         $productCanBeCreated = $this->productCanBeCreated();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Product/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/product/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
@@ -277,7 +277,7 @@ class ProductController extends AdminBaseController
             $request->get('newIndex'),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Product/AdvancedSearch/ruleForm.html.twig', [
+        return $this->render('@ShopsysAdministration/content/product/advancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),
         ]);
     }
@@ -319,7 +319,7 @@ class ProductController extends AdminBaseController
             }
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Product/createVariant.html.twig', [
+        return $this->render('@ShopsysAdministration/content/product/createVariant.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -343,7 +343,7 @@ class ProductController extends AdminBaseController
     {
         $product = $this->productFacade->getById($productId);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Product/visibility.html.twig', [
+        return $this->render('@ShopsysAdministration/content/product/visibilityItems.html.twig', [
             'product' => $product,
             'domains' => $this->domain->getAdminEnabledDomains(),
         ]);

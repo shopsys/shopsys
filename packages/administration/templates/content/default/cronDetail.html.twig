@@ -1,0 +1,22 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Cron detail'|trans }} - {{ cronName }}{% endblock %}
+
+{% block pre_title %}{{ 'Cron detail'|trans }}{% endblock %}
+{% block h1 %}{{ cronName }}{% endblock %}
+
+{% block main_content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <canvas
+                    class="js-cron-line-chart"
+                    data-chart-labels="{{ cronGraphLabels|json_encode }}"
+                    data-chart-values="{{ cronGraphValues|json_encode }}"
+                    data-chart-title="{{ 'Duration (seconds)'|trans }}"
+                    data-chart-timeout-secs="{{ cronTimeoutSecs }}"
+            ></canvas>
+        </div>
+    </div>
+
+    {{ cronRunsGridView.render() }}
+{% endblock %}

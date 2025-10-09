@@ -98,11 +98,9 @@ final class ArticleFormType extends AbstractType
                 'label' => t('Name'),
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide'),
             ])
             ->add('external', YesNoType::class, [
-                'required' => true,
                 'label' => t('Open in new window'),
             ])
             ->add('type', ChoiceType::class, [
@@ -125,6 +123,9 @@ final class ArticleFormType extends AbstractType
                 ],
                 'label' => t('URL'),
                 'trim' => true,
+                'row_attr' => [
+                    'data-js-article-type-content' => 'link',
+                ],
             ])
             ->add('text', GrapesJsType::class, [
                 'required' => true,
@@ -136,6 +137,9 @@ final class ArticleFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Content'),
+                'row_attr' => [
+                    'data-js-article-type-content' => 'site',
+                ],
             ])
             ->add('createdAt', DatePickerType::class, [
                 'required' => true,
@@ -143,39 +147,36 @@ final class ArticleFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter date of creation']),
                 ],
                 'label' => t('Creation date'),
+                'row_attr' => [
+                    'data-js-article-type-content' => 'site',
+                ],
             ]);
 
         $builderSeoData = $builder->create('seo', GroupType::class, [
             'label' => t('SEO'),
+            'row_attr' => [
+                'data-js-article-type-content' => 'site',
+            ],
         ]);
 
         $builderSeoData
             ->add('seoTitle', TextType::class, [
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'article_form_name',
+                    'data-js-recommended-length' => 60,
+                    'data-js-placeholder-source-input-id' => 'article_form_articleData_name',
                 ],
                 'label' => t('Page title'),
-                'macro' => [
-                    'name' => 'seoFormRowMacros',
-                    'recommended_length' => 60,
-                ],
             ])
             ->add('seoMetaDescription', TextareaType::class, [
                 'required' => false,
                 'attr' => $seoMetaDescriptionAttributes,
                 'label' => t('Meta description'),
-                'macro' => [
-                    'name' => 'seoFormRowMacros',
-                    'recommended_length' => 155,
-                ],
             ])
             ->add('seoH1', TextType::class, [
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'article_form_name',
+                    'data-js-placeholder-source-input-id' => 'article_form_articleData_name',
                 ],
                 'label' => t('Heading (H1)'),
             ]);
@@ -231,7 +232,7 @@ final class ArticleFormType extends AbstractType
 
     /**
      * @param array $options
-     * @return string[]
+     * @return array<string, int|string|null>
      */
     private function getSeoMetaDescriptionAttributes(array $options): array
     {
@@ -246,6 +247,8 @@ final class ArticleFormType extends AbstractType
         foreach ($descriptionsMainPageByDomainIds as $domainId => $description) {
             $seoMetaDescriptionAttributes['data-placeholder-domain' . $domainId] = $description;
         }
+
+        $seoMetaDescriptionAttributes['data-js-recommended-length'] = 155;
 
         return $seoMetaDescriptionAttributes;
     }

@@ -1,0 +1,37 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Administrator'|trans }}{% endblock %}
+{% block h1 %}{{ 'Administrator'|trans }}{% endblock %}
+
+{% block btn_wrapper %}
+    {% if administrator is defined and app.user.id == administrator.id %}
+        {% if administrator.enabledTwoFactorAuth %}
+            <a href="{{ url('admin_administrator_disable-two-factor-authentication', {'id': administrator.id}) }}" class="btn btn-light">
+                {{ 'Disable two factor authentication'|trans }}
+            </a>
+        {% else %}
+            <div class="dropdown">
+                <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-inline-block">{{ 'Enable two factor authentication' }}</span>
+                    <span class="d-md-none">{{ '2FA' }}</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'google_auth'}) }}">
+                        <span class="d-none d-md-inline-block">{{ 'Enable two factor authentication with Google Authenticator'|trans }}</span>
+                        <span class="d-md-none">{{ 'Enable with Google Authenticator'|trans }}</span>
+                    </a>
+                    <a class="dropdown-item" href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'email'}) }}">
+                        <span class="d-none d-md-inline-block">{{ 'Enable two factor authentication via email'|trans }}</span>
+                        <span class="d-md-none">{{ 'Enable via email'|trans }}</span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+
+    {% block admin_log %}{% endblock %}
+{% endblock %}

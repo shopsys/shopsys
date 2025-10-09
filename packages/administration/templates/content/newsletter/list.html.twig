@@ -1,0 +1,28 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}{{ 'Email newsletter'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Email newsletter'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_newsletter_export') }}" class="btn btn-primary">
+        {{ ux_icon('download') }}
+        {{ 'Export email list in CSV format'|trans }}
+    </a>
+{% endblock %}
+
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form_start(quickSearchForm) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: quickSearchForm.text,
+        form_submit: quickSearchForm.submit,
+        info_message: 'Search by email'|trans,
+    } %}
+    {{ form_end(quickSearchForm) }}
+
+    {{ gridView.render() }}
+{% endblock %}

@@ -64,12 +64,12 @@ final class PriceAndVatTableByDomainsType extends AbstractType
 
         $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
             'compound' => true,
-            'render_form_row' => false,
+            'label' => false,
         ]);
 
         $entityPricesByDomainId = $builder->create('pricesIndexedByDomainId', FormType::class, [
             'compound' => true,
-            'render_form_row' => false,
+            'label' => false,
         ]);
 
         foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {

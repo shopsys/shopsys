@@ -681,9 +681,6 @@
     "shopsys/http-smoke-testing": {
         "version": "v9.1.1"
     },
-    "shopsys/jsformvalidator-bundle": {
-        "version": "1.7.0"
-    },
     "shopsys/luigis-box": {
         "version": "17.0.0"
     },

@@ -1,0 +1,12 @@
+.roles-grid-row-actions {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease-in-out;
+
+    tr:hover & {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+}

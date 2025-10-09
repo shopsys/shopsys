@@ -1,9 +1,0 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
-
-{% block grid_value_cell_id_name %}
-    <a href="{{ url('admin_payment_edit', { id: row.p.id }) }}">{{ value|nameWithFallbackOnEmpty }}</a>
-{% endblock %}
-
-{% block grid_no_data %}
-    {{ 'No payments created so far.'|trans }}
-{% endblock %}

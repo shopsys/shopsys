@@ -5,9 +5,6 @@ parameters:
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
         -
-            message: '#Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.#'
-            path: %currentWorkingDirectory%/src/Form/JsFormValidatorFactory.php
-        -
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.#'
             path: %currentWorkingDirectory%/src/Model/Order/Order.php
         -

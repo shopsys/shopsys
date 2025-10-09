@@ -16,7 +16,7 @@ class FlashMessageController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function indexAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Inline/FlashMessage/index.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/flash_message/index.html.twig', [
             'errorMessages' => $this->getErrorMessages(),
             'infoMessages' => $this->getInfoMessages(),
             'successMessages' => $this->getSuccessMessages(),

@@ -1,0 +1,29 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No files found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'files'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_select %}
+    <a class="js-picker-window-add-item btn btn-sm"
+       href="#"
+       data-picker-instance-id="{{ jsInstanceId }}"
+       data-picker-id="{{ row.u.id }}"
+       data-picker-name="{{ row.filename }}"
+       data-picker-filename="{{ row.u.name }}"
+       data-picker-names="{{ row.names|json_encode }}"
+       data-picker-thumbnail="{{ uploadedFilePreviewWithLink(row.uploadedFile)|escape }}"
+    >
+        <span class="js-picker-icon icon-wrapper">
+            {{ ux_icon('plus') }}
+        </span>
+        <span class="js-picker-label">
+            {{ 'Add'|trans }}
+        </span>
+    </a>
+{% endblock %}

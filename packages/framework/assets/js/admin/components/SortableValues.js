@@ -46,9 +46,11 @@ export default class SortableValues {
 
     disableOption($option) {
         const $select = $option.closest('.js-sortable-values-input');
+        const tomSelectInstance = $select[0].tomselect;
 
-        $option.prop('disabled', true);
-        $select.val('').trigger('change.select2');
+        tomSelectInstance.clear();
+
+        this.updateDisabledSelectOption(tomSelectInstance, $option, true);
     }
 
     enableOptionOfItem($item) {
@@ -56,7 +58,17 @@ export default class SortableValues {
         const $input = $item.find('.js-sortable-values-item-input');
         const $option = $container.find(`.js-sortable-values-input [value="${$input.val()}"]`);
 
-        $option.prop('disabled', false);
+        const $select = $option.closest('.js-sortable-values-input');
+        const tomSelectInstance = $select[0].tomselect;
+        this.updateDisabledSelectOption(tomSelectInstance, $option, false);
+    }
+
+    updateDisabledSelectOption(tomSelectInstance, $option, disabled) {
+        tomSelectInstance.updateOption($option.val(), {
+            value: $option.val(),
+            text: $option.text(),
+            disabled: disabled,
+        });
     }
 
     static init($container) {

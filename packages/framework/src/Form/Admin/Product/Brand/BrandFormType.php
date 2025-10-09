@@ -55,20 +55,20 @@ final class BrandFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getTitlePlaceholder($brand),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'brand_form_name',
+                    'data-js-placeholder-source-input-id' => 'brand_form_basicInformation_name',
+                    'data-js-recommended-length' => 60,
                 ],
             ];
             $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
+                    'data-js-recommended-length' => 155,
                 ],
             ];
             $seoH1sOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getTitlePlaceholder($brand),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'brand_form_name',
+                    'data-js-placeholder-source-input-id' => 'brand_form_basicInformation_name',
                 ],
             ];
         }
@@ -110,20 +110,12 @@ final class BrandFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
-                ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
-                ],
                 'label' => t('Meta description'),
             ])
             ->add('seoH1s', MultidomainType::class, [

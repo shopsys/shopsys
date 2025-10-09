@@ -9,7 +9,7 @@ export default class PromoCode {
 
     handleDiscountTypeChange() {
         this.$discountTypeInputGroup.find('input[type=radio]:checked').each(function () {
-            $('.js-promo-code-limits-group').toggle($(this).val() !== 'free_transport_payment');
+            $('[data-js-promo-code-limits-group]').toggle($(this).val() !== 'free_transport_payment');
         });
     }
 

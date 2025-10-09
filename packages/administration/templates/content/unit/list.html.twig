@@ -1,0 +1,12 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Measurement units overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Measurement units'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\UnitController::settingAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

@@ -61,9 +61,6 @@ final class MailTemplateSendFormType extends AbstractType
         $builder
             ->add('save', SubmitType::class, [
                 'label' => t('Send'),
-                'attr' => [
-                    'class' => 'margin-top-20',
-                ],
             ]);
     }
 

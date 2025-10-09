@@ -54,7 +54,7 @@ class FlagController extends AdminBaseController
     {
         $grid = $this->flagGridFactory->create(AdminRoleConstant::ROLE_FLAG);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Flag/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/flag/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -99,7 +99,7 @@ class FlagController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Flag/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/flag/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -143,7 +143,7 @@ class FlagController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing flag - {{ name }}', ['{{ name }}' => $flag->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Flag/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/flag/edit.html.twig', [
             'form' => $form->createView(),
             'flag' => $flag,
         ]);
@@ -163,7 +163,7 @@ class FlagController extends AdminBaseController
             $hasDependency = $flagDependencies->hasPromoCodeDependency || $flagDependencies->hasSeoMixDependency;
 
             if ($hasDependency) {
-                return $this->render('@ShopsysFramework/Admin/Content/Flag/deleteForbidden.html.twig', [
+                return $this->render('@ShopsysAdministration/content/flag/deleteForbidden.html.twig', [
                     'hasPromoCodeDependency' => $flagDependencies->hasPromoCodeDependency,
                     'hasSeoMixDependency' => $flagDependencies->hasSeoMixDependency,
                 ]);

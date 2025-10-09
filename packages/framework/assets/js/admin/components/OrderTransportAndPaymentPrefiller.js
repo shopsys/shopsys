@@ -24,24 +24,25 @@ export default class OrderTransportAndPaymentPrefiller {
 
     onOrderTransportChange() {
         const selectedTransportId = this.$transportSelect.val();
-        $('#order_form_orderItems_orderTransport_priceWithVat').val(
+
+        $('#order_form_orderItems_orderTransport_unitPriceWithVat').val(
             this.transportPricesWithVatByTransportId[selectedTransportId].amount,
         );
         $('#order_form_orderItems_orderTransport_vatPercent').val(
             this.transportVatPercentsByTransportId[selectedTransportId],
         );
-        $('#order_form_orderItems_orderTransport_usePriceCalculation').prop('checked', true).change();
-        $('#order_form_orderItems_orderTransport_priceWithoutVat').val('');
+        $('#order_form_orderItems_orderTransport_setPricesManually').prop('checked', true).change();
+        $('#order_form_orderItems_orderTransport_unitPriceWithoutVat').val('');
     }
 
     onOrderPaymentChange() {
         const selectedPaymentId = this.$paymentSelect.val();
-        $('#order_form_orderItems_orderPayment_priceWithVat').val(
+        $('#order_form_orderItems_orderPayment_unitPriceWithVat').val(
             this.paymentPricesWithVatByPaymentId[selectedPaymentId].amount,
         );
         $('#order_form_orderItems_orderPayment_vatPercent').val(this.paymentVatPercentsByPaymentId[selectedPaymentId]);
-        $('#order_form_orderItems_orderPayment_usePriceCalculation').prop('checked', true).change();
-        $('#order_form_orderItems_orderPayment_priceWithoutVat').val('');
+        $('#order_form_orderItems_orderPayment_setPricesManually').prop('checked', true).change();
+        $('#order_form_orderItems_orderPayment_unitPriceWithoutVat').val('');
     }
 
     static init() {

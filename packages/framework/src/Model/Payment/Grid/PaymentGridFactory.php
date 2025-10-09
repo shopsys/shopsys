@@ -63,14 +63,13 @@ class PaymentGridFactory implements GridFactoryInterface
         $grid->enableDragAndDrop(Payment::class);
 
         $grid->addColumn('name', 'pt.name', t('Name'));
-        $grid->addColumn('price', 'displayPrice', t('Price'));
+        $grid->addColumn('price', 'displayPrice', t('Price'))->setClassAttribute('w-25');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_payment_edit', ['id' => 'p.id']);
         $grid->addDeleteActionColumn('admin_payment_delete', ['id' => 'p.id'])
             ->setConfirmMessage(t('Do you really want to remove this payment?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Payment/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/payment/listGrid.html.twig');
 
         return $grid;
     }

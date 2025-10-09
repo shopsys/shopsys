@@ -1,4 +1,5 @@
-import 'magnific-popup';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
+import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
 
 window.ProductPickerInstances = {};
@@ -15,7 +16,7 @@ export default class ProductPicker {
         this.$removeButton = this.$container.find('.js-product-picker-remove-button');
 
         this.$pickerButton.click(event => this.makePicker(event));
-        this.$removeButton.toggle(this.$label.val() !== this.$container.data('placeholder'));
+        this.$removeButton.prop('disabled', this.$label.val() === this.$container.data('placeholder'));
 
         this.$removeButton.click(() => {
             this.selectProduct('', this.$container.data('placeholder'));
@@ -32,10 +33,15 @@ export default class ProductPicker {
     }
 
     makePicker(event) {
-        $.magnificPopup.open({
-            items: { src: this.$pickerButton.data('product-picker-url').replace('__instance_id__', this.instanceId) },
-            type: 'iframe',
-            closeOnBgClick: true,
+        const url = this.$pickerButton.data('product-picker-url').replace('__instance_id__', this.instanceId);
+
+        const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
+
+        this.modal = new ModalWindow({
+            content: iframeContent,
+            title: Translator.trans('Assign product'),
+            size: 'xl',
+            buttons: [{ text: Translator.trans('Finish assigning') }],
         });
 
         event.preventDefault();
@@ -44,12 +50,23 @@ export default class ProductPicker {
     selectProduct(productId, productName) {
         this.$input.val(productId);
         this.$label.val(productName);
-        this.$removeButton.toggle(productId !== '');
+        this.$removeButton.prop('disabled', productId === '');
     }
 
     static onClickSelectProduct(instanceId, productId, productName) {
-        window.parent.ProductPickerInstances[instanceId].onSelectProduct(productId, productName);
-        window.parent.$.magnificPopup.instance.close();
+        const pickerInstance = window.parent.ProductPickerInstances[instanceId];
+
+        if (!pickerInstance) {
+            console.error(`ProductPicker instance ${instanceId} not found.`);
+
+            return;
+        }
+
+        pickerInstance.onSelectProduct(productId, productName);
+
+        if (pickerInstance.modal?.element && typeof pickerInstance.modal.element.modal === 'function') {
+            pickerInstance.modal.element.modal('hide');
+        }
     }
 
     static init($container) {

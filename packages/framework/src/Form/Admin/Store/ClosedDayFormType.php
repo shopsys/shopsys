@@ -41,9 +41,6 @@ final class ClosedDayFormType extends AbstractType
                 'input' => 'datetime_immutable',
                 'label' => t('Date'),
                 'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'full-width',
-                ],
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter date']),
                 ],
@@ -63,9 +60,6 @@ final class ClosedDayFormType extends AbstractType
                 'choices' => $this->storeFacade->getStoresByDomainId($domainId),
                 'choice_label' => static fn (Store $store) => $store->getName(),
                 'multiple' => true,
-                'attr' => [
-                    'class' => 'js-role-group-select',
-                ],
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_closedday_list',

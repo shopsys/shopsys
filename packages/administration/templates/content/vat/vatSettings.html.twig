@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{{ 'Settings'|trans }}</h3>
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+        <div class="row">
+            {{ form_label(form.defaultVat) }}
+            {{ form_help(form.defaultVat) }}
+
+            <div class="col-12 col-md mb-3 mb-md-0">
+                {{ form_widget(form.defaultVat) }}
+            </div>
+            <div class="col-12 col-md-auto">
+                {{ form_widget(form.save) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

@@ -67,7 +67,7 @@ class InquiryController extends AdminBaseController
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Inquiry/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/inquiry/list.html.twig', [
             'gridView' => $this->inquiryGridFactory->createView($queryBuilder, $this->getCurrentAdministrator()),
             'domainFilterNamespace' => $domainFilterNamespace,
             'quickSearchForm' => $quickSearchForm->createView(),
@@ -84,7 +84,7 @@ class InquiryController extends AdminBaseController
     {
         $inquiry = $this->inquiryFacade->getById($id);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Inquiry/detail.html.twig', [
+        return $this->render('@ShopsysAdministration/content/inquiry/detail.html.twig', [
             'inquiry' => $inquiry,
         ]);
     }

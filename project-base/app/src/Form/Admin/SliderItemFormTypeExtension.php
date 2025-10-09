@@ -8,6 +8,7 @@ use App\Model\Slider\SliderItemFacade;
 use Override;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
+use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -38,7 +39,7 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
         $imageConstraints = [];
 
         if ($options['scenario'] === SliderItemFormType::SCENARIO_CREATE) {
-            $imageConstraints[] = new Constraints\NotBlank(['message' => 'Please choose image']);
+            $imageConstraints[] = new MustUploadFile();
         }
 
         $builderImageGroup

@@ -1,0 +1,29 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+{% import _self as self %}
+
+{% block title %}- {{ 'Product'|trans }}{% endblock %}
+{% block h1 %}{{ 'Product'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col">
+            {{ form(form) }}
+        </div>
+
+        <div class="col-2 d-none d-xxl-block">
+            <div class="toc">
+                <h3>{{ 'Table of Contents'|trans }}</h3>
+                <div class="nav nav-vertical" id="toc">
+                    {# Table of Content filled by JavaScript in Product.initializeSideNavigation() #}
+                </div>
+                <button
+                    type="button"
+                    id="back-to-top-button"
+                    class="btn btn-sm btn-secondary w-full mt-2 d-none"
+                >
+                    {{ 'Back to top'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

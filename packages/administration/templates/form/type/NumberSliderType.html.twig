@@ -1,0 +1,10 @@
+{% block number_slider_widget %}
+    <div class="row align-items-center js-number-slider">
+        <div class="col js-number-slider-slider"></div>
+
+        <div class="col">
+            {% set attr = attr|merge({'class': ((attr.class|default('') ~ ' js-number-slider-input')|trim)}) %}
+            {{ block('form_widget_simple') }}
+        </div>
+    </div>
+{% endblock number_slider_widget %}

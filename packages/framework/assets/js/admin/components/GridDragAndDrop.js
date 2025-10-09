@@ -1,9 +1,9 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
-import formChangeInfo from './FormChangeInfo';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class GridDragAndDrop {
     constructor($content) {
@@ -49,9 +49,11 @@ export default class GridDragAndDrop {
 
     highlightChanges($grid, highlight) {
         if (highlight) {
-            $grid.find('.js-drag-and-drop-grid-submit').removeClass('btn--disabled');
+            $grid.find('.js-drag-and-drop-grid-submit').prop('disabled', false);
+            FormChangeInfo.showInfo();
         } else {
-            $grid.find('.js-drag-and-drop-grid-submit').addClass('btn--disabled');
+            $grid.find('.js-drag-and-drop-grid-submit').prop('disabled', true);
+            FormChangeInfo.removeInfo();
         }
     }
 
@@ -64,13 +66,13 @@ export default class GridDragAndDrop {
             $gridSaveButtons.hide();
 
             $gridsOnPage.on('update', () => {
-                formChangeInfo.showInfo();
-                $saveAllButton.removeClass('btn--disabled');
+                FormChangeInfo.showInfo();
+                $saveAllButton.prop('disabled', false);
             });
 
             $gridsOnPage.on('save', () => {
-                formChangeInfo.removeInfo();
-                $saveAllButton.addClass('btn--disabled');
+                FormChangeInfo.removeInfo();
+                $saveAllButton.prop('disabled', true);
             });
 
             $saveAllButton.click(() => {
@@ -95,7 +97,7 @@ export default class GridDragAndDrop {
                 this.highlightChanges($grid, false);
 
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saved'),
                 });
             },

@@ -36,7 +36,7 @@ final class ProductPricesWithVatSelectType extends AbstractType
     {
         $builder
             ->add('vat', ChoiceType::class, [
-                'block_prefix' => 'product_prices_select_vat_input',
+                'block_prefix' => 'prices_select_vat_input',
                 'required' => true,
                 'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($options['domain_id']),
                 'choice_label' => 'name',

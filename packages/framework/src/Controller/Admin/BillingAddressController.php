@@ -76,7 +76,7 @@ class BillingAddressController extends AdminBaseController
             t('Editing billing address - %name%', ['%name%' => $billingAddress->getCompanyName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/BillingAddress/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/billingAddress/edit.html.twig', [
             'form' => $form->createView(),
             'billingAddress' => $billingAddress,
         ]);

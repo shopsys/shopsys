@@ -1,8 +1,9 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class GridMultipleDragAndDrop {
     constructor($content) {
@@ -36,20 +37,22 @@ export default class GridMultipleDragAndDrop {
             data: data,
             dataType: 'json',
             success: () => {
+                FormChangeInfo.removeInfo();
+
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saved'),
                 });
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Order saving failed'),
                 });
             },
         });
 
-        $saveButton.addClass('btn--disabled');
+        $saveButton.prop('disabled', true);
     }
 
     getPositionsIndexedByGridId($grids) {
@@ -79,7 +82,8 @@ export default class GridMultipleDragAndDrop {
     }
 
     onUpdate($content) {
-        $content.find('.js-multiple-grids-save-all-button').removeClass('btn--disabled');
+        $content.find('.js-multiple-grids-save-all-button').prop('disabled', false);
+        FormChangeInfo.showInfo();
         this.toggleRowHolders($content);
     }
 

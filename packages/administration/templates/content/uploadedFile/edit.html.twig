@@ -1,0 +1,52 @@
+{% extends '@ShopsysAdministration/content/uploadedFile/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing file'|trans }} - {{ entity.getNameWithExtension() }}{% endblock %}
+
+{% block pre_title %}{{ 'Editing file'|trans }}{% endblock %}
+{% block h1 %}{{ entity.getNameWithExtension() }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ uploadedFileUrl(entity) }}" class="btn btn-secondary">
+        {{ ux_icon('download') }}
+        {{ 'Download'|trans }}
+    </a>
+
+    <a href="{{ deleteUrl }}"
+       class="btn btn-outline-danger"
+       data-confirm-window
+       data-confirm-message="{{ 'Do you really want to delete this file? It will be permanently deleted and unassigned from related records.'|trans }}"
+    >
+        {{ ux_icon('trash') }}
+        {{ 'Delete file'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content_inner %}
+    {{ form_row(form.products) }}
+
+    <div class="row mb-3">
+        <div class="col-3">
+            <label class="form-label">File</label>
+
+            <div class="card card-sm" style="max-width: 17.5rem;">
+                <div class="position-relative ratio ratio-16x9 overflow-hidden">
+                    {{ uploadedFilePreviewWithLink(entity) }}
+                </div>
+
+                <div class="card-footer">
+                    {{ entity.nameWithExtension }}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <label class="form-label">Replace file</label>
+            {{ form_widget(form.files) }}
+            {{ form_errors(form.files) }}
+        </div>
+    </div>
+
+    <div>
+        {{ form_rest(form) }}
+    </div>
+
+{% endblock %}

@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid ""
+msgstr ""
+
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
@@ -43,6 +46,9 @@ msgstr ""
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Color must be a valid hexadecimal code (e.g., #3333ff)"
+msgstr ""
+
 msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -58,7 +64,7 @@ msgstr ""
 msgid "Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}."
 msgstr ""
 
-msgid "Description background color must be a valid hexadecimal color code e.g. #fff or #ffffff"
+msgid "Description cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "EAN cannot be longer than {{ limit }} characters"
@@ -74,9 +80,6 @@ msgid "Email {{ email }} is already registered"
 msgstr ""
 
 msgid "Enter date in DD.MM.YYYY format"
-msgstr ""
-
-msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
 msgstr ""
 
 msgid "External ID cannot be longer than {{ limit }} characters"
@@ -107,9 +110,6 @@ msgid "First name of contact person cannot be longer than {{ limit }} characters
 msgstr ""
 
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
-msgstr ""
-
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
 msgid "Flag name cannot be longer than {{ limit }} characters"
@@ -196,9 +196,6 @@ msgstr ""
 msgid "Password cannot be same as part of email before at sign"
 msgstr ""
 
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr ""
-
 msgid "Passwords do not match"
 msgstr ""
 
@@ -230,9 +227,6 @@ msgid "Please choose type of limitation"
 msgstr ""
 
 msgid "Please choose unit"
-msgstr ""
-
-msgid "Please choose visibility"
 msgstr ""
 
 msgid "Please enter HTML code for advertisement area"
@@ -382,6 +376,9 @@ msgstr ""
 msgid "Please enter navigation item name"
 msgstr ""
 
+msgid "Please enter notification bar background color"
+msgstr ""
+
 msgid "Please enter notification bar content"
 msgstr ""
 
@@ -404,6 +401,9 @@ msgid "Please enter parameter group name"
 msgstr ""
 
 msgid "Please enter parameter name"
+msgstr ""
+
+msgid "Please enter parameter ordering priority"
 msgstr ""
 
 msgid "Please enter parameter value"

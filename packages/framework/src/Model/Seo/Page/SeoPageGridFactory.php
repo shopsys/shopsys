@@ -44,12 +44,11 @@ class SeoPageGridFactory
         $grid->addColumn('pageName', 'sp.pageName', t('Page name'), true);
         $grid->addColumn('pageSlug', 'spd.pageSlug', t('Page slug'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_seopage_edit', ['id' => 'sp.id']);
         $grid->addDeleteActionColumn('admin_seopage_deleteconfirm', ['id' => 'sp.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Seo/Page/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/seo/page/listGrid.html.twig');
 
         return $grid;
     }

@@ -1,0 +1,17 @@
+{% block roles_widget -%}
+    {% import '@ShopsysAdministration/form/content/_rolesMacros.html.twig' as rolesMacros %}
+
+    {% set isSingleGrid = form.vars.permissions|length == 0 %}
+
+    <div class="js-roles-grid" data-dependencies="{{ form.vars.permission_dependencies|json_encode|e('html_attr') }}">
+        {% if not form.vars.disabled and not isSingleGrid %}
+            <div class="mb-1 text-end">
+                {{ rolesMacros.render_actions('Select all permissions'|trans, 'Deselect all permissions'|trans) }}
+            </div>
+        {% endif %}
+
+        {% for child in form %}
+            {{ form_widget(child) }}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -98,7 +98,6 @@ final class PaymentFormType extends AbstractType
         }
 
         $builderBasicInformationGroup->add('hidden', YesNoType::class, [
-            'required' => false,
             'label' => t('Hidden'),
         ])
             ->add('transports', ChoiceType::class, [
@@ -136,11 +135,7 @@ final class PaymentFormType extends AbstractType
                 ],
                 'label' => t('GoPay payment method'),
                 'required' => true,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
-                'attr' => [
+                'row_attr' => [
                     'class' => 'js-payment-gopay-payment-method',
                 ],
             ]);
@@ -151,19 +146,13 @@ final class PaymentFormType extends AbstractType
 
         $builderPriceGroup
             ->add('czkRounding', YesNoType::class, [
-                'required' => false,
                 'label' => t('Order in CZK round to whole crowns'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.',
-                    ),
-                ],
+                'help' => t('Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.'),
             ])
             ->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
                 'pricesIndexedByDomainId' => $this->paymentFacade->getPricesIndexedByDomainId($payment),
                 'inherit_data' => true,
-                'render_form_row' => false,
+                'label' => false,
             ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [

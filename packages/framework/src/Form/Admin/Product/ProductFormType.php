@@ -20,11 +20,9 @@ use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
@@ -99,18 +97,17 @@ final class ProductFormType extends AbstractType
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
         $product = $options['product'];
-        $disabledItemInMainVariantAttr = [];
+
+        $disabledItemInMainVariantHelp = [];
 
         if ($this->isProductMainVariant($product)) {
-            $disabledItemInMainVariantAttr = [
-                'disabledField' => true,
-                'disabledFieldTitle' => t('This item can be set in product detail of a specific variant'),
-                'disabledFieldClass' => 'form-line__disabled',
+            $disabledItemInMainVariantHelp = [
+                'help' => t('This item can be set in product detail of a specific variant'),
             ];
         }
 
         $builder
-            ->add('namePrefix', LocalizedFullWidthType::class, [
+            ->add('namePrefix', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
@@ -118,9 +115,8 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Name prefix'),
-                'render_form_row' => false,
             ])
-            ->add('name', LocalizedFullWidthType::class, [
+            ->add('name', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
@@ -130,9 +126,8 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Name'),
-                'render_form_row' => false,
             ])
-            ->add('nameSuffix', LocalizedFullWidthType::class, [
+            ->add('nameSuffix', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
@@ -140,14 +135,13 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Name suffix'),
-                'render_form_row' => false,
             ]);
 
         if ($this->isProductVariant($product) || $this->isProductMainVariant($product)) {
             $builder->add($this->createVariantGroup($builder, $product));
         }
 
-        $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantAttr));
+        $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantHelp));
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
         $builder->add($this->createStocksGroup($builder, $product));
@@ -187,13 +181,13 @@ final class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
+     * @param array $disabledItemInMainVariantHelp
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createBasicInformationGroup(
         FormBuilderInterface $builder,
         ?Product $product,
-        array $disabledItemInMainVariantAttr = [],
+        array $disabledItemInMainVariantHelp = [],
     ): FormBuilderInterface {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
@@ -215,14 +209,12 @@ final class ProductFormType extends AbstractType
                 new UniqueProductCatnum(['product' => $product]),
             ],
             'disabled' => $this->isProductMainVariant($product),
-            'attr' => array_merge(
-                $disabledItemInMainVariantAttr,
-                [
-                    'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
-                    'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
-                ],
-            ),
+            'attr' => [
+                'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
+                'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
+            ],
             'label' => t('Catalog number'),
+            ...$disabledItemInMainVariantHelp,
         ])
             ->add('partno', TextType::class, [
                 'required' => false,
@@ -232,8 +224,8 @@ final class ProductFormType extends AbstractType
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
                 'label' => t('PartNo (serial number)'),
+                ...$disabledItemInMainVariantHelp,
             ])
             ->add('ean', TextType::class, [
                 'required' => false,
@@ -243,8 +235,8 @@ final class ProductFormType extends AbstractType
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
                 'label' => t('EAN'),
+                ...$disabledItemInMainVariantHelp,
             ]);
 
         if ($product !== null) {
@@ -258,9 +250,6 @@ final class ProductFormType extends AbstractType
             ->add('flagsByDomainId', MultidomainType::class, [
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
-                    'attr' => [
-                        'class' => 'input--full-width',
-                    ],
                     'choices' => $this->flagFacade->getAll(),
                     'choice_label' => 'name',
                     'choice_value' => 'id',
@@ -268,7 +257,6 @@ final class ProductFormType extends AbstractType
                     'expanded' => true,
                 ],
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 'label' => t('Flags'),
             ])
             ->add('brand', ChoiceType::class, [
@@ -310,25 +298,15 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductVariant($product)) {
             $builderShortDescriptionGroup->add('shortDescriptions', DisplayOnlyType::class, [
-                'mapped' => false,
-                'required' => false,
                 'data' => t('Short description can be set in the main variant.'),
-                'attr' => [
-                    'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
-                ],
+                'label' => false,
             ]);
         } else {
             $builderShortDescriptionGroup
                 ->add('shortDescriptions', MultidomainType::class, [
                     'entry_type' => TextareaType::class,
-                    'entry_options' => [
-                        'attr' => [
-                            'class' => 'input--full-width',
-                        ],
-                    ],
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
-                    'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 ]);
         }
 
@@ -348,12 +326,8 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductVariant($product)) {
             $builderDescriptionGroup->add('descriptions', DisplayOnlyType::class, [
-                'mapped' => false,
-                'required' => false,
                 'data' => t('Description can be set on product detail of the main product.'),
-                'attr' => [
-                    'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
-                ],
+                'label' => false,
             ]);
         } else {
             $builderDescriptionGroup
@@ -361,7 +335,6 @@ final class ProductFormType extends AbstractType
                     'entry_type' => CKEditorType::class,
                     'required' => false,
                     'disabled' => $this->isProductVariant($product),
-                    'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 ]);
         }
 
@@ -392,13 +365,11 @@ final class ProductFormType extends AbstractType
 
         $builderDisplayAvailabilityGroup
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide product'),
             ]);
 
         $builderDisplayAvailabilityGroup->add('domainHidden', MultidomainType::class, [
             'label' => t('Hide on domain'),
-            'required' => false,
             'entry_type' => YesNoType::class,
         ]);
 
@@ -414,18 +385,13 @@ final class ProductFormType extends AbstractType
                 'label' => t('Selling end date'),
             ])
             ->add('sellingDenied', YesNoType::class, [
-                'required' => false,
                 'label' => t('Exclude from sale on whole eshop'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
-                    ),
-                ],
+                'help' => t(
+                    'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
+                ),
             ])
             ->add('saleExclusion', MultidomainType::class, [
                 'label' => t('Exclude from sale on domains'),
-                'required' => false,
                 'entry_type' => YesNoType::class,
             ]);
 
@@ -453,7 +419,6 @@ final class ProductFormType extends AbstractType
                     'options_by_domain_id' => $categoriesOptionsByDomainId,
                     'disabled' => $this->isProductVariant($product),
                     'label' => t('Assign to category'),
-                    'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 ]);
         }
         $builderDisplayAvailabilityGroup
@@ -469,16 +434,6 @@ final class ProductFormType extends AbstractType
                 ],
                 'label' => t('Unit'),
             ]);
-
-        $builderStockGroup = $builder->create('stockGroup', FormType::class, [
-            'render_form_row' => false,
-            'inherit_data' => true,
-            'attr' => [
-                'class' => 'form-line__js',
-            ],
-        ]);
-
-        $builderDisplayAvailabilityGroup->add($builderStockGroup);
 
         $builderDisplayAvailabilityGroup
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
@@ -505,23 +460,20 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductMainVariant($product)) {
             $stockGroupBuilder
-                ->add('productStockData', DisplayOnlyType::class, [
+                ->add('productStockDataMessage', DisplayOnlyType::class, [
+                    'label' => false,
                     'data' => t('The stock quantities are set for the product variants separately.'),
                 ]);
         } else {
             $stockGroupBuilder->add('isAllowedNegativeStock', YesNoType::class, [
                 'required' => false,
                 'label' => t('Allow negative stock'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
-                ],
+                'help' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
             ]);
 
             $stockGroupBuilder->add('productStockData', CollectionType::class, [
                 'required' => false,
                 'entry_type' => ProductStockFormType::class,
-                'render_form_row' => false,
             ]);
         }
 
@@ -541,12 +493,8 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductMainVariant($product)) {
             $builderPricesGroup->add('disabledPricesOnMainVariant', DisplayOnlyType::class, [
-                'mapped' => false,
-                'required' => true,
                 'data' => t('You can set the prices on product detail of specific variant.'),
-                'attr' => [
-                    'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
-                ],
+                'label' => false,
             ]);
 
             return $builderPricesGroup;
@@ -628,13 +576,14 @@ final class ProductFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getTitlePlaceholder($locale, $product),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'product_form_name_' . $locale,
+                    'data-js-placeholder-source-input-id' => 'product_form_name_' . $locale,
+                    'data-js-recommended-length' => 60,
                 ],
             ];
             $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
+                    'data-js-recommended-length' => 155,
                 ],
             ];
             $seoH1OptionsByDomainId[$domainId] = $seoTitlesOptionsByDomainId[$domainId];
@@ -648,20 +597,12 @@ final class ProductFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
-                ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
-                ],
                 'label' => t('Meta description'),
             ])
             ->add('seoH1s', MultidomainType::class, [
@@ -691,10 +632,7 @@ final class ProductFormType extends AbstractType
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
-            'attr' => [
-                'class' => 'wrap-border',
-            ],
-            'render_form_row' => false,
+            'label' => false,
         ]);
 
         if ($this->isProductVariant($product)) {
@@ -717,7 +655,6 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => t('Variant alias'),
-                'render_form_row' => true,
             ]);
         }
 
@@ -786,7 +723,7 @@ final class ProductFormType extends AbstractType
                     ]),
                 ],
                 'error_bubbling' => false,
-                'render_form_row' => false,
+                'label' => false,
             ])
                 ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
 
@@ -931,7 +868,6 @@ final class ProductFormType extends AbstractType
             ->add(
                 $builder->create('productVideosData', CollectionType::class, [
                     'entry_type' => VideoTokenType::class,
-                    'render_form_row' => false,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'label' => false,

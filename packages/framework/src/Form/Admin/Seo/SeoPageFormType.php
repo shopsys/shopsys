@@ -139,18 +139,16 @@ final class SeoPageFormType extends AbstractType
             ->add('seoTitlesIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
+                'entry_options' => [
+                    'attr' => ['data-js-recommended-length' => 60],
                 ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptionsIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
+                'entry_options' => [
+                    'attr' => ['data-js-recommended-length' => 155],
                 ],
                 'label' => t('Meta description'),
             ])
@@ -162,27 +160,21 @@ final class SeoPageFormType extends AbstractType
                     ],
                 ],
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
                 'label' => t('Canonical URL'),
             ])
             ->add('seoOgTitlesIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
+                'entry_options' => [
+                    'attr' => ['data-js-recommended-length' => 60],
                 ],
                 'label' => t('Open Graph title'),
             ])
             ->add('seoOgDescriptionsIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
+                'entry_options' => [
+                    'attr' => ['data-js-recommended-length' => 155],
                 ],
                 'label' => t('Open Graph description'),
             ]);

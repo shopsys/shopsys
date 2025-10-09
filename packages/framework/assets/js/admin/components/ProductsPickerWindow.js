@@ -1,7 +1,7 @@
-import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 import Check from 'icons/tabler/check.svg';
 import Denied from 'icons/tabler/circle-x-filled.svg';
+import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class ProductsPickerWindow {
@@ -20,10 +20,9 @@ export default class ProductsPickerWindow {
 
     markAddButtonAsAdded($addButton) {
         const originalLabelText = $addButton.find('.js-products-picker-label').text();
-        const originalIconText = $addButton.find('.js-products-picker-icon').text();
+        const originalIconHtml = $addButton.find('.js-products-picker-icon').html();
         $addButton
-            .addClass('cursor-auto btn--success')
-            .removeClass('btn--plus btn--light')
+            .addClass('btn-success')
             .find('.js-products-picker-label')
             .text(Translator.trans('Added'))
             .end()
@@ -31,7 +30,7 @@ export default class ProductsPickerWindow {
             .html(Check)
             .end()
             .on('click.removeProduct', () => {
-                this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
+                this.onClickOnAddedButton($addButton, originalLabelText, originalIconHtml);
             })
             .click(() => false);
     }
@@ -47,8 +46,6 @@ export default class ProductsPickerWindow {
             .text(Translator.trans('Unable to add'))
             .end()
             .find('.js-products-picker-icon')
-            .removeClass('in-icon--add')
-            .addClass('in-icon--denied')
             .html(Denied)
             .end()
             .click(() => false);
@@ -59,32 +56,48 @@ export default class ProductsPickerWindow {
             window.parent.ProductsPickerInstances[$(event.currentTarget).data('product-picker-instance-id')];
         this.markAddButtonAsAdded($(event.currentTarget));
         $(event.currentTarget).off('click.addProduct');
-        productsPicker.addProduct(
-            $(event.currentTarget).data('product-picker-product-id'),
-            $(event.currentTarget).data('product-picker-product-name'),
-        );
+
+        Ajax.ajax({
+            url: $(event.currentTarget).data('product-picker-product-image-url'),
+            method: 'POST',
+            data: {
+                productId: $(event.currentTarget).data('product-picker-product-id'),
+            },
+            success: data => {
+                productsPicker.addProduct(
+                    $(event.currentTarget).data('product-picker-product-id'),
+                    $(event.currentTarget).data('product-picker-product-name'),
+                    data.imageHtml,
+                );
+            },
+            error: () => {
+                productsPicker.addProduct(
+                    $(event.currentTarget).data('product-picker-product-id'),
+                    $(event.currentTarget).data('product-picker-product-name'),
+                );
+            },
+        });
 
         return false;
     }
 
-    onClickOnAddedButton($addButton, originalLabelText, originalIconText) {
+    onClickOnAddedButton($addButton, originalLabelText, originalIconHtml) {
         const productsPicker = window.parent.ProductsPickerInstances[$addButton.data('product-picker-instance-id')];
-        this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText);
+        this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconHtml);
         $addButton.off('click.removeProduct');
         productsPicker.removeItemByProductId($addButton.data('product-picker-product-id'));
 
         return false;
     }
 
-    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText) {
+    unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconHtml) {
         $addButton
-            .addClass('btn--plus btn--light')
-            .removeClass('cursor-auto btn--success')
+            .removeClass('btn-success')
             .find('.js-products-picker-label')
             .text(originalLabelText)
             .end()
             .find('.js-products-picker-icon')
-            .text(originalIconText)
+            .html(originalIconHtml)
             .end()
             .on('click.addProduct', event => this.onClickAddButton(event))
             .click(() => false);

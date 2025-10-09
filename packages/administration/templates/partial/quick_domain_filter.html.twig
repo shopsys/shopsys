@@ -1,0 +1,35 @@
+{% if isMultidomain() %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title text-secondary">{{ 'Quick Domain Filter'|trans }}</div>
+            <div class="btn-list" role="tablist">
+                {% if selectedDomainId is null %}
+                    <span class="btn active">{{ 'All domains'|trans }}</span>
+                {% else %}
+                    <a class="btn"
+                       href="{{ url('admin_domainfilter_selectdomain', {
+                           domainId: null,
+                           namespace: namespace
+                       }) }}">
+                        {{ 'All domains'|trans }}
+                    </a>
+                {% endif %}
+
+                {% for domainConfig in domainConfigs %}
+                    {% if domainConfig.id == selectedDomainId %}
+                        <span class="btn active">
+                            {{ domain_icon(domainConfig.id) }}
+                            {{ domainConfig.name }}
+                        </span>
+                    {% else %}
+                        <a class="btn"
+                           href="{{ url('admin_domainfilter_selectdomain', { domainId: domainConfig.id, namespace: namespace }) }}">
+                            {{ domain_icon(domainConfig.id) }}
+                            {{ domainConfig.name }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

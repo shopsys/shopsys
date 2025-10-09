@@ -14,7 +14,7 @@ abstract class AbstractAction
      * @var array<string, mixed>
      */
     protected array $attributes = [
-        'class' => 'btn wrap-bar__btn',
+        'class' => 'btn',
     ];
 
     /**

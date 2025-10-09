@@ -51,7 +51,7 @@ class StoreController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Content/Store/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/store/list.html.twig', [
             'gridView' => $this->getGrid()->createView(),
         ]);
     }
@@ -71,13 +71,12 @@ class StoreController extends AdminBaseController
         $grid->addColumn('name', 's.name', t('Name'));
         $grid->setDefaultOrder('s.position');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_store_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_store_delete', ['id' => 's.id'])
             ->setConfirmMessage(t('Do you really want to remove this store? This step is irreversible!'));
         $grid->enableDragAndDrop(Store::class);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Store/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/store/listGrid.html.twig');
 
         return $grid;
     }
@@ -116,7 +115,7 @@ class StoreController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Store/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/store/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -157,7 +156,7 @@ class StoreController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Store/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/store/edit.html.twig', [
             'form' => $form->createView(),
             'store' => $store,
         ]);

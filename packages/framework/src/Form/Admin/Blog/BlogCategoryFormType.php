@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -101,7 +100,6 @@ final class BlogCategoryFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
-     * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createSettingsGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
@@ -172,20 +170,20 @@ final class BlogCategoryFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['blogCategory']),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_category_form_settings_names_' . $domainConfig->getLocale(),
+                    'data-js-recommended-length' => 60,
                 ],
             ];
             $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
+                    'data-js-recommended-length' => 155,
                 ],
             ];
             $seoH1OptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['blogCategory']),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_category_form_settings_names_' . $domainConfig->getLocale(),
                 ],
             ];
         }
@@ -211,20 +209,12 @@ final class BlogCategoryFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
-                ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
-                ],
                 'label' => t('Meta description'),
             ])
             ->add('seoH1s', MultidomainType::class, [
@@ -235,10 +225,6 @@ final class BlogCategoryFormType extends AbstractType
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
                 'label' => t('Heading (H1)'),
             ]);
 
@@ -282,7 +268,6 @@ final class BlogCategoryFormType extends AbstractType
                 'entry_type' => CKEditorType::class,
                 'label' => t('Description'),
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ]);
 
         return $builderDescriptionGroup;

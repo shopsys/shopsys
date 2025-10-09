@@ -1,0 +1,42 @@
+<h4>
+    {{ 'Visibility for unlogged customers'|trans }}
+</h4>
+<p>
+    {% for domain in domains %}
+        {% set url = findUrlByDomainId('front_product_detail', { id: product.id }, domain.id) %}
+        {% set isVisible = isVisibleForDefaultPricingGroup(product, domain.id) %}
+
+        {% if isVisible %}
+            {% set visibilityClass = 'text-green' %}
+            {% set visibilityIcon = 'visible' %}
+            {% set visibilityTitle = 'Yes'|trans %}
+        {% else %}
+            {% set visibilityClass = 'text-secondary' %}
+            {% set visibilityIcon = 'invisible' %}
+            {% set visibilityTitle = 'No'|trans %}
+        {% endif %}
+
+        <div class="row align-items-center mb-3">
+            <div class="col-auto {{ visibilityClass }}" title="{{ visibilityTitle }}">
+                {{ ux_icon(visibilityIcon) }}
+            </div>
+
+            {% if isMultidomain() %}
+                <div class="col-auto">
+                    {{ domain_icon(domain.id) }}
+                </div>
+            {% endif %}
+
+            <div class="col">
+                {% if isVisible %}
+                    <a href="{{ url }}" class="" target="_blank">
+                        {{ getDomainName(domain.id) }}
+                        {{ ux_icon('forward-page') }}
+                    </a>
+                {% else %}
+                    {{ getDomainName(domain.id) }}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</p>

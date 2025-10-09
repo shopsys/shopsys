@@ -22,7 +22,7 @@ final class AdministratorResetPasswordFormType extends AbstractType
      * @param array $options
      */
     #[Override]
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('password', RepeatedType::class, [
@@ -36,17 +36,19 @@ final class AdministratorResetPasswordFormType extends AbstractType
                 'first_options' => [
                     'label' => t('Password'),
                     'constraints' => [
-                        new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', 'message' => 'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.']),
-                        new Constraints\NotBlank([
-                            'message' => 'Please enter password',
-                        ]),
+                        new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', 'message' => '']),
+                        new Constraints\NotBlank(['message' => '']),
                     ],
                     'attr' => [
-                        'icon' => true,
-                        'iconTitle' => t(
-                            'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.',
-                        ),
+                        'data-js-set-password-input' => null,
                     ],
+                    'help_attr' => [
+                        'data-js-password-help-text' => null,
+                    ],
+                    'help_html' => true,
+                    'help' => t(
+                        'Password has to include <span class="text-incorrect" data-js-password-help-text-requirement="upper">uppercase letters</span>, <span class="text-incorrect" data-js-password-help-text-requirement="lower">lowercase letters</span>, <span class="text-incorrect" data-js-password-help-text-requirement="number">numbers</span> and must be <span class="text-incorrect" data-js-password-help-text-requirement="length">longer than 10 characters</span>.',
+                    ),
                 ],
                 'second_options' => [
                     'label' => t('Password again'),
@@ -54,18 +56,14 @@ final class AdministratorResetPasswordFormType extends AbstractType
                 'invalid_message' => 'Passwords do not match',
                 'label' => t('Password'),
             ])
-            ->add('save', SubmitType::class, [
-                'row_attr' => [
-                    'class' => 'form-line__side button',
-                ],
-            ]);
+            ->add('save', SubmitType::class);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     #[Override]
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['administrator'])

@@ -11,18 +11,18 @@ import Register from '../../common/utils/Register';
         const prefix = $firstRow.filterAllNodes('.js-promo-code-mass').attr('data-promo-code-prefix');
 
         this.init = () => {
-            $rows.addClass('display-none');
+            $rows.addClass('d-none');
 
-            const unpackButtonHtml = `<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="${prefix}">${Translator.trans('Expand')}</span>`;
+            const unpackButtonHtml = `<span class="btn btn-sm js-promo-code-group-unpack" data-promo-code-prefix="${prefix}">${Translator.trans('Expand')}</span>`;
             const $parentRow = $(
-                '<tr class="table-grid__row js-grid-row background-color-ddd">' +
-                    '<td colspan="2" class="table-grid__cell">' +
+                '<tr class="js-grid-row">' +
+                    '<td colspan="3">' +
                     Translator.trans('Bulk coupons with prefix') +
                     ' <b>' +
                     prefix +
                     '</b></td>' +
                     '<td></td>' +
-                    '<td class="table-grid__cell">' +
+                    '<td class="text-end">' +
                     unpackButtonHtml +
                     '</td>' +
                     '</tr>',
@@ -43,7 +43,7 @@ import Register from '../../common/utils/Register';
                     const unpack = Translator.trans('Expand');
                     return text === unpack ? pack : unpack;
                 });
-                $rows.toggleClass('display-none');
+                $rows.toggleClass('d-none');
             });
         };
     };

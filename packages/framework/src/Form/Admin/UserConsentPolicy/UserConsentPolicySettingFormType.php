@@ -45,12 +45,9 @@ final class UserConsentPolicySettingFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose article --'),
                 'label' => t('User consent policy article'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain.',
-                    ),
-                ],
+                'help' => t(
+                    'Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain.',
+                ),
             ]);
 
         $builder

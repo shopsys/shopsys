@@ -4,18 +4,10 @@ export default class CKEditorPreview {
     constructor($ckEditorPreview) {
         const $editButton = $ckEditorPreview.children('.js-cke-preview-edit');
 
-        if (this.isOverflown($ckEditorPreview)) {
-            $ckEditorPreview.addClass('in-ckeditor__text--collapsed');
-        }
-
         $ckEditorPreview.click(() => {
             $ckEditorPreview.hide();
             $editButton.hide();
         });
-    }
-
-    isOverflown($element) {
-        return $element[0].scrollHeight > $element[0].clientHeight;
     }
 
     static init($container) {

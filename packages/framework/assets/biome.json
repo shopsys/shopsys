@@ -5,7 +5,6 @@
             "js/**",
             "!js/admin/bootstrap",
             "!js/admin/components/jquery.dmuploader.js",
-            "!js/common/bootstrap/tooltip.js",
             "!js/common/plugins/jquery.fix.clone.js"
         ]
     }

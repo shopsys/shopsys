@@ -9,6 +9,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
+use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -76,10 +77,7 @@ final class AdvertFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter name of advertisement area']),
                 ],
                 'label' => t('Name'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t('Name serves only for internal use within the administration.'),
-                ],
+                'help' => t('Name serves only for internal use within the administration.'),
             ])
             ->add('type', ChoiceType::class, [
                 'required' => true,
@@ -107,10 +105,11 @@ final class AdvertFormType extends AbstractType
                 'required' => false,
                 'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
                 'label' => t('Assign to category'),
-                'display_as_row' => true,
+                'row_attr' => [
+                    'data-js-advert-categories' => null,
+                ],
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide advertisement'),
             ])
             ->add('code', TextareaType::class, [
@@ -119,23 +118,18 @@ final class AdvertFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter HTML code for advertisement area',
-                        'groups' => [static::VALIDATION_GROUP_TYPE_CODE],
+                        'groups' => [self::VALIDATION_GROUP_TYPE_CODE],
                     ]),
                 ],
-                'attr' => [
-                    'class' => 'height-150',
-                ],
-                'js_container' => [
-                    'container_class' => 'js-advert-type-content form-line__js',
-                    'data_type' => 'code',
+                'row_attr' => [
+                    'data-js-advert-type-content' => 'code',
                 ],
             ]);
 
         $builderImageGroup = $builder->create('image_group', GroupType::class, [
             'label' => t('Images'),
-            'js_container' => [
-                'container_class' => 'js-advert-type-content wrap-divider--top',
-                'data_type' => 'image',
+            'row_attr' => [
+                'data-js-advert-type-content' => 'image',
             ],
         ]);
 
@@ -146,7 +140,7 @@ final class AdvertFormType extends AbstractType
             ]);
 
         $imageConstraints = [
-            new Constraints\NotBlank([
+            new MustUploadFile([
                 'message' => 'Choose image',
                 'groups' => [self::VALIDATION_GROUP_TYPE_IMAGE],
             ]),
@@ -233,9 +227,9 @@ final class AdvertFormType extends AbstractType
                     $advertData = $form->getData();
 
                     if ($advertData->type === Advert::TYPE_CODE) {
-                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_CODE;
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_CODE;
                     } elseif ($advertData->type === Advert::TYPE_IMAGE) {
-                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_IMAGE;
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_IMAGE;
                     }
 
                     return $validationGroups;

@@ -3,7 +3,6 @@
 namespace Shopsys\ProductFeed\ZboziBundle\Form;
 
 use Override;
-use ReturnTypeWillChange;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
@@ -50,7 +49,6 @@ final class ZboziProductFormType extends AbstractType
             ->add('show', MultidomainType::class, [
                 'label' => $this->translator->trans('Offer in feed'),
                 'entry_type' => YesNoType::class,
-                'required' => false,
             ])
             ->add('cpc', MultidomainType::class, [
                 'label' => $this->translator->trans('Maximum price per click'),

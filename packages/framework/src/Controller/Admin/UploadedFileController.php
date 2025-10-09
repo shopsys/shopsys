@@ -70,7 +70,7 @@ class UploadedFileController extends AdminBaseController
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
-        return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/uploadedFile/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
@@ -118,7 +118,7 @@ class UploadedFileController extends AdminBaseController
             RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute('admin_uploadedfile_delete'),
         ]);
 
-        return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/uploadedFile/edit.html.twig', [
             'form' => $form->createView(),
             'entity' => $uploadedFile,
             'deleteUrl' => $deleteUrl,
@@ -170,7 +170,7 @@ class UploadedFileController extends AdminBaseController
             return $this->redirectToRoute('admin_uploadedfile_list');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/uploadedFile/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

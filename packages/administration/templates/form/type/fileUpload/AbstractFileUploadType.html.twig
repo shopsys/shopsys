@@ -1,0 +1,108 @@
+{% block abstract_file_upload_widget %}
+    {% import _self as self %}
+
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' js-file-upload mb-3'}) %}
+    {% set attr = attr|merge({'data-fileupload-url': url('admin_fileupload_upload')}) %}
+    {% set attr = attr|merge({'data-fileupload-delete-url': url('admin_fileupload_deletetemporaryfile')}) %}
+
+    <div {{ block('widget_attributes') }}>
+        <div class="js-file-upload-item">
+            {% block abstract_file_upload_widget_uploaded_files %}
+                <div class="file-upload-card-container js-file-upload-uploaded-files"
+                     data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', null, false, 'js-file-upload-uploaded-file-template')|escape }}"
+                >
+                    {% for key, uploadedFile in form.uploadedFiles %}
+                        {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
+                        {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
+                    {% else %}
+                        {% do form.children.uploadedFiles.setRendered %}
+                    {% endfor %}
+                </div>
+            {% endblock abstract_file_upload_widget_uploaded_files %}
+
+            <div class="position-fixed top-0 end-0 m-6 p-3 w-25" style="display: none; z-index: 1090">
+                <div class="js-file-upload-status alert alert-info alert-important" role="alert">
+                    {{ 'Status'|trans }}: {{ 'Successfully uploaded'|trans }}
+                </div>
+            </div>
+        </div>
+
+        <div class="js-file-upload-input rounded hstack border p-5 bg-muted-lt">
+            <div class="js-file-upload-fallback-hide mx-auto text-center d-none d-md-block">
+                <div class="avatar avatar-lg bg-transparent mb-2">
+                    {{ ux_icon('upload') }}
+                </div>
+                <div class="fs-2">
+                    <strong>
+                        {% if form.vars.multiple is same as(true) %}
+                            {{ 'Drag your files here'|trans }}
+                        {% else %}
+                            {{ 'Drag your file here'|trans }}
+                        {% endif %}</strong>
+                </div>
+                <div class="text-secondary">
+                    {{ info_text|default('') }}
+                </div>
+            </div>
+            <div class="js-file-upload-fallback-hide d-none d-md-block">
+                {{ 'or'|trans }}
+            </div>
+            <div class="mx-auto d-block d-md-flex gap-md-2 align-items-center">
+                {{ form_widget(form.children.file) }}
+                {% block abstract_file_upload_widget_buttons %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock abstract_file_upload_widget %}
+
+{% macro uploadedFile(uploadedFile, uploadedFilename, label, iconType, thumbnailUri, class, additionalTypesToRender) %}
+    <div class="card card-sm mb-3 js-file-upload-uploaded-file {{ class|default('') }}" style="max-width: 17.5rem;">
+        <div class="card-header py-1">
+            <button class="js-file-upload-delete-button ms-auto btn btn-sm btn-ghost-danger" type="button" title="{{ 'Delete'|trans }}">
+                {{ ux_icon('delete', { class: 'icon mx-0 js-file-upload-delete' }) }}
+            </button>
+        </div>
+        <div>
+            <div class="position-relative ratio ratio-16x9 overflow-hidden js-list-files-item">
+                {% if iconType is not null %}
+                    <span class="d-flex align-items-center justify-content-center h-100 w-100">
+                        {{ ux_icon('file-' ~ iconType, { class: 'icon icon-lg file-icon-' ~ iconType }) }}
+                    </span>
+                {% else %}
+                    <img class="js-file-upload-file-thumbnail w-100 h-100 object-contain"
+                            {% if thumbnailUri is not same as(false) %}
+                                src="{{ thumbnailUri|e('html_attr') }}"
+                            {% endif %}
+                         alt="{{ label }}"
+                    />
+                {% endif %}
+            </div>
+
+            <div class="progress h-4 js-file-upload-progress">
+                <div class="progress-bar js-file-upload-progress-bar" style="width: 0;">
+                    <span class="js-file-upload-progress-bar-value">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <span class="js-file-upload-label small text-secondary">{{ label }}</span>
+        </div>
+
+        <div class="card-footer">
+            {{ form_widget(uploadedFile, { attr: { class: 'js-file-upload-input' }}) }}
+
+            <span>
+                {{ form_widget(uploadedFilename, { attr: { class: 'mb-3 js-file-upload-name-input js-validation-no-file-upload' }}) }}
+                {{ form_errors(uploadedFilename) }}
+            </span>
+
+            {% if additionalTypesToRender is defined %}
+                {% for additionalType in additionalTypesToRender %}
+                    {{ form_widget(additionalType) }}
+                    {{ form_errors(additionalType) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}

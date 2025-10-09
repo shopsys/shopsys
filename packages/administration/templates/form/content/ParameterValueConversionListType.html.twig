@@ -1,0 +1,45 @@
+{% macro parameterValueRow(parameterValue, index) %}
+    <tr data-index="{{ index }}">
+        <td>
+            <div class="input-group">
+                <span class="input-group-text">{{ localeFlag(parameterValue.vars.value.locale) }}</span>
+                {{ form_widget(parameterValue.oldValueText) }}
+            </div>
+
+            {{ form_errors(parameterValue.oldValueText) }}
+        </td>
+        <td class="align-middle text-center">
+            {{ ux_icon('arrow-right') }}
+        </td>
+        <td>
+            <div class="input-group">
+                <span class="input-group-text">{{ localeFlag(parameterValue.vars.value.locale) }}</span>
+                {{ form_widget(parameterValue.newValueText) }}
+            </div>
+
+            {{ form_errors(parameterValue.newValueText) }}
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block parameter_value_conversion_list_widget %}
+    {% import _self as self %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'Old value'|trans }}</th>
+                <th></th>
+                <th>{{ 'New value'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody data-index="{{ form|length }}">
+            {{ form_errors(form) }}
+
+            {% for key, parameterValue in form.children %}
+                {{ self.parameterValueRow(parameterValue, key) }}
+            {% else %}
+                {% do form.setRendered %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

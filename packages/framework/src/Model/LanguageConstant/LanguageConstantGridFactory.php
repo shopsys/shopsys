@@ -68,7 +68,7 @@ class LanguageConstantGridFactory
             ])
             ->setConfirmMessage(t('Do you really want to remove this language constant translation?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/LanguageConstant/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/languageConstant/listGrid.html.twig');
 
         return $grid;
     }

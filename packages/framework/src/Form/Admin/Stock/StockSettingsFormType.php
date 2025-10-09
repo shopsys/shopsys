@@ -66,7 +66,7 @@ final class StockSettingsFormType extends AbstractType
             ])
             ->add('feedDeliveryDaysForOutOfStockProductsInfo', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
-                'data' => $this->environment->render('@ShopsysFramework/Admin/Content/Feed/feedDeliveryDaysForOutOfStockProductsInfo.html.twig'),
+                'data' => $this->environment->render('@ShopsysAdministration/content/feed/feedDeliveryDaysForOutOfStockProductsInfo.html.twig'),
             ]);
 
         $builder

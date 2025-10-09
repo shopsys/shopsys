@@ -1,14 +1,10 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class EntityUrlsNew {
     constructor($entityUrls) {
         this.$buttonAdd = $entityUrls.find('.js-entity-url-list-button-add-url');
         this.$newUrlsContainer = $entityUrls.find('.js-entity-url-list-new-urls');
-        this.newUrlsId = this.$newUrlsContainer.attr('id');
 
         this.$buttonAdd.click(() => this.addNewUrl());
         $entityUrls.on('click', '.js-entity-url-list-new-row-delete-button', event => this.onClickRemoveNewUrl(event));
@@ -23,7 +19,7 @@ export default class EntityUrlsNew {
         this.$newUrlsContainer.append($newUrl);
 
         new Register().registerNewContent($newUrl);
-        addNewItemToCollection(`#${this.newUrlsId}`, index);
+        FormChangeInfo.showInfo();
     }
 
     getNextNewUrlIndex() {
@@ -37,8 +33,7 @@ export default class EntityUrlsNew {
 
     onClickRemoveNewUrl(event) {
         const $row = $(event.currentTarget).closest('.js-entity-url-list-new-row');
-        const index = $row.data('index');
-        removeItemFromCollection(`#${this.newUrlsId}`, index);
+        FormChangeInfo.showInfo();
         $row.remove();
     }
 

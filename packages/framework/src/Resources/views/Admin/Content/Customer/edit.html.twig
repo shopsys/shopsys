@@ -1,8 +1,0 @@
-{% extends '@ShopsysFramework/Admin/Content/Customer/detail.html.twig' %}
-{% import '@ShopsysFramework/Admin/Content/Customer/loginAsUserLinkMacro.html.twig' as loginAsUserLinkMacro %}
-
-{% block title %}- {{ 'Editing customer'|trans }} - {{ customerUser.fullName }}{% endblock %}
-{% block h1 %}
-    {{ 'Editing customer'|trans }} - {{ customerUser.fullName }}
-    {{ loginAsUserLinkMacro.loginAsUserLink(customerUser) }}
-{% endblock %}

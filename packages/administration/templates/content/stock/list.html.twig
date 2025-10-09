@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Warehouses overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Warehouses'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_stock_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new warehouse'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}

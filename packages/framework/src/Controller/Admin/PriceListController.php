@@ -81,7 +81,7 @@ class PriceListController extends AdminBaseController
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/PriceList/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/priceList/list.html.twig', [
             'gridView' => $this->priceListGridFactory->createView($queryBuilder, $this->getCurrentAdministrator()),
             'domainFilterNamespace' => static::DOMAIN_FILTER_NAMESPACE,
         ]);
@@ -124,7 +124,7 @@ class PriceListController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/PriceList/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/priceList/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -167,7 +167,7 @@ class PriceListController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing price list - %name%', ['%name%' => $priceList->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/PriceList/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/priceList/edit.html.twig', [
             'form' => $form->createView(),
             'priceList' => $priceList,
         ]);
@@ -262,7 +262,7 @@ class PriceListController extends AdminBaseController
                     $this->addErrorFlash($error);
                 }
 
-                return $this->render('@ShopsysFramework/Admin/Content/PriceList/import.html.twig', [
+                return $this->render('@ShopsysAdministration/content/priceList/import.html.twig', [
                     'form' => $form->createView(),
                 ]);
             }
@@ -305,7 +305,7 @@ class PriceListController extends AdminBaseController
             $this->addErrorFlash(t('Error while importing CSV file.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/PriceList/import.html.twig', [
+        return $this->render('@ShopsysAdministration/content/priceList/import.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -51,11 +51,10 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
 
         $grid->addColumn('name', 'cst.name', t('Name'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_complaintstatus_deleteconfirm', ['id' => 'cs.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/ComplaintStatus/listGrid.html.twig', [
+        $grid->setTheme('@ShopsysAdministration/content/complaintStatus/listGrid.html.twig', [
             'STATUS_TYPE_NEW' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW,
             'STATUS_TYPE_RESOLVED' => ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED,
         ]);

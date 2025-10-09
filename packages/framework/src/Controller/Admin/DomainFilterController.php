@@ -32,7 +32,7 @@ class DomainFilterController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function domainFilterTabsAction(string $namespace): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Inline/Domain/filter.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/quick_domain_filter.html.twig', [
             'domainConfigs' => $this->domain->getAdminEnabledDomains(),
             'namespace' => $namespace,
             'selectedDomainId' => $this->adminDomainFilterTabsFacade->getSelectedDomainId($namespace),

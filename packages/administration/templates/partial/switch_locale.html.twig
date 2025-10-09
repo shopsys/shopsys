@@ -1,0 +1,27 @@
+{% if isMultidomain() %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title text-secondary">{{ 'Switch locale'|trans }}</div>
+            <div class="btn-list " role="tablist">
+                {% for domainConfig in domainConfigs %}
+                    {% if domainConfig.id is same as(selectedDomainId) %}
+                        <span class="btn active">
+                            <span class="me-3">
+                                {{ localeFlag(domainConfig.locale, null, true, 32, 22) }}
+                            </span>
+                            {{ domainConfig.locale|upper }}
+                        </span>
+                    {% else %}
+                        <a class="btn"
+                           href="{{ url('admin_domain_selectdomain', {id: domainConfig.id}) }}">
+                            <span class="me-3">
+                                {{ localeFlag(domainConfig.locale, null, true, 32, 22) }}
+                            </span>
+                            {{ domainConfig.locale|upper }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

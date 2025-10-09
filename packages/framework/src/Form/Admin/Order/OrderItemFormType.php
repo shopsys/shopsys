@@ -45,20 +45,17 @@ final class OrderItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('catnum', TextType::class, [
                 'constraints' => [
                     new Constraints\Length(['max' => '255']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('unitPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter unit price with VAT']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('unitPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
@@ -68,7 +65,6 @@ final class OrderItemFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
                     ]),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('totalPriceWithVat', MoneyType::class, [
                 'scale' => 6,
@@ -78,7 +74,6 @@ final class OrderItemFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
                     ]),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('totalPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
@@ -88,11 +83,12 @@ final class OrderItemFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION],
                     ]),
                 ],
-                'error_bubbling' => true,
             ])
             ->add(
                 $builder->create('setPricesManually', CheckboxType::class, [
                     'property_path' => 'usePriceCalculation',
+                    'required' => false,
+                    'label' => false,
                 ])->addModelTransformer(new InverseTransformer()),
             )
             ->add('vatPercent', NumberType::class, [
@@ -100,7 +96,6 @@ final class OrderItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('quantity', IntegerType::class, [
                 'constraints' => [
@@ -109,13 +104,11 @@ final class OrderItemFormType extends AbstractType
                         ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}'],
                     ),
                 ],
-                'error_bubbling' => true,
             ])
             ->add('unitName', TextType::class, [
                 'constraints' => [
                     new Constraints\Length(['max' => 10]),
                 ],
-                'error_bubbling' => true,
             ]);
     }
 

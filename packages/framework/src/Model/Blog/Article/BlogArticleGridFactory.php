@@ -42,12 +42,11 @@ class BlogArticleGridFactory
         $grid->addColumn('name', 'bat.name', t('Name'));
         $grid->addColumn('createdAt', 'ba.createdAt', t('Date of creation'));
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_blogarticle_edit', ['id' => 'ba.id']);
         $grid->addDeleteActionColumn('admin_blogarticle_deleteconfirm', ['id' => 'ba.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Blog/Article/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/blog/article/listGrid.html.twig');
 
         return $grid;
     }

@@ -24,7 +24,6 @@ final class DisplayVariablesType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'readonly' => 'readonly',
-                    'class' => '',
                 ],
                 'variables' => [],
             ])

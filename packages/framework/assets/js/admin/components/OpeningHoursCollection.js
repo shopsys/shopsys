@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class OpeningHoursCollection {
     static init($container) {
@@ -11,8 +8,7 @@ export default class OpeningHoursCollection {
 
         $openingHoursCollection.on('click', '.js-opening-hours-item-remove', function (event) {
             const $item = $(this).closest('.js-opening-hours-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-opening-hours', index);
+            FormChangeInfo.showInfo();
             $item.remove();
 
             event.preventDefault();
@@ -32,10 +28,7 @@ export default class OpeningHoursCollection {
             $collection.append($item);
             new Register().registerNewContent($item);
 
-            addNewItemToCollection('.js-opening-hours', index);
-
-            event.preventDefault();
-            return false;
+            FormChangeInfo.showInfo();
         });
     }
 }

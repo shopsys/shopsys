@@ -82,7 +82,7 @@ class BlogCategoryController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing blog category - %name%', ['%name%' => $blogCategory->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Blog/Category/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/blog/category/edit.html.twig', [
             'form' => $form->createView(),
             'blogCategory' => $blogCategory,
         ]);
@@ -122,7 +122,7 @@ class BlogCategoryController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Blog/Category/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/blog/category/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -149,7 +149,7 @@ class BlogCategoryController extends AdminBaseController
             );
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Blog/Category/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/blog/category/list.html.twig', [
             'blogCategoriesWithPreloadedChildren' => $blogCategoriesWithPreloadedChildren,
             'isForAllDomains' => ($selectedDomainId === null),
             'domainFilterNamespace' => $domainFilterNamespace,

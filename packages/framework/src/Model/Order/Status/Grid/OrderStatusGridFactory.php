@@ -51,11 +51,10 @@ class OrderStatusGridFactory implements GridFactoryInterface
 
         $grid->addColumn('name', 'ost.name', t('Name'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_orderstatus_deleteconfirm', ['id' => 'os.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/OrderStatus/listGrid.html.twig', [
+        $grid->setTheme('@ShopsysAdministration/content/orderStatus/listGrid.html.twig', [
             'TYPE_NEW' => OrderStatusTypeEnum::TYPE_NEW,
             'TYPE_DONE' => OrderStatusTypeEnum::TYPE_DONE,
             'TYPE_CANCELED' => OrderStatusTypeEnum::TYPE_CANCELED,

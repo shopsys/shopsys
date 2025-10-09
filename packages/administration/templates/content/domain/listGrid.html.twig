@@ -1,0 +1,13 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No domains so far.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_locale %}
+    {{ localeFlag(value) }}
+{% endblock %}
+
+{% block grid_value_cell_id_icon %}
+    {{ domain_icon(row.id) }}
+{% endblock %}

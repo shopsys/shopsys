@@ -205,7 +205,7 @@ class SalesmanController extends AdminBaseController
 Finally, it is time to create a new twig template, `templates/Admin/Content/Salesman/list.html.twig` with the following content:
 
 ```twig
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
 {% block title %}- {{ 'Salesmen'|trans }}{% endblock %}
 {% block h1 %}{{ 'Salesmen'|trans }}{% endblock %}
@@ -231,11 +231,11 @@ To adjust appearance (e.g., let's say we are in Germany and want to format the d
 ### 3.1 Create a new template
 
 We create the new twig template `listGrid.html.twig` in `templates/Admin/Content/Salesman`.
-The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and override block `grid_value_cell_id_registeredAt` where we apply a Twig filter to the value.
+The template has to extend `@ShopsysAdministration/datagrid/grid.html.twig` and override block `grid_value_cell_id_registeredAt` where we apply a Twig filter to the value.
 [You can read more about blocks here](../administration/internal-grid/grid-rendering-customization.md).
 
 ```twig
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_registeredAt %}
     {{ value|formatDateTime('de') }}

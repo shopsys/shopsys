@@ -1,0 +1,105 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Inquiry by'|trans }} {{ inquiry.email }}{% endblock %}
+
+{% block pre_title %}{{ 'Inquiry by'|trans }}{% endblock %}
+{% block h1 %}{{ inquiry.email }}{% endblock %}
+
+{% block main_content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Customer detail'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="datagrid mb-4">
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'First name'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.firstName }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Last name'|trans }}</div>
+                    <div class="datagrid-content">
+                        {{ inquiry.lastName }}
+                        {% if inquiry.customerUser %}
+                            <a class="ms-3" href="{{ url('admin_customer_user_edit', { id: inquiry.customerUser.id }) }}">
+                                {{ ux_icon('forward-page') }} {{ 'Go to associated customer user'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Email'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.email }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Telephone'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.telephone }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Created'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.createdAt|formatDateTime }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Company name'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.companyName ?: '-' }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Company number'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.companyNumber ?: '-' }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Company Tax number'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.companyTaxNumber ?: '-' }}</div>
+                </div>
+            </div>
+
+            <div class="datagrid">
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'Note'|trans }}</div>
+                    <div class="datagrid-content">{{ inquiry.note }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Inquired product'|trans }}</h3>
+        </div>
+        <div class="row align-items-center">
+            {% if inquiry.product is not null %}
+                <div class="col-auto">
+                    <a href="{{ url('admin_product_edit', { id: inquiry.product.id }) }}">
+                        {{ image(inquiry.product, { 'class': 'ms-3', width: 80, height: 80}) }}
+                    </a>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h3 class="m-0">
+                            <a href="{{ url('admin_product_edit', { id: inquiry.product.id }) }}">{{ inquiry.product.name }}</a>
+                        </h3>
+                        <div class="text-secondary">
+                            {{ 'Catalog number'|trans }}:
+                            <strong>{{ inquiry.product.catnum }}</strong>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card-body">
+                    <h3 class="m-0">
+                        {{ 'Catalog number'|trans }}: {{ inquiry.productCatnum }}
+                    </h3>
+                    <div class="text-secondary">
+                        {{ 'Product associated with this inquiry is no longer available in the catalog.'|trans }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% embed '@ShopsysAdministration/partial/_fixed_bar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_inquiry_list') }}" class="btn btn-ghost-secondary">{{ 'Back to overview'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

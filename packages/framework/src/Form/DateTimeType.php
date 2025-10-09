@@ -8,12 +8,11 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType as SymfonyDateTimeType;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DateTimeType extends AbstractType
 {
-    protected const FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss';
+    protected const string FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
@@ -28,21 +27,13 @@ final class DateTimeType extends AbstractType
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $defaultAttr = [
-            'icon' => true,
-            'iconTitle' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)'),
-        ];
         $resolver->setDefaults([
             'widget' => 'single_text',
-            'format' => static::FORMAT_PHP,
+            'format' => self::FORMAT_PHP,
             'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName(),
-            'attr' => $defaultAttr,
+            'help' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)'),
             'html5' => false,
         ]);
-
-        $resolver->setNormalizer('attr', function (Options $options, $userAttr) use ($defaultAttr) {
-            return array_merge($defaultAttr, $userAttr);
-        });
     }
 
     /**

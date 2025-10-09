@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class HreflangSettingFormType extends AbstractType
 {
-    public const FIELD_HREFLANG_COLLECTION = 'hreflang_collection';
+    public const string FIELD_HREFLANG_COLLECTION = 'hreflang_collection';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -38,6 +39,14 @@ final class HreflangSettingFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('message_info', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions.'),
+            ])
+            ->add('message_external_info', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('For more information about hreflang tags, see the <a href="https://developers.google.com/search/docs/specialty/international/localized-versions">Google documentation</a>'),
+            ])
             ->add(self::FIELD_HREFLANG_COLLECTION, CollectionType::class, [
                 'block_prefix' => 'hreflang_setting_collection',
                 'label' => t('Alternate language domains'),

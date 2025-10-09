@@ -72,7 +72,7 @@ class HeurekaController extends AdminBaseController
             $formView = $form->createView();
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Heureka/setting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/heureka/setting.html.twig', [
             'form' => $formView,
             'serverName' => $serverName,
             'selectedDomainConfig' => $domainConfig,

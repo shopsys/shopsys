@@ -39,10 +39,7 @@ final class UploadedFileFormType extends AbstractType
         $builder->add('names', LocalizedType::class, [
             'required' => false,
             'label' => t('Names'),
-            'attr' => [
-                'icon' => true,
-                'iconTitle' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
-            ],
+            'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
             'entry_options' => [
                 'required' => false,
                 'constraints' => [
@@ -73,8 +70,7 @@ final class UploadedFileFormType extends AbstractType
         $builder->add('products', ProductsType::class, [
             'required' => false,
             'label_button_add' => t('Add to products'),
-            'top_info_title' => t('Products'),
-            'label' => false,
+            'label' => t('Products'),
         ]);
     }
 

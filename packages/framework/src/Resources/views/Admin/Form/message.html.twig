@@ -1,9 +1,0 @@
-{% block message_label %}{% endblock message_label %}
-{% block message_widget %}
-    <div class="form-line__line form-line__line--no-space">
-        <div class="in-message in-message--{{ form.vars.message_level }}">
-            {{ ux_icon(form.vars.message_level, {class: 'in-message__icon'}) }}
-            {{ data|raw }}
-        </div>
-    </div>
-{% endblock message_widget %}

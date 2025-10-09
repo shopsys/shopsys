@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Sale including/excluding VAT settings'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Sale including/excluding VAT'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}

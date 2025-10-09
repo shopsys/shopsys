@@ -1,4 +1,3 @@
-import 'magnific-popup';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
 import MultiplePicker from './MultiplePicker';

@@ -97,7 +97,7 @@ class ArticleController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing article - %name%', ['%name%' => $article->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Article/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/article/edit.html.twig', [
             'form' => $form->createView(),
             'article' => $article,
         ]);
@@ -110,14 +110,14 @@ class ArticleController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1);
-        $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2);
-        $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3);
-        $gridFooter4 = $this->getGrid(Article::PLACEMENT_FOOTER_4);
-        $gridNone = $this->getGrid(Article::PLACEMENT_NONE);
+        $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1, t('Articles in footer') . ' 1');
+        $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2, t('Articles in footer') . ' 2');
+        $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3, t('Articles in footer') . ' 3');
+        $gridFooter4 = $this->getGrid(Article::PLACEMENT_FOOTER_4, t('Articles in footer') . ' 4');
+        $gridNone = $this->getGrid(Article::PLACEMENT_NONE, t('Articles without positioning'));
         $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
 
-        return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/article/list.html.twig', [
             'gridViewFooter1' => $gridFooter1->createView(),
             'gridViewFooter2' => $gridFooter2->createView(),
             'gridViewFooter3' => $gridFooter3->createView(),
@@ -163,7 +163,7 @@ class ArticleController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Article/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/article/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -240,9 +240,10 @@ class ArticleController extends AdminBaseController
 
     /**
      * @param string $articlePlacement
+     * @param string $articlePlacementTitle
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    protected function getGrid(string $articlePlacement): Grid
+    protected function getGrid(string $articlePlacement, string $articlePlacementTitle): Grid
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
@@ -254,16 +255,16 @@ class ArticleController extends AdminBaseController
         $gridId = $articlePlacement;
         $grid = $this->gridFactory->create($gridId, $dataSource, AdminRoleConstant::ROLE_ARTICLE);
         $grid->setDefaultOrder('position');
+        $grid->setTitle($articlePlacementTitle);
 
         $grid->addColumn('name', 'a.name', t('Name'));
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_article_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_article_deleteconfirm', ['id' => 'a.id'])
             ->setAjaxConfirm();
 
         $grid->enableMultipleDragAndDrop();
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Article/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/article/listGrid.html.twig');
 
         return $grid;
     }

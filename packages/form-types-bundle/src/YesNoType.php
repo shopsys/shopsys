@@ -8,6 +8,7 @@ use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class YesNoType extends AbstractType
@@ -36,7 +37,13 @@ final class YesNoType extends AbstractType
             },
             'multiple' => false,
             'expanded' => true,
+            'required' => true,
             'placeholder' => false,
+            'constraints' => [
+                new Constraints\NotNull([
+                    'message' => 'Please choose at least one option',
+                ]),
+            ],
         ]);
     }
 

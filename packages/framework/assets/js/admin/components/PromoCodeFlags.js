@@ -1,8 +1,5 @@
 import Register from '../../common/utils/Register';
-import {
-    addNewItemToCollection,
-    removeItemFromCollection,
-} from '../validation/customization/customizeCollectionBundle';
+import FormChangeInfo from './FormChangeInfo';
 
 export default class PromoCodeFlags {
     static init($container) {
@@ -13,8 +10,7 @@ export default class PromoCodeFlags {
             const $collection = $(this).closest('.js-flags');
 
             const $item = $(this).closest('.js-flags-item');
-            const index = $item.data('index');
-            removeItemFromCollection('.js-flags', index);
+            FormChangeInfo.showInfo();
             $item.remove();
 
             PromoCodeFlags.refreshCount($collection);
@@ -35,7 +31,7 @@ export default class PromoCodeFlags {
             $collection.append($item);
             new Register().registerNewContent($item);
 
-            addNewItemToCollection('.js-flags', index);
+            FormChangeInfo.showInfo();
             PromoCodeFlags.refreshCount($collection);
 
             return false;

@@ -1,11 +1,9 @@
-import 'select2/dist/js/select2.full';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class AdvancedSearch {
     constructor($addRuleButton, $rulesContainer, $ruleTemplate) {
-        $ruleTemplate.detach().removeClass('display-none').removeAttr('id').find('*[id]').removeAttr('id');
-        $ruleTemplate.find('select.select2-hidden-accessible').select2('destroy');
+        $ruleTemplate.detach().removeClass('d-none').removeAttr('id').find('*[id]').removeAttr('id');
 
         let newRuleIndexCounter = 0;
 
@@ -35,9 +33,7 @@ export default class AdvancedSearch {
     }
 
     static updateRule($rulesContainer, $rule, filterName, newIndex) {
-        $rule.addClass('in-disabled');
         Ajax.ajax({
-            loaderElement: '#js-advanced-search-rules-box',
             url: $rulesContainer.data('rule-form-url'),
             type: 'post',
             data: {

@@ -1,8 +1,9 @@
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import { KeyCodes } from '../../common/utils/KeyCodes';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 
 export default class GridInlineEdit {
     constructor(item) {
@@ -19,23 +20,21 @@ export default class GridInlineEdit {
 
         $grid.off('click', '.js-inline-edit-add').on('click', '.js-inline-edit-add', () => {
             $grid.find('.js-inline-edit-no-data').remove();
-            $grid.find('.js-inline-edit-data-container').removeClass('hidden');
             _this.addNewRow($grid);
             return false;
         });
 
         $grid.off('click', '.js-inline-edit-cancel').on('click', '.js-inline-edit-cancel', function () {
             const $formRow = $(this).closest('.js-grid-editing-row');
-            // eslint-disable-next-line no-new
-            new Window({
+
+            ConfirmWindow.show({
                 content: Translator.trans('Do you really want to discard all changes?'),
-                buttonCancel: true,
-                buttonContinue: true,
-                textContinue: Translator.trans('Yes'),
-                eventContinue: () => {
+                style: 'warning',
+                continueEvent: () => {
                     _this.cancelEdit($formRow);
                 },
             });
+
             return false;
         });
 
@@ -85,14 +84,14 @@ export default class GridInlineEdit {
                     $buttons.show();
                     $saving.hide();
                     // eslint-disable-next-line no-new
-                    new Window({
+                    new ModalWindow({
                         content: `${Translator.trans('Please check following information:')}<br/><br/>• ${saveResult.errors.join('<br/>• ')}`,
                     });
                 }
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Error occurred, try again please.'),
                 });
                 $buttons.show();

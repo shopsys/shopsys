@@ -1,4 +1,5 @@
-import 'magnific-popup';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
+import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
@@ -32,10 +33,16 @@ export default class MultiplePicker {
     }
 
     openPickerWindow() {
-        $.magnificPopup.open({
-            items: { src: this.$picker.data('picker-url').replace('__js_instance_id__', this.instanceId) },
-            type: 'iframe',
-            closeOnBgClick: true,
+        const url = this.$picker.data('picker-url').replace('__js_instance_id__', this.instanceId);
+
+        const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
+
+        // eslint-disable-next-line no-new
+        new ModalWindow({
+            content: iframeContent,
+            title: Translator.trans('Select items'),
+            size: 'xl',
+            buttons: [{ text: Translator.trans('Finish assigning') }],
         });
 
         return false;
@@ -125,10 +132,6 @@ export default class MultiplePicker {
         $container.filterAllNodes('.js-picker').each(function () {
             // eslint-disable-next-line no-new
             new MultiplePicker($(this));
-        });
-
-        $('.js-picker-close').click(() => {
-            window.parent.$.magnificPopup.instance.close();
         });
     }
 }

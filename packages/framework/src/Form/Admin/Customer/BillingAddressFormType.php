@@ -58,9 +58,9 @@ final class BillingAddressFormType extends AbstractType
                     ->create('companyFields', FormType::class, [
                         'inherit_data' => true,
                         'attr' => [
-                            'class' => 'js-company-fields form-line__js',
+                            'class' => 'js-company-fields',
                         ],
-                        'render_form_row' => false,
+                        'label' => false,
                     ])
                     ->add('companyName', TextType::class, [
                         'required' => true,

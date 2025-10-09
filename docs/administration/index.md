@@ -9,3 +9,4 @@
 - [Admin rights](./admin-rights.md)
 - [Disabling form fields](./disabling-form-fields.md)
 - [Icons](./icons.md)
+- [JavaScript Utilities](./javascript-utilities.md)

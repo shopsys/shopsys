@@ -1,0 +1,5 @@
+<div class="action-bar-bottom row w-auto fixed-bottom bg-light border-top py-1 pe-4 ps-4" data-js-unsaved-changes-container{% if app.environment is same as('dev') %} data-js-fixed-bar style="transition: bottom 0.3s ease;"{% endif %}>
+    <div class="col btn-list justify-content-end">
+        {% block fixed_bar_content %}{% endblock %}
+    </div>
+</div>

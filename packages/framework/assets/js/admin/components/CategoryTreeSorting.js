@@ -1,10 +1,10 @@
 import 'jquery-ui/ui/widgets/mouse';
 import 'jquery-ui-touch-punch';
 import 'jquery-ui-nested-sortable';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 export default class CategoryTreeSorting {
@@ -24,7 +24,7 @@ export default class CategoryTreeSorting {
             listType: 'ul',
             handle: '.js-category-tree-item-handle',
             items: '.js-category-tree-item',
-            placeholder: 'js-category-tree-placeholder form-tree__placeholder',
+            placeholder: 'js-category-tree-placeholder',
             toleranceElement: '> .js-category-tree-item-line',
             forcePlaceholderSize: true,
             helper: 'clone',
@@ -32,37 +32,44 @@ export default class CategoryTreeSorting {
             revert: 100,
             protectRoot: this.$rootTree.hasClass('js-protect-root'),
             change: () => this.onChange(),
+            start: (event, ui) => this.onDragStart(event, ui),
         });
 
         $saveButton.click(() => this.onSaveClick());
     }
 
     onChange() {
-        this.$saveButton.removeClass('btn--disabled');
+        this.$saveButton.prop('disabled', false);
         FormChangeInfo.showInfo();
     }
 
+    onDragStart(_event, ui) {
+        ui.helper.find('.js-category-tree-item-handle').removeClass('cursor-grab').addClass('cursor-grabbing');
+    }
+
     onSaveClick() {
-        if (this.$saveButton.hasClass('btn--disabled')) {
+        if (this.$saveButton.prop('disabled')) {
             return;
         }
+
         Ajax.ajax({
+            loaderElement: this.$saveButton,
             url: this.$saveButton.data('category-apply-sorting-url'),
             type: 'post',
             data: {
                 categoriesOrderingData: JSON.stringify(this.getNestedSetData()),
             },
             success: () => {
-                this.$saveButton.addClass('btn--disabled');
+                this.$saveButton.prop('disabled', true);
                 FormChangeInfo.removeInfo();
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans('Categories order saved.'),
                 });
             },
             error: () => {
                 // eslint-disable-next-line no-new
-                new Window({
+                new ModalWindow({
                     content: Translator.trans("There was an error while saving. The order isn't saved."),
                 });
             },

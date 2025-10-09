@@ -7,7 +7,6 @@ export default class FileUploadPreview {
     static initDelete() {
         $('.js-file-upload-file').each(function () {
             const $file = $(this);
-            const $filePreview = $file.find('.js-file-upload-preview');
             const $deleteButton = $file.find('.js-file-upload-delete-button');
             const $revertButton = $file.find('.js-file-upload-delete-revert-button');
             const $deleteInfo = $file.find('.js-file-upload-file-overlay');
@@ -15,20 +14,18 @@ export default class FileUploadPreview {
 
             $deleteButton.on('click.deleteFile', () => {
                 select($file.data('delete-input'), fileId);
-                $filePreview.addClass('list-files__item__in--removed');
                 $deleteButton.hide();
                 $revertButton.show();
-                $deleteInfo.show();
+                $deleteInfo.addClass('d-flex').removeClass('d-none');
                 formChangeInfo.showInfo();
                 return false;
             });
 
             $revertButton.on('click.deleteFile', () => {
                 deselect($file.data('delete-input'), fileId);
-                $filePreview.removeClass('list-files__item__in--removed');
                 $deleteButton.show();
                 $revertButton.hide();
-                $deleteInfo.hide();
+                $deleteInfo.removeClass('d-flex').addClass('d-none');
                 return false;
             });
 
@@ -45,6 +42,9 @@ export default class FileUploadPreview {
                 handle: '.js-file-upload-file-handle',
                 animation: 150,
                 onUpdate: formChangeInfo.showInfo,
+                ghostClass: 'opacity-50',
+                chosenClass: 'border-primary',
+                dragClass: 'shadow-lg',
             });
         });
     }

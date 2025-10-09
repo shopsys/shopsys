@@ -47,10 +47,9 @@ class CountryGridFactory implements GridFactoryInterface
         $grid->addColumn('name', 'ct.name', t('Name'), true);
         $grid->addColumn('code', 'c.code', t('Country code'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_country_edit', ['id' => 'c.id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Country/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/country/listGrid.html.twig');
 
         return $grid;
     }

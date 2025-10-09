@@ -43,6 +43,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^9.5.20",
+        "shopsys/biome-config": "18.0.x-dev",
         "shopsys/coding-standards": "18.0.x-dev"
     },
     "extra": {

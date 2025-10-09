@@ -55,7 +55,7 @@ class ContactFormSettingsController extends AdminBaseController
             return $this->redirectToRoute('admin_contactformsettings_index');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/ContactFormSettings/contactFormSettings.html.twig', [
+        return $this->render('@ShopsysAdministration/content/contactFormSettings/contactFormSettings.html.twig', [
             'form' => $form->createView(),
         ]);
     }

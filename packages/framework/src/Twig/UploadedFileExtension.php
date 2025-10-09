@@ -51,6 +51,7 @@ class UploadedFileExtension extends AbstractExtension
         return [
             new TwigFunction('uploadedFileUrl', $this->getUploadedFileUrl(...)),
             new TwigFunction('uploadedFilePreview', $this->getUploadedFilePreviewHtml(...), ['is_safe' => ['html']]),
+            new TwigFunction('uploadedFilePreviewWithLink', $this->getUploadedFilePreviewWithLinkHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('uploadedFileExists', $this->uploadedFileExists(...)),
             new TwigFunction('customerUploadedFileUrl', $this->getCustomerUploadedFileUrl(...)),
             new TwigFunction('customerUploadedFileExists', $this->customerUploadedFileExists(...)),
@@ -86,9 +87,10 @@ class UploadedFileExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
+     * @param string|null $additionalClasses
      * @return string
      */
-    public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile): string
+    public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile, ?string $additionalClasses = null): string
     {
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
@@ -103,7 +105,32 @@ class UploadedFileExtension extends AbstractExtension
             return $this->getUploadedFileIconHtml($uploadedFileIconType);
         }
 
-        return '<img src="' . $fileThumbnailInfo->getImageUri() . '"/>';
+        return sprintf('<img src="%s"%s>', $fileThumbnailInfo->getImageUri(), $additionalClasses !== null ? 'class="' . $additionalClasses . '"' : '');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
+     * @return string
+     */
+    public function getUploadedFilePreviewWithLinkHtml(UploadedFile $uploadedFile): string
+    {
+        $filePreviewClasses = 'w-100 h-100 object-contain';
+        $containerClasses = 'd-flex align-items-center justify-content-center h-100 w-100';
+
+        if ($this->uploadedFileExists($uploadedFile)) {
+            return sprintf(
+                '<a href="%s" download class="%s">%s</a>',
+                $this->getUploadedFileUrl($uploadedFile),
+                $containerClasses,
+                $this->getUploadedFilePreviewHtml($uploadedFile, $filePreviewClasses),
+            );
+        }
+
+        return sprintf(
+            '<div class="%s">%s</div>',
+            $containerClasses,
+            $this->getUploadedFilePreviewHtml($uploadedFile, $filePreviewClasses),
+        );
     }
 
     /**
@@ -112,12 +139,9 @@ class UploadedFileExtension extends AbstractExtension
      */
     protected function getUploadedFileIconHtml(string $uploadedFileIconType): string
     {
-        return
-            '<span class="list-files__item__file__type list-files__item__file__type--' .
-            $uploadedFileIconType .
-            ' text-no-decoration cursor-pointer">' .
-            $this->iconRenderer->renderIcon('file-' . $uploadedFileIconType) .
-            '</span>';
+        return $this->iconRenderer->renderIcon('file-' . $uploadedFileIconType, [
+            'class' => 'icon icon-lg file-icon-' . $uploadedFileIconType,
+        ]);
     }
 
     /**

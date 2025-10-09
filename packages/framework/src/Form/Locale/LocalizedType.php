@@ -6,24 +6,29 @@ namespace Shopsys\FrameworkBundle\Form\Locale;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalizedType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Form\FormTypeLayout $formTypeLayout
      */
-    public function __construct(private readonly Localization $localization)
-    {
+    public function __construct(
+        private readonly Localization $localization,
+        private readonly FormTypeLayout $formTypeLayout,
+    ) {
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -60,7 +65,7 @@ class LocalizedType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     * {@inheritdoc}
      */
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
@@ -70,6 +75,20 @@ class LocalizedType extends AbstractType
             'entry_type' => TextType::class,
             'entry_options' => [],
             'main_constraints' => [],
+            'layout' => null,
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        if ($options['layout'] === null) {
+            $options['layout'] = $this->formTypeLayout->resolveLayoutType($options['entry_type']);
+        }
+
+        $view->vars['layout'] = $options['layout'];
     }
 }

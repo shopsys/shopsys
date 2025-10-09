@@ -43,7 +43,6 @@ class PromoCodeMassGeneratedBatchGridFactory
         $grid->setDefaultOrder('batchId');
         $grid->addColumn('code', 'batchId', t('Batch ID'), true);
         $grid->addColumn('prefix', 'pc.prefix', t('Promo code prefix'), true);
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         $grid->addActionColumn('download', t('Download file'), 'admin_promocode_downloadmassgeneratebatch', ['batchId' => 'batchId']);
 

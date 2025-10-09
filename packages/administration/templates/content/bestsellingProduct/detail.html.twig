@@ -1,0 +1,8 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Bestsellers of the category'|trans }} {{ categoryName }}{% endblock %}
+{% block h1 %}{{ 'Bestsellers of the category'|trans }} {{ categoryName }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}

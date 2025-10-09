@@ -1,0 +1,14 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'VAT'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'VAT'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\VatController::settingsAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

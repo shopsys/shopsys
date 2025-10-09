@@ -44,7 +44,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
         $this->friendlyUrlInlineEdit->setGridQuickSearchFormData($quickSearchForm->getData());
         $unusedFriendlyUrlInlineEditGrid = $this->friendlyUrlInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/UnusedFriendlyUrl/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/unusedFriendlyUrl/list.html.twig', [
             'quickSearchForm' => $quickSearchForm->createView(),
             'gridView' => $unusedFriendlyUrlInlineEditGrid->createView(),
         ]);

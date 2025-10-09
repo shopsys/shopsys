@@ -86,8 +86,7 @@ foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
     $seoTitlesOptionsByDomainId[$domainId] = [
         'attr' => [
             'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-            'class' => 'js-dynamic-placeholder',
-            'data-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
+            'data-js-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
         ],
     ];
     $seoMetaDescriptionsOptionsByDomainId[$domainId] = [

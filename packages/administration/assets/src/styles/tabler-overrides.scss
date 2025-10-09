@@ -1,0 +1,62 @@
+:root {
+    --page-padding-bottom: 5rem;
+    font-size: 18px;
+
+    --tblr-primary: #009bd9;
+}
+
+// fix disabled button in input group border color
+.input-group {
+    --tblr-btn-disabled-border-color: #{$border-color};
+}
+
+// make popover and tooltip wider
+.popover {
+    --tblr-popover-max-width: 30rem;
+}
+
+.tooltip {
+    --tblr-tooltip-max-width: 36em;
+}
+
+// fix empty space on the left (https://github.com/tabler/tabler/issues/2271)
+@media (min-width: 992px) {
+    :host,
+    :root {
+        margin-left: 0;
+    }
+}
+
+body {
+    overflow-y: scroll;
+}
+
+// no arrows in number input
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+// fix validation cross position
+.form-control.is-invalid,
+.was-validated .form-control:invalid,
+textarea.form-control.is-invalid {
+    background-position: right calc(.375em + .1875rem) center;
+}
+
+// visually distinguish readonly input
+.form-control:read-only {
+    opacity: 1;
+    background-color: var(--tblr-bg-surface-secondary);
+    color: var(--tblr-secondary);
+}
+
+// fix small icon alignment in table cells
+.table td .icon-sm {
+    vertical-align: text-bottom;
+}

@@ -18,7 +18,7 @@ use Twig\Environment;
 class Grid
 {
     public const string GET_PARAMETER = 'g';
-    protected const string DEFAULT_VIEW_THEME = '@ShopsysFramework/Admin/Grid/Grid.html.twig';
+    protected const string DEFAULT_VIEW_THEME = '@ShopsysAdministration/datagrid/grid.html.twig';
     protected const int DEFAULT_LIMIT = 30;
 
     /**
@@ -85,6 +85,8 @@ class Grid
     protected array $selectedRowIds = [];
 
     protected bool $multipleDragAndDrop = false;
+
+    protected ?string $title = null;
 
     /**
      * @param string $id
@@ -767,5 +769,21 @@ class Grid
         }
 
         $this->columnsById = [...$orderedColumns, ...$this->columnsById];
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
     }
 }

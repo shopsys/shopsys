@@ -31,9 +31,6 @@ final class OpeningHoursRangeFormType extends AbstractType
     {
         $timeOptions = [
             'widget' => 'single_text',
-            'attr' => [
-                'class' => 'full-width',
-            ],
             'label' => false,
             'constraints' => [
                 new Constraints\NotBlank(['message' => 'Please enter time']),

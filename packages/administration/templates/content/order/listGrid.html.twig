@@ -1,0 +1,35 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_value_cell_id_preview %}
+    <div class="d-inline-block cursor-help"
+         data-bs-toggle="popover"
+         data-bs-trigger="hover"
+         data-bs-html="true"
+         data-bs-content="Loading..."
+         data-bs-container="body"
+         data-content-url="{{ url('admin_order_preview', {id: value}) }}"
+    >
+        {{ ux_icon('cart') }}
+    </div>
+{% endblock %}
+
+{% block grid_value_cell_id_number %}
+    <a href="{{ url('admin_order_edit', { id: row.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_total_price %}
+    {{ value|priceWithCurrency(row.order.currency) }}
+{% endblock %}
+
+{% block grid_value_cell_id_created_at %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No order found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'orders'|trans %}
+    {{ parent() }}
+{% endblock %}

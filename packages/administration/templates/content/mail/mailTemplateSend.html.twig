@@ -1,0 +1,21 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+<div class="text-start">
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="alert alert-danger js-mail-template-send-errors" style="display: none">
+        <div class="alert-description">
+            <ul class="alert-list"></ul>
+        </div>
+    </div>
+
+    {{ form_row(form.mailTo) }}
+
+    {% if form.entityIdentifier is defined %}
+        {{ form_row(form.entityIdentifier) }}
+    {% endif %}
+
+    {{ form_widget(form.save, { attr: { class: 'btn-primary w-100' } }) }}
+
+    {{ form_end(form) }}
+</div>

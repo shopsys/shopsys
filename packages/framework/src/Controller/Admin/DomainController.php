@@ -51,7 +51,7 @@ class DomainController extends AdminBaseController
     #[RequireRole(SystemRole::ADMIN)]
     public function domainTabsAction(): Response
     {
-        return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/switch_domain.html.twig', [
             'domainConfigs' => $this->domain->getAdminEnabledDomains(),
             'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
@@ -93,9 +93,9 @@ class DomainController extends AdminBaseController
         $grid->addColumn('icon', 'icon', t('Icon'));
         $grid->addEditActionColumn('admin_domain_edit', ['id' => 'id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Domain/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/domain/listGrid.html.twig');
 
-        return $this->render('@ShopsysFramework/Admin/Content/Domain/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/domain/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -144,7 +144,7 @@ class DomainController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Domain/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/domain/edit.html.twig', [
             'form' => $form->createView(),
             'domain' => $domain,
         ]);
@@ -163,7 +163,7 @@ class DomainController extends AdminBaseController
             }
         }
 
-        return $this->render('@ShopsysFramework/Admin/Inline/Domain/locales.html.twig', [
+        return $this->render('@ShopsysAdministration/partial/switch_locale.html.twig', [
             'domainConfigs' => $domainConfigs,
             'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);

@@ -49,14 +49,13 @@ class ReadyCategorySeoMixGridFactory
         $grid->addColumn('flagName', 'flagName', t('Flag'));
         $grid->addColumn('ordering', 'rcsm.ordering', t('Ordering'));
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_categoryseo_readycombination', [
             'categoryId' => 'categoryId',
             'selectedCategorySeoMixCombinationJson' => 'rcsm.selectedCategorySeoMixCombinationJson',
         ]);
         $grid->addDeleteActionColumn('admin_categoryseo_delete', ['id' => 'rcsmId']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/CategorySeo/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/categorySeo/listGrid.html.twig');
 
         $grid->enablePaging();
 

@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
@@ -106,8 +105,12 @@ final class PromoCodeFormType extends AbstractType
      */
     private function buildBaseGroup(FormBuilderInterface $builder, array $options): void
     {
+        $baseGroup = $builder->create('baseGroup', GroupType::class, [
+            'label' => t('Basic information'),
+        ]);
+
         if (!$options['mass_generate']) {
-            $builder
+            $baseGroup
                 ->add('code', TextType::class, [
                     'label' => t('Promo code'),
                     'required' => true,
@@ -120,13 +123,13 @@ final class PromoCodeFormType extends AbstractType
         }
 
         if ($this->promoCode instanceof PromoCode) {
-            $builder->add('formId', DisplayOnlyType::class, [
+            $baseGroup->add('formId', DisplayOnlyType::class, [
                 'label' => t('ID'),
                 'data' => $this->promoCode->getId(),
             ]);
         }
 
-        $builder->add('domainId', HiddenType::class, [
+        $baseGroup->add('domainId', HiddenType::class, [
             'data' => $this->getDomainId(),
         ])
             ->add('shownDomainId', DomainType::class, [
@@ -149,8 +152,9 @@ final class PromoCodeFormType extends AbstractType
             ])
             ->add('enabled', YesNoType::class, [
                 'label' => t('Enabled'),
-                'required' => true,
             ]);
+
+        $builder->add($baseGroup);
     }
 
     /**
@@ -177,15 +181,14 @@ final class PromoCodeFormType extends AbstractType
 
         $limitsGroup = $builder->create('limitsGroup', GroupType::class, [
             'label' => t('Apply according to the total price of the order'),
-            'js_container' => [
-                'container_class' => 'js-promo-code-limits-group',
-                'data_type' => null,
+            'row_attr' => [
+                'data-js-promo-code-limits-group' => null,
             ],
         ]);
 
         $limitsGroup->add(
             $limitsGroup->create('limits', PromoCodeLimitCollectionType::class, [
-                'label' => t('Limits'),
+                'label' => false,
                 'entry_type' => PromoCodeLimitType::class,
                 'entry_options' => ['discount' => $discountOptions],
                 'required' => false,
@@ -235,7 +238,7 @@ final class PromoCodeFormType extends AbstractType
         ]);
 
         $flagsGroup->add('flags', PromoCodeFlagCollectionType::class, [
-            'label' => t('Flags'),
+            'label' => false,
             'entry_type' => PromoCodeFlagType::class,
             'entry_options' => ['label' => false],
             'required' => false,
@@ -260,7 +263,6 @@ final class PromoCodeFormType extends AbstractType
         ]);
         $builder->add($customersGroup);
         $customersGroup->add('registeredCustomerUserOnly', YesNoType::class, [
-            'required' => false,
             'label' => t('For registered customers only'),
         ])
             ->add('limitedPricingGroups', ChoiceType::class, [
@@ -297,8 +299,7 @@ final class PromoCodeFormType extends AbstractType
         $displayCategoriesGroup->add('categoriesWithSale', CategoriesType::class, [
             'required' => false,
             'domain_id' => $this->getDomainId(),
-            'label' => t('Categories'),
-            'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+            'label' => false,
         ]);
         $builder->add($displayCategoriesGroup);
     }
@@ -316,7 +317,7 @@ final class PromoCodeFormType extends AbstractType
             'choices' => $this->brandFacade->getAll(),
             'choice_label' => 'name',
             'choice_value' => 'id',
-            'label' => t('Brands'),
+            'label' => false,
             'multiple' => true,
         ]);
         $builder->add($displayCategoriesGroup);

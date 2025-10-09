@@ -24,7 +24,6 @@ final class DisplayOnlyType extends AbstractType
                 'compound' => false,
                 'attr' => [
                     'readonly' => 'readonly',
-                    'class' => '',
                 ],
             ]);
     }

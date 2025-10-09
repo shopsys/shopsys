@@ -1,0 +1,23 @@
+<div class="mb-3">
+    {{ message|raw }}
+</div>
+
+<div class="w-100">
+    <div class="row">
+        <div class="col">
+            <a href="#"
+               class="btn w-100"
+               data-bs-dismiss="modal"
+            >
+                {{ 'No'|trans }}
+            </a>
+        </div>
+        <div class="col">
+            <a href="{{ url(route, routeParams) }}"
+               class="btn btn-danger w-100 js-confirm-delete-direct-link test-window-button-continue"
+            >
+                {{ 'Yes'|trans }}
+            </a>
+        </div>
+    </div>
+</div>

@@ -57,7 +57,7 @@ class BestsellingProductController extends AdminBaseController
             $domainId,
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/BestsellingProduct/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/bestsellingProduct/list.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'selectedDomainId' => $domainId,
             'bestsellingProductsInCategories' => $bestsellingProductsInCategories,
@@ -82,11 +82,11 @@ class BestsellingProductController extends AdminBaseController
             $domainId,
         );
 
-        $form = $this->createForm(BestsellingProductFormType::class, ['products' => $products]);
+        $form = $this->createForm(BestsellingProductFormType::class, $products);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newProducts = $form->getData()['products'];
+            $newProducts = $form->getData();
 
             $this->manualBestsellingProductFacade->edit($category, $domainId, $newProducts);
 
@@ -111,7 +111,7 @@ class BestsellingProductController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem($category->getName());
 
-        return $this->render('@ShopsysFramework/Admin/Content/BestsellingProduct/detail.html.twig', [
+        return $this->render('@ShopsysAdministration/content/bestsellingProduct/detail.html.twig', [
             'form' => $form->createView(),
             'categoryName' => $category->getName(),
         ]);

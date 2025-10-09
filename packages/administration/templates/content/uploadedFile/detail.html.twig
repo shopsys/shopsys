@@ -1,0 +1,14 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'File'|trans }}{% endblock %}
+
+{% block h1 %}{{ 'File'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% block main_content_inner %}{% endblock %}
+
+    {{ form_end(form) }}
+{% endblock %}

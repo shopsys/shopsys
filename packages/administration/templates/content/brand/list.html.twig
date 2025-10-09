@@ -1,0 +1,44 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Brand overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Brands'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_brand_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new brand'|trans }}
+    </a>
+{% endblock %}
+
+
+{% block main_content %}
+    {{ gridView.render() }}
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Link to the overview of brands'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                {% for domain in domains %}
+                    <div class="col-6">
+                        <div class="row g-3 align-items-center">
+                            {% if isMultidomain() %}
+                                {{ domain_icon(domain.id) }}
+                            {% endif %}
+                            <div class="col text-truncate">
+                                <a href="{{ findUrlByDomainId('front_brand_list', {}, domain.id) }}"
+                                   class="text-reset d-block text-truncate"
+                                   target="_blank"
+                                >{{ findUrlByDomainId('front_brand_list', {}, domain.id) }}</a>
+                                <div class="text-secondary text-truncate mt-n1">{{ getDomainName(domain.id) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

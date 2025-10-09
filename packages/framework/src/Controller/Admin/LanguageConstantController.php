@@ -61,7 +61,7 @@ class LanguageConstantController extends AdminBaseController
             $this->addErrorFlashTwig(t('Unable to load list of language constants'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/LanguageConstant/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/languageConstant/list.html.twig', [
             'gridView' => $grid?->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
@@ -126,7 +126,7 @@ class LanguageConstantController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/LanguageConstant/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/languageConstant/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

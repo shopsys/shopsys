@@ -1,0 +1,45 @@
+{% macro pickerWidgetItem(item, form, sortable, item_name, item_route, key, relationsFilenames, additionalTypesToRender) %}
+    {% set file = item %}
+    <div class="card card-sm mb-3 js-file-upload-uploaded-file js-picker-item" data-id="{{ file ? file.id : '' }}" style="max-width: 17.5rem;">
+        <div class="card-header d-flex justify-content-between align-items-center py-1">
+            <button class="js-picker-item-button-delete ms-auto btn btn-sm btn-ghost-danger" type="button" title="{{ 'Delete'|trans }}">
+                {{ ux_icon('delete', {class: 'icon mx-0'}) }}
+            </button>
+        </div>
+
+        <div class="position-relative ratio ratio-16x9 overflow-hidden js-picker-item-thumbnail">
+            {% if file %}
+                {{ uploadedFilePreviewWithLink(file) }}
+            {% endif %}
+        </div>
+
+        <div class="card-footer pb-0">
+            {{ form_widget(form, {attr: {class: 'js-picker-item-input'}}) }}
+            {{ form_widget(relationsFilenames, {attr: {class: 'js-picker-item-filename mb-3'}}) }}
+            {{ form_errors(relationsFilenames) }}
+
+            <div class="js-picker-item-names">
+                {% if additionalTypesToRender is defined %}
+                    {% for additionalType in additionalTypesToRender %}
+                        {{ form_widget(additionalType) }}
+                        {{ form_errors(additionalType) }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+    {% block files_picker %}
+        <div id="{{ form.relations.vars.id }}"
+             class="js-files-picker"
+             data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype)|e }}"
+             data-picker-url="{{ form.relations.vars.picker_url }}"
+        >
+            <div class="file-upload-card-container js-file-upload js-picker-items">
+                {% for key, formRow in form.relations %}
+                    {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key]) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}

@@ -169,8 +169,8 @@ final class ComplaintFormType extends AbstractType
                         'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
                     ]),
                 ],
-                'attr' => [
-                    'class' => 'js-complaint-bank-account-number',
+                'row_attr' => [
+                    'data-js-complaint-bank-account-number' => null,
                 ],
             ])
             ->add('order', DisplayOnlyOrderType::class, [

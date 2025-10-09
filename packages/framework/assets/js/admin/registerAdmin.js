@@ -1,11 +1,7 @@
 import '../common/components';
-import '../common/validation';
 
 import './components';
 import './search/search';
-
-import './validation/customization';
-import './validation/form';
 
 import Register from '../common/utils/Register';
 

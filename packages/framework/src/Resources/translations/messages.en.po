@@ -13,13 +13,10 @@ msgstr ""
 msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
 msgstr ""
 
-msgid "%defaultCurrency% per 1 %currentCurrency%"
-msgstr ""
-
-msgid "%defaultCurrency% per unit"
-msgstr ""
-
 msgid "%name% agrees with privacy policy."
+msgstr ""
+
+msgid "(minutes:seconds)"
 msgstr ""
 
 msgid "-- Choose area --"
@@ -44,6 +41,9 @@ msgid "-- Create new price list --"
 msgstr ""
 
 msgid "-- Select name of the transfer --"
+msgstr ""
+
+msgid "-- auto filled --"
 msgstr ""
 
 msgid "---"
@@ -94,9 +94,6 @@ msgstr ""
 msgid "Accessories in purchase confirmation box"
 msgstr ""
 
-msgid "Account"
-msgstr ""
-
 msgid "Action"
 msgstr ""
 
@@ -106,70 +103,16 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-msgid "Add URL"
-msgstr ""
-
-msgid "Add another flag"
-msgstr ""
-
-msgid "Add another limit"
-msgstr ""
-
-msgid "Add another mail whitelist pattern"
-msgstr ""
-
-msgid "Add another parameter"
-msgstr ""
-
-msgid "Add another price with weight limit"
-msgstr ""
-
-msgid "Add another video"
-msgstr ""
-
-msgid "Add country"
-msgstr ""
-
 msgid "Add customer user"
 msgstr ""
 
 msgid "Add files"
 msgstr ""
 
-msgid "Add item"
-msgstr ""
-
-msgid "Add language combination"
-msgstr ""
-
-msgid "Add limit"
-msgstr ""
-
-msgid "Add new customer user"
-msgstr ""
-
 msgid "Add new customer user to %companyName%"
 msgstr ""
 
-msgid "Add opening hours"
-msgstr ""
-
 msgid "Add product"
-msgstr ""
-
-msgid "Add requirement"
-msgstr ""
-
-msgid "Add some alternate language combinations"
-msgstr ""
-
-msgid "Add some flag"
-msgstr ""
-
-msgid "Add some mail whitelist patterns"
-msgstr ""
-
-msgid "Add some parameters"
 msgstr ""
 
 msgid "Add to products"
@@ -193,13 +136,7 @@ msgstr ""
 msgid "Admin inquiry detail URL"
 msgstr ""
 
-msgid "Administration"
-msgstr ""
-
 msgid "Administration localization was changed to \"%locale%\""
-msgstr ""
-
-msgid "Administrator"
 msgstr ""
 
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
@@ -217,12 +154,6 @@ msgstr ""
 msgid "Administrator ID"
 msgstr ""
 
-msgid "Administrator activities history"
-msgstr ""
-
-msgid "Administrator role group"
-msgstr ""
-
 msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
 msgstr ""
 
@@ -232,19 +163,10 @@ msgstr ""
 msgid "Administrator role group <strong>{{ name }}</strong> deleted."
 msgstr ""
 
-msgid "Administrator role groups"
-msgstr ""
-
 msgid "Administrators"
 msgstr ""
 
 msgid "Administrators overview"
-msgstr ""
-
-msgid "Advanced search"
-msgstr ""
-
-msgid "Advertising"
 msgstr ""
 
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
@@ -257,15 +179,6 @@ msgid "Advertising <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Advertising system"
-msgstr ""
-
-msgid "All"
-msgstr "All"
-
-msgid "All domains"
-msgstr ""
-
-msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr ""
 
 msgid "All search results"
@@ -283,25 +196,10 @@ msgstr ""
 msgid "Alternate language settings modified"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
-msgid "An authentication exception occurred."
-msgstr ""
-
 msgid "An email with 6 digit code was sent to your email address."
 msgstr ""
 
 msgid "Ancestor category"
-msgstr ""
-
-msgid "Applicable variables"
-msgstr ""
-
-msgid "Applicable variables for Content"
-msgstr ""
-
-msgid "Applicable variables for Subject"
 msgstr ""
 
 msgid "Apply"
@@ -364,6 +262,12 @@ msgstr ""
 msgid "Articles without positioning"
 msgstr ""
 
+msgid "Assign product"
+msgstr ""
+
+msgid "Assign products"
+msgstr ""
+
 msgid "Assign to category"
 msgstr ""
 
@@ -388,7 +292,7 @@ msgstr ""
 msgid "Average duration from all runs in last seven days"
 msgstr ""
 
-msgid "Avg duration (mm:ss)"
+msgid "Avg duration"
 msgstr ""
 
 msgid "Back to category selection"
@@ -397,16 +301,7 @@ msgstr ""
 msgid "Back to customer {{ name }}"
 msgstr ""
 
-msgid "Back to dashboard"
-msgstr ""
-
-msgid "Back to overview"
-msgstr ""
-
 msgid "Back to overview of available combinations"
-msgstr ""
-
-msgid "Back to parameter selection"
 msgstr ""
 
 msgid "Background color"
@@ -427,22 +322,13 @@ msgstr ""
 msgid "Bank transfer not completed"
 msgstr ""
 
-msgid "Banner"
-msgstr ""
-
 msgid "Banners"
 msgstr ""
 
 msgid "Basic"
 msgstr ""
 
-msgid "Basic frontend currency %domainName%"
-msgstr ""
-
 msgid "Basic information"
-msgstr ""
-
-msgid "Basic price"
 msgstr ""
 
 msgid "Batch ID"
@@ -460,7 +346,7 @@ msgstr ""
 msgid "Bestsellers"
 msgstr ""
 
-msgid "Bestsellers of the category"
+msgid "Bestselling products"
 msgstr ""
 
 msgid "Billing address"
@@ -520,9 +406,6 @@ msgstr ""
 msgid "Brand <strong>{{ name }}</strong> deleted"
 msgstr ""
 
-msgid "Brand overview"
-msgstr ""
-
 msgid "Brands"
 msgstr ""
 
@@ -533,9 +416,6 @@ msgid "Bulk coupons with prefix"
 msgstr ""
 
 msgid "Bulk creation of promo codes"
-msgstr ""
-
-msgid "Bulk edit"
 msgstr ""
 
 msgid "Bulk editing done"
@@ -550,22 +430,10 @@ msgstr ""
 msgid "CMS"
 msgstr ""
 
-msgid "CSS documentation"
-msgstr ""
-
 msgid "CSV file"
 msgstr ""
 
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
-msgstr ""
-
-msgid "Calculated price excluding VAT"
-msgstr ""
-
-msgid "Calculated price including VAT"
-msgstr ""
-
-msgid "Cancel"
 msgstr ""
 
 msgid "Canceled"
@@ -604,25 +472,10 @@ msgstr ""
 msgid "Category description"
 msgstr ""
 
-msgid "Category is hidden on all domains"
-msgstr ""
-
-msgid "Category is visible on all domains"
-msgstr ""
-
-msgid "Category is visible on some domains"
-msgstr ""
-
 msgid "Category name"
 msgstr ""
 
 msgid "Category with prefilled filters"
-msgstr ""
-
-msgid "Catnum"
-msgstr ""
-
-msgid "Change for"
 msgstr ""
 
 msgid "Changes"
@@ -631,31 +484,16 @@ msgstr ""
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr ""
 
-msgid "Choose"
-msgstr ""
-
 msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
 msgstr ""
 
 msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
 msgstr ""
 
-msgid "Choose new value first"
-msgstr ""
-
 msgid "Choose product"
 msgstr ""
 
-msgid "Choose replacement"
-msgstr ""
-
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
-msgstr ""
-
-msgid "Choose this category and continue"
-msgstr ""
-
-msgid "Choose type of redirect"
 msgstr ""
 
 msgid "Chosen payment information (image, name, price)"
@@ -676,21 +514,6 @@ msgstr ""
 msgid "Clean Storefront Cache"
 msgstr ""
 
-msgid "Clean Storefront Query Cache"
-msgstr ""
-
-msgid "Click to go to product section"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Close (Esc)"
-msgstr ""
-
-msgid "Closing time"
-msgstr ""
-
 msgid "Code"
 msgstr ""
 
@@ -698,9 +521,6 @@ msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
 msgid "Collapse"
-msgstr ""
-
-msgid "Collapse menu"
 msgstr ""
 
 msgid "Collection %collectionAttribute% was changed:<br> %changes%"
@@ -725,9 +545,6 @@ msgid "Company Tax number"
 msgstr ""
 
 msgid "Company data"
-msgstr ""
-
-msgid "Company detail"
 msgstr ""
 
 msgid "Company name"
@@ -760,16 +577,7 @@ msgstr ""
 msgid "Complaint status"
 msgstr ""
 
-msgid "Complaint statuses overview"
-msgstr ""
-
-msgid "Complaint was created manually without link to a particular order"
-msgstr ""
-
 msgid "Complaints"
-msgstr ""
-
-msgid "Complaints overview"
 msgstr ""
 
 msgid "Complement to title"
@@ -784,13 +592,7 @@ msgstr ""
 msgid "Confirm code and enable two-factor authentication"
 msgstr ""
 
-msgid "Confirm one-time passcode"
-msgstr ""
-
 msgid "Contact form"
-msgstr ""
-
-msgid "Contact form settings"
 msgstr ""
 
 msgid "Contact form settings modified"
@@ -808,13 +610,7 @@ msgstr ""
 msgid "Content-Security-Policy header has been set."
 msgstr ""
 
-msgid "Content-Security-Policy header setting"
-msgstr ""
-
 msgid "Convert values associated with parameter - %name%"
-msgstr ""
-
-msgid "Copied to clipboard!"
 msgstr ""
 
 msgid "Copy administrator role group"
@@ -824,9 +620,6 @@ msgid "Could not reach authorization centre"
 msgstr ""
 
 msgid "Countries"
-msgstr ""
-
-msgid "Countries overview"
 msgstr ""
 
 msgid "Country"
@@ -847,115 +640,7 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-msgid "Create SEO page"
-msgstr ""
-
-msgid "Create VAT rate"
-msgstr ""
-
 msgid "Create and download CSV"
-msgstr ""
-
-msgid "Create bulk promo codes"
-msgstr ""
-
-msgid "Create currency"
-msgstr ""
-
-msgid "Create flag"
-msgstr ""
-
-msgid "Create new administrator"
-msgstr ""
-
-msgid "Create new administrator role group"
-msgstr ""
-
-msgid "Create new advertising"
-msgstr ""
-
-msgid "Create new article"
-msgstr ""
-
-msgid "Create new banner"
-msgstr ""
-
-msgid "Create new blog article"
-msgstr ""
-
-msgid "Create new blog category"
-msgstr ""
-
-msgid "Create new brand"
-msgstr ""
-
-msgid "Create new category"
-msgstr ""
-
-msgid "Create new complaint status"
-msgstr ""
-
-msgid "Create new country"
-msgstr ""
-
-msgid "Create new customer"
-msgstr ""
-
-msgid "Create new customer user role group"
-msgstr ""
-
-msgid "Create new delivery address"
-msgstr ""
-
-msgid "Create new holiday or internal day"
-msgstr ""
-
-msgid "Create new item"
-msgstr ""
-
-msgid "Create new order status"
-msgstr ""
-
-msgid "Create new parameter"
-msgstr ""
-
-msgid "Create new parameter group"
-msgstr ""
-
-msgid "Create new price list"
-msgstr ""
-
-msgid "Create new product"
-msgstr ""
-
-msgid "Create new sales representative"
-msgstr ""
-
-msgid "Create new store"
-msgstr ""
-
-msgid "Create new warehouse"
-msgstr ""
-
-msgid "Create notification bar"
-msgstr ""
-
-msgid "Create payment"
-msgstr ""
-
-msgid "Create pricing group"
-msgstr ""
-
-msgid "Create promo code"
-msgstr ""
-
-msgid "Create record"
-msgstr ""
-
-msgid "Create shipping"
-msgstr ""
-
-msgid "Create unit"
 msgstr ""
 
 msgid "Create variant"
@@ -988,7 +673,7 @@ msgstr ""
 msgid "Cron detail - %name%"
 msgstr ""
 
-msgid "Cron overview"
+msgid "Cron overview (%instanceName%)"
 msgstr ""
 
 msgid "Cron runs"
@@ -1036,22 +721,7 @@ msgstr ""
 msgid "Customer city"
 msgstr ""
 
-msgid "Customer delivery addresses"
-msgstr ""
-
-msgid "Customer detail"
-msgstr ""
-
 msgid "Customer email address"
-msgstr ""
-
-msgid "Customer has no customer users."
-msgstr ""
-
-msgid "Customer has no delivery addresses."
-msgstr ""
-
-msgid "Customer has no orders so far."
 msgstr ""
 
 msgid "Customer has not given PSD2 consent"
@@ -1069,9 +739,6 @@ msgstr ""
 msgid "Customer street"
 msgstr ""
 
-msgid "Customer user role group"
-msgstr ""
-
 msgid "Customer user role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
 msgstr ""
 
@@ -1082,9 +749,6 @@ msgid "Customer user role group <strong>{{ name }}</strong> deleted."
 msgstr ""
 
 msgid "Customer user role groups"
-msgstr ""
-
-msgid "Customer users"
 msgstr ""
 
 msgid "Customer with ID %customerId% not found."
@@ -1118,9 +782,6 @@ msgid "Date of publication"
 msgstr ""
 
 msgid "Date of registration and privacy policy agreement"
-msgstr ""
-
-msgid "Day"
 msgstr ""
 
 msgid "Days for transfer between warehouses"
@@ -1174,9 +835,6 @@ msgstr ""
 msgid "Default VAT rate"
 msgstr ""
 
-msgid "Default administration currency"
-msgstr ""
-
 msgid "Default pricing group"
 msgstr ""
 
@@ -1184,12 +842,6 @@ msgid "Default pricing group settings modified"
 msgstr ""
 
 msgid "Default store"
-msgstr ""
-
-msgid "Default store cannot be removed"
-msgstr ""
-
-msgid "Default unit"
 msgstr ""
 
 msgid "Default unit settings modified"
@@ -1201,19 +853,7 @@ msgstr ""
 msgid "Default warehouse"
 msgstr ""
 
-msgid "Default warehouse cannot be removed"
-msgstr ""
-
 msgid "Delete"
-msgstr ""
-
-msgid "Delete and set"
-msgstr ""
-
-msgid "Delete category with SEO mix"
-msgstr ""
-
-msgid "Delete file"
 msgstr ""
 
 msgid "Delivery address"
@@ -1226,9 +866,6 @@ msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> mo
 msgstr ""
 
 msgid "Delivery address <strong>{{ deliveryAddressFullAddress }}</strong> deleted"
-msgstr ""
-
-msgid "Delivery address detail"
 msgstr ""
 
 msgid "Delivery address is the same as billing address"
@@ -1258,37 +895,13 @@ msgstr ""
 msgid "Description opacity"
 msgstr ""
 
-msgid "Deselect All"
-msgstr ""
-
-msgid "Deselect all permissions"
-msgstr ""
-
-msgid "Deselect all permissions for this role"
-msgstr ""
-
-msgid "Deselect all permissions in section"
-msgstr ""
-
-msgid "Disable"
-msgstr ""
-
 msgid "Disable two factor authentication"
-msgstr ""
-
-msgid "Disabled"
-msgstr ""
-
-msgid "Discard changes"
 msgstr ""
 
 msgid "Discount"
 msgstr ""
 
 msgid "Discount (%)"
-msgstr ""
-
-msgid "Discount against basic price"
 msgstr ""
 
 msgid "Discount type"
@@ -1315,19 +928,10 @@ msgstr ""
 msgid "Display on stock products only"
 msgstr ""
 
-msgid "Display personal information settings"
-msgstr ""
-
 msgid "Display products with special prices only"
 msgstr ""
 
-msgid "Displaying"
-msgstr ""
-
 msgid "Do you really want to %action% %count% product?"
-msgstr ""
-
-msgid "Do you really want to delete this category?"
 msgstr ""
 
 msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
@@ -1382,9 +986,6 @@ msgid "Do you really want to remove this blog article?"
 msgstr ""
 
 msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
-msgstr ""
-
-msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr ""
 
 msgid "Do you really want to remove this customer user role group?"
@@ -1453,13 +1054,7 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-msgid "Domain %domainName%"
-msgstr ""
-
 msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can't see the new icon."
-msgstr ""
-
-msgid "Domain filter"
 msgstr ""
 
 msgid "Domain name"
@@ -1468,16 +1063,7 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-msgid "Download"
-msgstr ""
-
 msgid "Download file"
-msgstr ""
-
-msgid "Drag your file here"
-msgstr ""
-
-msgid "Drag your files here"
 msgstr ""
 
 msgid "Duplicate"
@@ -1490,9 +1076,6 @@ msgid "Duplicate transaction reversal"
 msgstr ""
 
 msgid "Duration (mm:ss)"
-msgstr ""
-
-msgid "Duration (seconds)"
 msgstr ""
 
 msgid "E-mail"
@@ -1516,9 +1099,6 @@ msgstr ""
 msgid "E-shop URL address"
 msgstr ""
 
-msgid "E-shop domains"
-msgstr ""
-
 msgid "E-shop identification"
 msgstr ""
 
@@ -1529,15 +1109,6 @@ msgid "EAN"
 msgstr ""
 
 msgid "Edit"
-msgstr ""
-
-msgid "Edit domain icon"
-msgstr ""
-
-msgid "Edit parameter"
-msgstr ""
-
-msgid "Edit parameter group"
 msgstr ""
 
 msgid "Edit store"
@@ -1570,22 +1141,13 @@ msgstr ""
 msgid "Editing article - %name%"
 msgstr ""
 
-msgid "Editing banner"
-msgstr ""
-
 msgid "Editing bestseller"
 msgstr ""
 
 msgid "Editing billing address - %name%"
 msgstr ""
 
-msgid "Editing blog article"
-msgstr ""
-
 msgid "Editing blog article - %name%"
-msgstr ""
-
-msgid "Editing blog category"
 msgstr ""
 
 msgid "Editing blog category - %name%"
@@ -1627,9 +1189,6 @@ msgstr ""
 msgid "Editing customer user role group - %name%"
 msgstr ""
 
-msgid "Editing delivery address"
-msgstr ""
-
 msgid "Editing delivery address - %name%"
 msgstr ""
 
@@ -1657,9 +1216,6 @@ msgstr ""
 msgid "Editing item"
 msgstr ""
 
-msgid "Editing navigation item"
-msgstr ""
-
 msgid "Editing notification bar"
 msgstr ""
 
@@ -1676,9 +1232,6 @@ msgid "Editing parameter"
 msgstr ""
 
 msgid "Editing parameter group"
-msgstr ""
-
-msgid "Editing parameter of type color"
 msgstr ""
 
 msgid "Editing parameter value of type color"
@@ -1726,9 +1279,6 @@ msgstr ""
 msgid "Editing slider page - %name%"
 msgstr ""
 
-msgid "Editing warehouse"
-msgstr ""
-
 msgid "Editing warehouse - %name%"
 msgstr ""
 
@@ -1750,34 +1300,13 @@ msgstr ""
 msgid "Email settings modified."
 msgstr ""
 
-msgid "Email template"
-msgstr ""
-
 msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Email templates"
 msgstr ""
 
-msgid "Email templates settings"
-msgstr ""
-
 msgid "Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent."
-msgstr ""
-
-msgid "Emails are sent normally on this domain"
-msgstr ""
-
-msgid "Emails will be sent only to addresses matching at least one of these patterns:"
-msgstr ""
-
-msgid "Enable"
-msgstr ""
-
-msgid "Enable two factor authentication by Google Authenticator"
-msgstr ""
-
-msgid "Enable two factor authentication by email"
 msgstr ""
 
 msgid "Enable two-factor authentication"
@@ -1790,12 +1319,6 @@ msgid "Enabled"
 msgstr ""
 
 msgid "Enter 32-digit code which will be sent to server"
-msgstr ""
-
-msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
-msgstr ""
-
-msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr ""
 
 msgid "Enter in the store local time"
@@ -1823,9 +1346,6 @@ msgid "Entity log"
 msgstr ""
 
 msgid "Entry price type"
-msgstr ""
-
-msgid "Error"
 msgstr ""
 
 msgid "Error occurred while sending email."
@@ -1858,9 +1378,6 @@ msgstr ""
 msgid "Exchange rate"
 msgstr ""
 
-msgid "Excl. VAT"
-msgstr ""
-
 msgid "Exclude from sale on domains"
 msgstr ""
 
@@ -1888,34 +1405,16 @@ msgstr ""
 msgid "Expected maximum duration"
 msgstr ""
 
-msgid "Expired"
-msgstr ""
-
-msgid "Export CSV"
-msgstr ""
-
-msgid "Export email list in CSV format"
-msgstr ""
-
 msgid "Ext."
 msgstr ""
 
 msgid "Extended SEO categories"
 msgstr ""
 
-msgid "Extended SEO category %categoryName% - combinations"
-msgstr ""
-
-msgid "Extended SEO category %categoryName% - filters"
-msgstr ""
-
 msgid "Extended SEO category - category selection"
 msgstr ""
 
 msgid "Extended SEO category - combinations"
-msgstr ""
-
-msgid "Extended SEO category - editing the combination with SEO values"
 msgstr ""
 
 msgid "Extended SEO category - filters"
@@ -1928,12 +1427,6 @@ msgid "External ID"
 msgstr ""
 
 msgid "External bridge ID"
-msgstr ""
-
-msgid "External transaction ID"
-msgstr ""
-
-msgid "External transaction status"
 msgstr ""
 
 msgid "Facebook URL"
@@ -1952,9 +1445,6 @@ msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} successfully schedule
 msgstr ""
 
 msgid "Feed \"{{ feedName }}\" successfully generated."
-msgstr ""
-
-msgid "File"
 msgstr ""
 
 msgid "File <strong>{{ fileName }}</strong> deleted"
@@ -1978,9 +1468,6 @@ msgstr ""
 msgid "File upload failed, try again please."
 msgstr ""
 
-msgid "File will be removed from the record after saving."
-msgstr ""
-
 msgid "Filename"
 msgstr ""
 
@@ -1999,16 +1486,13 @@ msgstr ""
 msgid "Fill URL only for selected domain"
 msgstr ""
 
-msgid "Fill missing settings to enable creating products."
-msgstr ""
-
 msgid "Filter parameters"
 msgstr ""
 
 msgid "Filter parameters closed by default"
 msgstr ""
 
-msgid "Finish the assigning"
+msgid "Finish assigning"
 msgstr ""
 
 msgid "Finished at"
@@ -2038,9 +1522,6 @@ msgstr ""
 msgid "Flags"
 msgstr ""
 
-msgid "Flags overview"
-msgstr ""
-
 msgid "Footer"
 msgstr ""
 
@@ -2053,7 +1534,7 @@ msgstr ""
 msgid "For deleting unit \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which unit you want to set instead?"
 msgstr ""
 
-msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
+msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>"
 msgstr ""
 
 msgid "For registered customers only"
@@ -2071,9 +1552,6 @@ msgstr ""
 msgid "Fourth column categories"
 msgstr ""
 
-msgid "Free from order value"
-msgstr ""
-
 msgid "Free shipping and payment"
 msgstr ""
 
@@ -2086,16 +1564,7 @@ msgstr ""
 msgid "Frequency"
 msgstr ""
 
-msgid "Friday"
-msgstr ""
-
 msgid "Friendly URL \"%slug%\" was removed."
-msgstr ""
-
-msgid "From"
-msgstr ""
-
-msgid "Frontend"
 msgstr ""
 
 msgid "Full access"
@@ -2107,9 +1576,6 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
-msgid "Future"
-msgstr ""
-
 msgid "Generate"
 msgstr ""
 
@@ -2117,15 +1583,6 @@ msgid "Generated"
 msgstr ""
 
 msgid "Generated batches"
-msgstr ""
-
-msgid "Go to Frontend"
-msgstr ""
-
-msgid "Go to associated customer user"
-msgstr ""
-
-msgid "Go to page:"
 msgstr ""
 
 msgid "GoPay"
@@ -2138,9 +1595,6 @@ msgid "GoPay payment method"
 msgstr ""
 
 msgid "GoPay payment status"
-msgstr ""
-
-msgid "Granted"
 msgstr ""
 
 msgid "Group"
@@ -2156,12 +1610,6 @@ msgid "Headline"
 msgstr ""
 
 msgid "Heureka"
-msgstr ""
-
-msgid "Heureka - Verified by Customer"
-msgstr ""
-
-msgid "Heureka - Verified by Customer service does not support the language of this domain."
 msgstr ""
 
 msgid "Heureka Widget code"
@@ -2194,9 +1642,6 @@ msgstr ""
 msgid "Hiding product"
 msgstr ""
 
-msgid "Holiday / internal day"
-msgstr ""
-
 msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
@@ -2210,9 +1655,6 @@ msgid "Holiday / internal day detail"
 msgstr ""
 
 msgid "Holidays and internal days"
-msgstr ""
-
-msgid "Holidays and internal days overview"
 msgstr ""
 
 msgid "Home page"
@@ -2230,31 +1672,16 @@ msgstr ""
 msgid "ID %productId%"
 msgstr ""
 
-msgid "IP address"
-msgstr ""
-
 msgid "Icon"
 msgstr ""
 
 msgid "If you allow negative stock, it is possible to order more items than are currently in stock."
 msgstr ""
 
-msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
-msgstr ""
-
-msgid "If you change currency settings, prices of all products will be recalculated"
-msgstr ""
-
 msgid "If you want execute refund, you have to setup refund amount."
 msgstr ""
 
-msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
-msgstr ""
-
 msgid "Image"
-msgstr ""
-
-msgid "Image will be deleted after saving."
 msgstr ""
 
 msgid "Image with link"
@@ -2266,25 +1693,10 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-msgid "Import CSV"
-msgstr ""
-
 msgid "Import price list"
 msgstr ""
 
 msgid "In Progress"
-msgstr ""
-
-msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
-msgstr ""
-
-msgid "In stock"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Incl. VAT"
 msgstr ""
 
 msgid "Including VAT"
@@ -2305,19 +1717,10 @@ msgstr ""
 msgid "Input price without VAT"
 msgstr ""
 
-msgid "Inquired product"
-msgstr ""
-
 msgid "Inquiries"
 msgstr ""
 
-msgid "Inquiries overview"
-msgstr ""
-
 msgid "Inquiry ID"
-msgstr ""
-
-msgid "Inquiry by"
 msgstr ""
 
 msgid "Inquiry detail"
@@ -2341,28 +1744,7 @@ msgstr ""
 msgid "Internal note"
 msgstr ""
 
-msgid "Invalid reset password hash for administrator"
-msgstr ""
-
-msgid "Invalid two-factor authentication code."
-msgstr ""
-
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
-msgstr ""
-
-msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
-msgstr ""
-
-msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol <different> and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
-msgstr ""
-
-msgid "Item name"
-msgstr ""
-
-msgid "Items per page:"
-msgstr ""
-
-msgid "Keep empty if you do not want to limit the price by products' weight"
 msgstr ""
 
 msgid "Key"
@@ -2386,13 +1768,7 @@ msgstr ""
 msgid "Language constants"
 msgstr ""
 
-msgid "Last %limit% customer orders"
-msgstr ""
-
-msgid "Last action time"
-msgstr ""
-
-msgid "Last duration (mm:ss)"
+msgid "Last duration"
 msgstr ""
 
 msgid "Last finished at"
@@ -2422,9 +1798,6 @@ msgstr ""
 msgid "Legal conditions settings modified."
 msgstr ""
 
-msgid "Limits"
-msgstr ""
-
 msgid "Line:"
 msgstr ""
 
@@ -2434,22 +1807,10 @@ msgstr ""
 msgid "Link URL"
 msgstr ""
 
-msgid "Link [abbreviation]"
-msgstr "L"
-
 msgid "Link to complete the registration"
 msgstr ""
 
 msgid "Link to the log in page"
-msgstr ""
-
-msgid "Link to the overview of brands"
-msgstr ""
-
-msgid "Link to the personal information export"
-msgstr ""
-
-msgid "Link to the personal information overview"
 msgstr ""
 
 msgid "LinkedIn URL"
@@ -2470,43 +1831,16 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-msgid "Log in"
-msgstr ""
-
-msgid "Log in as user"
-msgstr ""
-
 msgid "Log in failed."
-msgstr ""
-
-msgid "Log out"
-msgstr ""
-
-msgid "Login"
-msgstr ""
-
-msgid "Login failed."
 msgstr ""
 
 msgid "Login name"
 msgstr ""
 
-msgid "Login time"
-msgstr ""
-
 msgid "Main URL"
 msgstr ""
 
-msgid "Main URL can't be deleted"
-msgstr ""
-
 msgid "Main administrator email"
-msgstr ""
-
-msgid "Main category"
-msgstr ""
-
-msgid "Main image"
 msgstr ""
 
 msgid "Main text"
@@ -2515,31 +1849,16 @@ msgstr ""
 msgid "Main variant"
 msgstr ""
 
-msgid "Main variant [abbreviation]"
-msgstr "M"
-
-msgid "Make modification"
-msgstr ""
-
 msgid "Map coordinates in decimal format"
 msgstr ""
 
-msgid "Max duration (mm:ss)"
+msgid "Max duration"
 msgstr ""
 
 msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
-msgid "Maximum weight of products"
-msgstr ""
-
 msgid "Measurement units"
-msgstr ""
-
-msgid "Measurement units overview"
-msgstr ""
-
-msgid "Menu"
 msgstr ""
 
 msgid "Message"
@@ -2551,7 +1870,7 @@ msgstr ""
 msgid "Meta description"
 msgstr ""
 
-msgid "Min duration (mm:ss)"
+msgid "Min duration"
 msgstr ""
 
 msgid "Min fraction digits"
@@ -2563,25 +1882,13 @@ msgstr ""
 msgid "Modifications"
 msgstr ""
 
-msgid "Module name"
-msgstr ""
-
 msgid "Modules"
 msgstr ""
 
 msgid "Modules configuration modified"
 msgstr ""
 
-msgid "Monday"
-msgstr ""
-
 msgid "Money return"
-msgstr ""
-
-msgid "Move"
-msgstr ""
-
-msgid "My account"
 msgstr ""
 
 msgid "Name"
@@ -2644,9 +1951,6 @@ msgstr ""
 msgid "New article"
 msgstr ""
 
-msgid "New banner"
-msgstr ""
-
 msgid "New blog article"
 msgstr ""
 
@@ -2680,13 +1984,7 @@ msgstr ""
 msgid "New item"
 msgstr ""
 
-msgid "New navigation item"
-msgstr ""
-
 msgid "New notification bar"
-msgstr ""
-
-msgid "New orders"
 msgstr ""
 
 msgid "New page"
@@ -2716,9 +2014,6 @@ msgstr ""
 msgid "New promo code"
 msgstr ""
 
-msgid "New registered customers"
-msgstr ""
-
 msgid "New sales representative"
 msgstr ""
 
@@ -2728,142 +2023,25 @@ msgstr ""
 msgid "New store"
 msgstr ""
 
-msgid "New value"
-msgstr ""
-
 msgid "New warehouse"
 msgstr ""
 
 msgid "No"
 msgstr ""
 
-msgid "No SEO pages found."
-msgstr ""
-
-msgid "No URLs so far."
-msgstr ""
-
-msgid "No VAT rate found. You have to create some first."
-msgstr ""
-
-msgid "No advertising found. You have to create some first."
-msgstr ""
-
-msgid "No articles found on this domain. You have to create some first."
-msgstr ""
-
-msgid "No blog articles found."
-msgstr ""
-
-msgid "No brands found. You have to create some first."
-msgstr ""
-
-msgid "No combinations of SEO categories found."
-msgstr ""
-
-msgid "No complaint statuses found."
-msgstr ""
-
-msgid "No complaints found."
-msgstr ""
-
-msgid "No countries found. You have to create some first."
-msgstr ""
-
-msgid "No cron runs found."
-msgstr ""
-
-msgid "No crons found."
-msgstr ""
-
-msgid "No currencies found. You have to create some first."
-msgstr ""
-
-msgid "No customers found."
-msgstr ""
-
-msgid "No domains so far."
-msgstr ""
-
-msgid "No email templates found. You have to create some first."
-msgstr ""
-
 msgid "No email whitelist is enabled, all emails will be sent."
-msgstr ""
-
-msgid "No email will be sent from this domain."
-msgstr ""
-
-msgid "No files found."
-msgstr ""
-
-msgid "No flags found. You have to create some first."
 msgstr ""
 
 msgid "No group"
 msgstr ""
 
-msgid "No inquiries found."
-msgstr ""
-
-msgid "No logs created so far."
-msgstr ""
-
-msgid "No order found."
-msgstr ""
-
-msgid "No orders status found."
-msgstr ""
-
-msgid "No page found."
-msgstr ""
-
-msgid "No parameters found. You have to create some first."
-msgstr ""
-
-msgid "No payments created so far."
-msgstr ""
-
-msgid "No pricing groups found. You have to create some first."
-msgstr ""
-
-msgid "No product found."
-msgstr ""
-
-msgid "No product list found."
-msgstr ""
-
-msgid "No promo codes found. You have to create some first."
-msgstr ""
-
-msgid "No records found."
-msgstr ""
-
-msgid "No sales representatives found."
-msgstr ""
-
-msgid "No shipping created so far."
-msgstr ""
-
-msgid "No store is created. You have to create one first."
-msgstr ""
-
-msgid "No subscribers found."
-msgstr ""
-
-msgid "No units found. You have to create some first."
+msgid "No redirect"
 msgstr ""
 
 msgid "No warehouse associated"
 msgstr ""
 
-msgid "No watchdog found."
-msgstr ""
-
 msgid "Nominal"
-msgstr ""
-
-msgid "Not granted"
 msgstr ""
 
 msgid "Not possible to assign product to itself"
@@ -2873,9 +2051,6 @@ msgid "Not possible to assign to itself"
 msgstr ""
 
 msgid "Not possible to create variations of products that are already variant or main variant."
-msgstr ""
-
-msgid "Not refundable"
 msgstr ""
 
 msgid "Note"
@@ -2905,19 +2080,10 @@ msgstr ""
 msgid "Number of products in filter"
 msgstr ""
 
-msgid "Number of selected products is not limited, however only %limit% will be displayed on frontend."
-msgstr ""
-
 msgid "Number of watchdogs"
 msgstr ""
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
-msgstr ""
-
-msgid "Ok"
-msgstr ""
-
-msgid "Old value"
 msgstr ""
 
 msgid "On each run (usually every 5 minutes)"
@@ -2941,16 +2107,10 @@ msgstr ""
 msgid "Open Graph title"
 msgstr ""
 
-msgid "Open in a new tab"
-msgstr ""
-
 msgid "Open in new window"
 msgstr ""
 
 msgid "Opening hours"
-msgstr ""
-
-msgid "Opening time"
 msgstr ""
 
 msgid "Order"
@@ -2962,16 +2122,10 @@ msgstr ""
 msgid "Order Nr."
 msgstr ""
 
-msgid "Order Nr. %orderNumber%"
-msgstr ""
-
 msgid "Order Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
 msgstr ""
 
 msgid "Order Nr. <strong>{{ number }}</strong> deleted"
-msgstr ""
-
-msgid "Order URL address"
 msgstr ""
 
 msgid "Order confirmation page"
@@ -2990,9 +2144,6 @@ msgid "Order has not been sent to GoPay"
 msgstr ""
 
 msgid "Order in CZK round to whole crowns"
-msgstr ""
-
-msgid "Order items"
 msgstr ""
 
 msgid "Order must contain at least one item"
@@ -3016,16 +2167,10 @@ msgstr ""
 msgid "Order status"
 msgstr ""
 
-msgid "Order statuses overview"
-msgstr ""
-
 msgid "Ordering"
 msgstr ""
 
 msgid "Orders"
-msgstr ""
-
-msgid "Orders overview"
 msgstr ""
 
 msgid "Orders value"
@@ -3067,12 +2212,6 @@ msgstr ""
 msgid "Page title"
 msgstr ""
 
-msgid "Paid amount"
-msgstr ""
-
-msgid "Parameter"
-msgstr ""
-
 msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
@@ -3082,16 +2221,10 @@ msgstr ""
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr ""
 
-msgid "Parameter group"
-msgstr ""
-
 msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
 msgstr ""
 
 msgid "Parameter groups"
-msgstr ""
-
-msgid "Parameter groups overview"
 msgstr ""
 
 msgid "Parameter value"
@@ -3100,25 +2233,16 @@ msgstr ""
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr ""
 
-msgid "Parameter value of type color"
-msgstr ""
-
 msgid "Parameter values"
 msgstr ""
 
 msgid "Parameter values associated with parameter - <strong><a href=\"{{ url }}\">{{ parameterName }}</a></strong> modified."
 msgstr ""
 
-msgid "Parameter values of type color"
-msgstr ""
-
 msgid "Parameters"
 msgstr ""
 
 msgid "Parameters order in category"
-msgstr ""
-
-msgid "Parameters overview"
 msgstr ""
 
 msgid "Pararameter value of type color"
@@ -3139,10 +2263,7 @@ msgstr ""
 msgid "Password has been successfully set."
 msgstr ""
 
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr ""
-
-msgid "Payment"
+msgid "Password has to include <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"upper\">uppercase letters</span>, <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"lower\">lowercase letters</span>, <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"number\">numbers</span> and must be <span class=\"text-incorrect\" data-js-password-help-text-requirement=\"length\">longer than 10 characters</span>."
 msgstr ""
 
 msgid "Payment <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
@@ -3187,9 +2308,6 @@ msgstr ""
 msgid "Payment method chosen"
 msgstr ""
 
-msgid "Payment method name"
-msgstr ""
-
 msgid "Payment not completed"
 msgstr ""
 
@@ -3232,9 +2350,6 @@ msgstr ""
 msgid "Payment was not paid in full"
 msgstr ""
 
-msgid "Payments"
-msgstr ""
-
 msgid "Percent"
 msgstr ""
 
@@ -3271,22 +2386,13 @@ msgstr ""
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
-msgid "Please check the entered values.<br>"
-msgstr ""
-
 msgid "Please fill all default values before creating a product"
 msgstr ""
 
 msgid "Please replace this text with your own content."
 msgstr ""
 
-msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
-msgstr ""
-
 msgid "Please select at least one domain."
-msgstr ""
-
-msgid "Please use the button below to send the one-time passcode to your email address."
 msgstr ""
 
 msgid "Please wait until all files are uploaded and try again."
@@ -3307,16 +2413,10 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-msgid "Price excluding VAT"
-msgstr ""
-
 msgid "Price including VAT"
 msgstr ""
 
 msgid "Price including VAT rounding"
-msgstr ""
-
-msgid "Price list"
 msgstr ""
 
 msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
@@ -3370,9 +2470,6 @@ msgstr ""
 msgid "Privacy policy"
 msgstr ""
 
-msgid "Privacy policy settings"
-msgstr ""
-
 msgid "Product"
 msgstr ""
 
@@ -3388,16 +2485,10 @@ msgstr ""
 msgid "Product ID"
 msgstr ""
 
-msgid "Product associated with this inquiry is no longer available in the catalog."
-msgstr ""
-
 msgid "Product catnum"
 msgstr ""
 
 msgid "Product detail URL"
-msgstr ""
-
-msgid "Product excluded from sale"
 msgstr ""
 
 msgid "Product image URL"
@@ -3419,9 +2510,6 @@ msgid "Product name"
 msgstr ""
 
 msgid "Product name in default language is not entered"
-msgstr ""
-
-msgid "Product not in e-shop."
 msgstr ""
 
 msgid "Product saved in order"
@@ -3472,28 +2560,13 @@ msgstr ""
 msgid "Promo codes"
 msgstr ""
 
-msgid "Promo codes - generated batches"
-msgstr ""
-
 msgid "Promoted categories"
 msgstr ""
 
 msgid "Promoted products"
 msgstr ""
 
-msgid "Quantity"
-msgstr ""
-
-msgid "Quick product search"
-msgstr ""
-
-msgid "Quick search"
-msgstr ""
-
 msgid "RGB Hex"
-msgstr ""
-
-msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr ""
 
 msgid "Redirect target"
@@ -3502,40 +2575,16 @@ msgstr ""
 msgid "Redirect type"
 msgstr ""
 
-msgid "Refund amount"
-msgstr ""
-
-msgid "Refundable amount"
-msgstr ""
-
-msgid "Refunded amount"
-msgstr ""
-
 msgid "Registration confirmation"
 msgstr ""
 
 msgid "Remaining number of uses"
 msgstr ""
 
-msgid "Remove"
-msgstr ""
-
 msgid "Removed %dataType%: \"%readableValue%\""
 msgstr ""
 
 msgid "Replace file"
-msgstr ""
-
-msgid "Request a one-time passcode by email"
-msgstr ""
-
-msgid "Reset administrator password"
-msgstr ""
-
-msgid "Reset filter"
-msgstr ""
-
-msgid "Reset password"
 msgstr ""
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
@@ -3547,16 +2596,7 @@ msgstr ""
 msgid "Resolved"
 msgstr ""
 
-msgid "Results:"
-msgstr ""
-
-msgid "Return back"
-msgstr ""
-
 msgid "Robots.txt"
-msgstr ""
-
-msgid "Robots.txt settings"
 msgstr ""
 
 msgid "Robots.txt settings modified"
@@ -3601,9 +2641,6 @@ msgstr ""
 msgid "Rounding type"
 msgstr ""
 
-msgid "Running"
-msgstr ""
-
 msgid "SEO"
 msgstr ""
 
@@ -3616,9 +2653,6 @@ msgstr ""
 msgid "SEO Page <strong>{{ name }}</strong> removed"
 msgstr ""
 
-msgid "SEO attributes settings"
-msgstr ""
-
 msgid "SEO attributes settings modified"
 msgstr ""
 
@@ -3628,9 +2662,6 @@ msgstr ""
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
 msgstr ""
 
-msgid "SEO page"
-msgstr ""
-
 msgid "SEO pages"
 msgstr ""
 
@@ -3638,9 +2669,6 @@ msgid "SMS was sent but not delivered yet"
 msgstr ""
 
 msgid "Sales including/excluding VAT settings"
-msgstr ""
-
-msgid "Sales overview (last 7 days)"
 msgstr ""
 
 msgid "Sales representative"
@@ -3658,106 +2686,34 @@ msgstr ""
 msgid "Sales representatives"
 msgstr ""
 
-msgid "Saturday"
-msgstr ""
-
 msgid "Save"
 msgstr ""
 
 msgid "Save changes"
 msgstr ""
 
-msgid "Save changes in order"
+msgid "Save default VAT rate"
+msgstr ""
+
+msgid "Save default currencies"
+msgstr ""
+
+msgid "Save default pricing group"
+msgstr ""
+
+msgid "Save default unit"
 msgstr ""
 
 msgid "Save warehouse settings"
 msgstr ""
 
-msgid "Scaled promo code"
-msgstr ""
-
-msgid "Scan QR code"
-msgstr ""
-
 msgid "Schedule"
-msgstr ""
-
-msgid "Scheduled"
-msgstr ""
-
-msgid "Search [verb]"
-msgstr "Search"
-
-msgid "Search by code..."
-msgstr ""
-
-msgid "Search by filename, extension or translated name..."
-msgstr ""
-
-msgid "Search by name, catalog number, or product part number..."
-msgstr ""
-
-msgid "Search by name..."
-msgstr ""
-
-msgid "Search by section name…"
-msgstr ""
-
-msgid "Search by slug..."
-msgstr ""
-
-msgid "Search in transfers"
-msgstr ""
-
-msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching in all currencies"
-msgstr ""
-
-msgid "Searching searches in complaint number, complaint email, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in email. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in name. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in product name and product catalog number. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in product name, product catalog number, company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Second column categories"
 msgstr ""
 
-msgid "Select All"
-msgstr ""
-
-msgid "Select all permissions"
-msgstr ""
-
-msgid "Select all permissions for this role"
-msgstr ""
-
-msgid "Select all permissions in section"
-msgstr ""
-
-msgid "Select new value"
+msgid "Select items"
 msgstr ""
 
 msgid "Selected SEO page cannot be deleted"
@@ -3898,16 +2854,10 @@ msgstr ""
 msgid "Send me authentication code"
 msgstr ""
 
-msgid "Send refund and save order"
-msgstr ""
-
 msgid "Send reset password"
 msgstr ""
 
 msgid "Send reset password email"
-msgstr ""
-
-msgid "Send test mail"
 msgstr ""
 
 msgid "Sending emails is turned off, no email will be sent from the app."
@@ -3917,12 +2867,6 @@ msgid "Seo"
 msgstr ""
 
 msgid "Set"
-msgstr ""
-
-msgid "Set as default"
-msgstr ""
-
-msgid "Set prices manually"
 msgstr ""
 
 msgid "Setting for domain \"%domainName%\" was saved."
@@ -3937,9 +2881,6 @@ msgstr ""
 msgid "Several times a day (%hours%h and %minutes%m)"
 msgstr ""
 
-msgid "Shipping"
-msgstr ""
-
 msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
@@ -3950,9 +2891,6 @@ msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Shipping instructions"
-msgstr ""
-
-msgid "Shippings"
 msgstr ""
 
 msgid "Shippings and payments"
@@ -3973,9 +2911,6 @@ msgstr ""
 msgid "Short description of category"
 msgstr ""
 
-msgid "Show all customer orders"
-msgstr ""
-
 msgid "Show combinations"
 msgstr ""
 
@@ -3988,9 +2923,6 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
-msgid "Site [abbreviation]"
-msgstr "S"
-
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
@@ -4000,16 +2932,10 @@ msgstr ""
 msgid "Slug"
 msgstr ""
 
-msgid "Some data may not be localized or serve the technical administrators of the e-shop."
-msgstr ""
-
 msgid "Some items cannot be imported due to errors:"
 msgstr ""
 
 msgid "Sorting priority"
-msgstr ""
-
-msgid "Special price"
 msgstr ""
 
 msgid "Standard"
@@ -4072,9 +2998,6 @@ msgstr ""
 msgid "Store does not exist"
 msgstr ""
 
-msgid "Store list"
-msgstr ""
-
 msgid "Storefront queries cache has been cleaned."
 msgstr ""
 
@@ -4096,22 +3019,7 @@ msgstr ""
 msgid "Successfully uploaded"
 msgstr ""
 
-msgid "Sunday"
-msgstr ""
-
 msgid "Superadmin"
-msgstr ""
-
-msgid "Superadmin - Closing modules"
-msgstr ""
-
-msgid "Superadmin - Sale including/excluding VAT settings"
-msgstr ""
-
-msgid "Superadmin - URL addresses"
-msgstr ""
-
-msgid "Switch locale"
 msgstr ""
 
 msgid "System data"
@@ -4129,16 +3037,10 @@ msgstr ""
 msgid "Terms and conditions"
 msgstr ""
 
-msgid "Terms and conditions settings"
-msgstr ""
-
 msgid "Test email sent to %email%."
 msgstr ""
 
 msgid "Text"
-msgstr ""
-
-msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
@@ -4147,28 +3049,10 @@ msgstr ""
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr ""
 
-msgid "The product has no specified name for the locale."
-msgstr ""
-
-msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
-msgstr ""
-
 msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."
-msgstr ""
-
-msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul>"
-msgstr ""
-
-msgid "There are no parameter values of type color yet."
-msgstr ""
-
-msgid "There is no parameter group yet."
-msgstr ""
-
-msgid "There is no warehouse on this domain yet."
 msgstr ""
 
 msgid "There was an error while saving. The order isn't saved."
@@ -4177,19 +3061,10 @@ msgstr ""
 msgid "Third column categories"
 msgstr ""
 
-msgid "This SEO page cannot be deleted."
-msgstr ""
-
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr ""
 
 msgid "This email was sent from the contact form located below the panel of categories."
-msgstr ""
-
-msgid "This flag can not be deleted as it is used in definition of"
-msgstr ""
-
-msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 
 msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
@@ -4201,34 +3076,10 @@ msgstr ""
 msgid "This payment method is hidden by GoPay on domains: %domains%"
 msgstr ""
 
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
-msgstr ""
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
-msgstr ""
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
-msgstr ""
-
-msgid "This status can't be deleted. This is automatically assigned status to all new complaints."
-msgstr ""
-
-msgid "This status can't be deleted. This is automatically assigned status to all new orders."
-msgstr ""
-
-msgid "This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?"
-msgstr ""
-
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr ""
 
-msgid "Thursday"
-msgstr ""
-
 msgid "TikTok URL"
-msgstr ""
-
-msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr ""
 
 msgid "To fifty hundredths (halfs)"
@@ -4243,15 +3094,6 @@ msgstr ""
 msgid "Too many login attempts. Please try again later."
 msgstr ""
 
-msgid "Total"
-msgstr ""
-
-msgid "Total excluding VAT"
-msgstr ""
-
-msgid "Total including VAT"
-msgstr ""
-
 msgid "Total order price (excluding VAT)"
 msgstr ""
 
@@ -4259,9 +3101,6 @@ msgid "Total order price (including VAT)"
 msgstr ""
 
 msgid "Total price"
-msgstr ""
-
-msgid "Total price including VAT"
 msgstr ""
 
 msgid "Tracking URL"
@@ -4288,19 +3127,7 @@ msgstr ""
 msgid "Transfer problem has been marked as resolved"
 msgstr ""
 
-msgid "Transfer type"
-msgstr ""
-
-msgid "Transfers"
-msgstr ""
-
 msgid "Transport type"
-msgstr ""
-
-msgid "Tuesday"
-msgstr ""
-
-msgid "Two factor authentication"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -4336,9 +3163,6 @@ msgstr ""
 msgid "URL settings"
 msgstr ""
 
-msgid "URL will be deleted after saving."
-msgstr ""
-
 msgid "Unable to add"
 msgstr ""
 
@@ -4366,16 +3190,7 @@ msgstr ""
 msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
 msgstr ""
 
-msgid "Unit price excluding VAT"
-msgstr ""
-
-msgid "Unit price including VAT"
-msgstr ""
-
 msgid "Unknown configuration"
-msgstr ""
-
-msgid "Unlimited"
 msgstr ""
 
 msgid "Unsupported payment card region"
@@ -4417,16 +3232,7 @@ msgstr ""
 msgid "Upon inquiry"
 msgstr ""
 
-msgid "Upon inquiry [abbreviation]"
-msgstr "?"
-
 msgid "Url address"
-msgstr ""
-
-msgid "Use"
-msgstr ""
-
-msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
 msgstr ""
 
 msgid "User"
@@ -4438,9 +3244,6 @@ msgstr ""
 msgid "User consent policy article"
 msgstr ""
 
-msgid "User consent policy settings"
-msgstr ""
-
 msgid "User consent policy settings modified."
 msgstr ""
 
@@ -4450,9 +3253,6 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-msgid "Using price calculation has been disabled, don't forget to edit all prices."
-msgstr ""
-
 msgid "VAT"
 msgstr ""
 
@@ -4460,18 +3260,6 @@ msgid "VAT <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>."
-msgstr ""
-
-msgid "VAT rate (%)"
-msgstr ""
-
-msgid "VAT rate can't be removed because it is being currently used for conversion to this VAT rate"
-msgstr ""
-
-msgid "VAT rate is marked for deleting and will be soon automatically removed. Conversion rate is several hundreds of products in 5 minutes."
-msgstr ""
-
-msgid "VAT rates"
 msgstr ""
 
 msgid "VAT settings modified"
@@ -4486,20 +3274,8 @@ msgstr ""
 msgid "Valid until"
 msgstr ""
 
-msgid "Value"
-msgstr ""
-
-msgid "Value of bought products after application of all discounts and promo codes without price of shipping and payment"
-msgstr ""
-
-msgid "Variant"
-msgstr ""
-
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr ""
-
-msgid "Variant [abbreviation]"
-msgstr "V"
 
 msgid "Variant alias"
 msgstr ""
@@ -4510,13 +3286,7 @@ msgstr ""
 msgid "Videos"
 msgstr ""
 
-msgid "View allowed recipients."
-msgstr ""
-
 msgid "Visibility"
-msgstr ""
-
-msgid "Visibility for unlogged customers"
 msgstr ""
 
 msgid "Visible on homepage"
@@ -4537,16 +3307,13 @@ msgstr ""
 msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was set as default."
+msgstr ""
+
 msgid "Warehouse <strong>{{ name }}</strong> deleted"
 msgstr ""
 
-msgid "Warehouse <strong>{{ name }}</strong> was set as default."
-msgstr ""
-
 msgid "Warehouse detail"
-msgstr ""
-
-msgid "Warehouse overview"
 msgstr ""
 
 msgid "Warehouse settings"
@@ -4556,9 +3323,6 @@ msgid "Warehouses"
 msgstr ""
 
 msgid "Watchdog"
-msgstr ""
-
-msgid "Watchdog -"
 msgstr ""
 
 msgid "Watchdog - %name%"
@@ -4573,25 +3337,10 @@ msgstr ""
 msgid "Watchdogs"
 msgstr ""
 
-msgid "Watchdogs overview"
-msgstr ""
-
-msgid "Wednesday"
-msgstr ""
-
 msgid "Weight (g)"
 msgstr ""
 
-msgid "When changing the default currency there is no recalculation of prices"
-msgstr ""
-
-msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
-msgstr ""
-
 msgid "XML Feeds"
-msgstr ""
-
-msgid "XML availability feeds"
 msgstr ""
 
 msgid "XML feeds settings"
@@ -4604,15 +3353,6 @@ msgid "You are allowed to disable two factor authentication only to yourself."
 msgstr ""
 
 msgid "You are allowed to set up two factor authentication only to yourself."
-msgstr ""
-
-msgid "You can change the settings <a href=\"%linkUrl%\">here</a>."
-msgstr ""
-
-msgid "You can drag additional content here."
-msgstr ""
-
-msgid "You can drag articles here."
 msgstr ""
 
 msgid "You can refund only %refundableAmount%."
@@ -4633,12 +3373,6 @@ msgstr ""
 msgid "You can't delete yourself."
 msgstr ""
 
-msgid "You cannot choose product that is main variant"
-msgstr ""
-
-msgid "You cannot choose product that is variant"
-msgstr ""
-
 msgid "You don't have permission to perform this action."
 msgstr ""
 
@@ -4657,9 +3391,6 @@ msgstr ""
 msgid "You have to set redirect code for redirect."
 msgstr ""
 
-msgid "You have unsaved changes!"
-msgstr ""
-
 msgid "You have unsaved changes, save them first, please."
 msgstr ""
 
@@ -4675,49 +3406,16 @@ msgstr ""
 msgid "above order summary in cart"
 msgstr ""
 
-msgid "administrators"
-msgstr ""
-
-msgid "advertisings"
-msgstr ""
-
 msgid "after"
-msgstr ""
-
-msgid "articles"
 msgstr ""
 
 msgid "before"
 msgstr ""
 
-msgid "blog articles"
-msgstr ""
-
-msgid "brands"
-msgstr ""
-
-msgid "complaint statuses"
-msgstr ""
-
-msgid "complaints"
-msgstr ""
-
-msgid "countries"
-msgstr ""
-
 msgid "create"
 msgstr ""
 
-msgid "currencies"
-msgstr ""
-
-msgid "customers"
-msgstr ""
-
 msgid "delete"
-msgstr ""
-
-msgid "discount"
 msgstr ""
 
 msgid "doesn't include"
@@ -4729,22 +3427,10 @@ msgstr ""
 msgid "empty value"
 msgstr ""
 
-msgid "files"
-msgstr ""
-
-msgid "flags"
-msgstr ""
-
-msgid "from"
-msgstr ""
-
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr ""
 
 msgid "full"
-msgstr ""
-
-msgid "g"
 msgstr ""
 
 msgid "higher or equal"
@@ -4759,9 +3445,6 @@ msgstr ""
 msgid "include"
 msgstr ""
 
-msgid "inquiries"
-msgstr ""
-
 msgid "is"
 msgstr ""
 
@@ -4772,9 +3455,6 @@ msgid "lower than"
 msgstr ""
 
 msgid "never"
-msgstr ""
-
-msgid "new customers"
 msgstr ""
 
 msgid "not"
@@ -4789,64 +3469,13 @@ msgstr ""
 msgid "numbers"
 msgstr ""
 
-msgid "or"
-msgstr ""
-
-msgid "order statuses"
-msgstr ""
-
-msgid "orders"
-msgstr ""
-
-msgid "orders sold"
-msgstr ""
-
-msgid "parameter values"
-msgstr ""
-
-msgid "parameters"
-msgstr ""
-
-msgid "product lists"
-msgstr ""
-
-msgid "products"
-msgstr ""
-
-msgid "promo codes"
-msgstr ""
-
-msgid "ready category seo mixes"
-msgstr ""
-
-msgid "records"
-msgstr ""
-
-msgid "sales representatives"
-msgstr ""
-
-msgid "subscribers"
-msgstr ""
-
-msgid "turnover in"
+msgid "slug"
 msgstr ""
 
 msgid "under heading"
 msgstr ""
 
-msgid "units"
-msgstr ""
-
-msgid "unregistered customer"
-msgstr ""
-
-msgid "use key tab or shift+tab"
-msgstr ""
-
 msgid "view"
-msgstr ""
-
-msgid "watchdogs"
 msgstr ""
 
 msgid "with VAT"

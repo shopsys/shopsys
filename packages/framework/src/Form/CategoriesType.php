@@ -44,7 +44,6 @@ final class CategoriesType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['domain_id'] = $options['domain_id'];
-        $view->vars['display_as_row'] = $options['display_as_row'];
         $view->vars['main_category_path'] = $this->getMainCategoryPath($options);
     }
 
@@ -71,10 +70,9 @@ final class CategoriesType extends AbstractType
         };
 
         $resolver
-            ->setRequired(['domain_id', 'display_as_row'])
+            ->setRequired(['domain_id'])
             ->setDefined(['product'])
             ->setAllowedTypes('domain_id', 'int')
-            ->setAllowedTypes('display_as_row', 'bool')
             ->setAllowedTypes('product', [Product::class, 'null'])
             ->setDefaults([
                 'required' => false,
@@ -82,7 +80,6 @@ final class CategoriesType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
-                'display_as_row' => false,
                 'product' => null,
             ]);
 

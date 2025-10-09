@@ -1,0 +1,23 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Price list overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Price list'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_pricelist_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new price list'|trans }}
+    </a>
+    <a href="{{ url('admin_pricelist_import') }}" class="btn">
+        {{ ux_icon('upload') }}
+        {{ 'Import CSV'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
+    {{ gridView.render() }}
+{% endblock %}

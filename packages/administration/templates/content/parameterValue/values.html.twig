@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Convert values associated with parameter - %name%'|trans({'%name%': parameter.name}) }}{% endblock %}
+
+{% block pre_title %}{{ 'Convert values associated with parameter'|trans }}{% endblock %}
+{% block h1 %}{{ parameter.name }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}

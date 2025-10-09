@@ -1,0 +1,19 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+{% import '@ShopsysAdministration/content/mail/variablesList.html.twig' as applicableVariablesMacro %}
+
+{% block title %}- {{ 'Email template'|trans }}{% endblock %}
+
+{% block h1 %}{{ 'Email template'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form, { 'attr': {'class': 'js-mail-template'}}) }}
+
+    {% if subjectVariables %}
+        {{ applicableVariablesMacro.applicableVariables('Applicable variables for Subject'|trans, subjectVariables, requiredSubjectVariables, labeledVariables) }}
+    {% endif %}
+
+    {% if bodyVariables %}
+        {{ applicableVariablesMacro.applicableVariables('Applicable variables for Content'|trans, bodyVariables, requiredBodyVariables, labeledVariables) }}
+    {% endif %}
+
+{% endblock %}

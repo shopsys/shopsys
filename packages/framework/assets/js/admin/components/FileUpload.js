@@ -1,9 +1,8 @@
 import './jquery.dmuploader';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import { forceValidateElement } from '../../common/validation/validationHelpers';
-import Window from '../utils/Window';
 import FileItem from './FileItem';
 import formChangeInfo from './FormChangeInfo';
 
@@ -27,7 +26,7 @@ export default class FileUpload {
     onFormSubmit(event) {
         if (!this.ready) {
             // eslint-disable-next-line no-new
-            new Window({
+            new ModalWindow({
                 content: Translator.trans('Please wait until all files are uploaded and try again.'),
             });
             event.preventDefault();
@@ -87,7 +86,6 @@ export default class FileUpload {
 
     onUploadComplete() {
         this.ready = true;
-        forceValidateElement(this.$uploader);
     }
 
     onUploadProgress(id, percent) {
@@ -108,7 +106,7 @@ export default class FileUpload {
         } else {
             this.items[id].deleteItem();
             // eslint-disable-next-line no-new
-            new Window({
+            new ModalWindow({
                 content: Translator.trans('Error occurred while uploading file.'),
             });
         }
@@ -122,7 +120,7 @@ export default class FileUpload {
             message = Translator.trans('File is in unsupported format');
         }
         // eslint-disable-next-line no-new
-        new Window({
+        new ModalWindow({
             content: Translator.trans('Error occurred while uploading file: %message%', { message: message }),
         });
         this.$status.parent().hide();

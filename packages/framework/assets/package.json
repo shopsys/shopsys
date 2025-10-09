@@ -12,16 +12,15 @@
         "tests:unit": "jest js"
     },
     "dependencies": {
-        "@claviska/jquery-minicolors": "^2.3.4",
+        "@melloware/coloris": "^0.25.0",
+        "@tabler/core": "^1.2.0",
         "bazinga-translator": "^2.6.6",
         "chart.js": "^2.9.3",
-        "counterup2": "^1.0.4",
         "flatpickr": "^4.6.13",
         "jquery": "^3.4.1",
         "jquery-hoverintent": "^1.10.1",
         "jquery-ui": "1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
-        "magnific-popup": "^1.1.0",
         "nouislider": "^15.8.1",
         "select2": "^4.0.12",
         "sortablejs": "^1.15.6"

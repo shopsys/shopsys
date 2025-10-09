@@ -1,12 +1,20 @@
 import Register from '../../common/utils/Register';
 
 export default class Article {
-    constructor() {
-        this.$domainSelectInput = $('#article_form_articleData_domainId');
-        this.$metaDescriptionInput = $('#article_form_seo_seoMetaDescription');
+    constructor($container) {
+        this.$domainSelectInput = $container.find('#article_form_articleData_domainId');
+        this.$metaDescriptionInput = $container.find('#article_form_seo_seoMetaDescription');
+        this.$typeInputs = $container.find('input[name="article_form[articleData][type]"]');
+
         this.$domainSelectInput.on('change', event => {
             this.changeMetaDescriptionPlaceholderByDomainId($(event.target).val());
         });
+
+        this.$typeInputs.on('change', () => {
+            this.initTypeVisibility($container);
+        });
+
+        this.initTypeVisibility($container);
     }
 
     changeMetaDescriptionPlaceholderByDomainId(domainId) {
@@ -14,9 +22,22 @@ export default class Article {
         this.$metaDescriptionInput.attr('placeholder', metaDescriptionPlaceHolderText);
     }
 
-    static init() {
-        // eslint-disable-next-line no-new
-        new Article();
+    initTypeVisibility($container) {
+        const checkedType = this.$typeInputs.filter(':checked').val();
+
+        $container.find('[data-js-article-type-content]').hide();
+        if (checkedType) {
+            $container.find(`[data-js-article-type-content="${checkedType}"]`).show();
+        }
+    }
+
+    static init($container) {
+        const $articleForm = $container.filterAllNodes('form[name="article_form"]');
+
+        if ($articleForm.length > 0) {
+            // eslint-disable-next-line no-new
+            new Article($articleForm);
+        }
     }
 }
 

@@ -1,8 +1,8 @@
-import 'magnific-popup';
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import { formatPrice } from '../../common/utils/priceFormatter';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 window.PriceListProductPickerInstances = {};
@@ -36,15 +36,12 @@ export default class PriceListProductPicker {
             url.searchParams.set('domainId', selectedDomainId);
 
             if (FormChangeInfo.isInfoShown) {
-                // eslint-disable-next-line no-new
-                new Window({
+                ConfirmWindow.show({
                     content: Translator.trans(
                         'Changing the domain will cause the loss of unsaved changes. Do you want to continue?',
                     ),
-                    buttonCancel: true,
-                    buttonContinue: true,
-                    textContinue: Translator.trans('Yes'),
-                    urlContinue: url.toString(),
+                    style: null,
+                    continueUrl: url.toString(),
                 });
             } else {
                 window.location.href = url.toString();
@@ -53,12 +50,16 @@ export default class PriceListProductPicker {
     }
 
     openProductsPickerWindow() {
-        $.magnificPopup.open({
-            items: {
-                src: this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId),
-            },
-            type: 'iframe',
-            closeOnBgClick: true,
+        const url = this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId);
+
+        const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
+
+        // eslint-disable-next-line no-new
+        new ModalWindow({
+            content: iframeContent,
+            title: Translator.trans('Assign products'),
+            size: 'xl',
+            buttons: [{ text: Translator.trans('Finish assigning') }],
         });
 
         return false;
@@ -75,7 +76,8 @@ export default class PriceListProductPicker {
 
         this.updateDiscount($item);
         this.productItems.push($item);
-        $item.find('.js-price-list-product-picker-item-button-delete').click(() => {
+        $item.find('.js-price-list-product-picker-item-button-delete').click(event => {
+            event.preventDefault();
             this.removeItem($item);
         });
     }
@@ -205,10 +207,6 @@ export default class PriceListProductPicker {
         $container.filterAllNodes('.js-price-list-product-picker').each(function () {
             // eslint-disable-next-line no-new
             new PriceListProductPicker($(this));
-        });
-
-        $container.filterAllNodes('.js-price-list-product-picker-close').click(() => {
-            window.parent.$.magnificPopup.instance.close();
         });
     }
 }

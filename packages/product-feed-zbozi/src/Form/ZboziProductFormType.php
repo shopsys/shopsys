@@ -36,7 +36,6 @@ final class ZboziProductFormType extends AbstractType
             ->add('show', MultidomainType::class, [
                 'label' => $this->translator->trans('Offer in feed'),
                 'entry_type' => YesNoType::class,
-                'required' => false,
             ])
             ->add('cpc', MultidomainType::class, [
                 'label' => $this->translator->trans('Maximum price per click'),

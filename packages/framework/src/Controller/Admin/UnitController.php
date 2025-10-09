@@ -46,7 +46,7 @@ class UnitController extends AdminBaseController
 
         $grid = $unitInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Unit/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/unit/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -170,7 +170,7 @@ class UnitController extends AdminBaseController
             return $this->redirectToRoute('admin_unit_list');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Unit/setting.html.twig', [
+        return $this->render('@ShopsysAdministration/content/unit/setting.html.twig', [
             'form' => $form->createView(),
         ]);
     }

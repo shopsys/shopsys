@@ -48,5 +48,10 @@ services:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
 
+    Shopsys\AdministrationBundle\Twig\Runtime\DomainIconRuntime:
+        arguments:
+            - '%kernel.project_dir%'
+        tags: ['twig.runtime']
+
     Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface:
         alias: Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessChecker

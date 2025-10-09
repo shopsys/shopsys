@@ -1,0 +1,21 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Banners'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Banners'|trans }}{% endblock %}
+
+
+
+{% block btn %}
+    <a href="{{ url('admin_slider_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new banner'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

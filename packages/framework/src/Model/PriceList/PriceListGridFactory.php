@@ -57,7 +57,6 @@ class PriceListGridFactory
         $grid->addColumn('validTo', 'pl.validTo', t('Valid to'), true);
         $grid->addColumn('validityStatus', 'validityStatus', t('Status'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_pricelist_edit', ['id' => 'pl.id']);
         $grid->addDeleteActionColumn('admin_pricelist_delete', ['id' => 'pl.id'])
             ->setConfirmMessage(
@@ -65,7 +64,7 @@ class PriceListGridFactory
             );
         $grid->addActionColumn('download', 'Export CSV', 'admin_pricelist_export', ['id' => 'pl.id']);
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/PriceList/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/priceList/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 

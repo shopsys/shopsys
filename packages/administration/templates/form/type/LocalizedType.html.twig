@@ -1,0 +1,42 @@
+{% block localized_widget %}
+    {% for child in form %}
+        <div class="mb-3">
+            {{- form_widget(child, { rawSymbolBeforeInput: localeFlag(child.vars.attr['data-locale']) }) -}}
+            {{- form_help(child) -}}
+            {{- form_errors(child) -}}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block localized_row %}
+    {%- set row_class = (row_attr.class|default('') ~ ' mb-3')|trim -%}
+    <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
+        {{ form_label(form) }}
+
+        {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\FormTypeLayout::LAYOUT_INLINE') %}
+            <fieldset>
+                {{ form_widget(form) }}
+                {{ form_help(form) }}
+            </fieldset>
+        {% else %}
+            {% for child in form %}
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="card-body">
+                                {{ localeFlag(child.vars.attr['data-locale']) }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body">
+                                {{- form_widget(child) -}}
+                                {{ form_help(child) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

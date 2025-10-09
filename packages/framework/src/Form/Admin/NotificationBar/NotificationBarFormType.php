@@ -20,7 +20,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -61,11 +60,7 @@ final class NotificationBarFormType extends AbstractType
             ->add('rgbColor', ColorPickerType::class, [
                 'label' => t('Background color'),
                 'constraints' => [
-                    new NotBlank(['message' => 'Please enter flag color']),
-                    new Length([
-                        'max' => 7,
-                        'maxMessage' => 'Flag color must be in valid hexadecimal code e.g. #3333ff',
-                    ]),
+                    new NotBlank(['message' => 'Please enter notification bar background color']),
                 ],
             ])
             ->add('validityFrom', DateTimeType::class, [
@@ -83,7 +78,6 @@ final class NotificationBarFormType extends AbstractType
                 ],
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide'),
             ])
             ->add('image', ImageUploadType::class, [

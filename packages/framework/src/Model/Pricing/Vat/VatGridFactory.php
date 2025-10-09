@@ -57,11 +57,10 @@ class VatGridFactory implements GridFactoryInterface
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'v.name', t('Name'), true);
         $grid->addColumn('percent', 'v.percent', t('Percent'), true);
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_vat_deleteconfirm', ['id' => 'v.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Vat/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/vat/listGrid.html.twig');
 
         return $grid;
     }

@@ -1,0 +1,8 @@
+{% import '@ShopsysAdministration/content/order/orderItem.html.twig' as orderItemMacro %}
+
+{{ orderItemMacro.orderItem(
+    form.orderItems.itemsWithoutTransportAndPayment[orderItem.id],
+    orderItem.id,
+    orderItem,
+    inputPriceType
+) }}

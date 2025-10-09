@@ -63,9 +63,9 @@ class NotificationBarController extends AdminBaseController
         $grid->addDeleteActionColumn('admin_notificationbar_delete', ['id' => 'nb.id'])
             ->setConfirmMessage(t('Do you really want to remove this notification bar?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/NotificationBar/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/notificationBar/listGrid.html.twig');
 
-        return $this->render('@ShopsysFramework/Admin/Content/NotificationBar/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/notificationBar/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -99,7 +99,7 @@ class NotificationBarController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/NotificationBar/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/notificationBar/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -140,7 +140,7 @@ class NotificationBarController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/NotificationBar/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/notificationBar/edit.html.twig', [
             'form' => $form->createView(),
             'notificationBar' => $notificationBar,
         ]);

@@ -9,12 +9,7 @@ services:
         resource: '%shopsys.vendor_dir%/commerceguys/intl/src/NumberFormat/*'
 
     Shopsys\FrameworkBundle\Twig\:
-        exclude: '../../Twig/{JsFormValidatorTwigExtension.php}'
         resource: '../../Twig/'
-
-    Shopsys\FrameworkBundle\Twig\DomainExtension:
-        arguments:
-            - '%shopsys.domain_images_url_prefix%'
 
     Shopsys\FrameworkBundle\Twig\ImageExtension:
         arguments:

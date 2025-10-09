@@ -74,9 +74,9 @@ class SliderController extends AdminBaseController
         $grid->addDeleteActionColumn('admin_slider_delete', ['id' => 's.id'])
             ->setConfirmMessage(t('Do you really want to remove this page?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Slider/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/slider/listGrid.html.twig');
 
-        return $this->render('@ShopsysFramework/Admin/Content/Slider/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/slider/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -116,7 +116,7 @@ class SliderController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Slider/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/slider/new.html.twig', [
             'form' => $form->createView(),
             'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
@@ -163,7 +163,7 @@ class SliderController extends AdminBaseController
             t('Editing slider page - %name%', ['%name%' => $sliderItem->getName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Slider/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/slider/edit.html.twig', [
             'form' => $form->createView(),
             'sliderItem' => $sliderItem,
         ]);

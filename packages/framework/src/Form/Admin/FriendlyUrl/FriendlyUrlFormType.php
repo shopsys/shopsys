@@ -47,9 +47,6 @@ final class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => $friendlyUrlData->slug,
-                    'attr' => [
-                        'class' => 'input--auto-size',
-                    ],
                 ],
             )
             ->add(
@@ -58,9 +55,6 @@ final class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => $this->friendlyUrlGridFactory->getReadableNameForRouteName($friendlyUrlData->name),
-                    'attr' => [
-                        'class' => 'input--auto-size',
-                    ],
                 ],
             )
             ->add(
@@ -69,9 +63,6 @@ final class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => $friendlyUrlData->entityId,
-                    'attr' => [
-                        'class' => 'input--auto-size',
-                    ],
                 ],
             )
             ->add('redirectTo', TextType::class, [
@@ -81,13 +72,15 @@ final class FriendlyUrlFormType extends AbstractType
                         'message' => 'Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)',
                     ]),
                 ],
-                'attr' => ['class' => 'input--auto-size'],
             ])
             ->add(
                 'redirectCode',
                 ChoiceType::class,
                 [
-                    'placeholder' => t('Choose type of redirect'),
+                    'required' => false,
+                    'multiple' => false,
+                    'expanded' => true,
+                    'placeholder' => t('No redirect'),
                     'choices' => [
                         t('301 (Permanent redirect)') => 301,
                         t('302 (Temporary redirect)') => 302,
@@ -100,7 +93,6 @@ final class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => $this->dateTimeFormatterExtension->formatDateTime($friendlyUrlData->lastModification),
-                    'attr' => ['class' => 'input--auto-size'],
                 ],
             );
     }

@@ -1,4 +1,5 @@
-import 'magnific-popup';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
+import Translator from 'bazinga-translator';
 import Sortable from 'sortablejs';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';
@@ -33,12 +34,16 @@ export default class ProductsPicker {
     }
 
     openProductsPickerWindow() {
-        $.magnificPopup.open({
-            items: {
-                src: this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId),
-            },
-            type: 'iframe',
-            closeOnBgClick: true,
+        const url = this.$productsPicker.data('products-picker-url').replace('__js_instance_id__', this.instanceId);
+
+        const iframeContent = `<iframe src="${url}" style="width: 100%; height: 800px; border: none;"></iframe>`;
+
+        // eslint-disable-next-line no-new
+        new ModalWindow({
+            content: iframeContent,
+            title: Translator.trans('Assign products'),
+            size: 'xl',
+            buttons: [{ text: Translator.trans('Finish assigning') }],
         });
 
         return false;
@@ -46,7 +51,8 @@ export default class ProductsPicker {
 
     initItem($item) {
         this.productItems.push($item);
-        $item.find('.js-products-picker-item-button-delete').click(() => {
+        $item.find('.js-products-picker-item-button-delete').click(event => {
+            event.preventDefault();
             this.removeItem($item);
         });
     }
@@ -113,11 +119,12 @@ export default class ProductsPicker {
         return this.findProductItemIndex(productId) !== null;
     }
 
-    addProduct(productId, productName) {
+    addProduct(productId, productName, productImageHtml) {
         const nextIndex = this.$itemsContainer.find('.js-products-picker-item').length;
         const itemHtml = this.$productsPicker.data('products-picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
         $item.find('.js-products-picker-item-product-name').text(productName);
+        $item.find('.js-products-picker-item-product-image').html(productImageHtml);
         $item.find('.js-products-picker-item-input').val(productId);
         this.$itemsContainer.append($item);
         this.initItem($item);
@@ -129,10 +136,6 @@ export default class ProductsPicker {
         $container.filterAllNodes('.js-products-picker').each(function () {
             // eslint-disable-next-line no-new
             new ProductsPicker($(this));
-        });
-
-        $('.js-products-picker-close').click(() => {
-            window.parent.$.magnificPopup.instance.close();
         });
     }
 }

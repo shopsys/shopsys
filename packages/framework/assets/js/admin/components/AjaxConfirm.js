@@ -1,6 +1,6 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import ConfirmDelete from './ConfirmDelete';
 
 export default class AjaxConfirm {
@@ -12,16 +12,26 @@ export default class AjaxConfirm {
                 Ajax.ajax({
                     url: $(this).attr('href'),
                     context: this,
-                    success: function (data) {
+                    success: data => {
                         // eslint-disable-next-line no-new
-                        new Window({
+                        new ModalWindow({
                             content: data,
                         });
-                        const onOpen = $(_this).data('ajax-confirm-on-open');
-                        if (onOpen) {
-                            // eslint-disable-next-line no-new
-                            new ConfirmDelete(this);
-                        }
+
+                        // Wait for the modal to be shown, then register the content
+                        $(document).on('shown.bs.modal', '.modal', function () {
+                            const $modalContent = $(this).find('.modal-body');
+                            new Register().registerNewContent($modalContent);
+
+                            const onOpen = $(_this).data('ajax-confirm-on-open');
+                            if (onOpen) {
+                                // eslint-disable-next-line no-new
+                                new ConfirmDelete(_this);
+                            }
+
+                            // Remove the event listener to avoid multiple registrations
+                            $(document).off('shown.bs.modal', '.modal');
+                        });
                     },
                 });
 

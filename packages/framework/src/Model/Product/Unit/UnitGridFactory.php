@@ -49,11 +49,10 @@ class UnitGridFactory implements GridFactoryInterface
 
         $grid->addColumn('name', 'ut.name', t('Name'), true);
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_unit_deleteconfirm', ['id' => 'u.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Unit/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/unit/listGrid.html.twig');
 
         return $grid;
     }

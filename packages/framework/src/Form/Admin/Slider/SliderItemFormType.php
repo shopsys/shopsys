@@ -74,10 +74,7 @@ final class SliderItemFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                 ],
                 'label' => t('Name'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t('Name serves only for internal use within the administration'),
-                ],
+                'help' => t('Name serves only for internal use within the administration'),
             ])
             ->add('link', UrlType::class, [
                 'required' => true,
@@ -95,10 +92,6 @@ final class SliderItemFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter description box background color']),
-                    new Constraints\Regex([
-                        'pattern' => '/^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/',
-                        'message' => 'Description background color must be a valid hexadecimal color code e.g. #fff or #ffffff',
-                    ]),
                 ],
                 'label' => t('Description background color'),
             ])
@@ -116,12 +109,6 @@ final class SliderItemFormType extends AbstractType
                 'label' => t('Description opacity'),
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\NotNull([
-                        'message' => 'Please choose visibility',
-                    ]),
-                ],
                 'label' => t('Hide'),
             ]);
 

@@ -57,7 +57,7 @@ class TopProductController extends AdminBaseController
             $this->addSuccessFlash(t('Product settings on the main page successfully changed'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/TopProduct/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/topProduct/list.html.twig', [
             'form' => $form->createView(),
             'productsFrontendLimit' => $this->productFrontendLimitProvider->getProductsFrontendLimit(),
         ]);

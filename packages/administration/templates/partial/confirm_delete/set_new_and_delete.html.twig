@@ -1,0 +1,31 @@
+<div class="modal-title">{{ 'Choose replacement'|trans }}</div>
+
+{% if possibleReplacements|length > 0 %}
+    <div class="mb-3">
+        {{ message|nl2br }}
+    </div>
+
+    {# custom form rendering because of csrf token and input names - controllers delete actions expect "newId" parameter #}
+    <form action="{{ url(route, {id: entityId}) }}" method="get" class="js-confirm-delete-form">
+        <input type="hidden"
+               name="{{ CSRF_TOKEN_REQUEST_PARAMETER }}"
+               value="{{ routeCsrfToken }}"
+        />
+        <div class="mb-3">
+            <select name="newId" required class="js-confirm-delete-select form-select">
+                <option value="">-- {{ 'Select new value'|trans }} --</option>
+                {% for possibleReplacement in possibleReplacements %}
+                    <option value="{{ possibleReplacement.id }}">{{ possibleReplacement.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-danger">
+                {{ 'Delete and set'|trans }}
+            </button>
+        </div>
+    </form>
+{% else %}
+    {{ 'To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one.'|trans }}
+{% endif %}

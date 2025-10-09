@@ -1,0 +1,122 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No crons found.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_lastStartedAt %}
+    {{ value|date_time_ago }}
+{% endblock %}
+
+{% block grid_value_cell_id_lastFinishedAt %}
+    {{ value|date_time_ago }}
+{% endblock %}
+
+{% block grid_value_cell_id_status %}
+    <strong class="text-nowrap align-items-center">
+        {% if row.enabled == false %}
+            <span class="text-secondary">
+                {{ ux_icon('circle-remove', {class: 'icon icon-sm'}) }}
+                {{ 'Disabled'|trans }}
+            </span>
+        {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
+            <span class="text-info">
+                {{ ux_icon('gear', {class: 'icon icon-sm'}) }}
+                {{ 'Running'|trans }}
+            </span>
+        {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
+            <span class="text-danger">
+                {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
+                {{ 'Error'|trans }}</span>
+        {% else %}
+            <span class="text-success">
+                {{ ux_icon('checked', {class: 'icon icon-sm'}) }}
+                {{ 'Ok'|trans }}
+            </span>
+        {% endif %}
+    </strong>
+{% endblock %}
+
+{% block grid_value_cell_id_actions %}
+    {% if row.scheduled == false and row.enabled != false %}
+        <a href="{{ url(
+            'admin_default_schedulecron', {
+                serviceId: row.id,
+            }
+        ) }}" class="text-reset me-2" title="{{ 'Schedule'|trans }}">{{ ux_icon('schedule') }}</a>
+    {% endif %}
+
+    {% if row.enabled == false %}
+        <a href="{{ url(
+            'admin_default_cronenable', {
+                serviceId: row.id
+            }
+        ) }}" class="text-danger" title="{{ 'Enable'|trans }}">{{ ux_icon('power') }}</a>
+    {% else %}
+        <a href="{{ url(
+            'admin_default_crondisable', {
+                serviceId: row.id
+            }
+        ) }}" class="text-success" title="{{ 'Disable'|trans }}">{{ ux_icon('power') }}</a>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url(
+        'admin_default_crondetail', {
+            serviceId: row.id
+        }
+    ) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_lastDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_minimalDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_maximalDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_averageDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span class="badge bg-danger me-1"></span>
+        <span class="text-danger">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+{% endblock %}

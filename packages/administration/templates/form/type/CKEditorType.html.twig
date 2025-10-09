@@ -1,0 +1,25 @@
+{% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' %}
+{% block base_ckeditor_widget %}
+    <div class="js-cke-preview" id="{{ id }}-preview">
+        <div class="card">
+            <div class="card-body overflow-hidden cursor-pointer" style="min-height: 92px; max-height: 200px;">
+                {{ value|raw }}
+            </div>
+            <div class="card-footer p-0">
+                <div class="btn btn-primary btn-sm w-100 js-cke-preview-edit">{{ 'Edit'|trans }}</div>
+            </div>
+        </div>
+    </div>
+
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+
+    {% if enable and not async %}
+        {{ block('_ckeditor_javascript') }}
+    {% endif %}
+{% endblock %}
+
+{% block ckeditor_widget %}
+    <div class="in-ckeditor">
+        {{ block('base_ckeditor_widget') }}
+    </div>
+{% endblock %}

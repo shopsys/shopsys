@@ -6,24 +6,28 @@ namespace Shopsys\FormTypesBundle;
 
 use Override;
 use Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface;
+use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class MultidomainType extends AbstractType
 {
     /**
      * @param \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface $domainIdsProvider
+     * @param \Shopsys\FrameworkBundle\Form\FormTypeLayout $formTypeLayout
      */
     public function __construct(
         private readonly DomainIdsProviderInterface $domainIdsProvider,
+        private readonly FormTypeLayout $formTypeLayout,
     ) {
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -41,6 +45,9 @@ final class MultidomainType extends AbstractType
                 $domainOptions = $entryOptions;
             }
 
+            $domainOptions['attr']['data-domain-id'] = $domainId;
+            $domainOptions['label'] = false;
+
             $builder->add((string)$domainId, $options['entry_type'], $domainOptions);
         }
     }
@@ -56,6 +63,20 @@ final class MultidomainType extends AbstractType
             'entry_type' => TextType::class,
             'entry_options' => [],
             'options_by_domain_id' => [],
+            'layout' => null,
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        if ($options['layout'] === null) {
+            $options['layout'] = $this->formTypeLayout->resolveLayoutType($options['entry_type']);
+        }
+
+        $view->vars['layout'] = $options['layout'];
     }
 }

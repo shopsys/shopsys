@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductGridFactory;
+use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,7 @@ class ProductPickerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductGridFactory $productGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Twig\ImageExtension $imageExtension
      */
     public function __construct(
         protected readonly AdministratorGridFacade $administratorGridFacade,
@@ -37,6 +39,7 @@ class ProductPickerController extends AdminBaseController
         protected readonly ProductFacade $productFacade,
         protected readonly ProductGridFactory $productGridFactory,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly ImageExtension $imageExtension,
     ) {
     }
 
@@ -133,7 +136,7 @@ class ProductPickerController extends AdminBaseController
             $request,
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/ProductPicker/list.html.twig', $viewParameters);
+        return $this->render('@ShopsysAdministration/content/productPicker/list.html.twig', $viewParameters);
     }
 
     /**
@@ -158,6 +161,25 @@ class ProductPickerController extends AdminBaseController
 
         return new JsonResponse([
             'basicPrice' => $basicPriceAmount,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/product-picker/product-image/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
+    #[RequireRole(SystemRole::ADMIN)]
+    public function productImageAction(Request $request): Response
+    {
+        $productId = (int)$request->get('productId');
+
+        $product = $this->productFacade->getById($productId);
+
+        $this->imageExtension->getImageHtml($product);
+
+        return new JsonResponse([
+            'imageHtml' => $this->imageExtension->getImageHtml($product),
         ]);
     }
 }

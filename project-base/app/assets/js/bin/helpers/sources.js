@@ -1,11 +1,11 @@
 const fs = require('node:fs');
 
-const getFrameworkNodeModulesDir = () => {
+const getPackageNodeModulesDir = packageName => {
     if (isMonorepo()) {
-        return '../../packages/framework/assets';
+        return `../../packages/${packageName}/assets`;
     }
 
-    return './node_modules/@shopsys/framework';
+    return `./node_modules/@shopsys/${packageName}`;
 };
 
 const isMonorepo = () => {
@@ -20,4 +20,4 @@ const getNodeModulesDir = () => {
     return './node_modules';
 };
 
-module.exports = { getFrameworkNodeModulesDir, getNodeModulesDir };
+module.exports = { getPackageNodeModulesDir, getNodeModulesDir };

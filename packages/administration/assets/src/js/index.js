@@ -1,0 +1,13 @@
+import './tabler-modules';
+import '@tabler/core';
+import './initComponents';
+import './colorPicker';
+import './ajaxPopover';
+import './dev/fixedBar';
+import './scrollMenuEntryToViewport';
+import './utils/copyToClipboard';
+import './utils/recommendedLength';
+import './utils/modalWindow';
+import './utils/confirmWindow';
+import './utils/passwordStrengthCalculator';
+import './passwordWithStrengthInput';

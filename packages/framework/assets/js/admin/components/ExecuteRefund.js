@@ -7,7 +7,7 @@ class ExecuteRefund {
         });
 
         $container.filterAllNodes('.js-refunded-amount-edit').on('click', _event => {
-            $container.filterAllNodes('.js-refunded-amount').toggleClass('hide');
+            $container.filterAllNodes('.js-refunded-amount').toggleClass('d-none');
         });
     }
 }

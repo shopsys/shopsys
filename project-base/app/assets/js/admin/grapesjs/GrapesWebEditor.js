@@ -1,4 +1,4 @@
-import 'magnific-popup';
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 import ckeditorPlugin from 'grapesjs-plugin-ckeditor';
@@ -122,20 +122,17 @@ export default class GrapesWebEditor {
             assetManager: {
                 custom: {
                     open(props) {
-                        $.magnificPopup.open({
-                            items: { src: elfinderUrl },
-                            type: 'iframe',
-                            closeOnBgClick: true,
-                            callbacks: {
-                                close: () => {
-                                    props.close();
-                                },
-                            },
+                        const iframeContent = `<iframe src="${elfinderUrl}" style="width: 100%; height: 800px; border: none;"></iframe>`;
+
+                        // eslint-disable-next-line no-new
+                        const modalInstance = new ModalWindow({
+                            content: iframeContent,
+                            size: 'xl',
                         });
 
                         window.document.fileManagerInsertImageCallback = (_selector, url) => {
                             props.options.target.set('src', url);
-                            $.magnificPopup.close();
+                            modalInstance.element.modal('hide');
                             props.close();
                         };
                     },

@@ -1,16 +1,10 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
-import Window from '../../admin/utils/Window';
-import { createLoaderOverlay, removeLoaderOverlay, showLoaderOverlay } from './loaderOverlay';
 
 export default class Ajax {
     static ajax(options) {
-        const loaderOverlayTimeout = setTimeout(() => {
-            showLoaderOverlay($loaderOverlay);
-        }, options.overlayDelay);
-
         const defaults = {
             loaderElement: undefined,
-            loaderMessage: undefined,
             overlayDelay: 200,
             error: Ajax.showDefaultError,
             complete: () => {},
@@ -18,13 +12,13 @@ export default class Ajax {
 
         options = $.extend(defaults, options);
         const userCompleteCallback = options.complete;
-        const $loaderOverlay = createLoaderOverlay(options.loaderElement, options.loaderMessage);
+
+        Ajax.setLoadingState(options.loaderElement);
         const userErrorCallback = options.error;
 
         options.complete = function (jqXHR, textStatus) {
             userCompleteCallback.apply(this, [jqXHR, textStatus]);
-            clearTimeout(loaderOverlayTimeout);
-            removeLoaderOverlay($loaderOverlay);
+            Ajax.unsetLoadingState(options.loaderElement);
         };
 
         options.error = function (jqXHR) {
@@ -44,7 +38,7 @@ export default class Ajax {
         }
 
         // eslint-disable-next-line no-new
-        new Window({
+        new ModalWindow({
             content: content,
         });
     }
@@ -89,6 +83,26 @@ export default class Ajax {
         if (callImmediately) {
             Ajax.ajaxPendingCalls[pendingCallName].isPending = false;
             Ajax.ajax(options);
+        }
+    }
+
+    static setLoadingState(loaderElement) {
+        if (!(loaderElement instanceof jQuery) || !loaderElement) {
+            return;
+        }
+
+        if (loaderElement.hasClass('btn')) {
+            loaderElement?.addClass('btn-loading');
+        }
+    }
+
+    static unsetLoadingState(loaderElement) {
+        if (!loaderElement) {
+            return;
+        }
+
+        if (loaderElement.hasClass('btn')) {
+            loaderElement?.removeClass('btn-loading');
         }
     }
 }

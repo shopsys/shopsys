@@ -434,10 +434,10 @@ final class OrderFormType extends AbstractType
                 $builderShippingAddressGroup
                     ->create('deliveryAddressFields', FormType::class, [
                         'inherit_data' => true,
+                        'label' => false,
                         'attr' => [
-                            'class' => 'form-line__js js-delivery-address-fields',
+                            'class' => 'js-delivery-address-fields',
                         ],
-                        'render_form_row' => false,
                     ])
                     ->add('deliveryFirstName', TextType::class, [
                         'label' => t('First name'),

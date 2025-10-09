@@ -1,0 +1,27 @@
+{% set defaultAttr = { title: domainName } %}
+{% set attr = (attr is defined ? defaultAttr|merge(attr) : defaultAttr) %}
+
+<div class="d-inline-block px-1" style="width: 3em">
+    {% if iconSrc is same as(null) %}
+        {% set colors = ['lime', 'blue', 'teal', 'red', 'cyan', 'yellow', 'pink', 'green', 'indigo', 'purple', 'orange', 'azure'] %}
+        {% set index = (domainId-1) % colors|length %}
+        {% set classAttr = 'w-100 badge badge-pill bg-' ~ colors[index] ~ '-lt' %}
+        {% set attr = attr|merge({ class: classAttr ~ ' ' ~ attr.class|default('') }) %}
+
+        <span{{ _self.attributes(attr) }}>{{ domainId }}</span>
+    {% else %}
+        <img width="46" height="26" src="{{ iconSrc }}" alt="{{ domainId }}"{{ _self.attributes(attr) }}>
+    {% endif %}
+</div>
+
+
+{% macro attributes(attr) %}
+    {% for attrname, attrvalue in attr %}
+        {{ " " }}
+        {% if attrvalue is same as(true) %}
+            {{ attrname }}="{{ attrname }}"
+        {% elseif attrvalue is not same as(false) %}
+            {{ attrname }}="{{ attrvalue }}"
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

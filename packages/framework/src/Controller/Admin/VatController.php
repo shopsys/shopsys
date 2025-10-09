@@ -48,7 +48,7 @@ class VatController extends AdminBaseController
     {
         $grid = $this->vatInlineEdit->getGrid();
 
-        return $this->render('@ShopsysFramework/Admin/Content/Vat/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/vat/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -162,7 +162,7 @@ class VatController extends AdminBaseController
             return $this->redirectToRoute('admin_vat_list');
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Vat/vatSettings.html.twig', [
+        return $this->render('@ShopsysAdministration/content/vat/vatSettings.html.twig', [
             'form' => $form->createView(),
         ]);
     }

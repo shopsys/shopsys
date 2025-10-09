@@ -1,0 +1,10 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Extended SEO category %categoryName% - filters'|trans({'%categoryName%': category.name(locale)}) }}{% endblock %}
+
+{% block pre_title %}{{ 'Extended SEO category'|trans }}{% endblock %}
+{% block h1 %}{{ '%categoryName% - Filters'|trans({'%categoryName%': category.name(locale)}) }}{% endblock %}
+
+{% block main_content %}
+    {{ form(form) }}
+{% endblock %}

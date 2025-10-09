@@ -69,7 +69,7 @@ class BlogArticleController extends AdminBaseController
 
         $grid = $this->blogArticleGridFactory->create($queryBuilder);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Blog/Article/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/blog/article/list.html.twig', [
             'quickSearchForm' => $quickSearchForm->createView(),
             'gridView' => $grid->createView(),
             'domainFilterNamespace' => $domainFilterNamespace,
@@ -115,7 +115,7 @@ class BlogArticleController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing blog article - %name%', ['%name%' => $blogArticle->getName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Blog/Article/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/blog/article/edit.html.twig', [
             'form' => $form->createView(),
             'blogArticle' => $blogArticle,
         ]);
@@ -155,7 +155,7 @@ class BlogArticleController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Blog/Article/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/blog/article/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

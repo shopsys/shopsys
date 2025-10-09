@@ -11,39 +11,6 @@ We use two types of naming for form types:
 
 Every form type has some default options that can be used for various things.
 
-### macro
-
-Defaults to `null`.  
-This option is used as array with two options (`name`, `recommended_length`) and its currently used for working with SEO:
-
-- `name` - this option has two values that can be used
-    - `seoFormRowMacros` - this value shows single domain `TextType` field with information about current length and recommended length
-    - `seoFormRowMacros.multidomainRow` - this value shows multidomain `TextType` field with information about current length and recommended length
-- `recommended_length` - it's an integer value that is used to show recommended maximal length of a text
-
-### icon_title
-
-Defaults to `null`.  
-This option is used to add information icon after form field that shows tooltip with message after hovering.
-To show message you need to fill this option with string that you want to show in the tooltip.
-
-### display_format
-
-Defaults to `null`.  
-You can use this option if you want to have no padding in your rendered form_row.
-To achieve this you need to fill this option with constant `FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING`
-
-### js_container
-
-Defaults to `null`.  
-This option is used as array with two options (`container_class`, `data_type`) and can be used to wrap your form_row in `<div class="{{ js_container.container_class }}" data-type="{{ js_container.data_type }}">`
-
-### render_form_row
-
-Defaults to `true`.  
-If you want to add your FormType and don't render its `form_label` and `form_errors` you can set this option to false.
-This can be set to create FormTypes that can be used in other FormTypes like the ones that are listed below.
-
 ## Form types
 
 We created some form types which can help you with creating your own form types.
@@ -73,10 +40,6 @@ there is `DisplayOnlyType` which does not map property onto `entity` and let you
 ### [DisplayOnlyUrlType]({{github.link}}/packages/framework/src/Form/DisplayOnlyUrlType.php)
 
 Displays custom URL based on routing system.
-
-### [LocalizedFullWidthType]({{github.link}}/packages/framework/src/Form/LocalizedFullWidthType.php)
-
-Displays localized field in vertical order of full-width label and inputs.
 
 ### [OrderItemsType]({{github.link}}/packages/framework/src/Form/OrderItemsType.php)
 
@@ -484,3 +447,47 @@ $builder->add($actionBar);
 !!! note
 
     For information about `position` option see [FormExtension](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
+
+## Form Input Symbols
+
+The administration form theme provides a convenient way to add symbols or text before or after form input fields using Bootstrap input groups.
+This feature works with any form widget that extends the `form_widget_simple` block.
+
+### Available Symbol Options
+
+| Option                 | Description                                | HTML Escaping                 |
+| ---------------------- | ------------------------------------------ | ----------------------------- |
+| `symbolAfterInput`     | Adds text or symbol after the input field  | Escaped (safe for plain text) |
+| `symbolBeforeInput`    | Adds text or symbol before the input field | Escaped (safe for plain text) |
+| `rawSymbolAfterInput`  | Adds HTML content after the input field    | Unescaped (allows HTML)       |
+| `rawSymbolBeforeInput` | Adds HTML content before the input field   | Unescaped (allows HTML)       |
+
+### Usage Examples
+
+#### Currency Symbols
+
+```twig
+{{ form_widget(form.price, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+```
+
+#### Unit Symbols
+
+```twig
+{{ form_widget(form.vatPercent, { symbolAfterInput: '%' }) }}
+{{ form_widget(form.weight, { symbolAfterInput: 'g'|trans }) }}
+```
+
+#### HTML Icons (using raw variants)
+
+```twig
+{{ form_widget(form.field, { rawSymbolAfterInput: info_icon('Help text') }) }}
+```
+
+#### Multiple Symbols
+
+```twig
+{{ form_widget(form.priceRange, {
+    symbolBeforeInput: '$',
+    symbolAfterInput: 'USD'
+}) }}
+```

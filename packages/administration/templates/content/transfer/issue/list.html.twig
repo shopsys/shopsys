@@ -1,0 +1,24 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Transfer issues overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Transfer issues'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_default_dashboard') }}" class="btn">
+        {{ 'Back to dashboard'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        title: 'Search in transfers'|trans,
+        form_input: form.transfer,
+        form_submit: form.submit,
+    } %}
+    {{ form_end(form) }}
+
+    {{ gridView.render() }}
+{% endblock %}

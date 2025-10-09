@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -77,20 +76,20 @@ final class CategoryFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'category_form_settings_name_' . $domainConfig->getLocale(),
+                    'data-js-recommended-length' => 60,
                 ],
             ];
             $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
+                    'data-js-recommended-length' => 155,
                 ],
             ];
             $seoH1OptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'category_form_settings_name_' . $domainConfig->getLocale(),
                 ],
             ];
         }
@@ -155,17 +154,14 @@ final class CategoryFormType extends AbstractType
                 'expanded' => true,
                 'choices' => $this->categoryAutomatedFilterFacade->getAllValuesIndexedByLabel(),
                 'choice_attr' => function ($choice, $key, $value) use ($categoryAutomatedFiltersNotesIndexedByValue) {
-                    $iconTitle = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
+                    $help = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
 
-                    if ($iconTitle === null) {
+                    if ($help === null) {
                         return [];
                     }
 
                     return [
-                        'icon' => true,
-                        'iconTitle' => $iconTitle,
-                        'iconPlacement' => 'right',
-                        'iconClass' => 'margin-left-10',
+                        'data-help' => $help,
                     ];
                 },
             ]);
@@ -179,20 +175,12 @@ final class CategoryFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
-                ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
-                ],
                 'label' => t('Meta description'),
             ])
             ->add('seoH1s', MultidomainType::class, [
@@ -205,10 +193,6 @@ final class CategoryFormType extends AbstractType
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
                 'label' => t('Heading (H1)'),
             ]);
 
@@ -216,7 +200,7 @@ final class CategoryFormType extends AbstractType
             $builderSeoGroup
                 ->add('urls', UrlListType::class, [
                     'route_name' => 'front_product_list',
-                    'entity_id' => $options['category'] !== null ? $options['category']->getId() : null,
+                    'entity_id' => $options['category']?->getId(),
                     'label' => t('URL addresses'),
                 ]);
         }
@@ -229,7 +213,6 @@ final class CategoryFormType extends AbstractType
             ->add('descriptions', MultidomainType::class, [
                 'entry_type' => CKEditorType::class,
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
@@ -308,7 +291,7 @@ final class CategoryFormType extends AbstractType
         if ($category === null) {
             return;
         }
-        $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
+        $parametersFilterBuilder = $builder->create('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
 
         $parameterNamesById = [];
 
@@ -334,5 +317,7 @@ final class CategoryFormType extends AbstractType
             'choice_value' => 'id',
             'multiple' => true,
         ]);
+
+        $builder->add($parametersFilterBuilder);
     }
 }

@@ -164,8 +164,10 @@ final class StoreFormType extends AbstractType
             ])
             ->add('openingHours', CollectionType::class, [
                 'label' => t('Opening hours'),
+                'help' => t('Enter in the store local time'),
                 'entry_type' => OpeningHoursRangeCollectionFormType::class,
                 'required' => false,
+                'error_bubbling' => false,
             ])
             ->add('description', CKEditorType::class, [
                 'required' => false,

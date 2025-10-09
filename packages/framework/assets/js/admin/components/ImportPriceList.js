@@ -7,14 +7,14 @@ export default class ImportPriceList {
         $selectListField.on('change', event => this.onSelectPriceList(event));
 
         if ($selectListField.val() !== '') {
-            const $domainIdField = $('.js-import-price-list-domain-id').parents('.form-line');
+            const $domainIdField = $('[data-js-import-price-list-domain-id]');
             $domainIdField.hide();
         }
     }
 
     onSelectPriceList(event) {
         const priceListId = event.target.value;
-        const $domainIdField = $('.js-import-price-list-domain-id').parents('.form-line');
+        const $domainIdField = $('[data-js-import-price-list-domain-id]');
 
         if (priceListId === '') {
             $domainIdField.show();

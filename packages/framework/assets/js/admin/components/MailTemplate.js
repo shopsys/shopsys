@@ -1,45 +1,79 @@
+import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import Window from '../utils/Window';
 import FormChangeInfo from './FormChangeInfo';
 
 export default class MailTemplate {
     constructor($container) {
-        $container.filterAllNodes('.js-send-mail-checkbox').on('change.requiredFields', this.toggleRequiredFields);
+        this.$sendMailCheckbox = $container.filterAllNodes('.js-send-mail-checkbox');
+        this.$sendMailCheckbox.on('change.requiredFields', this.toggleRequiredFields);
+        this.$sendMailCheckbox.trigger('change.requiredFields');
+
         $container.filterAllNodes('.js-mail-template-open-send-window').on('click', this.openSendWindow);
-        $container
-            .filterAllNodes('#mail_template_send_form_save')
-            .closest('form')
-            .submit(function () {
-                MailTemplate.submitSendForm($(this));
-                return false;
-            });
     }
 
     toggleRequiredFields(event) {
-        const sendMail = $(event.target).is(':checked');
-        $(event.target).closest('.js-mail-template').find('.js-form-compulsory').toggle(sendMail);
+        const isSendMail = $(event.target).is(':checked');
+        const $conditionalFields = $(event.target).closest('.js-mail-template').find('.js-conditional-field');
+
+        $conditionalFields.toggleClass('required', isSendMail);
     }
 
     openSendWindow(event) {
-        const $button = $(event.target);
+        event.preventDefault();
+        event.stopPropagation();
+
+        const $button = $(event.currentTarget);
+
+        // Prevent multiple clicks while loading
+        if ($button.data('loading')) {
+            return false;
+        }
+
         if (FormChangeInfo.isInfoShown) {
             // eslint-disable-next-line no-new
-            new Window({
+            new ModalWindow({
                 content: Translator.trans('You have unsaved changes, save them first, please.'),
             });
         } else {
+            $button.data('loading', true);
+
             Ajax.ajax({
                 loaderElement: $button,
                 url: $button.data('url'),
                 type: 'GET',
                 success: data => {
-                    // eslint-disable-next-line no-new
-                    new Window({
-                        content: data,
-                        wide: true,
-                    });
+                    // Check if a modal is already open and close it
+                    $('.modal.show').modal('hide');
+
+                    // Wait for any existing modal to fully close before opening new one
+                    setTimeout(() => {
+                        const modalInstance = new ModalWindow({
+                            content: data,
+                            size: 'lg',
+                        });
+
+                        // Bind form submission handler after modal is shown
+                        modalInstance.element.one('shown.bs.modal', function () {
+                            const $form = $(this).find('form');
+                            if ($form.length > 0) {
+                                $form.on('submit', function (e) {
+                                    e.preventDefault();
+                                    MailTemplate.submitSendForm($(this));
+                                    return false;
+                                });
+                            }
+                        });
+
+                        // Reset loading state when modal is hidden
+                        modalInstance.element.one('hidden.bs.modal', () => {
+                            $button.data('loading', false);
+                        });
+                    }, 200);
+                },
+                error: () => {
+                    $button.data('loading', false);
                 },
             });
         }
@@ -50,21 +84,24 @@ export default class MailTemplate {
     static submitSendForm($form) {
         const $errorsContainer = $('.js-mail-template-send-errors');
         $errorsContainer.hide();
+
+        const $submitButton = $form.find('button[type=submit]');
+
         Ajax.ajax({
             url: $form.attr('action'),
             data: $form.serialize(),
             type: $form.attr('method'),
             dataType: 'json',
-            loaderElement: $form,
+            loaderElement: $submitButton,
             success: data => {
                 if (data.result === 'valid') {
                     document.location.reload();
                 } else if (data.result === 'invalid') {
                     const $errorsList = $errorsContainer.show().find('ul');
                     $errorsList.find('li').remove();
-                    for (const i in data.errors) {
-                        $errorsList.append(`<li>${data.errors[i]}</li>`);
-                    }
+                    data.errors.forEach(error => {
+                        $errorsList.append(`<li>${error}</li>`);
+                    });
                 }
             },
         });

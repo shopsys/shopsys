@@ -1,0 +1,17 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Parameters overview'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Parameters'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_parameter_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new parameter'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}

@@ -125,7 +125,7 @@ class CustomerController extends AdminBaseController
 
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/edit.html.twig', [
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
@@ -180,7 +180,7 @@ class CustomerController extends AdminBaseController
 
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/User/edit.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/user/edit.html.twig', [
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
@@ -227,18 +227,17 @@ class CustomerController extends AdminBaseController
         $grid->addColumn('last_order_at', 'lastOrderAt', t('Last order'), true)
             ->setClassAttribute('text-right');
 
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_customer_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_customer_delete', ['id' => 'id'])
             ->setConfirmMessage(t('Do you really want to remove this customer?'));
         $grid->addActionColumn(ActionColumn::TYPE_RESET_PASSWORD, t('Send reset password'), 'admin_customer_send_reset_password', ['id' => 'cu.id'])
             ->setConfirmMessage(t('This will send an email to customer user for resetting password. Do you really want to send it ?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Customer/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/customer/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/list.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
@@ -281,7 +280,7 @@ class CustomerController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -332,7 +331,7 @@ class CustomerController extends AdminBaseController
             t('Add new customer user to %companyName%', ['%companyName%' => $billingAddress->getCompanyName()]),
         );
 
-        return $this->render('@ShopsysFramework/Admin/Content/Customer/User/new.html.twig', [
+        return $this->render('@ShopsysAdministration/content/customer/user/new.html.twig', [
             'form' => $form->createView(),
             'billingAddress' => $billingAddress,
         ]);

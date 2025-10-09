@@ -40,9 +40,6 @@ final class LanguageConstantFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(),
                 ],
-                'attr' => [
-                    'class' => 'form-full__field__input',
-                ],
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_languageconstant_list',

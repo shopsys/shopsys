@@ -1,0 +1,70 @@
+{% block order_list_row %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Last %limit% customer orders'|trans({'%limit%': limit}) }}</h3>
+            {% if orders|length > 0 %}
+                <div class="card-actions">
+                    <a href="{{ url('admin_order_list', {
+                        'as[0][subject]': 'customerId',
+                        'as[0][operator]': 'is',
+                        'as[0][value]': customer.id,
+                    }) }}" class="d-none d-md-flex btn btn-primary">
+                        {{ 'Show all customer orders'|trans }}
+                    </a>
+
+                    <a href="{{ url('admin_order_list', {
+                        'as[0][subject]': 'customerId',
+                        'as[0][operator]': 'is',
+                        'as[0][value]': customer.id,
+                    }) }}" class="d-md-none btn btn-icon btn-primary">
+                        {{  ux_icon('list-search') }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% if orders|length == 0 %}
+                <p class="text-secondary">{{ 'Customer has no orders so far.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Order number'|trans }}</th>
+                                <th>{{ 'Created on'|trans }}</th>
+                                <th>{{ 'Billing address'|trans }}</th>
+                                <th>{{ 'Delivery address'|trans }}</th>
+                                <th>{{ 'Total price including VAT'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url('admin_order_edit', { id: order.id }) }}" target="_blank">
+                                            {{ order.number }}{{ ux_icon('forward-page', { class: 'ms-1 icon icon-sm' }) }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ order.createdAt|formatDateTime }}
+                                    </td>
+                                    <td>
+                                        {{ order.street }}<br />
+                                        {{ order.city }}, {{ order.postcode }}
+                                    </td>
+                                    <td>
+                                        {{ order.deliveryStreet }}<br />
+                                        {{ order.deliveryCity }}, {{ order.deliveryPostcode }}
+                                    </td>
+                                    <td>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
+                                    <td>{{ order.status.name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+
+{% block grid_value_cell_id_productName %}
+    {% if value %}
+        {{ value }}
+    {% else %}
+        {{ row.productCatnum }}
+        {{ info_icon('The product has no specified name for the locale.'|trans) }}
+    {% endif %}
+    <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ ux_icon('forward-page') }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No watchdog found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'watchdogs'|trans %}
+    {{ parent() }}
+{% endblock %}

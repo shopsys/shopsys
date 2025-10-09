@@ -1,0 +1,45 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Order confirmation page'|trans }}{% endblock %}
+{% block h1 %}{{ 'Order confirmation page'|trans }}{% endblock %}
+
+{% block main_content %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ form(form) }}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Applicable variables'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    {{ _self.variable_row(VARIABLE_TRANSPORT_INSTRUCTIONS,'Shipping instructions'|trans) }}
+                    {{ _self.variable_row(VARIABLE_PAYMENT_INSTRUCTIONS, 'Payment instructions'|trans) }}
+                    {{ _self.variable_row(
+                        VARIABLE_ORDER_DETAIL_URL,
+                        'Order URL address'|trans,
+                        'It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol &lt;different&gt; and insert the text "%orderDetailUrlConstant%" in the URL field (Including the braces)'|trans({'%orderDetailUrlConstant%' : VARIABLE_ORDER_DETAIL_URL})
+                    ) }}
+                    {{ _self.variable_row(VARIABLE_NUMBER, 'Order number'|trans) }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% macro variable_row(variable, description, info_text) %}
+    <tr>
+        <td class="w-1">
+            <code><strong>{{ variable }}</strong></code>
+        </td>
+        <td>
+            {{ description }}
+            {% if info_text %}
+                {{ info_icon(info_text) }}
+            {% endif %}
+        </td>
+    </tr>
+{% endmacro %}

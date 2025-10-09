@@ -47,11 +47,10 @@ class PricingGroupGridFactory implements GridFactoryInterface
         $grid = $this->gridFactory->create('pricingGroupList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'pg.name', t('Name'), true);
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_pricinggroup_deleteconfirm', ['id' => 'pg.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Pricing/Groups/listGrid.html.twig');
+        $grid->setTheme('@ShopsysAdministration/content/pricing/groups/listGrid.html.twig');
 
         return $grid;
     }

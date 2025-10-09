@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
+use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
@@ -116,20 +116,12 @@ final class BlogArticleFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 60,
-                ],
                 'label' => t('Page title'),
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => 155,
-                ],
                 'label' => t('Meta description'),
             ])
             ->add('seoH1s', MultidomainType::class, [
@@ -140,10 +132,6 @@ final class BlogArticleFormType extends AbstractType
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'macro' => [
-                    'name' => 'seoFormRowMacros.multidomainRow',
-                    'recommended_length' => null,
-                ],
                 'label' => t('Heading (H1)'),
             ]);
 
@@ -198,14 +186,11 @@ final class BlogArticleFormType extends AbstractType
                 'entry_type' => BlogCategoriesType::class,
                 'options_by_domain_id' => $categoriesOptionsByDomainId,
                 'label' => t('Assign to category'),
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ])
             ->add('hidden', YesNoType::class, [
-                'required' => false,
                 'label' => t('Hide'),
             ])
             ->add('visibleOnHomepage', YesNoType::class, [
-                'required' => true,
                 'label' => t('Visible on homepage'),
             ])
             ->add('publishDate', DatePickerType::class, [
@@ -232,13 +217,13 @@ final class BlogArticleFormType extends AbstractType
 
         $builderDescriptionGroup
             ->add('descriptions', LocalizedType::class, [
+                'layout' => FormTypeLayout::LAYOUT_BLOCK,
                 'entry_type' => GrapesJsType::class,
                 'entry_options' => [
                     'allow_products' => true,
                 ],
                 'label' => t('Description'),
                 'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
             ]);
 
         return $builderDescriptionGroup;
@@ -315,20 +300,20 @@ final class BlogArticleFormType extends AbstractType
             $seoTitlesOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getArticleNameForPlaceholder($domainConfig, $blogArticle),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_article_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_article_form_settings_names_' . $domainConfig->getLocale(),
+                    'data-js-recommended-length' => 60,
                 ],
             ];
             $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
+                    'data-js-recommended-length' => 155,
                 ],
             ];
             $seoH1OptionsByDomainId[$domainId] = [
                 'attr' => [
                     'placeholder' => $this->getArticleNameForPlaceholder($domainConfig, $blogArticle),
-                    'class' => 'js-dynamic-placeholder',
-                    'data-placeholder-source-input-id' => 'blog_article_form_name_' . $domainConfig->getLocale(),
+                    'data-js-placeholder-source-input-id' => 'blog_article_form_settings_names_' . $domainConfig->getLocale(),
                 ],
             ];
         }

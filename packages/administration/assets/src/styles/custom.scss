@@ -1,0 +1,17 @@
+// adjust action bar appearance
+@include media-breakpoint-up(lg) {
+    .action-bar-bottom {
+        margin-left: 15rem;
+    }
+}
+
+// force display of ribbon on main image (first image in list)
+.js-file-upload .js-file-upload-file:first-of-type .main-image-ribbon {
+    display: flex !important;
+}
+
+.file-upload-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 17.5rem);
+    column-gap: 1rem;
+}

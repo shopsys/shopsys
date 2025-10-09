@@ -1,0 +1,40 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+{% import _self as self %}
+
+{% block title %}- {{ 'Bestsellers'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Bestsellers'|trans }}{% endblock %}
+
+{% block main_content %}
+    {% import _self as self %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    <div class="card">
+        <div class="card-body">
+            {{ self.categoryTreeItem(categoriesWithPreloadedChildren, selectedDomainId, bestsellingProductsInCategories) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro categoryTreeItem(categoriesWithPreloadedChildren, selectedDomainId, bestsellingProductsInCategories) %}
+    {% import _self as self %}
+    <ul class="list-group list-group-flush">
+        {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
+            <li class="list-group-item py-1">
+                {{ ux_icon('radius-bottom-left', { class: 'text-secondary' }) }}
+                <a href="{{ url('admin_bestsellingproduct_detail', {categoryId: categoryWithPreloadedChildren.category.id, domainId: selectedDomainId}) }}">
+                    {{ categoryWithPreloadedChildren.category.name }}
+                </a>
+
+                {% set count_color = bestsellingProductsInCategories[categoryWithPreloadedChildren.category.id] ? 'azure' %}
+                <span class="badge bg-{{ count_color }} text-{{ count_color }}-fg ms-2">
+                    {{ bestsellingProductsInCategories[categoryWithPreloadedChildren.category.id] }}
+                </span>
+
+                {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, selectedDomainId, bestsellingProductsInCategories) }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

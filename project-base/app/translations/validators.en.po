@@ -7,9 +7,6 @@ msgstr ""
 msgid "Image can be only in JPG or PNG format"
 msgstr ""
 
-msgid "Please choose image"
-msgstr ""
-
 msgid "Please enter GTM ID"
 msgstr ""
 
