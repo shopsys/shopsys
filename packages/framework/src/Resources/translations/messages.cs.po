@@ -94,9 +94,6 @@ msgstr "Příslušenství"
 msgid "Accessories in purchase confirmation box"
 msgstr "Příslušenství v mezikošíku"
 
-msgid "Account"
-msgstr "Účet"
-
 msgid "Account number"
 msgstr "Číslo účtu"
 
@@ -293,7 +290,7 @@ msgid "Available payment methods"
 msgstr "Dostupné platby"
 
 msgid "Available placeholders"
-msgstr ""
+msgstr "Dostupné proměnné"
 
 msgid "Available shipping methods"
 msgstr "Dostupné dopravy"
@@ -303,6 +300,9 @@ msgstr "Průměrné trvání všech cronů za posledních sedm dní"
 
 msgid "Avg duration"
 msgstr "Prům. trvání"
+
+msgid "BIC/Swift"
+msgstr ""
 
 msgid "Back to category selection"
 msgstr "Zpět na volbu kategorie"
@@ -329,7 +329,7 @@ msgid "Bank payment confirmed by statement"
 msgstr "Bankovní platba potvrzena výpisem"
 
 msgid "Bank transfer"
-msgstr ""
+msgstr "Bankovní převod"
 
 msgid "Bank transfer not completed"
 msgstr "Bankovní platba nebyla potvrzena"
@@ -1678,6 +1678,9 @@ msgstr "Hreflang tagy pomáhají vyhledávačům porozumět jazyku a regionáln�
 msgid "I buy on company behalf"
 msgstr "Nakupuji na firmu"
 
+msgid "IBAN"
+msgstr ""
+
 msgid "ID"
 msgstr "ID"
 
@@ -2311,6 +2314,9 @@ msgstr "Obsah stránky při platbě čekající na potvrzení"
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 
+msgid "Payment instructions for bank transfer and QR payment"
+msgstr "Platební instrukce pro bankovní převod a QR platbu"
+
 msgid "Payment is being processed in the Bitcoin network"
 msgstr "Platba byla přijata - Platba bude připsána po zpracování v síti Bitcoin"
 
@@ -2577,6 +2583,9 @@ msgstr "Promované kategorie"
 
 msgid "Promoted products"
 msgstr "Promované produkty"
+
+msgid "QR code"
+msgstr "QR kód"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -3286,6 +3295,9 @@ msgstr "Platnost do"
 msgid "Valid until"
 msgstr "Platnost do"
 
+msgid "Variable symbol"
+msgstr "Variabilní symbol"
+
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr "Varianta <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> byla úspěšně vytvořena."
 
@@ -3510,3 +3522,4 @@ msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vy
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
+
