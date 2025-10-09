@@ -231,7 +231,8 @@
     "conflict": {
         "symfony/symfony": "*",
         "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0",
-        "doctrine/doctrine-migrations-bundle": "3.4.0"
+        "doctrine/doctrine-migrations-bundle": "3.4.0",
+        "doctrine/doctrine-bundle": ">=2.17.0"
     },
     "scripts": {
         "post-install-cmd": [
