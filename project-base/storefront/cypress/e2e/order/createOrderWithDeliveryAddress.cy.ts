@@ -10,6 +10,9 @@ import {
     checkOrderConfirmationStatusText,
     checkOrderDetailFromOrderPage,
     checkOrderDetailFromOrderPageWithComplaintButton,
+    selectDeliveryAddressCard,
+    clickAddNewAddressButton,
+    fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
 import { deliveryAddress, deliveryAddress2, order, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
@@ -98,12 +101,9 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Logged Preserve Form On Refresh] should keep filled delivery address for logged-in user after page refresh', function () {
+    it('[Logged Popup Add Address] should add delivery address via popup for logged-in user and take snapshot after saving', function () {
         cy.registerAsNewUser(
-            generateCustomerRegistrationData(
-                'commonCustomer',
-                'keep-filled-delivery-address-after-page-refresh-logged-in@shopsys.com',
-            ),
+            generateCustomerRegistrationData('commonCustomer', 'delivery-address-popup-snapshots@shopsys.com'),
         );
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
@@ -112,13 +112,9 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
-
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-        cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
+        clickAddNewAddressButton();
+        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information with new delivery address', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
@@ -129,46 +125,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name);
-    });
-
-    it('[Logged Preserve Form On Checkbox Change] should keep filled delivery address for logged-in user after unchecking the checkbox for different delivery address and then checking it again', function () {
-        cy.registerAsNewUser(
-            generateCustomerRegistrationData(
-                'commonCustomer',
-                'keep-filled-delivery-address-logged-in-after-unchecking-and-checking@shopsys.com',
-            ),
-        );
-        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
-
-        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
-
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-        loseFocus();
-        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        loseFocus();
-        cy.wait(500);
-        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after checking again', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
-
-        clickOnSendOrderButton();
-        cy.waitForStableAndInteractiveDOM();
-        changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.czechPost);
-
-        clickOnOrderDetailButtonOnThankYouPage();
-        changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name);
+        checkOrderDetailFromOrderPageWithComplaintButton(transport.czechPost.name, payment.onDelivery.name);
     });
 
     it('[Logged Default Fill New] should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', function () {
@@ -183,9 +140,8 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
-        loseFocus();
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
+        clickAddNewAddressButton();
+        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'changed contact information after refresh', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
@@ -213,16 +169,15 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
-        loseFocus();
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
+        clickAddNewAddressButton();
+        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress2);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with changed delivery address', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnLabel('contact-information-formdeliveryAddressUuid0');
+        selectDeliveryAddressCard(0);
         loseFocus();
-        clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
+        selectDeliveryAddressCard(1);
         loseFocus();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),

@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
+import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -30,6 +31,7 @@ export const AddAddressAction: FC = () => {
             aria-haspopup="dialog"
             className="self-start"
             size="small"
+            tid={TIDs.blocks_addresslist_add_address_button}
             variant="secondary"
             onClick={openAddDeliveryAddressPopup}
         >
