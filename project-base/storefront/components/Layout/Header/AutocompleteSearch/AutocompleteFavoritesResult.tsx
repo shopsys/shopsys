@@ -42,7 +42,7 @@ export const AutocompleteFavoritesResult: FC<AutocompleteFavoritesResultProps> =
                             size: 'small',
                             textSize: 'xs',
                             textSizePrice: 'base',
-                            visibleItemsConfig: { price: true },
+                            visibleItemsConfig: { price: true, priceFromWord: true },
                             onClick: () => {
                                 onClosePopupCallback();
                             },

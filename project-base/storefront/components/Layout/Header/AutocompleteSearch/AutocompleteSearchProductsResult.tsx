@@ -60,7 +60,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
                     size: 'small',
                     textSize: 'xs',
                     textSizePrice: 'base',
-                    visibleItemsConfig: { price: true },
+                    visibleItemsConfig: { price: true, priceFromWord: true },
                     onClick: (product) => {
                         onProductDetailRedirectHandler(product);
                         onClosePopupCallback();
