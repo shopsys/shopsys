@@ -101,6 +101,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
             new Role(AdminRoleConstant::ROLE_UNIT, t('Measurement units'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_CATEGORY, t('Categories'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_TOP_CATEGORY, t('Top categories'), [Permission::VIEW, Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_AUTOCOMPLETE, t('Autocomplete favorites'), [Permission::VIEW, Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_BRAND, t('Brands'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_STOCK, t('Warehouses'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_PRICE_LIST, t('Price lists'), [Permission::FULL]),

@@ -12,6 +12,7 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\Exception\RootCategoryNotFoundException;
@@ -423,7 +424,12 @@ class CategoryRepository extends NestedTreeRepository
         $queryBuilder->andWhere(
             'NORMALIZED(ct.name) LIKE NORMALIZED(:searchText)',
         );
-        $queryBuilder->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
+
+        if (mb_strlen($searchText) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
+            $queryBuilder->setParameter('searchText', $searchText . '%');
+        } else {
+            $queryBuilder->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
+        }
     }
 
     /**

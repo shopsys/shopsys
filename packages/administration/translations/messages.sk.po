@@ -169,6 +169,9 @@ msgstr "Prehľad článkov"
 msgid "Authentication code"
 msgstr "Overovací kód"
 
+msgid "Autocomplete favorites"
+msgstr "Obľúbené položky v našepkávači"
+
 msgid "Awesome"
 msgstr "Úžasné"
 

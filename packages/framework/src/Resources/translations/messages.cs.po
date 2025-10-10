@@ -280,6 +280,12 @@ msgstr "Atribut %attribute% byl změněn %changes%"
 msgid "Authentication code"
 msgstr "Ověřovací kód"
 
+msgid "Autocomplete favorites"
+msgstr "Oblíbené položky v našeptávači"
+
+msgid "Autocomplete favorites successfully saved for the selected domain."
+msgstr "Oblíbené položky v našeptávači byly uloženy pro vybranou doménu"
+
 msgid "Automated filters"
 msgstr "Automatické filtry"
 
@@ -1443,6 +1449,15 @@ msgstr "Externí ID můstku"
 
 msgid "Facebook URL"
 msgstr "Facebook URL"
+
+msgid "Favorite Brands"
+msgstr "Oblíbené značky"
+
+msgid "Favorite Categories"
+msgstr "Oblíbené kategorie"
+
+msgid "Favorite Products"
+msgstr "Oblíbené produkty"
 
 msgid "Feed"
 msgstr "Feed"
@@ -2730,6 +2745,9 @@ msgstr "Uložit nastavení skladu"
 
 msgid "Schedule"
 msgstr "Naplánovat"
+
+msgid "Search and select products..."
+msgstr "Vyhledat a najít produkty..."
 
 msgid "Second column categories"
 msgstr "Kategorie druhého sloupce"

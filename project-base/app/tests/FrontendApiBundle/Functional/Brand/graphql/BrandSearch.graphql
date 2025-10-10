@@ -1,0 +1,5 @@
+query BrandSearch($search: String!, $userIdentifier: Uuid!) {
+    brandSearch(searchInput: { search: $search, userIdentifier: $userIdentifier }) {
+        name
+    }
+}

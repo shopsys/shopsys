@@ -234,6 +234,17 @@ export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlo
   uuid: Scalars['Uuid']['output'];
 };
 
+/** Autocomplete favorites data structure */
+export type TypeAutocompleteFavorites = {
+  __typename?: 'AutocompleteFavorites';
+  /** Favorite brands for autocomplete */
+  brands: Array<TypeBrand>;
+  /** Favorite categories for autocomplete */
+  categories: Array<TypeCategory>;
+  /** Favorite products for autocomplete */
+  products: Array<TypeProduct>;
+};
+
 /** Represents an availability */
 export type TypeAvailability = {
   __typename?: 'Availability';
@@ -2683,6 +2694,8 @@ export type TypeQuery = {
   articles: TypeArticleConnection;
   /** Returns list of searched articles and blog articles */
   articlesSearch: Array<TypeArticleInterface>;
+  /** Returns autocomplete favorites (products, categories, brands) configured for current domain */
+  autocompleteFavorites: TypeAutocompleteFavorites;
   /** Returns blog article filtered using UUID or URL slug */
   blogArticle: Maybe<TypeBlogArticle>;
   /** Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords */

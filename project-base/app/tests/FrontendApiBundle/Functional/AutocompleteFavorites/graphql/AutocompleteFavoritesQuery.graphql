@@ -1,0 +1,13 @@
+query AutocompleteFavoritesQuery {
+    autocompleteFavorites {
+        products {
+            name
+        }
+        categories {
+            name
+        }
+        brands {
+            name
+        }
+    }
+}

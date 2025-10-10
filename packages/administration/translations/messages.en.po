@@ -169,6 +169,9 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
+msgid "Autocomplete favorites"
+msgstr ""
+
 msgid "Awesome"
 msgstr ""
 

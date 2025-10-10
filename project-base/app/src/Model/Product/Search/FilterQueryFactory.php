@@ -32,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByFlagIdWithPriceAndStockFilter(int $flagId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createVisibleForCategory(\App\Model\Category\Category $category)
  * @method \App\Model\Product\Search\FilterQuery filterByCategory(\App\Model\Product\Search\FilterQuery $filterQuery, \App\Model\Category\Category $category)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsByProductIdsFilter(int[] $productIds, int|null $limit = null)
  */
 class FilterQueryFactory extends BaseFilterQueryFactory
 {

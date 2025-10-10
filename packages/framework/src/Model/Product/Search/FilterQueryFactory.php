@@ -225,6 +225,24 @@ class FilterQueryFactory
      * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
+    public function createListableProductsByProductIdsFilter(array $productIds, ?int $limit = null): FilterQuery
+    {
+        $filterQuery = $this->createListable()
+            ->filterByProductIds($productIds)
+            ->applyOrderingByIdsArray($productIds);
+
+        if ($limit === null) {
+            return $filterQuery;
+        }
+
+        return $filterQuery->setLimit($limit);
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param int|null $limit
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
     public function createSellableProductsByProductIdsFilter(array $productIds, ?int $limit = null): FilterQuery
     {
         $filterQuery = $this

@@ -50,6 +50,18 @@ class ProductElasticsearchProvider
     }
 
     /**
+     * @param int[] $productIds
+     * @param int|null $limit
+     * @return array
+     */
+    public function getListableProductArrayByIds(array $productIds, ?int $limit = null): array
+    {
+        return $this->productElasticsearchRepository->getProductsByFilterQuery(
+            $this->filterQueryFactory->createListableProductsByProductIdsFilter($productIds, $limit),
+        );
+    }
+
+    /**
      * @param string $productUuid
      * @return array
      */

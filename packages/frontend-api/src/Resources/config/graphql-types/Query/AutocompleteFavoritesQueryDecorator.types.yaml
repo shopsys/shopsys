@@ -1,0 +1,9 @@
+AutocompleteFavoritesQueryDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            autocompleteFavorites:
+                type: "AutocompleteFavorites!"
+                resolve: "@=query('autocompleteFavoritesQuery')"
+                description: "Returns autocomplete favorites (products, categories, brands) configured for current domain"

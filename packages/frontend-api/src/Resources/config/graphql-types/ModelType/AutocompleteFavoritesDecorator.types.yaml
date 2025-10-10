@@ -1,0 +1,15 @@
+AutocompleteFavoritesDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Autocomplete favorites data structure"
+        fields:
+            products:
+                type: "[Product!]!"
+                description: "Favorite products for autocomplete"
+            categories:
+                type: "[Category!]!"
+                description: "Favorite categories for autocomplete"
+            brands:
+                type: "[Brand!]!"
+                description: "Favorite brands for autocomplete"

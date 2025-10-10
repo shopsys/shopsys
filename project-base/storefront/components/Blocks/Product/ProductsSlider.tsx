@@ -33,6 +33,7 @@ export type ProductsSliderProps = {
     variant?: ProductsSliderVariant;
     isLuigisEnabled?: boolean;
     ariaAnchorName: string;
+    highlightFirstItemBadgeText?: string;
 };
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
@@ -47,6 +48,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     variant = 'default',
     isLuigisEnabled,
     ariaAnchorName,
+    highlightFirstItemBadgeText,
 }) => {
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -178,6 +180,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     <ProductsListContent
                         gtmMessageOrigin={gtmMessageOrigin}
                         gtmProductListName={gtmProductListName}
+                        highlightFirstItemBadgeText={highlightFirstItemBadgeText}
                         keyboardFocusableProductIndices={keyboardFocusableProductIndices}
                         productRefs={productElementRefs}
                         products={products}

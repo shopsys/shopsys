@@ -1,0 +1,9 @@
+query CategoriesSearch($search: String!, $userIdentifier: Uuid!, $first: Int, $last: Int) {
+    categoriesSearch(first: $first, last: $last, searchInput: { search: $search, userIdentifier: $userIdentifier }) {
+        edges {
+            node {
+                name
+            }
+        }
+    }
+}

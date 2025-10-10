@@ -280,6 +280,12 @@ msgstr "Atribút %attribute% bol zmenený %changes%"
 msgid "Authentication code"
 msgstr "Overovací kód"
 
+msgid "Autocomplete favorites"
+msgstr "Obľúbené položky v našepkávači"
+
+msgid "Autocomplete favorites successfully saved for the selected domain."
+msgstr "Obľúbené položky v našepkávači boli úspešne uložené pre vybranú doménu."
+
 msgid "Automated filters"
 msgstr "Automatizované filtre"
 
@@ -1443,6 +1449,15 @@ msgstr "Externé bridge ID"
 
 msgid "Facebook URL"
 msgstr "Facebook URL"
+
+msgid "Favorite Brands"
+msgstr "Obľúbené Značky"
+
+msgid "Favorite Categories"
+msgstr "Obľúbené kategórie"
+
+msgid "Favorite Products"
+msgstr "Obľúbené produkty"
 
 msgid "Feed"
 msgstr "Feed"
@@ -2730,6 +2745,9 @@ msgstr "Uložiť warehouse settings"
 
 msgid "Schedule"
 msgstr "Rozvrh"
+
+msgid "Search and select products..."
+msgstr "Vyhľadať a vybrať produkty..."
 
 msgid "Second column categories"
 msgstr "Kategórie druhého stĺpca"

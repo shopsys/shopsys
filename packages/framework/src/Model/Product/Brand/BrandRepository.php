@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 
@@ -93,11 +94,21 @@ class BrandRepository
      */
     public function getBrandsByIds(array $brandsIds): array
     {
-        $brandsQueryBuilder = $this->getBrandRepository()->createQueryBuilder('b')
-            ->select('b')
-            ->where('b.id IN (:brandIds)')
-            ->setParameter('brandIds', $brandsIds)
+        $brandsQueryBuilder = $this->getBrandsByIdsQueryBuilder($brandsIds)
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
+
+        return $brandsQueryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param int[] $brandIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsByIdsPreservingInputOrder(array $brandIds): array
+    {
+        $brandsQueryBuilder = $this->getBrandsByIdsQueryBuilder($brandIds)
+            ->addSelect('field(b.id, ' . implode(',', $brandIds) . ') AS HIDDEN relevance')
+            ->orderBy('relevance');
 
         return $brandsQueryBuilder->getQuery()->getResult();
     }
@@ -113,7 +124,13 @@ class BrandRepository
             ->andWhere(
                 'NORMALIZED(b.name) LIKE NORMALIZED(:searchText)',
             );
-        $queryBuilder->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
+
+        if (mb_strlen($searchText) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
+            $queryBuilder->setParameter('searchText', $searchText . '%');
+        } else {
+            $queryBuilder->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
+        }
+
         $queryBuilder->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()));
 
         return $queryBuilder->getQuery()->getResult();
@@ -169,5 +186,17 @@ class BrandRepository
             ->join('b.translations', 'bt', Join::WITH, 'bt.locale = :locale')
             ->setParameter('domainId', $domainConfig->getId())
             ->setParameter('locale', $domainConfig->getLocale());
+    }
+
+    /**
+     * @param int[] $brandIds
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getBrandsByIdsQueryBuilder(array $brandIds): QueryBuilder
+    {
+        return $this->getBrandRepository()->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.id IN (:brandIds)')
+            ->setParameter('brandIds', $brandIds);
     }
 }

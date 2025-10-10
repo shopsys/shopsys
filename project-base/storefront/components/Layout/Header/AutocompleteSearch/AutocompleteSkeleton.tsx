@@ -1,5 +1,6 @@
 import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const AutocompleteSkeleton: FC = () => {
@@ -9,7 +10,7 @@ export const AutocompleteSkeleton: FC = () => {
                 <Skeleton className="mb-2 h-7 w-24" />
 
                 <div className="flex gap-4 overflow-hidden lg:grid lg:grid-cols-5 lg:gap-5">
-                    {createEmptyArray(4).map((_, index) => (
+                    {createEmptyArray(VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE).map((_, index) => (
                         <Skeleton key={index} className="h-full min-h-[250px] min-w-[138px]" />
                     ))}
                 </div>

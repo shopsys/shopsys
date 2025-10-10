@@ -2,6 +2,7 @@ import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence } from 'framer-motion';
+import { useAutocompleteFavoritesQuery } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
 import {
     TypeAutocompleteSearchQuery,
     useAutocompleteSearchQuery,
@@ -49,6 +50,8 @@ export const AutocompleteSearch: FC = () => {
         requestPolicy: 'network-only',
     });
 
+    const [{ data: favoritesData }] = useAutocompleteFavoritesQuery();
+
     useEffect(() => {
         setSearchData(autocompleteSearchData);
     }, [autocompleteSearchData]);
@@ -59,8 +62,16 @@ export const AutocompleteSearch: FC = () => {
         }
     }, [searchQueryValue]);
 
-    const isSearchResultsPopupVisible =
-        isSearchResultsPopupOpen && isWithValidSearchQuery && (!!searchData || areAutocompleteSearchDataFetching);
+    const isWithFavorites = !!(
+        favoritesData?.autocompleteFavorites.products.length ||
+        favoritesData?.autocompleteFavorites.categories.length ||
+        favoritesData?.autocompleteFavorites.brands.length
+    );
+
+    const shouldShowPopup = isWithFavorites || isWithValidSearchQuery;
+    const isSearchResultsPopupVisible = isSearchResultsPopupOpen && shouldShowPopup;
+
+    const showFavorites = !isWithValidSearchQuery && isWithFavorites;
 
     const handleSearch = () => {
         if (isWithValidSearchQuery) {
@@ -78,8 +89,11 @@ export const AutocompleteSearch: FC = () => {
         <>
             <div
                 aria-label={t('Site search section', { ns: 'accessibility' })}
-                className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}
                 role="search"
+                className={twJoin(
+                    'relative flex w-full transition-all',
+                    isSearchResultsPopupVisible && 'z-aboveOverlay',
+                )}
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
@@ -100,6 +114,8 @@ export const AutocompleteSearch: FC = () => {
                             areAutocompleteSearchDataFetching={areAutocompleteSearchDataFetching}
                             autocompleteSearchQueryValue={searchQueryValue}
                             autocompleteSearchResults={searchData}
+                            favoritesData={favoritesData}
+                            showFavorites={showFavorites}
                             onClosePopupCallback={() => setIsSearchResultsPopupOpen(false)}
                         />
                     )}

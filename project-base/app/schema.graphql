@@ -190,6 +190,16 @@ type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & Articl
   uuid: Uuid!
 }
 
+"Autocomplete favorites data structure"
+type AutocompleteFavorites {
+  "Favorite brands for autocomplete"
+  brands: [Brand!]!
+  "Favorite categories for autocomplete"
+  categories: [Category!]!
+  "Favorite products for autocomplete"
+  products: [Product!]!
+}
+
 "Represents an availability"
 type Availability {
   "Localized availability name (domain dependent)"
@@ -2206,6 +2216,8 @@ type Query {
   ArticleSite: ArticleSite
   "Returns list of searched articles and blog articles"
   articlesSearch(searchInput: SearchInput!): [ArticleInterface!]!
+  "Returns autocomplete favorites (products, categories, brands) configured for current domain"
+  autocompleteFavorites: AutocompleteFavorites!
   "Returns blog article filtered using UUID or URL slug"
   blogArticle(urlSlug: String, uuid: Uuid): BlogArticle
   "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"

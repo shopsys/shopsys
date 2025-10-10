@@ -1,0 +1,6 @@
+query ArticlesSearch($search: String!, $userIdentifier: Uuid!) {
+    articlesSearch(searchInput: { search: $search, userIdentifier: $userIdentifier }) {
+        __typename
+        name
+    }
+}

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -14,7 +15,7 @@ use stdClass;
 
 class FilterQuery
 {
-    protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 100;
+    protected const int MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 400;
 
     /**
      * @var array<string, mixed>
@@ -733,30 +734,55 @@ class FilterQuery
      * @param string $text
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
+    protected function simpleSearch(string $text): self
+    {
+        $clone = clone $this;
+
+        $clone->match = [
+            'match_phrase_prefix' => [
+                'searching_names.full_without_diacritic' => [
+                    'query' => $text,
+                ],
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @param string $text
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
     public function search(string $text): self
     {
+        if (mb_strlen($text) < SearchSetting::SIMPLE_SEARCH_THRESHOLD) {
+            return $this->simpleSearch($text);
+        }
+
         $clone = clone $this;
 
         $clone->match = [
             'multi_match' => [
                 'query' => $text,
                 'fields' => [
-                    'name.full_with_diacritic^60',
-                    'name.full_without_diacritic^50',
-                    'name^45',
-                    'name.edge_ngram_with_diacritic^40',
-                    'name.edge_ngram_without_diacritic^35',
-                    'catnum^50',
-                    'catnum.edge_ngram^25',
-                    'partno^40',
-                    'partno.edge_ngram^20',
-                    'ean^60',
-                    'ean.edge_ngram^30',
-                    'short_description^5',
-                    'description^5',
+                    'searching_names.full_with_diacritic^60',
+                    'searching_names.full_without_diacritic^50',
+                    'searching_names^45',
+                    'searching_names.edge_ngram_with_diacritic^40',
+                    'searching_names.edge_ngram_without_diacritic^35',
+                    'searching_catnums^50',
+                    'searching_catnums.edge_ngram_unanalyzed_words^25',
+                    'searching_partnos^40',
+                    'searching_partnos.edge_ngram_unanalyzed_words^20',
+                    'searching_eans^60',
+                    'searching_eans.edge_ngram_unanalyzed_words^30',
+                    'searching_short_descriptions^5',
+                    'searching_descriptions^5',
                 ],
             ],
         ];
+
+        $clone->match['multi_match']['operator'] = 'and';
 
         return $clone;
     }
