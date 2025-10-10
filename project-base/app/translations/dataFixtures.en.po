@@ -352,6 +352,9 @@ msgstr ""
 msgid "BROTHER PT-H300"
 msgstr ""
 
+msgid "Bank transfer"
+msgstr ""
+
 msgid "Become one of us"
 msgstr ""
 
@@ -1274,6 +1277,9 @@ msgid "Pages count"
 msgstr ""
 
 msgid "Parallel port"
+msgstr ""
+
+msgid "Pay by bank transfer {qr_code}"
 msgstr ""
 
 msgid "Pay later"

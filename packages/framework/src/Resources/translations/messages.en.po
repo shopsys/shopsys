@@ -94,6 +94,9 @@ msgstr ""
 msgid "Accessories in purchase confirmation box"
 msgstr ""
 
+msgid "Account number"
+msgstr ""
+
 msgid "Action"
 msgstr ""
 
@@ -286,6 +289,9 @@ msgstr ""
 msgid "Available payment methods"
 msgstr ""
 
+msgid "Available placeholders"
+msgstr ""
+
 msgid "Available shipping methods"
 msgstr ""
 
@@ -293,6 +299,9 @@ msgid "Average duration from all runs in last seven days"
 msgstr ""
 
 msgid "Avg duration"
+msgstr ""
+
+msgid "BIC/Swift"
 msgstr ""
 
 msgid "Back to category selection"
@@ -317,6 +326,9 @@ msgid "Bank payment confirmed by advice"
 msgstr ""
 
 msgid "Bank payment confirmed by statement"
+msgstr ""
+
+msgid "Bank transfer"
 msgstr ""
 
 msgid "Bank transfer not completed"
@@ -1666,6 +1678,9 @@ msgstr ""
 msgid "I buy on company behalf"
 msgstr ""
 
+msgid "IBAN"
+msgstr ""
+
 msgid "ID"
 msgstr ""
 
@@ -2299,6 +2314,9 @@ msgstr ""
 msgid "Payment instructions"
 msgstr ""
 
+msgid "Payment instructions for bank transfer and QR payment"
+msgstr ""
+
 msgid "Payment is being processed in the Bitcoin network"
 msgstr ""
 
@@ -2564,6 +2582,9 @@ msgid "Promoted categories"
 msgstr ""
 
 msgid "Promoted products"
+msgstr ""
+
+msgid "QR code"
 msgstr ""
 
 msgid "RGB Hex"
@@ -3272,6 +3293,9 @@ msgid "Valid to"
 msgstr ""
 
 msgid "Valid until"
+msgstr ""
+
+msgid "Variable symbol"
 msgstr ""
 
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."

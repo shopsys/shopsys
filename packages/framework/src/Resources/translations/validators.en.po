@@ -10,6 +10,9 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
+msgid "Account number cannot be longer than {{ limit }} characters."
+msgstr ""
+
 msgid "Address {{ url }} already exists."
 msgstr ""
 
@@ -26,6 +29,9 @@ msgid "Amount of money should be greater to zero."
 msgstr ""
 
 msgid "At least two domains must be selected"
+msgstr ""
+
+msgid "BIC/Swift cannot be longer than {{ limit }} characters."
 msgstr ""
 
 msgid "Bank account number can contain only letters, numbers, slashes and dashes"
@@ -122,6 +128,9 @@ msgid "Heading (H1) cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Heureka API must be {{ limit }} characters"
+msgstr ""
+
+msgid "IBAN cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
@@ -229,7 +238,13 @@ msgstr ""
 msgid "Please choose unit"
 msgstr ""
 
+msgid "Please enter BIC/SWIFT for domain %domainName%."
+msgstr ""
+
 msgid "Please enter HTML code for advertisement area"
+msgstr ""
+
+msgid "Please enter IBAN for domain %domainName%."
 msgstr ""
 
 msgid "Please enter URL"
@@ -244,7 +259,13 @@ msgstr ""
 msgid "Please enter VAT rate"
 msgstr ""
 
+msgid "Please enter a valid IBAN."
+msgstr ""
+
 msgid "Please enter a whole number."
+msgstr ""
+
+msgid "Please enter account number for domain %domainName%."
 msgstr ""
 
 msgid "Please enter an ID"
@@ -506,6 +527,9 @@ msgid "Please enter whitelist pattern."
 msgstr ""
 
 msgid "Please enter zip code"
+msgstr ""
+
+msgid "Please select GoPay payment method for enabled domain %domainName%."
 msgstr ""
 
 msgid "Please upload a CSV file"

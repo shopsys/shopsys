@@ -10,6 +10,9 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
+msgid "Account number cannot be longer than {{ limit }} characters."
+msgstr "Číslo účtu nesmí být delší než {{ limit }} znaků."
+
 msgid "Address {{ url }} already exists."
 msgstr "Adresa {{ url }} již existuje."
 
@@ -27,6 +30,9 @@ msgstr "Tato částka musí být větší než nula."
 
 msgid "At least two domains must be selected"
 msgstr "Musí být vybrány alespoň dvě domény"
+
+msgid "BIC/Swift cannot be longer than {{ limit }} characters."
+msgstr "BIC/Swift nesmí být delší než {{ limit }} znaků."
 
 msgid "Bank account number can contain only letters, numbers, slashes and dashes"
 msgstr "Číslo bankovního účtu může obsahovat pouze písmena, čísla, lomítka a pomlčky"
@@ -123,6 +129,9 @@ msgstr "Nadpis H1 nesmí být delší než {{ limit }} znaků"
 
 msgid "Heureka API must be {{ limit }} characters"
 msgstr "Heureka API klíč musí mít právě {{ limit }} znaků"
+
+msgid "IBAN cannot be longer than {{ limit }} characters"
+msgstr "IBAN nesmí být delší než {{ limit }} znaků"
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČ nesmí být delší než {{ limit }} znaků"
@@ -229,8 +238,14 @@ msgstr "Prosím vyberte typ omezení"
 msgid "Please choose unit"
 msgstr "Prosím vyberte jednotku"
 
+msgid "Please enter BIC/SWIFT for domain %domainName%."
+msgstr "Zadejte prosím BIC/SWIFT pro doménu %domainName%."
+
 msgid "Please enter HTML code for advertisement area"
 msgstr "Vyplňte prosím HTML kód pro reklamní plochu"
+
+msgid "Please enter IBAN for domain %domainName%."
+msgstr "Zadejte prosím IBAN pro doménu %domainName%."
 
 msgid "Please enter URL"
 msgstr "Vyplňte prosím URL"
@@ -244,8 +259,14 @@ msgstr "Vyplňte prosím název dph"
 msgid "Please enter VAT rate"
 msgstr "Vyplňte prosím výši DPH"
 
+msgid "Please enter a valid IBAN."
+msgstr "Vyplňte prosím validní IBAN"
+
 msgid "Please enter a whole number."
 msgstr "Zadejte prosím celé číslo."
+
+msgid "Please enter account number for domain %domainName%."
+msgstr "Zadejte prosím číslo účtu pro doménu %domainName%."
 
 msgid "Please enter an ID"
 msgstr "Zadejte prosím ID"
@@ -507,6 +528,9 @@ msgstr "Vyplňte prosím předpis whitelistu."
 
 msgid "Please enter zip code"
 msgstr "Vyplňte prosím PSČ"
+
+msgid "Please select GoPay payment method for enabled domain %domainName%."
+msgstr "Pro povolenou doménu %domainName% vyberte platební metodu GoPay."
 
 msgid "Please upload a CSV file"
 msgstr "Nahrajte prosím CSV soubor"

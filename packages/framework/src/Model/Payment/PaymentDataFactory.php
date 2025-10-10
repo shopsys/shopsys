@@ -53,6 +53,9 @@ class PaymentDataFactory
             $paymentData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
             $paymentData->goPayPaymentMethodByDomainId[$domainId] = null;
             $paymentData->hiddenByGoPay[$domainId] = false;
+            $paymentData->accountNumberByDomainId[$domainId] = null;
+            $paymentData->ibanByDomainId[$domainId] = null;
+            $paymentData->bicSwiftByDomainId[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -109,6 +112,9 @@ class PaymentDataFactory
             $paymentData->vatsIndexedByDomainId[$domainId] = $payment->getPaymentDomain($domainId)->getVat();
             $paymentData->goPayPaymentMethodByDomainId[$domainId] = $payment->getGoPayPaymentMethodByDomainId($domainId);
             $paymentData->hiddenByGoPay[$domainId] = $payment->isHiddenByGoPayByDomainId($domainId);
+            $paymentData->accountNumberByDomainId[$domainId] = $payment->getAccountNumber($domainId);
+            $paymentData->ibanByDomainId[$domainId] = $payment->getIban($domainId);
+            $paymentData->bicSwiftByDomainId[$domainId] = $payment->getBicSwift($domainId);
         }
 
         $paymentData->image = $this->imageUploadDataFactory->createFromEntityAndType($payment);

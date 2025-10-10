@@ -1,26 +1,35 @@
-($ => {
-    const Shopsys = window.Shopsys || {};
-    Shopsys.payment = Shopsys.payment || {};
+import Register from '../../common/utils/Register';
 
-    Shopsys.payment.init = () => {
-        const $paymentType = $('.js-payment-type');
-
+export default class Payment {
+    constructor($paymentTypeSelect) {
         const onPaymentChange = () => {
-            const selectedType = $paymentType.val();
+            const selectedType = $paymentTypeSelect.val();
+
             const $goPayPaymentMethodDiv = $('.js-payment-gopay-payment-method');
+            const $bankTransferPaymentMethodDivs = $('.js-payment-bank-transfer');
 
             if (selectedType === 'goPay') {
                 $goPayPaymentMethodDiv.show();
+                $bankTransferPaymentMethodDivs.hide();
+            } else if (selectedType === 'bankTransfer') {
+                $goPayPaymentMethodDiv.hide();
+                $bankTransferPaymentMethodDivs.show();
             } else {
                 $goPayPaymentMethodDiv.hide();
+                $bankTransferPaymentMethodDivs.hide();
             }
         };
 
-        $paymentType.on('change', onPaymentChange);
-        $paymentType.change();
-    };
+        $paymentTypeSelect.on('change', onPaymentChange);
+        $paymentTypeSelect.change();
+    }
 
-    $(document).ready(() => {
-        Shopsys.payment.init();
-    });
-})(jQuery);
+    static init($container) {
+        $container.filterAllNodes('.js-payment-type').each(function () {
+            // eslint-disable-next-line no-new
+            new Payment($(this));
+        });
+    }
+}
+
+new Register().registerCallback(Payment.init, 'Payment.init');

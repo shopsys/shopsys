@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
@@ -65,6 +66,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
      */
     public function __construct(
         protected readonly string $mailTemplateDisplayPrice,
@@ -78,6 +80,7 @@ class OrderMail implements MessageFactoryInterface
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly HiddenPriceExtension $hiddenPriceExtension,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly PaymentInstructionFacade $paymentInstructionFacade,
     ) {
     }
 
@@ -277,13 +280,15 @@ class OrderMail implements MessageFactoryInterface
      */
     protected function getPaymentInstructionsHtml(Order $order): ?string
     {
-        if ($order->getPaymentItem()->getPayment()->getInstructions($this->getDomainLocaleByOrder($order)) === null) {
+        $paymentInstructions = $this->paymentInstructionFacade->getPaymentInstructionsForEmail($order);
+
+        if ($paymentInstructions === null) {
             return null;
         }
 
         return $this->twig->render('@ShopsysFramework/Mail/Order/paymentInstructions.html.twig', [
-            'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'paymentInstructions' => $paymentInstructions,
         ]);
     }
 

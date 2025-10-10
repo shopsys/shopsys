@@ -352,6 +352,9 @@ msgstr "Článok na testovanie vyhľadávania"
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
 
+msgid "Bank transfer"
+msgstr "Bankový prevod"
+
 msgid "Become one of us"
 msgstr "Staňte sa jedným z nás"
 
@@ -1275,6 +1278,9 @@ msgstr "Počet stránok"
 
 msgid "Parallel port"
 msgstr "Paralelný port"
+
+msgid "Pay by bank transfer {qr_code}"
+msgstr "Plaťte bankovým prevodom {qr_code}"
 
 msgid "Pay later"
 msgstr "Zaplatiť neskôr"

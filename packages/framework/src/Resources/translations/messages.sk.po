@@ -94,6 +94,9 @@ msgstr "Príslušenstvo"
 msgid "Accessories in purchase confirmation box"
 msgstr "Príslušenstvo v poli potvrdenia nákupu"
 
+msgid "Account number"
+msgstr "Číslo účtu"
+
 msgid "Action"
 msgstr "Akcia"
 
@@ -286,6 +289,9 @@ msgstr "Dostupné"
 msgid "Available payment methods"
 msgstr "Dostupné spôsoby platby"
 
+msgid "Available placeholders"
+msgstr "Dostupné premenné"
+
 msgid "Available shipping methods"
 msgstr "Dostupné spôsoby doručenia"
 
@@ -294,6 +300,9 @@ msgstr "Priemerné trvanie zo všetkých spustení za posledných sejď dní"
 
 msgid "Avg duration"
 msgstr "Priemerné trvanie"
+
+msgid "BIC/Swift"
+msgstr ""
 
 msgid "Back to category selection"
 msgstr "Späť na výber kategórie"
@@ -318,6 +327,9 @@ msgstr "Banková platba potvrdená avizom"
 
 msgid "Bank payment confirmed by statement"
 msgstr "Banková platba potvrdená výpisom"
+
+msgid "Bank transfer"
+msgstr "Bankový prevod"
 
 msgid "Bank transfer not completed"
 msgstr "Bankový prevod nedokončený"
@@ -1666,6 +1678,9 @@ msgstr "Hreflang tagy pomáhajú vyhľadávačom pochopiť jazyk a región ciele
 msgid "I buy on company behalf"
 msgstr "Nakúpujem v mene spoločnosti"
 
+msgid "IBAN"
+msgstr ""
+
 msgid "ID"
 msgstr "ID"
 
@@ -2299,6 +2314,9 @@ msgstr "Obsah stránky pri platbe čakajúcej na potvrdenie"
 msgid "Payment instructions"
 msgstr "Pokyny k platbe"
 
+msgid "Payment instructions for bank transfer and QR payment"
+msgstr "Platobné pokyny pre bankový prevod a platbu QR kódom"
+
 msgid "Payment is being processed in the Bitcoin network"
 msgstr "Platba sa spracúva v Bitcoin sieti"
 
@@ -2565,6 +2583,9 @@ msgstr "Propagované kategórie"
 
 msgid "Promoted products"
 msgstr "Propagované produkty"
+
+msgid "QR code"
+msgstr "QR kód"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -3273,6 +3294,9 @@ msgstr "Planosť do"
 
 msgid "Valid until"
 msgstr "Planosť do"
+
+msgid "Variable symbol"
+msgstr ""
 
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr "Varianta <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> bola úspešne vytvorená."

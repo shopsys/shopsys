@@ -43,7 +43,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
 
     /**
      * @param bool $canSeePrices
-     * @param bool $isGatewayPayment
+     * @param bool $isOnlinePayment
      * @param bool $isHidden
      * @param bool $isDeleted
      * @param bool $isHiddenByGoPay
@@ -54,7 +54,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
     #[DataProvider('paymentVisibilityProvider')]
     public function testIsIndependentlyVisible(
         bool $canSeePrices,
-        bool $isGatewayPayment,
+        bool $isOnlinePayment,
         bool $isHidden,
         bool $isDeleted,
         bool $isHiddenByGoPay,
@@ -63,7 +63,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         bool $expectedResult,
     ) {
         $paymentMock = $this->createMock(Payment::class);
-        $paymentMock->method('isGatewayPayment')->willReturn($isGatewayPayment);
+        $paymentMock->method('isOnlinePayment')->willReturn($isOnlinePayment);
         $paymentMock->method('isHidden')->willReturn($isHidden);
         $paymentMock->method('isDeleted')->willReturn($isDeleted);
         $paymentMock->method('isHiddenByGoPayByDomainId')->willReturn($isHiddenByGoPay);
@@ -83,7 +83,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         return [
             'Customer can see prices' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -93,7 +93,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment name is empty' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -103,7 +103,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is hidden' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => true,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -113,7 +113,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is deleted' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => true,
                 'isHiddenByGoPay' => false,
@@ -123,7 +123,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is hidden by GoPay' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => true,
@@ -133,7 +133,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is enabled' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -143,7 +143,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is not enabled' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -151,9 +151,9 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
                 'isEnabled' => false,
                 'expectedResult' => false,
             ],
-            'Customer cannot see prices and payment is a gateway payment' => [
+            'Customer cannot see prices and payment is an online payment' => [
                 'canSeePrices' => false,
-                'isGatewayPayment' => true,
+                'isOnlinePayment' => true,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -161,9 +161,9 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
                 'isEnabled' => true,
                 'expectedResult' => false,
             ],
-            'Customer cannot see prices and payment is not a gateway payment' => [
+            'Customer cannot see prices and payment is not an online payment' => [
                 'canSeePrices' => false,
-                'isGatewayPayment' => false,
+                'isOnlinePayment' => false,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,

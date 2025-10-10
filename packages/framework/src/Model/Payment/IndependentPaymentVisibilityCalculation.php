@@ -44,7 +44,7 @@ class IndependentPaymentVisibilityCalculation
         }
 
         if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
-            return !$payment->isGatewayPayment();
+            return !$payment->isOnlinePayment();
         }
 
         return true;

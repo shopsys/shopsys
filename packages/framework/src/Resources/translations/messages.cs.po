@@ -94,6 +94,9 @@ msgstr "Příslušenství"
 msgid "Accessories in purchase confirmation box"
 msgstr "Příslušenství v mezikošíku"
 
+msgid "Account number"
+msgstr "Číslo účtu"
+
 msgid "Action"
 msgstr "Akce"
 
@@ -286,6 +289,9 @@ msgstr "Dostupné"
 msgid "Available payment methods"
 msgstr "Dostupné platby"
 
+msgid "Available placeholders"
+msgstr "Dostupné proměnné"
+
 msgid "Available shipping methods"
 msgstr "Dostupné dopravy"
 
@@ -294,6 +300,9 @@ msgstr "Průměrné trvání všech cronů za posledních sedm dní"
 
 msgid "Avg duration"
 msgstr "Prům. trvání"
+
+msgid "BIC/Swift"
+msgstr ""
 
 msgid "Back to category selection"
 msgstr "Zpět na volbu kategorie"
@@ -318,6 +327,9 @@ msgstr "Bankovní platba potvrzena avízem"
 
 msgid "Bank payment confirmed by statement"
 msgstr "Bankovní platba potvrzena výpisem"
+
+msgid "Bank transfer"
+msgstr "Bankovní převod"
 
 msgid "Bank transfer not completed"
 msgstr "Bankovní platba nebyla potvrzena"
@@ -1666,6 +1678,9 @@ msgstr "Hreflang tagy pomáhají vyhledávačům porozumět jazyku a regionáln�
 msgid "I buy on company behalf"
 msgstr "Nakupuji na firmu"
 
+msgid "IBAN"
+msgstr ""
+
 msgid "ID"
 msgstr "ID"
 
@@ -2299,6 +2314,9 @@ msgstr "Obsah stránky při platbě čekající na potvrzení"
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 
+msgid "Payment instructions for bank transfer and QR payment"
+msgstr "Platební instrukce pro bankovní převod a QR platbu"
+
 msgid "Payment is being processed in the Bitcoin network"
 msgstr "Platba byla přijata - Platba bude připsána po zpracování v síti Bitcoin"
 
@@ -2565,6 +2583,9 @@ msgstr "Promované kategorie"
 
 msgid "Promoted products"
 msgstr "Promované produkty"
+
+msgid "QR code"
+msgstr "QR kód"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -3273,6 +3294,9 @@ msgstr "Platnost do"
 
 msgid "Valid until"
 msgstr "Platnost do"
+
+msgid "Variable symbol"
+msgstr "Variabilní symbol"
 
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr "Varianta <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> byla úspěšně vytvořena."

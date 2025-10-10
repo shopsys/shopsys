@@ -10,6 +10,7 @@
                 {% for child in form %}
                     <div class="mb-3">
                         {{- form_widget(child, { rawSymbolBeforeInput: domain_icon(child.vars.attr['data-domain-id']) }) -}}
+                        {{- form_errors(child) -}}
                     </div>
                 {% endfor %}
             </fieldset>
@@ -28,6 +29,7 @@
                         </div>
                         <div class="card-body">
                             {{- childContent|raw -}}
+                            {{- form_errors(child) -}}
                         </div>
                     </div>
                 {% endif %}

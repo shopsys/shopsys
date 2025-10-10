@@ -77,6 +77,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_LATER,
             'expectedAvailablePaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
+                PaymentDataFixture::PAYMENT_BANK_TRANSFER,
             ],
         ];
     }
@@ -101,6 +102,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
             'expectedAvailablePaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
+                PaymentDataFixture::PAYMENT_BANK_TRANSFER,
             ],
         ];
     }
