@@ -4,14 +4,7 @@ fragment ListedOrderFragment on Order {
     number
     creationDate
     productItems {
-        __typename
-        quantity
-        product {
-            __typename
-            isVisible
-            isSellingDenied
-            isInquiryType
-        }
+        ...OrderItemFragment
     }
     transport {
         __typename

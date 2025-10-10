@@ -1,0 +1,14 @@
+fragment OrderItemFragment on OrderItem {
+    __typename
+    quantity
+    product {
+        __typename
+        isVisible
+        isSellingDenied
+        isInquiryType
+        link
+        mainImage {
+            ...ImageFragment
+        }
+    }
+}
