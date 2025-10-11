@@ -34,6 +34,9 @@ msgstr "Oprava"
 msgid "Free"
 msgstr "Zdarma"
 
+msgid "Gift"
+msgstr "Dárek"
+
 msgid "In stock"
 msgstr "Skladem"
 

@@ -5,7 +5,7 @@ mutation AddToCartMutation($input: AddToCartInput!) {
         }
         addProductResult {
             cartItem {
-                ...CartItemFragment
+                ...CartItemWithGiftsFragment
             }
             addedQuantity
             isNew

@@ -63,6 +63,21 @@ class ProductElasticsearchBatchProvider
     }
 
     /**
+     * @param int[][] $productsIds
+     * @return array
+     */
+    public function getBatchedProductGiftsAndIndexedByProductsIds(array $productsIds): array
+    {
+        $filterQueries = [];
+
+        foreach ($productsIds as $mainProductId => $productIds) {
+            $filterQueries[$mainProductId] = $this->filterQueryFactory->createSellableProductGiftsByProductIdsFilter(array_values($productIds), $this->productFrontendLimitProvider->getProductsFrontendLimit());
+        }
+
+        return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+    }
+
+    /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
      * @return array
      */

@@ -541,6 +541,8 @@ export type TypeCartItem = {
   product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
+  /** Cart item type */
+  type: TypeCartItemTypeEnum;
   /** Cart item UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -551,6 +553,12 @@ export type TypeCartItemModificationsResult = {
   cartItemsWithModifiedPrice: Array<TypeCartItem>;
   noLongerListableCartItems: Array<TypeCartItem>;
 };
+
+/** One of possible types of the cart item */
+export enum TypeCartItemTypeEnum {
+  Product = 'product',
+  ProductGift = 'productGift'
+}
 
 export type TypeCartModificationsResult = {
   __typename?: 'CartModificationsResult';
@@ -1408,6 +1416,10 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Gift price for the product when is as gift */
+  giftPrice: TypeProductPrice;
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
@@ -2088,6 +2100,7 @@ export enum TypeOrderItemTypeEnum {
   Discount = 'discount',
   Payment = 'payment',
   Product = 'product',
+  ProductGift = 'productGift',
   Rounding = 'rounding',
   Transport = 'transport'
 }
@@ -2430,6 +2443,10 @@ export type TypeProduct = {
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Gift price for the product when is as gift */
+  giftPrice: TypeProductPrice;
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
@@ -3192,6 +3209,10 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Gift price for the product when is as gift */
+  giftPrice: TypeProductPrice;
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
@@ -3606,6 +3627,10 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Gift price for the product when is as gift */
+  giftPrice: TypeProductPrice;
+  /** List of gift products */
+  gifts: Array<TypeProduct>;
   /** Alternate links for hreflang meta tags */
   hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */

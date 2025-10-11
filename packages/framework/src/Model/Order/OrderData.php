@@ -346,6 +346,7 @@ class OrderData
     {
         return $this->getTotalPriceForItemTypes([
             OrderItemTypeEnum::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
             OrderItemTypeEnum::TYPE_DISCOUNT,
         ]);
     }

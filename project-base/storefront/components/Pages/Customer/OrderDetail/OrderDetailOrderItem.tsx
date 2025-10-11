@@ -25,6 +25,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     const formatPrice = useFormatPrice();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canCreateComplaint } = useAuthorization();
+    const isProductGift = orderItem.type === TypeOrderItemTypeEnum.ProductGift;
 
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const openCreateComplaintPopup = (
@@ -57,10 +58,21 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     return (
         <div
             className={twJoin(
-                'vl:gap-5 font-secondary flex items-center gap-3 font-semibold first:border-none first:pt-0 last:pb-0',
-                'border-t-border-default border-t py-5',
+                'vl:gap-5 font-secondary relative flex items-center gap-3 font-semibold first:border-none',
+                'border-t-border-default border-t py-5 first:pt-0 last:pb-0',
             )}
         >
+            {isProductGift && (
+                <div
+                    className={twJoin(
+                        'absolute top-5 left-0 z-10 rounded-tl-md rounded-br-md px-2 py-0.5',
+                        'bg-gradient-to-r from-purple-600 to-pink-600 text-xs font-semibold text-white shadow-md',
+                    )}
+                >
+                    {t('Gift')}
+                </div>
+            )}
+
             <div
                 className={twMergeCustom(
                     'vl:grid vl:grid-cols-[3fr_2fr_1fr_2fr] vl:gap-5 flex w-full flex-wrap items-center justify-between gap-3 border-b last:border-none',

@@ -6,6 +6,7 @@ import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemTypeEnum } from 'graphql/types';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -22,7 +23,7 @@ type CartListItemProps = {
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
-    item: { product, quantity, uuid },
+    item: { product, quantity, uuid, type },
     listIndex,
     onRemoveFromCart,
     onAddToCart,
@@ -33,6 +34,8 @@ export const CartListItem: FC<CartListItemProps> = ({
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
+    const isProduct = type === TypeCartItemTypeEnum.Product;
+    const isProductGift = type === TypeCartItemTypeEnum.ProductGift;
 
     useEffect(() => {
         if (debouncedSpinboxValue !== undefined && spinboxRef.current?.valueAsNumber !== quantity) {
@@ -53,6 +56,12 @@ export const CartListItem: FC<CartListItemProps> = ({
                 className="bg-background-more vl:flex-nowrap vl:p-5 relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-4"
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
+                {isProductGift && (
+                    <div className="absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow-md">
+                        {t('Gift')}
+                    </div>
+                )}
+
                 <div className="vl:basis-auto vl:items-center vl:pr-0 vl:pt-0 flex basis-full gap-2.5 pt-6 pr-8">
                     <div className="flex size-20 shrink-0">
                         <ExtendedNextLink
@@ -102,26 +111,37 @@ export const CartListItem: FC<CartListItemProps> = ({
                 </div>
 
                 <div className="vl:flex-row vl:items-center vl:gap-8 flex w-auto flex-col justify-between gap-2 xl:gap-16">
-                    <Spinbox
-                        defaultValue={quantity}
-                        id={uuid}
-                        max={product.isAllowedNegativeStock ? null : product.stockQuantity}
-                        min={1}
-                        ref={spinboxRef}
-                        size="large"
-                        step={1}
-                        onChangeValueCallback={setSpinboxValue}
-                    />
+                    {isProduct ? (
+                        <Spinbox
+                            defaultValue={quantity}
+                            id={uuid}
+                            max={product.isAllowedNegativeStock ? null : product.stockQuantity}
+                            min={1}
+                            ref={spinboxRef}
+                            size="large"
+                            step={1}
+                            onChangeValueCallback={setSpinboxValue}
+                        />
+                    ) : (
+                        <div className="min-w-[100px] text-center">{quantity}</div>
+                    )}
 
-                    {isPriceVisible(product.price.priceWithVat) && (
+                    {isProduct && isPriceVisible(product.price.priceWithVat) && (
                         <div className="font-secondary vl:w-40 whitespace-nowrap">
                             <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
                             <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
                         </div>
                     )}
+                    {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
+                        <div className="font-secondary vl:w-40 whitespace-nowrap">
+                            <span className="font-semibold">{formatPrice(product.giftPrice.priceWithVat)}</span>
+                            <span className="text-text-less text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
+                        </div>
+                    )}
                 </div>
 
-                <CartItemPrice productPrice={product.price} quantity={quantity} />
+                {isProduct && <CartItemPrice productPrice={product.price} quantity={quantity} />}
+                {isProductGift && <CartItemPrice productPrice={product.giftPrice} quantity={quantity} />}
 
                 <RemoveCartItemButton
                     className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"

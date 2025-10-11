@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
@@ -39,45 +39,38 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         $orderData = $orderProcessingData->orderData;
 
         foreach ($orderProcessingData->orderInput->getQuantifiedProducts() as $quantifiedProduct) {
-            $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
-                $quantifiedProduct,
-                $orderProcessingData->getDomainId(),
-                $orderProcessingData->orderInput->getCustomerUser(),
-            );
+            if ($quantifiedProduct->getAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY) !== CartItemTypeEnum::TYPE_PRODUCT) {
+                continue;
+            }
 
-            $orderItemData = $this->createProductItemData($quantifiedItemPrice, $quantifiedProduct, $orderProcessingData->getDomainLocale());
-            $orderData->addItem($orderItemData);
-
-            $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT);
+            $this->addProductOrderItemData($orderData, $quantifiedProduct, $orderProcessingData);
         }
 
         return $orderProcessingStack->processNext($orderProcessingData);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface $quantifiedItemPrice
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
      */
-    protected function createProductItemData(
-        QuantifiedItemPriceInterface $quantifiedItemPrice,
+    protected function addProductOrderItemData(
+        OrderData $orderData,
         QuantifiedProduct $quantifiedProduct,
-        string $locale,
-    ): OrderItemData {
-        $product = $quantifiedProduct->getProduct();
+        OrderProcessingData $orderProcessingData,
+    ): void {
+        $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
+            $quantifiedProduct,
+            $orderProcessingData->getDomainId(),
+            $orderProcessingData->orderInput->getCustomerUser(),
+        );
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
-
-        $orderItemData->name = $product->getFullName($locale);
-        $orderItemData->setUnitPrice($quantifiedItemPrice->getUnitPrice());
-        $orderItemData->setTotalPrice($quantifiedItemPrice->getTotalPrice());
-        $orderItemData->vatPercent = $quantifiedItemPrice->getVat()->getPercent();
-        $orderItemData->quantity = $quantifiedProduct->getQuantity();
-        $orderItemData->unitName = $product->getUnit()->getName($locale);
-        $orderItemData->catnum = $product->getCatnum();
-        $orderItemData->product = $product;
-
-        return $orderItemData;
+        $orderItemData = $this->orderItemDataFactory->createFromQuantifiedProduct(
+            $quantifiedProduct,
+            $quantifiedItemPrice,
+            $orderProcessingData->getDomainLocale(),
+        );
+        $orderData->addItem($orderItemData);
+        $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT);
     }
 }

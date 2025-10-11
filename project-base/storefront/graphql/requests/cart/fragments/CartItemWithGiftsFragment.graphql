@@ -1,0 +1,8 @@
+fragment CartItemWithGiftsFragment on CartItem {
+    ...CartItemFragment
+    product {
+        gifts {
+            ...ProductGiftFragment
+        }
+    }
+}

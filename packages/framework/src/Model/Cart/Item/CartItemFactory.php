@@ -13,9 +13,12 @@ class CartItemFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum $cartItemTypeEnum
      */
-    public function __construct(protected readonly EntityNameResolver $entityNameResolver)
-    {
+    public function __construct(
+        protected readonly EntityNameResolver $entityNameResolver,
+        protected readonly CartItemTypeEnum $cartItemTypeEnum,
+    ) {
     }
 
     /**
@@ -23,6 +26,7 @@ class CartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice
+     * @param string $type
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
     public function create(
@@ -30,9 +34,11 @@ class CartItemFactory
         Product $product,
         int $quantity,
         ?Money $watchedPrice,
+        string $type,
     ): CartItem {
+        $this->cartItemTypeEnum->validateCase($type);
         $entityClassName = $this->entityNameResolver->resolve(CartItem::class);
 
-        return new $entityClassName($cart, $product, $quantity, $watchedPrice);
+        return new $entityClassName($cart, $product, $quantity, $watchedPrice, $type);
     }
 }

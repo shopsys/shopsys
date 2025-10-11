@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemTypeEnum } from 'graphql/types';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -16,12 +17,14 @@ type CartInHeaderListItemProps = {
 };
 
 export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
-    cartItem: { product, uuid, quantity },
+    cartItem: { product, uuid, quantity, type },
     onRemoveFromCart,
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
+    const isProduct = type === TypeCartItemTypeEnum.Product;
+    const isProductGift = type === TypeCartItemTypeEnum.ProductGift;
 
     return (
         <li
@@ -69,9 +72,15 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     {quantity + ' ' + product.unit.name}
                 </div>
 
-                {isPriceVisible(product.price.priceWithVat) && (
+                {isProduct && isPriceVisible(product.price.priceWithVat) && (
                     <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
+                    </div>
+                )}
+
+                {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
+                    <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
+                        {formatPrice(mapPriceForCalculations(product.giftPrice.priceWithVat) * quantity)}
                     </div>
                 )}
             </div>

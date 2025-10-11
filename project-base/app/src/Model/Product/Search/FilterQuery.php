@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery filterBySellingFrom(\DateTimeImmutable $sellingFrom)
  * @method \App\Model\Product\Search\FilterQuery simpleSearch(string $text)
  * @method \App\Model\Product\Search\FilterQuery search(string $text)
+ * @method \App\Model\Product\Search\FilterQuery filterOnlyInStockOrAllowedNegativeStock()
  */
 class FilterQuery extends BaseFilterQuery
 {

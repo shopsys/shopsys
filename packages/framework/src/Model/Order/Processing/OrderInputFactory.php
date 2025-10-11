@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Processing;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput as BaseOrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
@@ -30,12 +31,7 @@ class OrderInputFactory
     {
         $orderInput = $this->create($domainConfig);
 
-        foreach ($cart->getQuantifiedProducts() as $quantifiedProduct) {
-            $orderInput->addProduct(
-                $quantifiedProduct->getProduct(),
-                $quantifiedProduct->getQuantity(),
-            );
-        }
+        $this->fillItemsByCart($orderInput, $cart);
 
         $orderInput->setPayment($cart->getPayment());
         $orderInput->setTransport($cart->getTransport());
@@ -51,5 +47,18 @@ class OrderInputFactory
         }
 
         return $orderInput;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput $orderInput
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    protected function fillItemsByCart(BaseOrderInput $orderInput, Cart $cart): void
+    {
+        $orderInput->cleanProducts();
+
+        foreach ($cart->getQuantifiedProducts() as $quantifiedProduct) {
+            $orderInput->addQuantifiedProduct($quantifiedProduct);
+        }
     }
 }

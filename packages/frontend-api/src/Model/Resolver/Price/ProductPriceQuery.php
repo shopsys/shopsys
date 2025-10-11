@@ -7,6 +7,9 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
@@ -26,6 +29,9 @@ class ProductPriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrontendApiBundle\Model\Price\PriceInfoFactory $priceInfoFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory $vatFactory
      */
     public function __construct(
         protected readonly SpecialPriceFacade $specialPriceFacade,
@@ -35,6 +41,9 @@ class ProductPriceQuery extends AbstractQuery
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
         protected readonly PriceInfoFactory $priceInfoFactory,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
+        protected readonly VatDataFactory $vatDataFactory,
+        protected readonly VatFactory $vatFactory,
     ) {
     }
 
@@ -64,6 +73,35 @@ class ProductPriceQuery extends AbstractQuery
         return $this->priceInfoFactory->create(
             $basicProductPrice,
             $specialPrice,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
+     * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
+     */
+    public function giftPriceByProductQuery(Product|array $data): PriceInfo
+    {
+        $domainId = $this->domain->getId();
+
+        if ($data instanceof Product) {
+            $vat = $data->getVatForDomain($domainId);
+        } else {
+            $vatPercent = $data['vat_percent'];
+            $vatData = $this->vatDataFactory->create();
+            $vatData->name = 'vat';
+            $vatData->percent = $vatPercent;
+            $vat = $this->vatFactory->create($vatData, $domainId);
+        }
+
+        $productGiftPrice = $this->giftPlanSettingFacade->calculateProductGiftPrice(
+            $domainId,
+            $vat,
+        );
+
+        return $this->priceInfoFactory->create(
+            $productGiftPrice,
+            null,
         );
     }
 

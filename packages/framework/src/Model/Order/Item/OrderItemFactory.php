@@ -68,6 +68,27 @@ class OrderItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public function createProductGift(
+        OrderItemData $orderItemData,
+        Order $order,
+        ?Product $product,
+    ): OrderItem {
+        $orderItem = $this->createOrderItem(
+            $orderItemData,
+            $order,
+        );
+
+        $orderItem->setProductGift($product);
+
+        return $orderItem;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */

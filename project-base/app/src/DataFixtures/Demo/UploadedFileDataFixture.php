@@ -53,7 +53,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
         $this->addUploadedFile(
             $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2),
             'example-file.pdf',
-            [$this->domain->getLocale() => 'Example file'],
+            $this->createUploadedFileTranslatedNames('Example file'),
         );
 
         $this->addReferencedUploadedFiles($this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2), [1]);

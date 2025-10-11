@@ -1,0 +1,21 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Gift plans'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Gift plans'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_giftplan_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create new gift plan'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\GiftPlanController::setGiftPriceAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

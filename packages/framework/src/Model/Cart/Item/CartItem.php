@@ -66,16 +66,24 @@ class CartItem
     protected $uuid;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=32, nullable=false)
+     */
+    protected $type;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice
+     * @param string $type
      */
     public function __construct(
         Cart $cart,
         Product $product,
         int $quantity,
         ?Money $watchedPrice,
+        string $type = CartItemTypeEnum::TYPE_PRODUCT,
     ) {
         $this->cart = $cart;
         $this->product = $product;
@@ -83,6 +91,7 @@ class CartItem
         $this->changeQuantity($quantity);
         $this->addedAt = new DateTime();
         $this->uuid = Uuid::uuid4()->toString();
+        $this->setType($type);
     }
 
     /**
@@ -156,7 +165,7 @@ class CartItem
      */
     public function isSimilarItemAs(self $cartItem): bool
     {
-        return $this->getProduct()->getId() === $cartItem->getProduct()->getId();
+        return $this->getProduct()->getId() === $cartItem->getProduct()->getId() && $this->getType() === $cartItem->getType();
     }
 
     /**
@@ -189,5 +198,37 @@ class CartItem
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    protected function setType($type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProductGift(): bool
+    {
+        return $this->type === CartItemTypeEnum::TYPE_PRODUCT_GIFT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProduct(): bool
+    {
+        return $this->type === CartItemTypeEnum::TYPE_PRODUCT;
     }
 }

@@ -1,0 +1,4 @@
+CartItemTypeEnum:
+    type: enum
+    inherits:
+        - 'CartItemTypeEnumDecorator'

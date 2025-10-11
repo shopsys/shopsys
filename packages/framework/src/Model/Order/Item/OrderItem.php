@@ -388,6 +388,16 @@ class OrderItem
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public function getProductGift()
+    {
+        $this->checkTypeProductGift();
+
+        return $this->product;
+    }
+
+    /**
      * @return bool
      */
     public function isTypeProductAndHasProduct()
@@ -410,6 +420,20 @@ class OrderItem
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $productGift
+     */
+    public function setProductGift($productGift): void
+    {
+        $this->checkTypeProductGift();
+
+        if ($productGift !== null && $productGift->isMainVariant()) {
+            throw new MainVariantCannotBeOrderedException();
+        }
+
+        $this->product = $productGift;
+    }
+
+    /**
      * @param string $type
      * @return bool
      */
@@ -424,6 +448,14 @@ class OrderItem
     public function isTypeProduct(): bool
     {
         return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTypeProductGift(): bool
+    {
+        return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 
     /**
@@ -481,6 +513,11 @@ class OrderItem
     protected function checkTypeProduct(): void
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT);
+    }
+
+    protected function checkTypeProductGift(): void
+    {
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 
     protected function checkTypeDiscount(): void

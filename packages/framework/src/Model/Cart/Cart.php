@@ -217,13 +217,25 @@ class Cart
 
         foreach ($this->items as $item) {
             try {
-                $quantifiedProducts[$item->getId()] = new QuantifiedProduct($item->getProduct(), $item->getQuantity());
+                $quantifiedProducts[$item->getId()] = $this->createQuantifiedProduct($item);
             } catch (ProductNotFoundException) {
                 continue;
             }
         }
 
         return $quantifiedProducts;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct
+     */
+    protected function createQuantifiedProduct(CartItem $cartItem): QuantifiedProduct
+    {
+        $quantifiedProduct = new QuantifiedProduct($cartItem->getProduct(), $cartItem->getQuantity());
+        $quantifiedProduct->setAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY, $cartItem->getType());
+
+        return $quantifiedProduct;
     }
 
     /**
@@ -496,5 +508,21 @@ class Cart
         $this->customerUser = $customerUser;
         $this->cartIdentifier = '';
         $this->setModifiedNow();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     */
+    public function getProductGiftCartItems(): array
+    {
+        return array_filter($this->getItems(), fn (CartItem $cartItem) => $cartItem->isProductGift());
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     */
+    public function getProductCartItems(): array
+    {
+        return array_filter($this->getItems(), fn (CartItem $cartItem) => $cartItem->isProduct());
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Processing;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
@@ -49,7 +50,23 @@ class OrderInput
      */
     public function addProduct(Product $product, int $quantity): void
     {
-        $this->products[] = new QuantifiedProduct($product, $quantity);
+        $quantifiedProduct = new QuantifiedProduct($product, $quantity);
+        $quantifiedProduct->setAdditionalData(QuantifiedProduct::CART_ITEM_TYPE_KEY, CartItemTypeEnum::TYPE_PRODUCT);
+
+        $this->addQuantifiedProduct($quantifiedProduct);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     */
+    public function addQuantifiedProduct(QuantifiedProduct $quantifiedProduct): void
+    {
+        $this->products[] = $quantifiedProduct;
+    }
+
+    public function cleanProducts(): void
+    {
+        $this->products = [];
     }
 
     /**

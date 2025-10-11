@@ -437,6 +437,8 @@ type CartItem {
   product: Product!
   "Quantity of items in the cart"
   quantity: Int!
+  "Cart item type"
+  type: CartItemTypeEnum!
   "Cart item UUID"
   uuid: Uuid!
 }
@@ -445,6 +447,12 @@ type CartItemModificationsResult {
   cartItemsWithChangedQuantity: [CartItem!]!
   cartItemsWithModifiedPrice: [CartItem!]!
   noLongerListableCartItems: [CartItem!]!
+}
+
+"One of possible types of the cart item"
+enum CartItemTypeEnum {
+  product
+  productGift
 }
 
 type CartModificationsResult {
@@ -1224,6 +1232,10 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"
@@ -1692,6 +1704,7 @@ enum OrderItemTypeEnum {
   discount
   payment
   product
+  productGift
   rounding
   transport
 }
@@ -1987,6 +2000,10 @@ interface Product {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"
@@ -2485,6 +2502,10 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"
@@ -2834,6 +2855,10 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Gift price for the product when is as gift"
+  giftPrice: ProductPrice!
+  "List of gift products"
+  gifts: [Product!]!
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
   "Product id"

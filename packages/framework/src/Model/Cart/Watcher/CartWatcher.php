@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -19,11 +20,13 @@ class CartWatcher
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade $giftPlanSettingFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly Domain $domain,
+        protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
     ) {
     }
 
@@ -35,15 +38,25 @@ class CartWatcher
     {
         $modifiedItems = [];
 
-        foreach ($cart->getItems() as $cartItem) {
+        foreach ($cart->getProductCartItems() as $cartItem) {
             $price = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
                 $cartItem->getProduct(),
             )->getPrice();
 
-            if (!$price->getPriceWithVat()->equals($cartItem->getWatchedPrice())) {
+            if (!$price->getPriceWithVat()->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
                 $modifiedItems[] = $cartItem;
             }
             $cartItem->setWatchedPrice($price->getPriceWithVat());
+        }
+
+        $giftPrice = $this->giftPlanSettingFacade->getInputGiftPrice($this->domain->getId());
+
+        foreach ($cart->getProductGiftCartItems() as $cartItem) {
+            if ($giftPrice->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
+                continue;
+            }
+
+            $cartItem->setWatchedPrice($giftPrice);
         }
 
         return $modifiedItems;

@@ -14,6 +14,7 @@ class ProductExportScopeConfig
     public const string SCOPE_BRAND = 'product_brand_scope';
     public const string SCOPE_STOCKS = 'product_stocks_scope';
     public const string SCOPE_FLAGS = 'product_flags_scope';
+    public const string SCOPE_GIFT_FLAGS = 'product_gift_flags_scope';
     public const string SCOPE_PARAMETERS = 'product_parameters_scope';
     public const string SCOPE_URL = 'product_url_scope';
     public const string SCOPE_SELLING_DENIED = 'product_selling_denied_scope';
@@ -28,6 +29,7 @@ class ProductExportScopeConfig
 
     public const string PRECONDITION_VISIBILITY_RECALCULATION = 'visibility_recalculation';
     public const string PRECONDITION_SELLING_DENIED_RECALCULATION = 'selling_denied_recalculation';
+    public const string PRECONDITION_GIFT_FLAG_RECALCULATION = 'gift_flag_recalculation';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule[]|null $productExportScopeRules
@@ -149,6 +151,11 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::DESCRIPTION,
             ProductExportFieldProvider::SEO_META_DESCRIPTION,
             ProductExportFieldProvider::SHORT_DESCRIPTION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_GIFT_FLAGS, [
+            ProductExportFieldProvider::FLAGS,
+        ], [
+            self::PRECONDITION_GIFT_FLAG_RECALCULATION,
         ]);
     }
 

@@ -152,6 +152,7 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
+    * [CartItemTypeEnum](#cartitemtypeenum)
     * [CategoryAutomatedFilterEnum](#categoryautomatedfilterenum)
     * [CustomerUserRoleEnum](#customeruserroleenum)
     * [FriendlyUrlRouteEnum](#friendlyurlrouteenum)
@@ -3402,6 +3403,15 @@ Quantity of items in the cart
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.type">type</strong></td>
+<td valign="top"><a href="#cartitemtypeenum">CartItemTypeEnum</a>!</td>
+<td>
+
+Cart item type
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -5806,6 +5816,24 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
 
 </td>
 </tr>
@@ -8594,6 +8622,24 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
@@ -9908,6 +9954,24 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
 
 </td>
 </tr>
@@ -12377,6 +12441,29 @@ Product availability status out of stock
 </tbody>
 </table>
 
+### CartItemTypeEnum
+
+One of possible types of the cart item
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>product</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>productGift</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### CategoryAutomatedFilterEnum
 
 Category automated filter types
@@ -12553,6 +12640,10 @@ One of possible types of the order item
 </tr>
 <tr>
 <td valign="top"><strong>product</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>productGift</strong></td>
 <td></td>
 </tr>
 <tr>
@@ -13794,6 +13885,24 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.giftprice">giftPrice</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Gift price for the product when is as gift
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.gifts">gifts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of gift products
 
 </td>
 </tr>

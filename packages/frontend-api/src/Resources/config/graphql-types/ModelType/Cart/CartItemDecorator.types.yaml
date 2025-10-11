@@ -13,3 +13,6 @@ CartItemDecorator:
             quantity:
                 type: "Int!"
                 description: "Quantity of items in the cart"
+            type:
+                type: "CartItemTypeEnum!"
+                description: "Cart item type"

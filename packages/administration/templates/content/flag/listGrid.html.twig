@@ -22,3 +22,15 @@
 {% block grid_value_cell_id_visible %}
     {{ block('grid_value_cell_type_boolean') }}
 {% endblock %}
+
+{% block grid_action_cell_type_delete %}
+    {% if row.f.lockedForDeletion is same as(true) %}
+        <span title="{{ 'This flag cannot be deleted.'|trans }}"
+              class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left"
+        >
+            {{ ux_icon('info') }}
+        </span>
+    {% else %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}

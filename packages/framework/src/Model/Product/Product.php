@@ -528,6 +528,15 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
+     * @param int $domainId
+     */
+    public function setFlags(array $flags, int $domainId): void
+    {
+        $this->getProductDomain($domainId)->setFlags($flags);
+    }
+
+    /**
      * @param int $domainId
      * @return int[]
      */

@@ -10,11 +10,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -35,6 +37,7 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade $giftCartFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -48,6 +51,7 @@ class CartFacade
         protected readonly CartItemFactory $cartItemFactory,
         protected readonly CartRepository $cartRepository,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly GiftCartFacade $giftCartFacade,
     ) {
     }
 
@@ -68,10 +72,10 @@ class CartFacade
             throw new InvalidQuantityException($quantity);
         }
 
-        foreach ($cart->getItems() as $item) {
-            if ($item->getProduct() === $product) {
+        foreach ($cart->getProductCartItems() as $productCartItem) {
+            if ($productCartItem->getProduct() === $product) {
                 if (!$isAbsoluteQuantity) {
-                    $newQuantity = $item->getQuantity() + $quantity;
+                    $newQuantity = $productCartItem->getQuantity() + $quantity;
                 } else {
                     $newQuantity = $quantity;
                 }
@@ -82,11 +86,13 @@ class CartFacade
                     $newQuantity -= $notOnStockQuantity;
                 }
 
-                $item->changeQuantity($newQuantity);
-                $item->changeAddedAt(new DateTime());
-                $result = new AddProductResult($item, false, $newQuantity, $notOnStockQuantity);
+                $productCartItem->changeQuantity($newQuantity);
+                $productCartItem->changeAddedAt(new DateTime());
+                $result = new AddProductResult($productCartItem, false, $newQuantity, $notOnStockQuantity);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();
+
+                $this->giftCartFacade->refreshProductGiftsInCart($cart, $this->domain->getId());
 
                 return $result;
             }
@@ -99,7 +105,7 @@ class CartFacade
             $quantity -= $notOnStockQuantity;
         }
 
-        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat());
+        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat(), CartItemTypeEnum::TYPE_PRODUCT);
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 
@@ -107,6 +113,8 @@ class CartFacade
 
         $this->em->persist($result->getCartItem());
         $this->em->flush();
+
+        $this->giftCartFacade->refreshProductGiftsInCart($cart, $this->domain->getId());
 
         return $result;
     }

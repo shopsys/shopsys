@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 
 final class FlagDataFixture extends AbstractReferenceFixture
 {
@@ -22,6 +23,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
     public const string FLAG_PRODUCT_MADEIN_SK = 'product_madein_sk';
     public const string FLAG_PRODUCT_MADEIN_DE = 'product_madein_de';
     public const string FLAG_PRODUCT_PRICE_HIT = 'product_price_hit';
+    public const string FLAG_PRODUCT_GIFT = 'product_gift';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
@@ -102,6 +104,20 @@ final class FlagDataFixture extends AbstractReferenceFixture
         }
 
         $this->createFlag($flagData, self::FLAG_PRODUCT_PRICE_HIT);
+        $this->editGiftFlag();
+    }
+
+    private function editGiftFlag(): void
+    {
+        /** @var \App\Model\Product\Flag\Flag $giftFlag */
+        $giftFlag = $this->flagFacade->getByUuid(GiftFlagSynchronizerFacade::FLAG_GIFT_UUID);
+        $flagData = $this->flagDataFactory->createFromFlag($giftFlag);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $flagData->name[$locale] = t('Product gift', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $giftFlag = $this->flagFacade->edit($giftFlag->getId(), $flagData);
+        $this->addReference(self::FLAG_PRODUCT_GIFT, $giftFlag);
     }
 
     /**

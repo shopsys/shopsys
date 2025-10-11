@@ -10,6 +10,7 @@ import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
+import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -66,6 +67,17 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         />
 
                         <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
+                            {product.gifts.length > 0 && (
+                                <>
+                                    <p className="h3 mb-3">{t('Gifts')}</p>
+                                    <div>
+                                        {product.gifts.map((gift, index) => (
+                                            <ProductGift key={index} gift={gift} />
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+
                             <ProductDetailPrice productPrice={product.price} />
 
                             <ProductDetailAvailability

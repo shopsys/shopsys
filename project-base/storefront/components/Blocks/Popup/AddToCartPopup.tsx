@@ -1,11 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
+import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
@@ -18,7 +19,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 type AddToCartPopupProps = {
-    addedCartItem: TypeCartItemFragment;
+    addedCartItem: TypeCartItemWithGiftsFragment;
     key: string;
 };
 
@@ -85,6 +86,16 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                {product.gifts.length > 0 && (
+                    <>
+                        <p className="h3 mb-3">{t('Gifts')}</p>
+                        {product.gifts.map((gift, index) => (
+                            <ProductGift key={index} gift={gift} />
+                        ))}
+                    </>
+                )}
             </div>
 
             {isLuigisBoxActive && (

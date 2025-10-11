@@ -16,12 +16,19 @@
         {% set entity = orderItem.transport %}
     {% elseif orderItem.isTypePayment and orderItem.payment is not null %}
         {% set entity = orderItem.payment %}
+    {% elseif orderItem.isTypeProductGift and orderItem.productGift is not null %}
+        {% set entity = orderItem.productGift %}
     {% endif %}
 
 
     {% if not orderItem.isTypeRounding and not orderItem.isTypeTransport and not orderItem.isTypePayment %}
         <tr>
-            <td style="{% if orderItem.isTypeDiscount %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px;">
+            <td style="{% if orderItem.isTypeDiscount %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px; position: relative;">
+                {% if orderItem.isTypeProductGift %}
+                    <div style="position: absolute; top: 10px; left: 0; width: fit-content; max-width: 80px; background: linear-gradient(to right, #9333ea, #db2777); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 10;">
+                        {% trans into orderLocale %}Gift{% endtrans %}
+                    </div>
+                {% endif %}
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                     <tr>
@@ -47,7 +54,7 @@
                                             <tr>
                                                 <td class="product-description">
                                                     <strong>{{ orderItem.name }}</strong><br>
-                                                    {% if orderItem.isTypeProduct %}
+                                                    {% if orderItem.isTypeProduct or orderItem.isTypeProductGift %}
                                                         {% trans into orderLocale %}Amount{% endtrans %}: {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }}<br>
 
                                                         {% if displayWithoutVat %}

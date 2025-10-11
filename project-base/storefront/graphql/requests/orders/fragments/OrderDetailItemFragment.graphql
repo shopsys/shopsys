@@ -35,6 +35,9 @@ fragment OrderDetailItemFragment on OrderItem {
         price {
             ...ProductPriceFragment
         }
+        giftPrice {
+            ...ProductPriceFragment
+        }
         availability {
             name
             status

@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem as BaseCartItem;
  * @method \App\Model\Product\Product getProduct()
  * @method bool isSimilarItemAs(\App\Model\Cart\Item\CartItem $cartItem)
  * @property \App\Model\Cart\Cart $cart
- * @method __construct(\App\Model\Cart\Cart $cart, \App\Model\Product\Product $product, int $quantity, \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice)
+ * @method __construct(\App\Model\Cart\Cart $cart, \App\Model\Product\Product $product, int $quantity, \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice, string $type = \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum::TYPE_PRODUCT)
  */
 class CartItem extends BaseCartItem
 {

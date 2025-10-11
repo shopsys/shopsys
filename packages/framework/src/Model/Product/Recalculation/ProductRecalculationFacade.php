@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -32,6 +33,7 @@ class ProductRecalculationFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade $productExportScopeConfigFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
      */
     public function __construct(
         protected readonly IndexFacade $indexFacade,
@@ -44,6 +46,7 @@ class ProductRecalculationFacade
         protected readonly ProductExportScopeConfigFacade $productExportScopeConfigFacade,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
+        protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
     ) {
     }
 
@@ -89,6 +92,18 @@ class ProductRecalculationFacade
 
         if ($shouldRecalculateSellingDenied) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds);
+        }
+
+        if ($shouldRecalculateVisibility || $shouldRecalculateSellingDenied) {
+            foreach ($productIds as $productId) {
+                $this->giftFlagSynchronizerFacade->refreshForGiftProductId($productId);
+            }
+        }
+
+        if ($this->productExportScopeConfigFacade->shouldRecalculateGiftFlags($exportScopes)) {
+            foreach ($productIds as $productId) {
+                $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProductId($productId);
+            }
         }
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);

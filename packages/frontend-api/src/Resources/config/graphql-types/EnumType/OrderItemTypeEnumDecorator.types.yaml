@@ -8,6 +8,8 @@ OrderItemTypeEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_PAYMENT")'
             product:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_PRODUCT")'
+            productGift:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_PRODUCT_GIFT")'
             discount:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_DISCOUNT")'
             transport:

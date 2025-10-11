@@ -59,4 +59,7 @@ fragment ProductDetailInterfaceFragment on Product {
     files {
         ...FileFragment
     }
+    gifts {
+        ...ProductGiftFragment
+    }
 }

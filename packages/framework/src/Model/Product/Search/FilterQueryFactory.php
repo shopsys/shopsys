@@ -257,6 +257,26 @@ class FilterQueryFactory
     }
 
     /**
+     * @param int[] $productIds
+     * @param int|null $limit
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createSellableProductGiftsByProductIdsFilter(array $productIds, ?int $limit = null): FilterQuery
+    {
+        $filterQuery = $this
+            ->createVisibleProductsByProductIdsFilter($productIds)
+            ->filterOnlySellable()
+            ->filterOnlyInStockOrAllowedNegativeStock()
+        ;
+
+        if ($limit === null) {
+            return $filterQuery;
+        }
+
+        return $filterQuery->setLimit($limit);
+    }
+
+    /**
      * @param string[] $productUuids
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */

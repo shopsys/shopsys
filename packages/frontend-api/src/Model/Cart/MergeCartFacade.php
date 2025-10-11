@@ -75,6 +75,7 @@ class MergeCartFacade
                     $itemToMerge->getProduct(),
                     $itemToMerge->getQuantity(),
                     $itemToMerge->getWatchedPrice(),
+                    $itemToMerge->getType(),
                 );
                 $currentCart->addItem($newCartItem);
                 $this->entityManager->persist($newCartItem);

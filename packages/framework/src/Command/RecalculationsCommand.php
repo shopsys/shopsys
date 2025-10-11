@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Override;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -23,11 +24,13 @@ class RecalculationsCommand extends Command
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
      */
     public function __construct(
         private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
         private readonly ProductVisibilityFacade $productVisibilityFacade,
         private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        private readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
     ) {
         parent::__construct();
     }
@@ -47,6 +50,9 @@ class RecalculationsCommand extends Command
 
         $output->writeln('<fg=green>Products selling denial.</fg=green>');
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForAll();
+
+        $output->writeln('<fg=green>Gift products automatic flags.</fg=green>');
+        $this->giftFlagSynchronizerFacade->refreshAllGiftPlans();
 
         return Command::SUCCESS;
     }

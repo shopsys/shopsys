@@ -29,6 +29,9 @@ overblog_dataloader:
         luigisBoxBatchLoader:
             alias: "luigis_box_batch_loader"
             batch_load_fn: "@Shopsys\\LuigisBoxBundle\\Model\\Batch\\LuigisBoxBatchLoader:loadByBatchData"
+        productGiftsByMainProductIdsBatchLoader:
+            alias: "product_gifts_by_main_product_ids_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadProductGiftsByMainProductIds"
         productsByEntitiesBatchLoader:
             alias: "products_by_entities_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadByEntities"

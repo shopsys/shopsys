@@ -1021,6 +1021,9 @@ msgstr "Opravdu chcete odstranit tento příznak?"
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
 
+msgid "Do you really want to remove this gift plan?"
+msgstr "Opravdu chcete tento dárkový plán odstranit?"
+
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
 
@@ -1227,6 +1230,12 @@ msgstr "Editace příznaku"
 
 msgid "Editing flag - {{ name }}"
 msgstr "Editace příznaku - {{ name }}"
+
+msgid "Editing gift plan"
+msgstr "Editace dárkového plánu"
+
+msgid "Editing gift plan - %name%"
+msgstr "Editace dárkového plánu - %name%"
 
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr "Editace svátku / interního dne - {{ name }}"
@@ -1543,6 +1552,9 @@ msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytv
 msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
 
+msgid "Flag <strong>{{ name }}</strong> cannot be deleted"
+msgstr "Příznak <strong>{{ name }}<strong> nelze smazat"
+
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr "Příznak <strong>{{ name }}</strong> byl smazán"
 
@@ -1611,6 +1623,27 @@ msgstr "Vygenerováno"
 
 msgid "Generated batches"
 msgstr "Vygenerované dávky"
+
+msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
+msgstr "Dárkový plán <a href=\"{{ url }}\"><strong>{{ name }}<strong></a> byl vytvořen"
+
+msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
+msgstr "Dárkový plán <a href=\"{{ url }}\"><strong>{{ name }}<strong></a> byl upraven"
+
+msgid "Gift plan <strong>{{ name }}</strong> deleted"
+msgstr "Dárkový plán <strong>{{ name }}<strong> byl smazán"
+
+msgid "Gift plans"
+msgstr "Dárkové plány"
+
+msgid "Gift price (with VAT)"
+msgstr "Cena dárku (s DPH)"
+
+msgid "Gift price saved"
+msgstr "Cena dárku uložena"
+
+msgid "Gift product"
+msgstr "Dárkový produkt"
 
 msgid "GoPay"
 msgstr "GoPay"
@@ -1873,6 +1906,9 @@ msgstr "Hlavní URL"
 msgid "Main administrator email"
 msgstr "Hlavní administrátorský e-mail"
 
+msgid "Main products"
+msgstr "Hlavní produkty"
+
 msgid "Main text"
 msgstr "Text"
 
@@ -2010,6 +2046,9 @@ msgstr "Nová doručovací adresa"
 
 msgid "New flag"
 msgstr "Nový příznak"
+
+msgid "New gift plan"
+msgstr "Nový dárkový plán"
 
 msgid "New item"
 msgstr "Nová položka"
@@ -2524,6 +2563,9 @@ msgstr "Katalogové číslo produktu"
 msgid "Product detail URL"
 msgstr "URL detailu produktu"
 
+msgid "Product gift"
+msgstr "Dárkový produkt"
+
 msgid "Product image URL"
 msgstr "URL obrázku produktu"
 
@@ -2740,6 +2782,9 @@ msgstr "Uložit výchozí cenovou skupinu"
 msgid "Save default unit"
 msgstr "Uložit výchozí jednotku"
 
+msgid "Save gift price setting"
+msgstr "Uložit nastavení ceny dárku"
+
 msgid "Save warehouse settings"
 msgstr "Uložit nastavení skladu"
 
@@ -2808,6 +2853,9 @@ msgstr "Vybraný soubor neexistuje."
 
 msgid "Selected flag doesn't exist."
 msgstr "Zvolený příznak neexistuje."
+
+msgid "Selected gift plan doesn't exist."
+msgstr "Vybraný dárkový plán neexistuje."
 
 msgid "Selected holiday / internal day doesn't exist."
 msgstr "Vybraný svátek / interní den neexistuje."

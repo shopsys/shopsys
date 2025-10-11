@@ -1,0 +1,9 @@
+fragment ProductGiftFragment on Product {
+    name
+    images{
+        ...ImageFragment
+    }
+    giftPrice{
+        ...ProductPriceFragment
+    }
+}

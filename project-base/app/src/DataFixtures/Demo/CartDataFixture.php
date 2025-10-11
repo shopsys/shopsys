@@ -54,6 +54,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
         return [
             ProductDataFixture::class,
             CustomerUserDataFixture::class,
+            GiftPlanDataFixture::class,
         ];
     }
 

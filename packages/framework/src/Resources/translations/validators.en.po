@@ -226,6 +226,9 @@ msgstr ""
 msgid "Please choose flag"
 msgstr ""
 
+msgid "Please choose gift product"
+msgstr ""
+
 msgid "Please choose image"
 msgstr ""
 
@@ -392,6 +395,9 @@ msgid "Please enter name"
 msgstr ""
 
 msgid "Please enter name of advertisement area"
+msgstr ""
+
+msgid "Please enter name of gift plan"
 msgstr ""
 
 msgid "Please enter navigation item name"

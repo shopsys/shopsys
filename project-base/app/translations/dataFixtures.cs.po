@@ -1366,6 +1366,9 @@ msgstr "Pravděpodobně ta nejlepší volba"
 msgid "Processor frequency"
 msgstr "Frekvence procesoru"
 
+msgid "Product gift"
+msgstr "Dárkový produkt"
+
 msgid "Promoted products"
 msgstr "Promované produkty"
 
