@@ -445,6 +445,9 @@ msgstr "Vytvoriť novú skupinu rolí zákazníka"
 msgid "Create new delivery address"
 msgstr "Vytvoriť novú dodaciu adresu"
 
+msgid "Create new gift plan"
+msgstr "Vytvoriť nový darčekový plán"
+
 msgid "Create new holiday or internal day"
 msgstr "Vytvoriť nový sviatok alebo interný deň"
 
@@ -730,6 +733,9 @@ msgstr "Úprava súboru"
 msgid "Editing flag"
 msgstr "Úprava značky"
 
+msgid "Editing gift plan"
+msgstr "Úprava darčekového plánu"
+
 msgid "Editing holiday / internal day"
 msgstr "Editace sviatku / interného dne"
 
@@ -912,6 +918,15 @@ msgstr "Budúcnosť"
 
 msgid "Generate"
 msgstr "Generovať"
+
+msgid "Gift plan"
+msgstr "Darčekový plán"
+
+msgid "Gift plans"
+msgstr "Darčekové plány"
+
+msgid "Gift price"
+msgstr "Cena darčeka"
 
 msgid "Go to Frontend"
 msgstr "Prejsť na Frontend"
@@ -1165,6 +1180,9 @@ msgstr "Nová dodacia adresa"
 msgid "New flag"
 msgstr "Nová značka"
 
+msgid "New gift plan"
+msgstr "Nový darčekový plán"
+
 msgid "New navigation item"
 msgstr "Nová navigačná položka"
 
@@ -1275,6 +1293,9 @@ msgstr "Žiadne súbory neboli nájdené."
 
 msgid "No flags found. You have to create some first."
 msgstr "Neboli nájdené žiadne príznaky. Musíte najskôr nejaký vytvoriť."
+
+msgid "No gift plan found. You have to create some first."
+msgstr "Neboli nájdené žiadne darčekové plány. Musíte najskôr nejaký vytvoriť."
 
 msgid "No inquiries found."
 msgstr "Neboli nájdené žiadne poptávky."
@@ -1885,6 +1906,9 @@ msgstr "Táto mena nemôže byť odstránená, je nastavená ako predvolená ale
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Táto značka nemôže byť odstránená, pretože sa používa v definícii"
 
+msgid "This flag cannot be deleted."
+msgstr "Tento príznak nie je možné odstrániť."
+
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je posledný používateľ zákazníka. Odstráni to všetky súvisísie údaje. Naozaj to chcete odstrániť?"
 
@@ -2184,6 +2208,9 @@ msgstr "z"
 
 msgid "g"
 msgstr "g"
+
+msgid "gift plans"
+msgstr "darčekové plány"
 
 msgid "inquiries"
 msgstr "dopyty"

@@ -1021,6 +1021,9 @@ msgstr ""
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr ""
 
+msgid "Do you really want to remove this gift plan?"
+msgstr ""
+
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr ""
 
@@ -1226,6 +1229,12 @@ msgid "Editing flag"
 msgstr ""
 
 msgid "Editing flag - {{ name }}"
+msgstr ""
+
+msgid "Editing gift plan"
+msgstr ""
+
+msgid "Editing gift plan - %name%"
 msgstr ""
 
 msgid "Editing holiday / internal day - {{ name }}"
@@ -1543,6 +1552,9 @@ msgstr ""
 msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
+msgid "Flag <strong>{{ name }}</strong> cannot be deleted"
+msgstr ""
+
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -1610,6 +1622,27 @@ msgid "Generated"
 msgstr ""
 
 msgid "Generated batches"
+msgstr ""
+
+msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
+msgstr ""
+
+msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
+msgstr ""
+
+msgid "Gift plan <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Gift plans"
+msgstr ""
+
+msgid "Gift price (with VAT)"
+msgstr ""
+
+msgid "Gift price saved"
+msgstr ""
+
+msgid "Gift product"
 msgstr ""
 
 msgid "GoPay"
@@ -1873,6 +1906,9 @@ msgstr ""
 msgid "Main administrator email"
 msgstr ""
 
+msgid "Main products"
+msgstr ""
+
 msgid "Main text"
 msgstr ""
 
@@ -2009,6 +2045,9 @@ msgid "New delivery address"
 msgstr ""
 
 msgid "New flag"
+msgstr ""
+
+msgid "New gift plan"
 msgstr ""
 
 msgid "New item"
@@ -2524,6 +2563,9 @@ msgstr ""
 msgid "Product detail URL"
 msgstr ""
 
+msgid "Product gift"
+msgstr ""
+
 msgid "Product image URL"
 msgstr ""
 
@@ -2740,6 +2782,9 @@ msgstr ""
 msgid "Save default unit"
 msgstr ""
 
+msgid "Save gift price setting"
+msgstr ""
+
 msgid "Save warehouse settings"
 msgstr ""
 
@@ -2807,6 +2852,9 @@ msgid "Selected file doesn't exist."
 msgstr ""
 
 msgid "Selected flag doesn't exist."
+msgstr ""
+
+msgid "Selected gift plan doesn't exist."
 msgstr ""
 
 msgid "Selected holiday / internal day doesn't exist."

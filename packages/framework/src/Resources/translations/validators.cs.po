@@ -226,6 +226,9 @@ msgstr "Prosím vyberte výchozí jednotku"
 msgid "Please choose flag"
 msgstr "Prosím vyberte příznak"
 
+msgid "Please choose gift product"
+msgstr "Prosím vyberte dárkový produkt"
+
 msgid "Please choose image"
 msgstr "Prosím vyberte obrázek"
 
@@ -285,9 +288,6 @@ msgstr "Zadejte prosím aspoň jednu cenu"
 
 msgid "Please enter bank account number"
 msgstr "Prosím vyplňte číslo bankovního účtu"
-
-msgid "Please enter choose gift product"
-msgstr "Prosím vyberte dárkový produkt"
 
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"

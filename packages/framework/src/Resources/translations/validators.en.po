@@ -226,6 +226,9 @@ msgstr ""
 msgid "Please choose flag"
 msgstr ""
 
+msgid "Please choose gift product"
+msgstr ""
+
 msgid "Please choose image"
 msgstr ""
 
@@ -284,9 +287,6 @@ msgid "Please enter at least one price"
 msgstr ""
 
 msgid "Please enter bank account number"
-msgstr ""
-
-msgid "Please enter choose gift product"
 msgstr ""
 
 msgid "Please enter city"

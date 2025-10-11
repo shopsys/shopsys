@@ -226,6 +226,9 @@ msgstr "Prosím, vyberte predvolenú jednotku"
 msgid "Please choose flag"
 msgstr "Prosím, vyberte príznak"
 
+msgid "Please choose gift product"
+msgstr "Prosím, vyberte darčekový produkt"
+
 msgid "Please choose image"
 msgstr "Prosím, vyberte obrázok"
 
@@ -393,6 +396,9 @@ msgstr "Prosím, zadajte názov"
 
 msgid "Please enter name of advertisement area"
 msgstr "Prosím, zadajte názov reklamného priestoru"
+
+msgid "Please enter name of gift plan"
+msgstr "Prosím, zadajte názov darčekového plánu"
 
 msgid "Please enter navigation item name"
 msgstr "Prosím, zadajte názov položky navigácie"

@@ -445,6 +445,9 @@ msgstr "Vytvořit novou skupinu uživatelských práv"
 msgid "Create new delivery address"
 msgstr "Vytvořit novou adresu"
 
+msgid "Create new gift plan"
+msgstr "Vytvořit nový dárkový plán"
+
 msgid "Create new holiday or internal day"
 msgstr "Vytvořit nový svátek nebo interní den"
 
@@ -730,6 +733,9 @@ msgstr "Upravit soubor"
 msgid "Editing flag"
 msgstr "Editace příznaku"
 
+msgid "Editing gift plan"
+msgstr "Editace dárkového plánu"
+
 msgid "Editing holiday / internal day"
 msgstr "Editace svátku / interního dne"
 
@@ -913,6 +919,15 @@ msgstr "Budoucí"
 msgid "Generate"
 msgstr "Vygenerovat"
 
+msgid "Gift plan"
+msgstr "Dárkový plán"
+
+msgid "Gift plans"
+msgstr "Dárkové plány"
+
+msgid "Gift price"
+msgstr "Cena dárku"
+
 msgid "Go to Frontend"
 msgstr "Přejít na Frontend"
 
@@ -936,9 +951,6 @@ msgstr "Uděleno"
 
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
-
-msgid "Gift plans"
-msgstr ""
 
 msgid "Heureka setting"
 msgstr "Heureka nastavení"
@@ -1168,6 +1180,9 @@ msgstr "Nová doručovací adresa"
 msgid "New flag"
 msgstr "Nový příznak"
 
+msgid "New gift plan"
+msgstr "Nový dárkový plán"
+
 msgid "New navigation item"
 msgstr "Nová položka navigace"
 
@@ -1278,6 +1293,9 @@ msgstr "Žádné soubory nebyly nalezeny."
 
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
+
+msgid "No gift plan found. You have to create some first."
+msgstr "Nebyl nalezen žádný dárkový plán. Musíte prvně nějaký vytvořit."
 
 msgid "No inquiries found."
 msgstr "Nebyly nalezeny žádné poptávky."
@@ -1888,6 +1906,9 @@ msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u 
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
 
+msgid "This flag cannot be deleted."
+msgstr "Tento příznak nelze smazat."
+
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
@@ -2187,6 +2208,9 @@ msgstr "z"
 
 msgid "g"
 msgstr "g"
+
+msgid "gift plans"
+msgstr "dárkové plány"
 
 msgid "inquiries"
 msgstr "poptávky"

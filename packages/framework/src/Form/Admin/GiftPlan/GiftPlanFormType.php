@@ -80,7 +80,7 @@ final class GiftPlanFormType extends AbstractType
             ->add('giftProduct', ProductType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter choose gift product']),
+                    new Constraints\NotBlank(['message' => 'Please choose gift product']),
                 ],
                 'label' => t('Gift product'),
             ])
