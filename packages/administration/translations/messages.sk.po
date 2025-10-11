@@ -5,7 +5,7 @@ msgstr ""
 "Language: sk\n"
 
 msgid "%categoryName% - Combinations"
-msgstr "%categoryName% - Kombinace"
+msgstr "%categoryName% - Kombinácie"
 
 msgid "%categoryName% - Filters"
 msgstr "%categoryName% - Filtry"
@@ -20,7 +20,7 @@ msgid "%entity_name% Overview"
 msgstr "Prehľad %entity_name%"
 
 msgid "<a href=\"%url%\">Go back</a> to login page."
-msgstr "<a href=\"%url%\">Zpet</a> na prihlašovací stránku."
+msgstr "<a href=\"%url%\">Späť</a> na prihlasovaciu stránku."
 
 msgid "Action"
 msgstr "Akcia"
@@ -119,7 +119,7 @@ msgid "Advertising"
 msgstr "Reklama"
 
 msgid "Advertising system"
-msgstr "Reklamáčný systém"
+msgstr "Reklamný systém"
 
 msgid "Adverts"
 msgstr "Reklamy"
@@ -131,10 +131,10 @@ msgid "All domains"
 msgstr "Všetky domény"
 
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
-msgstr "Všetky ceny musia byť spracované manuálne ak je zaškrtnuté, inak bude jednotková cena bez DPH a celkové ceny pre túto položku prepóčítané automaticky."
+msgstr "Všetky ceny musia byť spracované manuálne ak je zaškrtnuté, inak bude jednotková cena bez DPH a celkové ceny pre túto položku prepočítané automaticky."
 
 msgid "Alternate language"
-msgstr "Alternativní jazyky"
+msgstr "Alternatívny jazyk"
 
 msgid "Alternate language settings"
 msgstr "Nastavenia alternatívnych jazykov"
@@ -209,7 +209,7 @@ msgid "Bestselling products"
 msgstr "Najpredávanejšie produkty"
 
 msgid "Billing address"
-msgstr "Fúktúračná adresa"
+msgstr "Faktúračná adresa"
 
 msgid "Blog article"
 msgstr "Blogový článok"
@@ -239,7 +239,7 @@ msgid "Bulk edit"
 msgstr "Hromadné upravovanie"
 
 msgid "But at other addresses we have a lot for you..."
-msgstr "Ale na jiných adresách toho pro Vás máme spousty..."
+msgstr "Ale na iných adresách toho pre Vás máme veľa..."
 
 msgid "Calculated prices"
 msgstr "Vypočítané ceny"
@@ -290,7 +290,7 @@ msgid "Clean Storefront Query Cache"
 msgstr "Vymazať cache dotazov obchodu"
 
 msgid "Clear"
-msgstr "Vymazat"
+msgstr "Vymazať"
 
 msgid "Click to go to product section"
 msgstr "Kliknite pre prechod do sekcie produktov"
@@ -302,7 +302,7 @@ msgid "Closed days"
 msgstr "Zatvorené dni"
 
 msgid "Closing modules"
-msgstr "Zapínací moduly"
+msgstr "Zatvárací moduly"
 
 msgid "Color parameter values"
 msgstr "Hodnoty farebných parametrov"
@@ -326,7 +326,7 @@ msgid "Complaint Nr."
 msgstr "Č. reklamácie"
 
 msgid "Complaint statuses"
-msgstr "Stavy reklamacíí"
+msgstr "Stavy reklamácií"
 
 msgid "Complaint statuses overview"
 msgstr "Prehľad stavov reklamácií"
@@ -368,10 +368,10 @@ msgid "Convert values associated with parameter - %name%"
 msgstr "Konvertovať hodnoty priradené k parametru - %name%"
 
 msgid "Copied!"
-msgstr "Zkopírováno"
+msgstr "Skopírované"
 
 msgid "Copy to clipboard"
-msgstr "Kopírovat do schránky"
+msgstr "Kopírovať do schránky"
 
 msgid "Countries"
 msgstr "Krajiny"
@@ -392,7 +392,7 @@ msgid "Create VAT rate"
 msgstr "Vytvoriť sadzbu DPH"
 
 msgid "Create a strong new password to secure your account."
-msgstr "Vytvorte si nové, silné heslo pro váš účet."
+msgstr "Vytvorte si nové, silné heslo pre váš účet."
 
 msgid "Create bulk promo codes"
 msgstr "Vytvoriť hromadné promo kódy"
@@ -530,7 +530,7 @@ msgid "Customer has no delivery addresses."
 msgstr "Zákazník nemá žiadne dodacie adresy."
 
 msgid "Customer has no orders so far."
-msgstr "Zákazník zatíĺ nemá žiadne objednávky."
+msgstr "Zákazník zatiaľ nemá žiadne objednávky."
 
 msgid "Customer user role group"
 msgstr "Skupina rolí používateľa zákazníka"
@@ -602,10 +602,10 @@ msgid "Discount"
 msgstr "Zľava"
 
 msgid "Discount against basic price"
-msgstr "Zľava voprči základnej cene"
+msgstr "Zľava voči základnej cene"
 
 msgid "Display personal information"
-msgstr "Zobrazení osobních údajô"
+msgstr "Zobrazenie osobných údajov"
 
 msgid "Display personal information settings"
 msgstr "Zobraziť nastavenia osobných údajov"
@@ -617,7 +617,7 @@ msgid "Do you really want to delete this category?"
 msgstr "Naozaj chcete odstrániť túto kategóriu?"
 
 msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
-msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpojný od príbuzných záznamov."
+msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpojený od príbuzných záznamov."
 
 msgid "Do you really want to delete this item?"
 msgstr "Naozaj chcete odstrániť túto položku?"
@@ -677,7 +677,7 @@ msgid "Edit store"
 msgstr "Upraviť predajňu"
 
 msgid "Edit the combination with SEO values"
-msgstr "Editace kombinace se SEO hodnotami"
+msgstr "Úprava kombinácie s SEO hodnotami"
 
 msgid "Editing %entity_name%"
 msgstr "Úprava %entity_name%"
@@ -701,7 +701,7 @@ msgid "Editing banner"
 msgstr "Upravovanie banneru"
 
 msgid "Editing blog article"
-msgstr "Upravovanie blogu článku"
+msgstr "Upravovanie blogového článku"
 
 msgid "Editing blog category"
 msgstr "Úprava kategórie blogu"
@@ -737,7 +737,7 @@ msgid "Editing gift plan"
 msgstr "Úprava darčekového plánu"
 
 msgid "Editing holiday / internal day"
-msgstr "Editace sviatku / interného dne"
+msgstr "Úprava sviatku / interného dňa"
 
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr "Úprava sviatku / interného dňa - {{ name }}"
@@ -755,7 +755,7 @@ msgid "Editing payment"
 msgstr "Úprava platby"
 
 msgid "Editing price list"
-msgstr "Zoznam Editing price"
+msgstr "Úprava cenníka"
 
 msgid "Editing product"
 msgstr "Úprava produktu"
@@ -770,7 +770,7 @@ msgid "Editing shipping"
 msgstr "Úprava doručovania"
 
 msgid "Editing store"
-msgstr "Editace predajne"
+msgstr "Úprava predajne"
 
 msgid "Editing warehouse"
 msgstr "Úprava skladu"
@@ -794,7 +794,7 @@ msgid "Email templates"
 msgstr "E-mailové šablóny"
 
 msgid "Email templates settings"
-msgstr "Nastavenia Email templates"
+msgstr "Nastavenia e-mailových šablón"
 
 msgid "Emails are sent normally on this domain"
 msgstr "E-maily sa na tejto doméne odosielajú normálne"
@@ -806,19 +806,19 @@ msgid "Enable"
 msgstr "Povoliť"
 
 msgid "Enable two factor authentication via email"
-msgstr "Zapnout dvojfaktorové overování pomocí e-mailu"
+msgstr "Zapnúť dvojfaktorové overovanie pomocou e-mailu"
 
 msgid "Enable two factor authentication with Google Authenticator"
-msgstr "Zapnout dvojfaktorové overování pomocí Google Autentikátoru"
+msgstr "Zapnúť dvojfaktorové overovanie pomocou Google Autentikátora"
 
 msgid "Enable via email"
-msgstr "Zapnout pomocí e-mailu"
+msgstr "Zapnúť pomocou e-mailu"
 
 msgid "Enable with Google Authenticator"
-msgstr "Zapnout pomocí Google Autentikátoru"
+msgstr "Zapnúť pomocou Google Autentikátora"
 
 msgid "Enter a 6 digit authentication from your email."
-msgstr "Vložte 6 místný overovací kód z e-mailu"
+msgstr "Vložte 6-miestny overovací kód z e-mailu"
 
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr "Zadajte 6-miestny autentifikačný kód z vašej mobilnej aplikácie pre dvojfaktorovú autentifikáciu."
@@ -842,10 +842,10 @@ msgid "Export email list in CSV format"
 msgstr "Exportovať zoznam e-mailov vo formáte CSV"
 
 msgid "Extended SEO categories"
-msgstr "Rozšérené SEO kategórie"
+msgstr "Rozšírené SEO kategórie"
 
 msgid "Extended SEO category"
-msgstr "Rozšírená SEO kategórie"
+msgstr "Rozšírená SEO kategória"
 
 msgid "Extended SEO category %categoryName% - combinations"
 msgstr "Rozšírená SEO kategória %categoryName% - kombinácie"
@@ -890,7 +890,7 @@ msgid "Flags overview"
 msgstr "Prehľad značiek"
 
 msgid "For security reasons, password reset links are only valid for a limited time."
-msgstr "Z bezpečnostných dôvodô je odkaz na reset hesla platný pouze určitou dobu."
+msgstr "Z bezpečnostných dôvodov je odkaz na reset hesla platný iba určitú dobu."
 
 msgid "Free from order value"
 msgstr "Zadarmo od hodnoty objednávky"
@@ -935,16 +935,16 @@ msgid "Go to associated customer user"
 msgstr "Prejsť na priradeného zákazníka"
 
 msgid "Go to dashboard"
-msgstr "Jít na nástenku"
+msgstr "Prejsť na nástenku"
 
 msgid "Go to login page"
-msgstr "Jít na prihlašovací stránku"
+msgstr "Prejsť na prihlasovaciu stránku"
 
 msgid "Go to page:"
 msgstr "Prejsť na stránku:"
 
 msgid "Go to product advanced search"
-msgstr "Jít na pokročilé vyhľadávanie produktô"
+msgstr "Prejsť na pokročilé vyhľadávanie produktov"
 
 msgid "Granted"
 msgstr "Udelené"
@@ -968,13 +968,13 @@ msgid "If you cannot scan the QR code, you can manually enter the following secr
 msgstr "Ak nemôžete nascánovať QR kód, môžete ručne zadať nasledujúci tajný kľúč:"
 
 msgid "If you change currency settings, prices of all products will be recalculated"
-msgstr "Ak zmeníte nastavenia meny, ceny všetkých produktov budú prepóčítané"
+msgstr "Ak zmeníte nastavenia meny, ceny všetkých produktov budú prepočítané"
 
 msgid "Image"
 msgstr "Obrázok"
 
 msgid "Image will be deleted after saving"
-msgstr "Obrázek bude po uložení smazán."
+msgstr "Obrázok bude po uložení zmazaný."
 
 msgid "Import CSV"
 msgstr "Importovať CSV"
@@ -983,7 +983,7 @@ msgid "Import price list"
 msgstr "Importovať cenník"
 
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
-msgstr "V konkrétnej záložke domény nie je možné upraviť poradie a zařadenie kategórií. Prosím, choďte do detailu kategórie alebo do prehľadu kategórií všetkých domén"
+msgstr "V konkrétnej záložke domény nie je možné upraviť poradie a zaradenie kategórií. Prosím, choďte do detailu kategórie alebo do prehľadu kategórií všetkých domén"
 
 msgid "Incl. VAT"
 msgstr "Vrát. DPH"
@@ -1001,10 +1001,10 @@ msgid "Inquiry by"
 msgstr "Dopyt od"
 
 msgid "Invalid reset password hash for administrator"
-msgstr "Neplatné reset password hash for administrator"
+msgstr "Neplatný hash pre reset hesla administrátora"
 
 msgid "Invalid two-factor authentication code."
-msgstr "Neplatné two-factor authentication code."
+msgstr "Neplatný kód dvojfaktorového overenia."
 
 msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
 msgstr "Nie je možné aktualizovať poradie a odsadenie blog kategórií na konkrétnej záložke domény. Prosím, choďte do detailu kategórie alebo prehľadu blog kategórií pre všetky domény"
@@ -1052,7 +1052,7 @@ msgid "List of language constants"
 msgstr "Zoznam jazykových konštant"
 
 msgid "Loading"
-msgstr "Nahrávám"
+msgstr "Načítava sa"
 
 msgid "Location"
 msgstr "Umiestnenie"
@@ -1148,7 +1148,7 @@ msgid "New banner"
 msgstr "Nový banner"
 
 msgid "New blog article"
-msgstr "Nový blogu článok"
+msgstr "Nový blogový článok"
 
 msgid "New blog category"
 msgstr "Nová kategória blogu"
@@ -1160,7 +1160,7 @@ msgid "New category"
 msgstr "Nová kategória"
 
 msgid "New closed day"
-msgstr "Nový zatvorť deň"
+msgstr "Nový zatvorený deň"
 
 msgid "New country"
 msgstr "Nová krajina"
@@ -1172,7 +1172,7 @@ msgid "New customer user role group"
 msgstr "Nová skupina rolí zákazníckeho používateľa"
 
 msgid "New customers"
-msgstr "Nových zákazníkô"
+msgstr "Noví zákazníci"
 
 msgid "New delivery address"
 msgstr "Nová dodacia adresa"
@@ -1259,7 +1259,7 @@ msgid "No combinations of SEO categories found."
 msgstr "Neboli nájdené žiadne kombinácie SEO kategórií."
 
 msgid "No complaint statuses found."
-msgstr "Nenájdené žiadne stavy reklamacía."
+msgstr "Nenájdené žiadne stavy reklamácií."
 
 msgid "No complaints found."
 msgstr "Neboli nájdené žiadne reklámacie."
@@ -1328,19 +1328,19 @@ msgid "No product list found."
 msgstr "Nebol nájdený žiadny cenník."
 
 msgid "No promo codes found. You have to create some first."
-msgstr "Neboli nájdené žiadne zlâavové kupóny. Najskôr musíte nejaký vytvoriť."
+msgstr "Neboli nájdené žiadne zľavové kupóny. Najskôr musíte nejaký vytvoriť."
 
 msgid "No records found."
 msgstr "Neboli nájdené žiadne záznamy."
 
 msgid "No results found"
-msgstr "Nebyly nalezeny žádné výsledky."
+msgstr "Neboli nájdené žiadne výsledky."
 
 msgid "No sales representatives found."
 msgstr "Neboli nájdení žiadni obchodní zástupcovia."
 
 msgid "No shipping created so far."
-msgstr "Zatíĺ nebola vytvorená žiadna doprava."
+msgstr "Zatiaľ nebola vytvorená žiadna doprava."
 
 msgid "No store is created. You have to create one first."
 msgstr "Nie je vytvorená žiadna predajňa. Najskôr musíte jednu vytvoriť."
@@ -1367,7 +1367,7 @@ msgid "Notification bar"
 msgstr "Panel s upozorneniami"
 
 msgid "Notification bars"
-msgstr "Notifikační lišty"
+msgstr "Panely s upozorneniami"
 
 msgid "Number of selected products is not limited, however only %limit% will be displayed on frontend."
 msgstr "Počet vybraných produktov nie je obmedzený, avšak na frontende sa zobrazí iba %limit%."
@@ -1385,7 +1385,7 @@ msgid "Open in a new tab"
 msgstr "Otvoriť v novej karte"
 
 msgid "Open user menu"
-msgstr "Otevrít menu uživatele"
+msgstr "Otvoriť menu používateľa"
 
 msgid "Order Nr."
 msgstr "Č. objednávky"
@@ -1409,7 +1409,7 @@ msgid "Order statuses"
 msgstr "Stavy objednávok"
 
 msgid "Order statuses overview"
-msgstr "Prehľad Order statuses"
+msgstr "Prehľad stavov objednávok"
 
 msgid "Order submitted page setting"
 msgstr "Nastavenie stránky odoslanej objednávky"
@@ -1424,7 +1424,7 @@ msgid "Orders & Customers"
 msgstr "Objednávky a zákazníci"
 
 msgid "Orders overview"
-msgstr "Prehľad Orders"
+msgstr "Prehľad objednávok"
 
 msgid "Orders sold"
 msgstr "Predaných objednávok"
@@ -1433,7 +1433,7 @@ msgid "Overview"
 msgstr "Prehľad"
 
 msgid "Paid amount"
-msgstr "Zaplatena suma"
+msgstr "Zaplatená suma"
 
 msgid "Parameter"
 msgstr "Parameter"
@@ -1445,7 +1445,7 @@ msgid "Parameter groups"
 msgstr "Skupiny parametrov"
 
 msgid "Parameter groups overview"
-msgstr "Prehľad Parameter groups"
+msgstr "Prehľad skupín parametrov"
 
 msgid "Parameter value of type color"
 msgstr "Hodnota parametra typu farba"
@@ -1457,7 +1457,7 @@ msgid "Parameters"
 msgstr "Parametre"
 
 msgid "Parameters overview"
-msgstr "Prehľad Parameters"
+msgstr "Prehľad parametrov"
 
 msgid "Payment"
 msgstr "Platba"
@@ -1478,13 +1478,13 @@ msgid "Personal information export"
 msgstr "Export osobných informácií"
 
 msgid "Personal information overview"
-msgstr "Prehľad Personal information"
+msgstr "Prehľad osobných informácií"
 
 msgid "Phone"
 msgstr "Telefón"
 
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
-msgstr "Ospravedlňujeme se za tuto chybu, pracujeme na její oprave. V prípade potreby nás kontaktujte e-mailem alebo telefonicky."
+msgstr "Ospravedlňujeme sa za túto chybu, pracujeme na jej oprave. V prípade potreby nás kontaktujte e-mailom alebo telefonicky."
 
 msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
 msgstr "Prosím, naskenujte nižšie uvedený QR kód pomocou aplikácie pre generovanie jednorazových prístupových kódov (ako je Google Authenticator)."
@@ -1499,16 +1499,16 @@ msgid "Preview"
 msgstr "Náhľad"
 
 msgid "Price including VAT"
-msgstr "Cena including DPH"
+msgstr "Cena vrátane DPH"
 
 msgid "Price including VAT rounding"
 msgstr "Zaokrúhlenie ceny s DPH"
 
 msgid "Price list"
-msgstr "Zoznam Price"
+msgstr "Cenník"
 
 msgid "Price list overview"
-msgstr "Prehľad Price list"
+msgstr "Prehľad cenníkov"
 
 msgid "Price lists"
 msgstr "Cenníky"
@@ -1523,7 +1523,7 @@ msgid "Privacy policy article setting"
 msgstr "Nastavenie článku o zásadách ochrany osobných údajov"
 
 msgid "Privacy policy settings"
-msgstr "Nastavenia Privacy policy"
+msgstr "Nastavenia zásad ochrany osobných údajov"
 
 msgid "Product"
 msgstr "Produkt"
@@ -1544,7 +1544,7 @@ msgid "Products & Catalog"
 msgstr "Produkty a katalóg"
 
 msgid "Products overview"
-msgstr "Prehľad Products"
+msgstr "Prehľad produktov"
 
 msgid "Promo code"
 msgstr "Promo kód"
@@ -1568,7 +1568,7 @@ msgid "Quantity"
 msgstr "Množstvo"
 
 msgid "Quick Domain Filter"
-msgstr "Rýchly filtr dle domény"
+msgstr "Rýchly filter podľa domény"
 
 msgid "Quick product search"
 msgstr "Rýchle vyhľadávanie v produktoch"
@@ -1640,10 +1640,10 @@ msgid "SEO pages"
 msgstr "SEO stránky"
 
 msgid "Sale including/excluding VAT"
-msgstr "Prodej s/bez DPH"
+msgstr "Predaj s/bez DPH"
 
 msgid "Sale including/excluding VAT settings"
-msgstr "Nastavení prodeje s/bez DPH"
+msgstr "Nastavenia predaja s/bez DPH"
 
 msgid "Sales representative"
 msgstr "Obchodný zástupca"
@@ -1655,16 +1655,16 @@ msgid "Saturday"
 msgstr "Sobota"
 
 msgid "Save changes"
-msgstr "Uložiť changes"
+msgstr "Uložiť zmeny"
 
 msgid "Save changes in order"
-msgstr "Uložiť changes in order"
+msgstr "Uložiť zmeny v objednávke"
 
 msgid "Scaled promo code"
 msgstr "Stupnicový promo kód"
 
 msgid "Scan QR code"
-msgstr "Skenovas QR kód"
+msgstr "Skenovať QR kód"
 
 msgid "Schedule"
 msgstr "Rozvrh"
@@ -1679,7 +1679,7 @@ msgid "Search by code..."
 msgstr "Hľadať podľa kódu..."
 
 msgid "Search by email"
-msgstr "Vyhľadať podle e-mailu"
+msgstr "Vyhľadať podľa e-mailu"
 
 msgid "Search by filename, extension or translated name..."
 msgstr "Hľadať podľa názvu súboru, prípony alebo preloženého názvu..."
@@ -1703,7 +1703,7 @@ msgid "Search in uploaded files by filename, extension or translated name. It is
 msgstr "Hľadať v nahraných súboroch podľa názvu súboru, prípony alebo preloženého názvu. Je možné použiť zástupné znaky * a ?."
 
 msgid "Search navigation"
-msgstr "Vyhľadať v navigaci"
+msgstr "Vyhľadať v navigácii"
 
 msgid "Searching in all currencies"
 msgstr "Hľadanie vo všetkých menách"
@@ -1799,7 +1799,7 @@ msgid "Shippings and payments"
 msgstr "Doprava a platby"
 
 msgid "Show all customer orders"
-msgstr "Zobraziť all customer orders"
+msgstr "Zobraziť všetky objednávky zákazníka"
 
 msgid "Site"
 msgstr "Stránka"
@@ -1877,7 +1877,7 @@ msgid "The current list of URL addresses can be found in the project's repositor
 msgstr "Aktuálny zoznam URL adries môže byť nájdený v repositári projektu v súbore \"storefront/config/staticRewritePaths.js\"."
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
-msgstr "Odkaz pro resetování hesla je neplatný, expirovaný alebo již byl použit."
+msgstr "Odkaz na resetovanie hesla je neplatný, expirovaný alebo už bol použitý."
 
 msgid "The product has no specified name for the locale."
 msgstr "Produkt nemá stanovený názov pre daný jazyk."
@@ -1949,7 +1949,7 @@ msgid "To whole numbers"
 msgstr "Na celé čísla"
 
 msgid "Toggle navigation"
-msgstr "Zobraziť/skrýt navigaci"
+msgstr "Zobraziť/skryť navigáciu"
 
 msgid "Top categories"
 msgstr "Top kategórie"
@@ -1961,13 +1961,13 @@ msgid "Total"
 msgstr "Celkom"
 
 msgid "Total excluding VAT"
-msgstr "Celkom excluding VAT"
+msgstr "Celkom bez DPH"
 
 msgid "Total including VAT"
-msgstr "Celkom including VAT"
+msgstr "Celkom vrátane DPH"
 
 msgid "Total price including VAT"
-msgstr "Celkom price including VAT"
+msgstr "Celková cena vrátane DPH"
 
 msgid "Transfer issues"
 msgstr "Problémy v prenosech"
@@ -1982,7 +1982,7 @@ msgid "Transports and payments"
 msgstr "Prepravy a platby"
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."
-msgstr "Zkuste upraviť své hledání alebo filtr, aby ste našli, co hľadáte, alebo vytvorte nový záznam, pokud je to potreba."
+msgstr "Skúste upraviť svoje vyhľadávanie alebo filter, aby ste našli, čo hľadáte, alebo vytvorte nový záznam, ak je to potrebné."
 
 msgid "Tuesday"
 msgstr "Utorok"
@@ -2000,10 +2000,10 @@ msgid "URL will be deleted after saving."
 msgstr "URL bude vymazané po uložení."
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
-msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
+msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je ako naschvál!"
 
 msgid "Undo delete"
-msgstr "Zrušit smazání"
+msgstr "Zrušiť vymazanie"
 
 msgid "Unit"
 msgstr "Jednotka"
@@ -2015,7 +2015,7 @@ msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
 
 msgid "Unlimited"
-msgstr "Neobmedzene"
+msgstr "Neobmedzené"
 
 msgid "Unused friendly URL list"
 msgstr "Zoznam Unused friendly URL"
@@ -2027,7 +2027,7 @@ msgid "Upload files"
 msgstr "Nahrať súbory"
 
 msgid "Upon inquiry"
-msgstr "Na dopovedanie"
+msgstr "Na dopytovanie"
 
 msgid "Upon inquiry [abbreviation]"
 msgstr "?"
@@ -2048,7 +2048,7 @@ msgid "User consent policy settings"
 msgstr "Nastavenia User consent policy"
 
 msgid "Using price calculation has been disabled, don't forget to edit all prices."
-msgstr "Prepočítavanie cín bolo zakázané, nezabudnite upravovať všetky ceny."
+msgstr "Prepočítavanie cien bolo zakázané, nezabudnite upravovať všetky ceny."
 
 msgid "VAT"
 msgstr "DPH"
@@ -2066,16 +2066,16 @@ msgid "VAT rates"
 msgstr "sadzby DPH"
 
 msgid "Valid from"
-msgstr "Planosť od"
+msgstr "Platnosť od"
 
 msgid "Valid to"
-msgstr "Planosť do"
+msgstr "Platnosť do"
 
 msgid "Value"
 msgstr "Hodnota"
 
 msgid "Value of bought products after application of all discounts and promo codes without price of shipping and payment"
-msgstr "Hodnota nákupených produktov po aplikácii všetkých zľav a promo kódov bez ceny dopravy a platby"
+msgstr "Hodnota kúpených produktov po aplikácii všetkých zľav a promo kódov bez ceny dopravy a platby"
 
 msgid "Variant"
 msgstr "Variant"
@@ -2120,7 +2120,7 @@ msgid "Watchdogs overview"
 msgstr "Prehľad Watchdogs"
 
 msgid "We have nothing to show you at this url."
-msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
+msgstr "Na tejto URL adrese nemáme nič, čo by sme Vám ukázali."
 
 msgid "Weak"
 msgstr "Slabé"
@@ -2129,7 +2129,7 @@ msgid "Wednesday"
 msgstr "Streda"
 
 msgid "When changing the default currency there is no recalculation of prices"
-msgstr "Pri zmene predvolenej meny nedôjde k prepôčtu cien"
+msgstr "Pri zmene predvolenej meny nedôjde k prepočtu cien"
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
 msgstr "Pri vytváraní novej cenovej skupiny budťte trpezliví. Aplikácia musí prepôčítať cenu pre každý produkt na e-shope. Produkty bez prepôčítanej ceny nebudú zobrazené na e-shope. Naprie. trvanie prepôčítania 2000 produktov trvanie a jedna hodina."
@@ -2147,10 +2147,10 @@ msgid "You can change the settings <a href=\"%linkUrl%\">here</a>."
 msgstr "Nastavenia môžete zmeniť <a href=\"%linkUrl%\">tu</a>."
 
 msgid "You can drag additional content here."
-msgstr "Môžete sem potiahnungsť dodatočný obsah."
+msgstr "Môžete sem potiahnuť dodatočný obsah."
 
 msgid "You can drag articles here."
-msgstr "Môžete sem potiahnugsť články."
+msgstr "Môžete sem potiahnuť články."
 
 msgid "You cannot choose product that is main variant"
 msgstr "Nemôžete vybrať produkt, ktorý je hlavnou variantou"
@@ -2177,10 +2177,10 @@ msgid "brands"
 msgstr "značiek"
 
 msgid "complaint statuses"
-msgstr "stavy reklamacía"
+msgstr "stavy reklamácií"
 
 msgid "complaints"
-msgstr "reklámacíe"
+msgstr "reklamácie"
 
 msgid "countries"
 msgstr "štáty"
@@ -2252,7 +2252,7 @@ msgid "subscribers"
 msgstr "odberateľia"
 
 msgid "type&nbsp;%key%&nbsp;to search"
-msgstr "stisknete&nbsp;%key%&nbsp;pro hledání"
+msgstr "stlačte&nbsp;%key%&nbsp;pre vyhľadávanie"
 
 msgid "units"
 msgstr "jednotky"
