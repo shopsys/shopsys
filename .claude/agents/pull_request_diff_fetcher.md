@@ -61,16 +61,16 @@ Fetch complete PR data using the best available method and return structured inf
 - Commit messages
 - Success: true
 
-### Method 2: WebFetch (fallback if gh not available)
+### Method 2: WebFetch with GitHub API (fallback if gh not available)
 
-**Step 1: Extract PR metadata**
+**Step 1: Extract PR metadata using GitHub REST API**
 
 ```
-WebFetch: https://github.com/shopsys/shopsys/pull/{PR_NUMBER}
-Prompt: "Extract the base branch name from 'wants to merge X commits into [BASE_BRANCH] from [HEAD_BRANCH]'. Also extract PR title, description, and labels."
+WebFetch: https://api.github.com/repos/shopsys/shopsys/pulls/{PR_NUMBER}
+Prompt: "Extract from this JSON: base.ref (base branch name), title, body (description), labels[].name (label names), head.ref (head branch name)"
 ```
 
-Store the BASE branch - you'll need it if diff is large.
+Store the BASE branch (`base.ref`) - you'll need it if diff is large.
 
 **Step 2: Get complete diff**
 
@@ -79,11 +79,11 @@ WebFetch: https://patch-diff.githubusercontent.com/raw/shopsys/shopsys/pull/{PR_
 Prompt: "Return the complete diff content exactly as-is"
 ```
 
-**Step 3: Get commits**
+**Step 3: Get commits using GitHub REST API**
 
 ```
-WebFetch: https://github.com/shopsys/shopsys/pull/{PR_NUMBER}/commits
-Prompt: "Extract commit messages, looking for keywords: 'move', 'moved', 'moving' combined with 'from project-base' or 'to package'"
+WebFetch: https://api.github.com/repos/shopsys/shopsys/pulls/{PR_NUMBER}/commits
+Prompt: "Extract commit messages from the JSON array (commit.message field for each item), looking for keywords: 'move', 'moved', 'moving' combined with 'from project-base' or 'to package'"
 ```
 
 **Step 4: Decide if local git needed**
