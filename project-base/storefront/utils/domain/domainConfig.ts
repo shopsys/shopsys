@@ -1,4 +1,4 @@
-import { getBaseUrlWithLocale } from './domainUtils';
+import { getBaseUrlWithLocale, DEFAULT_LOCALE } from './domainUtils';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
@@ -33,7 +33,7 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
 
     const normalizedDomain = domainUrl.replace(':3000', ':8000');
     const hostWithLocale = getBaseUrlWithLocale(normalizedDomain, locale);
-    const isDefaultLocale = locale === 'default';
+    const isDefaultLocale = locale === DEFAULT_LOCALE;
 
     for (const domainConfig of domainsConfig) {
         const configDomainUrl = new URL(domainConfig.url || '');
@@ -71,9 +71,11 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
         }
     }
 
-    const cdnDomainHost = getBaseUrlWithLocale(new URL(cdnDomain).host, locale);
-    if (hostWithLocale === cdnDomainHost) {
-        return domainsConfig[0];
+    if (cdnDomain.length > 0) {
+        const cdnDomainHost = getBaseUrlWithLocale(new URL(cdnDomain).host, locale);
+        if (hostWithLocale === cdnDomainHost) {
+            return domainsConfig[0];
+        }
     }
 
     throw new Error(`Domain '${hostWithLocale}' is not configured`);
