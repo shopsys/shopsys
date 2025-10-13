@@ -30,7 +30,7 @@ class FeedPathProvider
      */
     public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
     {
-        return $domainConfig->getUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
+        return $domainConfig->getBaseUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
     /**
