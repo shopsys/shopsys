@@ -47,6 +47,7 @@ final class ParameterFormType extends AbstractType
     {
         $builder
             ->add('name', LocalizedType::class, [
+                'label' => 'Name',
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [
@@ -58,10 +59,12 @@ final class ParameterFormType extends AbstractType
                 ],
             ])
             ->add('parameterType', ChoiceType::class, [
+                'label' => 'Parameter type',
                 'required' => true,
                 'choices' => Parameter::PARAMETER_TYPES,
             ])
             ->add('unit', ChoiceType::class, [
+                'label' => 'Unit',
                 'required' => false,
                 'choices' => $this->unitFacade->getAll(),
                 'placeholder' => t('-- Choose unit --'),
@@ -69,6 +72,7 @@ final class ParameterFormType extends AbstractType
                 'choice_value' => 'id',
             ])
             ->add('orderingPriority', NumberType::class, [
+                'label' => 'Ordering priority',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter parameter ordering priority']),
@@ -78,6 +82,7 @@ final class ParameterFormType extends AbstractType
                 ),
             ])
             ->add('group', ChoiceType::class, [
+                'label' => 'Group',
                 'placeholder' => t('-- Choose group --'),
                 'required' => false,
                 'choices' => $this->parameterGroupFacade->getAll(),

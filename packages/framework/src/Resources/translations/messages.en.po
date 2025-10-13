@@ -859,6 +859,9 @@ msgstr ""
 msgid "Default store"
 msgstr ""
 
+msgid "Default unit"
+msgstr ""
+
 msgid "Default unit settings modified"
 msgstr ""
 
@@ -2236,6 +2239,9 @@ msgstr ""
 msgid "Ordering"
 msgstr ""
 
+msgid "Ordering priority"
+msgstr ""
+
 msgid "Orders"
 msgstr ""
 
@@ -2291,6 +2297,9 @@ msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edi
 msgstr ""
 
 msgid "Parameter groups"
+msgstr ""
+
+msgid "Parameter type"
 msgstr ""
 
 msgid "Parameter value"
