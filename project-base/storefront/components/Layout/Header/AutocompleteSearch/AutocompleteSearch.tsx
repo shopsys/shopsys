@@ -10,12 +10,13 @@ import {
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageViewEvents/useGtmAutocompleteResultsViewEvent';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
+import { useFocusTrap } from 'utils/useFocusTrap';
 
 const AutocompleteSearchPopup = dynamic(() =>
     import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
@@ -28,6 +29,8 @@ export const AutocompleteSearch: FC = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
+    const searchSectionRef = useRef<HTMLDivElement>(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
     const [searchData, setSearchData] = useState<TypeAutocompleteSearchQuery>();
@@ -83,28 +86,43 @@ export const AutocompleteSearch: FC = () => {
         }
     };
 
+    const handleClosePopup = () => {
+        setIsSearchResultsPopupOpen(false);
+        searchInputRef.current?.focus();
+    };
+
+    const handleOpenPopup = () => {
+        if (shouldShowPopup) {
+            setIsSearchResultsPopupOpen(true);
+        }
+    };
+
     useGtmAutocompleteResultsViewEvent(searchData, debouncedSearchQuery);
+
+    useFocusTrap(isSearchResultsPopupVisible ? searchSectionRef : undefined);
 
     return (
         <>
             <div
                 aria-label={t('Site search section', { ns: 'accessibility' })}
+                ref={searchSectionRef}
                 role="search"
                 className={twJoin(
                     'relative flex w-full transition-all',
                     isSearchResultsPopupVisible && 'z-aboveOverlay',
                 )}
-                onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
                     aria-haspopup="listbox"
                     ariaLabelForSearchButton={t('Go to search page', { ns: 'accessibility' })}
                     className="w-full"
+                    inputRef={searchInputRef}
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}
                     value={searchQueryValue}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
                     onClear={() => setSearchQueryValue('')}
+                    onOpenPopup={handleOpenPopup}
                     onSearch={handleSearch}
                 />
 
@@ -116,13 +134,13 @@ export const AutocompleteSearch: FC = () => {
                             autocompleteSearchResults={searchData}
                             favoritesData={favoritesData}
                             showFavorites={showFavorites}
-                            onClosePopupCallback={() => setIsSearchResultsPopupOpen(false)}
+                            onClosePopupCallback={handleClosePopup}
                         />
                     )}
                 </AnimatePresence>
             </div>
 
-            <Overlay isActive={isSearchResultsPopupVisible} onClick={() => setIsSearchResultsPopupOpen(false)} />
+            <Overlay isActive={isSearchResultsPopupVisible} onClick={handleClosePopup} />
         </>
     );
 };

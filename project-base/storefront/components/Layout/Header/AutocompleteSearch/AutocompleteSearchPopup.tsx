@@ -19,6 +19,7 @@ import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { fadeAnimation } from 'utils/animations/animationVariants';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useKeypress } from 'utils/useKeyPress';
 
 type AutocompleteProps = {
     autocompleteSearchResults: TypeAutocompleteSearchQuery | undefined;
@@ -52,6 +53,8 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
     const showSearchResults = !showFavorites;
 
+    useKeypress('Escape', () => onClosePopupCallback());
+
     return (
         <RemoveScroll>
             <m.div
@@ -81,6 +84,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                     !isWithResults && (
                         <div className="flex items-center">
                             <IconImage alt="warning" icon="warning" />
+
                             <span className="flex-1 pl-4 text-sm">
                                 {t('Could not find any results for the given query.')}
                             </span>

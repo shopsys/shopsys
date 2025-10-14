@@ -4,7 +4,7 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type FlagProps = {
     href?: string;
-    type?: 'blog' | 'discount';
+    type?: 'blog' | 'discount' | 'highlight';
     rgbBgColor?: string;
     ariaLabel?: string;
 };
@@ -21,6 +21,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
         type === 'blog' && 'bg-secondary-500',
         type === 'blog' && href && 'hover:bg-background-accent-more',
         type === 'discount' && 'bg-price-discounted',
+        type === 'highlight' && 'bg-primary-500',
         className,
     );
 

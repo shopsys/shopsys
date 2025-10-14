@@ -1,5 +1,6 @@
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Flag } from 'components/Basic/Flag/Flag';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -79,20 +80,21 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 className={twMergeCustom(
                     'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border pb-5 text-left transition select-text',
-                    size === 'small' && 'gap-0 py-2.5',
+                    size === 'small' && 'gap-0 pb-0',
                     'hover:border-border-less hover:bg-background-default',
-                    highlightBadgeText && 'border-2 border-red-600',
+                    highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
                     className,
                 )}
             >
                 {highlightBadgeText && (
-                    <span className="absolute top-2 left-2 z-10 rounded bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                        {highlightBadgeText}
-                    </span>
+                    <div className="z-above absolute top-5 right-2.5 items-end sm:right-5">
+                        <Flag type="highlight">{highlightBadgeText}</Flag>
+                    </div>
                 )}
+
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="text-text-default hover:text-link-default flex grow no-underline select-text hover:no-underline"
+                    className="text-text-default hover:text-link-default flex grow rounded-xl no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     tabIndex={allowKeyboardFocus ? 0 : -1}
@@ -107,7 +109,12 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <div className="flex w-full flex-col gap-2.5 px-2.5 pt-5 sm:px-5">
+                    <div
+                        className={twMergeCustom(
+                            'flex w-full flex-col gap-2.5 px-2.5 pt-5 sm:px-5',
+                            size === 'small' && 'py-4 pt-4 pb-4',
+                        )}
+                    >
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
                         <h3
