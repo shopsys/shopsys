@@ -3,6 +3,102 @@ import { TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
 import { PERSIST_STORE_NAME, products, user } from 'fixtures/demodata';
 
+Cypress.Commands.add('checkGQL', { prevSubject: true }, (subject: Cypress.Response<any>, operationName: string) => {
+    // Defer all work into Cypress chain so cy.log entries render in GUI before any throw
+    return cy.wrap(subject, { log: false }).then((response) => {
+        // Normalize body to object
+        let body: any = response?.body;
+        if (typeof body === 'string') {
+            try {
+                body = JSON.parse(body);
+            } catch (e) {
+                cy.log(`[GQL] ${operationName} non-JSON response (status ${response.status})`);
+                return cy.then(() => {
+                    throw new Error(
+                        `[GQL] ${operationName} failed: response body is not valid JSON (status ${response.status})`,
+                    );
+                });
+            }
+        }
+
+        const errors = body?.errors as
+            | Array<{
+                  message: string;
+                  path?: (string | number)[];
+                  extensions?:
+                      | (Record<string, unknown> & {
+                            code?: number | string;
+                            userCode?: string | null;
+                            validation?: Record<string, Array<{ code?: string; message?: string } | string>>;
+                        })
+                      | undefined;
+              }>
+            | undefined;
+        const data = body?.data;
+
+        if (Array.isArray(errors) && errors.length > 0) {
+            const first = errors[0];
+            const pathStr = first.path ? first.path.join('.') : undefined;
+
+            const validation = first.extensions?.validation;
+            const validationMessages: string[] = [];
+            if (validation && typeof validation === 'object') {
+                Object.entries(validation).forEach(([field, issues]) => {
+                    const cleanField = field.startsWith('input.') ? field.replace(/^input\./, '') : field;
+                    if (Array.isArray(issues)) {
+                        for (const issue of issues) {
+                            if (issue && typeof issue === 'object') {
+                                const code = (issue as any).code ? ` [${(issue as any).code}]` : '';
+                                const message = (issue as any).message ?? String(issue);
+                                validationMessages.push(`${cleanField}: ${message}${code}`);
+                            } else {
+                                validationMessages.push(`${cleanField}: ${String(issue)}`);
+                            }
+                        }
+                    }
+                });
+            }
+
+            const extCode = first.extensions && (first.extensions as any).code;
+            const userCode = first.extensions && (first.extensions as any).userCode;
+
+            let detailedMessage = `${first.message}`;
+            if (validationMessages.length > 0) {
+                detailedMessage += `\nValidation:\n- ${validationMessages.join('\n- ')}`;
+            }
+            const summary = `${detailedMessage}${pathStr ? ` @ ${pathStr}` : ''}`;
+
+            cy.log(
+                `[GQL] ${operationName} failed (status ${response.status}${
+                    extCode || userCode ? `, code ${extCode ?? ''}${userCode ? `, userCode ${userCode}` : ''}` : ''
+                }):`,
+            );
+            if (validationMessages.length > 0) {
+                cy.log(`Validation:\n- ${validationMessages.join('\n- ')}`);
+            } else {
+                cy.log(first.message);
+            }
+
+            return cy.then(() => {
+                const codeInfo =
+                    extCode || userCode ? `, code ${extCode ?? ''}${userCode ? `, userCode ${userCode}` : ''}` : '';
+                throw new Error(`[GQL] ${operationName} failed: ${summary} (status ${response.status}${codeInfo})`);
+            });
+        }
+
+        if (typeof data === 'undefined') {
+            cy.log(`[GQL] ${operationName} missing both data and errors (status ${response.status})`);
+            return cy.then(() => {
+                throw new Error(
+                    `[GQL] ${operationName} failed: missing both data and errors (status ${response.status})`,
+                );
+            });
+        }
+
+        return data;
+    });
+});
+
 Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?: number) => {
     const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
 
@@ -39,8 +135,10 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
                     'Content-Type': 'application/json',
                     ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
                 },
+                failOnStatusCode: false,
             })
-            .its('body.data.AddToCart.cart');
+            .checkGQL('AddToCartMutation')
+            .its('AddToCart.cart');
     });
 });
 
@@ -80,8 +178,10 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
                     'Content-Type': 'application/json',
                     ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
                 },
+                failOnStatusCode: false,
             })
-            .its('body.data.ApplyPromoCodeToCart')
+            .checkGQL('ApplyPromoCodeToCartMutation')
+            .its('ApplyPromoCodeToCart')
             .then((cart) => {
                 expect(cart.uuid).equal(cartUuid);
                 const responsePromoCode = cart.promoCodes.find(
@@ -135,8 +235,10 @@ Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickup
                     'Content-Type': 'application/json',
                     ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
                 },
+                failOnStatusCode: false,
             })
-            .its('body.data.ChangeTransportInCart')
+            .checkGQL('ChangeTransportInCartMutation')
+            .its('ChangeTransportInCart')
             .then((cart) => {
                 expect(cart.uuid).equal(cartUuid);
                 expect(cart.transport.uuid).equal(transportUuid);
@@ -188,8 +290,10 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
                     'Content-Type': 'application/json',
                     ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
                 },
+                failOnStatusCode: false,
             })
-            .its('body.data.ChangePaymentInCart')
+            .checkGQL('ChangePaymentInCartMutation')
+            .its('ChangePaymentInCart')
             .then((cart) => {
                 expect(cart.uuid).equal(cartUuid);
                 expect(cart.payment.uuid).equal(paymentUuid);
@@ -219,8 +323,10 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
             headers: {
                 'Content-Type': 'application/json',
             },
+            failOnStatusCode: false,
         })
-        .its('body.data.Register')
+        .checkGQL('RegistrationMutation')
+        .its('Register')
         .then((registrationResponse) => {
             if (shouldLogin) {
                 expect(registrationResponse.tokens.accessToken).to.be.a('string').and.not.be.empty;
@@ -266,12 +372,12 @@ Cypress.Commands.add('login', (email = user.email, password = user.password) => 
                     productListsUuids: [],
                 },
             },
+            failOnStatusCode: false,
         })
-            // .its('body.data')
-            .then((res) => {
-                console.log(res);
-                accessToken = res.body.data.Login.tokens.accessToken;
-                refreshToken = res.body.data.Login.tokens.refreshToken;
+            .checkGQL('LoginMutation')
+            .then((data) => {
+                accessToken = data.Login.tokens.accessToken;
+                refreshToken = data.Login.tokens.refreshToken;
 
                 cy.log('Customer login - ' + user.email);
                 if (accessToken) {
@@ -316,9 +422,11 @@ Cypress.Commands.add('logout', () => {
                     'Content-Type': 'application/json',
                     ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
                 },
+                failOnStatusCode: false,
             })
-            .then((logoutResponse) => {
-                expect(logoutResponse.body.data.Logout).to.be.true;
+            .checkGQL('LogoutMutation')
+            .then((data) => {
+                expect(data.Logout).to.be.true;
                 cy.clearCookie('accessToken-1');
                 cy.clearCookie('refreshToken-1');
             });
@@ -416,7 +524,9 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                     'Content-Type': 'application/json',
                     ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
                 },
+                failOnStatusCode: false,
             })
-            .its('body.data.CreateOrder.order');
+            .checkGQL('CreateOrderMutation')
+            .its('CreateOrder.order');
     });
 });

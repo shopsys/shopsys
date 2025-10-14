@@ -26,6 +26,86 @@ Here you can put various global helpers, such as custom cypress commands, or sim
 
 You can put all commands or support functions related to API (such as manual mutations or queries) in `/support/api.ts`.
 
+#### GraphQL requests and `checkGQL`
+
+For GraphQL requests, prefer the `checkGQL` child command defined in `project-base/storefront/cypress/support/api.ts`. It makes requests fail fast with a helpful error message instead of timing out when `body.data.*` is missing.
+
+- Always set `failOnStatusCode: false` on `cy.request` so the error payload can be read even on HTTP 4xx/5xx.
+- Call `.checkGQL('<OperationName>')` right after the request. The operation name must be explicit.
+- On success, `checkGQL` yields `body.data` so you can chain `.its('...')` or `.then(...)` directly.
+- On error, the command throws with a rich message: `[GQL] <Operation> failed: <message> (status <code>[, code <extCode>[, userCode <userCode>]])`.
+    - If GraphQL returns `extensions.validation`, it is flattened under a `Validation:` section with the `input.` prefix removed from field names.
+- Logging: `checkGQL` writes a `cy.log` entry before throwing so the GUI log always shows what failed.
+
+Usage examples
+
+- Success path (example: add to cart):
+
+```
+cy.request({
+  method: 'POST',
+  url: 'graphql/',
+  headers: { 'Content-Type': 'application/json', /* optionally: 'X-Auth-Token': `Bearer ${accessToken}` */ },
+  body: JSON.stringify({
+    operationName: 'AddToCartMutation',
+    query: `mutation AddToCartMutation($input: AddToCartInput!) { AddToCart(input: $input) { cart { uuid } } }`,
+    variables: { input: { cartUuid, productUuid, quantity: 1 } },
+  }),
+  failOnStatusCode: false,
+})
+  .checkGQL('AddToCartMutation')
+  .its('AddToCart.cart.uuid')
+  .then((uuid) => { /* assertions */ });
+```
+
+- Negative/validation scenario (two options):
+    - Prefer asserting on the thrown message using `Cypress.once('fail', ...)` (keeps the command consistent and still fail-fast):
+
+```
+Cypress.once('fail', (err) => {
+  expect(String(err.message)).to.contain('RegistrationMutation failed');
+  expect(String(err.message)).to.match(/Validation:/);
+  expect(String(err.message)).not.to.contain('input.');
+  return false; // prevent the test from failing after verifying the error
+});
+
+cy.request({ /* ... invalid input ... */, failOnStatusCode: false })
+  .checkGQL('RegistrationMutation');
+```
+
+- Or, if you need to inspect `errors` without throwing, skip `checkGQL` and assert on `response.body.errors` manually:
+
+```
+cy.request({ /* ... */, failOnStatusCode: false }).then((res) => {
+  const body = typeof res.body === 'string' ? JSON.parse(res.body) : res.body;
+  expect(body.errors).to.be.an('array').and.not.empty;
+  // further assertions
+});
+```
+
+Migration from `.its('body.data.*')`
+
+- Before:
+    - `cy.request(...).its('body.data.Product')`
+- After:
+    - `cy.request({ ..., failOnStatusCode: false }).checkGQL('ProductQuery').its('Product')`
+
+Headers and auth
+
+- Many helpers in `support/api.ts` take care of auth cookies/headers for you. If writing raw requests:
+    - Set `Content-Type: application/json`.
+    - When needed, add `'X-Auth-Token': 'Bearer ' + accessToken` (read from `cy.getCookie('accessToken')`).
+
+JSON envelope
+
+- Prefer sending the GraphQL envelope as a JSON string via `body: JSON.stringify({ operationName, query, variables })` for consistency and to avoid payload-type mismatches.
+
+Type definitions
+
+- `cypress/cypress.d.ts` declares the `checkGQL` command as returning the `body.data` shape:
+    - `checkGQL<T = any>(operationName: string): Cypress.Chainable<T>`
+    - After `checkGQL`, you can safely chain `.its('...')` on `data`.
+
 ### TIDs.ts
 
 Here you should put all data test IDs (TIDs) used in the app. Having them in a single TS file which can be globally referenced is helpful for maintenance and keeping track of used or unused IDs.
