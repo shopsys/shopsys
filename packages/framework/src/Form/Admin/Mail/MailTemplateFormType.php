@@ -40,7 +40,7 @@ final class MailTemplateFormType extends AbstractType
 
         $builder
             ->add('subject', TextType::class, [
-                'label' => t('Subject'),
+                'label' => 'Subject',
                 'required' => true,
                 'constraints' => $this->getSubjectConstraints($options),
                 'label_attr' => [
@@ -48,7 +48,7 @@ final class MailTemplateFormType extends AbstractType
                 ],
             ])
             ->add('bccEmail', EmailType::class, [
-                'label' => t('Hidden copy'),
+                'label' => 'Hidden copy',
                 'required' => false,
                 'constraints' => [
                     new Email(),
@@ -60,7 +60,7 @@ final class MailTemplateFormType extends AbstractType
             ->add(
                 $builder
                     ->create('body', GrapesJsMailType::class, [
-                        'label' => t('Content'),
+                        'label' => 'Content',
                         'required' => true,
                         'body_variables' => $options['body_variables'],
                         'constraints' => $this->getBodyConstraints($options),
@@ -74,7 +74,7 @@ final class MailTemplateFormType extends AbstractType
                     ->addModelTransformer(new EmptyWysiwygTransformer()),
             )
             ->add('attachments', FileUploadType::class, [
-                'label' => t('Upload attachment'),
+                'label' => 'Upload attachment',
                 'required' => false,
                 'file_constraints' => [
                     new Constraints\File([
@@ -89,7 +89,7 @@ final class MailTemplateFormType extends AbstractType
 
         if ($options['allow_disable_sending']) {
             $builder->add('sendMail', CheckboxType::class, [
-                'label' => t('Send email about change to this status'),
+                'label' => 'Send email about change to this status',
                 'attr' => ['class' => 'js-send-mail-checkbox'],
                 'required' => false,
             ]);

@@ -34,7 +34,7 @@ final class UserConsentPolicySettingFormType extends AbstractType
         $articles = $this->articleFacade->getAllByDomainId($options['domain_id']);
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
@@ -43,8 +43,8 @@ final class UserConsentPolicySettingFormType extends AbstractType
                 'choices' => $articles,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => t('-- Choose article --'),
-                'label' => t('User consent policy article'),
+                'placeholder' => '-- Choose article --',
+                'label' => 'User consent policy article',
                 'help' => t(
                     'Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain.',
                 ),

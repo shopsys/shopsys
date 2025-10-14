@@ -42,7 +42,7 @@ final class PricingGroupSettingsFormType extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => t('Save default pricing group'),
+                'label' => 'Save default pricing group',
             ]);
     }
 

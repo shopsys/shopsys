@@ -107,33 +107,33 @@ final class ComplaintFormType extends AbstractType
         Complaint $complaint,
     ): FormBuilderInterface {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         $builderBasicInformationGroup
             ->add('id', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $complaint->getId(),
             ]);
 
         if ($this->domain->isMultidomain()) {
             $builderBasicInformationGroup
                 ->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                     'data' => $complaint->getDomainId(),
                 ]);
         }
         $builderBasicInformationGroup
             ->add('number', DisplayOnlyType::class, [
-                'label' => t('Complaint number'),
+                'label' => 'Complaint number',
                 'data' => $complaint->getNumber(),
             ])
             ->add('dateOfCreation', DisplayOnlyType::class, [
-                'label' => t('Date of creation'),
+                'label' => 'Date of creation',
                 'data' => $this->dateTimeFormatterExtension->formatDateTime($complaint->getCreatedAt()),
             ])
             ->add('status', ChoiceType::class, [
-                'label' => t('Status'),
+                'label' => 'Status',
                 'required' => true,
                 'choices' => $this->complaintStatusFacade->getAll(),
                 'choice_label' => 'name',
@@ -142,7 +142,7 @@ final class ComplaintFormType extends AbstractType
                 'expanded' => false,
             ])
             ->add('resolution', ChoiceType::class, [
-                'label' => t('Resolution'),
+                'label' => 'Resolution',
                 'required' => true,
                 'choices' => $this->complaintResolutionEnum->getAllIndexedByTranslations(),
                 'multiple' => false,
@@ -152,7 +152,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('bankAccountNumber', TextType::class, [
-                'label' => t('Bank account number'),
+                'label' => 'Bank account number',
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter bank account number',
@@ -174,16 +174,16 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('order', DisplayOnlyOrderType::class, [
-                'label' => t('Order or document number'),
+                'label' => 'Order or document number',
                 'order' => $complaint->getOrder(),
                 'manualDocumentNumber' => $complaint->getManualDocumentNumber(),
             ])
             ->add('user', DisplayOnlyCustomerType::class, [
-                'label' => t('Customer'),
+                'label' => 'Customer',
                 'user' => $complaint->getCustomerUser(),
             ])
             ->add('email', TextType::class, [
-                'label' => t('Email'),
+                'label' => 'Email',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
@@ -204,12 +204,12 @@ final class ComplaintFormType extends AbstractType
     private function createDeliveryAddressGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDeliveryAddressGroup = $builder->create('deliveryAddressGroup', GroupType::class, [
-            'label' => t('Delivery address'),
+            'label' => 'Delivery address',
         ]);
 
         $builderDeliveryAddressGroup
             ->add('deliveryFirstName', TextType::class, [
-                'label' => t('First name'),
+                'label' => 'First name',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -222,7 +222,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryLastName', TextType::class, [
-                'label' => t('Last name'),
+                'label' => 'Last name',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -235,7 +235,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryCompanyName', TextType::class, [
-                'label' => t('Company'),
+                'label' => 'Company',
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
@@ -245,7 +245,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryTelephone', TextType::class, [
-                'label' => t('Telephone'),
+                'label' => 'Telephone',
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
@@ -255,7 +255,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryStreet', TextType::class, [
-                'label' => t('Street'),
+                'label' => 'Street',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -268,7 +268,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryCity', TextType::class, [
-                'label' => t('City'),
+                'label' => 'City',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -280,7 +280,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryPostcode', TextType::class, [
-                'label' => t('Postcode'),
+                'label' => 'Postcode',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -293,7 +293,7 @@ final class ComplaintFormType extends AbstractType
                 ],
             ])
             ->add('deliveryCountry', ChoiceType::class, [
-                'label' => t('Country'),
+                'label' => 'Country',
                 'required' => true,
                 'choices' => $this->countryFacade->getAll(),
                 'choice_label' => 'name',
@@ -313,7 +313,7 @@ final class ComplaintFormType extends AbstractType
     private function createItemsGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderItemsGroup = $builder->create('itemsGroup', GroupType::class, [
-            'label' => t('Complaint items'),
+            'label' => 'Complaint items',
         ]);
 
         $builderItemsGroup

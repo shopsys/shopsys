@@ -56,7 +56,7 @@ final class AutocompleteFavoriteFormType extends AbstractType
         }
 
         $productsGroup = $builder->create('productsGroup', GroupType::class, [
-            'label' => t('Favorite Products'),
+            'label' => 'Favorite Products',
         ]);
         $productsGroup->add(
             $builder->create('products', ProductsType::class, [
@@ -64,7 +64,7 @@ final class AutocompleteFavoriteFormType extends AbstractType
                 'sortable' => true,
                 'allow_variants' => false,
                 'attr' => [
-                    'placeholder' => t('Search and select products...'),
+                    'placeholder' => 'Search and select products...',
                 ],
             ])->addModelTransformer(
                 $this->removeDuplicatesFromArrayTransformer,
@@ -72,7 +72,7 @@ final class AutocompleteFavoriteFormType extends AbstractType
         );
 
         $categoriesGroup = $builder->create('categoriesGroup', GroupType::class, [
-            'label' => t('Favorite Categories'),
+            'label' => 'Favorite Categories',
         ]);
         $categoriesGroup->add(
             $builder->create('categories', SortableValuesType::class, [
@@ -86,7 +86,7 @@ final class AutocompleteFavoriteFormType extends AbstractType
         );
 
         $brandsGroup = $builder->create('brandsGroup', GroupType::class, [
-            'label' => t('Favorite Brands'),
+            'label' => 'Favorite Brands',
         ]);
         $brandsGroup->add(
             $builder->create('brands', SortableValuesType::class, [

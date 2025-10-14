@@ -26,24 +26,24 @@ final class CustomerUserCommunicationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
             ->add(self::ORDER_SENT_CONTENT_FIELD_NAME, CKEditorType::class, [
-                'label' => t('Order sent page content'),
+                'label' => 'Order sent page content',
                 'required' => false,
             ])
             ->add(self::PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME, CKEditorType::class, [
-                'label' => t('Payment successful page content'),
+                'label' => 'Payment successful page content',
                 'required' => false,
             ])
             ->add(self::PAYMENT_IN_PROCESS_CONTENT_FIELD_NAME, CKEditorType::class, [
-                'label' => t('Payment in process page content'),
+                'label' => 'Payment in process page content',
                 'required' => false,
             ])
             ->add(self::PAYMENT_FAILED_CONTENT_FIELD_NAME, CKEditorType::class, [
-                'label' => t('Payment failed page content'),
+                'label' => 'Payment failed page content',
                 'required' => false,
             ]);
 

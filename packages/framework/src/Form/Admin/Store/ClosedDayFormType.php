@@ -39,7 +39,7 @@ final class ClosedDayFormType extends AbstractType
             ->add('date', DatePickerType::class, [
                 'required' => true,
                 'input' => 'datetime_immutable',
-                'label' => t('Date'),
+                'label' => 'Date',
                 'widget' => 'single_text',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter date']),
@@ -48,7 +48,7 @@ final class ClosedDayFormType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'required' => true,
-                'label' => t('Name'),
+                'label' => 'Name',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
@@ -56,7 +56,7 @@ final class ClosedDayFormType extends AbstractType
             ])
             ->add('excludedStores', ChoiceType::class, [
                 'required' => false,
-                'label' => t('Excluded stores'),
+                'label' => 'Excluded stores',
                 'choices' => $this->storeFacade->getStoresByDomainId($domainId),
                 'choice_label' => static fn (Store $store) => $store->getName(),
                 'multiple' => true,

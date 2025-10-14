@@ -104,14 +104,14 @@ final class CategoryFormType extends AbstractType
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['category']->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ]);
         }
 
@@ -130,7 +130,7 @@ final class CategoryFormType extends AbstractType
                         ),
                     ],
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('parent', ChoiceType::class, [
                 'required' => false,
@@ -141,14 +141,14 @@ final class CategoryFormType extends AbstractType
                     return $padding . $category->getName();
                 },
                 'choice_value' => 'id',
-                'label' => t('Parent category'),
+                'label' => 'Parent category',
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
-                'label' => t('Display on'),
+                'label' => 'Display on',
             ])
             ->add('automatedFilters', ChoiceType::class, [
-                'label' => t('Automated filters'),
+                'label' => 'Automated filters',
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
@@ -167,7 +167,7 @@ final class CategoryFormType extends AbstractType
             ]);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [
-            'label' => t('SEO'),
+            'label' => 'SEO',
         ]);
 
         $builderSeoGroup
@@ -175,13 +175,13 @@ final class CategoryFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => t('Page title'),
+                'label' => 'Page title',
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ])
             ->add('seoH1s', MultidomainType::class, [
                 'required' => false,
@@ -193,7 +193,7 @@ final class CategoryFormType extends AbstractType
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'label' => t('Heading (H1)'),
+                'label' => 'Heading (H1)',
             ]);
 
         if ($options['scenario'] === self::SCENARIO_EDIT) {
@@ -201,12 +201,12 @@ final class CategoryFormType extends AbstractType
                 ->add('urls', UrlListType::class, [
                     'route_name' => 'front_product_list',
                     'entity_id' => $options['category']?->getId(),
-                    'label' => t('URL addresses'),
+                    'label' => 'URL addresses',
                 ]);
         }
 
         $builderDescriptionGroup = $builder->create('description', GroupType::class, [
-            'label' => t('Description'),
+            'label' => 'Description',
         ]);
 
         $builderDescriptionGroup
@@ -216,7 +216,7 @@ final class CategoryFormType extends AbstractType
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
 
         $builderImageGroup
@@ -232,7 +232,7 @@ final class CategoryFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
                 'entity' => $options['category'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
@@ -304,13 +304,13 @@ final class CategoryFormType extends AbstractType
         $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
             'entry_type' => IntegerType::class,
             'labels_by_value' => $parameterNamesById,
-            'label' => t('Parameters order in category'),
+            'label' => 'Parameters order in category',
             'required' => false,
         ]);
 
         $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
             'required' => false,
-            'label' => t('Filter parameters closed by default'),
+            'label' => 'Filter parameters closed by default',
             'choices' => $parametersUsedByProductsInCategory,
             'expanded' => true,
             'choice_label' => 'name',

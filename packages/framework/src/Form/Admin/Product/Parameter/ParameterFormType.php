@@ -67,7 +67,7 @@ final class ParameterFormType extends AbstractType
                 'label' => 'Unit',
                 'required' => false,
                 'choices' => $this->unitFacade->getAll(),
-                'placeholder' => t('-- Choose unit --'),
+                'placeholder' => '-- Choose unit --',
                 'choice_label' => 'name',
                 'choice_value' => 'id',
             ])
@@ -83,7 +83,7 @@ final class ParameterFormType extends AbstractType
             ])
             ->add('group', ChoiceType::class, [
                 'label' => 'Group',
-                'placeholder' => t('-- Choose group --'),
+                'placeholder' => '-- Choose group --',
                 'required' => false,
                 'choices' => $this->parameterGroupFacade->getAll(),
                 'choice_label' => 'name',

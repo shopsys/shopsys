@@ -24,7 +24,7 @@ final class HeurekaShopCertificationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
@@ -37,12 +37,12 @@ final class HeurekaShopCertificationFormType extends AbstractType
                         'exactMessage' => 'Heureka API must be {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Code of service Heureka - Verified by Customer'),
+                'label' => 'Code of service Heureka - Verified by Customer',
                 'help' => t('Enter 32-digit code which will be sent to server') . ' ' . $options['server_name'],
             ])
             ->add('heurekaWidgetCode', TextareaType::class, [
                 'required' => false,
-                'label' => t('Heureka Widget code'),
+                'label' => 'Heureka Widget code',
             ]);
 
         $builder

@@ -44,7 +44,7 @@ final class TopCategoriesFormType extends AbstractType
             ->add(
                 $builder
                     ->create('categories', SortableValuesType::class, [
-                        'label' => t('Category'),
+                        'label' => 'Category',
                         'labels_by_value' => $categoryPaths,
                         'required' => false,
                     ])

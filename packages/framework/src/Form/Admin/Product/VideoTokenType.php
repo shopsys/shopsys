@@ -29,7 +29,7 @@ final class VideoTokenType extends AbstractType
                     'message' => 'Please enter video ID',
                 ]),
             ],
-            'label' => t('Youtube ID'),
+            'label' => 'Youtube ID',
         ]);
 
         $builder->add('videoTokenDescriptions', LocalizedType::class, [
@@ -42,7 +42,7 @@ final class VideoTokenType extends AbstractType
                     ),
                 ],
             ],
-            'label' => t('Description'),
+            'label' => 'Description',
         ]);
     }
 

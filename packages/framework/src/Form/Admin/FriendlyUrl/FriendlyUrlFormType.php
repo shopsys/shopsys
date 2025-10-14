@@ -80,7 +80,7 @@ final class FriendlyUrlFormType extends AbstractType
                     'required' => false,
                     'multiple' => false,
                     'expanded' => true,
-                    'placeholder' => t('No redirect'),
+                    'placeholder' => 'No redirect',
                     'choices' => [
                         t('301 (Permanent redirect)') => 301,
                         t('302 (Temporary redirect)') => 302,

@@ -27,7 +27,7 @@ final class UploadedFileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('name', TextType::class, [
-            'label' => t('Filename'),
+            'label' => 'Filename',
             'constraints' => [
                 new Constraints\NotBlank(['message' => 'Please enter the filename']),
                 new Constraints\Length(
@@ -38,7 +38,7 @@ final class UploadedFileFormType extends AbstractType
 
         $builder->add('names', LocalizedType::class, [
             'required' => false,
-            'label' => t('Names'),
+            'label' => 'Names',
             'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
             'entry_options' => [
                 'required' => false,
@@ -64,13 +64,13 @@ final class UploadedFileFormType extends AbstractType
                         . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
                 ]),
             ],
-            'label' => t('Replace file'),
+            'label' => 'Replace file',
         ]);
 
         $builder->add('products', ProductsType::class, [
             'required' => false,
             'label_button_add' => t('Add to products'),
-            'label' => t('Products'),
+            'label' => 'Products',
         ]);
     }
 

@@ -88,7 +88,7 @@ final class CurrencyFormType extends AbstractType
                     t('To fifty hundredths (halfs)') => Currency::ROUNDING_TYPE_FIFTIES,
                     t('To whole numbers') => Currency::ROUNDING_TYPE_INTEGER,
                 ],
-                'label' => t('Price including VAT rounding'),
+                'label' => 'Price including VAT rounding',
             ])
             ->add('roundingPlacesPriceWithoutVat', NumberType::class, [
                 'required' => true,

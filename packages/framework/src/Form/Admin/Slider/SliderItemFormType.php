@@ -44,26 +44,26 @@ final class SliderItemFormType extends AbstractType
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['slider_item']->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ])
                 ->add('domainId', DomainType::class, [
                     'required' => true,
                     'attr' => ['readonly' => 'readonly'],
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                 ]);
         }
 
         if ($options['scenario'] === self::SCENARIO_CREATE) {
             $builderSettingsGroup->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Domain'),
+                'label' => 'Domain',
             ]);
         }
 
@@ -73,7 +73,7 @@ final class SliderItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
                 'help' => t('Name serves only for internal use within the administration'),
             ])
             ->add('link', UrlType::class, [
@@ -82,18 +82,18 @@ final class SliderItemFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter link']),
                     new Constraints\Url(['message' => 'Link must be valid URL address']),
                 ],
-                'label' => t('Link'),
+                'label' => 'Link',
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
-                'label' => t('Description'),
+                'label' => 'Description',
             ])
             ->add('rgbBackgroundColor', ColorPickerType::class, [
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter description box background color']),
                 ],
-                'label' => t('Description background color'),
+                'label' => 'Description background color',
             ])
             ->add('opacity', NumberSliderType::class, [
                 'required' => true,
@@ -106,14 +106,14 @@ final class SliderItemFormType extends AbstractType
                         'notInRangeMessage' => 'Opacity must be between {{ min }} and {{ max }}',
                     ]),
                 ],
-                'label' => t('Description opacity'),
+                'label' => 'Description opacity',
             ])
             ->add('hidden', YesNoType::class, [
-                'label' => t('Hide'),
+                'label' => 'Hide',
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
 
         $builderImageGroup
@@ -130,7 +130,7 @@ final class SliderItemFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
@@ -142,11 +142,11 @@ final class SliderItemFormType extends AbstractType
             ->add($builderImageGroup)
             ->add('datetimeVisibleFrom', DatePickerType::class, [
                 'required' => false,
-                'label' => t('Display date FROM'),
+                'label' => 'Display date FROM',
             ])
             ->add('datetimeVisibleTo', DatePickerType::class, [
                 'required' => false,
-                'label' => t('Display date TO'),
+                'label' => 'Display date TO',
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_slider_list',

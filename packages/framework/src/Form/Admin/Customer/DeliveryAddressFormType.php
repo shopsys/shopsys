@@ -44,7 +44,7 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('First name'),
+                'label' => 'First name',
             ])
             ->add('lastName', TextType::class, [
                 'required' => true,
@@ -55,7 +55,7 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Last name'),
+                'label' => 'Last name',
             ])
             ->add('companyName', TextType::class, [
                 'required' => false,
@@ -65,7 +65,7 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Company'),
+                'label' => 'Company',
             ])
             ->add('street', TextType::class, [
                 'required' => true,
@@ -76,7 +76,7 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Street'),
+                'label' => 'Street',
             ])
             ->add('city', TextType::class, [
                 'required' => true,
@@ -87,7 +87,7 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('City'),
+                'label' => 'City',
             ])
             ->add('postcode', TextType::class, [
                 'required' => true,
@@ -98,14 +98,14 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Postcode'),
+                'label' => 'Postcode',
             ])
             ->add('country', ChoiceType::class, [
                 'required' => true,
                 'choices' => $countries,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'label' => t('Country'),
+                'label' => 'Country',
             ])
             ->add('telephone', TextType::class, [
                 'required' => false,
@@ -115,7 +115,7 @@ final class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Telephone'),
+                'label' => 'Telephone',
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_url' => $options['back_url'],

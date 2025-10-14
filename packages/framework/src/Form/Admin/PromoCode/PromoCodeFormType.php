@@ -89,7 +89,7 @@ final class PromoCodeFormType extends AbstractType
 
         if ($options['mass_generate']) {
             $actionBar->add('saveAndDownloadCsv', SubmitType::class, [
-                'label' => t('Create and download CSV'),
+                'label' => 'Create and download CSV',
                 'position' => [
                     'before' => 'save',
                 ],
@@ -106,13 +106,13 @@ final class PromoCodeFormType extends AbstractType
     private function buildBaseGroup(FormBuilderInterface $builder, array $options): void
     {
         $baseGroup = $builder->create('baseGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         if (!$options['mass_generate']) {
             $baseGroup
                 ->add('code', TextType::class, [
-                    'label' => t('Promo code'),
+                    'label' => 'Promo code',
                     'required' => true,
                     'constraints' => [
                         new Constraints\NotBlank([
@@ -124,7 +124,7 @@ final class PromoCodeFormType extends AbstractType
 
         if ($this->promoCode instanceof PromoCode) {
             $baseGroup->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $this->promoCode->getId(),
             ]);
         }
@@ -134,24 +134,24 @@ final class PromoCodeFormType extends AbstractType
         ])
             ->add('shownDomainId', DomainType::class, [
                 'mapped' => false,
-                'label' => t('Domain'),
+                'label' => 'Domain',
                 'disabled' => true,
             ])
             ->add('discountType', ChoiceType::class, [
                 'expanded' => true,
                 'multiple' => false,
                 'choices' => $this->promoCodeTypeEnum->getAllIndexedByTranslations(),
-                'label' => t('Discount type'),
+                'label' => 'Discount type',
                 'attr' => [
                     'class' => 'js-promo-code-discount-type',
                 ],
             ])
             ->add('remainingUses', IntegerType::class, [
-                'label' => t('Remaining number of uses'),
+                'label' => 'Remaining number of uses',
                 'required' => false,
             ])
             ->add('enabled', YesNoType::class, [
-                'label' => t('Enabled'),
+                'label' => 'Enabled',
             ]);
 
         $builder->add($baseGroup);
@@ -176,11 +176,11 @@ final class PromoCodeFormType extends AbstractType
                 ]),
             ],
             'invalid_message' => 'Please enter number.',
-            'label' => t('Discount (%)'),
+            'label' => 'Discount (%)',
         ];
 
         $limitsGroup = $builder->create('limitsGroup', GroupType::class, [
-            'label' => t('Apply according to the total price of the order'),
+            'label' => 'Apply according to the total price of the order',
             'row_attr' => [
                 'data-js-promo-code-limits-group' => null,
             ],
@@ -214,15 +214,15 @@ final class PromoCodeFormType extends AbstractType
     private function buildTimeValidationFormGroup(FormBuilderInterface $builder): void
     {
         $timeValidationGroup = $builder->create('timeValidationGroup', GroupType::class, [
-            'label' => t('Apply according to date and time limit'),
+            'label' => 'Apply according to date and time limit',
         ]);
 
         $timeValidationGroup->add('datetimeValidFrom', DateTimeType::class, [
             'required' => false,
-            'label' => t('Valid from'),
+            'label' => 'Valid from',
         ])->add('datetimeValidTo', DateTimeType::class, [
             'required' => false,
-            'label' => t('Valid to'),
+            'label' => 'Valid to',
         ]);
 
         $builder->add($timeValidationGroup);
@@ -234,7 +234,7 @@ final class PromoCodeFormType extends AbstractType
     private function buildFlagsFormGroup(FormBuilderInterface $builder): void
     {
         $flagsGroup = $builder->create('flagsGroup', GroupType::class, [
-            'label' => t('Apply according to product flags'),
+            'label' => 'Apply according to product flags',
         ]);
 
         $flagsGroup->add('flags', PromoCodeFlagCollectionType::class, [
@@ -259,18 +259,18 @@ final class PromoCodeFormType extends AbstractType
     private function buildCustomersFormGroup(FormBuilderInterface $builder): void
     {
         $customersGroup = $builder->create('customersGroup', GroupType::class, [
-            'label' => t('Apply according to customer'),
+            'label' => 'Apply according to customer',
         ]);
         $builder->add($customersGroup);
         $customersGroup->add('registeredCustomerUserOnly', YesNoType::class, [
-            'label' => t('For registered customers only'),
+            'label' => 'For registered customers only',
         ])
             ->add('limitedPricingGroups', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->pricingGroupFacade->getByDomainId($this->adminDomainTabsFacade->getSelectedDomainId()),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'label' => t('Pricing groups'),
+                'label' => 'Pricing groups',
                 'multiple' => true,
             ]);
     }
@@ -284,7 +284,7 @@ final class PromoCodeFormType extends AbstractType
             ->add('productsWithSale', ProductsType::class, [
                 'required' => false,
                 'sortable' => true,
-                'label' => t('Apply to selected products'),
+                'label' => 'Apply to selected products',
             ]);
     }
 
@@ -294,7 +294,7 @@ final class PromoCodeFormType extends AbstractType
     private function buildCategoriesWithSaleFormGroup(FormBuilderInterface $builder): void
     {
         $displayCategoriesGroup = $builder->create('displayCategoriesGroup', GroupType::class, [
-            'label' => t('Apply to selected categories'),
+            'label' => 'Apply to selected categories',
         ]);
         $displayCategoriesGroup->add('categoriesWithSale', CategoriesType::class, [
             'required' => false,
@@ -310,7 +310,7 @@ final class PromoCodeFormType extends AbstractType
     private function buildBrandsWithSaleFormGroup(FormBuilderInterface $builder): void
     {
         $displayCategoriesGroup = $builder->create('displayBrandsGroup', GroupType::class, [
-            'label' => t('Apply to selected brands'),
+            'label' => 'Apply to selected brands',
         ]);
         $displayCategoriesGroup->add('brandsWithSale', ChoiceType::class, [
             'required' => false,
@@ -330,16 +330,16 @@ final class PromoCodeFormType extends AbstractType
     private function addMassGenerationGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderMassPromoCodeGroup = $builder->create('massPromoCodeGroup', GroupType::class, [
-            'label' => t('Bulk promo code generation'),
+            'label' => 'Bulk promo code generation',
         ]);
 
         $builderMassPromoCodeGroup
             ->add('prefix', TextType::class, [
-                'label' => t('Prefix (e.g. "SPRING_")'),
+                'label' => 'Prefix (e.g. "SPRING_")',
                 'required' => false,
             ])
             ->add('quantity', IntegerType::class, [
-                'label' => t('Number of generated promo codes'),
+                'label' => 'Number of generated promo codes',
                 'required' => true,
                 'constraints' => [
                     new NotBlank([

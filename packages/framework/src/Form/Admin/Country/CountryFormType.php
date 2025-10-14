@@ -43,7 +43,7 @@ final class CountryFormType extends AbstractType
 
         if ($this->country instanceof Country) {
             $builder->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $this->country->getId(),
             ]);
         }
@@ -60,7 +60,7 @@ final class CountryFormType extends AbstractType
                         ),
                     ],
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('code', TextType::class, [
                 'required' => true,
@@ -74,12 +74,12 @@ final class CountryFormType extends AbstractType
                         'message' => 'Country code with this code already exists',
                     ]),
                 ],
-                'label' => t('Code'),
+                'label' => 'Code',
                 'help' => t('Country code in ISO 3166-1 alpha-2'),
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
-                'label' => t('Display on'),
+                'label' => 'Display on',
             ])
             ->add('priority', MultidomainType::class, [
                 'entry_type' => IntegerType::class,
@@ -94,7 +94,7 @@ final class CountryFormType extends AbstractType
                     ],
                 ],
                 'required' => false,
-                'label' => t('Priority'),
+                'label' => 'Priority',
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_country_list',

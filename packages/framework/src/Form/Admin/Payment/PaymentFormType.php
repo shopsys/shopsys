@@ -68,12 +68,12 @@ final class PaymentFormType extends AbstractType
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment */
         $payment = $options['payment'];
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         if ($payment instanceof Payment) {
             $builderBasicInformationGroup->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $payment->getId(),
             ]);
         }
@@ -92,7 +92,7 @@ final class PaymentFormType extends AbstractType
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
-                'label' => t('Display on'),
+                'label' => 'Display on',
             ]);
 
         if ($payment !== null) {
@@ -103,7 +103,7 @@ final class PaymentFormType extends AbstractType
         }
 
         $builderBasicInformationGroup->add('hidden', YesNoType::class, [
-            'label' => t('Hidden'),
+            'label' => 'Hidden',
         ])
             ->add('transports', ChoiceType::class, [
                 'required' => false,
@@ -115,10 +115,10 @@ final class PaymentFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'empty_message' => t('You have to create some shipping first.'),
-                'label' => t('Available shipping methods'),
+                'label' => 'Available shipping methods',
             ])
             ->add('type', ChoiceType::class, [
-                'label' => t('Type'),
+                'label' => 'Type',
                 'choices' => $this->paymentTypeProvider->getAllIndexedByTranslations(),
                 'multiple' => false,
                 'expanded' => false,
@@ -138,7 +138,7 @@ final class PaymentFormType extends AbstractType
                     'expanded' => false,
                     'required' => true,
                 ],
-                'label' => t('GoPay payment method'),
+                'label' => 'GoPay payment method',
                 'required' => true,
                 'row_attr' => [
                     'class' => 'js-payment-gopay-payment-method',
@@ -146,7 +146,7 @@ final class PaymentFormType extends AbstractType
             ])
             ->add('accountNumberByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
-                'label' => t('Account number'),
+                'label' => 'Account number',
                 'required' => true,
                 'row_attr' => [
                     'class' => 'js-payment-bank-transfer',
@@ -154,7 +154,7 @@ final class PaymentFormType extends AbstractType
             ])
             ->add('ibanByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
-                'label' => t('IBAN'),
+                'label' => 'IBAN',
                 'required' => true,
                 'row_attr' => [
                     'class' => 'js-payment-bank-transfer',
@@ -162,7 +162,7 @@ final class PaymentFormType extends AbstractType
             ])
             ->add('bicSwiftByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
-                'label' => t('BIC/Swift'),
+                'label' => 'BIC/Swift',
                 'required' => true,
                 'row_attr' => [
                     'class' => 'js-payment-bank-transfer',
@@ -170,12 +170,12 @@ final class PaymentFormType extends AbstractType
             ]);
 
         $builderPriceGroup = $builder->create('prices', GroupType::class, [
-            'label' => t('Prices'),
+            'label' => 'Prices',
         ]);
 
         $builderPriceGroup
             ->add('czkRounding', YesNoType::class, [
-                'label' => t('Order in CZK round to whole crowns'),
+                'label' => 'Order in CZK round to whole crowns',
                 'help' => t('Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.'),
             ])
             ->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
@@ -185,19 +185,19 @@ final class PaymentFormType extends AbstractType
             ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [
-            'label' => t('Additional information'),
+            'label' => 'Additional information',
         ]);
 
         $builderAdditionalInformationGroup
             ->add('description', LocalizedType::class, [
                 'required' => false,
                 'entry_type' => TextareaType::class,
-                'label' => t('Description'),
+                'label' => 'Description',
             ])
             ->add('instructions', LocalizedType::class, [
                 'required' => false,
                 'entry_type' => CKEditorType::class,
-                'label' => t('Instructions'),
+                'label' => 'Instructions',
                 'entry_options' => [
                     'help' => $this->buildInstructionsHelpHtml(),
                     'help_html' => true,
@@ -205,12 +205,12 @@ final class PaymentFormType extends AbstractType
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
                 'image_entity_class' => Payment::class,
                 'file_constraints' => [
                     new Constraints\Image([

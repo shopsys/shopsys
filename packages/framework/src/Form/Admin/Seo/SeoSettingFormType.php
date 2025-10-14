@@ -47,7 +47,7 @@ final class SeoSettingFormType extends AbstractType
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
@@ -59,7 +59,7 @@ final class SeoSettingFormType extends AbstractType
                         'message' => 'Same title is used on another domain',
                     ]),
                 ],
-                'label' => t('Headline'),
+                'label' => 'Headline',
             ])
             ->add('titleAddOn', TextType::class, [
                 'required' => false,
@@ -69,7 +69,7 @@ final class SeoSettingFormType extends AbstractType
                         'message' => 'Same title complement is used on another domain',
                     ]),
                 ],
-                'label' => t('Complement to title'),
+                'label' => 'Complement to title',
                 'help' => t(
                     'Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”.',
                 ),
@@ -82,7 +82,7 @@ final class SeoSettingFormType extends AbstractType
                         'message' => 'Same description is used on another domain',
                     ]),
                 ],
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ]);
 
         $builder

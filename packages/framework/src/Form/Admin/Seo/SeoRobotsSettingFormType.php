@@ -27,7 +27,7 @@ final class SeoRobotsSettingFormType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'required' => false,
-                'label' => t('File content'),
+                'label' => 'File content',
             ])
             ->add('actionBar', ActionBarType::class, [
                 'save_label' => t('Save changes'),

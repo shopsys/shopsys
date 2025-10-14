@@ -33,11 +33,11 @@ final class SalesRepresentativeFormType extends AbstractType
 
         if ($salesRepresentative instanceof SalesRepresentative) {
             $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
-                'label' => t('System data'),
+                'label' => 'System data',
             ]);
 
             $builderSystemDataGroup->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $salesRepresentative->getId(),
             ]);
 
@@ -46,7 +46,7 @@ final class SalesRepresentativeFormType extends AbstractType
         }
 
         $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
-            'label' => t('Personal data'),
+            'label' => 'Personal data',
         ]);
 
         $builderPersonalDataGroup
@@ -58,7 +58,7 @@ final class SalesRepresentativeFormType extends AbstractType
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('First name'),
+                'label' => 'First name',
             ])
             ->add('lastName', TextType::class, [
                 'required' => false,
@@ -68,7 +68,7 @@ final class SalesRepresentativeFormType extends AbstractType
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Last name'),
+                'label' => 'Last name',
             ])
             ->add('email', EmailType::class, [
                 'required' => false,
@@ -79,7 +79,7 @@ final class SalesRepresentativeFormType extends AbstractType
                     ]),
                     new Email(['message' => 'Please enter valid email']),
                 ],
-                'label' => t('Email'),
+                'label' => 'Email',
             ])
             ->add('telephone', TextType::class, [
                 'required' => false,
@@ -89,11 +89,11 @@ final class SalesRepresentativeFormType extends AbstractType
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Telephone'),
+                'label' => 'Telephone',
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
 
         $builderImageGroup
@@ -109,7 +109,7 @@ final class SalesRepresentativeFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
                 'entity' => $options['salesRepresentative'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],

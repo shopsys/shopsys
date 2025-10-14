@@ -32,7 +32,7 @@ final class PrivacyPolicySettingFormType extends AbstractType
         $articles = $this->articleFacade->getAllByDomainId($options['domain_id']);
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
@@ -41,8 +41,8 @@ final class PrivacyPolicySettingFormType extends AbstractType
                 'choices' => $articles,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => t('-- Choose article --'),
-                'label' => t('Privacy policy'),
+                'placeholder' => '-- Choose article --',
+                'label' => 'Privacy policy',
                 'help' => t('Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user.'),
             ]);
 

@@ -32,7 +32,7 @@ final class FriendlyUrlType extends AbstractType
         $builder->add(UrlListData::FIELD_SLUG, TextType::class, [
             'required' => true,
             'attr' => [
-                'placeholder' => t('slug'),
+                'placeholder' => 'slug',
             ],
             'constraints' => [
                 new Constraints\NotBlank(),

@@ -22,7 +22,7 @@ final class HeurekaFeedSettingFormType extends AbstractType
     {
         $builder
             ->add(HeurekaFeedSettingEnum::HEUREKA_FEED_DELIVERY_DAYS, IntegerType::class, [
-                'label' => t('Number of delivery days for out of stock products for Heureka XML feed'),
+                'label' => 'Number of delivery days for out of stock products for Heureka XML feed',
                 'required' => false,
             ])
             ->add('heurekaFeedDeliveryDaysInfo', MessageType::class, [

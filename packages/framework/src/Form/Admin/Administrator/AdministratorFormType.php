@@ -56,7 +56,7 @@ final class AdministratorFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $adminToEdit */
@@ -66,7 +66,7 @@ final class AdministratorFormType extends AbstractType
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $adminToEdit->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ]);
         }
 
@@ -84,7 +84,7 @@ final class AdministratorFormType extends AbstractType
                         'entityName' => Administrator::class,
                     ]),
                 ],
-                'label' => t('Login name'),
+                'label' => 'Login name',
             ])
             ->add('realName', TextType::class, [
                 'constraints' => [
@@ -93,7 +93,7 @@ final class AdministratorFormType extends AbstractType
                         ['max' => 100, 'maxMessage' => 'Full name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
-                'label' => t('Full name'),
+                'label' => 'Full name',
             ])
             ->add('email', EmailType::class, [
                 'required' => true,
@@ -110,7 +110,7 @@ final class AdministratorFormType extends AbstractType
                         'entityName' => Administrator::class,
                     ]),
                 ],
-                'label' => t('Email'),
+                'label' => 'Email',
             ]);
 
         if ($options['scenario'] === self::SCENARIO_EDIT) {
@@ -123,7 +123,7 @@ final class AdministratorFormType extends AbstractType
                             'admin_administrator_send-reset-password',
                         ),
                     ],
-                    'label' => t('Password'),
+                    'label' => 'Password',
                     'route_label' => t('Send reset password email'),
                     'link_target' => '_self',
                 ]);
@@ -133,9 +133,9 @@ final class AdministratorFormType extends AbstractType
             $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->administratorRoleGroupFacade->getAll(),
-                'placeholder' => t('Custom'),
+                'placeholder' => 'Custom',
                 'multiple' => false,
-                'label' => t('Role Group'),
+                'label' => 'Role Group',
                 'choice_label' => function (AdministratorRoleGroup $administratorRoleGroup) {
                     return $administratorRoleGroup->getName();
                 },
@@ -145,7 +145,7 @@ final class AdministratorFormType extends AbstractType
             ]);
 
             $builderSettingsGroup->add('roles', RolesType::class, [
-                'label' => t('Role'),
+                'label' => 'Role',
                 'context' => AdminContext::class,
                 'row_attr' => [
                     'data-js-role-group-custom' => null,

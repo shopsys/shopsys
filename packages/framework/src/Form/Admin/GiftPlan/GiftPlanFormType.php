@@ -45,25 +45,25 @@ final class GiftPlanFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         if ($options['giftPlan'] !== null) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['giftPlan']->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ])
                 ->add('domainId', DisplayOnlyType::class, [
                     'data' => $this->domain->getDomainConfigById($options['giftPlan']->getDomainId())->getName(),
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                 ]);
         } else {
             $builderSettingsGroup
                 ->add('domainId', DomainType::class, [
                     'required' => true,
                     'data' => $this->adminDomainTabsFacade->getSelectedDomainId(),
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                 ]);
         }
 
@@ -74,7 +74,7 @@ final class GiftPlanFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter name of gift plan']),
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
                 'help' => t('Name serves only for internal use within the administration.'),
             ])
             ->add('giftProduct', ProductType::class, [
@@ -82,19 +82,19 @@ final class GiftPlanFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose gift product']),
                 ],
-                'label' => t('Gift product'),
+                'label' => 'Gift product',
             ])
             ->add('validFrom', DatePickerType::class, [
                 'required' => false,
-                'label' => t('Valid from'),
+                'label' => 'Valid from',
             ])
             ->add('validTo', DatePickerType::class, [
                 'required' => false,
-                'label' => t('Valid to'),
+                'label' => 'Valid to',
             ])
             ->add('mainProducts', ProductsType::class, [
                 'required' => false,
-                'label' => t('Main products'),
+                'label' => 'Main products',
             ]);
         $builderSettingsGroup->get('validTo')->addModelTransformer($this->endOfDayTransformer);
 

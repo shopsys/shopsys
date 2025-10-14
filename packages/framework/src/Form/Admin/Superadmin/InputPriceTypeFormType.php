@@ -24,7 +24,7 @@ final class InputPriceTypeFormType extends AbstractType
     {
         $builder
             ->add('inputPriceType', ChoiceType::class, [
-                'label' => t('Entry price type'),
+                'label' => 'Entry price type',
                 'choices' => [
                     t('Excluding VAT') => PricingSetting::PRICE_TYPE_WITHOUT_VAT,
                     t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
@@ -34,7 +34,7 @@ final class InputPriceTypeFormType extends AbstractType
                 ],
             ])
             ->add('sellingPriceType', ChoiceType::class, [
-                'label' => t('Selling price type'),
+                'label' => 'Selling price type',
                 'choices' => [
                     t('Excluding VAT') => PricingSetting::PRICE_TYPE_WITHOUT_VAT,
                     t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
