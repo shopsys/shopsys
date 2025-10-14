@@ -4,9 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid ""
-msgstr ""
-
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 

@@ -30,6 +30,11 @@ class MessageIdNormalizer
         foreach ($catalogue->getDomains() as $domain => $messageCollection) {
             foreach ($messageCollection->all() as $message) {
                 $normalizedMessage = $this->getNormalizedMessage($message, $domain);
+
+                if ($normalizedMessage->getId() === '') {
+                    continue;
+                }
+
                 $normalizedCatalogue->add($normalizedMessage);
             }
         }

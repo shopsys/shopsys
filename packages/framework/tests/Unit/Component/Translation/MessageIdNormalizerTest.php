@@ -90,4 +90,33 @@ class MessageIdNormalizerTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $normalizedCatalogue->get($message->getId(), $message->getDomain());
     }
+
+    /**
+     * @param string $messageId
+     */
+    #[DataProvider('emptyMessageIdProvider')]
+    public function testEmptyMessageIsNotAddedToCatalogue(string $messageId): void
+    {
+        $messageIdNormalizer = new MessageIdNormalizer();
+        $messageWithOnlyWhitespace = new Message($messageId);
+        $catalogue = new MessageCatalogue();
+
+        $catalogue->add($messageWithOnlyWhitespace);
+
+        $normalizedCatalogue = $messageIdNormalizer->getNormalizedCatalogue($catalogue);
+
+        $this->assertFalse($normalizedCatalogue->has($messageWithOnlyWhitespace));
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function emptyMessageIdProvider(): iterable
+    {
+        yield 'empty string' => [''];
+
+        yield 'empty string with spaces' => ['     '];
+
+        yield 'string with tabs and new lines' => ["\t\t\n\t"];
+    }
 }
