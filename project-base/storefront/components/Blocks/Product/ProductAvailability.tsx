@@ -1,5 +1,4 @@
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 

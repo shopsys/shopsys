@@ -36,7 +36,6 @@ type DeferredProvidersClientProps = {
     children: React.ReactNode;
     cookieStoreStateFromServerPromise: Promise<CookiesStoreState>;
     domainConfig: DomainConfigType;
-    staticRewritePaths: Record<string, string>;
     settingsPromise: Promise<{ data: TypeSettingsQuery | undefined; error: any }>;
     dictionaryPromise: Promise<Dictionary>;
     lang: Locale;
@@ -49,7 +48,6 @@ export function ProvidersWrapper({
     children,
     cookieStoreStateFromServerPromise,
     domainConfig,
-    //staticRewritePaths,
     settingsPromise,
     dictionaryPromise,
     lang,
@@ -69,13 +67,15 @@ export function ProvidersWrapper({
         throw new Error('Failed to fetch settings - settings data is unavailable');
     }
 
+    const staticRewritePaths = STATIC_REWRITE_PATHS[domainConfig.url];
+
     return (
         <CookiesStoreProvider cookieStoreStateFromServer={cookieStoreStateFromServer}>
             <DomainConfigProvider domainConfig={domainConfig}>
                 <AppConfigProvider
                     domainConfig={domainConfig}
                     settings={settingsResult.data.settings}
-                    staticRewritePaths={STATIC_REWRITE_PATHS[domainConfig.url]}
+                    staticRewritePaths={staticRewritePaths}
                 >
                     <TranslationProvider dictionary={dictionary} lang={lang}>
                         <AuthProvider user={user}>
@@ -127,7 +127,6 @@ export default async function Providers({ children }: ProvidersProps) {
             initialProductListStatePromise={initialProductListStatePromise}
             lang={lang}
             settingsPromise={settingsPromise}
-            staticRewritePaths={STATIC_REWRITE_PATHS[domainConfig.url]}
             userPromise={userPromise}
         >
             {children}

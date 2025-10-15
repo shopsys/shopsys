@@ -118,6 +118,7 @@ export const routes = [
         '/social-login': '/social-login',
         '/stores': '/obchodne-domy',
         '/styleguide': '/styleguide',
+        '/test-errors': '/test-errors',
         '/user-consent': '/pouzivatelsky-suhlas',
         '/wishlist': '/oblubene-produkty',
     },

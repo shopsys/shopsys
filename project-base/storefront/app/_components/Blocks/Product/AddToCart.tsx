@@ -7,10 +7,10 @@ import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>
@@ -78,7 +78,7 @@ export const AddToCart: FC<AddToCartProps> = ({
                 )}
 
                 <Button
-                    isDisabled={isAddingToCart}
+                    hasDisabledLook={isAddingToCart}
                     name="add-to-cart"
                     size={buttonSize}
                     tid={TIDs.blocks_product_addtocart}

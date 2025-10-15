@@ -1,7 +1,7 @@
 import { CategoryBestsellersInitialProducts } from './CategoryBestsellersInitialProducts';
 import { CategoryBestselllersRemainingProducts } from './CategoryBestselllersRemainingProducts';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 
 export const NUMBER_OF_VISIBLE_ITEMS = 3;
 

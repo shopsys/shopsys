@@ -23,7 +23,7 @@ export const useAuthLoader = () => {
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
 
     useEffect(() => {
-        const cookies = getCookies({ secure: getIsHttps() });
+        const cookies = getCookies({ secure: getIsHttps() }) as Record<string, string>;
         const accessTokenName = getCookieName('accessToken', domainConfig.domainId);
         const refreshTokenName = getCookieName('refreshToken', domainConfig.domainId);
         const isWithUserTokens = !!(cookies[accessTokenName] && cookies[refreshTokenName]);

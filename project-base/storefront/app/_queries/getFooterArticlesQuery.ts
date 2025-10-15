@@ -1,6 +1,6 @@
 import { getArticlesQuery } from './getArticlesQuery';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
+import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.ssr';
 import { TypeArticlePlacementTypeEnum } from 'graphql/types';
 
 export const getFooterArticlesQuery = async () => {

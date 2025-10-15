@@ -5,7 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
-import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.generated';
+import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.ssr';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';

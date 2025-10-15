@@ -20,7 +20,7 @@ export const getInternationalizedStaticUrl = async (url: Url) => {
     }
 
     const staticUrlTemplate = urlsOnDomain[url.url];
-    const staticPart = staticUrlTemplate.split(':')[0];
+    const staticPart = staticUrlTemplate?.split(':')[0];
 
     return staticPart + (url.param ?? '');
 };

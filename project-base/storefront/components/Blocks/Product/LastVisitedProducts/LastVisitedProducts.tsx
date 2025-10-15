@@ -1,7 +1,7 @@
 import { LastVisitedProductsContent } from './LastVisitedProductsContent';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
 import { useCookiesStore } from 'store/useCookiesStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type LastVisitedProductsProps = {
     currentProductCatnum?: string;

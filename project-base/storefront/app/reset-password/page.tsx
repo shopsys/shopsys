@@ -2,7 +2,7 @@ import { ResetPasswordForm } from 'app/_components/Blocks/ResetPasswordForm/Rese
 import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';
 
 const ResetPasswordPage = async () => {
     const t = await getTranslation();

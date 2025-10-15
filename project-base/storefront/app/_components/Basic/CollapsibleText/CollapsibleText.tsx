@@ -2,9 +2,9 @@
 
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import DOMPurify from 'isomorphic-dompurify';
-import useTranslation from 'next-translate/useTranslation';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CollapsibleTextProps = {
     text: string;

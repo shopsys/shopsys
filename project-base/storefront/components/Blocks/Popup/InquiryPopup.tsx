@@ -10,7 +10,6 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateInquiryMutation } from 'graphql/requests/inquiry/mutations/CreateInquiryMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { InquiryFormType } from 'types/form';

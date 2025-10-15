@@ -7,12 +7,12 @@ import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuer
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimatePresence } from 'framer-motion';
-import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.ssr';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;

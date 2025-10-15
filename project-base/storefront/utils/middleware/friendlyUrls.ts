@@ -1,4 +1,3 @@
-import { getHostFromRequest } from './helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import {
     FriendlyPagesDestinations,
@@ -6,7 +5,7 @@ import {
     FriendlyPagesTypesKey,
     FriendlyPageTypesValue,
 } from 'types/friendlyUrl';
-import { getDomainIdFromHostname } from 'utils/domain/getDomainIdFromHostname';
+import { getHostAndDomainFromRequest } from 'utils/domain/getHostAndDomainFromRequest';
 
 export const handleFriendlyUrls = async (
     request: NextRequest,
@@ -22,11 +21,13 @@ export const handleFriendlyUrls = async (
 };
 
 async function resolveFriendlyUrl(request: NextRequest, previousResponse: NextResponse): Promise<NextResponse> {
+    const { domainId } = getHostAndDomainFromRequest(request);
+
     const pageTypeResponse = await fetch(`${process.env.INTERNAL_ENDPOINT}resolve-friendly-url`, {
         method: 'POST',
         body: JSON.stringify({
             slug: request.nextUrl.pathname,
-            domainId: getDomainIdFromHostname(getHostFromRequest(request)),
+            domainId,
         }),
     });
 

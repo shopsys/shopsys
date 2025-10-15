@@ -1,10 +1,10 @@
 'use client';
 
 import { getCookies } from 'cookies-next/client';
-import useTranslation from 'next-translate/useTranslation';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';

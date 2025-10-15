@@ -1,7 +1,7 @@
 'use client';
 
 import { BlogCategoryProvider } from 'components/providers/BlogCategoryProvider';
-import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
+import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.ssr';
 import { useRef } from 'react';
 
 type BlogCategoryContentProps = {

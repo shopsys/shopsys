@@ -3,9 +3,9 @@ import { ProductDetailParametersTab } from './ProductDetailParametersTab';
 import { ProductDetailRelatedProductsTab } from './ProductDetailRelatedProductsTab';
 import { ProductDetailTabsContent } from './ProductDetailTabsContent';
 import { ProductDetailTabsFiles } from './ProductDetailTabsFiles';
-import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
-import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.ssr';
+import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.ssr';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 
 export type ProductDetailTabsProps = {
     description: string | null;

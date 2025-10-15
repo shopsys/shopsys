@@ -1,6 +1,6 @@
 import { ProductItemProps } from './ProductListItem';
 import { ProductsListContent } from './ProductsListContent';
-import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.ssr';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';

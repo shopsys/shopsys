@@ -2,8 +2,8 @@ import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSecti
 import { AUTOCOMPLETE_CATEGORY_LIMIT } from './constants';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Tag } from 'components/Basic/Tag/Tag';
-import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
-import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.ssr';
+import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.ssr';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type AutocompleteSearchCategoriesResultProps = {

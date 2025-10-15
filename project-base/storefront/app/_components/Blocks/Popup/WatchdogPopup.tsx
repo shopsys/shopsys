@@ -14,11 +14,11 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { useCurrentCustomerData } from 'components/providers/AuthProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmCreateWatchdotEventHandler } from 'gtm/handlers/onGtmCreateWatchdotEventHandler';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 

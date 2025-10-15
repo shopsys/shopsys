@@ -13,9 +13,9 @@ import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQu
 import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type FilterFieldType = 'flags' | 'brands';
 

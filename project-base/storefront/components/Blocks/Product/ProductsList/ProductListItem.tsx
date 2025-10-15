@@ -17,7 +17,6 @@ import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEve
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 export type ProductVisibleItemsConfigType = {

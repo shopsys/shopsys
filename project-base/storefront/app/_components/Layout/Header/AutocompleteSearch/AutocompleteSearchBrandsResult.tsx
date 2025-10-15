@@ -2,7 +2,7 @@ import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSecti
 import { AUTOCOMPLETE_BRAND_LIMIT } from './constants';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Tag } from 'components/Basic/Tag/Tag';
-import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.ssr';
 
 type AutocompleteSearchBrandsResultProps = {
     brandSearch: TypeAutocompleteSearchQuery['brandSearch'];

@@ -1,6 +1,6 @@
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
-import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.ssr';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.ssr';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { headers } from 'next/headers';
 

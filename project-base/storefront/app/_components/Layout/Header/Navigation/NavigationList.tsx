@@ -1,7 +1,7 @@
 'use client';
 
 import { NavigationItem } from './NavigationItem';
-import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
+import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.ssr';
 import { useState } from 'react';
 
 export type NavigationListProps = {

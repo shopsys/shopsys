@@ -2,8 +2,8 @@
 
 import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 import { Flag } from 'app/_components/Basic/Flag/Flag';
-import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.ssr';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductFlagsProps = {

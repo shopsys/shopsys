@@ -7,7 +7,7 @@ import { ProductListItemImage } from 'app/_components/Blocks/Product/ProductsLis
 import { ProductListItemInfo } from 'app/_components/Blocks/Product/ProductsList/ProductListItemInfo';
 import { ProductListItemWrapper } from 'app/_components/Blocks/Product/ProductsList/ProductListItemWrapper';
 import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { forwardRef } from 'react';

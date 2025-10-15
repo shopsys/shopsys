@@ -12,12 +12,12 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { TypePasswordRecoveryMutationVariables } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.ssr';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ResetPasswordFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export type ResetPasswordFormProps = {

@@ -64,7 +64,7 @@ export const NewsletterForm: FC = () => {
 
                             <SubmitButton
                                 className="h-12 py-0 max-lg:mt-3 lg:ml-3"
-                                isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                hasDisabledLook={!formProviderMethods.formState.isValid}
                                 variant="inverted"
                             >
                                 {t('Send')}

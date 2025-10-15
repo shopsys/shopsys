@@ -2,8 +2,8 @@
 
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'app/_components/Basic/Tabs/Tabs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
 import { ReactNode, useState } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export type ProductDetailTabsContentProps = {
     description?: ReactNode;

@@ -4,12 +4,12 @@ import { useHandleActionsAfterRegistration } from './useHandleActionsAfterRegist
 import { registrationAction } from 'app/_actions/registrationAction';
 import { RegistrationFormMetaType } from 'app/_components/Blocks/Registration/registrationFormMeta';
 import { TypeRegistrationMutationVariables } from 'graphql/requests/registration/mutations/RegistrationMutation.ssr';
-import useTranslation from 'next-translate/useTranslation';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type UseRegistrationProps = {
     formMeta: RegistrationFormMetaType;

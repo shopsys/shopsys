@@ -5,7 +5,7 @@ import { AnimateNavigationMenu } from 'components/Basic/Animations/AnimateNaviga
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { AnimatePresence, m } from 'framer-motion';
-import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
+import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.ssr';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { PageType } from 'types/simpleNavigation';

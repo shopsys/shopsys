@@ -1,4 +1,4 @@
-import { TypeSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { TypeSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.ssr';
 import { CombinedError } from 'urql';
 
 export const getCouldNotFindUserConsentPolicyArticleUrl = (

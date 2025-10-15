@@ -9,7 +9,7 @@ All available translations can be found under `/project-base/storefront/public/l
 Wherever you want to use translated string, you first need to import the `useTranslation` hook from `next-translate`(if you are inside a component) or `getT` if you are in a server-side function, such as `getServerSideProps`.
 
 ```ts
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 ```
 
 then you are able to use it in a component/hook

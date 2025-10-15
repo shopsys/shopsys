@@ -5,7 +5,6 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
@@ -147,7 +146,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         }
     };
 
-    useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
+    // useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
         <>

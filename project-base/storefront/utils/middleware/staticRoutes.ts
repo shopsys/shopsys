@@ -34,7 +34,12 @@ const getStaticUrlsAvailableForDomain = (host: string): Record<string, string> =
         throw new Error(`Host ${host} does not have a corresponding URL in the available static URLS.`);
     }
 
-    return STATIC_REWRITE_PATHS[domainUrlKey];
+    const routes = STATIC_REWRITE_PATHS[domainUrlKey];
+
+    return Object.fromEntries(Object.entries(routes).filter(([, value]) => value !== undefined)) as Record<
+        string,
+        string
+    >;
 };
 
 function getRewriteTargetPathname(request: NextRequest, routeDefinitions: Record<string, string>): string {
