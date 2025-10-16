@@ -112,7 +112,7 @@ class ProductFacade
         $product = $this->productFactory->create($productData);
 
         $this->em->persist($product);
-        $this->refreshProductPromotion($product, $productData);
+        $this->refreshProductPromotions($product, $productData);
         $this->em->flush();
         $this->setAdditionalDataAfterCreate($product, $productData);
 
@@ -177,7 +177,7 @@ class ProductFacade
         );
         $product->edit($productCategoryDomains, $productData);
 
-        $this->refreshProductPromotion($product, $productData);
+        $this->refreshProductPromotions($product, $productData);
 
         $this->saveParameters($product, $productData->parameters);
 
@@ -214,13 +214,30 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
-    protected function refreshProductPromotion(Product $product, ProductData $productData): void
+    protected function refreshProductPromotions(Product $product, ProductData $productData): void
     {
-        $promotionData = $productData->promotionXyData;
+        foreach ($productData->promotionXyData as $domainId => $promotionData) {
+            if ($promotionData === null) {
+                continue;
+            }
 
-        $promotionBuyQuantity = $promotionData?->buyQuantity;
-        $promotionFreeQuantity = $promotionData?->freeQuantity;
-        $currentPromotion = $product->getPromotionXy();
+            $this->refreshProductPromotionForDomain($promotionData, $product, $domainId);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData $promotionData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     */
+    protected function refreshProductPromotionForDomain(
+        ProductPromotionXyData $promotionData,
+        Product $product,
+        int $domainId,
+    ): void {
+        $promotionBuyQuantity = $promotionData->buyQuantity;
+        $promotionFreeQuantity = $promotionData->freeQuantity;
+        $currentPromotion = $product->getPromotionXy($domainId);
 
         if ($promotionBuyQuantity === $currentPromotion?->getBuyQuantity() && $promotionFreeQuantity === $currentPromotion?->getFreeQuantity()) {
             return;
@@ -228,7 +245,7 @@ class ProductFacade
 
         if ($promotionBuyQuantity === null || $promotionFreeQuantity === null) {
             if ($currentPromotion !== null) {
-                $product->setPromotionXy(null);
+                $product->setPromotionXy(null, $domainId);
             }
 
             return;
@@ -237,7 +254,6 @@ class ProductFacade
         $productPromotionXyData = $this->productPromotionXyDataFactory->create();
         $productPromotionXyData->buyQuantity = $promotionBuyQuantity;
         $productPromotionXyData->freeQuantity = $promotionFreeQuantity;
-        $productData->promotionXyData = $productPromotionXyData;
 
         $promotion = $this->productPromotionXyRepository->findPromotionXyByQuantities($promotionBuyQuantity, $promotionFreeQuantity);
 
@@ -246,7 +262,7 @@ class ProductFacade
         }
 
         $this->em->persist($promotion);
-        $product->setPromotionXy($promotion);
+        $product->setPromotionXy($promotion, $domainId);
         $this->em->flush();
     }
 

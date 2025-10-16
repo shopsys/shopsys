@@ -4013,8 +4013,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'PROMO-3PLUS1-TV';
         $productData->ean = '9991234567895';
-        $productData->promotionXyData->buyQuantity = 3;
-        $productData->promotionXyData->freeQuantity = 1;
         $productData->weight = 12000;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '25990');
         $this->productDemoDataSetter->setSellingFrom($productData, '1.2.2015');
@@ -4039,6 +4037,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
             ]);
+            $productData->promotionXyData[$domain->getId()]->buyQuantity = 3;
+            $productData->promotionXyData[$domain->getId()]->freeQuantity = 1;
         }
 
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);

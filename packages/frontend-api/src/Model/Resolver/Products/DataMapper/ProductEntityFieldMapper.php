@@ -373,7 +373,7 @@ class ProductEntityFieldMapper
      */
     public function getPromotionBuyQuantity(Product $product): ?int
     {
-        return $product->getPromotionXy()?->getBuyQuantity();
+        return $product->getPromotionXy($this->domain->getId())?->getBuyQuantity();
     }
 
     /**
@@ -382,6 +382,6 @@ class ProductEntityFieldMapper
      */
     public function getPromotionFreeQuantity(Product $product): ?int
     {
-        return $product->getPromotionXy()?->getFreeQuantity();
+        return $product->getPromotionXy($this->domain->getId())?->getFreeQuantity();
     }
 }

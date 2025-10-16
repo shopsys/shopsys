@@ -87,8 +87,6 @@ class ProductDataFactory
      */
     protected function fillNew(ProductData $productData): void
     {
-        $productData->promotionXyData = $this->productPromotionXyDataFactory->create();
-
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->shortDescriptionUsp1ByDomainId[$domainId] = null;
             $productData->shortDescriptionUsp2ByDomainId[$domainId] = null;
@@ -99,6 +97,7 @@ class ProductDataFactory
             $productData->orderingPriorityByDomainId[$domainId] = 0;
             $productData->domainSellingDenied[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
+            $productData->promotionXyData[$domainId] = $this->productPromotionXyDataFactory->create();
         }
 
         $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createEmptyForAllDomains();
@@ -171,6 +170,9 @@ class ProductDataFactory
             $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
             $productData->domainSellingDenied[$domainId] = $product->isSellingDeniedOnDomain($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
+            $productData->promotionXyData[$domainId] = $product->getPromotionXy($domainId) === null ?
+                null :
+                $this->productPromotionXyDataFactory->createFromEntity($product->getPromotionXy($domainId));
         }
 
         $productData->urls->mainFriendlyUrlsByDomainId = $this->friendlyUrlFacade->getMainFriendlyUrlsIndexedByDomains(
@@ -187,10 +189,6 @@ class ProductDataFactory
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
         $productData->unit = $product->getUnit();
-        $productData->promotionXyData = $product->getPromotionXy() === null ?
-            null :
-            $this->productPromotionXyDataFactory->createFromEntity($product->getPromotionXy());
-
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
         $productData->brand = $product->getBrand();

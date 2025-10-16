@@ -38,7 +38,7 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
         $orderData = $orderProcessingData->orderData;
 
         foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
-            $freeQuantity = $productItem->product->calculateFreeQuantity($productItem->quantity);
+            $freeQuantity = $productItem->product->calculateFreeQuantity($productItem->quantity, $orderProcessingData->getDomainId());
 
             if ($freeQuantity === 0) {
                 continue;
@@ -85,12 +85,11 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
         OrderItemData $productItem,
         DomainConfig $domainConfig,
     ): OrderItemData {
-        $locale = $domainConfig->getLocale();
         $discountPrice = $productItem->getUnitPrice()->inverse();
 
         $discountOrderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PROMOTION);
 
-        $discountOrderItemData->name = $this->getOrderItemName($locale, $productItem->product);
+        $discountOrderItemData->name = $this->getOrderItemName($domainConfig, $productItem->product);
         $discountOrderItemData->quantity = $freeQuantity;
         $discountOrderItemData->setUnitPrice($discountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice->multiply($freeQuantity));
@@ -100,22 +99,22 @@ class ApplyPromotionXyMiddleware implements OrderProcessorMiddlewareInterface
     }
 
     /**
-     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
     protected function getOrderItemName(
-        string $locale,
+        DomainConfig $domainConfig,
         Product $product,
     ): string {
         return t(
             'Promotion {{ x }} + {{ y }} free',
             [
-                '{{ x }}' => $product->getPromotionXy()?->getBuyQuantity(),
-                '{{ y }}' => $product->getPromotionXy()?->getFreeQuantity(),
+                '{{ x }}' => $product->getPromotionXy($domainConfig->getId())?->getBuyQuantity(),
+                '{{ y }}' => $product->getPromotionXy($domainConfig->getId())?->getFreeQuantity(),
             ],
             Translator::DEFAULT_TRANSLATION_DOMAIN,
-            $locale,
+            $domainConfig->getLocale(),
         );
     }
 }

@@ -233,12 +233,13 @@ class CartItem
     }
 
     /**
+     * @param int $domainId
      * @return int
      */
-    public function getFreeQuantity()
+    public function getFreeQuantity(int $domainId): int
     {
         $product = $this->getProduct();
 
-        return $product->calculateFreeQuantity($this->getQuantity());
+        return $product->calculateFreeQuantity($this->getQuantity(), $domainId);
     }
 }

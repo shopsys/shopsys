@@ -224,7 +224,7 @@ class ProductData
     public $productVideosData;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData|null
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData[]
      */
     public $promotionXyData;
 
@@ -262,6 +262,6 @@ class ProductData
         $this->excludedTransports = [];
         $this->productType = ProductTypeEnum::TYPE_BASIC;
         $this->productVideosData = [];
-        $this->promotionXyData = null;
+        $this->promotionXyData = [];
     }
 }

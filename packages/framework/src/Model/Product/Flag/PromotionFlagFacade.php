@@ -43,21 +43,17 @@ class PromotionFlagFacade
      */
     public function updatePromotionFlags(Product $product, ProductData $productData): void
     {
-        if ($productData->promotionXyData === null) {
-            return;
-        }
-
-        $isSellableOnDomain = [];
-
         foreach ($this->domain->getAllIds() as $domainId) {
-            $isSellableOnDomain[$domainId] = $product->isCalculatedSellingDenied($domainId) === false;
-        }
+            $promotionXyData = $productData->promotionXyData[$domainId];
 
-        $promotionXyData = $productData->promotionXyData;
-        $promotionBuyQuantity = $promotionXyData->buyQuantity;
-        $promotionFreeQuantity = $promotionXyData->freeQuantity;
+            if ($promotionXyData === null) {
+                continue;
+            }
+            $isSellableOnDomain = $product->isCalculatedSellingDenied($domainId) === false;
 
-        foreach ($this->domain->getAllIds() as $domainId) {
+            $promotionBuyQuantity = $promotionXyData->buyQuantity;
+            $promotionFreeQuantity = $promotionXyData->freeQuantity;
+
             $flags = $productData->flagsByDomainId[$domainId] ?? [];
 
             $promotionFlags = array_filter(
@@ -72,27 +68,25 @@ class PromotionFlagFacade
             $promotionFlag = reset($promotionFlags);
 
             if (
-                $isSellableOnDomain[$domainId] &&
+                $isSellableOnDomain &&
                 $promotionFlag->getPromotionXy()->getBuyQuantity() === $promotionBuyQuantity &&
                 $promotionFlag->getPromotionXy()->getFreeQuantity() === $promotionFreeQuantity
             ) {
-                return;
+                continue;
             }
 
             $productData->flagsByDomainId[$domainId] = array_values(array_filter(
                 $flags,
                 fn (Flag $flag): bool => !$flag->hasPromotionXy(),
             ));
-        }
 
-        if ($promotionBuyQuantity === null || $promotionFreeQuantity === null) {
-            return;
-        }
+            if ($promotionBuyQuantity === null || $promotionFreeQuantity === null) {
+                continue;
+            }
 
-        $flag = $this->findOrCreatePromotionFlag($promotionBuyQuantity, $promotionFreeQuantity);
+            $flag = $this->findOrCreatePromotionFlag($promotionBuyQuantity, $promotionFreeQuantity);
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            if ($isSellableOnDomain[$domainId] && !in_array($flag, $productData->flagsByDomainId[$domainId], true)) {
+            if ($isSellableOnDomain && !in_array($flag, $productData->flagsByDomainId[$domainId], true)) {
                 $productData->flagsByDomainId[$domainId][] = $flag;
             }
         }
@@ -146,7 +140,7 @@ class PromotionFlagFacade
      * @param string $locale
      * @return string
      */
-    protected function buildPromotionFlagName(int $x, int $y, string $locale)
+    protected function buildPromotionFlagName(int $x, int $y, string $locale): string
     {
         return t(
             'Promotion {{ x }} + {{ y }} free',

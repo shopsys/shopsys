@@ -32,8 +32,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
  * @method \App\Model\Product\Product edit(int $productId, \App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
  * @method refreshProductAccessories(\App\Model\Product\Product $product, \App\Model\Product\Product[] $accessories)
  * @method saveParameters(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData)
- * @method refreshProductPromotion(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
+ * @method refreshProductPromotions(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method array getCalculatedSellingDeniedPerDomainIds(\App\Model\Product\Product $product)
+ * @method refreshProductPromotionForDomain(\Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData $promotionData, \App\Model\Product\Product $product, int $domainId)
  */
 class ProductFacade extends BaseProductFacade
 {

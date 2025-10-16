@@ -4,15 +4,25 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormTypeInterface;
 
 class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'productHasPromotionXy';
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     */
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
+    }
 
     /**
      * @return string
@@ -57,18 +67,25 @@ class ProductHasPromotionXyFilter implements AdvancedSearchFilterInterface
     #[Override]
     public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
+        $existsDql = $this->em->createQueryBuilder()
+            ->select('1')
+            ->from(ProductDomain::class, 'pd_xy')
+            ->join('pd_xy.promotionXy', 'pxy')
+            ->where('pd_xy.product = p.id')
+            ->andWhere('pxy.buyQuantity IS NOT NULL')
+            ->andWhere('pxy.freeQuantity IS NOT NULL')
+            ->getDQL();
+
         foreach ($rulesData as $ruleData) {
             if ($ruleData->operator === self::OPERATOR_IS) {
-                $queryBuilder->leftJoin('p.promotionXy', 'pxy');
-                $queryBuilder->andWhere('pxy.buyQuantity IS NOT NULL AND pxy.freeQuantity IS NOT NULL');
+                $queryBuilder->andWhere('EXISTS (' . $existsDql . ')');
             }
 
             if ($ruleData->operator !== self::OPERATOR_IS_NOT) {
                 continue;
             }
 
-            $queryBuilder->leftJoin('p.promotionXy', 'pxy');
-            $queryBuilder->andWhere('pxy.buyQuantity IS NULL AND pxy.freeQuantity IS NULL');
+            $queryBuilder->andWhere('NOT EXISTS (' . $existsDql . ')');
         }
     }
 }

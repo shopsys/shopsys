@@ -579,9 +579,14 @@ final class ProductFormType extends AbstractType
             return $promotionGroup;
         }
 
-        $promotionGroup->add('promotionXyData', ProductPromotionXyType::class, [
+        $promotionGroup->add('promotionXyData', MultidomainType::class, [
             'label' => false,
+            'entry_type' => ProductPromotionXyType::class,
             'required' => false,
+            'entry_options' => [
+                'label' => false,
+                'required' => false,
+            ],
         ]);
 
         return $promotionGroup;

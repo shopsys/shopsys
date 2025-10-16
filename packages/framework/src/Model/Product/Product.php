@@ -160,13 +160,6 @@ class Product extends AbstractTranslatableEntity
     protected $weight;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy")
-     * @ORM\JoinColumn(name="promotion_xy_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     */
-    protected $promotionXy;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @ORM\JoinTable(name="product_excluded_transports")
@@ -388,16 +381,17 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param int $quantity
+     * @param int $domainId
      * @return int
      */
-    public function calculateFreeQuantity($quantity)
+    public function calculateFreeQuantity(int $quantity, int $domainId): int
     {
-        if ($this->promotionXy === null) {
+        if ($this->getPromotionXy($domainId) === null) {
             return 0;
         }
 
-        $buyQuantity = $this->promotionXy->getBuyQuantity();
-        $freeQuantity = $this->promotionXy->getFreeQuantity();
+        $buyQuantity = $this->getPromotionXy($domainId)->getBuyQuantity();
+        $freeQuantity = $this->getPromotionXy($domainId)->getFreeQuantity();
 
         $totalPromotionsSize = $buyQuantity + $freeQuantity;
 
@@ -409,11 +403,12 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
      */
-    public function getPromotionXy()
+    public function getPromotionXy(int $domainId)
     {
-        return $this->promotionXy;
+        return $this->getProductDomain($domainId)->getPromotionXy();
     }
 
     /**
@@ -858,10 +853,11 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
+     * @param $domainId
      */
-    public function setPromotionXy($promotionXy)
+    public function setPromotionXy($promotionXy, $domainId)
     {
-        $this->promotionXy = $promotionXy;
+        $this->getProductDomain($domainId)->setPromotionXy($promotionXy);
     }
 
     /**

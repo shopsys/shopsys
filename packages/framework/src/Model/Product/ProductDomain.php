@@ -138,6 +138,13 @@ class ProductDomain
     protected $calculatedSellingDenied;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy")
+     * @ORM\JoinColumn(name="promotion_xy_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $promotionXy;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      */
@@ -419,5 +426,21 @@ class ProductDomain
     public function isCalculatedSellingDenied()
     {
         return $this->calculatedSellingDenied;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     */
+    public function getPromotionXy()
+    {
+        return $this->promotionXy;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
+     */
+    public function setPromotionXy($promotionXy)
+    {
+        $this->promotionXy = $promotionXy;
     }
 }

@@ -209,8 +209,8 @@ class ProductExportRepository
             }, $product->getProductVideos()),
             ProductExportFieldProvider::VAT_PERCENT => $this->extractVat($product, $domainId),
             ProductExportFieldProvider::PROMOTION => [
-                'buy_quantity' => $product->getPromotionXy()?->getBuyQuantity(),
-                'free_quantity' => $product->getPromotionXy()?->getFreeQuantity(),
+                'buy_quantity' => $product->getPromotionXy($domainId)?->getBuyQuantity(),
+                'free_quantity' => $product->getPromotionXy($domainId)?->getFreeQuantity(),
             ],
 
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
