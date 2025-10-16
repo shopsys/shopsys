@@ -7,7 +7,6 @@
 
 {% block btn_wrapper %}
     {{ block('product_visibilities') }}
-    {{ block('product_sellability') }}
 {% endblock %}
 
 {% block product_visibilities %}
@@ -22,22 +21,6 @@
         {% set visibilityIcon = 'invisible' %}
     {% endif %}
 
-    <div class="dropdown"
-         data-bs-toggle="popover"
-         data-bs-trigger="click"
-         data-bs-html="true"
-         data-bs-content="{{ 'Loading'|trans }}..."
-         data-bs-container="body"
-         data-bs-placement="left"
-         data-content-url="{{ url('admin_product_visibility', {productId: product.id}) }}"
-    >
-        <button type="button" class="btn btn-link dropdown-toggle {{ visibilityClass }}" data-bs-toggle="dropdown">
-            {{ ux_icon(visibilityIcon) }} {{ 'Preview'|trans }}
-        </button>
-    </div>
-{% endblock %}
-
-{% block product_sellability %}
     {% if product.isSellableOnAllDomains() %}
         {% set sellabilityClass = 'text-green' %}
         {% set sellabilityIcon = 'cart' %}
@@ -49,17 +32,23 @@
         {% set sellabilityIcon = 'cart-off' %}
     {% endif %}
 
-    <div class="dropdown"
-         data-bs-toggle="popover"
-         data-bs-trigger="click"
-         data-bs-html="true"
-         data-bs-content="{{ 'Loading'|trans }}..."
-         data-bs-container="body"
-         data-bs-placement="left"
-         data-content-url="{{ url('admin_product_sellability', {productId: product.id}) }}"
-    >
-        <button type="button" class="btn btn-link dropdown-toggle {{ sellabilityClass }}" data-bs-toggle="dropdown">
-            {{ ux_icon(sellabilityIcon) }} {{ 'Preview'|trans }}
-        </button>
-    </div>
+    {% if isMultidomain() %}
+        <div class="dropdown"
+             data-bs-toggle="popover"
+             data-bs-trigger="click"
+             data-bs-html="true"
+             data-bs-content="{{ 'Loading'|trans }}..."
+             data-bs-container="body"
+             data-bs-placement="left"
+             data-content-url="{{ url('admin_product_visibility', {productId: product.id}) }}"
+        >
+            <button type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown">
+                <span class="{{ visibilityClass }}">{{ ux_icon(visibilityIcon) }}</span>
+                <span class="{{ sellabilityClass }}">{{ ux_icon(sellabilityIcon) }}</span>
+                {{ 'Preview'|trans }}
+            </button>
+        </div>
+    {% else %}
+        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\ProductController::visibilityAction', { productId: product.id, withHeadline: false })) }}
+    {% endif %}
 {% endblock %}
