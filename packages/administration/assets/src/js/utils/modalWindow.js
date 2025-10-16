@@ -33,6 +33,7 @@ export default class ModalWindow {
             size: 'sm',
             buttons: [],
             style: null,
+            borderless: false,
             ...options,
         };
 
@@ -66,8 +67,8 @@ export default class ModalWindow {
                 <div class="modal-dialog ${sizeClass} modal-dialog-centered" role="document">
                     <div class="modal-content">
                         ${this.options.style ? `<div class="modal-status bg-${this.options.style}"></div>` : ''}
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="${Translator.trans('Close')}"></button>
-                        <div class="modal-body text-center py-4">
+                        <button type="button" class="btn-close${this.options.borderless ? ' visually-hidden' : ''}" data-bs-dismiss="modal" aria-label="${Translator.trans('Close')}"></button>
+                        <div class="modal-body text-center${this.options.borderless ? ' p-0' : ''}">
                             ${statusIcon ? `<div class="text-center mb-3" aria-hidden="true">${statusIcon}</div>` : ''}
                             ${this.options.title ? `<h3>${this.options.title}</h3>` : ''}
                             ${this.options.content}

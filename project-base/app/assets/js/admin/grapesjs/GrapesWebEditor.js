@@ -129,6 +129,7 @@ export default class GrapesWebEditor {
                         this.currentModal = new ModalWindow({
                             content: iframeContent,
                             size: 'xl',
+                            borderless: true,
                         });
 
                         let isClosed = false;
