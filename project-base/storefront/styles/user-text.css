@@ -272,24 +272,40 @@
         }
 
         .grid {
-            @apply grid grid-cols-12 gap-1 py-1;
+            @apply my-8 grid grid-cols-1 items-center gap-5 lg:my-10 lg:grid-cols-12 lg:gap-10;
 
             .grid__item {
                 &.grid__item--1 {
-                    @apply col-span-full;
+                    @apply col-span-1 lg:col-span-12;
                 }
 
                 &.grid__item--1-2 {
-                    @apply col-span-6;
+                    @apply col-span-1 lg:col-span-6;
                 }
 
                 &.grid__item--1-3 {
-                    @apply col-span-4;
+                    @apply col-span-1 lg:col-span-4;
                 }
 
                 &.grid__item--2-3 {
-                    @apply col-span-8;
+                    @apply col-span-1 lg:col-span-8;
                 }
+
+                h2:first-child,
+                h3:first-child,
+                h4:first-child,
+                h5:first-child,
+                h6:first-child {
+                    @apply mt-0;
+                }
+
+                & > *:last-child {
+                    @apply mb-0;
+                }
+            }
+
+            img {
+                @apply m-0;
             }
         }
 
