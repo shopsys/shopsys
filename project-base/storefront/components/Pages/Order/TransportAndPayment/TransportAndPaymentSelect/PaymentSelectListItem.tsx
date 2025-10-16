@@ -4,7 +4,9 @@ import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { usePaymentChangeInSelect } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { memo } from 'react';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type ChangePayment = ReturnType<typeof usePaymentChangeInSelect>['changePayment'];
 
@@ -16,11 +18,23 @@ type PaymentListItemProps = {
 
 const PaymentListItemComp: FC<PaymentListItemProps> = ({ payment, isActive = false, changePayment }) => {
     const { t } = useTranslation();
+    const formatPrice = useFormatPrice();
+
+    const ariaLabel = isPriceVisible(payment.price.priceWithVat)
+        ? t('Choose payment {{ paymentName }} for {{ price }}', {
+              ns: 'accessibility',
+              paymentName: payment.name,
+              price: formatPrice(payment.price.priceWithVat),
+          })
+        : t('Choose payment {{ paymentName }}', {
+              ns: 'accessibility',
+              paymentName: payment.name,
+          });
 
     return (
         <TransportAndPaymentListItem key={payment.uuid}>
             <Radiobutton
-                aria-label={t('Choose payment {{ paymentName }}', { ns: 'accessibility', paymentName: payment.name })}
+                aria-label={ariaLabel}
                 checked={isActive}
                 id={payment.uuid}
                 name="payment"

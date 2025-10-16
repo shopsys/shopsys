@@ -33,15 +33,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
     const ariaDescription = t(
-        'You have added quantity {{quantity}} {{unit}} to your cart for {{priceInfo}}. You can now proceed to checkout or continue shopping',
-        {
-            ns: 'accessibility',
-            quantity,
-            unit: product.unit.name,
-            priceInfo: isPriceVisible(product.price.priceWithVat)
-                ? `${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`
-                : '',
-        },
+        'Great choice! We have added your item to the cart. You can now proceed to checkout or continue shopping.',
+        { ns: 'accessibility' },
     );
 
     return (

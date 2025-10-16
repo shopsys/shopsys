@@ -7,6 +7,7 @@ import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/tra
 import { memo } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type ChangeTransport = ReturnType<typeof useTransportChangeInSelect>['changeTransport'];
@@ -31,18 +32,25 @@ const TransportListItemComp: FC<TransportListItemProps> = ({
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
+    const ariaLabel = isPriceVisible(transport.price.priceWithVat)
+        ? t('Choose transport {{ transportName }} for {{ price }}', {
+              ns: 'accessibility',
+              transportName: transport.name,
+              price: formatPrice(transport.price.priceWithVat),
+          })
+        : t('Choose transport {{ transportName }}', {
+              ns: 'accessibility',
+              transportName: transport.name,
+          });
+
     return (
         <TransportAndPaymentListItem key={transport.uuid}>
             <Radiobutton
+                aria-label={ariaLabel}
                 checked={isActive}
                 id={transport.uuid}
                 name="transport"
                 value={transport.uuid}
-                aria-label={t('Choose transport {{ transportName }} for {{ price }}', {
-                    ns: 'accessibility',
-                    transportName: transport.name,
-                    price: formatPrice(transport.price.priceWithVat),
-                })}
                 label={
                     <TransportAndPaymentSelectItemLabel
                         daysUntilDelivery={transport.daysUntilDelivery}

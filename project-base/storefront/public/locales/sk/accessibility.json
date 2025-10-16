@@ -1,7 +1,8 @@
 {
+    " for {{ price }}": " za {{ price }}",
     "Add product {{ productName }} to comparison": "Pridať produkt {{ productName }} do porovnania",
     "Add product {{ productName }} to wishlist": "Pridať produkt {{ productName }} do obľúbených produktov",
-    "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}": "Pridať {{ productName }}, množstvo {{ quantity }} {{ unit }} za {{ price }} do košíka",
+    "Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }}": "Pridať do košíka {{ productName }}, množstvo {{ quantity }} {{ unit }}",
     "Address": "Adresa",
     "Breadcrumb navigation": "Navigácia z kolečka",
     "Call sales representative": "Zavolať obchodnému zástupcovi",
@@ -10,6 +11,8 @@
     "Cart items list": "Zoznam položiek košíka",
     "Checkout steps navigation": "Navigácia v krocích objednávky",
     "Choose payment {{ paymentName }}": "Vybrať platbu {{ paymentName }}",
+    "Choose payment {{ paymentName }} for {{ price }}": "Vybrať platbu {{ paymentName }} za {{ price }}",
+    "Choose transport {{ transportName }}": "Vybrať dopravu {{ transportName }}",
     "Choose transport {{ transportName }} for {{ price }}": "Vybrať dopravu {{ transportName }} za {{ price }}",
     "Clear all active filters": "Vymazať všetky aktívne filtre",
     "Clear search input": "Vyčistiť vyhľadávacie pole",
@@ -74,6 +77,7 @@
     "Go to user consent update page": "Prejsť na stránku aktualizácie súhlasu",
     "Go to wishlist page": "Prejsť na stránku obľúbených produktov",
     "Go to Youtube": "Prejsť na Youtube",
+    "Great choice! We have added your item to the cart. You can now proceed to checkout or continue shopping.": "Výborná voľba! Pridali sme váš produkt do košíka. Teraz môžete pokračovať v objednávke alebo pokračovať v nákupe.",
     "Increase quantity": "Zvýšiť množstvo",
     "Loading search results": "Načítanie výsledkov hľadania",
     "Mail to {{email}}": "Poslať e-mail na {{email}}",
@@ -85,7 +89,7 @@
     "Mobile navigation menu": "Navigácia menu na mobilnom zariadení",
     "Navigation": "Navigácia",
     "Open image gallery of {{ productName }}": "Otvoriť galériu obrázkov {{ productName }}",
-    "Open inquiry popup": "Otvoriť popup dopytov",
+    "Open inquiry popup": "Otvoriť popup dopytu",
     "Open product filters": "Otvoriť filtre produktov",
     "Open stores availability popup": "Otvoriť popup dostupnosti v predajniach",
     "Open watchdog popup for {{productName}}": "Otvoriť popup hlídacieho psa pre {{productName}}",
@@ -183,6 +187,5 @@
     "View complaint images in gallery": "Zobraziť obrázky reklamácie v galériií",
     "Visit Shopsys.com": "Navštívte stránky Shopsys.com",
     "Write to us": "Napíšte nám",
-    "You are on {{pageTitle}} page": "Ste na stránke {{pageTitle}}",
-    "You have added quantity {{quantity}} {{unit}} to your cart for {{priceInfo}}. You can now proceed to checkout or continue shopping": "Pridali ste do košíka {{quantity}} {{unit}} za {{priceInfo}}. Teraz môžete pokračovať k objednávke alebo pokračovať v nákupe."
+    "You are on {{pageTitle}} page": "Ste na stránke {{pageTitle}}"
 }

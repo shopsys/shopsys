@@ -1,4 +1,5 @@
 import { Loader } from 'components/Basic/Loader/Loader';
+import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -7,25 +8,10 @@ import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/P
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
 import { useRef } from 'react';
-import { useSessionStore } from 'store/useSessionStore';
-import { useAddToCart } from 'utils/cart/useAddToCart';
-import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { useAddToCartAriaLabel } from 'utils/accessibility/useAddToCartAriaLabel';
+import { useAddToCartHandler } from 'utils/cart/useAddToCartHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { mapPriceForCalculations } from 'utils/mappers/price';
-
-const AddToCartPopup = dynamic(
-    () => import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
-    { ssr: false },
-);
-
-const InquiryPopup = dynamic(
-    () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
-    {
-        ssr: false,
-    },
-);
 
 export type ProductDetailAddToCartProps = {
     product: TypeProductDetailFragment;
@@ -34,54 +20,28 @@ export type ProductDetailAddToCartProps = {
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
-    const { addToCart, isAddingToCart } = useAddToCart(
-        GtmMessageOriginType.product_detail_page,
-        GtmProductListNameType.product_detail,
-    );
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const { canCreateOrder } = useAuthorization();
-    const formatPrice = useFormatPrice();
 
-    const onAddToCartHandler = async () => {
-        if (!spinboxRef.current) {
-            return;
-        }
+    const { onAddToCartHandler, isAddingToCart } = useAddToCartHandler({
+        spinboxRef,
+        productUuid: product.uuid,
+        gtmMessageOrigin: GtmMessageOriginType.product_detail_page,
+        gtmProductListName: GtmProductListNameType.product_detail,
+    });
 
-        const addToCartResult = await addToCart(product.uuid, spinboxRef.current.valueAsNumber);
-        spinboxRef.current!.valueAsNumber = 1;
-
-        if (addToCartResult) {
-            updatePortalContent(
-                <AddToCartPopup
-                    key={addToCartResult.addProductResult.cartItem.uuid}
-                    addedCartItem={addToCartResult.addProductResult.cartItem}
-                />,
-            );
-        }
-    };
+    const { ariaLabel, onFocusHandler } = useAddToCartAriaLabel({
+        spinboxRef,
+        productName: product.name,
+        priceWithVat: product.price.priceWithVat,
+        unitName: product.unit.name,
+    });
 
     if (product.isSellingDenied) {
         return <p className="text-text-error">{t('This item can no longer be purchased')}</p>;
     }
 
     if (product.isInquiryType) {
-        const openInquiryPopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            e.stopPropagation();
-            updatePortalContent(<InquiryPopup productUuid={product.uuid} />);
-        };
-
-        return (
-            <Button
-                aria-haspopup="dialog"
-                aria-label={t('Open inquiry popup', { ns: 'accessibility' })}
-                className="w-fit"
-                size="large"
-                title={t('Inquire popup')}
-                onClick={openInquiryPopup}
-            >
-                {t('Inquire')}
-            </Button>
-        );
+        return <ProductInquiryButton buttonSize="large" className="w-fit" productUuid={product.uuid} />;
     }
 
     if (!canCreateOrder) {
@@ -91,16 +51,6 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     const isWatchdogButtonVisible =
         (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
         product.isSellingDenied;
-
-    const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
-        ns: 'accessibility',
-        productName: product.name,
-        quantity: spinboxRef.current?.valueAsNumber,
-        unit: product.unit.name,
-        price: formatPrice(
-            (spinboxRef.current?.valueAsNumber ?? 1) * mapPriceForCalculations(product.price.priceWithVat),
-        ),
-    });
 
     return (
         <div className="flex items-center gap-2">
@@ -129,6 +79,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                     title={t('Add to cart')}
                     variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
                     onClick={onAddToCartHandler}
+                    onFocus={onFocusHandler}
                 >
                     {t('Add to cart')}
                 </Button>
