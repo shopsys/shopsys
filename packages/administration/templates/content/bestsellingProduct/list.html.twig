@@ -13,27 +13,30 @@
 
     <div class="card">
         <div class="card-body">
-            {{ self.categoryTreeItem(categoriesWithPreloadedChildren, selectedDomainId, bestsellingProductsInCategories) }}
+            {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, selectedDomainId, bestsellingProductsInCategories) }}
         </div>
     </div>
 {% endblock %}
 
-{% macro categoryTreeItem(categoriesWithPreloadedChildren, selectedDomainId, bestsellingProductsInCategories) %}
-    {% import _self as self %}
-    <ul class="list-group list-group-flush">
+{% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, selectedDomainId, bestsellingProductsInCategories) %}
+    <ul class="{{ isFirstLevel ? 'tree' : 'tree-group' }}">
         {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
-            <li class="list-group-item py-1">
-                {{ ux_icon('radius-bottom-left', { class: 'text-secondary' }) }}
-                <a href="{{ url('admin_bestsellingproduct_detail', {categoryId: categoryWithPreloadedChildren.category.id, domainId: selectedDomainId}) }}">
-                    {{ categoryWithPreloadedChildren.category.name }}
-                </a>
+            <li class="tree-item">
+                <div class="tree-item-content">
+                    <div class="tree-item-label text-truncate">
+                        <a href="{{ url('admin_bestsellingproduct_detail', {categoryId: categoryWithPreloadedChildren.category.id, domainId: selectedDomainId}) }}">
+                            {{ categoryWithPreloadedChildren.category.name }}
+                        </a>
 
-                {% set count_color = bestsellingProductsInCategories[categoryWithPreloadedChildren.category.id] ? 'azure' %}
-                <span class="badge bg-{{ count_color }} text-{{ count_color }}-fg ms-2">
-                    {{ bestsellingProductsInCategories[categoryWithPreloadedChildren.category.id] }}
-                </span>
+                        {% set count_color = bestsellingProductsInCategories[categoryWithPreloadedChildren.category.id] ? 'azure' %}
+                        {% set badge_class = count_color > 0 ? ' bg-azure text-azure-fg' : '' %}
+                        <span class="badge{{ badge_class }} ms-2">
+                            {{ bestsellingProductsInCategories[categoryWithPreloadedChildren.category.id] }}
+                        </span>
+                    </div>
+                </div>
 
-                {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, selectedDomainId, bestsellingProductsInCategories) }}
+                {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, selectedDomainId, bestsellingProductsInCategories) }}
             </li>
         {% endfor %}
     </ul>
