@@ -1594,12 +1594,6 @@ msgstr "Zaslanie zabudnutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategórie štvrtého stĺpca"
 
-msgid "Free from order value"
-msgstr "Zadarmo od hodnoty objednávky"
-
-msgid "Free from order value"
-msgstr "Zadarmo od hodnoty objednávky"
-
 msgid "Free quantity"
 msgstr "Množstvo zadarmo"
 
@@ -2587,23 +2581,11 @@ msgstr "Produkt detail URL"
 msgid "Product gift"
 msgstr "Darčekový produkt"
 
-msgid "Product excluded from sale"
-msgstr "Produkt vylúčený z predaja"
-
-msgid "Product excluded from sale on all domains"
-msgstr "Produkt vylúčený z predaja na všetkých doménach"
-
-msgid "Product excluded from sale on some domains"
-msgstr "Produkt vylúčený z predaja na niektorých doménach"
-
 msgid "Product image URL"
 msgstr "Produkt image URL"
 
 msgid "Product in order"
 msgstr "Produkt v objednávke"
-
-msgid "Product is included for sale on all domains"
-msgstr "Produkt je zahrnutý v predaji na všetkých doménach"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavná varianta."
@@ -2628,9 +2610,6 @@ msgstr "Skladové množstvo produktu"
 
 msgid "Product type"
 msgstr "Typ produktu"
-
-msgid "Product with X + Y free promotion"
-msgstr "Produkt s akciou X + Y zadarmo"
 
 msgid "Products"
 msgstr "Produkty"
@@ -2674,18 +2653,6 @@ msgstr "Propagované kategórie"
 msgid "Promoted products"
 msgstr "Propagované produkty"
 
-msgid "QR code"
-msgstr "QR kód"
-
-msgid "Quantity"
-msgstr "Množstvo"
-
-msgid "Quick product search"
-msgstr "Rýchle vyhľadávanie v produktoch"
-
-msgid "Quick search"
-msgstr "Rýchle hľadanie"
-
 msgid "Promotion X + Y free"
 msgstr "Akcia X + Y zadarmo"
 
@@ -2695,14 +2662,8 @@ msgstr "Akcia sa nastavuje na konkrétné variantě."
 msgid "Promotion {{ x }} + {{ y }} free"
 msgstr "Akcia {{ x }} + {{ y }} zadarmo"
 
-msgid "Quantity"
-msgstr "Množstvo"
-
-msgid "Quick product search"
-msgstr "Rýchle vyhľadávanie v produktoch"
-
-msgid "Quick search"
-msgstr "Rýchle hľadanie"
+msgid "QR code"
+msgstr "QR kód"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -2977,9 +2938,6 @@ msgstr "Vybraný sklad neexistuje."
 msgid "Selected watchdog does not exist."
 msgstr "Vybraný hlídací pes neexistuje."
 
-msgid "Sellability on each domain"
-msgstr "Predajnosť na každej doméne"
-
 msgid "Selling end date"
 msgstr "Dátum stáhnutia"
 
@@ -3198,9 +3156,6 @@ msgstr "Čím vyššia priorita, tým vyššie bude krajina zobrazená v zoznamo
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimálna veľkosť ikony je 46x26 px. Povolený je len PNG formát."
-
-msgid "The selected flag cannot be deleted."
-msgstr "Vybraná značka nemôže byť odstránená."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové množstvá sú nastavené pre varianty produktu osobne."

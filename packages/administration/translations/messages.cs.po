@@ -1360,6 +1360,12 @@ msgstr "Neuděleno"
 msgid "Not refundable"
 msgstr "Nerefundovatelné"
 
+msgid "Not sellable"
+msgstr "Neprodejný"
+
+msgid "Not visible"
+msgstr "Neviditelný"
+
 msgid "Note"
 msgstr "Poznámka"
 
@@ -1531,11 +1537,11 @@ msgstr "Zboží"
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr "Produkt v této poptávce není již dostupný v katalogu."
 
-msgid "Product excluded from sale"
-msgstr "Zboží je vyřazeno z prodeje"
-
 msgid "Product not in e-shop."
 msgstr "Zboží se nenachází v eshopu."
+
+msgid "Product with X + Y free promotion"
+msgstr "Produkt s akcí X + Y zdarma"
 
 msgid "Products"
 msgstr "Zboží"
@@ -1758,6 +1764,9 @@ msgstr "Zvolte novou hodnotu"
 
 msgid "Select row"
 msgstr "Vybrat řádek"
+
+msgid "Sellable"
+msgstr "Prodejný"
 
 msgid "Selling prices"
 msgstr "Prodejní ceny"
@@ -2095,8 +2104,11 @@ msgstr "Zobrazit povolené příjemce."
 msgid "Viewing %entity_name%"
 msgstr "Detail %entity_name%"
 
-msgid "Visibility for unlogged customers"
-msgstr "Viditelnost pro neregistrované zákazníky"
+msgid "Visibility and sellability for unlogged customers"
+msgstr "Viditelnost a prodejnost pro neregistrované zákazníky"
+
+msgid "Visible"
+msgstr "Viditelný"
 
 msgid "Warehouse"
 msgstr "Sklad"

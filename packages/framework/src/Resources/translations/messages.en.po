@@ -2581,22 +2581,10 @@ msgstr ""
 msgid "Product gift"
 msgstr ""
 
-msgid "Product excluded from sale"
-msgstr ""
-
-msgid "Product excluded from sale on all domains"
-msgstr ""
-
-msgid "Product excluded from sale on some domains"
-msgstr ""
-
 msgid "Product image URL"
 msgstr ""
 
 msgid "Product in order"
-msgstr ""
-
-msgid "Product is included for sale on all domains"
 msgstr ""
 
 msgid "Product is main variant."
@@ -2621,9 +2609,6 @@ msgid "Product stock quantity"
 msgstr ""
 
 msgid "Product type"
-msgstr ""
-
-msgid "Product with X + Y free promotion"
 msgstr ""
 
 msgid "Products"
@@ -2668,9 +2653,6 @@ msgstr ""
 msgid "Promoted products"
 msgstr ""
 
-msgid "QR code"
-msgstr ""
-
 msgid "Promotion X + Y free"
 msgstr ""
 
@@ -2678,6 +2660,9 @@ msgid "Promotion can be set on specific variant."
 msgstr ""
 
 msgid "Promotion {{ x }} + {{ y }} free"
+msgstr ""
+
+msgid "QR code"
 msgstr ""
 
 msgid "RGB Hex"
@@ -2953,9 +2938,6 @@ msgstr ""
 msgid "Selected watchdog does not exist."
 msgstr ""
 
-msgid "Sellability on each domain"
-msgstr ""
-
 msgid "Selling end date"
 msgstr ""
 
@@ -3173,9 +3155,6 @@ msgid "The higher the priority, the higher the country will be shown in the list
 msgstr ""
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
-msgstr ""
-
-msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."

@@ -2581,23 +2581,11 @@ msgstr "URL detailu produktu"
 msgid "Product gift"
 msgstr "Dárkový produkt"
 
-msgid "Product excluded from sale"
-msgstr "Zboží je vyřazeno z prodeje"
-
-msgid "Product excluded from sale on all domains"
-msgstr "Zboží je vyřazeno z prodeje na všech doménách"
-
-msgid "Product excluded from sale on some domains"
-msgstr "Zboží je vyřazeno z prodeje na některých doménách"
-
 msgid "Product image URL"
 msgstr "URL obrázku produktu"
 
 msgid "Product in order"
 msgstr "Zboží v objednávce"
-
-msgid "Product is included for sale on all domains"
-msgstr "Zboží je zahrnuto do prodeje na všech doménách"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavní variantou."
@@ -2622,9 +2610,6 @@ msgstr "Počet kusů skladem"
 
 msgid "Product type"
 msgstr "Typ produktu"
-
-msgid "Product with X + Y free promotion"
-msgstr "Produkt s akcí X + Y zdarma"
 
 msgid "Products"
 msgstr "Zboží"
@@ -2668,9 +2653,6 @@ msgstr "Promované kategorie"
 msgid "Promoted products"
 msgstr "Promované produkty"
 
-msgid "QR code"
-msgstr "QR kód"
-
 msgid "Promotion X + Y free"
 msgstr "Akce X + Y zdarma"
 
@@ -2679,6 +2661,9 @@ msgstr "Akce může být nastavena na konkrétní variantě."
 
 msgid "Promotion {{ x }} + {{ y }} free"
 msgstr "Akce {{ x }} + {{ y }} zdarma"
+
+msgid "QR code"
+msgstr "QR kód"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -2953,9 +2938,6 @@ msgstr "Vybraný sklad neexistuje."
 msgid "Selected watchdog does not exist."
 msgstr "Vybraný hlídací pes neexistuje."
 
-msgid "Sellability on each domain"
-msgstr "Prodejnost na doménách"
-
 msgid "Selling end date"
 msgstr "Datum stažení"
 
@@ -3174,9 +3156,6 @@ msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. St
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
-
-msgid "The selected flag cannot be deleted."
-msgstr "Vybraný příznak nelze smazat."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
