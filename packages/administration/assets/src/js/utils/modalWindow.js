@@ -4,7 +4,7 @@ import Check from 'icons/tabler/check.svg';
 import ExclamationCircle from 'icons/tabler/exclamation-circle.svg';
 import InfoCircleFilled from 'icons/tabler/info-circle-filled.svg';
 
-const MODAL_SIZES = ['sm', 'md', 'lg', 'xl'];
+const MODAL_SIZES = ['sm', 'md', 'lg', 'xl', 'fullscreen'];
 const MODAL_STYLES = [null, 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 
 export default class ModalWindow {
