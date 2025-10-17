@@ -323,6 +323,7 @@ class Order
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction>
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction", mappedBy="order", cascade={"persist"})
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $paymentTransactions;
 
