@@ -2,7 +2,7 @@ import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { TIDs } from 'cypress/tids';
-import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
+import { InputHTMLAttributes, KeyboardEventHandler, RefObject } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -13,8 +13,11 @@ type SearchInputProps = NativeProps & {
     value: string;
     label: string;
     shouldShowSpinnerInInput: boolean;
+    className?: string;
+    inputRef?: RefObject<HTMLInputElement>;
     onClear: () => void;
     onSearch?: () => void;
+    onOpenPopup?: () => void;
     ariaLabelForSearchButton: string;
 };
 
@@ -23,17 +26,26 @@ export const SearchInput: FC<SearchInputProps> = ({
     value,
     shouldShowSpinnerInInput,
     className,
+    inputRef,
     onChange,
     onClear,
     onSearch,
+    onOpenPopup,
     ariaLabelForSearchButton,
 }) => {
     const { t } = useTranslation();
 
-    const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onSearch) {
             onSearch();
+        } else if (onOpenPopup && event.key.length === 1) {
+            onOpenPopup();
         }
+    };
+
+    const handleClear = () => {
+        onClear();
+        inputRef?.current?.focus();
     };
 
     return (
@@ -44,11 +56,12 @@ export const SearchInput: FC<SearchInputProps> = ({
                 data-tid={TIDs.layout_header_search_autocomplete_input}
                 id="search-input"
                 placeholder={label}
+                ref={inputRef}
                 type="search"
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'border-input-border-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer mb-0 h-12 w-full rounded-md border pr-20 pl-11',
+                    'border-input-border-default bg-input-bg-default text-input-text-default placeholder:text-input-placeholder-default peer rounded-input mb-0 h-12 w-full border pr-20 pl-11',
                     '[&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
                     '[&:-webkit-autofill]:hover:!bg-input-bg-hovered [&:-webkit-autofill]:hover:!shadow-inner',
                     '[&:-webkit-autofill]:focus:!bg-input-fill [&:-webkit-autofill]:focus:!shadow-inner',
@@ -58,28 +71,29 @@ export const SearchInput: FC<SearchInputProps> = ({
                     className,
                 )}
                 onChange={onChange}
-                onKeyUp={enterKeyPressHandler}
+                onClick={onOpenPopup}
+                onKeyDown={handleKeyDown}
             />
 
             <button
                 aria-label={ariaLabelForSearchButton}
-                className="gjs-template-header-search-button absolute top-1/2 left-0 flex size-11 -translate-y-1/2 items-center justify-center rounded-sm"
+                className="group gjs-template-header-search-button absolute top-1/2 left-1 flex size-10 -translate-y-1/2 items-center justify-center rounded-md hover:cursor-pointer"
                 tabIndex={0}
                 title={t('Search')}
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="text-icon-less hover:text-icon-accent size-4" />
+                <SearchIcon className="text-icon-less group-hover:text-icon-accent size-6" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (
                 <button
                     aria-label={t('Clear search input', { ns: 'accessibility' })}
-                    className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
+                    className="absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-md p-1.5"
                     tabIndex={0}
                     title={t('Clear search')}
                     type="button"
-                    onClick={onClear}
+                    onClick={handleClear}
                 >
                     <CloseIcon className="text-icon-less hover:text-icon-accent size-4" />
                 </button>
