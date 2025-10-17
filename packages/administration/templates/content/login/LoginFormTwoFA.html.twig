@@ -40,7 +40,7 @@
         <div class="form-footer">
             <div class="btn-list flex-nowrap">
                 {# The logout link gives the user a way out if they can't complete two-factor authentication #}
-                <a href="{{ logoutPath }}" class="btn w-100"> Cancel </a>
+                <a href="{{ logoutPath }}" class="btn w-100">{{ 'Cancel'|trans }}</a>
                 <button type="submit" class="btn btn-primary w-100">
                     {{ ux_icon('lock', {class: 'me-1'}) }}
                     {{ 'Log in'|trans }}
