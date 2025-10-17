@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
@@ -56,7 +55,6 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade $promotionFlagManager
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory $productPromotionXyFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository $productPromotionXyRepository
@@ -84,7 +82,6 @@ class ProductFacade
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductVideoFacade $productVideoFacade,
-        protected readonly PromotionFlagFacade $promotionFlagManager,
         protected readonly ProductPromotionXyFactory $productPromotionXyFactory,
         protected readonly ProductPromotionXyDataFactory $productPromotionXyDataFactory,
         protected readonly ProductPromotionXyRepository $productPromotionXyRepository,
@@ -119,9 +116,6 @@ class ProductFacade
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
         $this->editProductStockRelation($productData, $product);
-
-        $this->promotionFlagManager->updatePromotionFlags($product, $productData);
-        $this->em->flush();
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
 
@@ -202,7 +196,6 @@ class ProductFacade
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
         $this->editProductStockRelation($productData, $product);
-        $this->promotionFlagManager->updatePromotionFlags($product, $productData);
         $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);

@@ -69,4 +69,19 @@ class ProductPromotionXyRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @return int[]
+     */
+    public function getAllProductIdsWithPromotionXy(): array
+    {
+        $result = $this->em->getRepository(ProductDomain::class)
+            ->createQueryBuilder('pd')
+            ->select('DISTINCT IDENTITY(pd.product) AS productId')
+            ->join('pd.promotionXy', 'pxy')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'productId');
+    }
 }

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
@@ -34,6 +35,7 @@ class ProductRecalculationFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade $promotionFlagFacade
      */
     public function __construct(
         protected readonly IndexFacade $indexFacade,
@@ -47,6 +49,7 @@ class ProductRecalculationFacade
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
         protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
+        protected readonly PromotionFlagFacade $promotionFlagFacade,
     ) {
     }
 
@@ -104,6 +107,10 @@ class ProductRecalculationFacade
             foreach ($productIds as $productId) {
                 $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProductId($productId);
             }
+        }
+
+        foreach ($productIds as $productId) {
+            $this->promotionFlagFacade->updatePromotionFlags($productId);
         }
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);

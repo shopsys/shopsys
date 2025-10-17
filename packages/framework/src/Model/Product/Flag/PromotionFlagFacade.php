@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository;
@@ -25,6 +25,7 @@ class PromotionFlagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository $productPromotionXyRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory $productPromotionXyFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
@@ -34,64 +35,63 @@ class PromotionFlagFacade
         protected readonly ProductPromotionXyRepository $productPromotionXyRepository,
         protected readonly ProductPromotionXyFactory $productPromotionXyFactory,
         protected readonly ProductPromotionXyDataFactory $productPromotionXyDataFactory,
+        protected readonly ProductFacade $productFacade,
     ) {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param int $productId
      */
-    public function updatePromotionFlags(Product $product, ProductData $productData): void
+    public function updatePromotionFlags(int $productId): void
     {
+        $product = $this->productFacade->getById($productId);
+        $flagsByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
-            $promotionXyData = $productData->promotionXyData[$domainId];
-
-            if ($promotionXyData === null) {
-                continue;
-            }
-            $isSellableOnDomain = $product->isCalculatedSellingDenied($domainId) === false;
-
-            $promotionBuyQuantity = $promotionXyData->buyQuantity;
-            $promotionFreeQuantity = $promotionXyData->freeQuantity;
-
-            $flags = $productData->flagsByDomainId[$domainId] ?? [];
-
-            $promotionFlags = array_filter(
-                $flags,
-                fn (Flag $flag): bool => $flag->hasPromotionXy(),
-            );
-
-            if (count($promotionFlags) <= 0) {
-                continue;
-            }
-
-            $promotionFlag = reset($promotionFlags);
-
-            if (
-                $isSellableOnDomain &&
-                $promotionFlag->getPromotionXy()->getBuyQuantity() === $promotionBuyQuantity &&
-                $promotionFlag->getPromotionXy()->getFreeQuantity() === $promotionFreeQuantity
-            ) {
-                continue;
-            }
-
-            $productData->flagsByDomainId[$domainId] = array_values(array_filter(
-                $flags,
-                fn (Flag $flag): bool => !$flag->hasPromotionXy(),
-            ));
-
-            if ($promotionBuyQuantity === null || $promotionFreeQuantity === null) {
-                continue;
-            }
-
-            $flag = $this->findOrCreatePromotionFlag($promotionBuyQuantity, $promotionFreeQuantity);
-
-            if ($isSellableOnDomain && !in_array($flag, $productData->flagsByDomainId[$domainId], true)) {
-                $productData->flagsByDomainId[$domainId][] = $flag;
-            }
+            $flagsByDomainId[$domainId] = $this->getUpdatedFlagsOnDomain($product, $domainId);
         }
 
-        $product->setFlags($productData->flagsByDomainId);
+        if (!$this->haveFlagsChanged($product, $flagsByDomainId)) {
+            return;
+        }
+
+        $product->setFlags($flagsByDomainId);
+        $this->em->flush();
+    }
+
+    public function updatePromotionFlagsForAll(): void
+    {
+        foreach ($this->productPromotionXyRepository->getAllProductIdsWithPromotionXy() as $productId) {
+            $this->updatePromotionFlags($productId);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    protected function getUpdatedFlagsOnDomain(Product $product, int $domainId): array
+    {
+        $currentFlags = $product->getFlags($domainId);
+        $promotionXy = $product->getPromotionXy($domainId);
+        $isSellableOnDomain = !$product->isCalculatedSellingDenied($domainId);
+
+        $nonPromotionFlags = array_filter(
+            $currentFlags,
+            static fn (Flag $flag): bool => !$flag->hasPromotionXy(),
+        );
+
+        if ($promotionXy === null || !$isSellableOnDomain) {
+            return array_values($nonPromotionFlags);
+        }
+
+        $buyQuantity = $promotionXy->getBuyQuantity();
+        $freeQuantity = $promotionXy->getFreeQuantity();
+
+        $flagForCurrentProductPromotion = $this->findOrCreatePromotionFlag($buyQuantity, $freeQuantity);
+
+        return array_values([...$nonPromotionFlags, $flagForCurrentProductPromotion]);
     }
 
     /**
@@ -99,7 +99,7 @@ class PromotionFlagFacade
      * @param int $y
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    public function findOrCreatePromotionFlag(int $x, int $y): Flag
+    protected function findOrCreatePromotionFlag(int $x, int $y): Flag
     {
         $flag = $this->productPromotionXyRepository->findFlagByQuantities($x, $y);
 
@@ -151,5 +151,33 @@ class PromotionFlagFacade
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             $locale,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array<int, array<\Shopsys\FrameworkBundle\Model\Product\Flag\Flag>> $newFlagsByDomainId
+     * @return bool
+     */
+    protected function haveFlagsChanged(Product $product, array $newFlagsByDomainId): bool
+    {
+        foreach ($newFlagsByDomainId as $domainId => $newFlags) {
+            $currentFlags = $product->getFlags($domainId);
+
+            if (count($currentFlags) !== count($newFlags)) {
+                return true;
+            }
+
+            $currentFlagIds = array_map(static fn (Flag $flag): int => $flag->getId(), $currentFlags);
+            $newFlagIds = array_map(static fn (Flag $flag): int => $flag->getId(), $newFlags);
+
+            sort($currentFlagIds);
+            sort($newFlagIds);
+
+            if ($currentFlagIds !== $newFlagIds) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
