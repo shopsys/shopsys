@@ -529,6 +529,12 @@ msgstr "Prosím, zadajte názov skladu"
 msgid "Please enter whitelist pattern."
 msgstr "Prosím, zadajte vzor whitelistu."
 
+msgid "Please enter withdrawal deadline."
+msgstr "Prosím, zadajte lehotu na odstúpenie od zmluvy"
+
+msgid "Please enter withdrawal instructions."
+msgstr "Prosím, zadajte pokyny po odstúpenie"
+
 msgid "Please enter zip code"
 msgstr "Prosím, zadajte PSČ"
 
@@ -687,6 +693,9 @@ msgstr "Názov skladu nemôže byť dlhší ako {{ limit }} znakov"
 
 msgid "Warehouse with this external code already exists"
 msgstr "Sklad s týmto externým kódom už existuje"
+
+msgid "Withdrawal deadline must be a positive number."
+msgstr "Lehota na odstúpenie od zmluvy musí byť kladné číslo."
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."
 msgstr "Zadali ste rovnaký produkt dvakrát. V zozname bestsellerov môže byť produkt len raz. Prosím, opravte to a potom znovu uložte formulár."

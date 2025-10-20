@@ -3490,6 +3490,15 @@ msgstr ""
 msgid "Weight (g)"
 msgstr ""
 
+msgid "Withdrawal deadline (days)"
+msgstr ""
+
+msgid "Withdrawal from a contract"
+msgstr ""
+
+msgid "Withdrawal instructions"
+msgstr ""
+
 msgid "XML Feeds"
 msgstr ""
 

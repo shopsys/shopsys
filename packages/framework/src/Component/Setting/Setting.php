@@ -28,6 +28,8 @@ class Setting
     public const string CUSTOMER_USER_DEFAULT_GROUP_ROLE_ID = 'customerUserDefaultGroupRoleId';
     public const string FILE_STRUCTURE_MIGRATED_FOR_RELATIONS = 'fileStructureMigratedForRelations';
     public const string CSP_HEADER = 'cspHeader';
+    public const string WITHDRAWAL_DEADLINE_DAYS = 'withdrawalDeadlineDays';
+    public const string WITHDRAWAL_INSTRUCTIONS = 'withdrawalInstructions';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]

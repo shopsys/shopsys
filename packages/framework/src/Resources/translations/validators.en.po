@@ -529,6 +529,12 @@ msgstr ""
 msgid "Please enter whitelist pattern."
 msgstr ""
 
+msgid "Please enter withdrawal deadline."
+msgstr ""
+
+msgid "Please enter withdrawal instructions."
+msgstr ""
+
 msgid "Please enter zip code"
 msgstr ""
 
@@ -686,6 +692,9 @@ msgid "Warehouse name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Warehouse with this external code already exists"
+msgstr ""
+
+msgid "Withdrawal deadline must be a positive number."
 msgstr ""
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."

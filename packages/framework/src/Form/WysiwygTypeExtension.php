@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class WysiwygTypeExtension extends AbstractTypeExtension
@@ -42,7 +44,10 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
                 'language' => $this->localization->getRequestLocale(),
                 'format_tags' => static::ALLOWED_FORMAT_TAGS,
             ],
+            'available_variables' => [],
         ]);
+
+        $resolver->setAllowedTypes('available_variables', 'array');
     }
 
     /**
@@ -52,6 +57,48 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->wysiwygCdnDataTransformer);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        if (count($options['available_variables']) > 0) {
+            $variablesHtml = $this->buildVariablesHelpHtml($options['available_variables']);
+
+            if (array_key_exists('help', $view->vars) && $view->vars['help'] !== null) {
+                $view->vars['help'] .= $variablesHtml;
+            } else {
+                $view->vars['help'] = $variablesHtml;
+            }
+
+            $view->vars['help_html'] = true;
+        }
+    }
+
+    /**
+     * @param array<string, string> $variables
+     * @return string
+     */
+    private function buildVariablesHelpHtml(array $variables): string
+    {
+        $items = [];
+
+        foreach ($variables as $variable => $description) {
+            $items[] = sprintf(
+                '<li><code>%s</code> &ndash; %s</li>',
+                htmlspecialchars($variable, ENT_QUOTES, 'UTF-8'),
+                htmlspecialchars($description, ENT_QUOTES, 'UTF-8'),
+            );
+        }
+
+        return sprintf(
+            '<div><h5>%s</h5><ul class="list-unstyled">%s</ul></div>',
+            t('Available placeholders'),
+            implode('', $items),
+        );
     }
 
     /**

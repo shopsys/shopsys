@@ -3490,6 +3490,15 @@ msgstr "Hlídací psi"
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
 
+msgid "Withdrawal deadline (days)"
+msgstr "Lhůta pro odstoupení (dny)"
+
+msgid "Withdrawal from a contract"
+msgstr "Odstoupení od smlouvy"
+
+msgid "Withdrawal instructions"
+msgstr "Pokyny po odstoupení"
+
 msgid "XML Feeds"
 msgstr "XML Feedy"
 

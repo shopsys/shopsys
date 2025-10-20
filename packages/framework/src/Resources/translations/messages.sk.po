@@ -3490,6 +3490,15 @@ msgstr "Watchdogy"
 msgid "Weight (g)"
 msgstr "Hmotnosť (g)"
 
+msgid "Withdrawal deadline (days)"
+msgstr "Lehota na odstúpenie od zmluvy (dni)"
+
+msgid "Withdrawal from a contract"
+msgstr "Odstúpenie od zmluvy"
+
+msgid "Withdrawal instructions"
+msgstr "Pokyny po odstúpenie"
+
 msgid "XML Feeds"
 msgstr "XML Feedy"
 
