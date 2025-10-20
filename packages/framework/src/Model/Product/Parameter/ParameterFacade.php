@@ -30,6 +30,7 @@ class ParameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterSortingHelper $parameterSortingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -42,6 +43,7 @@ class ParameterFacade
         protected readonly ParameterValueFactory $parameterValueFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade,
+        protected readonly ParameterSortingHelper $parameterSortingHelper,
     ) {
     }
 
@@ -250,13 +252,9 @@ class ParameterFacade
             $valueIdsForParameter = $parameterValueIdsIndexedByParameterId[$parameter->getId()];
             $parameterValues = array_intersect_key($allParameterValues, array_flip($valueIdsForParameter));
 
-            uasort($parameterValues, static function (ParameterValue $first, ParameterValue $second) {
-                return strcmp($first->getText(), $second->getText());
-            });
-
             $parameterFilterChoices[] = new ParameterFilterChoice(
                 $parameter,
-                $parameterValues,
+                $this->parameterSortingHelper->sortParameterValuesAlphabetically($parameterValues, $locale),
             );
         }
 
