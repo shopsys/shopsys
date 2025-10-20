@@ -13,11 +13,21 @@
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Current domain</b>
-                <span>{{ collector.currentDomainName }}</span>
+                {% if collector.inAdmin %}
+                    <span>Administration</span>
+                {% else %}
+                    <span>{{ collector.currentDomainName }}</span>
+                {% endif %}
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Locale</b>
-                <span class="sf-toolbar-status">{{ collector.currentDomainLocale }}</span>
+                <span class="sf-toolbar-status">
+                    {% if collector.inAdmin %}
+                        {{ collector.adminLocale }}
+                    {% else %}
+                        {{ collector.currentDomainLocale }}
+                    {% endif %}
+                </span>
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>System TimeZone</b>
