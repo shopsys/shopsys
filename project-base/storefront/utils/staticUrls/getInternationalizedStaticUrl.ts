@@ -12,7 +12,7 @@ export const getInternationalizedStaticUrl = (url: Url, domainUrl: string) => {
     }
 
     const staticUrlTemplate = urlsOnDomain[url.url];
-    const staticPart = staticUrlTemplate?.split(':')[0];
+    const staticPart = staticUrlTemplate.split(':')[0];
 
     return staticPart + (url.param ?? '');
 };

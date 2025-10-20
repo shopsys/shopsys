@@ -1,5 +1,6 @@
 export type TranslationQuery = {
     [name: string]: any;
+    ns?: string;
 };
 
 type RemovePlural<Key extends string> =
@@ -14,10 +15,27 @@ export type Paths<T> = RemovePlural<
     }[Extract<keyof T, string>]
 >;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const dictionary = () => import('../public/locales/cs/common.json').then((module) => module.default);
+const commonDictionary = () => import('../public/locales/cs/common.json').then((module) => module.default);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const accessibilityDictionary = () =>
+    import('../public/locales/cs/accessibility.json').then((module) => module.default);
 
-export type Dictionary = Awaited<ReturnType<typeof dictionary>>;
-export type TranslationKeys = Paths<Dictionary>;
+type CommonDictionary = Awaited<ReturnType<typeof commonDictionary>>;
+type AccessibilityDictionary = Awaited<ReturnType<typeof accessibilityDictionary>>;
+
+export type Dictionary = {
+    common: CommonDictionary;
+    accessibility: AccessibilityDictionary;
+};
+
+type NamespacedKeys<Namespace extends keyof Dictionary> =
+    Paths<Dictionary[Namespace]> extends infer Keys ? (Keys extends string ? `${Namespace}:${Keys}` : never) : never;
+
+export type TranslationKeys =
+    | Paths<CommonDictionary>
+    | Paths<AccessibilityDictionary>
+    | NamespacedKeys<'common'>
+    | NamespacedKeys<'accessibility'>;
 
 export type Translate = <T extends string>(
     i18nKey: TranslationKeys,

@@ -1,6 +1,5 @@
 import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'app/_config/staticRewritePaths';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
-import { headers } from 'next/headers';
 import { SameLengthOutput } from 'types/SameLengthOutput';
 
 export type Url = StaticRewritePathKeyType | { url: StaticRewritePathKeyType; param: string | undefined | null };
@@ -10,7 +9,7 @@ export const getInternationalizedStaticUrls = async <InputUrls extends Url[]>(ur
 };
 
 export const getInternationalizedStaticUrl = async (url: Url) => {
-    const domainConfig = getDomainConfig((await headers()).get('host')!);
+    const domainConfig = await getDomainConfig();
 
     const urlsOnDomain = STATIC_REWRITE_PATHS[domainConfig.url];
 
@@ -20,7 +19,7 @@ export const getInternationalizedStaticUrl = async (url: Url) => {
     }
 
     const staticUrlTemplate = urlsOnDomain[url.url];
-    const staticPart = staticUrlTemplate?.split(':')[0];
+    const staticPart = staticUrlTemplate.split(':')[0];
 
     return staticPart + (url.param ?? '');
 };

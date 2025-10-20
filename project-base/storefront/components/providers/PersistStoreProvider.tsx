@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from './DomainConfigProvider';
 import { createContext, ReactNode, useMemo } from 'react';
 import { broadcast } from 'store/broadcast';

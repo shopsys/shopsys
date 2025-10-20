@@ -6,7 +6,6 @@ import { NotificationBars } from 'app/_components/Layout/NotificationBars/Notifi
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
-import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import 'styles/globals.css';
 
@@ -24,7 +23,7 @@ type RootLayoutProps = {
 };
 
 const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
-    const domainConfig = getDomainConfig((await headers()).get('host')!);
+    const domainConfig = await getDomainConfig();
     const { defaultLocale: lang } = domainConfig;
 
     return (
@@ -33,21 +32,23 @@ const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
             {/* suppressHydrationWarning for ignoring grammarly extension */}
             <body suppressHydrationWarning>
                 <Providers>
-                    <NotificationBars />
+                    <>
+                        <NotificationBars />
 
-                    <div className="flex min-h-dvh flex-col">
-                        <Header />
+                        <div className="flex min-h-dvh flex-col">
+                            <Header />
 
-                        {breadcrumbs}
+                            {breadcrumbs}
 
-                        <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">{children}</main>
+                            <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">{children}</main>
 
-                        <Footer />
+                            <Footer />
 
-                        <Suspense fallback={null}>
-                            <DeferredUserConsent />
-                        </Suspense>
-                    </div>
+                            <Suspense fallback={null}>
+                                <DeferredUserConsent />
+                            </Suspense>
+                        </div>
+                    </>
                 </Providers>
             </body>
         </html>

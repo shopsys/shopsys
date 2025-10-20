@@ -13,7 +13,6 @@ import {
     TypeSettingsQuery,
     TypeSettingsQueryVariables,
 } from 'graphql/requests/settings/queries/SettingsQuery.ssr';
-import { headers } from 'next/headers';
 import { FooterArticle } from 'types/footerArticle';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -29,7 +28,7 @@ export type FooterProps =
 
 export const Footer: FC<FooterProps> = async ({ simpleFooter }) => {
     const t = await getTranslation();
-    const { url } = getDomainConfig((await headers()).get('host')!);
+    const { url } = await getDomainConfig();
 
     const settingsResponse = await createQuery<TypeSettingsQuery, TypeSettingsQueryVariables>(
         SettingsQueryDocument,

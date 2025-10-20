@@ -1,8 +1,14 @@
 import { getHostFromRequest, isHomePage } from './helpers';
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { NextRequest, NextResponse } from 'next/server';
+import { getHostAndDomainFromRequest } from 'utils/domain/getHostAndDomainFromRequest';
 
 export const handleStaticRoutes = (request: NextRequest, previousResponse: NextResponse) => {
+    // Resolve domain and pass to app router via headers
+    const { domainId, host } = getHostAndDomainFromRequest(request);
+    previousResponse.headers.set('x-domain-id', domainId.toString());
+    previousResponse.headers.set('x-domain-url', host);
+
     // early return for homepage
     if (isHomePage(request)) {
         previousResponse.headers.set('x-pathname', '/');
@@ -36,10 +42,7 @@ const getStaticUrlsAvailableForDomain = (host: string): Record<string, string> =
 
     const routes = STATIC_REWRITE_PATHS[domainUrlKey];
 
-    return Object.fromEntries(Object.entries(routes).filter(([, value]) => value !== undefined)) as Record<
-        string,
-        string
-    >;
+    return Object.fromEntries(Object.entries(routes)) as Record<string, string>;
 };
 
 function getRewriteTargetPathname(request: NextRequest, routeDefinitions: Record<string, string>): string {

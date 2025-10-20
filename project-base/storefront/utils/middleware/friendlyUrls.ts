@@ -21,7 +21,11 @@ export const handleFriendlyUrls = async (
 };
 
 async function resolveFriendlyUrl(request: NextRequest, previousResponse: NextResponse): Promise<NextResponse> {
-    const { domainId } = getHostAndDomainFromRequest(request);
+    const { domainId, host } = getHostAndDomainFromRequest(request);
+
+    // Pass domain info to app router via headers
+    previousResponse.headers.set('x-domain-id', domainId.toString());
+    previousResponse.headers.set('x-domain-url', host);
 
     const pageTypeResponse = await fetch(`${process.env.INTERNAL_ENDPOINT}resolve-friendly-url`, {
         method: 'POST',

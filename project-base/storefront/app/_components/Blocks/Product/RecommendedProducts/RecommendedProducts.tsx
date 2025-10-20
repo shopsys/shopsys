@@ -3,7 +3,6 @@ import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { SkeletonModuleRecommendedProducts } from 'components/Blocks/Skeleton/SkeletonModuleRecommendedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeRecommendationType } from 'graphql/types';
-import { headers } from 'next/headers';
 import { Suspense } from 'react';
 
 export type RecommendedProductsProps = {
@@ -12,7 +11,7 @@ export type RecommendedProductsProps = {
 };
 
 export const RecommendedProducts: FC<RecommendedProductsProps> = async ({ recommendationType, itemUuids = [] }) => {
-    const { isLuigisBoxActive } = getDomainConfig((await headers()).get('host')!);
+    const { isLuigisBoxActive } = await getDomainConfig();
 
     if (!isLuigisBoxActive) {
         return null;

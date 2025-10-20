@@ -40,13 +40,35 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
 
-const dictionaries = {
-    en: () => import('../../public/locales/en/common.json').then((module) => module.default),
-    sk: () => import('../../public/locales/sk/common.json').then((module) => module.default),
-    cs: () => import('../../public/locales/cs/common.json').then((module) => module.default),
+const namespaces = ['common', 'accessibility'] as const;
+
+type NamespaceDictionaries = {
+    [key in (typeof namespaces)[number]]: () => Promise<Record<string, string>>;
 };
 
-const getDictionary = async (lang: Locale): Promise<Dictionary> => (await dictionaries[lang]()) as Dictionary;
+const dictionariesByNamespace: Record<Locale, NamespaceDictionaries> = {
+    en: {
+        common: () => import('../../public/locales/en/common.json').then((module) => module.default),
+        accessibility: () => import('../../public/locales/en/accessibility.json').then((module) => module.default),
+    },
+    sk: {
+        common: () => import('../../public/locales/sk/common.json').then((module) => module.default),
+        accessibility: () => import('../../public/locales/sk/accessibility.json').then((module) => module.default),
+    },
+    cs: {
+        common: () => import('../../public/locales/cs/common.json').then((module) => module.default),
+        accessibility: () => import('../../public/locales/cs/accessibility.json').then((module) => module.default),
+    },
+};
+
+const getDictionary = async (lang: Locale): Promise<Dictionary> => {
+    const namespaceDictionaries = dictionariesByNamespace[lang];
+    const loadedDictionaries = await Promise.all(
+        namespaces.map(async (namespace) => [namespace, await namespaceDictionaries[namespace]()]),
+    );
+
+    return Object.fromEntries(loadedDictionaries) as Dictionary;
+};
 export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;

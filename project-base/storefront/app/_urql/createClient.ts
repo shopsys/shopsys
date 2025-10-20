@@ -1,8 +1,12 @@
 import { getUrqlExchanges } from './exchanges';
 import { registerUrql } from '@urql/next/rsc';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import {
+    getExplicitPathDomainLocaleOrDefault,
+    getInternalGraphqlEndpoint,
+} from 'app/_utils/getInternalGraphqlEndpoint';
 import getConfig from 'next/config';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import 'server-only';
 // eslint-disable-next-line no-restricted-imports
@@ -24,19 +28,24 @@ async function getRedis() {
 
 async function getClient({
     publicGraphqlEndpoint,
+    domainUrl,
     redisClient,
 }: {
     publicGraphqlEndpoint: string;
+    domainUrl: string;
     redisClient?: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
 }): Promise<() => Client> {
     const { serverRuntimeConfig } = getConfig();
-    const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
+    const locale = getExplicitPathDomainLocaleOrDefault(domainUrl);
+    const internalGraphqlEndpoint = getInternalGraphqlEndpoint(serverRuntimeConfig?.internalGraphqlEndpoint, locale);
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
     const accessToken = (await cookies()).get('accessToken')?.value;
 
     const makeClient = () => {
+        const finalUrl = internalGraphqlEndpoint ?? publicGraphqlEndpoint;
+
         return createUrqlClient({
-            url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
+            url: finalUrl,
             exchanges: getUrqlExchanges(accessToken),
             fetchOptions: {
                 headers: {
@@ -54,9 +63,10 @@ async function getClient({
 }
 
 export async function createClient() {
-    const domainConfig = getDomainConfig((await headers()).get('host')!);
+    const domainConfig = await getDomainConfig();
 
     const publicGraphqlEndpoint = domainConfig.publicGraphqlEndpoint;
+    const domainUrl = domainConfig.url;
 
     const redisClient = await getRedis();
 
@@ -64,6 +74,7 @@ export async function createClient() {
 
     const newClient = await getClient({
         publicGraphqlEndpoint,
+        domainUrl,
         redisClient,
     });
 

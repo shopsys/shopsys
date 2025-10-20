@@ -2,12 +2,11 @@ import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
-import { headers } from 'next/headers';
 import imageLogo from 'public/images/logo.svg';
 import { getDictionary } from 'utils/getDictionary';
 
 export const FooterCopyright = async () => {
-    const { defaultLocale: lang } = getDomainConfig((await headers()).get('host')!);
+    const { defaultLocale: lang } = await getDomainConfig();
     const dictionary = await getDictionary(lang);
     const t = await getTranslation({ defaultLang: lang, defaultDictionary: dictionary });
 
