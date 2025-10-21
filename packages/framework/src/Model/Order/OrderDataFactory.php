@@ -106,6 +106,7 @@ class OrderDataFactory
         }
 
         $orderData->createdAt = $order->getCreatedAt();
+        $orderData->deliveredAt = $order->getDeliveredAt();
         $orderData->domainId = $order->getDomainId();
         $orderData->currency = $order->getCurrency();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();

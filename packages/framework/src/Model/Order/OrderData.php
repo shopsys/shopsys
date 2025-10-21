@@ -155,6 +155,11 @@ class OrderData
     public $createdAt;
 
     /**
+     * @var \DateTime|null
+     */
+    public $deliveredAt;
+
+    /**
      * @var int|null
      */
     public $domainId;

@@ -78,6 +78,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDeliveryDateFacade $orderDeliveryDateFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -112,6 +113,7 @@ class OrderFacade
         protected readonly OrderInputFactory $orderInputFactory,
         protected readonly OrderProcessor $orderProcessor,
         protected readonly PaymentFacade $paymentFacade,
+        protected readonly OrderDeliveryDateFacade $orderDeliveryDateFacade,
     ) {
     }
 
@@ -160,6 +162,7 @@ class OrderFacade
 
         if ($orderEditResult->isStatusChanged()) {
             $this->orderMailFacade->sendEmail($order);
+            $this->orderDeliveryDateFacade->setDeliveredNowIfNecessary($order);
         }
 
         foreach ($orderData->paymentTransactionRefunds as $paymentTransactionId => $paymentTransactionRefundData) {

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionsType;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
+use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCompanyNameType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
@@ -239,6 +240,10 @@ final class OrderFormType extends AbstractType
                         'max' => 100,
                     ]),
                 ],
+            ])
+            ->add('deliveredAt', DateTimeType::class, [
+                'label' => 'Delivered at',
+                'required' => false,
             ]);
 
         $promoCode = $order->getPromoCode();
