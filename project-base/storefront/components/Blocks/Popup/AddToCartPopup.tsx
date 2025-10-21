@@ -29,6 +29,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     const { url, isLuigisBoxActive } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const { restoreStoredFocus } = useSessionStore.getState();
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
@@ -36,6 +37,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
         'Great choice! We have added your item to the cart. You can now proceed to checkout or continue shopping.',
         { ns: 'accessibility' },
     );
+
+    const handleClosePopup = () => {
+        restoreStoredFocus();
+        updatePortalContent(null);
+    };
 
     return (
         <Popup
@@ -109,7 +115,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     aria-label={t('Go back to shop', { ns: 'accessibility' })}
                     className="w-full md:w-auto"
                     variant="inverted"
-                    onClick={() => updatePortalContent(null)}
+                    onClick={handleClosePopup}
                 >
                     {t('Back to shop')}
                 </Button>

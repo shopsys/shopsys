@@ -21,6 +21,7 @@ type AnnounceOptions = {
 export const RouteAnnouncer: FC = () => {
     const { t } = useTranslation();
     const router = useRouter();
+
     const { hadClientSideNavigation, isPageLoading } = useSessionStore(
         useCallback(
             (state) => ({
@@ -114,8 +115,22 @@ export const RouteAnnouncer: FC = () => {
     );
 
     useEffect(() => {
-        // Announce the server-rendered title after hydration.
-        announceTitle(readDocumentTitle(), { forceRepeat: true });
+        const attemptToFocusToast = () => {
+            const toastTextElement = document.querySelector(
+                '[data-tid="toast_success"], [data-tid="toast_error"], [data-tid="toast_info"]',
+            );
+
+            // Announce flash message after login/logout
+            if (toastTextElement instanceof HTMLElement) {
+                toastTextElement.setAttribute('tabindex', '-1');
+                toastTextElement.focus();
+            } else {
+                // Announce the server-rendered title after hydration.
+                announceTitle(readDocumentTitle(), { forceRepeat: true });
+            }
+        };
+
+        attemptToFocusToast();
     }, [announceTitle]);
 
     useEffect(() => {

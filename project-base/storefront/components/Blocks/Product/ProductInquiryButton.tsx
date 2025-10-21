@@ -13,6 +13,7 @@ const InquiryPopup = dynamic(
 
 type ProductInquiryButtonProps = {
     productUuid: string;
+    productName: string;
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     skipKeyboardNavigation?: boolean;
     className?: string;
@@ -20,6 +21,7 @@ type ProductInquiryButtonProps = {
 
 export const ProductInquiryButton: FC<ProductInquiryButtonProps> = ({
     productUuid,
+    productName,
     buttonSize,
     skipKeyboardNavigation = false,
     className,
@@ -35,11 +37,14 @@ export const ProductInquiryButton: FC<ProductInquiryButtonProps> = ({
     return (
         <Button
             aria-haspopup="dialog"
-            aria-label={t('Open inquiry popup', { ns: 'accessibility' })}
             className={twJoin(className)}
             size={buttonSize}
             tabIndex={skipKeyboardNavigation ? -1 : 0}
             title={t('Inquire popup')}
+            aria-label={t('Open inquiry popup for product {{ productName }}', {
+                productName: productName,
+                ns: 'accessibility',
+            })}
             onClick={openInquiryPopup}
         >
             {t('Inquire')}

@@ -40,25 +40,19 @@ export const Popup: React.FC<PopupProps> = ({
     const [popupPositions, setPopupPositions] = useState({ left: 0, top: 0 });
     const popupRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
-    const previousFocusRef = useRef<HTMLElement | null>(null);
     const ariaLabel = ariaDescription ? `${title}. ${ariaDescription}` : title;
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
+    const restoreStoredFocus = useSessionStore((s) => s.restoreStoredFocus);
 
-    useKeypress('Escape', () => updatePortalContent(null));
-
-    // Store the element that had focus before popup opened
-    useEffect(() => {
-        previousFocusRef.current = document.activeElement as HTMLElement;
-
-        // Restore focus when popup unmounts
-        return () => {
-            if (previousFocusRef.current) {
-                previousFocusRef.current.focus();
-            }
-        };
-    }, []);
+    const handleClosePopup = () => {
+        updatePortalContent(null);
+        restoreStoredFocus();
+    };
 
     // Focus on popup when it appears
     useEffect(() => {
+        storeCurrentFocus();
+
         if (popupRef.current) {
             popupRef.current.focus();
         }
@@ -73,12 +67,14 @@ export const Popup: React.FC<PopupProps> = ({
         }
     }, [windowDimensions, children]);
 
+    useKeypress('Escape', () => handleClosePopup());
+
     useFocusTrap(popupRef);
 
     return (
         <div key={key}>
             <RemoveScroll>
-                <Overlay isActive onClick={() => updatePortalContent(null)} />
+                <Overlay isActive onClick={handleClosePopup} />
 
                 <AnimatePresence>
                     <m.div
@@ -122,7 +118,7 @@ export const Popup: React.FC<PopupProps> = ({
                                     className="text-icon-less hover:text-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
                                     ref={closeButtonRef}
                                     tabIndex={0}
-                                    onClick={() => updatePortalContent(null)}
+                                    onClick={handleClosePopup}
                                 >
                                     <RemoveIcon className="size-6" />
                                 </button>

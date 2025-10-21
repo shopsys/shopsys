@@ -1,4 +1,5 @@
 import { createFilterPanelSlice, FilterPanelSlice } from './slices/createFilterPanelSlice';
+import { createFocusManagementSlice, FocusManagementSlice } from './slices/createFocusManagementSlice';
 import { createGeolocationSlice, GeolocationSlice } from './slices/createGeolocationSlice';
 import { createNavigationOverflowSlise, NavigationOverflowSlice } from './slices/createNavigationOverflowSlise';
 import { createPageLoadingStateSlice, PageLoadingStateSlice } from './slices/createPageLoadingStateSlice';
@@ -13,7 +14,8 @@ type SessionStore = SeoCategorySlice &
     FilterPanelSlice &
     GeolocationSlice &
     UserMenuSlice &
-    NavigationOverflowSlice;
+    NavigationOverflowSlice &
+    FocusManagementSlice;
 
 export const useSessionStore = create<SessionStore>()((...store) => ({
     ...createSeoCategorySlice(...store),
@@ -23,4 +25,5 @@ export const useSessionStore = create<SessionStore>()((...store) => ({
     ...createGeolocationSlice(...store),
     ...createUserMenuSlice(...store),
     ...createNavigationOverflowSlise(...store),
+    ...createFocusManagementSlice(...store),
 }));

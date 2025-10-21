@@ -41,7 +41,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     }
 
     if (product.isInquiryType) {
-        return <ProductInquiryButton buttonSize="large" className="w-fit" productUuid={product.uuid} />;
+        return (
+            <ProductInquiryButton
+                buttonSize="large"
+                className="w-fit"
+                productName={product.fullName}
+                productUuid={product.uuid}
+            />
+        );
     }
 
     if (!canCreateOrder) {

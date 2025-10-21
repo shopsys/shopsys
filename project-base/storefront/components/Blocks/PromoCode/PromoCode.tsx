@@ -5,11 +5,13 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
-import { useState } from 'react';
-import { FormProvider } from 'react-hook-form';
+import { useCallback, useState } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { PromoCodeFormType } from 'types/form';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { blurInput } from 'utils/forms/blurInput';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -25,6 +27,14 @@ export const PromoCode: FC = () => {
     useErrorPopup(formProviderMethods, formMeta.fields);
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
+
+    const onApplyPromoCodeHandler = useCallback<SubmitHandler<PromoCodeFormType>>(
+        async (promoCodeFormData) => {
+            blurInput();
+            await applyPromoCodeToCart(promoCodeFormData.promoCode);
+        },
+        [applyPromoCodeToCart],
+    );
 
     if (promoCodes.length > 0) {
         return null;
@@ -52,9 +62,7 @@ export const PromoCode: FC = () => {
                             exit="closed"
                             initial="closed"
                             variants={collapseExpandAnimation}
-                            onSubmit={formProviderMethods.handleSubmit((promoCodeFormData) =>
-                                applyPromoCodeToCart(promoCodeFormData.promoCode),
-                            )}
+                            onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
                         >
                             <div className="max-w-60">
                                 <TextInputControlled

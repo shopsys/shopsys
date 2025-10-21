@@ -41,6 +41,7 @@ export const ProductAction: FC<ProductActionProps> = ({
         return (
             <ProductInquiryButton
                 buttonSize={buttonSize}
+                productName={product.fullName}
                 productUuid={product.uuid}
                 skipKeyboardNavigation={skipKeyboardNavigation}
             />

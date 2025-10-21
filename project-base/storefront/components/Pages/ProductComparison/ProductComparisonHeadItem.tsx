@@ -86,7 +86,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 className="bg-background-default absolute top-0 right-3 p-2 sm:right-5"
                 title={t('Remove product from comparison')}
                 variant="inverted"
-                aria-label={t('Remove product {{ productName }} from comparison', {
+                aria-label={t('Remove from comparison product {{ productName }}', {
                     ns: 'accessibility',
                     productName: product.fullName,
                 })}

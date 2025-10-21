@@ -31,11 +31,14 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             aria-label={
                 isProductInWishlist
-                    ? t('Remove product {{ productName }} from wishlist', {
+                    ? t('Remove from wishlist product {{ productName }}', {
                           ns: 'accessibility',
                           productName: productName,
                       })
-                    : t('Add product {{ productName }} to wishlist', { ns: 'accessibility', productName: productName })
+                    : t('Add to wishlist product {{ productName }}', {
+                          ns: 'accessibility',
+                          productName: productName,
+                      })
             }
             className={twMergeCustom(
                 'text-icon-less hover:text-icon-accent flex cursor-pointer items-center gap-2',

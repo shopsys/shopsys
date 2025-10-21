@@ -74,7 +74,6 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         submitRegistrationForm();
         checkRegistrationValidationErrorsPopup();
         checkPopupIsVisible(true);
-        loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after invalid try', {
             blackout: [
                 { tid: TIDs.footer_social_links },
