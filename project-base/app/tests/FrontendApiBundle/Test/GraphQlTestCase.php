@@ -171,12 +171,12 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             );
         } else {
             self::$client->request(
-                'GET',
+                'POST',
                 $path,
-                [
+                content: json_encode([
                     'query' => file_get_contents($pathToFile),
-                    'variables' => json_encode($variables, JSON_THROW_ON_ERROR),
-                ],
+                    'variables' => $variables, JSON_THROW_ON_ERROR,
+                ], JSON_THROW_ON_ERROR),
             );
         }
 

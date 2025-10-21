@@ -35,6 +35,7 @@ export const createClient = ({
         {
             url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
             exchanges: getUrqlExchanges(ssrExchange, t, domainConfig, context),
+            preferGetMethod: false,
             fetchOptions: {
                 headers: {
                     OriginalHost: publicGraphqlEndpointObject.host,

@@ -1,5 +1,6 @@
 overblog_graphql_endpoint:
     path: /{query}
+    methods: [POST]
     requirements:
         query: "^(?!batch|graphiql).*"
     defaults:
@@ -10,6 +11,7 @@ overblog_graphql_endpoint:
 
 overblog_graphql_batch_endpoint:
     path: /batch/
+    methods: [POST]
     defaults:
         _controller: Shopsys\FrontendApiBundle\Controller\FrontendApiController::batchEndpointAction
         _format: 'json'

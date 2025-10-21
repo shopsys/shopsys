@@ -84,7 +84,7 @@ describe('createClient test', () => {
             expect(mockRequestWithFetcher).toBeCalledWith(
                 expect.stringContaining(mockDomainConfig.publicGraphqlEndpoint + OPERATION_NAME),
                 expect.objectContaining({
-                    method: 'GET',
+                    method: 'POST',
                     headers: expect.objectContaining({
                         originalhost: 'test.ts',
                         'x-forwarded-proto': 'on',
@@ -119,7 +119,7 @@ describe('createClient test', () => {
         expect(mockRequestWithFetcher).toBeCalledWith(
             expect.stringContaining(mockDomainConfig.publicGraphqlEndpoint + OPERATION_NAME),
             expect.objectContaining({
-                method: 'GET',
+                method: 'POST',
                 headers: expect.objectContaining({
                     originalhost: 'test.ts',
                     'x-forwarded-proto': 'on',
