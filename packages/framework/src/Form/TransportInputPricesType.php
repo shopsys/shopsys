@@ -41,7 +41,7 @@ final class TransportInputPricesType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter VAT rate']),
                 ],
-                'label' => t('VAT'),
+                'label' => 'VAT',
             ])
             ->add(
                 'pricesWithLimits',

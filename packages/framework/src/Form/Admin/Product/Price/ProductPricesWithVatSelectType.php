@@ -44,7 +44,7 @@ final class ProductPricesWithVatSelectType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                 ],
-                'label' => t('VAT'),
+                'label' => 'VAT',
             ])
             ->add(
                 'manualInputPricesByPricingGroupId',

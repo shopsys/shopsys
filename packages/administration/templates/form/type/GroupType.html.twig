@@ -2,7 +2,7 @@
     {%- set row_class = (row_attr.class|default('') ~ ' card mb-3')|trim -%}
     <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
         <div class="card-header">
-            <h3 class="card-title">{{ form.vars.label }}</h3>
+            <h3 class="card-title">{{ form.vars.label|trans }}</h3>
         </div>
         <div class="card-body">
             {{ form_widget(form) }}

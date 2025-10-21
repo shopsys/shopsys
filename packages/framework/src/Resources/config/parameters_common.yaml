@@ -14,7 +14,7 @@ parameters:
     shopsys.admin_display_timezone: ~
 
     # Locales to select from in the administration. The first locale is the default one.
-    shopsys.allowed_admin_locales: ['en', 'cs']
+    shopsys.allowed_admin_locales: ['en', 'cs', 'sk']
 
     # Hours defined in cron.yaml correspond to this timezone (default is PHP timezone)
     shopsys.cron_timezone: ~

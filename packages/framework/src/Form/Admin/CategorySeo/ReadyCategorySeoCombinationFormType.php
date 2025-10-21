@@ -35,36 +35,36 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                 'required' => true,
                 'route_name' => 'front_category_seo',
                 'entity_id' => $readyCategorySeoMix?->getId(),
-                'label' => t('URL Settings'),
+                'label' => 'URL Settings',
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
             ->add('h1', TextType::class, [
-                'label' => t('Heading (H1)'),
+                'label' => 'Heading (H1)',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
             ->add('showInCategory', YesNoType::class, [
-                'label' => t('Show in the category'),
+                'label' => 'Show in the category',
             ])
             ->add('shortDescription', TextareaType::class, [
-                'label' => t('Short description of category'),
+                'label' => 'Short description of category',
                 'required' => false,
             ])
             ->add('description', CKEditorType::class, [
-                'label' => t('Category description'),
+                'label' => 'Category description',
                 'required' => false,
             ])
             ->add('title', TextType::class, [
-                'label' => t('Page title'),
+                'label' => 'Page title',
                 'required' => false,
                 'attr' => ['data-js-recommended-length' => 60],
             ])
             ->add('metaDescription', TextareaType::class, [
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
                 'required' => false,
                 'attr' => ['data-js-recommended-length' => 155],
             ])

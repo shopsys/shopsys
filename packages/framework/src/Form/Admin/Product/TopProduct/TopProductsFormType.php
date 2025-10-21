@@ -32,7 +32,7 @@ final class TopProductsFormType extends AbstractType
             ->add(
                 $builder
                     ->create('products', ProductsType::class, [
-                        'label' => t('Products'),
+                        'label' => 'Products',
                         'required' => false,
                         'sortable' => true,
                     ])

@@ -40,7 +40,7 @@ final class BillingAddressFormType extends AbstractType
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
         $builderCompanyDataGroup = $builder->create('companyData', GroupType::class, [
-            'label' => t('Company data'),
+            'label' => 'Company data',
         ]);
 
         $builderCompanyDataGroup
@@ -51,7 +51,7 @@ final class BillingAddressFormType extends AbstractType
                     'class' => 'js-checkbox-toggle',
                 ],
                 'disabled' => $options['disableCompanyCustomerCheckbox'],
-                'label' => t('I buy on company behalf'),
+                'label' => 'I buy on company behalf',
             ])
             ->add(
                 $builderCompanyDataGroup
@@ -75,7 +75,7 @@ final class BillingAddressFormType extends AbstractType
                                 'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
                             ]),
                         ],
-                        'label' => t('Company'),
+                        'label' => 'Company',
                     ])
                     ->add('companyNumber', TextType::class, [
                         'required' => true,
@@ -90,7 +90,7 @@ final class BillingAddressFormType extends AbstractType
                                 'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
                             ]),
                         ],
-                        'label' => t('Company number'),
+                        'label' => 'Company number',
                     ])
                     ->add('companyTaxNumber', TextType::class, [
                         'required' => false,
@@ -101,12 +101,12 @@ final class BillingAddressFormType extends AbstractType
                                 'groups' => [static::VALIDATION_GROUP_COMPANY_CUSTOMER],
                             ]),
                         ],
-                        'label' => t('Tax number'),
+                        'label' => 'Tax number',
                     ]),
             );
 
         $builderAddressGroup = $builder->create('address', GroupType::class, [
-            'label' => t('Address'),
+            'label' => 'Address',
         ]);
 
         $builderAddressGroup
@@ -121,7 +121,7 @@ final class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Street'),
+                'label' => 'Street',
             ])
             ->add('city', TextType::class, [
                 'required' => true,
@@ -134,7 +134,7 @@ final class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('City'),
+                'label' => 'City',
             ])
             ->add('postcode', TextType::class, [
                 'required' => true,
@@ -147,7 +147,7 @@ final class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Postcode'),
+                'label' => 'Postcode',
             ])
             ->add('country', ChoiceType::class, [
                 'required' => true,
@@ -159,7 +159,7 @@ final class BillingAddressFormType extends AbstractType
                         'message' => 'Please choose country',
                     ]),
                 ],
-                'label' => t('Country'),
+                'label' => 'Country',
             ]);
 
         $builder

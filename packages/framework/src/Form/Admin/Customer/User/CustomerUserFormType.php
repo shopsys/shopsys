@@ -71,20 +71,20 @@ final class CustomerUserFormType extends AbstractType
         $domain = $this->domain->getDomainConfigById($options['domain_id']);
 
         $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
-            'label' => t('System data'),
+            'label' => 'System data',
         ]);
 
         if ($this->customerUser instanceof CustomerUser) {
             $builderSystemDataGroup->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $this->customerUser->getId(),
             ]);
             $builderSystemDataGroup->add('activated', DisplayOnlyType::class, [
-                'label' => t('Active'),
+                'label' => 'Active',
                 'data' => $this->customerUser->isActivated() ? t('Yes') : t('No'),
             ]);
             $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                'label' => t('Domain'),
+                'label' => 'Domain',
                 'data' => $this->customerUser->getDomainId(),
             ]);
             $pricingGroups = $this->pricingGroupFacade->getByDomainId($this->customerUser->getDomainId());
@@ -93,7 +93,7 @@ final class CustomerUserFormType extends AbstractType
                 ->add('domainId', DomainType::class, [
                     'required' => true,
                     'data' => $options['domain_id'],
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                     'attr' => [
                         'class' => 'js-toggle-opt-group-control',
                     ],
@@ -113,7 +113,7 @@ final class CustomerUserFormType extends AbstractType
                         'data-js-toggle-option' => $pricingGroup->getDomainId(),
                     ];
                 },
-                'label' => t('Pricing group'),
+                'label' => 'Pricing group',
                 'attr' => [
                     'data-js-toggle-opt-group-control' => '.js-toggle-opt-group-control',
                 ],
@@ -126,12 +126,12 @@ final class CustomerUserFormType extends AbstractType
                 'choices' => $this->salesRepresentativeFacade->getAll(),
                 'choice_label' => 'fullName',
                 'choice_value' => 'id',
-                'label' => t('Sales representative'),
+                'label' => 'Sales representative',
                 'disabled' => !$options['allowEditSystemData'],
             ]);
 
         $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
-            'label' => t('Personal data'),
+            'label' => 'Personal data',
         ]);
 
         if (
@@ -145,7 +145,7 @@ final class CustomerUserFormType extends AbstractType
                     'choices' => $roleGroups,
                     'choice_label' => 'name',
                     'choice_value' => 'id',
-                    'label' => t('Role'),
+                    'label' => 'Role',
                 ]);
         }
 
@@ -158,7 +158,7 @@ final class CustomerUserFormType extends AbstractType
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('First name'),
+                'label' => 'First name',
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
@@ -168,7 +168,7 @@ final class CustomerUserFormType extends AbstractType
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Last name'),
+                'label' => 'Last name',
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
@@ -180,13 +180,13 @@ final class CustomerUserFormType extends AbstractType
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\Callback([$this, 'validateUniqueEmail']),
                 ],
-                'label' => t('Email'),
+                'label' => 'Email',
             ]);
 
         if ($this->customerUser === null) {
             $builderPersonalDataGroup->add('sendRegistrationMail', CheckboxType::class, [
                 'required' => false,
-                'label' => t('Send confirmation email about registration to customer'),
+                'label' => 'Send confirmation email about registration to customer',
             ]);
         }
 
@@ -199,17 +199,17 @@ final class CustomerUserFormType extends AbstractType
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                     ]),
                 ],
-                'label' => t('Telephone'),
+                'label' => 'Telephone',
             ]);
 
         if ($this->customerUser instanceof CustomerUser) {
             $builderSystemDataGroup->add('createdAt', DisplayOnlyType::class, [
-                'label' => t('Date of registration and privacy policy agreement'),
+                'label' => 'Date of registration and privacy policy agreement',
                 'data' => $this->dateTimeFormatterExtension->formatDateTime($this->customerUser->getCreatedAt()),
             ]);
 
             $builderSystemDataGroup->add('lastLogin', DisplayOnlyType::class, [
-                'label' => t('Last login'),
+                'label' => 'Last login',
                 'data' => $this->customerUserLoginInformationProvider->getLastLogin($this->customerUser) !== null ? $this->dateTimeFormatterExtension->formatDateTime(
                     $this->customerUserLoginInformationProvider->getLastLogin($this->customerUser),
                 ) : t(
@@ -219,7 +219,7 @@ final class CustomerUserFormType extends AbstractType
 
             if ($this->customerUserLoginInformationProvider->getAdditionalLoginInfo($this->customerUser) !== null) {
                 $builderSystemDataGroup->add('additionalLoginInfo', DisplayOnlyType::class, [
-                    'label' => t('Additional login info'),
+                    'label' => 'Additional login info',
                     'data' => $this->customerUserLoginInformationProvider->getAdditionalLoginInfo($this->customerUser),
                 ]);
             }

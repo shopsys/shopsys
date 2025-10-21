@@ -40,19 +40,19 @@ final class StockFormType extends AbstractType
         $this->stock = $options['stock'];
 
         $stockDataBuilder = $builder->create('stockData', GroupType::class, [
-            'label' => t('Warehouse'),
+            'label' => 'Warehouse',
         ]);
 
         if ($this->stock !== null) {
             $stockDataBuilder
                 ->add('stockId', DisplayOnlyType::class, [
-                    'label' => t('ID'),
+                    'label' => 'ID',
                     'data' => $this->stock->getId(),
                 ])
                 ->add('isDefault', DisplayOnlyType::class, [
                     'required' => false,
                     'data' => $this->stock->isDefault() ? t('Yes') : t('No'),
-                    'label' => t('Default warehouse'),
+                    'label' => 'Default warehouse',
                 ]);
         }
 
@@ -63,15 +63,15 @@ final class StockFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter warehouse name']),
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Warehouse name cannot be longer than {{ limit }} characters']),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('isEnabledByDomain', DomainsType::class, [
                 'required' => false,
-                'label' => t('Display on'),
+                'label' => 'Display on',
             ])
             ->add('externalId', TextType::class, [
                 'required' => false,
-                'label' => t('External bridge ID'),
+                'label' => 'External bridge ID',
                 'constraints' => [
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'External bridge ID cannot be longer than {{ limit }} characters']),
                     new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
@@ -79,7 +79,7 @@ final class StockFormType extends AbstractType
             ])
             ->add('note', TextType::class, [
                 'required' => false,
-                'label' => t('Internal note'),
+                'label' => 'Internal note',
             ]);
 
         $builder->add($stockDataBuilder);

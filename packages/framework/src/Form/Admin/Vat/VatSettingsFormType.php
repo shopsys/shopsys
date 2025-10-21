@@ -42,10 +42,10 @@ final class VatSettingsFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter default VAT']),
                 ],
-                'label' => t('Default VAT rate'),
+                'label' => 'Default VAT rate',
             ])
             ->add('save', SubmitType::class, [
-                'label' => t('Save default VAT rate'),
+                'label' => 'Save default VAT rate',
             ]);
     }
 

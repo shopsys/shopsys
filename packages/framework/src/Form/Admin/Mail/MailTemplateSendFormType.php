@@ -40,7 +40,7 @@ final class MailTemplateSendFormType extends AbstractType
         $labelForEntityIdentifier = $this->mailTemplateSenderFacade->getFormLabelForEntityIdentifier($options['mailTemplate']);
         $builder
             ->add('mailTo', TextType::class, [
-                'label' => t('Send mail to'),
+                'label' => 'Send mail to',
                 'required' => true,
                 'data' => $currentAdministrator->getEmail(),
                 'constraints' => [
@@ -60,7 +60,7 @@ final class MailTemplateSendFormType extends AbstractType
 
         $builder
             ->add('save', SubmitType::class, [
-                'label' => t('Send'),
+                'label' => 'Send',
             ]);
     }
 

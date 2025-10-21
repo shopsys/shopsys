@@ -25,7 +25,7 @@ final class BestsellingProductFormType extends AbstractType
     {
         $builder
             ->add('products', GroupType::class, [
-                'label' => t('Bestselling products'),
+                'label' => 'Bestselling products',
                 'error_bubbling' => true,
                 'constraints' => [
                     new Constraints\UniqueCollection([

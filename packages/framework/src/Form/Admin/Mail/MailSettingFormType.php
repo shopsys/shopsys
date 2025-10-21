@@ -26,7 +26,7 @@ final class MailSettingFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
@@ -35,41 +35,41 @@ final class MailSettingFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
                 ],
-                'label' => t('Main administrator email'),
+                'label' => 'Main administrator email',
             ])
             ->add('name', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter full name']),
                 ],
-                'label' => t('Email name'),
+                'label' => 'Email name',
             ]);
 
         $footerGroup = $builder->create('footerGroup', GroupType::class, [
-            'label' => t('Footer'),
+            'label' => 'Footer',
         ]);
 
         $footerGroup->add('facebookUrl', TextType::class, [
-            'label' => t('Facebook URL'),
+            'label' => 'Facebook URL',
             'required' => false,
         ]);
         $footerGroup->add('instagramUrl', TextType::class, [
-            'label' => t('Instagram URL'),
+            'label' => 'Instagram URL',
             'required' => false,
         ]);
         $footerGroup->add('youtubeUrl', TextType::class, [
-            'label' => t('Youtube URL'),
+            'label' => 'Youtube URL',
             'required' => false,
         ]);
         $footerGroup->add('linkedinUrl', TextType::class, [
-            'label' => t('LinkedIn URL'),
+            'label' => 'LinkedIn URL',
             'required' => false,
         ]);
         $footerGroup->add('tiktokUrl', TextType::class, [
-            'label' => t('TikTok URL'),
+            'label' => 'TikTok URL',
             'required' => false,
         ]);
         $footerGroup->add('footerText', CKEditorType::class, [
-            'label' => t('Footer Text'),
+            'label' => 'Footer Text',
         ]);
 
         $builder

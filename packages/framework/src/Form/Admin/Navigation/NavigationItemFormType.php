@@ -54,17 +54,17 @@ final class NavigationItemFormType extends AbstractType
         $builder
             ->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Domain'),
+                'label' => 'Domain',
             ])
             ->add('name', TextType::class, [
-                'label' => t('Name'),
+                'label' => 'Name',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter navigation item name']),
                 ],
             ])
             ->add('url', TextType::class, [
-                'label' => t('Link URL'),
+                'label' => 'Link URL',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter link URL']),

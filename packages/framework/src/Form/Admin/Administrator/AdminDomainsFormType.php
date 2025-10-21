@@ -44,7 +44,7 @@ final class AdminDomainsFormType extends AbstractType
         $builder
             ->add($domainsGroup)
             ->add('apply', SubmitType::class, [
-                'label' => t('Apply'),
+                'label' => 'Apply',
             ]);
 
         $builder->addModelTransformer(new CallbackTransformer(

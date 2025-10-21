@@ -23,6 +23,7 @@ final class UnitFormType extends AbstractType
     {
         $builder
             ->add('name', LocalizedType::class, [
+                'label' => 'Name',
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [

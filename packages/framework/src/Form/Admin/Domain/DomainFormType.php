@@ -26,7 +26,7 @@ final class DomainFormType extends AbstractType
     {
         $builder
             ->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                'label' => t('Existing icon'),
+                'label' => 'Existing icon',
                 'data' => $options['domain']->getId(),
                 'show_domain_name' => false,
             ])

@@ -29,7 +29,7 @@ final class FlagFormType extends AbstractType
     {
         $builder
             ->add('name', LocalizedType::class, [
-                'label' => t('Name'),
+                'label' => 'Name',
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [
@@ -42,32 +42,32 @@ final class FlagFormType extends AbstractType
             ]);
 
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         $builderBasicInformationGroup
             ->add('rgbColor', ColorPickerType::class, [
-                'label' => t('Color'),
+                'label' => 'Color',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter flag color']),
                 ],
             ])
             ->add('visible', YesNoType::class, [
-                'label' => t('Display'),
+                'label' => 'Display',
             ]);
 
         $builder->add($builderBasicInformationGroup);
 
         if ($options['flag'] !== null) {
             $builderSeoInformationGroup = $builder->create('seoGroup', GroupType::class, [
-                'label' => t('Seo'),
+                'label' => 'Seo',
             ]);
 
             $builderSeoInformationGroup
                 ->add('urls', UrlListType::class, [
                     'route_name' => 'front_flag_detail',
                     'entity_id' => $options['flag']->getId(),
-                    'label' => t('URL addresses'),
+                    'label' => 'URL addresses',
                 ]);
 
             $builder->add($builderSeoInformationGroup);

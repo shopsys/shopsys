@@ -37,12 +37,12 @@ final class StockSettingsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderStockSettingGroup = $builder->create('stockSettings', GroupType::class, [
-            'label' => t('Warehouse settings'),
+            'label' => 'Warehouse settings',
         ]);
 
         $builderStockSettingGroup
             ->add('transfer', TextType::class, [
-                'label' => t('Days for transfer between warehouses'),
+                'label' => 'Days for transfer between warehouses',
                 'constraints' => [
                     new Constraints\NotBlank(),
                     new Constraints\Regex(['pattern' => '/^\d+$/']),
@@ -51,12 +51,12 @@ final class StockSettingsFormType extends AbstractType
             ]);
 
         $builderFeedSettingGroup = $builder->create('feedSettings', GroupType::class, [
-            'label' => t('XML feeds settings'),
+            'label' => 'XML feeds settings',
         ]);
 
         $builderFeedSettingGroup
             ->add('feedDeliveryDaysForOutOfStockProducts', IntegerType::class, [
-                'label' => t('Number of delivery days for out of stock products in XML feeds'),
+                'label' => 'Number of delivery days for out of stock products in XML feeds',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotNull([

@@ -859,6 +859,9 @@ msgstr "Nastavenia predvolenej cenovej skupiny upravené"
 msgid "Default store"
 msgstr "Predvolená predajňa"
 
+msgid "Default unit"
+msgstr "Predvolená jednotka"
+
 msgid "Default unit settings modified"
 msgstr "Nastavenia predvolenej jednotky upravené"
 
@@ -2236,6 +2239,9 @@ msgstr "Stav objednávky"
 msgid "Ordering"
 msgstr "Objednávanie"
 
+msgid "Ordering priority"
+msgstr "Priorita zoraďovania"
+
 msgid "Orders"
 msgstr "Objednávky"
 
@@ -2292,6 +2298,9 @@ msgstr "Skupina parametrov <strong><a href=\"{{ url }}\">{{ name }}</a></strong>
 
 msgid "Parameter groups"
 msgstr "Skupiny parametrov"
+
+msgid "Parameter type"
+msgstr "Typ parametra"
 
 msgid "Parameter value"
 msgstr "Hodnota parametra"

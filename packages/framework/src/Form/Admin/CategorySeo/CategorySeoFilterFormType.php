@@ -39,11 +39,11 @@ final class CategorySeoFilterFormType extends AbstractType
 
         $builder
             ->add('useFlags', YesNoType::class, [
-                'label' => t('By flag'),
+                'label' => 'By flag',
                 'data' => false,
             ])
             ->add('parameters', ChoiceType::class, [
-                'label' => t('Products parameters of selected category'),
+                'label' => 'Products parameters of selected category',
                 'choices' => $this->categorySeoFacade->getParametersUsedByProductsInCategoryWithoutSlider($category, $domainId),
                 'choice_label' => 'name',
                 'choice_value' => 'id',

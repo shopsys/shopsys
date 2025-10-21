@@ -46,11 +46,11 @@ final class PriceListFormType extends AbstractType
         if ($priceList instanceof PriceList) {
             $builder
                 ->add('id', DisplayOnlyType::class, [
-                    'label' => t('ID'),
+                    'label' => 'ID',
                     'data' => $priceList->getId(),
                 ])
                 ->add('lastUpdate', DisplayOnlyType::class, [
-                    'label' => t('Last update'),
+                    'label' => 'Last update',
                     'data' => $this->dateTimeFormatterExtension->formatDateTime($priceList->getLastUpdate()),
                 ]);
         }
@@ -59,7 +59,7 @@ final class PriceListFormType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => t('Name'),
+                'label' => 'Name',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter product list name']),
                     new Constraints\Length([
@@ -69,7 +69,7 @@ final class PriceListFormType extends AbstractType
                 ],
             ])
             ->add('validFrom', DateTimeType::class, [
-                'label' => t('Valid from'),
+                'label' => 'Valid from',
                 'input' => 'datetime_immutable',
                 'required' => true,
                 'constraints' => [
@@ -77,7 +77,7 @@ final class PriceListFormType extends AbstractType
                 ],
             ])
             ->add('validTo', DateTimeType::class, [
-                'label' => t('Valid to'),
+                'label' => 'Valid to',
                 'input' => 'datetime_immutable',
                 'required' => true,
                 'constraints' => [
@@ -86,7 +86,7 @@ final class PriceListFormType extends AbstractType
             ])
             ->add('priceListProductPricesData', PriceListProductsPickerType::class, [
                 'required' => false,
-                'label' => t('Products'),
+                'label' => 'Products',
             ]);
 
         $builder->add('actionBar', ActionBarType::class, [
@@ -138,13 +138,13 @@ final class PriceListFormType extends AbstractType
 
         if ($priceList instanceof PriceList) {
             $builder->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                'label' => t('Domain'),
+                'label' => 'Domain',
                 'data' => $priceList->getDomainId(),
             ]);
         } else {
             $builder->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Domain'),
+                'label' => 'Domain',
                 'attr' => [
                     'class' => 'js-update-domain-id',
                 ],

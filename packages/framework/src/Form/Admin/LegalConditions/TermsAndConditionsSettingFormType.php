@@ -32,7 +32,7 @@ final class TermsAndConditionsSettingFormType extends AbstractType
         $articles = $this->articleFacade->getAllByDomainId($options['domain_id']);
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
@@ -41,8 +41,8 @@ final class TermsAndConditionsSettingFormType extends AbstractType
                 'choices' => $articles,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => t('-- Choose article --'),
-                'label' => t('Terms and conditions'),
+                'placeholder' => '-- Choose article --',
+                'label' => 'Terms and conditions',
                 'help' => t('Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.'),
             ]);
 

@@ -55,8 +55,8 @@ final class ImportPriceListFormType extends AbstractType
                     return $this->domain->getDomainConfigById($priceList->getDomainId())->getName();
                 },
                 'required' => false,
-                'placeholder' => t('-- Create new price list --'),
-                'label' => t('Overwrite Price list'),
+                'placeholder' => '-- Create new price list --',
+                'label' => 'Overwrite Price list',
                 'attr' => [
                     'class' => 'js-import-price-list-select-list',
                     'data-load-metadata-url' => $this->urlGenerator->generate('admin_pricelist_loadmetadata', ['id' => '0']),
@@ -64,13 +64,13 @@ final class ImportPriceListFormType extends AbstractType
             ])
             ->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Domain'),
+                'label' => 'Domain',
                 'row_attr' => [
                     'data-js-import-price-list-domain-id' => null,
                 ],
             ])
             ->add('name', TextType::class, [
-                'label' => t('Name'),
+                'label' => 'Name',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter product list name']),
@@ -84,7 +84,7 @@ final class ImportPriceListFormType extends AbstractType
                 ],
             ])
             ->add('validFrom', DateTimeType::class, [
-                'label' => t('Valid from'),
+                'label' => 'Valid from',
                 'input' => 'datetime_immutable',
                 'required' => true,
                 'constraints' => [
@@ -95,7 +95,7 @@ final class ImportPriceListFormType extends AbstractType
                 ],
             ])
             ->add('validTo', DateTimeType::class, [
-                'label' => t('Valid to'),
+                'label' => 'Valid to',
                 'input' => 'datetime_immutable',
                 'required' => true,
                 'constraints' => [
@@ -121,7 +121,7 @@ final class ImportPriceListFormType extends AbstractType
                             . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('CSV file'),
+                'label' => 'CSV file',
             ]);
 
         $builder->add('actionBar', ActionBarType::class, [

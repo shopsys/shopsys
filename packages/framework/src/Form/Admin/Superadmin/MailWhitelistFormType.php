@@ -45,14 +45,14 @@ final class MailWhitelistFormType extends AbstractType
 
         $builder
             ->add('mailWhitelistEnabled', YesNoType::class, [
-                'label' => t('Enable whitelist'),
+                'label' => 'Enable whitelist',
             ])
             ->add('messageMailWhitelist', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
                 'data' => t('E-mails are sent to addresses which comply with at least one regular expression. You can use <a href="https://regex101.com">https://regex101.com</a> for validating regular expressions.'),
             ])
             ->add('mailWhitelist', MailWhitelistCollectionType::class, [
-                'label' => t('E-mail addresses whitelist'),
+                'label' => 'E-mail addresses whitelist',
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,

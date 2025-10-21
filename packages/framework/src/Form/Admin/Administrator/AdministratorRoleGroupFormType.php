@@ -32,7 +32,7 @@ final class AdministratorRoleGroupFormType extends AbstractType
                     ['max' => 100, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                 ),
             ],
-            'label' => t('Role name'),
+            'label' => 'Role name',
         ]);
         $builder->add('roles', RolesType::class, [
             'label' => 'Roles',

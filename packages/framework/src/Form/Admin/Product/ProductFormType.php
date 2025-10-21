@@ -114,7 +114,7 @@ final class ProductFormType extends AbstractType
                         new Constraints\Length(['max' => 255, 'maxMessage' => 'Product prefix name cannot be longer than {{ limit }} characters']),
                     ],
                 ],
-                'label' => t('Name prefix'),
+                'label' => 'Name prefix',
             ])
             ->add('name', LocalizedType::class, [
                 'required' => false,
@@ -125,7 +125,7 @@ final class ProductFormType extends AbstractType
                         ),
                     ],
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('nameSuffix', LocalizedType::class, [
                 'required' => false,
@@ -134,7 +134,7 @@ final class ProductFormType extends AbstractType
                         new Constraints\Length(['max' => 255, 'maxMessage' => 'Product suffix name cannot be longer than {{ limit }} characters']),
                     ],
                 ],
-                'label' => t('Name suffix'),
+                'label' => 'Name suffix',
             ]);
 
         if ($this->isProductVariant($product) || $this->isProductMainVariant($product)) {
@@ -190,14 +190,14 @@ final class ProductFormType extends AbstractType
         array $disabledItemInMainVariantHelp = [],
     ): FormBuilderInterface {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         if (!$this->isProductMainVariant($product)) {
             $builderBasicInformationGroup->add('productType', ChoiceType::class, [
                 'required' => true,
                 'choices' => $this->productTypeEnum->getAllIndexedByTranslations(),
-                'label' => t('Product type'),
+                'label' => 'Product type',
             ]);
         }
 
@@ -213,7 +213,7 @@ final class ProductFormType extends AbstractType
                 'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
                 'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
             ],
-            'label' => t('Catalog number'),
+            'label' => 'Catalog number',
             ...$disabledItemInMainVariantHelp,
         ])
             ->add('partno', TextType::class, [
@@ -224,7 +224,7 @@ final class ProductFormType extends AbstractType
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
-                'label' => t('PartNo (serial number)'),
+                'label' => 'PartNo (serial number)',
                 ...$disabledItemInMainVariantHelp,
             ])
             ->add('ean', TextType::class, [
@@ -235,13 +235,13 @@ final class ProductFormType extends AbstractType
                     ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
-                'label' => t('EAN'),
+                'label' => 'EAN',
                 ...$disabledItemInMainVariantHelp,
             ]);
 
         if ($product !== null) {
             $builderBasicInformationGroup->add('id', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $product->getId(),
             ]);
         }
@@ -257,18 +257,18 @@ final class ProductFormType extends AbstractType
                     'expanded' => true,
                 ],
                 'required' => false,
-                'label' => t('Flags'),
+                'label' => 'Flags',
             ])
             ->add('brand', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->brandFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => t('-- Choose brand --'),
-                'label' => t('Brand'),
+                'placeholder' => '-- Choose brand --',
+                'label' => 'Brand',
             ])
             ->add('weight', IntegerType::class, [
-                'label' => t('Weight (g)'),
+                'label' => 'Weight (g)',
                 'required' => false,
             ])
             ->add('excludedTransports', ChoiceType::class, [
@@ -277,7 +277,7 @@ final class ProductFormType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => false,
-                'label' => t('Excluded transports'),
+                'label' => 'Excluded transports',
             ]);
 
         return $builderBasicInformationGroup;
@@ -293,7 +293,7 @@ final class ProductFormType extends AbstractType
         ?Product $product,
     ): FormBuilderInterface {
         $builderShortDescriptionGroup = $builder->create('shortDescriptionsGroup', GroupType::class, [
-            'label' => t('Short description'),
+            'label' => 'Short description',
         ]);
 
         if ($this->isProductVariant($product)) {
@@ -321,7 +321,7 @@ final class ProductFormType extends AbstractType
     private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('descriptionsGroup', GroupType::class, [
-            'label' => t('Description'),
+            'label' => 'Description',
         ]);
 
         if ($this->isProductVariant($product)) {
@@ -360,16 +360,16 @@ final class ProductFormType extends AbstractType
         }
 
         $builderDisplayAvailabilityGroup = $builder->create('displayAvailabilityGroup', GroupType::class, [
-            'label' => t('Display and availability'),
+            'label' => 'Display and availability',
         ]);
 
         $builderDisplayAvailabilityGroup
             ->add('hidden', YesNoType::class, [
-                'label' => t('Hide product'),
+                'label' => 'Hide product',
             ]);
 
         $builderDisplayAvailabilityGroup->add('domainHidden', MultidomainType::class, [
-            'label' => t('Hide on domain'),
+            'label' => 'Hide on domain',
             'entry_type' => YesNoType::class,
         ]);
 
@@ -377,21 +377,21 @@ final class ProductFormType extends AbstractType
             ->add('sellingFrom', DatePickerType::class, [
                 'required' => false,
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
-                'label' => t('Selling start date'),
+                'label' => 'Selling start date',
             ])
             ->add('sellingTo', DatePickerType::class, [
                 'required' => false,
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
-                'label' => t('Selling end date'),
+                'label' => 'Selling end date',
             ])
             ->add('sellingDenied', YesNoType::class, [
-                'label' => t('Exclude from sale on whole eshop'),
+                'label' => 'Exclude from sale on whole eshop',
                 'help' => t(
                     'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
                 ),
             ])
             ->add('saleExclusion', MultidomainType::class, [
-                'label' => t('Exclude from sale on domains'),
+                'label' => 'Exclude from sale on domains',
                 'entry_type' => YesNoType::class,
             ]);
 
@@ -409,7 +409,7 @@ final class ProductFormType extends AbstractType
             $builderDisplayAvailabilityGroup
                 ->add('categoriesByDomainId', DisplayOnlyType::class, [
                     'data' => t('You can set the categories on product detail of the main variant'),
-                    'label' => t('Assign to category'),
+                    'label' => 'Assign to category',
                 ]);
         } else {
             $builderDisplayAvailabilityGroup
@@ -418,7 +418,7 @@ final class ProductFormType extends AbstractType
                     'entry_type' => CategoriesType::class,
                     'options_by_domain_id' => $categoriesOptionsByDomainId,
                     'disabled' => $this->isProductVariant($product),
-                    'label' => t('Assign to category'),
+                    'label' => 'Assign to category',
                 ]);
         }
         $builderDisplayAvailabilityGroup
@@ -432,7 +432,7 @@ final class ProductFormType extends AbstractType
                         'message' => 'Please choose unit',
                     ]),
                 ],
-                'label' => t('Unit'),
+                'label' => 'Unit',
             ]);
 
         $builderDisplayAvailabilityGroup
@@ -441,7 +441,7 @@ final class ProductFormType extends AbstractType
                 'entry_options' => [
                     'required' => true,
                 ],
-                'label' => t('Sorting priority'),
+                'label' => 'Sorting priority',
             ]);
 
         return $builderDisplayAvailabilityGroup;
@@ -455,7 +455,7 @@ final class ProductFormType extends AbstractType
     private function createStocksGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
-            'label' => t('Warehouses'),
+            'label' => 'Warehouses',
         ]);
 
         if ($this->isProductMainVariant($product)) {
@@ -467,7 +467,7 @@ final class ProductFormType extends AbstractType
         } else {
             $stockGroupBuilder->add('isAllowedNegativeStock', YesNoType::class, [
                 'required' => false,
-                'label' => t('Allow negative stock'),
+                'label' => 'Allow negative stock',
                 'help' => t('If you allow negative stock, it is possible to order more items than are currently in stock.'),
             ]);
 
@@ -488,7 +488,7 @@ final class ProductFormType extends AbstractType
     private function createPricesGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderPricesGroup = $builder->create('pricesGroup', GroupType::class, [
-            'label' => t('Prices'),
+            'label' => 'Prices',
         ]);
 
         if ($this->isProductMainVariant($product)) {
@@ -546,7 +546,7 @@ final class ProductFormType extends AbstractType
                     'priceListOverview',
                     MultidomainType::class,
                     [
-                        'label' => t('Price list overview'),
+                        'label' => 'Price list overview',
                         'entry_type' => PriceListOverviewType::class,
                         'required' => false,
                         'mapped' => false,
@@ -589,7 +589,7 @@ final class ProductFormType extends AbstractType
             $seoH1OptionsByDomainId[$domainId] = $seoTitlesOptionsByDomainId[$domainId];
         }
         $builderSeoGroup = $builder->create('seoGroup', GroupType::class, [
-            'label' => t('SEO'),
+            'label' => 'SEO',
         ]);
 
         $builderSeoGroup
@@ -597,26 +597,26 @@ final class ProductFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => t('Page title'),
+                'label' => 'Page title',
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ])
             ->add('seoH1s', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'label' => t('Heading (H1)'),
+                'label' => 'Heading (H1)',
             ]);
 
         if ($product) {
             $builderSeoGroup->add('urls', UrlListType::class, [
                 'route_name' => 'front_product_detail',
                 'entity_id' => $product->getId(),
-                'label' => t('URL settings'),
+                'label' => 'URL settings',
             ]);
         }
 
@@ -637,7 +637,7 @@ final class ProductFormType extends AbstractType
 
         if ($this->isProductVariant($product)) {
             $variantGroup->add('mainVariantUrl', DisplayOnlyUrlType::class, [
-                'label' => t('Product is variant'),
+                'label' => 'Product is variant',
                 'route' => 'admin_product_edit',
                 'route_params' => [
                     'id' => $product->getMainVariant()->getId(),
@@ -654,7 +654,7 @@ final class ProductFormType extends AbstractType
                         ),
                     ],
                 ],
-                'label' => t('Variant alias'),
+                'label' => 'Variant alias',
             ]);
         }
 
@@ -665,7 +665,7 @@ final class ProductFormType extends AbstractType
                 'allow_main_variants' => false,
                 'allow_variants' => false,
                 'label_button_add' => t('Add variant'),
-                'label' => t('Variants'),
+                'label' => 'Variants',
                 'top_info_title' => t('Product is main variant.'),
             ]);
         }
@@ -708,7 +708,7 @@ final class ProductFormType extends AbstractType
     private function createParametersGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderParametersGroup = $builder->create('parametersGroup', GroupType::class, [
-            'label' => t('Parameters'),
+            'label' => 'Parameters',
         ]);
 
         $builderParametersGroup
@@ -738,7 +738,7 @@ final class ProductFormType extends AbstractType
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('imageGroup', GroupType::class, [
-            'label' => t('Images'),
+            'label' => 'Images',
         ]);
         $builderImageGroup
             ->add('images', ImageUploadType::class, [
@@ -755,7 +755,7 @@ final class ProductFormType extends AbstractType
                 ],
                 'entity' => $options['product'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
-                'label' => t('Images'),
+                'label' => 'Images',
             ]);
 
         return $builderImageGroup;
@@ -773,7 +773,7 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'main_product' => $product,
                 'sortable' => true,
-                'label' => t('Accessories'),
+                'label' => 'Accessories',
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer);
     }
@@ -785,7 +785,7 @@ final class ProductFormType extends AbstractType
     private function createShortDescriptionsUspGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
-            'label' => t('Short description USP'),
+            'label' => 'Short description USP',
         ]);
 
         $builderShortDescriptionsUspGroup
@@ -834,7 +834,7 @@ final class ProductFormType extends AbstractType
     private function createFilesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderFileGroup = $builder->create('fileGroup', GroupType::class, [
-            'label' => t('Files'),
+            'label' => 'Files',
         ]);
 
         $builderFileGroup
@@ -849,7 +849,7 @@ final class ProductFormType extends AbstractType
                     ]),
                 ],
                 'entity' => $options['product'],
-                'label' => t('Files'),
+                'label' => 'Files',
             ]);
 
         return $builderFileGroup;
@@ -862,7 +862,7 @@ final class ProductFormType extends AbstractType
     private function createVideosGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $videosGroup = $builder->create('videosGroup', GroupType::class, [
-            'label' => t('Videos'),
+            'label' => 'Videos',
         ]);
         $videosGroup
             ->add(

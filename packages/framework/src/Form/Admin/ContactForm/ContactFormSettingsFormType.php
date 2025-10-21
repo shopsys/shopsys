@@ -23,7 +23,7 @@ final class ContactFormSettingsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Main text'),
+            'label' => 'Main text',
         ]);
 
         $builderSettingsGroup

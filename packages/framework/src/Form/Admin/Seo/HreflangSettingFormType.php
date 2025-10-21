@@ -49,7 +49,7 @@ final class HreflangSettingFormType extends AbstractType
             ])
             ->add(self::FIELD_HREFLANG_COLLECTION, CollectionType::class, [
                 'block_prefix' => 'hreflang_setting_collection',
-                'label' => t('Alternate language domains'),
+                'label' => 'Alternate language domains',
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
                     'required' => true,

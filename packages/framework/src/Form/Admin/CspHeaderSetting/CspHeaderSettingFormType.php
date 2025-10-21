@@ -27,7 +27,7 @@ final class CspHeaderSettingFormType extends AbstractType
 
         $builder->add('cspHeader', TextareaType::class, [
             'required' => false,
-            'label' => t('Content-Security-Policy header'),
+            'label' => 'Content-Security-Policy header',
         ]);
         $builder->add('actionBar', ActionBarType::class, [
             'save_label' => t('Save changes'),

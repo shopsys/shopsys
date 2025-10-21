@@ -34,7 +34,7 @@ final class AdministratorResetPasswordFormType extends AbstractType
                     ],
                 ],
                 'first_options' => [
-                    'label' => t('Password'),
+                    'label' => 'Password',
                     'constraints' => [
                         new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', 'message' => '']),
                         new Constraints\NotBlank(['message' => '']),
@@ -51,10 +51,10 @@ final class AdministratorResetPasswordFormType extends AbstractType
                     ),
                 ],
                 'second_options' => [
-                    'label' => t('Password again'),
+                    'label' => 'Password again',
                 ],
                 'invalid_message' => 'Passwords do not match',
-                'label' => t('Password'),
+                'label' => 'Password',
             ])
             ->add('save', SubmitType::class);
     }

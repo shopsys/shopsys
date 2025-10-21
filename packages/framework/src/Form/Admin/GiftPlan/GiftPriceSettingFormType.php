@@ -30,11 +30,11 @@ final class GiftPriceSettingFormType extends AbstractType
                 new NotBlank(['message' => 'Please enter price']),
                 new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
             ],
-            'label' => t('Gift price (with VAT)'),
+            'label' => 'Gift price (with VAT)',
         ]);
         $builder
             ->add('save', SubmitType::class, [
-                'label' => t('Save gift price setting'),
+                'label' => 'Save gift price setting',
             ]);
     }
 

@@ -111,14 +111,14 @@ final class BlogCategoryFormType extends AbstractType
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         if ($options['blogCategory'] !== null) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['blogCategory']->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ]);
         }
 
@@ -133,7 +133,7 @@ final class BlogCategoryFormType extends AbstractType
                         new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
                     ],
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('parent', ChoiceType::class, [
                 'required' => true,
@@ -144,11 +144,11 @@ final class BlogCategoryFormType extends AbstractType
                     return $padding . $blogCategory->getName();
                 },
                 'choice_value' => 'id',
-                'label' => t('Ancestor category'),
+                'label' => 'Ancestor category',
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
-                'label' => t('Display on'),
+                'label' => 'Display on',
             ]);
 
         return $builderSettingsGroup;
@@ -201,7 +201,7 @@ final class BlogCategoryFormType extends AbstractType
         [$seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId] = $this->prepareSeoData($options);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [
-            'label' => t('Seo'),
+            'label' => 'Seo',
         ]);
 
         $builderSeoGroup
@@ -209,13 +209,13 @@ final class BlogCategoryFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => t('Page title'),
+                'label' => 'Page title',
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ])
             ->add('seoH1s', MultidomainType::class, [
                 'required' => false,
@@ -225,7 +225,7 @@ final class BlogCategoryFormType extends AbstractType
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
-                'label' => t('Heading (H1)'),
+                'label' => 'Heading (H1)',
             ]);
 
         if ($options['blogCategory'] !== null) {
@@ -233,7 +233,7 @@ final class BlogCategoryFormType extends AbstractType
                 ->add('urls', UrlListType::class, [
                     'route_name' => 'front_blogcategory_detail',
                     'entity_id' => $this->getBlogCategoryId($options['blogCategory']),
-                    'label' => t('URL addresses'),
+                    'label' => 'URL addresses',
                 ]);
         }
 
@@ -260,13 +260,13 @@ final class BlogCategoryFormType extends AbstractType
     private function createDescriptionGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('description', GroupType::class, [
-            'label' => t('Description'),
+            'label' => 'Description',
         ]);
 
         $builderDescriptionGroup
             ->add('descriptions', LocalizedType::class, [
                 'entry_type' => CKEditorType::class,
-                'label' => t('Description'),
+                'label' => 'Description',
                 'required' => false,
             ]);
 
@@ -281,7 +281,7 @@ final class BlogCategoryFormType extends AbstractType
     private function createImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
 
         $builderImageGroup
@@ -296,7 +296,7 @@ final class BlogCategoryFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
                 'entity' => $options['blogCategory'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);

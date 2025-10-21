@@ -62,12 +62,12 @@ final class TransportFormType extends AbstractType
         /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transport */
         $transport = $options['transport'];
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         if ($transport instanceof Transport) {
             $builderBasicInformationGroup->add('formId', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $transport->getId(),
             ]);
         }
@@ -82,14 +82,14 @@ final class TransportFormType extends AbstractType
                         ),
                     ],
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
-                'label' => t('Display on'),
+                'label' => 'Display on',
             ])
             ->add('hidden', YesNoType::class, [
-                'label' => t('Hidden'),
+                'label' => 'Hidden',
             ])
             ->add('payments', ChoiceType::class, [
                 'required' => false,
@@ -101,7 +101,7 @@ final class TransportFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'empty_message' => t('You have to create some payment first.'),
-                'label' => t('Available payment methods'),
+                'label' => 'Available payment methods',
             ])
             ->add('type', ChoiceType::class, [
                 'required' => true,
@@ -109,7 +109,7 @@ final class TransportFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'label' => t('Transport type'),
+                'label' => 'Transport type',
             ])
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => true,
@@ -122,11 +122,11 @@ final class TransportFormType extends AbstractType
                         'pattern' => '/^\d+$/',
                     ]),
                 ],
-                'label' => t('Days until delivery'),
+                'label' => 'Days until delivery',
             ]);
 
         $builderPricesGroup = $builder->create('prices', GroupType::class, [
-            'label' => t('Prices'),
+            'label' => 'Prices',
         ]);
 
         $optionsByDomainId = [];
@@ -151,29 +151,29 @@ final class TransportFormType extends AbstractType
         ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [
-            'label' => t('Additional information'),
+            'label' => 'Additional information',
         ]);
 
         $builderAdditionalInformationGroup
             ->add('description', LocalizedType::class, [
                 'required' => false,
                 'entry_type' => TextareaType::class,
-                'label' => t('Description'),
+                'label' => 'Description',
             ])
             ->add('instructions', LocalizedType::class, [
                 'required' => false,
                 'entry_type' => CKEditorType::class,
-                'label' => t('Instructions'),
+                'label' => 'Instructions',
             ]);
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
 
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
                 'image_entity_class' => Transport::class,
                 'file_constraints' => [
                     new Constraints\Image([
@@ -189,12 +189,12 @@ final class TransportFormType extends AbstractType
             ]);
 
         $builderPackageTrackingGroup = $builder->create('packageTracking', GroupType::class, [
-            'label' => t('Package tracking'),
+            'label' => 'Package tracking',
         ]);
 
         $builderPackageTrackingGroup
             ->add('trackingUrl', TextType::class, [
-                'label' => t('Tracking URL'),
+                'label' => 'Tracking URL',
                 'required' => false,
                 'constraints' => [
                     new Length([
@@ -203,7 +203,7 @@ final class TransportFormType extends AbstractType
                 ],
             ])
             ->add('trackingUrlVariables', DisplayVariablesType::class, [
-                'label' => t('Tracking URL variables'),
+                'label' => 'Tracking URL variables',
                 'required' => false,
                 'variables' => [
                     OrderMail::VARIABLE_TRANSPORT_TRACKING_NUMBER => [
@@ -214,11 +214,11 @@ final class TransportFormType extends AbstractType
             ])
             ->add('trackingInstructions', LocalizedType::class, [
                 'entry_type' => CKEditorType::class,
-                'label' => t('Tracking instructions'),
+                'label' => 'Tracking instructions',
                 'required' => false,
             ])
             ->add('trackingInstructionsVariables', DisplayVariablesType::class, [
-                'label' => t('Tracking instructions variables'),
+                'label' => 'Tracking instructions variables',
                 'required' => false,
                 'variables' => [
                     OrderMail::VARIABLE_TRANSPORT_TRACKING_NUMBER => [

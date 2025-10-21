@@ -435,7 +435,7 @@ $actionBar = $builder->create('actionBar', ActionBarType::class, [
 ]);
 
 $actionBar->add('createAndDownloadCsv', SubmitType::class, [
-    'label' => t('Create and download CSV'),
+    'label' => 'Create and download CSV',
     'position' => [
         'before' => 'save',
     ],

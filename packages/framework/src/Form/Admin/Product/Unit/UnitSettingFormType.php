@@ -31,7 +31,8 @@ final class UnitSettingFormType extends AbstractType
     {
         $builder
             ->add('defaultUnit', ChoiceType::class, [
-                'placeholder' => t('-- Choose unit --'),
+                'label' => 'Default unit',
+                'placeholder' => '-- Choose unit --',
                 'required' => true,
                 'choices' => $this->unitFacade->getAll(),
                 'choice_label' => 'name',
@@ -42,7 +43,7 @@ final class UnitSettingFormType extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => t('Save default unit'),
+                'label' => 'Save default unit',
             ]);
     }
 

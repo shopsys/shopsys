@@ -53,20 +53,20 @@ final class AdvertFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $builderSettingsGroup
             ->add('domain', DisplayOnlyType::class, [
                 'data' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
-                'label' => t('Domain'),
+                'label' => 'Domain',
             ]);
 
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['advert']->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ]);
         }
 
@@ -76,7 +76,7 @@ final class AdvertFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name of advertisement area']),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
                 'help' => t('Name serves only for internal use within the administration.'),
             ])
             ->add('type', ChoiceType::class, [
@@ -90,30 +90,30 @@ final class AdvertFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose advertisement type']),
                 ],
-                'label' => t('Type'),
+                'label' => 'Type',
             ])
             ->add('positionName', ChoiceType::class, [
                 'required' => true,
                 'choices' => array_flip($this->advertPositionRegistry->getAllLabelsIndexedByNames()),
-                'placeholder' => t('-- Choose area --'),
+                'placeholder' => '-- Choose area --',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose advertisement area']),
                 ],
-                'label' => t('Area'),
+                'label' => 'Area',
             ])
             ->add('categories', CategoriesType::class, [
                 'required' => false,
                 'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
-                'label' => t('Assign to category'),
+                'label' => 'Assign to category',
                 'row_attr' => [
                     'data-js-advert-categories' => null,
                 ],
             ])
             ->add('hidden', YesNoType::class, [
-                'label' => t('Hide advertisement'),
+                'label' => 'Hide advertisement',
             ])
             ->add('code', TextareaType::class, [
-                'label' => t('Code'),
+                'label' => 'Code',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -127,7 +127,7 @@ final class AdvertFormType extends AbstractType
             ]);
 
         $builderImageGroup = $builder->create('image_group', GroupType::class, [
-            'label' => t('Images'),
+            'label' => 'Images',
             'row_attr' => [
                 'data-js-advert-type-content' => 'image',
             ],
@@ -136,7 +136,7 @@ final class AdvertFormType extends AbstractType
         $builderImageGroup
             ->add('link', TextType::class, [
                 'required' => false,
-                'label' => t('Link'),
+                'label' => 'Link',
             ]);
 
         $imageConstraints = [
@@ -161,7 +161,7 @@ final class AdvertFormType extends AbstractType
                     ]),
                 ],
                 'constraints' => ($options['web_image_exists'] ? [] : $imageConstraints),
-                'label' => t('Upload new image'),
+                'label' => 'Upload new image',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
@@ -181,7 +181,7 @@ final class AdvertFormType extends AbstractType
                     ]),
                 ],
                 'constraints' => ($options['mobile_image_exists'] ? [] : $imageConstraints),
-                'label' => t('Upload image for mobile devices'),
+                'label' => 'Upload image for mobile devices',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
@@ -191,11 +191,11 @@ final class AdvertFormType extends AbstractType
             ->add($builderImageGroup)
             ->add('datetimeVisibleFrom', DatePickerType::class, [
                 'required' => false,
-                'label' => t('Display date FROM'),
+                'label' => 'Display date FROM',
             ])
             ->add('datetimeVisibleTo', DatePickerType::class, [
                 'required' => false,
-                'label' => t('Display date TO'),
+                'label' => 'Display date TO',
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_advert_list',

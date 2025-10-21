@@ -36,7 +36,7 @@ final class NotificationBarFormType extends AbstractType
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'required' => false,
-            'label' => t('Settings'),
+            'label' => 'Settings',
         ]);
 
         $domainIdAttributes = [];
@@ -47,38 +47,38 @@ final class NotificationBarFormType extends AbstractType
 
         $builderSettingsGroup
             ->add('domainId', DomainType::class, [
-                'label' => t('Domain'),
+                'label' => 'Domain',
                 'attr' => $domainIdAttributes,
             ])
             ->add('text', CKEditorType::class, [
                 'required' => false,
-                'label' => t('Content'),
+                'label' => 'Content',
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter notification bar content']),
                 ],
             ])
             ->add('rgbColor', ColorPickerType::class, [
-                'label' => t('Background color'),
+                'label' => 'Background color',
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter notification bar background color']),
                 ],
             ])
             ->add('validityFrom', DateTimeType::class, [
                 'required' => false,
-                'label' => t('Valid from'),
+                'label' => 'Valid from',
                 'attr' => [
                     'autocomplete' => 'off',
                 ],
             ])
             ->add('validityTo', DateTimeType::class, [
                 'required' => false,
-                'label' => t('Valid to'),
+                'label' => 'Valid to',
                 'attr' => [
                     'autocomplete' => 'off',
                 ],
             ])
             ->add('hidden', YesNoType::class, [
-                'label' => t('Hide'),
+                'label' => 'Hide',
             ])
             ->add('image', ImageUploadType::class, [
                 'required' => false,
@@ -94,7 +94,7 @@ final class NotificationBarFormType extends AbstractType
                     ]),
                 ],
                 'entity' => $options['notification_bar'],
-                'label' => t('Upload new image'),
+                'label' => 'Upload new image',
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
 

@@ -24,7 +24,7 @@ final class ModulesFormType extends AbstractType
     {
         $builder
             ->add('modules', GroupType::class, [
-                'label' => t('Modules'),
+                'label' => 'Modules',
             ])
             ->add('actionBar', ActionBarType::class, [
                 'save_label' => t('Save changes'),

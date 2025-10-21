@@ -119,16 +119,16 @@ final class OrderFormType extends AbstractType
     {
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         $builderBasicInformationGroup
             ->add('id', DisplayOnlyType::class, [
-                'label' => t('ID'),
+                'label' => 'ID',
                 'data' => $order->getId(),
             ])
             ->add('orderDetail', DisplayOnlyUrlType::class, [
-                'label' => t('Order detail'),
+                'label' => 'Order detail',
                 'route' => 'front_customer_order_detail_unregistered',
                 'route_params' => [
                     'urlHash' => $order->getUrlHash(),
@@ -139,22 +139,22 @@ final class OrderFormType extends AbstractType
         if ($this->domain->isMultidomain()) {
             $builderBasicInformationGroup
                 ->add('domainIcon', DisplayOnlyDomainIconType::class, [
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                     'data' => $order->getDomainId(),
                 ]);
         }
 
         $builderBasicInformationGroup
             ->add('orderNumber', DisplayOnlyType::class, [
-                'label' => t('Order number'),
+                'label' => 'Order number',
                 'data' => $order->getNumber(),
             ])
             ->add('dateOfCreation', DisplayOnlyType::class, [
-                'label' => t('Date of creation and privacy policy agreement'),
+                'label' => 'Date of creation and privacy policy agreement',
                 'data' => $this->dateTimeFormatterExtension->formatDateTime($order->getCreatedAt()),
             ])
             ->add('status', ChoiceType::class, [
-                'label' => t('Status'),
+                'label' => 'Status',
                 'required' => true,
                 'choices' => $this->orderStatusFacade->getAll(),
                 'choice_label' => 'name',
@@ -166,28 +166,28 @@ final class OrderFormType extends AbstractType
         if ($order->getCreatedAsAdministrator() || $order->getCreatedAsAdministratorName()) {
             $builderBasicInformationGroup
                 ->add('createdAsAdministrator', DisplayOnlyType::class, [
-                    'label' => t('Created by administrator'),
+                    'label' => 'Created by administrator',
                     'data' => $order->getCreatedAsAdministrator() === null ? $order->getCreatedAsAdministratorName() : $order->getCreatedAsAdministrator()->getRealName(),
                 ]);
         }
 
         $builderBasicInformationGroup
             ->add('user', DisplayOnlyCustomerType::class, [
-                'label' => t('Customer'),
+                'label' => 'Customer',
                 'user' => $order->getCustomerUser(),
             ]);
 
         if ($domainConfig->isB2b() && $order->getCustomer()?->getBillingAddress()->getCompanyNumber() !== null) {
             $builderBasicInformationGroup
                 ->add('company', DisplayOnlyCompanyNameType::class, [
-                    'label' => t('Company'),
+                    'label' => 'Company',
                     'customer' => $order->getCustomer(),
                 ]);
         }
 
         $builderBasicInformationGroup
             ->add('heurekaAgreement', DisplayOnlyType::class, [
-                'label' => t('Heureka agreement'),
+                'label' => 'Heureka agreement',
                 'data' => $order->isHeurekaAgreement() ? t('Yes') : t('No'),
             ]);
 
@@ -201,7 +201,7 @@ final class OrderFormType extends AbstractType
 
         $builderBasicInformationGroup
             ->add('payment', DisplayOnlyType::class, [
-                'label' => t('Payment type'),
+                'label' => 'Payment type',
                 'data' => $order->getPayment()->getName(),
             ]);
 
@@ -221,18 +221,18 @@ final class OrderFormType extends AbstractType
 
             $builderBasicInformationGroup
                 ->add('gopayStatus', DisplayOnlyType::class, [
-                    'label' => t('GoPay payment status'),
+                    'label' => 'GoPay payment status',
                     'data' => $translatedGoPayStatus,
                 ]);
         }
 
         $builderBasicInformationGroup
             ->add('transport', DisplayOnlyType::class, [
-                'label' => t('Transport type'),
+                'label' => 'Transport type',
                 'data' => $order->getTransport()->getName(),
             ])
             ->add('trackingNumber', TextType::class, [
-                'label' => t('Tracking number'),
+                'label' => 'Tracking number',
                 'required' => false,
                 'constraints' => [
                     new Length([
@@ -246,7 +246,7 @@ final class OrderFormType extends AbstractType
         if ($promoCode !== null) {
             $builderBasicInformationGroup
                 ->add('promoCode', DisplayOnlyType::class, [
-                    'label' => t('Promo code'),
+                    'label' => 'Promo code',
                     'data' => $promoCode,
                 ]);
         }
@@ -261,12 +261,12 @@ final class OrderFormType extends AbstractType
     private function createPersonalDataGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderPersonalDataGroup = $builder->create('personalDataGroup', GroupType::class, [
-            'label' => t('Personal data'),
+            'label' => 'Personal data',
         ]);
 
         $builderPersonalDataGroup
             ->add('firstName', TextType::class, [
-                'label' => t('First name'),
+                'label' => 'First name',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length([
@@ -276,7 +276,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('lastName', TextType::class, [
-                'label' => t('Last name'),
+                'label' => 'Last name',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter last name']),
                     new Constraints\Length([
@@ -286,7 +286,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
-                'label' => t('Email'),
+                'label' => 'Email',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
@@ -297,7 +297,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('telephone', TextType::class, [
-                'label' => t('Telephone'),
+                'label' => 'Telephone',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
@@ -317,12 +317,12 @@ final class OrderFormType extends AbstractType
     private function createCompanyDataGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderCompanyDataGroup = $builder->create('companyDataGroup', GroupType::class, [
-            'label' => t('Company data'),
+            'label' => 'Company data',
         ]);
 
         $builderCompanyDataGroup
             ->add('companyName', TextType::class, [
-                'label' => t('Company name'),
+                'label' => 'Company name',
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
@@ -332,7 +332,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('companyNumber', TextType::class, [
-                'label' => t('Company number'),
+                'label' => 'Company number',
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
@@ -342,7 +342,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('companyTaxNumber', TextType::class, [
-                'label' => t('Tax number'),
+                'label' => 'Tax number',
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
@@ -363,12 +363,12 @@ final class OrderFormType extends AbstractType
     private function createBillingDataGroup(FormBuilderInterface $builder, array $countries): FormBuilderInterface
     {
         $builderBillingDataGroup = $builder->create('billingDataGroup', GroupType::class, [
-            'label' => t('Billing data'),
+            'label' => 'Billing data',
         ]);
 
         $builderBillingDataGroup
             ->add('street', TextType::class, [
-                'label' => t('Street'),
+                'label' => 'Street',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter street']),
                     new Constraints\Length([
@@ -378,7 +378,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('city', TextType::class, [
-                'label' => t('City'),
+                'label' => 'City',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter city']),
                     new Constraints\Length([
@@ -388,7 +388,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('postcode', TextType::class, [
-                'label' => t('Postcode'),
+                'label' => 'Postcode',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter zip code']),
                     new Constraints\Length([
@@ -398,7 +398,7 @@ final class OrderFormType extends AbstractType
                 ],
             ])
             ->add('country', ChoiceType::class, [
-                'label' => t('Country'),
+                'label' => 'Country',
                 'choices' => $countries,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
@@ -418,12 +418,12 @@ final class OrderFormType extends AbstractType
     private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries): FormBuilderInterface
     {
         $builderShippingAddressGroup = $builder->create('shippingAddressGroup', GroupType::class, [
-            'label' => t('Delivery address'),
+            'label' => 'Delivery address',
         ]);
 
         $builderShippingAddressGroup
             ->add('deliveryAddressSameAsBillingAddress', CheckboxType::class, [
-                'label' => t('Delivery address is the same as billing address'),
+                'label' => 'Delivery address is the same as billing address',
                 'required' => false,
                 'attr' => [
                     'data-checkbox-toggle-container-class' => 'js-delivery-address-fields',
@@ -440,7 +440,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryFirstName', TextType::class, [
-                        'label' => t('First name'),
+                        'label' => 'First name',
                         'required' => true,
                         'constraints' => [
                             new Constraints\NotBlank([
@@ -455,7 +455,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryLastName', TextType::class, [
-                        'label' => t('Last name'),
+                        'label' => 'Last name',
                         'required' => true,
                         'constraints' => [
                             new Constraints\NotBlank([
@@ -470,7 +470,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryCompanyName', TextType::class, [
-                        'label' => t('Company'),
+                        'label' => 'Company',
                         'required' => false,
                         'constraints' => [
                             new Constraints\Length([
@@ -481,7 +481,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryTelephone', TextType::class, [
-                        'label' => t('Telephone'),
+                        'label' => 'Telephone',
                         'required' => false,
                         'constraints' => [
                             new Constraints\Length([
@@ -492,7 +492,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryStreet', TextType::class, [
-                        'label' => t('Street'),
+                        'label' => 'Street',
                         'required' => true,
                         'constraints' => [
                             new Constraints\NotBlank([
@@ -507,7 +507,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryCity', TextType::class, [
-                        'label' => t('City'),
+                        'label' => 'City',
                         'required' => true,
                         'constraints' => [
                             new Constraints\NotBlank([
@@ -521,7 +521,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryPostcode', TextType::class, [
-                        'label' => t('Postcode'),
+                        'label' => 'Postcode',
                         'required' => true,
                         'constraints' => [
                             new Constraints\NotBlank([
@@ -536,7 +536,7 @@ final class OrderFormType extends AbstractType
                         ],
                     ])
                     ->add('deliveryCountry', ChoiceType::class, [
-                        'label' => t('Country'),
+                        'label' => 'Country',
                         'required' => true,
                         'choices' => $countries,
                         'choice_label' => 'name',
@@ -557,12 +557,12 @@ final class OrderFormType extends AbstractType
     private function createNoteGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderNoteGroup = $builder->create('noteGroup', GroupType::class, [
-            'label' => t('Note'),
+            'label' => 'Note',
         ]);
 
         $builderNoteGroup
             ->add('note', TextareaType::class, [
-                'label' => t('Contact us'),
+                'label' => 'Contact us',
                 'required' => false,
             ]);
 
@@ -577,7 +577,7 @@ final class OrderFormType extends AbstractType
     private function createPaymentTransactionsGroup(FormBuilderInterface $builder, Order $order): FormBuilderInterface
     {
         $builderPaymentGroup = $builder->create('paymentTransactionsGroup', GroupType::class, [
-            'label' => t('Payment transactions'),
+            'label' => 'Payment transactions',
         ]);
 
         $builderPaymentGroup->add('paymentTransactionRefunds', PaymentTransactionsType::class, [

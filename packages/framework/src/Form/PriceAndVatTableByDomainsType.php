@@ -81,7 +81,7 @@ final class PriceAndVatTableByDomainsType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                 ],
-                'label' => t('VAT'),
+                'label' => 'VAT',
             ]);
 
             $entityPricesByDomainId->add((string)$domainConfig->getId(), MoneyType::class, [
@@ -92,7 +92,7 @@ final class PriceAndVatTableByDomainsType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter price']),
                     new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
                 ],
-                'label' => t('Price'),
+                'label' => 'Price',
             ]);
         }
 

@@ -54,7 +54,7 @@ final class CurrencySettingsFormType extends AbstractType
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => t('Save default currencies'),
+                'label' => 'Save default currencies',
             ]);
     }
 

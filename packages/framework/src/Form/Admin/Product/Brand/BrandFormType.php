@@ -74,13 +74,13 @@ final class BrandFormType extends AbstractType
         }
 
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         if ($brand !== null) {
             $builderBasicInformationGroup
                 ->add('id', DisplayOnlyType::class, [
-                    'label' => t('ID'),
+                    'label' => 'ID',
                     'data' => $brand->getId(),
                 ]);
         }
@@ -94,47 +94,47 @@ final class BrandFormType extends AbstractType
                         ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('descriptions', LocalizedType::class, [
                 'entry_type' => CKEditorType::class,
                 'required' => false,
-                'label' => t('Description'),
+                'label' => 'Description',
             ]);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [
-            'label' => t('SEO'),
+            'label' => 'SEO',
         ]);
         $builderSeoGroup
             ->add('seoTitles', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
-                'label' => t('Page title'),
+                'label' => 'Page title',
             ])
             ->add('seoMetaDescriptions', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ])
             ->add('seoH1s', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoH1sOptionsByDomainId,
-                'label' => t('Heading (H1)'),
+                'label' => 'Heading (H1)',
             ]);
 
         if ($brand) {
             $builderSeoGroup->add('urls', UrlListType::class, [
                 'route_name' => 'front_brand_detail',
                 'entity_id' => $brand->getId(),
-                'label' => t('URL addresses'),
+                'label' => 'URL addresses',
             ]);
         }
 
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
@@ -151,7 +151,7 @@ final class BrandFormType extends AbstractType
                 ],
                 'entity' => $brand,
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
-                'label' => t('Upload image'),
+                'label' => 'Upload image',
             ]);
 
         $builder

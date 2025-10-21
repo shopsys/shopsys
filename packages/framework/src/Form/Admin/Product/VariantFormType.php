@@ -28,7 +28,7 @@ final class VariantFormType extends AbstractType
     {
         $builder
             ->add(self::MAIN_VARIANT, ProductType::class, [
-                'label' => t('Main variant'),
+                'label' => 'Main variant',
                 'allow_main_variants' => false,
                 'allow_variants' => false,
                 'constraints' => [
@@ -38,7 +38,7 @@ final class VariantFormType extends AbstractType
             ->add(
                 $builder
                     ->create(self::VARIANTS, ProductsType::class, [
-                        'label' => t('Variants'),
+                        'label' => 'Variants',
                         'allow_main_variants' => false,
                         'allow_variants' => false,
                         'constraints' => [

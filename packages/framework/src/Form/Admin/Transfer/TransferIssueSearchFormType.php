@@ -37,7 +37,7 @@ final class TransferIssueSearchFormType extends AbstractType
                 'choices' => $transfers,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => t('-- Select name of the transfer --'),
+                'placeholder' => '-- Select name of the transfer --',
             ])
             ->add('submit', SubmitType::class);
     }

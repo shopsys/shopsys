@@ -59,7 +59,7 @@ final class ArticleFormType extends AbstractType
         $seoMetaDescriptionAttributes = $this->getSeoMetaDescriptionAttributes($options);
 
         $builderArticleData = $builder->create('articleData', GroupType::class, [
-            'label' => t('Article data'),
+            'label' => 'Article data',
         ]);
 
         if ($article === null) {
@@ -67,26 +67,26 @@ final class ArticleFormType extends AbstractType
                 ->add('domainId', DomainType::class, [
                     'required' => true,
                     'data' => $options['domain_id'],
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                 ])
                 ->add('placement', ChoiceType::class, [
                     'required' => true,
                     'choices' => $this->articleFacade->getAvailablePlacementChoices(),
-                    'placeholder' => t('-- Choose article position --'),
+                    'placeholder' => '-- Choose article position --',
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please choose article placement']),
                     ],
-                    'label' => t('Location'),
+                    'label' => 'Location',
                 ]);
         } else {
             $builderArticleData
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $article->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ])
                 ->add('domain', DisplayOnlyType::class, [
                     'data' => $this->domain->getDomainConfigById($article->getDomainId())->getName(),
-                    'label' => t('Domain'),
+                    'label' => 'Domain',
                 ]);
         }
         $builderArticleData
@@ -95,13 +95,13 @@ final class ArticleFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter article name']),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('hidden', YesNoType::class, [
-                'label' => t('Hide'),
+                'label' => 'Hide',
             ])
             ->add('external', YesNoType::class, [
-                'label' => t('Open in new window'),
+                'label' => 'Open in new window',
             ])
             ->add('type', ChoiceType::class, [
                 'required' => true,
@@ -111,7 +111,7 @@ final class ArticleFormType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
-                'label' => t('Type'),
+                'label' => 'Type',
             ])
             ->add('url', UrlType::class, [
                 'required' => true,
@@ -121,7 +121,7 @@ final class ArticleFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_TYPE_LINK],
                     ]),
                 ],
-                'label' => t('URL'),
+                'label' => 'URL',
                 'trim' => true,
                 'row_attr' => [
                     'data-js-article-type-content' => 'link',
@@ -136,7 +136,7 @@ final class ArticleFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_TYPE_SITE],
                     ]),
                 ],
-                'label' => t('Content'),
+                'label' => 'Content',
                 'row_attr' => [
                     'data-js-article-type-content' => 'site',
                 ],
@@ -146,14 +146,14 @@ final class ArticleFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter date of creation']),
                 ],
-                'label' => t('Creation date'),
+                'label' => 'Creation date',
                 'row_attr' => [
                     'data-js-article-type-content' => 'site',
                 ],
             ]);
 
         $builderSeoData = $builder->create('seo', GroupType::class, [
-            'label' => t('SEO'),
+            'label' => 'SEO',
             'row_attr' => [
                 'data-js-article-type-content' => 'site',
             ],
@@ -166,25 +166,25 @@ final class ArticleFormType extends AbstractType
                     'data-js-recommended-length' => 60,
                     'data-js-placeholder-source-input-id' => 'article_form_articleData_name',
                 ],
-                'label' => t('Page title'),
+                'label' => 'Page title',
             ])
             ->add('seoMetaDescription', TextareaType::class, [
                 'required' => false,
                 'attr' => $seoMetaDescriptionAttributes,
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ])
             ->add('seoH1', TextType::class, [
                 'required' => false,
                 'attr' => [
                     'data-js-placeholder-source-input-id' => 'article_form_articleData_name',
                 ],
-                'label' => t('Heading (H1)'),
+                'label' => 'Heading (H1)',
             ]);
 
         if ($article !== null) {
             $builderSeoData
                 ->add('urls', UrlListType::class, [
-                    'label' => t('URL addresses'),
+                    'label' => 'URL addresses',
                     'route_name' => 'front_article_detail',
                     'entity_id' => $article->getId(),
                     'limit_domains_by_ids' => [$article->getDomainId()],

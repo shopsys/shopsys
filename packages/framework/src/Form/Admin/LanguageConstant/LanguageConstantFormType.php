@@ -27,16 +27,16 @@ final class LanguageConstantFormType extends AbstractType
 
         $builder
             ->add('key', DisplayOnlyType::class, [
-                'label' => t('Key'),
+                'label' => 'Key',
                 'data' => $languageConstantData->key,
             ])
             ->add('originalTranslation', DisplayOnlyType::class, [
-                'label' => t('Original translation'),
+                'label' => 'Original translation',
                 'data' => $languageConstantData->originalTranslation,
             ])
             ->add('userTranslation', TextType::class, [
                 'required' => true,
-                'label' => t('User translation'),
+                'label' => 'User translation',
                 'constraints' => [
                     new Constraints\NotBlank(),
                 ],

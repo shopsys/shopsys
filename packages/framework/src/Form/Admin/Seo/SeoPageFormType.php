@@ -80,7 +80,7 @@ final class SeoPageFormType extends AbstractType
         ?SeoPage $seoPage,
     ): FormBuilderInterface {
         $group = $builder->create('basicInformationGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         $optionsByDomainId = [];
@@ -98,7 +98,7 @@ final class SeoPageFormType extends AbstractType
 
         $group
             ->add('pageName', TextType::class, [
-                'label' => t('Page name'),
+                'label' => 'Page name',
                 'required' => true,
                 'disabled' => $seoPage !== null,
                 'constraints' => [
@@ -109,7 +109,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'disabled' => $seoPage !== null,
                 'required' => true,
-                'label' => t('Page slug'),
+                'label' => 'Page slug',
                 'options_by_domain_id' => $optionsByDomainId,
                 'entry_options' => [
                     'constraints' => [
@@ -132,7 +132,7 @@ final class SeoPageFormType extends AbstractType
     private function createSeoAttributesGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $group = $builder->create('attributes', GroupType::class, [
-            'label' => t('SEO'),
+            'label' => 'SEO',
         ]);
 
         $group
@@ -142,7 +142,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_options' => [
                     'attr' => ['data-js-recommended-length' => 60],
                 ],
-                'label' => t('Page title'),
+                'label' => 'Page title',
             ])
             ->add('seoMetaDescriptionsIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
@@ -150,7 +150,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_options' => [
                     'attr' => ['data-js-recommended-length' => 155],
                 ],
-                'label' => t('Meta description'),
+                'label' => 'Meta description',
             ])
             ->add('canonicalUrlsIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => UrlType::class,
@@ -160,7 +160,7 @@ final class SeoPageFormType extends AbstractType
                     ],
                 ],
                 'required' => false,
-                'label' => t('Canonical URL'),
+                'label' => 'Canonical URL',
             ])
             ->add('seoOgTitlesIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
@@ -168,7 +168,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_options' => [
                     'attr' => ['data-js-recommended-length' => 60],
                 ],
-                'label' => t('Open Graph title'),
+                'label' => 'Open Graph title',
             ])
             ->add('seoOgDescriptionsIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
@@ -176,7 +176,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_options' => [
                     'attr' => ['data-js-recommended-length' => 155],
                 ],
-                'label' => t('Open Graph description'),
+                'label' => 'Open Graph description',
             ]);
 
         return $group;
@@ -190,7 +190,7 @@ final class SeoPageFormType extends AbstractType
     private function createImageGroup(FormBuilderInterface $builder, ?SeoPage $seoPage): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('image', GroupType::class, [
-            'label' => t('Image'),
+            'label' => 'Image',
         ]);
 
         $builderImageGroup

@@ -80,24 +80,24 @@ final class StoreFormType extends AbstractType
     private function createBasicInformationGroup(FormBuilderInterface $builder, ?Store $store): FormBuilderInterface
     {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
-            'label' => t('Basic information'),
+            'label' => 'Basic information',
         ]);
 
         if ($store !== null) {
             $builderBasicInformationGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $store->getId(),
-                    'label' => t('ID'),
+                    'label' => 'ID',
                 ])
                 ->add('isDefault', DisplayOnlyType::class, [
                     'required' => false,
                     'data' => $store->isDefault() ? t('Yes') : t('No'),
-                    'label' => t('Default store'),
+                    'label' => 'Default store',
                 ])
                 ->add('urls', UrlListType::class, [
                     'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,
                     'entity_id' => $store->getId(),
-                    'label' => t('URL settings'),
+                    'label' => 'URL settings',
                     'limit_domains_by_ids' => [$store->getDomainId()],
                 ]);
         }
@@ -111,11 +111,11 @@ final class StoreFormType extends AbstractType
                         ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
-                'label' => t('Name'),
+                'label' => 'Name',
             ])
             ->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Display on'),
+                'label' => 'Display on',
                 'disabled' => $store !== null,
             ])
             ->add('externalId', TextType::class, [
@@ -126,12 +126,12 @@ final class StoreFormType extends AbstractType
                     ),
                     new Constraints\Callback([$this, 'sameStoreExternalIdValidation']),
                 ],
-                'label' => t('External ID'),
+                'label' => 'External ID',
             ])
             ->add('stock', ChoiceType::class, [
                 'required' => false,
-                'label' => t('Warehouse'),
-                'placeholder' => t('No warehouse associated'),
+                'label' => 'Warehouse',
+                'placeholder' => 'No warehouse associated',
                 'choices' => $this->stockFacade->getAllStocks(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
@@ -149,7 +149,7 @@ final class StoreFormType extends AbstractType
     private function createUserInformationGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderUserInformationGroup = $builder->create('userInformation', GroupType::class, [
-            'label' => t('Information for customers'),
+            'label' => 'Information for customers',
         ]);
 
         $builderUserInformationGroup
@@ -163,7 +163,7 @@ final class StoreFormType extends AbstractType
                 'required' => false,
             ])
             ->add('openingHours', CollectionType::class, [
-                'label' => t('Opening hours'),
+                'label' => 'Opening hours',
                 'help' => t('Enter in the store local time'),
                 'entry_type' => OpeningHoursRangeCollectionFormType::class,
                 'required' => false,
@@ -186,7 +186,7 @@ final class StoreFormType extends AbstractType
     private function createMapGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderMapGroup = $builder->create('map', GroupType::class, [
-            'label' => t('Map coordinates in decimal format'),
+            'label' => 'Map coordinates in decimal format',
         ]);
 
         $builderMapGroup
@@ -209,12 +209,12 @@ final class StoreFormType extends AbstractType
     private function createAddressGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderAddressGroup = $builder->create('address', GroupType::class, [
-            'label' => t('Address'),
+            'label' => 'Address',
         ]);
 
         $builderAddressGroup
             ->add('street', TextType::class, [
-                'label' => t('Street'),
+                'label' => 'Street',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter street']),
@@ -225,7 +225,7 @@ final class StoreFormType extends AbstractType
                 ],
             ])
             ->add('city', TextType::class, [
-                'label' => t('City'),
+                'label' => 'City',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter city']),
@@ -236,7 +236,7 @@ final class StoreFormType extends AbstractType
                 ],
             ])
             ->add('postcode', TextType::class, [
-                'label' => t('Postcode'),
+                'label' => 'Postcode',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter zip code']),
@@ -247,7 +247,7 @@ final class StoreFormType extends AbstractType
                 ],
             ])
             ->add('country', ChoiceType::class, [
-                'label' => t('Country'),
+                'label' => 'Country',
                 'required' => true,
                 'choices' => $this->countryFacade->getAll(),
                 'choice_label' => 'name',
@@ -305,7 +305,7 @@ final class StoreFormType extends AbstractType
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         return $builder->create('imageGroup', GroupType::class, [
-            'label' => t('Images'),
+            'label' => 'Images',
         ])->add('image', ImageUploadType::class, [
             'required' => false,
             'image_entity_class' => Store::class,
@@ -318,7 +318,7 @@ final class StoreFormType extends AbstractType
                         . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                 ]),
             ],
-            'label' => t('Upload image'),
+            'label' => 'Upload image',
             'entity' => $options['store'],
             'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
         ]);
