@@ -37,7 +37,8 @@ services:
             - storefront
         volumes:
             - ./project-base/app/web:/var/www/html/project-base/app/web:cached
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
+            - ./project-base/docker/nginx/nginx.conf:/etc/nginx/templates/default.conf.template:delegated
+            - ./project-base/docker/nginx/12-set-env-variables.envsh:/docker-entrypoint.d/12-set-env-variables.envsh:delegated
         ports:
             - "8000:8080"
 

@@ -214,7 +214,9 @@ If you have set a different locale, you can use `translations-dump` that will cr
 
 **Admin URL Configuration:**
 
-- Admin path is configurable via `%admin_url%` DI parameter (default: `admin`)
+- Admin path is configurable via `ADMIN_URL` environment variable (default: `admin`)
+    - This environment variable has to be set separately for `php_fpm` and `webserver` containers
+    - If you use [shopsys/deployment](https://github.com/shopsys/deployment) package to deploy your application, you just need to set the environment variable in GitLab and after deploy, the change is automatically propagated to both containers
 - All admin URLs use this path: `http://first-domain/{admin_url}/...`
 - Example: If `%admin_url%` is set to `administration`, admin is at `http://127.0.0.1:8000/administration`
 - This setting affects both redirect behavior and admin route generation

@@ -25,6 +25,7 @@ function deploy() {
     )
 
     declare -A ENVIRONMENT_VARIABLES=(
+        ["ADMIN_URL"]=${ADMIN_URL:-'admin'}
         ["APP_SECRET"]=${APP_SECRET}
         ["DATABASE_HOST"]=${POSTGRES_DATABASE_IP_ADDRESS}
         ["DATABASE_PORT"]=${POSTGRES_DATABASE_PORT}

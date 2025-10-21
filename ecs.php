@@ -12,8 +12,10 @@ use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
+use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
@@ -179,6 +181,13 @@ return ECSConfig::configure()
             ],
             PhpCsValidVariableNameSniff::class => [
                 __DIR__ . '/packages/product-feed-heureka/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php',
+            ],
+            ValidVariableNameSniff::class => [
+                __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
+
+            ],
+            ForbiddenSuperGlobalSniff::class => [
+                __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
             ],
             PropertyTypeHintSniff::class => [
                 __DIR__ . '/packages/framework/tests/Unit/Component/ClassExtension/Source/*',
