@@ -16,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvi
 use Shopsys\FrameworkBundle\Model\Mail\Exception\InvalidMailTemplateVariablesConfigurationException;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
+use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMail;
+use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailTemplateVariablesProvider;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail;
@@ -42,6 +44,7 @@ class MailTemplateConfiguration
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMailTemplateVariablesProvider $watchdogMailTemplateVariablesProvider
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail $complaintMail
+     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailTemplateVariablesProvider $withdrawalMailTemplateVariablesProvider
      */
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
@@ -49,6 +52,7 @@ class MailTemplateConfiguration
         protected readonly InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider,
         protected readonly WatchdogMailTemplateVariablesProvider $watchdogMailTemplateVariablesProvider,
         protected readonly ComplaintMail $complaintMail,
+        protected readonly WithdrawalMailTemplateVariablesProvider $withdrawalMailTemplateVariablesProvider,
     ) {
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
@@ -57,6 +61,7 @@ class MailTemplateConfiguration
         $this->registerCustomerActivationMailTemplate();
         $this->registerInquiryMailTemplates();
         $this->registerWatchdogMailTemplate();
+        $this->registerWithdrawalMailTemplate();
     }
 
     /**
@@ -392,5 +397,15 @@ class MailTemplateConfiguration
     {
         $watchdogMailTemplateVariables = $this->watchdogMailTemplateVariablesProvider->create();
         $this->addMailTemplateVariables(WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME, $watchdogMailTemplateVariables);
+    }
+
+    protected function registerWithdrawalMailTemplate(): void
+    {
+        $mailTemplateVariables = $this->withdrawalMailTemplateVariablesProvider->create();
+
+        $this->addMailTemplateVariables(
+            WithdrawalMail::MAIL_TEMPLATE_NAME,
+            $mailTemplateVariables,
+        );
     }
 }
