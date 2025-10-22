@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
+use DateTimeImmutable;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
@@ -389,6 +390,7 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
                 'label' => 'Selling start date',
+                ...($product === null ? ['data' => new DateTimeImmutable()] : []),
             ])
             ->add('sellingTo', DatePickerType::class, [
                 'required' => false,
