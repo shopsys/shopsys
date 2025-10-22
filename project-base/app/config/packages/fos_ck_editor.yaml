@@ -5,9 +5,11 @@ fos_ck_editor:
             versionCheck: false
             entities_greek: false
             entities_latin: false
-            enterMode: 2
             shiftEnterMode: 1
             filebrowserBrowseRoute: elfinder
+            bodyClass: 'user-text'
+            height: 800
+            removePlugins: 'magicline'
             toolbar:
                 - ['Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'Subscript', '-', 'RemoveFormat']
                 - ['PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
@@ -31,6 +33,7 @@ fos_ck_editor:
             enterMode: 2
             shiftEnterMode: 1
             filebrowserBrowseRoute: elfinder
+            removePlugins: 'magicline'
             toolbar:
                 - ['Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'Subscript', '-', 'RemoveFormat']
                 - ['PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']

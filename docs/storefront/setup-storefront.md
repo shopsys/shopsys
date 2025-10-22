@@ -82,3 +82,9 @@ pnpm run check
 ```bash
 pnpm run check--fix
 ```
+
+### Run Tailwind export for Admin
+
+```bash
+pnpm run compile-tailwind-for-admin
+```

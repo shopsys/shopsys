@@ -10,8 +10,9 @@ CKEDITOR.dialog.add('layoutDialog', function (editor) {
                         onClick: function () {
                             editor.insertHtml(
                                 '<div class="grid">'
-                                + '   <div class="grid__item grid__item--1"></div>'
+                                + '   <div class="grid__item grid__item--1"><p></p></div>'
                                 + '</div>'
+                                + '<p></p>'
                             );
                             this._.dialog.hide();
                         }
@@ -22,9 +23,10 @@ CKEDITOR.dialog.add('layoutDialog', function (editor) {
                         onClick: function () {
                             editor.insertHtml(
                                 '<div class="grid">'
-                                + '   <div class="grid__item grid__item--1-2"></div>'
-                                + '   <div class="grid__item grid__item--1-2"></div>'
+                                + '   <div class="grid__item grid__item--1-2"><p></p></div>'
+                                + '   <div class="grid__item grid__item--1-2"><p></p></div>'
                                 + '</div>'
+                                + '<p></p>'
                             );
                             this._.dialog.hide();
                         }
@@ -35,9 +37,10 @@ CKEDITOR.dialog.add('layoutDialog', function (editor) {
                         onClick: function () {
                             editor.insertHtml(
                                 '<div class="grid">'
-                                + '<div class="grid__item grid__item--1-3"></div>'
-                                + '<div class="grid__item grid__item--2-3"></div>'
+                                + '<div class="grid__item grid__item--1-3"><p></p></div>'
+                                + '<div class="grid__item grid__item--2-3"><p></p></div>'
                                 + '</div>'
+                                + '<p></p>'
                             );
                             this._.dialog.hide();
                         }
@@ -54,9 +57,10 @@ CKEDITOR.dialog.add('layoutDialog', function (editor) {
                         onClick: function () {
                             editor.insertHtml(
                                 '<div class="grid">'
-                                + '<div class="grid__item grid__item--2-3"></div>'
-                                + '<div class="grid__item grid__item--1-3"></div>'
+                                + '<div class="grid__item grid__item--2-3"><p></p></div>'
+                                + '<div class="grid__item grid__item--1-3"><p></p></div>'
                                 + '</div>'
+                                + '<p></p>'
                             );
                             this._.dialog.hide();
                         }
@@ -67,10 +71,11 @@ CKEDITOR.dialog.add('layoutDialog', function (editor) {
                         onClick: function () {
                             editor.insertHtml(
                                 '<div class="grid">'
-                                + '<div class="grid__item grid__item--1-3"></div>'
-                                + '<div class="grid__item grid__item--1-3"></div>'
-                                + '<div class="grid__item grid__item--1-3"></div>'
+                                + '<div class="grid__item grid__item--1-3"><p></p></div>'
+                                + '<div class="grid__item grid__item--1-3"><p></p></div>'
+                                + '<div class="grid__item grid__item--1-3"><p></p></div>'
                                 + '</div>'
+                                + '<p></p>'
                             );
                             this._.dialog.hide();
                         }

@@ -68,6 +68,8 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
             $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[static::ADMIN_WYSIWYG_ENTRY]['css']);
         }
 
+        $entrypointsOutput[] = '/tailwind-for-admin/style.css';
+
         return $entrypointsOutput;
     }
 
