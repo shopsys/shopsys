@@ -78,6 +78,7 @@ final class OrderFormType extends AbstractType
                 'order' => $order,
             ])
             ->add($this->createPaymentTransactionsGroup($builder, $order))
+            ->add($this->createWithdrawalRequestGroup($builder))
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_order_list',
                 'entity' => $options['order'],
@@ -595,5 +596,69 @@ final class OrderFormType extends AbstractType
         ]);
 
         return $builderPaymentGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createWithdrawalRequestGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderWithdrawalRequestGroup = $builder->create('withdrawalRequestGroup', GroupType::class, [
+            'label' => 'Withdrawal Request',
+        ]);
+
+        $builderWithdrawalRequestGroup
+            ->add('withdrawalFirstName', TextType::class, [
+                'required' => false,
+                'label' => 'First name',
+                'constraints' => [
+                    new Constraints\Length([
+                        'max' => 100,
+                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('withdrawalLastName', TextType::class, [
+                'required' => false,
+                'label' => 'Last name',
+                'constraints' => [
+                    new Constraints\Length([
+                        'max' => 100,
+                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('withdrawalTelephone', TextType::class, [
+                'required' => false,
+                'label' => 'Telephone',
+                'constraints' => [
+                    new Constraints\Length([
+                        'max' => 30,
+                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('withdrawalEmail', EmailType::class, [
+                'required' => false,
+                'label' => 'Email',
+                'constraints' => [
+                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length([
+                        'max' => 255,
+                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('withdrawalNote', TextareaType::class, [
+                'required' => false,
+                'label' => 'Note',
+            ])
+            ->add('withdrawalRequestedAt', DateTimeType::class, [
+                'required' => false,
+                'label' => 'Requested at',
+            ]);
+
+        return $builderWithdrawalRequestGroup;
     }
 }

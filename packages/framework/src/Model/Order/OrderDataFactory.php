@@ -107,6 +107,12 @@ class OrderDataFactory
 
         $orderData->createdAt = $order->getCreatedAt();
         $orderData->deliveredAt = $order->getDeliveredAt();
+        $orderData->withdrawalFirstName = $order->getWithdrawalFirstName();
+        $orderData->withdrawalLastName = $order->getWithdrawalLastName();
+        $orderData->withdrawalTelephone = $order->getWithdrawalTelephone();
+        $orderData->withdrawalEmail = $order->getWithdrawalEmail();
+        $orderData->withdrawalNote = $order->getWithdrawalNote();
+        $orderData->withdrawalRequestedAt = $order->getWithdrawalRequestedAt();
         $orderData->domainId = $order->getDomainId();
         $orderData->currency = $order->getCurrency();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();

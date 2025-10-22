@@ -89,6 +89,42 @@ class Order
     protected $deliveredAt;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $withdrawalFirstName;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $withdrawalLastName;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected $withdrawalTelephone;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $withdrawalEmail;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $withdrawalNote;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $withdrawalRequestedAt;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem",
@@ -597,6 +633,12 @@ class Order
         $this->status = $orderData->status;
         $this->heurekaAgreement = $orderData->heurekaAgreement;
         $this->deliveredAt = $orderData->deliveredAt;
+        $this->withdrawalFirstName = $orderData->withdrawalFirstName;
+        $this->withdrawalLastName = $orderData->withdrawalLastName;
+        $this->withdrawalTelephone = $orderData->withdrawalTelephone;
+        $this->withdrawalEmail = $orderData->withdrawalEmail;
+        $this->withdrawalNote = $orderData->withdrawalNote;
+        $this->withdrawalRequestedAt = $orderData->withdrawalRequestedAt;
 
         $this->setDeliveryAddress($orderData);
 
@@ -874,6 +916,54 @@ class Order
     public function setDeliveredAt($deliveredAt)
     {
         $this->deliveredAt = $deliveredAt;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWithdrawalFirstName()
+    {
+        return $this->withdrawalFirstName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWithdrawalLastName()
+    {
+        return $this->withdrawalLastName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWithdrawalTelephone()
+    {
+        return $this->withdrawalTelephone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWithdrawalEmail()
+    {
+        return $this->withdrawalEmail;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWithdrawalNote()
+    {
+        return $this->withdrawalNote;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getWithdrawalRequestedAt()
+    {
+        return $this->withdrawalRequestedAt;
     }
 
     /**
