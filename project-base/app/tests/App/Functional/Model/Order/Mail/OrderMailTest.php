@@ -13,11 +13,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
@@ -83,14 +83,12 @@ class OrderMailTest extends TransactionFunctionalTestCase
         $hiddenPriceExtensionMock = $this->getMockBuilder(
             HiddenPriceExtension::class,
         )->disableOriginalConstructor()->getMock();
-        $pricingSettingMock = $this->getMockBuilder(
-            PricingSetting::class,
-        )->disableOriginalConstructor()->getMock();
-        $paymentInstructionFacade = $this->getMockBuilder(PaymentInstructionFacade::class)
+        $paymentInstructionFacadeMock = $this->getMockBuilder(PaymentInstructionFacade::class)
+            ->disableOriginalConstructor()->getMock();
+        $mailDisplayPriceResolverMock = $this->getMockBuilder(MailDisplayPriceResolver::class)
             ->disableOriginalConstructor()->getMock();
 
         $orderMail = new OrderMail(
-            'selling_price',
             $settingMock,
             $domainRouterFactoryMock,
             $twigMock,
@@ -100,8 +98,8 @@ class OrderMailTest extends TransactionFunctionalTestCase
             $dateTimeFormatterExtensionMock,
             $orderUrlGeneratorMock,
             $hiddenPriceExtensionMock,
-            $pricingSettingMock,
-            $paymentInstructionFacade,
+            $paymentInstructionFacadeMock,
+            $mailDisplayPriceResolverMock,
         );
 
         $order = $this->getReference('order_1', Order::class);
