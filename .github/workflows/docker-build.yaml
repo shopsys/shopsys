@@ -1152,6 +1152,7 @@ jobs:
                 run: |
                     cd ${BRANCH_NAME}
                     chmod +x set-urls-for-review.sh
+                    chmod +x 12-set-env-variables.envsh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
                     docker compose down -v --remove-orphans || true
                     docker compose up -d --wait --force-recreate
