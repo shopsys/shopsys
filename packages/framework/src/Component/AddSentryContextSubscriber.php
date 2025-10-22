@@ -8,11 +8,15 @@ use App\Environment;
 use Override;
 use RedisException;
 use Sentry\State\Scope;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
 use Symfony\Component\Console\ConsoleEvents;
@@ -29,6 +33,8 @@ class AddSentryContextSubscriber implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
         protected readonly MaintenanceModeFacade $maintenanceModeFacade,
@@ -36,6 +42,8 @@ class AddSentryContextSubscriber implements EventSubscriberInterface
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ErrorIdProvider $errorIdProvider,
+        protected readonly ContextResolverInterface $contextResolver,
+        protected readonly AdministratorFacade $administratorFacade,
     ) {
     }
 
@@ -59,6 +67,19 @@ class AddSentryContextSubscriber implements EventSubscriberInterface
             $context['currentDomainLocale'] = $this->domain->getLocale();
             $context['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName();
         } catch (NoDomainSelectedException | FileNotFoundException) {
+        }
+
+        if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
+            $context['inAdmin'] = true;
+            $context['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName();
+
+            try {
+                $administrator = $this->administratorFacade->getCurrentlyLoggedAdministrator();
+                $context['adminSelectedLocale'] = $administrator->getSelectedLocale();
+                $context['adminId'] = $administrator->getId();
+            } catch (AdministratorIsNotLoggedException) {
+                $context['adminId'] = null;
+            }
         }
 
         configureScope(function (Scope $scope) use ($context): void {

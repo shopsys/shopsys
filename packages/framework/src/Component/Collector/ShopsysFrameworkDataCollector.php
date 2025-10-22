@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Component\Collector;
 
 use Override;
 use PharIo\Version\Version;
+use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +22,14 @@ class ShopsysFrameworkDataCollector extends DataCollector
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface $contextResolver
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
+        protected readonly ContextResolverInterface $contextResolver,
+        protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
     ) {
     }
 
@@ -40,16 +46,17 @@ class ShopsysFrameworkDataCollector extends DataCollector
             'systemTimeZone' => date_default_timezone_get(),
         ];
 
-        try {
+        if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
+            $this->data['inAdmin'] = true;
+            $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName();
+            $this->data['adminLocale'] = $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault();
+            $this->data['currentDomainId'] = 0;
+        } else {
+            $this->data['inAdmin'] = false;
             $this->data['currentDomainId'] = $this->domain->getId();
             $this->data['currentDomainName'] = $this->domain->getName();
             $this->data['currentDomainLocale'] = $this->domain->getLocale();
             $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName();
-        } catch (NoDomainSelectedException) {
-            $this->data['currentDomainId'] = 0;
-            $this->data['currentDomainName'] = '-';
-            $this->data['currentDomainLocale'] = '-';
-            $this->data['displayTimeZone'] = '-';
         }
     }
 
@@ -100,6 +107,22 @@ class ShopsysFrameworkDataCollector extends DataCollector
     public function getCurrentDomainLocale(): string
     {
         return $this->data['currentDomainLocale'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInAdmin(): bool
+    {
+        return $this->data['inAdmin'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdminLocale(): string
+    {
+        return $this->data['adminLocale'];
     }
 
     /**
