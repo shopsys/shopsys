@@ -122,7 +122,7 @@ class ProductEntityFieldMapper
      */
     public function isSellingDenied(Product $product): bool
     {
-        return $product->getCalculatedSellingDenied();
+        return $product->isCalculatedSellingDenied($this->domain->getId()) === true;
     }
 
     /**
@@ -365,5 +365,23 @@ class ProductEntityFieldMapper
     public function getVatPercent(Product $product): string
     {
         return $product->getVatForDomain($this->domain->getId())->getPercent();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return int|null
+     */
+    public function getPromotionBuyQuantity(Product $product): ?int
+    {
+        return $product->getPromotionXy($this->domain->getId())?->getBuyQuantity();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return int|null
+     */
+    public function getPromotionFreeQuantity(Product $product): ?int
+    {
+        return $product->getPromotionXy($this->domain->getId())?->getFreeQuantity();
     }
 }

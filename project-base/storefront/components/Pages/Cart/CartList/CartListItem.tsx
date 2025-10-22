@@ -23,7 +23,7 @@ type CartListItemProps = {
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
-    item: { product, quantity, uuid, type },
+    item: { product, quantity, uuid, type, freeQuantity },
     listIndex,
     onRemoveFromCart,
     onAddToCart,
@@ -99,6 +99,15 @@ export const CartListItem: FC<CartListItemProps> = ({
                             <div className="text-text-less text-sm">
                                 {t('Code')}: {product.catalogNumber}
                             </div>
+
+                            {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (
+                                <div className="text-text-less text-xs">
+                                    {t('Promotion {{ x }} + {{ y }} free', {
+                                        x: product.promotionBuyQuantity,
+                                        y: product.promotionFreeQuantity,
+                                    })}
+                                </div>
+                            )}
                         </div>
 
                         <ProductAvailability
@@ -140,8 +149,12 @@ export const CartListItem: FC<CartListItemProps> = ({
                     )}
                 </div>
 
-                {isProduct && <CartItemPrice productPrice={product.price} quantity={quantity} />}
-                {isProductGift && <CartItemPrice productPrice={product.giftPrice} quantity={quantity} />}
+                {isProduct && (
+                    <CartItemPrice freeQuantity={freeQuantity} productPrice={product.price} quantity={quantity} />
+                )}
+                {isProductGift && (
+                    <CartItemPrice freeQuantity={0} productPrice={product.giftPrice} quantity={quantity} />
+                )}
 
                 <RemoveCartItemButton
                     className="vl:static text-icon-less hover:text-icon-default absolute top-2.5 right-2.5 flex cursor-pointer items-center rounded-md outline-none"

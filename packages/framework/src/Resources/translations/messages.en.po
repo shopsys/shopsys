@@ -439,6 +439,9 @@ msgstr ""
 msgid "Bulk promo code generation"
 msgstr ""
 
+msgid "Buy quantity"
+msgstr ""
+
 msgid "By flag"
 msgstr ""
 
@@ -1591,6 +1594,9 @@ msgstr ""
 msgid "Fourth column categories"
 msgstr ""
 
+msgid "Free quantity"
+msgstr ""
+
 msgid "Free shipping and payment"
 msgstr ""
 
@@ -1661,6 +1667,9 @@ msgid "Group"
 msgstr ""
 
 msgid "HTML code"
+msgstr ""
+
+msgid "Has X+Y promotion"
 msgstr ""
 
 msgid "Heading (H1)"
@@ -2578,9 +2587,6 @@ msgstr ""
 msgid "Product in order"
 msgstr ""
 
-msgid "Product is excluded from the sale"
-msgstr ""
-
 msgid "Product is main variant."
 msgstr ""
 
@@ -2645,6 +2651,15 @@ msgid "Promoted categories"
 msgstr ""
 
 msgid "Promoted products"
+msgstr ""
+
+msgid "Promotion X + Y free"
+msgstr ""
+
+msgid "Promotion can be set on specific variant."
+msgstr ""
+
+msgid "Promotion {{ x }} + {{ y }} free"
 msgstr ""
 
 msgid "QR code"
@@ -3140,9 +3155,6 @@ msgid "The higher the priority, the higher the country will be shown in the list
 msgstr ""
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
-msgstr ""
-
-msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."

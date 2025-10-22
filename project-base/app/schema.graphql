@@ -433,6 +433,8 @@ input CartInput {
 
 "Represent one item in the cart"
 type CartItem {
+  "Quantity of free items from X+Y promotion"
+  freeQuantity: Int!
   "Product in the cart"
   product: Product!
   "Quantity of items in the cart"
@@ -1266,6 +1268,10 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   price: ProductPrice!
   productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
+  "Quantity required to qualify for the buy X + Y free promotion (null when not set)"
+  promotionBuyQuantity: Int
+  "Quantity given for free in the buy X + Y free promotion (null when not set)"
+  promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
   "Seo first level heading of product"
@@ -1705,6 +1711,7 @@ enum OrderItemTypeEnum {
   payment
   product
   productGift
+  promotion
   rounding
   transport
 }
@@ -2034,6 +2041,10 @@ interface Product {
   price: ProductPrice!
   productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
+  "Quantity required to qualify for the buy X + Y free promotion (null when not set)"
+  promotionBuyQuantity: Int
+  "Quantity given for free in the buy X + Y free promotion (null when not set)"
+  promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
   "Seo first level heading of product"
@@ -2536,6 +2547,10 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   price: ProductPrice!
   productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
+  "Quantity required to qualify for the buy X + Y free promotion (null when not set)"
+  promotionBuyQuantity: Int
+  "Quantity given for free in the buy X + Y free promotion (null when not set)"
+  promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
   "Seo first level heading of product"
@@ -2890,6 +2905,10 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   price: ProductPrice!
   productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
+  "Quantity required to qualify for the buy X + Y free promotion (null when not set)"
+  promotionBuyQuantity: Int
+  "Quantity given for free in the buy X + Y free promotion (null when not set)"
+  promotionFreeQuantity: Int
   "List of related products"
   relatedProducts: [Product!]!
   "Seo first level heading of product"

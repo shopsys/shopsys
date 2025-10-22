@@ -28,7 +28,7 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 132, Product::class);
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
-        $productData->saleExclusion[$this->domain->getId()] = true;
+        $productData->domainSellingDenied[$this->domain->getId()] = true;
         $this->productFacade->edit($product->getId(), $productData);
 
         $this->handleDispatchedRecalculationMessages();
@@ -36,7 +36,7 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
         // wait for elastic to reindex
         sleep(1);
 
-        self::assertTrue($product->getSaleExclusion($this->domain->getId()));
+        self::assertTrue($product->isCalculatedSellingDenied($this->domain->getId()));
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/ProductQuery.graphql', [
             'uuid' => $product->getUuid(),

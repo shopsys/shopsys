@@ -39,7 +39,7 @@ class MultipleProductsQueryTest extends GraphQlTestCase
                     ],
                     [
                         'node' => [
-                            'name' => t('LG 47LA790W (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'name' => t('Samsung Smart TV 3+1 Promo Pack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                     ],
                 ],

@@ -186,4 +186,12 @@ class FlagFacade
     {
         return $this->flagRepository->getFlagDependencies($flagId);
     }
+
+    /**
+     * @return int[]
+     */
+    public function getFlagsIdsWithPromotionXy(): array
+    {
+        return $this->flagRepository->getFlagsIdsWithPromotionXy();
+    }
 }

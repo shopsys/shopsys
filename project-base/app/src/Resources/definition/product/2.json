@@ -293,9 +293,6 @@
             "ordering_priority": {
                 "type": "integer"
             },
-            "calculated_selling_denied": {
-                "type": "boolean"
-            },
             "selling_denied": {
                 "type": "boolean"
             },
@@ -357,9 +354,6 @@
             },
             "name_suffix": {
                 "type": "text"
-            },
-            "is_sale_exclusion": {
-                "type": "boolean"
             },
             "store_availabilities_information": {
                 "type": "nested",
@@ -501,6 +495,16 @@
             },
             "vat_percent": {
                 "type": "text"
+            },
+            "promotion": {
+                "properties": {
+                    "buy_quantity": {
+                        "type": "integer"
+                    },
+                    "free_quantity": {
+                        "type": "integer"
+                    }
+                }
             }
         }
     }

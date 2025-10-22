@@ -16,3 +16,5 @@ OrderItemTypeEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_TRANSPORT")'
             rounding:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_ROUNDING")'
+            promotion:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_PROMOTION")'

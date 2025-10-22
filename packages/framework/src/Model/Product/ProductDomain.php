@@ -123,13 +123,26 @@ class ProductDomain
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $saleExclusion;
+    protected $sellingDenied;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
     protected $domainHidden;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $calculatedSellingDenied;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy")
+     * @ORM\JoinColumn(name="promotion_xy_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $promotionXy;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
@@ -140,6 +153,7 @@ class ProductDomain
         $this->product = $product;
         $this->domainId = $domainId;
         $this->flags = new ArrayCollection();
+        $this->calculatedSellingDenied = false;
     }
 
     /**
@@ -377,17 +391,17 @@ class ProductDomain
     /**
      * @return bool
      */
-    public function getSaleExclusion()
+    public function isSellingDenied()
     {
-        return $this->saleExclusion;
+        return $this->sellingDenied;
     }
 
     /**
-     * @param bool $saleExclusion
+     * @param bool $sellingDenied
      */
-    public function setSaleExclusion(bool $saleExclusion): void
+    public function setSellingDenied(bool $sellingDenied): void
     {
-        $this->saleExclusion = $saleExclusion;
+        $this->sellingDenied = $sellingDenied;
     }
 
     /**
@@ -404,5 +418,29 @@ class ProductDomain
     public function isDomainHidden()
     {
         return $this->domainHidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCalculatedSellingDenied()
+    {
+        return $this->calculatedSellingDenied;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     */
+    public function getPromotionXy()
+    {
+        return $this->promotionXy;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null $promotionXy
+     */
+    public function setPromotionXy($promotionXy)
+    {
+        $this->promotionXy = $promotionXy;
     }
 }

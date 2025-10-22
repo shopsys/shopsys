@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 
 class FlagRepository
 {
@@ -228,6 +229,27 @@ class FlagRepository
             ->setParameter('flagId', $flagId);
         $flagDependenciesData->hasSeoMixDependency = (bool)$flagsQueryBuilder->getQuery()->getOneOrNullResult();
 
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('1')
+            ->join(ProductDomain::class, 'pd', Join::WITH, 'pd.promotionXy = f.promotionXy')
+            ->andWhere('f.id = :flagId')
+            ->andWhere('pd.promotionXy IS NOT NULL')
+            ->setParameter('flagId', $flagId)
+            ->groupBy('f.id');
+        $flagDependenciesData->hasPromotionXyDependency = (bool)$flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
         return $flagDependenciesData;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getFlagsIdsWithPromotionXy(): array
+    {
+        $queryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('f.id')
+            ->where('f.promotionXy IS NOT NULL');
+
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'id');
     }
 }

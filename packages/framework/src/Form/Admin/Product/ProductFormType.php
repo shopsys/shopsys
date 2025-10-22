@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -144,6 +143,7 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantHelp));
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
+        $builder->add($this->createPromotionGroup($builder, $product));
         $builder->add($this->createStocksGroup($builder, $product));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
@@ -246,6 +246,8 @@ final class ProductFormType extends AbstractType
             ]);
         }
 
+        $flagsIdsWithPromotionXy = $this->flagFacade->getFlagsIdsWithPromotionXy();
+
         $builderBasicInformationGroup
             ->add('flagsByDomainId', MultidomainType::class, [
                 'entry_type' => ChoiceType::class,
@@ -253,6 +255,15 @@ final class ProductFormType extends AbstractType
                     'choices' => $this->flagFacade->getAll(),
                     'choice_label' => 'name',
                     'choice_value' => 'id',
+                    'choice_attr' => function ($flag) use ($flagsIdsWithPromotionXy) {
+                        if (in_array($flag->getId(), $flagsIdsWithPromotionXy, true)) {
+                            return [
+                                'disabled' => 'disabled',
+                            ];
+                        }
+
+                        return [];
+                    },
                     'multiple' => true,
                     'expanded' => true,
                 ],
@@ -390,20 +401,10 @@ final class ProductFormType extends AbstractType
                     'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.',
                 ),
             ])
-            ->add('saleExclusion', MultidomainType::class, [
+            ->add('domainSellingDenied', MultidomainType::class, [
                 'label' => 'Exclude from sale on domains',
                 'entry_type' => YesNoType::class,
             ]);
-
-        if (
-            $product !== null
-            && $product->getCalculatedSellingDenied()
-        ) {
-            $builderDisplayAvailabilityGroup
-                ->add('productCalculatedSellingDeniedInfo', MessageType::class, [
-                    'data' => t('Product is excluded from the sale'),
-                ]);
-        }
 
         if ($this->isProductVariant($product)) {
             $builderDisplayAvailabilityGroup
@@ -557,6 +558,38 @@ final class ProductFormType extends AbstractType
         }
 
         return $builderPricesGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createPromotionGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
+    {
+        $promotionGroup = $builder->create('promotionGroup', GroupType::class, [
+            'label' => t('Promotion X + Y free'),
+        ]);
+
+        if ($this->isProductMainVariant($product)) {
+            $promotionGroup->add('promotionInfo', DisplayOnlyType::class, [
+                'data' => t('Promotion can be set on specific variant.'),
+            ]);
+
+            return $promotionGroup;
+        }
+
+        $promotionGroup->add('promotionXyData', MultidomainType::class, [
+            'label' => false,
+            'entry_type' => ProductPromotionXyType::class,
+            'required' => false,
+            'entry_options' => [
+                'label' => false,
+                'required' => false,
+            ],
+        ]);
+
+        return $promotionGroup;
     }
 
     /**

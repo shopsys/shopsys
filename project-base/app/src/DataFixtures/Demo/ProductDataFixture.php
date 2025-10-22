@@ -4009,6 +4009,42 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
+        $productData = $this->productDemoDataFactory->createDefaultData('PROMO3PLUS1');
+
+        $productData->partno = 'PROMO-3PLUS1-TV';
+        $productData->ean = '9991234567895';
+        $productData->weight = 12000;
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '25990');
+        $this->productDemoDataSetter->setSellingFrom($productData, '1.2.2015');
+        $this->productDemoDataSetter->setStocksQuantity($productData, 25);
+        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_ELECTRONICS]);
+        $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
+        $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
+
+        $parameterValues = [];
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('Samsung Smart TV 3+1 Promo Pack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptions[$domain->getId()] = t('Bundle promotion – buy three and get one Samsung Smart TV for free.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('Limited-time Samsung Smart TV promotion. Purchase three televisions and receive the fourth one free thanks to the 3+1 promotion automatically applied in the cart.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $this->addParameterValues($parameterValues, $locale, [
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '55',
+                ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_RESOLUTION => t('3840×2160 (4K UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
+            ]);
+            $productData->promotionXyData[$domain->getId()]->buyQuantity = 3;
+            $productData->promotionXyData[$domain->getId()]->freeQuantity = 1;
+        }
+
+        $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
+
+        $this->createProduct($productData);
+
         $this->createVariants();
     }
 

@@ -65,8 +65,6 @@ class ProductExportScopeConfig
 
         $this->addNewExportScopeRule(self::SCOPE_SELLING_DENIED, [
             ProductExportFieldProvider::SELLING_DENIED,
-            ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
-            ProductExportFieldProvider::IS_SALE_EXCLUSION,
         ], [
             self::PRECONDITION_SELLING_DENIED_RECALCULATION,
         ]);
@@ -137,7 +135,6 @@ class ProductExportScopeConfig
             self::PRECONDITION_VISIBILITY_RECALCULATION,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_VARIANTS, [
-            ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
             ProductExportFieldProvider::VISIBILITY,
             ProductExportFieldProvider::VARIANTS,
             ProductExportFieldProvider::IS_VARIANT,

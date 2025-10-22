@@ -6,14 +6,16 @@ import { twMergeCustom } from 'utils/twMerge';
 type CartItemPriceProps = {
     productPrice: TypeProductPriceFragment;
     quantity: number;
+    freeQuantity: number;
 };
 
-export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity }) => {
+export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity, freeQuantity }) => {
     const formatPrice = useFormatPrice();
     const isSpecialPrice =
         !!productPrice.percentageDiscount &&
         productPrice.percentageDiscount > 0 &&
         productPrice.percentageDiscount < 100;
+    const isLowerPriceApplied = isSpecialPrice || freeQuantity > 0;
 
     if (!isPriceVisible(productPrice.priceWithVat)) {
         return null;
@@ -25,15 +27,15 @@ export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity }
                 <div
                     className={twMergeCustom(
                         'text-price-default',
-                        isSpecialPrice && 'text-price-before text-sm font-semibold line-through',
+                        isLowerPriceApplied && 'text-price-before text-sm font-semibold line-through',
                     )}
                 >
                     {formatPrice(mapPriceForCalculations(productPrice.basicPrice.priceWithVat) * quantity)}
                 </div>
 
-                {isSpecialPrice && (
+                {isLowerPriceApplied && (
                     <div className="text-price-discounted">
-                        {formatPrice(mapPriceForCalculations(productPrice.priceWithVat) * quantity)}
+                        {formatPrice(mapPriceForCalculations(productPrice.priceWithVat) * (quantity - freeQuantity))}
                     </div>
                 )}
             </div>

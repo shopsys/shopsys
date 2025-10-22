@@ -54,7 +54,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'special_prices',
             'parameters',
             'ordering_priority',
-            'calculated_selling_denied',
             'selling_denied',
             'availability',
             'availability_status',
@@ -76,7 +75,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'accessories',
             'name_prefix',
             'name_suffix',
-            'is_sale_exclusion',
             'store_availabilities_information',
             'usps',
             'searching_names',
@@ -92,6 +90,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'hreflang_links',
             'selling_from',
             'vat_percent',
+            'promotion',
         ];
     }
 }

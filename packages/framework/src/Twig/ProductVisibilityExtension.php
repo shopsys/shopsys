@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -18,11 +19,13 @@ class ProductVisibilityExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly Domain $domain,
+        protected readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -41,6 +44,10 @@ class ProductVisibilityExtension extends AbstractExtension
             new TwigFunction(
                 'isVisibleForDefaultPricingGroupOnSomeDomain',
                 $this->isVisibleForDefaultPricingGroupOnSomeDomain(...),
+            ),
+            new TwigFunction(
+                'isSellableOnDomain',
+                $this->isSellableOnDomain(...),
             ),
         ];
     }
@@ -96,5 +103,17 @@ class ProductVisibilityExtension extends AbstractExtension
             $product,
             $defaultPricingGroupIdsIndexedByDomainId,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return bool
+     */
+    public function isSellableOnDomain(Product $product, int $domainId): bool
+    {
+        $calculatedSellingDeniedPerDomainIds = $this->productFacade->getCalculatedSellingDeniedPerDomainIds($product);
+
+        return !$calculatedSellingDeniedPerDomainIds[$domainId];
     }
 }

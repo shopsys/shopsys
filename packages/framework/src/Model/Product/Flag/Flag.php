@@ -59,6 +59,13 @@ class Flag extends AbstractTranslatableEntity
     protected $lockedForDeletion;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy")
+     * @ORM\JoinColumn(name="promotion_xy_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $promotionXy;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      */
     public function __construct(FlagData $flagData)
@@ -86,6 +93,7 @@ class Flag extends AbstractTranslatableEntity
         $this->setTranslations($flagData);
         $this->rgbColor = $flagData->rgbColor;
         $this->visible = $flagData->visible;
+        $this->promotionXy = $flagData->promotionXy;
     }
 
     /**
@@ -141,6 +149,22 @@ class Flag extends AbstractTranslatableEntity
     public function isVisible()
     {
         return $this->visible;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPromotionXy()
+    {
+        return $this->promotionXy !== null;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     */
+    public function getPromotionXy()
+    {
+        return $this->promotionXy;
     }
 
     /**

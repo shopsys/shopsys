@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Override;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -25,12 +26,14 @@ class RecalculationsCommand extends Command
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade $promotionFlagFacade
      */
     public function __construct(
         private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
         private readonly ProductVisibilityFacade $productVisibilityFacade,
         private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         private readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
+        private readonly PromotionFlagFacade $promotionFlagFacade,
     ) {
         parent::__construct();
     }
@@ -53,6 +56,9 @@ class RecalculationsCommand extends Command
 
         $output->writeln('<fg=green>Gift products automatic flags.</fg=green>');
         $this->giftFlagSynchronizerFacade->refreshAllGiftPlans();
+
+        $output->writeln('<fg=green>X + Y promotion products automatic flags.</fg=green>');
+        $this->promotionFlagFacade->updatePromotionFlagsForAll();
 
         return Command::SUCCESS;
     }

@@ -231,4 +231,15 @@ class CartItem
     {
         return $this->type === CartItemTypeEnum::TYPE_PRODUCT;
     }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    public function getFreeQuantity(int $domainId): int
+    {
+        $product = $this->getProduct();
+
+        return $product->calculateFreeQuantity($this->getQuantity(), $domainId);
+    }
 }

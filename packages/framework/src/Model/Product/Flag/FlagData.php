@@ -33,11 +33,17 @@ class FlagData
      */
     public $urls;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
+     */
+    public $promotionXy;
+
     public function __construct()
     {
         $this->name = [];
         $this->visible = false;
         $this->rgbColor = '';
         $this->urls = new UrlListData();
+        $this->promotionXy = null;
     }
 }

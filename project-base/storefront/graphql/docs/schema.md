@@ -3385,6 +3385,15 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.freequantity">freeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity of free items from X+Y promotion
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -5985,6 +5994,24 @@ Product price
 <td colspan="2" valign="top"><strong id="mainvariant.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.promotionbuyquantity">promotionBuyQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity required to qualify for the buy X + Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.promotionfreequantity">promotionFreeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity given for free in the buy X + Y free promotion (null when not set)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="mainvariant.relatedproducts">relatedProducts</strong></td>
@@ -8789,6 +8816,24 @@ Product price
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.promotionbuyquantity">promotionBuyQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity required to qualify for the buy X + Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.promotionfreequantity">promotionFreeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity given for free in the buy X + Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.relatedproducts">relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -10128,6 +10173,24 @@ Product price
 <td colspan="2" valign="top"><strong id="variant.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.promotionbuyquantity">promotionBuyQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity required to qualify for the buy X + Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.promotionfreequantity">promotionFreeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity given for free in the buy X + Y free promotion (null when not set)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.relatedproducts">relatedProducts</strong></td>
@@ -12647,6 +12710,10 @@ One of possible types of the order item
 <td></td>
 </tr>
 <tr>
+<td valign="top"><strong>promotion</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>rounding</strong></td>
 <td></td>
 </tr>
@@ -14054,6 +14121,24 @@ Product price
 <td colspan="2" valign="top"><strong id="product.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.promotionbuyquantity">promotionBuyQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity required to qualify for the buy X + Y free promotion (null when not set)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.promotionfreequantity">promotionFreeQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Quantity given for free in the buy X + Y free promotion (null when not set)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.relatedproducts">relatedProducts</strong></td>

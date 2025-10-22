@@ -6,15 +6,23 @@ import { twMergeCustom } from 'utils/twMerge';
 type OrderItemProductPriceProps = {
     productPrice: TypeProductPriceFragment;
     quantity: number;
+    freeQuantity: number | null;
     unit: string | null;
 };
 
-export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({ productPrice, quantity, unit }) => {
+export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({
+    productPrice,
+    quantity,
+    unit,
+    freeQuantity,
+}) => {
     const formatPrice = useFormatPrice();
     const isSpecialPrice =
         !!productPrice.percentageDiscount &&
         productPrice.percentageDiscount > 0 &&
         productPrice.percentageDiscount < 100;
+
+    const isLowerPriceApplied = isSpecialPrice || (freeQuantity !== null && freeQuantity > 0);
 
     if (!isPriceVisible(productPrice.priceWithVat)) {
         return null;
@@ -31,15 +39,17 @@ export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({ productP
                 <div
                     className={twMergeCustom(
                         'font-secondary text-price-default font-bold whitespace-nowrap',
-                        isSpecialPrice && 'text-price-before text-xs font-semibold line-through',
+                        isLowerPriceApplied && 'text-price-before text-xs font-semibold line-through',
                     )}
                 >
                     {formatPrice(mapPriceForCalculations(productPrice.basicPrice.priceWithVat) * quantity)}
                 </div>
 
-                {isSpecialPrice && (
+                {isLowerPriceApplied && (
                     <div className="font-secondary text-price-discounted font-bold whitespace-nowrap">
-                        {formatPrice(mapPriceForCalculations(productPrice.priceWithVat) * quantity)}
+                        {formatPrice(
+                            mapPriceForCalculations(productPrice.priceWithVat) * (quantity - (freeQuantity || 0)),
+                        )}
                     </div>
                 )}
             </div>

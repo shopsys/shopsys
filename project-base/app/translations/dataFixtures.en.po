@@ -103,6 +103,9 @@ msgstr ""
 msgid "36\" Philips [V]"
 msgstr ""
 
+msgid "3840×2160 (4K UHD)"
+msgstr ""
+
 msgid "4 W"
 msgstr ""
 
@@ -398,6 +401,9 @@ msgid "Books"
 msgstr ""
 
 msgid "Bookworm"
+msgstr ""
+
+msgid "Bundle promotion – buy three and get one Samsung Smart TV for free."
 msgstr ""
 
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
@@ -1006,6 +1012,9 @@ msgstr ""
 msgid "Limited user"
 msgstr ""
 
+msgid "Limited-time Samsung Smart TV promotion. Purchase three televisions and receive the fourth one free thanks to the 3+1 promotion automatically applied in the cart."
+msgstr ""
+
 msgid "Localization"
 msgstr ""
 
@@ -1460,6 +1469,9 @@ msgid "Samsung Galaxy Core 2 (SM-G355) - black"
 msgstr ""
 
 msgid "Samsung Galaxy Core Plus (SM-G350) - white"
+msgstr ""
+
+msgid "Samsung Smart TV 3+1 Promo Pack"
 msgstr ""
 
 msgid "Samsung T27D590EW"

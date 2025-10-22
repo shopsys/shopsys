@@ -439,6 +439,9 @@ msgstr "Hromadná úprava byla provedena"
 msgid "Bulk promo code generation"
 msgstr "Hromadné generování kupónu"
 
+msgid "Buy quantity"
+msgstr "Kupované množství"
+
 msgid "By flag"
 msgstr "Dle příznaku"
 
@@ -1591,6 +1594,9 @@ msgstr "Zaslání zapomenutého hesla"
 msgid "Fourth column categories"
 msgstr "Kategorie čtvrtého sloupce"
 
+msgid "Free quantity"
+msgstr "Množství zdarma"
+
 msgid "Free shipping and payment"
 msgstr "Doprava a platba zdarma"
 
@@ -1662,6 +1668,9 @@ msgstr "Skupina"
 
 msgid "HTML code"
 msgstr "HTML kód"
+
+msgid "Has X+Y promotion"
+msgstr "Má akci X+Y"
 
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
@@ -2578,9 +2587,6 @@ msgstr "URL obrázku produktu"
 msgid "Product in order"
 msgstr "Zboží v objednávce"
 
-msgid "Product is excluded from the sale"
-msgstr "Produkt je vyřazen z prodeje"
-
 msgid "Product is main variant."
 msgstr "Produkt je hlavní variantou."
 
@@ -2646,6 +2652,15 @@ msgstr "Promované kategorie"
 
 msgid "Promoted products"
 msgstr "Promované produkty"
+
+msgid "Promotion X + Y free"
+msgstr "Akce X + Y zdarma"
+
+msgid "Promotion can be set on specific variant."
+msgstr "Akce může být nastavena na konkrétní variantě."
+
+msgid "Promotion {{ x }} + {{ y }} free"
+msgstr "Akce {{ x }} + {{ y }} zdarma"
 
 msgid "QR code"
 msgstr "QR kód"
@@ -3141,9 +3156,6 @@ msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. St
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
-
-msgid "The selected flag cannot be deleted."
-msgstr "Vybraný příznak nelze smazat."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."

@@ -3,6 +3,7 @@ fragment CartItemFragment on CartItem {
     uuid
     quantity
     type
+    freeQuantity
     product {
         __typename
         id
@@ -27,6 +28,8 @@ fragment CartItemFragment on CartItem {
         availability {
             ...AvailabilityFragment
         }
+        promotionBuyQuantity
+        promotionFreeQuantity
         price {
             ...ProductPriceFragment
         }

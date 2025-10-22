@@ -1,24 +1,41 @@
-<h4>
-    {{ 'Visibility for unlogged customers'|trans }}
-</h4>
+{% if withHeadline %}
+    <h4>
+        {{ 'Visibility and sellability for unlogged customers'|trans }}
+    </h4>
+{% endif %}
 <p>
     {% for domain in domains %}
         {% set url = findUrlByDomainId('front_product_detail', { id: product.id }, domain.id) %}
         {% set isVisible = isVisibleForDefaultPricingGroup(product, domain.id) %}
+        {% set isSellable = isSellableOnDomain(product, domain.id) %}
 
         {% if isVisible %}
             {% set visibilityClass = 'text-green' %}
             {% set visibilityIcon = 'visible' %}
-            {% set visibilityTitle = 'Yes'|trans %}
+            {% set visibilityTitle = 'Visible'|trans %}
         {% else %}
             {% set visibilityClass = 'text-secondary' %}
             {% set visibilityIcon = 'invisible' %}
-            {% set visibilityTitle = 'No'|trans %}
+            {% set visibilityTitle = 'Not visible'|trans %}
+        {% endif %}
+
+        {% if isSellable %}
+            {% set sellabilityClass = 'text-green' %}
+            {% set sellabilityIcon = 'cart' %}
+            {% set sellabilityTitle = 'Sellable'|trans %}
+        {% else %}
+            {% set sellabilityClass = 'text-secondary' %}
+            {% set sellabilityIcon = 'cart-off' %}
+            {% set sellabilityTitle = 'Not sellable'|trans %}
         {% endif %}
 
         <div class="row align-items-center mb-3">
-            <div class="col-auto {{ visibilityClass }}" title="{{ visibilityTitle }}">
+            <div class="col-auto {{ visibilityClass }}" title="{{ visibilityTitle }}" data-bs-toggle="tooltip">
                 {{ ux_icon(visibilityIcon) }}
+            </div>
+
+            <div class="col-auto {{ sellabilityClass }}" title="{{ sellabilityTitle }}" data-bs-toggle="tooltip">
+                {{ ux_icon(sellabilityIcon) }}
             </div>
 
             {% if isMultidomain() %}
@@ -29,11 +46,17 @@
 
             <div class="col">
                 {% if isVisible %}
-                    <a href="{{ url }}" class="" target="_blank">
-                        {{ getDomainName(domain.id) }}
-                        {{ ux_icon('forward-page') }}
+                    <a href="{{ url }}" target="_blank">
+                        {% if isMultidomain() %}
+                            {{ getDomainName(domain.id) }}
+                            {{ ux_icon('forward-page') }}
+                        {% else %}
+                            <span title="{{ 'Go to Frontend'|trans }}" data-bs-toggle="tooltip">
+                                {{ ux_icon('forward-page') }}
+                            </span>
+                        {% endif %}
                     </a>
-                {% else %}
+                {% elseif isMultidomain() %}
                     {{ getDomainName(domain.id) }}
                 {% endif %}
             </div>

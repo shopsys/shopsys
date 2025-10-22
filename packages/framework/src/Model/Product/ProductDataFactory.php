@@ -37,6 +37,7 @@ class ProductDataFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository $productVideoRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
      */
     public function __construct(
         protected readonly UnitFacade $unitFacade,
@@ -54,6 +55,7 @@ class ProductDataFactory
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
         protected readonly ProductVideoDataFactory $productVideoDataFactory,
         protected readonly ProductVideoRepository $productVideoRepository,
+        protected readonly ProductPromotionXyDataFactory $productPromotionXyDataFactory,
     ) {
     }
 
@@ -93,8 +95,9 @@ class ProductDataFactory
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = null;
             $productData->flagsByDomainId[$domainId] = [];
             $productData->orderingPriorityByDomainId[$domainId] = 0;
-            $productData->saleExclusion[$domainId] = false;
+            $productData->domainSellingDenied[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
+            $productData->promotionXyData[$domainId] = $this->productPromotionXyDataFactory->create();
         }
 
         $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createEmptyForAllDomains();
@@ -165,8 +168,11 @@ class ProductDataFactory
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = $product->getShortDescriptionUsp5($domainId);
             $productData->flagsByDomainId[$domainId] = $product->getFlags($domainId);
             $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
-            $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
+            $productData->domainSellingDenied[$domainId] = $product->isSellingDeniedOnDomain($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
+            $productData->promotionXyData[$domainId] = $product->getPromotionXy($domainId) === null ?
+                null :
+                $this->productPromotionXyDataFactory->createFromEntity($product->getPromotionXy($domainId));
         }
 
         $productData->urls->mainFriendlyUrlsByDomainId = $this->friendlyUrlFacade->getMainFriendlyUrlsIndexedByDomains(
@@ -183,7 +189,6 @@ class ProductDataFactory
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
         $productData->unit = $product->getUnit();
-
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
         $productData->brand = $product->getBrand();

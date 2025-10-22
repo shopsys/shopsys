@@ -44,7 +44,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method setExcludedTransports(\App\Model\Transport\Transport[] $excludedTransports)
  * @method \App\Model\Transport\Transport[] getExcludedTransports()
  * @method setTranslations(\App\Model\Product\ProductData $productData)
- * @method setFlags(\App\Model\Product\Flag\Flag[] $flags, int $domainId)
+ * @method setFlags(array<int,\App\Model\Product\Flag\Flag[]> $flagsByDomainId)
  */
 class Product extends BaseProduct
 {
@@ -175,15 +175,6 @@ class Product extends BaseProduct
                 return $value !== null && $value !== '';
             },
         ));
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function getCalculatedSaleExclusion(int $domainId): bool
-    {
-        return $this->getProductDomain($domainId)->getCalculatedSaleExclusion();
     }
 
     /**

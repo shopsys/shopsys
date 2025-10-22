@@ -55,6 +55,9 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory $productPromotionXyFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory $productPromotionXyDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository $productPromotionXyRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -79,6 +82,9 @@ class ProductFacade
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductVideoFacade $productVideoFacade,
+        protected readonly ProductPromotionXyFactory $productPromotionXyFactory,
+        protected readonly ProductPromotionXyDataFactory $productPromotionXyDataFactory,
+        protected readonly ProductPromotionXyRepository $productPromotionXyRepository,
     ) {
     }
 
@@ -103,6 +109,7 @@ class ProductFacade
         $product = $this->productFactory->create($productData);
 
         $this->em->persist($product);
+        $this->refreshProductPromotions($product, $productData);
         $this->em->flush();
         $this->setAdditionalDataAfterCreate($product, $productData);
 
@@ -164,6 +171,8 @@ class ProductFacade
         );
         $product->edit($productCategoryDomains, $productData);
 
+        $this->refreshProductPromotions($product, $productData);
+
         $this->saveParameters($product, $productData->parameters);
 
         if (!$product->isMainVariant()) {
@@ -192,6 +201,62 @@ class ProductFacade
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
 
         return $product;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     */
+    protected function refreshProductPromotions(Product $product, ProductData $productData): void
+    {
+        foreach ($productData->promotionXyData as $domainId => $promotionData) {
+            if ($promotionData === null) {
+                continue;
+            }
+
+            $this->refreshProductPromotionForDomain($promotionData, $product, $domainId);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyData $promotionData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     */
+    protected function refreshProductPromotionForDomain(
+        ProductPromotionXyData $promotionData,
+        Product $product,
+        int $domainId,
+    ): void {
+        $promotionBuyQuantity = $promotionData->buyQuantity;
+        $promotionFreeQuantity = $promotionData->freeQuantity;
+        $currentPromotion = $product->getPromotionXy($domainId);
+
+        if ($promotionBuyQuantity === $currentPromotion?->getBuyQuantity() && $promotionFreeQuantity === $currentPromotion?->getFreeQuantity()) {
+            return;
+        }
+
+        if ($promotionBuyQuantity === null || $promotionFreeQuantity === null) {
+            if ($currentPromotion !== null) {
+                $product->setPromotionXy(null, $domainId);
+            }
+
+            return;
+        }
+
+        $productPromotionXyData = $this->productPromotionXyDataFactory->create();
+        $productPromotionXyData->buyQuantity = $promotionBuyQuantity;
+        $productPromotionXyData->freeQuantity = $promotionFreeQuantity;
+
+        $promotion = $this->productPromotionXyRepository->findPromotionXyByQuantities($promotionBuyQuantity, $promotionFreeQuantity);
+
+        if ($promotion === null) {
+            $promotion = $this->productPromotionXyFactory->create($productPromotionXyData);
+        }
+
+        $this->em->persist($promotion);
+        $product->setPromotionXy($promotion, $domainId);
+        $this->em->flush();
     }
 
     /**
@@ -485,5 +550,14 @@ class ProductFacade
     public function findAllByCatnums(array $catnums): array
     {
         return $this->productRepository->findAllByCatnums($catnums);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array
+     */
+    public function getCalculatedSellingDeniedPerDomainIds(Product $product): array
+    {
+        return $this->productRepository->getCalculatedSellingDeniedPerDomainIds($product);
     }
 }

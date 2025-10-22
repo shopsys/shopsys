@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 
 class ProductListAdminRepository
 {
@@ -34,15 +35,25 @@ class ProductListAdminRepository
     public function getProductListQueryBuilder(int $pricingGroupId): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();
+
+        $subQueryBuilder = $this->em->createQueryBuilder();
+        $subQueryBuilder
+            ->select('COUNT(pd.id)')
+            ->from(ProductDomain::class, 'pd')
+            ->where('pd.product = p.id')
+            ->andWhere('pd.calculatedSellingDenied = true');
+
         $queryBuilder
-            ->select('p.id, 
-            pt.name, 
-            p.calculatedSellingDenied,
-            p.variantType,
-            p.productType,
-            p.catnum,
-            p.ean,
-            pmip.inputPrice AS priceForProductList')
+            ->select('
+                p.id,
+                pt.name,
+                p.variantType,
+                p.productType,
+                p.catnum,
+                p.ean,
+                pmip.inputPrice AS priceForProductList,
+                (' . $subQueryBuilder->getDQL() . ') AS sellingDeniedDomainsCount
+            ')
             ->from(Product::class, 'p')
             ->leftJoin(
                 ProductManualInputPrice::class,

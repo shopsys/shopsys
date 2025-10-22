@@ -56,7 +56,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('318.85');
         }
 
-        $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('9889.9');
+        $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('31448');
 
         $materials = [
             [
@@ -81,7 +81,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $colors = [
             [
                 'text' => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                'count' => 1,
+                'count' => 2,
                 'isAbsolute' => true,
                 'rgbHex' => '#000000',
             ],
@@ -123,7 +123,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                'count' => 1,
+                'count' => 2,
                 'isAbsolute' => true,
             ],
         ];
@@ -135,7 +135,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'flag' => [
                     'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
-                'count' => 2,
+                'count' => 3,
+                'isAbsolute' => true,
+            ],
+            [
+                'flag' => [
+                    'name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
                 'isAbsolute' => true,
             ],
         ];
@@ -158,6 +165,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'brand' => [
                     'name' => t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => true,
+            ],
+            [
+                'brand' => [
+                    'name' => t('Samsung', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
                 'isAbsolute' => true,
@@ -238,6 +252,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         'count' => 3,
                         'isAbsolute' => true,
                     ],
+                    [
+                        'text' => t('3840×2160 (4K UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                        'isAbsolute' => true,
+                    ],
                 ],
             ],
             [
@@ -248,7 +267,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'minimalValue' => 27,
-                'maximalValue' => 47,
+                'maximalValue' => 55,
             ],
             [
                 'isCollapsed' => false,
@@ -271,7 +290,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'values' => [
                     [
                         'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 3,
+                        'count' => 4,
                         'isAbsolute' => true,
                     ],
                 ],
@@ -284,7 +303,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'values' => [
                     [
                         'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 3,
+                        'count' => 4,
                         'isAbsolute' => true,
                     ],
                 ],
@@ -305,7 +324,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($query);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $this->assertSame(3, $data['products']['productFilterOptions']['inStock']);
+        $this->assertSame(4, $data['products']['productFilterOptions']['inStock']);
         $this->assertSame($minimalPrice, $data['products']['productFilterOptions']['minimalPrice']);
         $this->assertSame($maximalPrice, $data['products']['productFilterOptions']['maximalPrice']);
 
@@ -344,6 +363,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 },
 {
     "brand": {
+        "name": "' . t('Samsung', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
+    },
+    "count": 1,
+    "isAbsolute": false
+},
+{
+    "brand": {
         "name": "' . t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
     },
     "count": 1,
@@ -366,6 +392,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "flag": {
             "name": "' . t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
+        },
+        "count": 0,
+        "isAbsolute": false
+    },
+    {
+        "flag": {
+            "name": "' . t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
         },
         "count": 0,
         "isAbsolute": false
@@ -466,7 +499,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                'count' => 1,
+                'count' => 2,
                 'isAbsolute' => false,
             ],
         ];
@@ -530,7 +563,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'minimalValue' => 27,
-                'maximalValue' => 47,
+                'maximalValue' => 55,
             ],
             [
                 'isCollapsed' => true,
@@ -592,6 +625,16 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             $this->firstDomainLocale,
                         ),
                         'count' => 2,
+                        'isAbsolute' => true,
+                    ],
+                    [
+                        'text' => t(
+                            '3840×2160 (4K UHD)',
+                            [],
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                            $this->firstDomainLocale,
+                        ),
+                        'count' => 0,
                         'isAbsolute' => true,
                     ],
                 ],

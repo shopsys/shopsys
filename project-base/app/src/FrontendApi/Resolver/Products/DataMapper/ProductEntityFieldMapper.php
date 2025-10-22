@@ -56,7 +56,10 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat getVat(\App\Model\Product\Product $product)
  * @method string getSlug(\App\Model\Product\Product $product)
  * @method string getVatPercent(\App\Model\Product\Product $product)
+ * @method int|null getPromotionBuyQuantity(\App\Model\Product\Product $product)
+ * @method int|null getPromotionFreeQuantity(\App\Model\Product\Product $product)
  * @method bool isAllowedNegativeStock(\App\Model\Product\Product $product)
+ * @method bool isSellingDenied(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -120,16 +123,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productVideoTranslationsRepository,
             $friendlyUrlFacade,
         );
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return bool
-     */
-    #[Override]
-    public function isSellingDenied(BaseProduct $product): bool
-    {
-        return $product->getCalculatedSellingDenied() === true || $product->getSaleExclusion($this->domain->getId()) === true;
     }
 
     /**

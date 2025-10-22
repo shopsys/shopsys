@@ -28,6 +28,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                             key={item.uuid}
                             availability={item.product.availability}
                             categoryName={item.product.categories[0]?.name}
+                            freeQuantity={null}
                             fullName={item.name}
                             mainImage={item.product.mainImage}
                             price={item.product.price}
@@ -52,7 +53,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                     );
                 }
 
-                if (item.type === TypeOrderItemTypeEnum.Discount) {
+                if (item.type === TypeOrderItemTypeEnum.Discount || item.type === TypeOrderItemTypeEnum.Promotion) {
                     return (
                         <OrderItemDiscountCard key={item.uuid} name={item.name} price={item.totalPrice.priceWithVat} />
                     );

@@ -101,7 +101,7 @@ class ProductRepository
             ->setParameter('domainId', $domainId);
 
         $queryBuilder
-            ->andWhere('p.calculatedSellingDenied = FALSE');
+            ->andWhere('pd.calculatedSellingDenied = FALSE');
 
         return $queryBuilder;
     }
@@ -536,5 +536,22 @@ class ProductRepository
             ->setParameter('catnum', $catnums);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array<int, bool>
+     */
+    public function getCalculatedSellingDeniedPerDomainIds(Product $product): array
+    {
+        $queryBuilder = $this->getProductRepository()
+            ->createQueryBuilder('p')
+            ->select('pd.domainId, pd.calculatedSellingDenied')
+            ->join('p.domains', 'pd')
+            ->where('p = :product')
+            ->setParameter('product', $product)
+            ->orderBy('pd.domainId');
+
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'calculatedSellingDenied', 'domainId');
     }
 }

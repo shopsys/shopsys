@@ -491,6 +491,14 @@ class OrderItem
     }
 
     /**
+     * @return bool
+     */
+    public function isTypePromotion(): bool
+    {
+        return $this->isType(OrderItemTypeEnum::TYPE_PROMOTION);
+    }
+
+    /**
      * @param string $type
      */
     protected function checkTypeOf(string $type): void
@@ -528,6 +536,11 @@ class OrderItem
     protected function checkTypeRounding(): void
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
+    }
+
+    protected function checkTypePromotion(): void
+    {
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PROMOTION);
     }
 
     /**

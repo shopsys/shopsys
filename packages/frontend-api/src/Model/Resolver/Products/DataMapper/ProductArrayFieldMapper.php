@@ -153,7 +153,7 @@ class ProductArrayFieldMapper
      */
     public function isSellingDenied(array $data): bool
     {
-        return $data['calculated_selling_denied'] === true || $data['is_sale_exclusion'] === true;
+        return $data['selling_denied'] === true;
     }
 
     /**
@@ -357,5 +357,23 @@ class ProductArrayFieldMapper
     public function getVatPercent(array $data): string
     {
         return $data['vat_percent'];
+    }
+
+    /**
+     * @param array $data
+     * @return int|null
+     */
+    public function getPromotionBuyQuantity(array $data): ?int
+    {
+        return $data['promotion']['buy_quantity'];
+    }
+
+    /**
+     * @param array $data
+     * @return int|null
+     */
+    public function getPromotionFreeQuantity(array $data): ?int
+    {
+        return $data['promotion']['free_quantity'];
     }
 }

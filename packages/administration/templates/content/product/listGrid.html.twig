@@ -38,6 +38,34 @@
 {% endblock %}
 
 {% block grid_value_cell_id_visibility %}
+    {% if row.isVisible %}
+        {% set visibilityClass = 'text-green' %}
+        {% set visibilityIcon = 'visible' %}
+        {% set visibilityTitle = 'Visible'|trans %}
+    {% elseif row.isVisibleOnSomeDomain %}
+        {% set visibilityClass = 'text-orange' %}
+        {% set visibilityIcon = 'visible' %}
+        {% set visibilityTitle = 'Visible'|trans %}
+    {% else %}
+        {% set visibilityClass = 'text-secondary' %}
+        {% set visibilityIcon = 'invisible' %}
+        {% set visibilityTitle = 'Not visible'|trans %}
+    {% endif %}
+
+    {% if row.sellingDeniedDomainsCount == 0 %}
+        {% set sellabilityClass = 'text-green' %}
+        {% set sellabilityIcon = 'cart' %}
+        {% set sellabilityTitle = 'Sellable'|trans %}
+    {% elseif row.sellingDeniedDomainsCount < getDomainsCount() and row.sellingDeniedDomainsCount > 0 %}
+        {% set sellabilityClass = 'text-orange' %}
+        {% set sellabilityIcon = 'cart' %}
+        {% set sellabilityTitle = 'Sellable'|trans %}
+    {% else %}
+        {% set sellabilityClass = 'text-secondary' %}
+        {% set sellabilityIcon = 'cart-off' %}
+        {% set sellabilityTitle = 'Not sellable'|trans %}
+    {% endif %}
+
     {% if isMultidomain() %}
         <span data-bs-toggle="popover"
               data-bs-trigger="click"
@@ -47,38 +75,32 @@
               data-content-url="{{ url('admin_product_visibility', {productId: row.id}) }}"
               class="position-relative cursor-pointer"
         >
-            {% if row.isVisible %}
-                {% set visibilityClass = 'text-green' %}
-                {% set visibilityIcon = 'visible' %}
-            {% elseif row.isVisibleOnSomeDomain %}
-                {% set visibilityClass = 'text-orange' %}
-                {% set visibilityIcon = 'visible' %}
-            {% else %}
-                {% set visibilityClass = 'text-secondary' %}
-                {% set visibilityIcon = 'invisible' %}
-            {% endif %}
             <span class="{{ visibilityClass }}">
                 {{ ux_icon(visibilityIcon) }}
+            </span>
+
+            <span class="{{ sellabilityClass }}">
+                {{ ux_icon(sellabilityIcon) }}
             </span>
         </span>
     {% else %}
         {% if row.isVisible %}
             <a href="{{ findUrlByDomainId('front_product_detail', { id: row.id }, getFirstDomain().id) }}">
-                {{ ux_icon('visible') }}
+                {{ _self.singleDomainIcon(visibilityTitle, visibilityClass, visibilityIcon) }}
+                {{ _self.singleDomainIcon(sellabilityTitle, sellabilityClass, sellabilityIcon) }}
             </a>
         {% else %}
-            {{ ux_icon('invisible') }}
+            {{ _self.singleDomainIcon(visibilityTitle, visibilityClass, visibilityIcon) }}
+            {{ _self.singleDomainIcon(sellabilityTitle, sellabilityClass, sellabilityIcon) }}
         {% endif %}
     {% endif %}
-    {% if row.calculatedSellingDenied %}
-        <span data-bs-toggle="popover"
-              data-bs-trigger="hover"
-              data-bs-content="{{ 'Product excluded from sale'|trans }}"
-        >
-            {{ ux_icon('cart-off') }}
-        </span>
-    {% endif %}
 {% endblock %}
+
+{% macro singleDomainIcon(title, class, icon) %}
+    <span title="{{ title }}" class="{{ class }}" data-bs-toggle="tooltip">
+        {{ ux_icon(icon) }}
+    </span>
+{% endmacro %}
 
 {% block grid_pager_totalcount %}
     {% set entityName = 'products'|trans %}

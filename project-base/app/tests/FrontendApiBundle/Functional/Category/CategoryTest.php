@@ -153,6 +153,9 @@ class CategoryTest extends GraphQlTestCase
                 ),
             ]],
             ['node' => [
+                'name' => t('Samsung Smart TV 3+1 Promo Pack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ]],
+            ['node' => [
                 'name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]],
         ];

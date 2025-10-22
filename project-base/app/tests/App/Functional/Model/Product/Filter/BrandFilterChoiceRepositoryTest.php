@@ -32,7 +32,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     {
         $brandFilterChoices = $this->getChoicesForCategoryReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
-        $this->assertCount(4, $brandFilterChoices);
+        $this->assertCount(5, $brandFilterChoices);
 
         $ids = array_map(
             static function (Brand $brand) {

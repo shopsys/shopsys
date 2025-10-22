@@ -15,4 +15,9 @@ class FlagDependenciesData
      * @var bool
      */
     public bool $hasSeoMixDependency;
+
+    /**
+     * @var bool
+     */
+    public bool $hasPromotionXyDependency;
 }

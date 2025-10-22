@@ -55,7 +55,7 @@ class SitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE',
             )
-            ->andWhere('p.calculatedSellingDenied = FALSE')
+            ->andWhere('pd.calculatedSellingDenied = FALSE')
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
@@ -166,6 +166,7 @@ class SitemapRepository
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup);
         $queryBuilder
             ->addSelect('fu.slug, fu.entityId')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
             ->join(
                 FriendlyUrl::class,
                 'fu',
@@ -176,7 +177,7 @@ class SitemapRepository
                 AND fu.main = TRUE',
             )
             ->andWhere('p.variantType != :variantTypeMain')
-            ->andWhere('p.calculatedSellingDenied = TRUE')
+            ->andWhere('pd.calculatedSellingDenied = TRUE')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());

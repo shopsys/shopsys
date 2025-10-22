@@ -124,7 +124,7 @@ class GiftFlagSynchronizerFacade
 
         if ($shouldHaveFlag && !$hasGiftFlag) {
             $flags[] = $giftFlag;
-            $mainProduct->setFlags($flags, $domainId);
+            $mainProduct->setFlags([$domainId => $flags]);
             $changed = true;
         } elseif (!$shouldHaveFlag && $hasGiftFlag) {
             $filtered = [];
@@ -135,7 +135,7 @@ class GiftFlagSynchronizerFacade
                 }
             }
 
-            $mainProduct->setFlags($filtered, $domainId);
+            $mainProduct->setFlags([$domainId => $filtered]);
             $changed = true;
         }
 

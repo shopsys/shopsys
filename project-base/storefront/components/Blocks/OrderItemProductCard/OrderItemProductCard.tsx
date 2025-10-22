@@ -14,6 +14,7 @@ type OrderItemProductCardProps = {
     fullName: string;
     categoryName: string;
     quantity: number;
+    freeQuantity: number | null;
     unit: string | null;
     price: TypeProductPriceFragment;
 };
@@ -23,6 +24,7 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
     fullName,
     categoryName,
     quantity,
+    freeQuantity,
     unit,
     price,
     availability,
@@ -59,7 +61,7 @@ const OrderItemProductCardComp: FC<OrderItemProductCardProps> = ({
                 </div>
             </div>
 
-            <OrderItemProductPrice productPrice={price} quantity={quantity} unit={unit} />
+            <OrderItemProductPrice freeQuantity={freeQuantity} productPrice={price} quantity={quantity} unit={unit} />
         </li>
     );
 };

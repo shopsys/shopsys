@@ -26,6 +26,8 @@ fragment OrderDetailItemFragment on OrderItem {
         isVisible
         isSellingDenied
         isInquiryType
+        promotionBuyQuantity
+        promotionFreeQuantity
         categories {
             name
         }

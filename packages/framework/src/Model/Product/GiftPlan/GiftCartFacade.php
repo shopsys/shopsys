@@ -139,7 +139,7 @@ class GiftCartFacade
                 $domainId,
             );
 
-        return $productVisibility->isVisible() && !$product->getCalculatedSellingDenied();
+        return $productVisibility->isVisible() && !$product->isCalculatedSellingDenied($domainId);
     }
 
     /**

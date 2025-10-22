@@ -43,7 +43,6 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::MAIN_VARIANT_ID] = $product[ProductExportFieldProvider::MAIN_VARIANT_ID] ?? null;
         $result[ProductExportFieldProvider::VARIANTS] = $product[ProductExportFieldProvider::VARIANTS] ?? [];
 
-        $result[ProductExportFieldProvider::CALCULATED_SELLING_DENIED] = $product[ProductExportFieldProvider::CALCULATED_SELLING_DENIED] ?? true;
         $result[ProductExportFieldProvider::SELLING_DENIED] = $product[ProductExportFieldProvider::SELLING_DENIED] ?? true;
 
         // unknown default value, used for filtering only
@@ -71,13 +70,13 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::UUID] = $product[ProductExportFieldProvider::UUID] ?? '00000000-0000-0000-0000-000000000000';
         $result[ProductExportFieldProvider::UNIT] = $product[ProductExportFieldProvider::UNIT] ?? '';
 
-        $result[ProductExportFieldProvider::IS_SALE_EXCLUSION] = $product[ProductExportFieldProvider::IS_SALE_EXCLUSION] ?? true;
-
         $result[ProductExportFieldProvider::SELLING_FROM] = $product[ProductExportFieldProvider::SELLING_FROM] ?? null;
 
         $result[ProductExportFieldProvider::PRODUCT_VIDEOS] = $product[ProductExportFieldProvider::PRODUCT_VIDEOS] ?? [];
 
         $result[ProductExportFieldProvider::VAT_PERCENT] = $product[ProductExportFieldProvider::VAT_PERCENT] ?? '0';
+
+        $result[ProductExportFieldProvider::PROMOTION] = $product[ProductExportFieldProvider::PROMOTION] ?? null;
 
         return $result;
     }

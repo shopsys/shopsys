@@ -29,28 +29,32 @@ export const CartPreview: FC = () => {
         <div className="bg-background-more font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" overlayClassName="rounded-xl" />}
 
-            {promoCodes.length > 0 && (
+            {(promoCodes.length > 0 ||
+                (isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
+                    mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0)) && (
                 <div className="border-border-less mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <p>{t('Promo code')}</p>
+                    {promoCodes.length > 0 && (
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <p>{t('Promo code')}</p>
 
-                            <Flag type="discount">{promoCodes[0].code}</Flag>
+                                <Flag type="discount">{promoCodes[0].code}</Flag>
 
-                            <button
-                                className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
-                                data-tid={TIDs.blocks_promocode_promocodeinfo_code}
-                                tabIndex={0}
-                                aria-label={t('Remove promo code {{ promoCode }}', {
-                                    ns: 'accessibility',
-                                    promoCode: promoCodes[0].code,
-                                })}
-                                onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
-                            >
-                                {t('Remove')}
-                            </button>
+                                <button
+                                    className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
+                                    data-tid={TIDs.blocks_promocode_promocodeinfo_code}
+                                    tabIndex={0}
+                                    aria-label={t('Remove promo code {{ promoCode }}', {
+                                        ns: 'accessibility',
+                                        promoCode: promoCodes[0].code,
+                                    })}
+                                    onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
+                                >
+                                    {t('Remove')}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
                         mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (

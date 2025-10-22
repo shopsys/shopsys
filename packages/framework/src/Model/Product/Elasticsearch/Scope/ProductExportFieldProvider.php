@@ -26,7 +26,6 @@ class ProductExportFieldProvider
     public const string SPECIAL_PRICES = 'special_prices';
     public const string PARAMETERS = 'parameters';
     public const string ORDERING_PRIORITY = 'ordering_priority';
-    public const string CALCULATED_SELLING_DENIED = 'calculated_selling_denied';
     public const string SELLING_DENIED = 'selling_denied';
     public const string AVAILABILITY = 'availability';
     public const string IS_MAIN_VARIANT = 'is_main_variant';
@@ -53,10 +52,10 @@ class ProductExportFieldProvider
     public const string AVAILABILITY_STATUS = 'availability_status';
     public const string VAT_PERCENT = 'vat_percent';
 
-    public const string IS_SALE_EXCLUSION = 'is_sale_exclusion';
-
     public const string SELLING_FROM = 'selling_from';
     public const string PRODUCT_VIDEOS = 'product_videos';
+
+    public const string PROMOTION = 'promotion';
 
     /**
      * @return string[]

@@ -32,7 +32,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     {
         $flagFilterChoices = $this->getChoicesForCategoryReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
-        $this->assertCount(1, $flagFilterChoices);
+        $this->assertCount(2, $flagFilterChoices);
 
         $ids = $this->getFlagIds($flagFilterChoices);
 

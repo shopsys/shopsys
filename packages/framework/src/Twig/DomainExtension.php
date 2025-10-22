@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
@@ -15,9 +16,11 @@ class DomainExtension extends AbstractExtension
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly Domain $domain,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -33,6 +36,7 @@ class DomainExtension extends AbstractExtension
             new TwigFunction('isMultidomain', $this->isMultidomain(...)),
             new TwigFunction('getDomainUrlByLocale', $this->getDomainUrlByLocale(...)),
             new TwigFunction('getFirstDomain', $this->getFirstDomainConfig(...)),
+            new TwigFunction('getDomainsCount', $this->getDomainsCount(...)),
         ];
     }
 
@@ -90,5 +94,20 @@ class DomainExtension extends AbstractExtension
     public function getFirstDomainConfig(): DomainConfig
     {
         return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainsCount(): int
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            'domainsCount',
+            function () {
+                return count($this->domain->getAll());
+            },
+            'domainsCount
+        ',
+        );
     }
 }
