@@ -76,7 +76,9 @@ class ProductElasticsearchConverter
 
         $result[ProductExportFieldProvider::VAT_PERCENT] = $product[ProductExportFieldProvider::VAT_PERCENT] ?? '0';
 
-        $result[ProductExportFieldProvider::PROMOTION] = $product[ProductExportFieldProvider::PROMOTION] ?? null;
+        $result[ProductExportFieldProvider::PROMOTION] = $this->fillEmptyPromotion(
+            $product[ProductExportFieldProvider::PROMOTION] ?? null,
+        );
 
         return $result;
     }
@@ -118,5 +120,24 @@ class ProductElasticsearchConverter
         }
 
         return $results;
+    }
+
+    /**
+     * @param array|null $promotion
+     * @return array{buy_quantity: int|null, free_quantity: int|null}
+     */
+    protected function fillEmptyPromotion(?array $promotion): array
+    {
+        if (!is_array($promotion)) {
+            return [
+                'buy_quantity' => null,
+                'free_quantity' => null,
+            ];
+        }
+
+        return [
+            'buy_quantity' => $promotion['buy_quantity'] ?? null,
+            'free_quantity' => $promotion['free_quantity'] ?? null,
+        ];
     }
 }
