@@ -136,6 +136,7 @@
     * [OrderFilterInput](#orderfilterinput)
     * [OrderInput](#orderinput)
     * [OrderItemsFilterInput](#orderitemsfilterinput)
+    * [OrderWithdrawalRequestInput](#orderwithdrawalrequestinput)
     * [ParameterFilter](#parameterfilter)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [ProductFilter](#productfilter)
@@ -1704,6 +1705,20 @@ Subscribe for e-mail newsletter
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#newslettersubscriptiondatainput">NewsletterSubscriptionDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.orderwithdrawalrequest">OrderWithdrawalRequest</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Request withdrawal from contract for an order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#orderwithdrawalrequestinput">OrderWithdrawalRequestInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -11872,6 +11887,76 @@ Filter order items by product with this UUID (OR condition with catnum)
 <td>
 
 Filter order items by type
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderWithdrawalRequestInput
+
+Input for requesting withdrawal from contract for an order
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.email">email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address for withdrawal confirmation
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.firstname">firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name of the person requesting withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.lastname">lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name of the person requesting withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.note">note</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Additional note or reason for withdrawal (optional)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.orderurlhash">orderUrlHash</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Order URL hash to identify the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.telephone">telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Telephone number (optional)
 
 </td>
 </tr>

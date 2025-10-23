@@ -7,19 +7,19 @@ namespace Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
+use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMail;
-use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 
 class WithdrawalMailTemplateSender implements MailTemplateSenderInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailFacade $withdrawalMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
-        protected readonly WithdrawalMailFacade $withdrawalMailFacade,
+        protected readonly WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade,
     ) {
     }
 
@@ -55,6 +55,6 @@ class WithdrawalMailTemplateSender implements MailTemplateSenderInterface
         }
 
         $order = $this->orderFacade->getById($entityId);
-        $this->withdrawalMailFacade->sendMailTemplate($mailTemplate, $order, $mailTo);
+        $this->withdrawalCustomerMailFacade->sendMailTemplate($mailTemplate, $order, $mailTo);
     }
 }

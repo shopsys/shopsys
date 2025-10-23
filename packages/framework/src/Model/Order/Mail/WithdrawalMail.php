@@ -52,8 +52,8 @@ class WithdrawalMail implements MessageFactoryInterface
     public function createMessage(MailTemplate $mailTemplate, $order): MessageData
     {
         return new MessageData(
-            $order->getEmail(),
-            $mailTemplate->getBccEmail(),
+            $order->getWithdrawalEmail(),
+            $this->getBccEmails($mailTemplate, $order),
             $mailTemplate->getBody(),
             $mailTemplate->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $order->getDomainId()),
@@ -103,5 +103,21 @@ class WithdrawalMail implements MessageFactoryInterface
             'orderLocale' => $this->domain->getDomainConfigById($order->getDomainId())->getLocale(),
             'displayPrice' => $this->mailDisplayPriceResolver->getDisplayPrice(),
         ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string[]
+     */
+    protected function getBccEmails(MailTemplate $mailTemplate, Order $order): array
+    {
+        $bccEmails = [$mailTemplate->getBccEmail()];
+
+        if ($order->getEmail() !== $order->getWithdrawalEmail()) {
+            $bccEmails[] = $order->getEmail();
+        }
+
+        return array_filter($bccEmails);
     }
 }

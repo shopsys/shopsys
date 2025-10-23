@@ -1352,6 +1352,8 @@ type Mutation {
   Logout: Boolean!
   "Subscribe for e-mail newsletter"
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
+  "Request withdrawal from contract for an order"
+  OrderWithdrawalRequest(input: OrderWithdrawalRequestInput!): Boolean!
   "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
   PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
   "Recover password using hash required from RequestPasswordRecovery"
@@ -1756,6 +1758,22 @@ enum OrderStatusEnum {
   inProgress
   "New"
   new
+}
+
+"Input for requesting withdrawal from contract for an order"
+input OrderWithdrawalRequestInput {
+  "Email address for withdrawal confirmation"
+  email: String!
+  "First name of the person requesting withdrawal"
+  firstName: String!
+  "Last name of the person requesting withdrawal"
+  lastName: String!
+  "Additional note or reason for withdrawal (optional)"
+  note: String = null
+  "Order URL hash to identify the order"
+  orderUrlHash: String!
+  "Telephone number (optional)"
+  telephone: String = null
 }
 
 "Information about pagination in a connection."

@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -964,6 +965,20 @@ class Order
     public function getWithdrawalRequestedAt()
     {
         return $this->withdrawalRequestedAt;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
+     */
+    public function setWithdrawalData(
+        WithdrawalRequestData $withdrawalRequestData,
+    ): void {
+        $this->withdrawalFirstName = $withdrawalRequestData->firstName;
+        $this->withdrawalLastName = $withdrawalRequestData->lastName;
+        $this->withdrawalEmail = $withdrawalRequestData->email;
+        $this->withdrawalTelephone = $withdrawalRequestData->telephone;
+        $this->withdrawalNote = $withdrawalRequestData->note;
+        $this->withdrawalRequestedAt = new DateTime();
     }
 
     /**

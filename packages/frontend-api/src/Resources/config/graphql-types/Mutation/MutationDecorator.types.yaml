@@ -267,3 +267,11 @@ MutationDecorator:
                         type: CreateWatchdogInput!
                         validation: cascade
                 resolve: "@=mutation('createWatchdogMutation', args)"
+            OrderWithdrawalRequest:
+                type: 'Boolean!'
+                description: "Request withdrawal from contract for an order"
+                args:
+                    input:
+                        type: OrderWithdrawalRequestInput!
+                        validation: cascade
+                resolve: "@=mutation('orderWithdrawalRequestMutation', args)"

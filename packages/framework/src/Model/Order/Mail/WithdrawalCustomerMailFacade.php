@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
-class WithdrawalMailFacade
+class WithdrawalCustomerMailFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer

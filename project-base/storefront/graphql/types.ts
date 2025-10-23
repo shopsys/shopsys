@@ -1547,6 +1547,8 @@ export type TypeMutation = {
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean']['output'];
+  /** Request withdrawal from contract for an order */
+  OrderWithdrawalRequest: Scalars['Boolean']['output'];
   /** Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer */
   PayOrder: TypePaymentSetupCreationData;
   /** Recover password using hash required from RequestPasswordRecovery */
@@ -1692,6 +1694,11 @@ export type TypeMutationLoginViaExchangeTokenArgs = {
 
 export type TypeMutationNewsletterSubscribeArgs = {
   input: TypeNewsletterSubscriptionDataInput;
+};
+
+
+export type TypeMutationOrderWithdrawalRequestArgs = {
+  input: TypeOrderWithdrawalRequestInput;
 };
 
 
@@ -2171,6 +2178,22 @@ export enum TypeOrderStatusEnum {
   /** New */
   New = 'new'
 }
+
+/** Input for requesting withdrawal from contract for an order */
+export type TypeOrderWithdrawalRequestInput = {
+  /** Email address for withdrawal confirmation */
+  email: Scalars['String']['input'];
+  /** First name of the person requesting withdrawal */
+  firstName: Scalars['String']['input'];
+  /** Last name of the person requesting withdrawal */
+  lastName: Scalars['String']['input'];
+  /** Additional note or reason for withdrawal (optional) */
+  note: InputMaybe<Scalars['String']['input']>;
+  /** Order URL hash to identify the order */
+  orderUrlHash: Scalars['String']['input'];
+  /** Telephone number (optional) */
+  telephone: InputMaybe<Scalars['String']['input']>;
+};
 
 /** Information about pagination in a connection. */
 export type TypePageInfo = {
