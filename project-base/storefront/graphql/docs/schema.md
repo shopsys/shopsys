@@ -6531,6 +6531,15 @@ The registered customer user who made the order (or null if the order was made b
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.deliveredat">deliveredAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date and time when the order was delivered to the customer
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.deliverycity">deliveryCity</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -6842,6 +6851,60 @@ Unique url hash that can be used to
 <td>
 
 UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalemail">withdrawalEmail</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Email address for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalfirstname">withdrawalFirstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawallastname">withdrawalLastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalnote">withdrawalNote</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Additional notes or instructions for withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalrequestedat">withdrawalRequestedAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date and time when the withdrawal was requested by customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawaltelephone">withdrawalTelephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Telephone number for withdrawal request contact
 
 </td>
 </tr>
@@ -9246,6 +9309,24 @@ Returns Terms and Conditions article's url
 <td>
 
 Returns User consent policy article's url
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="settings.withdrawaldeadlinedays">withdrawalDeadlineDays</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of days customers have to withdraw from purchase
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="settings.withdrawalinstructions">withdrawalInstructions</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Instructions for customers regarding withdrawal process
 
 </td>
 </tr>

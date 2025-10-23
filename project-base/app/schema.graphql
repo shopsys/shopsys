@@ -1489,6 +1489,8 @@ type Order {
   creationDate: DateTime!
   "The registered customer user who made the order (or null if the order was made by an unregistered user)"
   customerUser: BaseCustomerUser
+  "Date and time when the order was delivered to the customer"
+  deliveredAt: DateTime
   "City name for delivery"
   deliveryCity: String
   "Company name for delivery"
@@ -1559,6 +1561,18 @@ type Order {
   urlHash: String!
   "UUID"
   uuid: Uuid!
+  "Email address for withdrawal request contact"
+  withdrawalEmail: String
+  "First name for withdrawal request contact"
+  withdrawalFirstName: String
+  "Last name for withdrawal request contact"
+  withdrawalLastName: String
+  "Additional notes or instructions for withdrawal"
+  withdrawalNote: String
+  "Date and time when the withdrawal was requested by customer"
+  withdrawalRequestedAt: DateTime
+  "Telephone number for withdrawal request contact"
+  withdrawalTelephone: String
 }
 
 "A connection to a list of items."
@@ -2688,6 +2702,10 @@ type Settings {
   termsAndConditionsArticleUrl: String
   "Returns User consent policy article's url"
   userConsentPolicyArticleUrl: String
+  "Number of days customers have to withdraw from purchase"
+  withdrawalDeadlineDays: Int!
+  "Instructions for customers regarding withdrawal process"
+  withdrawalInstructions: String!
 }
 
 type SliderItem {

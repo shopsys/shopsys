@@ -1896,6 +1896,8 @@ export type TypeOrder = {
   creationDate: Scalars['DateTime']['output'];
   /** The registered customer user who made the order (or null if the order was made by an unregistered user) */
   customerUser: Maybe<TypeBaseCustomerUser>;
+  /** Date and time when the order was delivered to the customer */
+  deliveredAt: Maybe<Scalars['DateTime']['output']>;
   /** City name for delivery */
   deliveryCity: Maybe<Scalars['String']['output']>;
   /** Company name for delivery */
@@ -1966,6 +1968,18 @@ export type TypeOrder = {
   urlHash: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  /** Email address for withdrawal request contact */
+  withdrawalEmail: Maybe<Scalars['String']['output']>;
+  /** First name for withdrawal request contact */
+  withdrawalFirstName: Maybe<Scalars['String']['output']>;
+  /** Last name for withdrawal request contact */
+  withdrawalLastName: Maybe<Scalars['String']['output']>;
+  /** Additional notes or instructions for withdrawal */
+  withdrawalNote: Maybe<Scalars['String']['output']>;
+  /** Date and time when the withdrawal was requested by customer */
+  withdrawalRequestedAt: Maybe<Scalars['DateTime']['output']>;
+  /** Telephone number for withdrawal request contact */
+  withdrawalTelephone: Maybe<Scalars['String']['output']>;
 };
 
 /** A connection to a list of items. */
@@ -3417,6 +3431,10 @@ export type TypeSettings = {
   termsAndConditionsArticleUrl: Maybe<Scalars['String']['output']>;
   /** Returns User consent policy article's url */
   userConsentPolicyArticleUrl: Maybe<Scalars['String']['output']>;
+  /** Number of days customers have to withdraw from purchase */
+  withdrawalDeadlineDays: Scalars['Int']['output'];
+  /** Instructions for customers regarding withdrawal process */
+  withdrawalInstructions: Scalars['String']['output'];
 };
 
 export type TypeSliderItem = {
