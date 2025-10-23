@@ -76,6 +76,9 @@ msgstr ""
 msgid "Order item is required"
 msgstr ""
 
+msgid "Order not found"
+msgstr ""
+
 msgid "Order or document number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -296,6 +299,15 @@ msgid "Transport with provided UUID is not available"
 msgstr ""
 
 msgid "Type of file {{ fileName }} is unsupported."
+msgstr ""
+
+msgid "Withdrawal deadline has passed for this order"
+msgstr ""
+
+msgid "Withdrawal has already been requested for this order"
+msgstr ""
+
+msgid "Withdrawal is not allowed for cancelled orders"
 msgstr ""
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"

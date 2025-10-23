@@ -85,6 +85,9 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
+msgid "A customer has requested withdrawal from contract for the following order"
+msgstr ""
+
 msgid "Access to all the complaints created under the user's company"
 msgstr ""
 
@@ -760,6 +763,9 @@ msgstr ""
 msgid "Customer city"
 msgstr ""
 
+msgid "Customer email"
+msgstr ""
+
 msgid "Customer email address"
 msgstr ""
 
@@ -902,6 +908,9 @@ msgid "Default warehouse"
 msgstr ""
 
 msgid "Delete"
+msgstr ""
+
+msgid "Delivered at"
 msgstr ""
 
 msgid "Delivery address"
@@ -2050,6 +2059,9 @@ msgstr ""
 msgid "New SEO page"
 msgstr ""
 
+msgid "New Withdrawal Request"
+msgstr ""
+
 msgid "New administrator"
 msgstr ""
 
@@ -2138,6 +2150,9 @@ msgid "New store"
 msgstr ""
 
 msgid "New warehouse"
+msgstr ""
+
+msgid "New withdrawal request for order {orderNumber}"
 msgstr ""
 
 msgid "No"
@@ -2248,6 +2263,9 @@ msgstr ""
 msgid "Order confirmation page content modified"
 msgstr ""
 
+msgid "Order date"
+msgstr ""
+
 msgid "Order detail"
 msgstr ""
 
@@ -2258,6 +2276,9 @@ msgid "Order has not been sent to GoPay"
 msgstr ""
 
 msgid "Order in CZK round to whole crowns"
+msgstr ""
+
+msgid "Order information"
 msgstr ""
 
 msgid "Order must contain at least one item"
@@ -2720,6 +2741,9 @@ msgid "Removed %dataType%: \"%readableValue%\""
 msgstr ""
 
 msgid "Replace file"
+msgstr ""
+
+msgid "Requested at"
 msgstr ""
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
@@ -3490,13 +3514,22 @@ msgstr ""
 msgid "Weight (g)"
 msgstr ""
 
+msgid "Withdrawal Request"
+msgstr ""
+
 msgid "Withdrawal deadline (days)"
 msgstr ""
 
 msgid "Withdrawal from a contract"
 msgstr ""
 
+msgid "Withdrawal from contract"
+msgstr ""
+
 msgid "Withdrawal instructions"
+msgstr ""
+
+msgid "Withdrawal request details"
 msgstr ""
 
 msgid "XML Feeds"

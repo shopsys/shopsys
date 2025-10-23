@@ -76,6 +76,9 @@ msgstr "Objednávka je povinná"
 msgid "Order item is required"
 msgstr "Položka objednávky je povinná"
 
+msgid "Order not found"
+msgstr "Objednávka nebola nájdená"
+
 msgid "Order or document number cannot be longer than {{ limit }} characters"
 msgstr "Číslo objednávky alebo dokladu nemôže byť dlhšie ako {{ limit }} znakov"
 
@@ -297,6 +300,15 @@ msgstr "Doprava s uvedeným UUID nie je dostupná"
 
 msgid "Type of file {{ fileName }} is unsupported."
 msgstr "Typ súboru {{ fileName }} nie je podporovaný."
+
+msgid "Withdrawal deadline has passed for this order"
+msgstr "Lehota na odstúpenie od zmluvy pre túto objednávku uplynula"
+
+msgid "Withdrawal has already been requested for this order"
+msgstr "Odstúpenie od zmluvy pre túto objednávku už bolo požadované"
+
+msgid "Withdrawal is not allowed for cancelled orders"
+msgstr "Odstúpenie od zmluvy nie je povolené pre zrušené objednávky"
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
 msgstr "Musíte byť prihlásený, ak chcete zadať UUID dodacej adresy v objednávke"

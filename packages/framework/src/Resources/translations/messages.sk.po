@@ -85,6 +85,9 @@ msgstr "<strong><a href=\"{{ url }}\">Panel upozornení</a></strong> bol úspeš
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kategória</a></strong> bola uložená"
 
+msgid "A customer has requested withdrawal from contract for the following order"
+msgstr "Zákazník požiadal o odstúpenie od zmluvy pre nasledujúcu objednávku"
+
 msgid "Access to all the complaints created under the user's company"
 msgstr "Prístup ku všetkým sťažnostiam vytvoreným v rámci spoločnosti používateľa"
 
@@ -760,6 +763,9 @@ msgstr "Aktivácia zákazníka"
 msgid "Customer city"
 msgstr "Mesto zákazníka"
 
+msgid "Customer email"
+msgstr "E-mail zákazníka"
+
 msgid "Customer email address"
 msgstr "E-mailová adresa zákazníka"
 
@@ -903,6 +909,9 @@ msgstr "Predvolený sklad"
 
 msgid "Delete"
 msgstr "Odstrániť"
+
+msgid "Delivered at"
+msgstr "Doručené dňa"
 
 msgid "Delivery address"
 msgstr "Dodacia adresa"
@@ -2050,6 +2059,9 @@ msgstr "Nový"
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
+msgid "New Withdrawal Request"
+msgstr "Nová žiadosť o odstúpenie od zmluvy"
+
 msgid "New administrator"
 msgstr "Nový administrátor"
 
@@ -2139,6 +2151,9 @@ msgstr "Nový obchod"
 
 msgid "New warehouse"
 msgstr "Nový sklad"
+
+msgid "New withdrawal request for order {orderNumber}"
+msgstr "Nová žiadosť o odstúpenie od zmluvy pre objednávku {orderNumber}"
 
 msgid "No"
 msgstr "Nie"
@@ -2248,6 +2263,9 @@ msgstr "Stránka potvrdenia objednávky"
 msgid "Order confirmation page content modified"
 msgstr "Obsah stránky potvrdenia objednávky upravený"
 
+msgid "Order date"
+msgstr "Dátum objednávky"
+
 msgid "Order detail"
 msgstr "Detail objednávky"
 
@@ -2259,6 +2277,9 @@ msgstr "Objednávka nebola odoslaná do GoPay"
 
 msgid "Order in CZK round to whole crowns"
 msgstr "Objednávka v CZK zaokrúhlená na celé koruny"
+
+msgid "Order information"
+msgstr "Informácie o objednávke"
 
 msgid "Order must contain at least one item"
 msgstr "Objednávka musí obsahovať aspoň jednu položku"
@@ -2721,6 +2742,9 @@ msgstr "Zmazaný %dataType%: \"%readableValue%\""
 
 msgid "Replace file"
 msgstr "Nahradiť súbor"
+
+msgid "Requested at"
+msgstr "Dátum žiadosti"
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žiadosť o resetovanie hesla bola odoslaná na adresu <strong>{{ email }}</strong>"
@@ -3490,14 +3514,23 @@ msgstr "Watchdogy"
 msgid "Weight (g)"
 msgstr "Hmotnosť (g)"
 
+msgid "Withdrawal Request"
+msgstr "Žiadosť o odstúpenie od zmluvy"
+
 msgid "Withdrawal deadline (days)"
 msgstr "Lehota na odstúpenie od zmluvy (dni)"
 
 msgid "Withdrawal from a contract"
 msgstr "Odstúpenie od zmluvy"
 
+msgid "Withdrawal from contract"
+msgstr "Odstúpenie od zmluvy"
+
 msgid "Withdrawal instructions"
 msgstr "Pokyny po odstúpenie"
+
+msgid "Withdrawal request details"
+msgstr "Detaily žiadosti o odstúpenie"
 
 msgid "XML Feeds"
 msgstr "XML Feedy"

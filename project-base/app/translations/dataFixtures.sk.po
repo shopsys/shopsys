@@ -1375,6 +1375,9 @@ msgstr "Pravdepodobne najlepšia voľba"
 msgid "Processor frequency"
 msgstr "Frekvencia procesora"
 
+msgid "Product does not match description, I want to return the entire order."
+msgstr "Produkt nezodpovedá popisu, chcem vrátiť celú objednávku."
+
 msgid "Product gift"
 msgstr "Darčekový produkt"
 
