@@ -9,6 +9,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 const NotAddedProductsPopup = dynamic(() =>
     import('components/Blocks/Popup/NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
@@ -20,8 +21,8 @@ const MergeCartsPopup = dynamic(() =>
 export const useAddOrderItemsToCart = () => {
     const { cart } = useCurrentCart();
     const router = useRouter();
-    const { url } = useDomainConfig();
-    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
+    const domainConfig = useDomainConfig();
+    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutation();
     const { t } = useTranslation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -38,6 +39,8 @@ export const useAddOrderItemsToCart = () => {
 
         const newCart = addOrderItemsToCartResponse.data?.AddOrderItemsToCart;
         updateCartUuid(newCart?.uuid ?? null);
+
+        dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
 
         if (newCart) {
             const notAddedProducts = newCart.modifications.multipleAddedProductModifications.notAddedProducts;

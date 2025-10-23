@@ -40,6 +40,7 @@ import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
 export const useContactInformationPageNavigation = () => {
@@ -252,6 +253,8 @@ const useHandleEventsAfterOrderCreation = () => {
         }
 
         resetContactInformation();
+
+        dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
     };
 
     return handleEventsAfterOrderCreation;
