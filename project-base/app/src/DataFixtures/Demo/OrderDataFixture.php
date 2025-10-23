@@ -17,6 +17,7 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
@@ -37,6 +38,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const string ORDER_WITH_GOPAY_PAYMENT_PREFIX = 'order_with_gopay_payment_';
     public const string ORDER_WITH_GOPAY_PAYMENT_1 = 'order_with_gopay_payment_1';
     public const string ORDER_WITH_GOPAY_PAYMENT_14 = 'order_with_gopay_payment_14';
+    public const string ORDER_CANCELLED = 'order_cancelled';
+    public const string ORDER_WITH_WITHDRAWAL_REQUEST = 'order_with_withdrawal_request';
+    public const string ORDER_DELIVERED_YESTERDAY = 'order_delivered_yesterday';
+    public const string ORDER_DELIVERED_MONTH_AGO = 'order_delivered_month_ago';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -101,6 +106,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -3 day'))->setTime(12, 40, 22);
+        $orderData->deliveredAt = (new DateTime('now -2 day'))->setTime(14, 15, 10);
 
         $order = $this->createOrder(
             $orderData,
@@ -263,7 +269,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -13 day'))->setTime(23, 35, 15);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
@@ -273,6 +279,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::TRANSPORT_PERSONAL,
             PaymentDataFixture::PAYMENT_CASH,
         );
+        $this->addReferenceForDomain(self::ORDER_CANCELLED, $order, $domainId);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
@@ -289,7 +296,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -5 day'))->setTime(9, 11, 59);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
-        $this->createOrder(
+        $orderData->deliveredAt = (new DateTime('now -1 day'))->setTime(16, 45, 30);
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
@@ -299,6 +307,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::TRANSPORT_CZECH_POST,
             PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
         );
+        $this->addReferenceForDomain(self::ORDER_DELIVERED_YESTERDAY, $order, $domainId);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
@@ -340,7 +349,13 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(7, 2, 31);
         $orderData->promoCode = 'promoCode123';
-        $this->createOrder(
+        $orderData->withdrawalFirstName = 'Adam';
+        $orderData->withdrawalLastName = 'Bořič';
+        $orderData->withdrawalTelephone = '+420755496328';
+        $orderData->withdrawalEmail = 'no-reply@shopsys.com';
+        $orderData->withdrawalNote = t('Product does not match description, I want to return the entire order.', domain: Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, locale: $this->domain->getDomainConfigById($domainId)->getLocale());
+        $orderData->withdrawalRequestedAt = (new DateTime('now -1 day'))->setTime(14, 30, 15);
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
@@ -348,6 +363,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::TRANSPORT_PPL,
             PaymentDataFixture::PAYMENT_CARD,
         );
+        $this->addReferenceForDomain(self::ORDER_WITH_WITHDRAWAL_REQUEST, $order, $domainId);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
@@ -388,6 +404,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -10 day'))->setTime(18, 3, 36);
+        $orderData->deliveredAt = (new DateTime('now -8 day'))->setTime(11, 30, 45);
         $this->createOrder(
             $orderData,
             [
@@ -437,7 +454,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -10 day'))->setTime(8, 14, 8);
+        $orderData->createdAt = (new DateTime('now -35 day'))->setTime(8, 14, 8);
+        $orderData->deliveredAt = (new DateTime('now -30 day'))->setTime(10, 20, 15);
         $order = $this->createOrder(
             $orderData,
             [
@@ -450,6 +468,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             PaymentDataFixture::PAYMENT_GOPAY_CARD,
         );
         $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
+        $this->addReferenceForDomain(self::ORDER_DELIVERED_MONTH_AGO, $order, $domainId);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
