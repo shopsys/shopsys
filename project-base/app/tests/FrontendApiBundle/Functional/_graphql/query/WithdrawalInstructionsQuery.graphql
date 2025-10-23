@@ -1,0 +1,3 @@
+query WithdrawalInstructionsQuery($orderUrlHash: String!) {
+    withdrawalInstructions(orderUrlHash: $orderUrlHash)
+}
