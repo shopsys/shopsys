@@ -57,6 +57,7 @@ class ComplaintRepository
                 END AS customerName',
             )
             ->addSelect('MAX(cst.name) AS statusName')
+            ->addSelect('cs.statusType AS statusType')
             ->join('cmp.status', 'cs')
             ->join('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
             ->join('cmp.customerUser', 'cu')
@@ -66,6 +67,7 @@ class ComplaintRepository
             ->addGroupBy('o.number')
             ->addGroupBy('o.id')
             ->addGroupBy('cu.id')
+            ->addGroupBy('cs.statusType')
             ->addGroupBy('ba.id')
             ->setParameter('locale', $locale);
     }

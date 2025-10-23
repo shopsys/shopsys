@@ -21,6 +21,21 @@
     {{ value|formatDateTime }}
 {% endblock %}
 
+{% block grid_value_cell_id_status_name %}
+    {% if row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Complaint\\Status\\ComplaintStatusTypeEnum::STATUS_TYPE_NEW')) %}
+        {% set status_class = 'yellow' %}
+    {% elseif row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Complaint\\Status\\ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED')) %}
+        {% set status_class = 'green' %}
+    {% else %}
+        {% set status_class = 'blue' %}
+    {% endif %}
+
+    <span class="status status-{{ status_class }}">
+        <span class="status-dot"></span>
+        {{ value }}
+    </span>
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No complaints found.'|trans }}
 {% endblock %}

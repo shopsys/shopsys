@@ -30,6 +30,7 @@ class OrderListAdminRepository
                 o.domainId,
                 o.createdAt,
                 MAX(ost.name) AS statusName,
+                os.type AS statusType,
                 o.totalPriceWithVat,
                 CASE WHEN o.companyName IS NOT NULL
                     THEN o.companyName
@@ -40,6 +41,7 @@ class OrderListAdminRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
             ->groupBy('o.id')
+            ->addGroupBy('os.id')
             ->setParameter('deleted', false)
             ->setParameter('locale', $locale);
     }
