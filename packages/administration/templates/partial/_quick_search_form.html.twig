@@ -6,13 +6,14 @@
 @var placeholder: string
 @var hide_title: boolean
 #}
+{% if not hide_title|default(false) %}
 <div class="card">
     <div class="card-body">
-        {% if not hide_title|default(false) %}
-            <h2 class="card-title text-secondary">
-                {{ title|default('Quick search'|trans) }}
-            </h2>
-        {% endif %}
+        <h2 class="card-title text-secondary">
+            {{ title|default('Quick search'|trans) }}
+        </h2>
+{% endif %}
+
         <div class="input-group input-group-flat">
             {{ form_widget(form_input, { attr: { placeholder: placeholder|default(null) } }) }}
             {% if info_message|default(false) %}
@@ -28,5 +29,8 @@
                 full_name: ''
             }) }}
         </div>
+
+{% if not hide_title|default(false) %}
     </div>
 </div>
+{% endif %}
