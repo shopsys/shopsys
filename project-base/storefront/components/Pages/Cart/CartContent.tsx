@@ -1,4 +1,5 @@
 import { CartList } from './CartList/CartList';
+import { CartStickyBar } from './CartStickyBar';
 import { CartSummary } from './CartSummary';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
@@ -7,6 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
+import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type CartContentProps = {
@@ -16,6 +18,7 @@ type CartContentProps = {
 export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { t } = useTranslation();
     const { url, isLuigisBoxActive } = useDomainConfig();
+    const cartPreviewRef = useRef<HTMLDivElement>(null);
 
     return (
         <VerticalStack gap="md">
@@ -26,7 +29,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
 
                 <CartList items={cart.items} />
 
-                <CartSummary />
+                <CartSummary cartPreviewRef={cartPreviewRef} />
             </Webline>
 
             {isLuigisBoxActive && (
@@ -41,6 +44,8 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     )}
                 />
             )}
+
+            <CartStickyBar originalButtonRef={cartPreviewRef} />
         </VerticalStack>
     );
 };
