@@ -7,8 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Menu;
 use Knp\Menu\ItemInterface;
 use Override;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
-use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
+use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,14 +15,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 final class CrudMenuSubscriber implements EventSubscriberInterface
 {
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry
+     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
-     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider $crudConfigProvider
      */
     public function __construct(
-        public readonly CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry,
+        public readonly CrudControllerRegistry $crudControllerRegistry,
         public readonly CrudRouteProvider $crudRouteProvider,
-        public readonly CrudConfigProvider $crudConfigProvider,
     ) {
     }
 
@@ -45,8 +42,8 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
 
-        foreach ($this->crudControllerDefinitionRegistry->getItems() as $item) {
-            $config = $this->crudConfigProvider->getConfig($item);
+        foreach ($this->crudControllerRegistry->getItems() as $item) {
+            $config = $item->getConfig();
 
             if ($config->isFullDisabled()) {
                 continue;

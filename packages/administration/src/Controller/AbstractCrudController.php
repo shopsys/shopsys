@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
-use ReflectionClass;
-use RuntimeException;
-use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
+use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +20,7 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractCrudController extends AbstractController
 {
-    private ?CrudConfigData $config = null;
+    public Definition $definition;
 
     #[Required]
     public DatagridFactory $datagridFactory;
@@ -31,13 +28,10 @@ abstract class AbstractCrudController extends AbstractController
     #[Required]
     public OrmAdapterFactory $ormAdapterFactory;
 
-    #[Required]
-    public CrudControllerExtensionsRegistry $crudControllerExtensionsRegistry;
-
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfig $config
      */
-    protected function configure(CrudConfig $config): void
+    public function configure(CrudConfig $config): void
     {
     }
 
@@ -67,11 +61,10 @@ abstract class AbstractCrudController extends AbstractController
      */
     public function listAction(): Response
     {
-        $extensions = $this->crudControllerExtensionsRegistry->getExtensions(static::class);
-        $adapter = $this->ormAdapterFactory->create($this->getConfig()->getEntityClass(), function (QueryBuilder $queryBuilder) use ($extensions) {
+        $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder) {
             $this->configureQuery($queryBuilder);
 
-            foreach ($extensions as $extension) {
+            foreach ($this->definition->getExtensions() as $extension) {
                 $extension->configureQuery($queryBuilder);
             }
         });
@@ -82,7 +75,7 @@ abstract class AbstractCrudController extends AbstractController
         ]);
         $this->configureDatagrid($datagrid);
 
-        foreach ($extensions as $extension) {
+        foreach ($this->definition->getExtensions() as $extension) {
             $extension->configureDatagrid($datagrid);
         }
 
@@ -147,7 +140,7 @@ abstract class AbstractCrudController extends AbstractController
 
         $this->configureActions($actionsConfig);
 
-        foreach ($this->crudControllerExtensionsRegistry->getExtensions(static::class) as $extension) {
+        foreach ($this->definition->getExtensions() as $extension) {
             $extension->configureActions($actionsConfig);
         }
 
@@ -159,26 +152,6 @@ abstract class AbstractCrudController extends AbstractController
      */
     final public function getConfig(): CrudConfigData
     {
-        if ($this->config === null) {
-            $reflectionClass = new ReflectionClass($this);
-            $attributes = $reflectionClass->getAttributes(CrudController::class);
-
-            if (count($attributes) === 0) {
-                throw new RuntimeException(sprintf('Class %s must have @%s attribute.', $reflectionClass->getName(), CrudController::class));
-            }
-
-            $entityClass = $attributes[0]->newInstance()->entityClass;
-
-            $config = new CrudConfig(static::class, $entityClass);
-            $this->configure($config);
-
-            foreach ($this->crudControllerExtensionsRegistry->getExtensions(static::class) as $extension) {
-                $extension->configure($config);
-            }
-
-            $this->config = $config->getConfig();
-        }
-
-        return $this->config;
+        return $this->definition->getConfig();
     }
 }

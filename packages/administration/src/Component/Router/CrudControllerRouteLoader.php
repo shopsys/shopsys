@@ -5,26 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Router;
 
 use Override;
-use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
+use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
+use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
 
 final class CrudControllerRouteLoader implements LoaderInterface
 {
-    private bool $loaded = false;
-
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $registry
+     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
-     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider $crudConfigProvider
      */
     public function __construct(
-        private readonly CrudControllerDefinitionRegistry $registry,
+        private readonly CrudControllerRegistry $crudControllerRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
-        private readonly CrudConfigProvider $crudConfigProvider,
     ) {
     }
 
@@ -34,18 +29,11 @@ final class CrudControllerRouteLoader implements LoaderInterface
     #[Override]
     public function load($resource, ?string $type = null)
     {
-        if ($this->loaded === true) {
-            // Instead of throwing an exception, return an empty RouteCollection
-            return new RouteCollection();
-        }
-
         $routes = new RouteCollection();
 
-        foreach ($this->registry->getItems() as $item) {
+        foreach ($this->crudControllerRegistry->getItems() as $item) {
             $this->addRoutesForController($routes, $item);
         }
-
-        $this->loaded = true;
 
         return $routes;
     }
@@ -80,17 +68,11 @@ final class CrudControllerRouteLoader implements LoaderInterface
 
     /**
      * @param \Symfony\Component\Routing\RouteCollection $routes
-     * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem $item
+     * @param \Shopsys\AdministrationBundle\Component\Crud\Definition $item
      */
-    private function addRoutesForController(RouteCollection $routes, CrudControllerDefinitionItem $item): void
+    private function addRoutesForController(RouteCollection $routes, Definition $item): void
     {
-        $config = $this->crudConfigProvider->getConfig($item);
-
-        if ($config->isFullDisabled()) {
-            return;
-        }
-
-        foreach ($config->getActions() as $actionType) {
+        foreach ($item->getConfig()->getActions() as $actionType) {
             $routeItem = $this->crudRouteProvider->generate($item, $actionType);
 
             $routes->add($routeItem->getRouteName(), $routeItem->getRoute());
