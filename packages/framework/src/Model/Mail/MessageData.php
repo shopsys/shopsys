@@ -12,8 +12,8 @@ class MessageData
     public array $variablesReplacementsForSubject;
 
     /**
-     * @param string $toEmail
-     * @param string|null $bccEmail
+     * @param string|array<string> $toEmail
+     * @param string|array<string>|null $bccEmail
      * @param string $body
      * @param string $subject
      * @param string $fromEmail
@@ -24,8 +24,8 @@ class MessageData
      * @param string|null $replyTo
      */
     public function __construct(
-        public string $toEmail,
-        public ?string $bccEmail,
+        public string|array $toEmail,
+        public string|array|null $bccEmail,
         public string $body,
         public string $subject,
         public string $fromEmail,
@@ -40,5 +40,25 @@ class MessageData
         } else {
             $this->variablesReplacementsForSubject = $variablesReplacementsForBody;
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getToEmailAsArray(): array
+    {
+        return is_array($this->toEmail) ? $this->toEmail : [$this->toEmail];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getBccEmailAsArray(): array
+    {
+        if ($this->bccEmail === null) {
+            return [];
+        }
+
+        return is_array($this->bccEmail) ? $this->bccEmail : [$this->bccEmail];
     }
 }
