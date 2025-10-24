@@ -2777,6 +2777,8 @@ export type TypeQuery = {
   brandSearch: Array<TypeBrand>;
   /** Returns complete list of brands */
   brands: Array<TypeBrand>;
+  /** Returns whether withdrawal can be requested for the order */
+  canRequestOrderWithdrawal: Scalars['Boolean']['output'];
   /** Return cart of logged customer or cart by UUID for anonymous user */
   cart: Maybe<TypeCart>;
   /** Returns complete list of categories */
@@ -2863,6 +2865,8 @@ export type TypeQuery = {
   transport: Maybe<TypeTransport>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TypeTransport>;
+  /** Returns withdrawal instructions for the order */
+  withdrawalInstructions: Scalars['String']['output'];
 };
 
 
@@ -2931,6 +2935,11 @@ export type TypeQueryBrandArgs = {
 
 export type TypeQueryBrandSearchArgs = {
   searchInput: TypeSearchInput;
+};
+
+
+export type TypeQueryCanRequestOrderWithdrawalArgs = {
+  orderUrlHash: Scalars['String']['input'];
 };
 
 
@@ -3125,6 +3134,11 @@ export type TypeQueryTransportArgs = {
 
 export type TypeQueryTransportsArgs = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryWithdrawalInstructionsArgs = {
+  orderUrlHash: Scalars['String']['input'];
 };
 
 export enum TypeRecommendationType {
@@ -3454,10 +3468,6 @@ export type TypeSettings = {
   termsAndConditionsArticleUrl: Maybe<Scalars['String']['output']>;
   /** Returns User consent policy article's url */
   userConsentPolicyArticleUrl: Maybe<Scalars['String']['output']>;
-  /** Number of days customers have to withdraw from purchase */
-  withdrawalDeadlineDays: Scalars['Int']['output'];
-  /** Instructions for customers regarding withdrawal process */
-  withdrawalInstructions: Scalars['String']['output'];
 };
 
 export type TypeSliderItem = {

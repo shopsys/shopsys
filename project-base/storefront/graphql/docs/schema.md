@@ -477,6 +477,20 @@ Returns list of searched brands
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="query.canrequestorderwithdrawal">canRequestOrderWithdrawal</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns whether withdrawal can be requested for the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUrlHash</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="query.cart">cart</strong></td>
 <td valign="top"><a href="#cart">Cart</a></td>
 <td>
@@ -1360,6 +1374,20 @@ Returns available transport methods based on the current cart state
 <tr>
 <td colspan="2" valign="top"><strong id="query.variant">Variant</strong></td>
 <td valign="top"><a href="#variant">Variant</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query.withdrawalinstructions">withdrawalInstructions</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns withdrawal instructions for the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUrlHash</td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -9324,24 +9352,6 @@ Returns Terms and Conditions article's url
 <td>
 
 Returns User consent policy article's url
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="settings.withdrawaldeadlinedays">withdrawalDeadlineDays</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of days customers have to withdraw from purchase
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="settings.withdrawalinstructions">withdrawalInstructions</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Instructions for customers regarding withdrawal process
 
 </td>
 </tr>

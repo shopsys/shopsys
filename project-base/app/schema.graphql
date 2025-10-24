@@ -2294,6 +2294,8 @@ type Query {
   brands: [Brand!]!
   "Returns list of searched brands"
   brandSearch(searchInput: SearchInput!): [Brand!]!
+  "Returns whether withdrawal can be requested for the order"
+  canRequestOrderWithdrawal(orderUrlHash: String!): Boolean!
   "Return cart of logged customer or cart by UUID for anonymous user"
   cart(cartInput: CartInput): Cart
   "Returns complete list of categories"
@@ -2415,6 +2417,8 @@ type Query {
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
   Variant: Variant
+  "Returns withdrawal instructions for the order"
+  withdrawalInstructions(orderUrlHash: String!): String!
 }
 
 enum RecommendationType {
@@ -2720,10 +2724,6 @@ type Settings {
   termsAndConditionsArticleUrl: String
   "Returns User consent policy article's url"
   userConsentPolicyArticleUrl: String
-  "Number of days customers have to withdraw from purchase"
-  withdrawalDeadlineDays: Int!
-  "Instructions for customers regarding withdrawal process"
-  withdrawalInstructions: String!
 }
 
 type SliderItem {
