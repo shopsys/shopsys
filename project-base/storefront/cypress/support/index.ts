@@ -212,6 +212,7 @@ export const takeSnapshotAndCompare = (
 
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     hideScrollbars();
+    disableStickyPositioningBeforeScreenshot();
     callbackBeforeBlackout?.();
     disableAnimationsBeforeScreenshot();
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
@@ -228,6 +229,7 @@ export const takeSnapshotAndCompare = (
         cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(snapshotNameFormatted);
     }
 
+    restoreStickyPositioningAfterScreenshot();
     removeBlackoutsAfterScreenshot();
     resetPointerEventsAfterScreenshot();
     resetAnimationsAfterScreenshot();
@@ -254,6 +256,32 @@ const hideScrollbars = () => {
         doc.head.appendChild(style);
 
         style.innerHTML = `::-webkit-scrollbar { display: none; }`;
+    });
+};
+
+const disableStickyPositioningBeforeScreenshot = () => {
+    cy.document().then((doc) => {
+        doc.querySelectorAll('*').forEach((el) => {
+            const htmlEl = el as HTMLElement;
+            const position = window.getComputedStyle(htmlEl).getPropertyValue('position');
+
+            if (position === 'sticky') {
+                htmlEl.setAttribute('data-original-position', position);
+                htmlEl.style.setProperty('position', 'static', 'important');
+            }
+        });
+    });
+};
+
+const restoreStickyPositioningAfterScreenshot = () => {
+    cy.document().then((doc) => {
+        const modifiedElements = doc.querySelectorAll('[data-original-position]');
+
+        modifiedElements.forEach((el) => {
+            const htmlEl = el as HTMLElement;
+            htmlEl.style.removeProperty('position');
+            htmlEl.removeAttribute('data-original-position');
+        });
     });
 };
 
