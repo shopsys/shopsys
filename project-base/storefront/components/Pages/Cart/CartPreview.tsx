@@ -4,13 +4,18 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
+import { RefObject } from 'react';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
-export const CartPreview: FC = () => {
+type CartPreviewProps = {
+    wrapperRef?: RefObject<HTMLDivElement>;
+};
+
+export const CartPreview: FC<CartPreviewProps> = ({ wrapperRef }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, promoCodes } = useCurrentCart();
@@ -103,6 +108,7 @@ export const CartPreview: FC = () => {
                     )}
                 </div>
             )}
+
             {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
                 isPriceVisible(cart.totalItemsPrice.priceWithoutVat) && (
                     <div className="flex flex-col justify-between gap-2" data-tid={TIDs.pages_cart_cartpreview_total}>
@@ -119,20 +125,22 @@ export const CartPreview: FC = () => {
                         </span>
                     </div>
                 )}
-            <Button
-                className="mt-4"
-                size="xlarge"
-                tid={TIDs.blocks_orderaction_next}
-                variant="primary"
-                aria-label={t('Continue with order to {{ step }}', {
-                    ns: 'accessibility',
-                    step: t('Transport and payment'),
-                })}
-                onClick={goToNextStepFromCartPage}
-            >
-                {t('Continue with order')}
-                <ArrowSecondaryIcon className="size-4 -rotate-90" />
-            </Button>
+
+            <div className="mt-4" ref={wrapperRef}>
+                <Button
+                    size="xlarge"
+                    tid={TIDs.blocks_orderaction_next}
+                    variant="primary"
+                    aria-label={t('Continue with order to {{ step }}', {
+                        ns: 'accessibility',
+                        step: t('Transport and payment'),
+                    })}
+                    onClick={goToNextStepFromCartPage}
+                >
+                    {t('Continue with order')}
+                    <ArrowSecondaryIcon className="size-4 -rotate-90" />
+                </Button>
+            </div>
         </div>
     );
 };
