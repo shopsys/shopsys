@@ -29,8 +29,18 @@ CartDecorator:
             totalItemsPrice:
                 type: "Price!"
                 description: "Total items price (excluding transport and payment)"
+            totalItemsPriceBeforeDiscount:
+                type: "Price!"
+                description: "Total items price before any discounts are applied (sum of all products at basic prices)"
+            totalProductDiscountPrice:
+                type: "Price!"
+                description: "Total discount from product special prices (difference between basic and selling prices)"
+            totalPromoCodeDiscountPrice:
+                type: "Price!"
+                description: "Total discount from promo codes and promotions"
             totalDiscountPrice:
                 type: "Price!"
+                description: "Total of all discounts (product discounts + promo code discounts)"
             totalPriceWithoutDiscountTransportAndPayment:
                 type: "Price!"
                 description: "Total price (excluding discount, transport and payment)"
