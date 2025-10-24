@@ -9,6 +9,7 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -71,8 +72,8 @@ final class TermsAndConditionsSettingFormType extends AbstractType
                 'label' => 'Withdrawal instructions',
                 'help' => t('The instructions are presented to the customer after they submit the order withdrawal request.'),
                 'available_variables' => [
-                    '{order_number}' => t('Order number'),
-                    '{order_detail_url}' => t('Order detail URL address'),
+                    WithdrawalFacade::VARIABLE_ORDER_NUMBER => t('Order number'),
+                    WithdrawalFacade::VARIABLE_ORDER_DETAIL_URL => t('Order detail URL address'),
                 ],
                 'constraints' => [
                     new Constraints\NotBlank([

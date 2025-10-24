@@ -721,6 +721,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
 
+    Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker: ~
+
     Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider:
         arguments:
             $paymentTypeEnums: !tagged shopsys.payment_type_enum

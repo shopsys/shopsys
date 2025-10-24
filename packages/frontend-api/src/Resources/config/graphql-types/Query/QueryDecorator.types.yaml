@@ -457,3 +457,19 @@ QueryDecorator:
                                     min: 20
                                     max: 20
                 resolve: "@=query('personalDataAccessQuery', args['hash'], validator)"
+            withdrawalInstructions:
+                type: "String!"
+                resolve: "@=query('withdrawalInstructionsQuery', args['orderUrlHash'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+                args:
+                    orderUrlHash:
+                        type: "String!"
+                description: "Returns withdrawal instructions for the order"
+            canRequestOrderWithdrawal:
+                type: "Boolean!"
+                resolve: "@=query('canRequestOrderWithdrawalQuery', args['orderUrlHash'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+                args:
+                    orderUrlHash:
+                        type: "String!"
+                description: "Returns whether withdrawal can be requested for the order"
