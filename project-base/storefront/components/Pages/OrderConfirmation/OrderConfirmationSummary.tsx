@@ -4,10 +4,10 @@ import React, { memo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { isPriceVisible } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 type OrderConfirmationSummaryProps = {
-    promoCode: string | null | undefined;
+    promoCode?: string | null;
     payment: {
         name: string | undefined;
         price: string | undefined;
@@ -18,6 +18,9 @@ type OrderConfirmationSummaryProps = {
     };
     totalPrice: TypePriceFragment;
     roundingPrice?: TypePriceFragment | null;
+    totalItemsPriceBeforeDiscount?: TypePriceFragment | null;
+    totalProductDiscountPrice?: TypePriceFragment | null;
+    totalDiscountPrice?: TypePriceFragment | null;
 };
 
 const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
@@ -26,9 +29,22 @@ const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
     transport,
     totalPrice,
     roundingPrice,
+    totalItemsPriceBeforeDiscount,
+    totalProductDiscountPrice,
+    totalDiscountPrice,
 }) => {
     const formatPrice = useFormatPrice();
     const { t } = useTranslation();
+
+    const hasProductDiscounts =
+        totalProductDiscountPrice &&
+        isPriceVisible(totalProductDiscountPrice.priceWithVat) &&
+        mapPriceForCalculations(totalProductDiscountPrice.priceWithVat) > 0;
+
+    const hasTotalDiscounts =
+        totalDiscountPrice &&
+        isPriceVisible(totalDiscountPrice.priceWithVat) &&
+        mapPriceForCalculations(totalDiscountPrice.priceWithVat) > 0;
 
     return (
         <div className="bg-background-more font-secondary flex flex-col gap-4 rounded-xl p-8 text-sm font-semibold">
@@ -65,6 +81,32 @@ const OrderConfirmationSummaryComp: FC<OrderConfirmationSummaryProps> = ({
                 <div className={twJoin('flex items-center justify-between gap-4')}>
                     {t('Promo code')}
                     <Flag type="discount">{promoCode}</Flag>
+                </div>
+            )}
+
+            {hasProductDiscounts && (
+                <div className="flex flex-col gap-4">
+                    {totalItemsPriceBeforeDiscount &&
+                        isPriceVisible(totalItemsPriceBeforeDiscount.priceWithVat) &&
+                        hasTotalDiscounts && (
+                            <div className="border-border-less flex items-center justify-between gap-4 border-t-1 pt-4">
+                                <span>{t('Price before discount')}</span>
+
+                                <span className="whitespace-nowrap">
+                                    {formatPrice(totalItemsPriceBeforeDiscount.priceWithVat)}
+                                </span>
+                            </div>
+                        )}
+
+                    {hasTotalDiscounts && (
+                        <div className="border-border-less flex items-center justify-between gap-4">
+                            <span className="text-price-discounted">{t('Save in total')}</span>
+
+                            <span className="text-price-discounted whitespace-nowrap">
+                                {formatPrice(totalDiscountPrice.priceWithVat)}
+                            </span>
+                        </div>
+                    )}
                 </div>
             )}
 
