@@ -10,7 +10,7 @@ export type SkeletonModuleProductsListProps = {
 
 export const SkeletonModuleProductSlider: FC<SkeletonModuleProductsListProps> = ({ isWithSimpleCards }) => (
     <div className="flex flex-col gap-3">
-        <Skeleton className="h-5 w-40 lg:h-6" />
+        <Skeleton className="h-7 w-40 lg:h-8" />
 
         <div className="relative">
             <div className="w-full">

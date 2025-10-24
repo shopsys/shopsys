@@ -74,7 +74,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     };
 
     return (
-        <Webline>
+        <Webline className="mb-4">
             {shouldRender
                 ? render(
                       <ProductsSlider
