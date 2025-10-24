@@ -3340,7 +3340,11 @@ Selected pickup place identifier if provided
 <tr>
 <td colspan="2" valign="top"><strong id="cart.totaldiscountprice">totalDiscountPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
+<td>
+
+Total of all discounts (product discounts + promo code discounts)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="cart.totalitemsprice">totalItemsPrice</strong></td>
@@ -3348,6 +3352,15 @@ Selected pickup place identifier if provided
 <td>
 
 Total items price (excluding transport and payment)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.totalitemspricebeforediscount">totalItemsPriceBeforeDiscount</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total items price before any discounts are applied (sum of all products at basic prices)
 
 </td>
 </tr>
@@ -3366,6 +3379,24 @@ Total price including transport and payment
 <td>
 
 Total price (excluding discount, transport and payment)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.totalproductdiscountprice">totalProductDiscountPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total discount from product special prices (difference between basic and selling prices)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.totalpromocodediscountprice">totalPromoCodeDiscountPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total discount from promo codes and promotions
 
 </td>
 </tr>

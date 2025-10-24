@@ -10,6 +10,15 @@ fragment CartFragment on Cart {
     totalItemsPrice {
         ...PriceFragment
     }
+    totalItemsPriceBeforeDiscount {
+        ...PriceFragment
+    }
+    totalProductDiscountPrice {
+        ...PriceFragment
+    }
+    totalPromoCodeDiscountPrice {
+        ...PriceFragment
+    }
     totalDiscountPrice {
         ...PriceFragment
     }
@@ -18,7 +27,7 @@ fragment CartFragment on Cart {
     }
     remainingAmountForFreeTransport
     transport {
-        ...TransportWithAvailablePaymentsAndStoresFragment,
+        ...TransportWithAvailablePaymentsAndStoresFragment
     }
     payment {
         ...SimplePaymentFragment
