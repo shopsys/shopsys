@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Router;
 
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
-use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem;
+use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Symfony\Component\Routing\Route;
 
 final class CrudRouteProvider
@@ -47,25 +46,15 @@ final class CrudRouteProvider
     ];
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider $crudConfigProvider
-     */
-    public function __construct(
-        private readonly CrudConfigProvider $crudConfigProvider,
-    ) {
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem $item
+     * @param \Shopsys\AdministrationBundle\Component\Crud\Definition $item
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @return \Shopsys\AdministrationBundle\Component\Router\CrudRouteItem
      */
-    public function generate(CrudControllerDefinitionItem $item, ActionType $pageType): CrudRouteItem
+    public function generate(Definition $item, ActionType $pageType): CrudRouteItem
     {
-        $config = $this->crudConfigProvider->getConfig($item);
-
         return new CrudRouteItem(
             controller: $this->generateController($item->controllerClass, $pageType),
-            route: $this->generateRoute($item, $pageType, $config->getRoutePrefix()),
+            route: $this->generateRoute($item, $pageType, $item->getConfig()->getRoutePrefix()),
             routeName: $this->generateRouteName($item->controllerName, $pageType),
             pageType: $pageType,
         );
@@ -82,13 +71,13 @@ final class CrudRouteProvider
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem $item
+     * @param \Shopsys\AdministrationBundle\Component\Crud\Definition $item
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @param string|null $routePrefix
      * @return \Symfony\Component\Routing\Route
      */
     private function generateRoute(
-        CrudControllerDefinitionItem $item,
+        Definition $item,
         ActionType $pageType,
         ?string $routePrefix,
     ): Route {

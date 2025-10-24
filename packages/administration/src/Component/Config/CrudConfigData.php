@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use ReflectionClass;
 
 final class CrudConfigData
 {
-    private string $entityName;
-
     public array $customPageTitles = [
         ActionType::CREATE->value => null,
         ActionType::EDIT->value => null,
@@ -37,11 +34,10 @@ final class CrudConfigData
 
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param class-string $entityClass
+     * @param string $entityName
      */
-    public function __construct(private string $crudController, private string $entityClass)
+    public function __construct(private string $crudController, private string $entityName)
     {
-        $this->entityName = (new ReflectionClass($entityClass))->getShortName();
         $this->enabledActions = new ArrayCollection([
             ActionType::LIST,
             ActionType::CREATE,
@@ -74,14 +70,6 @@ final class CrudConfigData
     public function getEntityName(): string
     {
         return $this->entityName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityClass(): string
-    {
-        return $this->entityClass;
     }
 
     /**

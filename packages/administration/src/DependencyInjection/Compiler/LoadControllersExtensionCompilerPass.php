@@ -8,7 +8,7 @@ use Override;
 use ReflectionClass;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry;
+use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -34,7 +34,7 @@ class LoadControllersExtensionCompilerPass implements CompilerPassInterface
         }
 
         $container->setParameter(
-            CrudControllerExtensionsRegistry::CRUD_CONTROLLERS_EXTENSIONS_PARAMETER,
+            CrudControllerRegistry::CRUD_CONTROLLERS_EXTENSIONS_PARAMETER,
             $extensions,
         );
     }

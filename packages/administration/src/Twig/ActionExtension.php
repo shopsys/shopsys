@@ -10,7 +10,7 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface
 use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
-use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
+use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
@@ -21,13 +21,13 @@ use Twig\TwigFunction;
 class ActionExtension extends AbstractExtension
 {
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry
+     * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
      */
     public function __construct(
-        private readonly CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry,
+        private readonly CrudControllerRegistry $crudControllerRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
         private readonly RouterInterface $router,
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
@@ -65,7 +65,7 @@ class ActionExtension extends AbstractExtension
 
         if ($actionRoute instanceof CrudActionRouteData) {
             $routeItem = $this->crudRouteProvider->generate(
-                $this->crudControllerDefinitionRegistry->getItem($actionRoute->getCrudController()),
+                $this->crudControllerRegistry->getItem($actionRoute->getCrudController()),
                 $actionRoute->getActionType(),
             );
 
