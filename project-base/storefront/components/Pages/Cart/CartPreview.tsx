@@ -25,50 +25,84 @@ export const CartPreview: FC = () => {
         return null;
     }
 
+    const hasProductDiscounts =
+        isPriceVisible(cart.totalProductDiscountPrice.priceWithVat) &&
+        mapPriceForCalculations(cart.totalProductDiscountPrice.priceWithVat) > 0;
+
+    const hasPromoCodeDiscounts =
+        isPriceVisible(cart.totalPromoCodeDiscountPrice.priceWithVat) &&
+        mapPriceForCalculations(cart.totalPromoCodeDiscountPrice.priceWithVat) > 0;
+
+    const hasTotalDiscounts =
+        isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
+        mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0;
+
     return (
         <div className="bg-background-more font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" overlayClassName="rounded-xl" />}
 
-            {(promoCodes.length > 0 ||
-                (isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
-                    mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0)) && (
+            {(hasProductDiscounts || hasPromoCodeDiscounts || promoCodes.length > 0) && (
                 <div className="border-border-less mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
-                    {promoCodes.length > 0 && (
+                    {isPriceVisible(cart.totalItemsPriceBeforeDiscount.priceWithVat) && hasTotalDiscounts && (
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <p>{t('Promo code')}</p>
+                            <p>{t('Price before discount')}</p>
 
-                                <Flag type="discount">{promoCodes[0].code}</Flag>
-
-                                <button
-                                    className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
-                                    data-tid={TIDs.blocks_promocode_promocodeinfo_code}
-                                    tabIndex={0}
-                                    aria-label={t('Remove promo code {{ promoCode }}', {
-                                        ns: 'accessibility',
-                                        promoCode: promoCodes[0].code,
-                                    })}
-                                    onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
-                                >
-                                    {t('Remove')}
-                                </button>
-                            </div>
+                            <span className="whitespace-nowrap">
+                                {formatPrice(cart.totalItemsPriceBeforeDiscount.priceWithVat)}
+                            </span>
                         </div>
                     )}
 
-                    {isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
-                        mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
-                            <div className="flex items-center justify-between">
-                                <p>{t('The amount of discounts')}</p>
+                    {hasProductDiscounts && (
+                        <div className="flex items-center justify-between">
+                            <p>{t('Amount of discount on products on sale')}</p>
 
-                                <span className="text-price-discounted whitespace-nowrap">
-                                    {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
+                            <span className="text-price-discounted whitespace-nowrap">
+                                {'-' + formatPrice(cart.totalProductDiscountPrice.priceWithVat)}
+                            </span>
+                        </div>
+                    )}
+
+                    {promoCodes.length > 0 && (
+                        <div className="flex w-full items-center gap-2">
+                            <p>{t('Promo code')}</p>
+
+                            <Flag className={hasPromoCodeDiscounts ? '' : 'ml-auto'} type="discount">
+                                {promoCodes[0].code}
+                            </Flag>
+
+                            <button
+                                className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
+                                data-tid={TIDs.blocks_promocode_promocodeinfo_code}
+                                tabIndex={0}
+                                aria-label={t('Remove promo code {{ promoCode }}', {
+                                    ns: 'accessibility',
+                                    promoCode: promoCodes[0].code,
+                                })}
+                                onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
+                            >
+                                {t('Remove')}
+                            </button>
+
+                            {hasPromoCodeDiscounts && (
+                                <span className="text-price-discounted ml-auto">
+                                    {'-' + formatPrice(cart.totalPromoCodeDiscountPrice.priceWithVat)}
                                 </span>
-                            </div>
-                        )}
+                            )}
+                        </div>
+                    )}
+
+                    {hasTotalDiscounts && (
+                        <div className="border-border-less flex items-center justify-between border-t-1 pt-4">
+                            <p className="text-price-discounted">{t('Save in total')}</p>
+
+                            <span className="text-price-discounted whitespace-nowrap">
+                                {formatPrice(cart.totalDiscountPrice.priceWithVat)}
+                            </span>
+                        </div>
+                    )}
                 </div>
             )}
-
             {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
                 isPriceVisible(cart.totalItemsPrice.priceWithoutVat) && (
                     <div className="flex flex-col justify-between gap-2" data-tid={TIDs.pages_cart_cartpreview_total}>
@@ -85,7 +119,6 @@ export const CartPreview: FC = () => {
                         </span>
                     </div>
                 )}
-
             <Button
                 className="mt-4"
                 size="xlarge"

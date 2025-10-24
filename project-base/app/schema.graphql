@@ -413,13 +413,20 @@ type Cart {
   roundingPrice: Price
   "Selected pickup place identifier if provided"
   selectedPickupPlaceIdentifier: String
+  "Total of all discounts (product discounts + promo code discounts)"
   totalDiscountPrice: Price!
   "Total items price (excluding transport and payment)"
   totalItemsPrice: Price!
+  "Total items price before any discounts are applied (sum of all products at basic prices)"
+  totalItemsPriceBeforeDiscount: Price!
   "Total price including transport and payment"
   totalPrice: Price!
   "Total price (excluding discount, transport and payment)"
   totalPriceWithoutDiscountTransportAndPayment: Price!
+  "Total discount from product special prices (difference between basic and selling prices)"
+  totalProductDiscountPrice: Price!
+  "Total discount from promo codes and promotions"
+  totalPromoCodeDiscountPrice: Price!
   "Selected transport if transport provided"
   transport: Transport
   "UUID of the cart, null for authenticated user"
