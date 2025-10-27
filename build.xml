@@ -188,13 +188,13 @@
         </if>
     </target>
 
-    <target name="standards" depends="shopsys_framework.standards,phing-config-check" description="Checks coding standards."/>
+    <target name="standards" depends="shopsys_administration.standards,phing-config-check" description="Checks coding standards."/>
 
-    <target name="standards-diff" depends="shopsys_framework.standards-diff,phing-config-check" description="Checks coding standards in changed files."/>
+    <target name="standards-diff" depends="shopsys_administration.standards-diff,phing-config-check" description="Checks coding standards in changed files."/>
 
-    <target name="standards-fix" depends="shopsys_framework.standards-fix,phing-config-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix" depends="shopsys_administration.standards-fix,phing-config-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
 
-    <target name="standards-fix-diff" depends="shopsys_framework.standards-fix-diff,phing-config-fix" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix-diff" depends="shopsys_administration.standards-fix-diff,phing-config-fix" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="stylelint" description="Checks conventions in styles">
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">

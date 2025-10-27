@@ -18,6 +18,9 @@ final readonly class AccessControlConfiguration
         'admin_login',
         'admin_login_check',
         'admin_logout',
+        'ef_connect',
+        'ef_main_js',
+        'elfinder',
     ];
 
     /**
