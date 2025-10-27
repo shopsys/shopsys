@@ -13,6 +13,10 @@ use Symfony\Component\Routing\RouteCollection;
 
 final class CrudControllerRouteLoader implements LoaderInterface
 {
+    public const string IS_CRUD_CONTROLLER = '_crud_controller';
+    public const string CRUD_ACTION = '_crud_action';
+    public const string CRUD_ROLE_CONSTANT = '_crud_role_constant';
+
     /**
      * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
@@ -75,7 +79,13 @@ final class CrudControllerRouteLoader implements LoaderInterface
         foreach ($item->getConfig()->getActions() as $actionType) {
             $routeItem = $this->crudRouteProvider->generate($item, $actionType);
 
-            $routes->add($routeItem->getRouteName(), $routeItem->getRoute());
+            $route = $routeItem->getRoute();
+
+            $route->setDefault(self::IS_CRUD_CONTROLLER, true);
+            $route->setDefault(self::CRUD_ACTION, $actionType->value);
+            $route->setDefault(self::CRUD_ROLE_CONSTANT, $item->getRoleConstant());
+
+            $routes->add($routeItem->getRouteName(), $route);
         }
     }
 }
