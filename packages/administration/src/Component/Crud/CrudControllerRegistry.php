@@ -104,7 +104,7 @@ final class CrudControllerRegistry
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
         $crudController = $this->container->get($controllerClass);
 
-        $config = new CrudConfig($controllerClass, $entityName);
+        $config = new CrudConfig($entityName);
         $crudController->configure($config);
 
         foreach ($extensions as $extension) {
