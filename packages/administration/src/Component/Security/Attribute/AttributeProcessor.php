@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Security\Attribute;
 
 use InvalidArgumentException;
+use ReflectionClass;
 use ReflectionMethod;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -33,24 +34,16 @@ final class AttributeProcessor
     }
 
     /**
+     * @param \ReflectionClass $class
      * @param \ReflectionMethod $method
      * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
      */
-    public function processMethod(ReflectionMethod $method): array
+    public function processMethod(ReflectionClass $class, ReflectionMethod $method): array
     {
         $rules = [];
 
-        // Get class-level role if ForRole attribute is present
-        $classRole = $this->getClassRole($method);
-
-        // Check if class has SuperAdminOnly attribute
-        $classSuperAdminOnly = $this->getClassSuperAdminOnly($method);
-
-        // Check if class has PublicAccess attribute
-        $classPublicAccess = $this->getClassPublicAccess($method);
-
         // Process SuperAdminOnly first (highest priority - most restrictive)
-        if ($classSuperAdminOnly) {
+        if ($this->getClassAttribute($class, SuperAdminOnly::class) !== null) {
             $rules[] = $this->accessControlRuleFactory->create(SystemRole::SUPER_ADMIN);
 
             // If SuperAdminOnly is present at class level, don't process other attributes for security
@@ -87,6 +80,9 @@ final class AttributeProcessor
             $rules[] = $this->accessControlRuleFactory->create($roleWithPermission, $attribute->getMethods());
         }
 
+        // Get class-level role if ForRole attribute is present
+        $classRole = $this->getClassAttribute($class, ForRole::class)?->role;
+
         // Process CRUD attributes
         $this->processPermissionAttributes($method, $rules, CanView::class, $classRole);
         $this->processPermissionAttributes($method, $rules, CanEdit::class, $classRole);
@@ -101,7 +97,7 @@ final class AttributeProcessor
             if ($publicAccess !== []) {
                 $attribute = $publicAccess[0]->newInstance();
                 $rules[] = $this->accessControlRuleFactory->create(SystemRole::PUBLIC_ACCESS, $attribute->getMethods());
-            } elseif ($classPublicAccess) {
+            } elseif ($this->getClassAttribute($class, PublicAccess::class) !== null) {
                 // Fall back to class-level PublicAccess only if no method-level attributes exist
                 $rules[] = $this->accessControlRuleFactory->create(SystemRole::PUBLIC_ACCESS);
             }
@@ -141,39 +137,19 @@ final class AttributeProcessor
     }
 
     /**
-     * @param \ReflectionMethod $method
-     * @return string|null
+     * @template T of object
+     * @param \ReflectionClass $class
+     * @param class-string<T> $attributeClass
+     * @return T|null
      */
-    private function getClassRole(ReflectionMethod $method): ?string
+    private function getClassAttribute(ReflectionClass $class, string $attributeClass): ?object
     {
-        $classAttributes = $method->getDeclaringClass()->getAttributes(ForRole::class);
+        $attributes = $class->getAttributes($attributeClass);
 
-        if ($classAttributes === []) {
-            return null;
+        if ($attributes !== []) {
+            return $attributes[0]->newInstance();
         }
 
-        return $classAttributes[0]->newInstance()->role;
-    }
-
-    /**
-     * @param \ReflectionMethod $method
-     * @return bool
-     */
-    private function getClassSuperAdminOnly(ReflectionMethod $method): bool
-    {
-        $classAttributes = $method->getDeclaringClass()->getAttributes(SuperAdminOnly::class);
-
-        return $classAttributes !== [];
-    }
-
-    /**
-     * @param \ReflectionMethod $method
-     * @return bool
-     */
-    private function getClassPublicAccess(ReflectionMethod $method): bool
-    {
-        $classAttributes = $method->getDeclaringClass()->getAttributes(PublicAccess::class);
-
-        return $classAttributes !== [];
+        return null;
     }
 }

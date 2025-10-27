@@ -238,7 +238,7 @@ class RouteAccessControlDataProviderTest extends TestCase
 
         $routeData = $result['admin_reflection_error'];
         $this->assertEquals('Tests\\AdministrationBundle\\Unit\\Component\\Security\\AccessControl\\RouteAccessControlDataProviderTest', $routeData->controllerClass);
-        $this->assertEquals('unknownMethod', $routeData->controllerMethod);
+        $this->assertEquals('nonExistentMethod', $routeData->controllerMethod);
         $this->assertEmpty($routeData->accessControlRules);
     }
 

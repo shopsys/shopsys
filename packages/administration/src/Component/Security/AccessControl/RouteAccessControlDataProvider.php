@@ -7,8 +7,8 @@ namespace Shopsys\AdministrationBundle\Component\Security\AccessControl;
 use InvalidArgumentException;
 use Override;
 use Psr\Log\LoggerInterface;
+use ReflectionClass;
 use ReflectionException;
-use ReflectionMethod;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -137,8 +137,8 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
                     continue;
                 }
 
-                $reflectionMethod = new ReflectionMethod($controllerClass, $method);
-                $rules = $this->attributeProcessor->processMethod($reflectionMethod);
+                $reflectionClass = new ReflectionClass($controllerClass);
+                $rules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
 
                 $indexedRoutes[$routeName] = new RouteAccessControlData(
                     $routeName,
@@ -161,7 +161,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
                     $routeName,
                     [],
                     explode('::', $controller)[0] ?? 'UnknownController',
-                    'unknownMethod',
+                    explode('::', $controller)[1] ?? 'unknownMethod',
                 );
             }
         }
