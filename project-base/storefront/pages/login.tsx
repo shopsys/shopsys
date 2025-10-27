@@ -66,7 +66,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 return {
                     redirect: {
                         statusCode: 302,
-                        destination: getBasePathWithLocale(redirectUrl, context.locale),
+                        destination: getBasePathWithLocale(redirectUrl, context),
                     },
                 };
             }

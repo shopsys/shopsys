@@ -70,7 +70,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             if (typeof context.params?.urlHash !== 'string') {
                 return {
                     redirect: {
-                        destination: getBasePathWithLocale('/', domainConfig.defaultLocale),
+                        destination: getBasePathWithLocale('/', context),
                         statusCode: 301,
                     },
                 };

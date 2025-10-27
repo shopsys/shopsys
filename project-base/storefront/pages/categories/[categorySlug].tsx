@@ -127,9 +127,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const serverSideCategoryDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     categoryDetailResponse.error,
                     categoryDetailResponse.data?.category,
-                    context.res,
+                    context,
                     domainConfig.url,
-                    context.locale,
                     urlSlug,
                 );
 
@@ -140,9 +139,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const serverSideCategoryProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     categoryProductsResponse.error,
                     categoryProductsResponse.data?.products,
-                    context.res,
+                    context,
                     domainConfig.url,
-                    context.locale,
                     urlSlug,
                 );
 

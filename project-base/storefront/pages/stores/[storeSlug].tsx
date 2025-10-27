@@ -69,9 +69,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     storeResponse.error,
                     storeResponse.data?.store,
-                    context.res,
+                    context,
                     domainConfig.url,
-                    context.locale,
                 );
 
                 if (serverSideErrorResponse) {

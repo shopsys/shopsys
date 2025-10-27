@@ -1,13 +1,12 @@
 import { getLoginUrlWithRedirect } from './getLoginUrlWithRedirect';
 import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
-import { Redirect } from 'next';
-import { DEFAULT_LOCALE } from 'utils/domain/domainUtils';
+import { GetServerSidePropsContext, Redirect } from 'next';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const getUnauthenticatedRedirectSSR = (
     resolvedUrl: string,
     domainUrl: string,
-    contextLocale: string = DEFAULT_LOCALE,
+    context: GetServerSidePropsContext,
 ): { redirect: Redirect } => {
     let redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(['/login'], domainUrl)[0];
 
@@ -21,7 +20,7 @@ export const getUnauthenticatedRedirectSSR = (
     return {
         redirect: {
             statusCode: 302,
-            destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, contextLocale),
+            destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, context),
         },
     };
 };

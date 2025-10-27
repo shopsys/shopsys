@@ -171,7 +171,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             return getUnauthenticatedRedirectSSR(
                 getUrlWithoutGetParameters(context.resolvedUrl),
                 domainConfig.url,
-                context.locale,
+                context,
             );
         }
     }
