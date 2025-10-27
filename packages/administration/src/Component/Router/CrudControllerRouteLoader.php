@@ -75,7 +75,13 @@ final class CrudControllerRouteLoader implements LoaderInterface
         foreach ($item->getConfig()->getActions() as $actionType) {
             $routeItem = $this->crudRouteProvider->generate($item, $actionType);
 
-            $routes->add($routeItem->getRouteName(), $routeItem->getRoute());
+            $route = $routeItem->getRoute();
+
+            $route->setDefault('_crud_controller', true);
+            $route->setDefault('_crud_action', $actionType->value);
+            $route->setDefault('_crud_role_constant', $item->getRoleConstant());
+
+            $routes->add($routeItem->getRouteName(), $route);
         }
     }
 }

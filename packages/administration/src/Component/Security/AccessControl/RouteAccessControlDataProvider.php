@@ -9,9 +9,12 @@ use Override;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use ReflectionException;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleIdentifierHelper;
+use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Contracts\Cache\CacheInterface;
 
@@ -38,6 +41,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
      * @param \Psr\Log\LoggerInterface $logger
      * @param string $adminUrl
      * @param \Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor $attributeProcessor
+     * @param \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory $accessControlRuleFactory
      */
     public function __construct(
         private readonly CacheInterface $cache,
@@ -46,6 +50,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
         private readonly LoggerInterface $logger,
         private readonly string $adminUrl,
         private readonly AttributeProcessor $attributeProcessor,
+        private readonly AccessControlRuleFactory $accessControlRuleFactory,
     ) {
     }
 
@@ -136,12 +141,9 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
                     continue;
                 }
 
-                $reflectionClass = new ReflectionClass($controllerClass);
-                $rules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
-
                 $indexedRoutes[$routeName] = new RouteAccessControlData(
                     $routeName,
-                    $rules,
+                    $this->processRouteRules($route, $controllerClass, $method),
                     $controllerClass,
                     $method,
                 );
@@ -216,5 +218,38 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
         }
 
         throw new InvalidArgumentException(sprintf('Invalid controller format: %s', $controller));
+    }
+
+    /**
+     * @param \Symfony\Component\Routing\Route $route
+     * @param class-string $controllerClass
+     * @param string $method
+     * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
+     */
+    private function processRouteRules(
+        Route $route,
+        string $controllerClass,
+        string $method,
+    ): array {
+        $reflectionClass = new ReflectionClass($controllerClass);
+        $attributeRules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
+        $isCrudController = $route->getDefault('_crud_controller') === true;
+
+        if (count($attributeRules) > 0 || $isCrudController === false) {
+            return $attributeRules;
+        }
+
+        /** @var \Shopsys\AdministrationBundle\Component\Config\ActionType $action */
+        $action = ActionType::from($route->getDefault('_crud_action'));
+        $roleConstant = $route->getDefault('_crud_role_constant');
+
+        $crudRules = [];
+
+        foreach ($action->toAccessControlRules() as $rule) {
+            $roleWithPermission = RoleIdentifierHelper::getIdentifierWithPermission($roleConstant, $rule->getPermission());
+            $crudRules[] = $this->accessControlRuleFactory->create($roleWithPermission, $rule->getMethods());
+        }
+
+        return $crudRules;
     }
 }
