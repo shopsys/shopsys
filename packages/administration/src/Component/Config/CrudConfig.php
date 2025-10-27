@@ -31,6 +31,10 @@ final class CrudConfig
 
     private ?string $routePrefix = null;
 
+    private ?string $customRoleConstant = null;
+
+    private ?string $customRoleSection = null;
+
     /**
      * @param string $entityName
      */
@@ -180,6 +184,34 @@ final class CrudConfig
     }
 
     /**
+     * Set custom role constant for the CRUD controller. This will be used for access control checks.
+     * If not set, role constant will be generated from the controller name automatically.
+     *
+     * @param string|null $roleConstant
+     * @return $this
+     */
+    public function setCustomRoleConstant(?string $roleConstant): self
+    {
+        $this->customRoleConstant = $roleConstant;
+
+        return $this;
+    }
+
+    /**
+     * Set role section for role constant. If not set, role section will be got from menu section automatically.
+     *
+     * @see \Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider
+     * @param string $roleSection
+     * @return $this
+     */
+    public function setCustomRoleSection(string $roleSection): self
+    {
+        $this->customRoleSection = $roleSection;
+
+        return $this;
+    }
+
+    /**
      * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfigData
      */
     public function getConfig(): CrudConfigData
@@ -193,6 +225,8 @@ final class CrudConfig
             $this->submenuSection,
             $this->visibleInMenu,
             $this->routePrefix,
+            $this->customRoleConstant,
+            $this->customRoleSection,
         );
     }
 }

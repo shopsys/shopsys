@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Router;
 
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Symfony\Component\Routing\Route;
 
 final class CrudRouteProvider
@@ -53,7 +54,7 @@ final class CrudRouteProvider
     public function generate(Definition $item, ActionType $pageType): CrudRouteItem
     {
         return new CrudRouteItem(
-            controller: $this->generateController($item->controllerClass, $pageType),
+            controller: CrudTransformationHelper::generateController($item->controllerClass, $pageType),
             route: $this->generateRoute($item, $pageType, $item->getConfig()->getRoutePrefix()),
             routeName: $this->generateRouteName($item->controllerName, $pageType),
             pageType: $pageType,
@@ -67,7 +68,7 @@ final class CrudRouteProvider
      */
     private function generateRouteName(string $controllerName, ActionType $pageType): string
     {
-        return 'admin_crud_' . $this->transformToRouteName($controllerName) . '_' . $pageType->value;
+        return 'admin_crud_' . CrudTransformationHelper::transformToRouteName($controllerName) . '_' . $pageType->value;
     }
 
     /**
@@ -85,67 +86,16 @@ final class CrudRouteProvider
         $routePath = '/';
 
         if ($routePrefix) {
-            $routePath .= $this->transformToRouteUrl(trim($routePrefix, '/')) . '/';
+            $routePath .= CrudTransformationHelper::transformToRouteUrl(trim($routePrefix, '/')) . '/';
         }
 
-        $routePath .= $this->transformToRouteUrl($item->controllerName) . $routeConfig['path'];
+        $routePath .= CrudTransformationHelper::transformToRouteUrl($item->controllerName) . $routeConfig['path'];
 
         return new Route(
             $routePath,
             [
-                '_controller' => $this->generateController($item->controllerClass, $pageType),
+                '_controller' => CrudTransformationHelper::generateController($item->controllerClass, $pageType),
             ],
         );
-    }
-
-    /**
-     * @param string $controllerClass
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
-     * @return string
-     */
-    private function generateController(string $controllerClass, ActionType $pageType): string
-    {
-        return sprintf('%s::%sAction', $controllerClass, $pageType->value);
-    }
-
-    /**
-     * Transform CrudController name to string that can be used as part of route URL in kebab-case format
-     *
-     * Example:
-     *     PriceListController -> price-list
-     *     OrdersController -> orders
-     *
-     * @param string $controllerName
-     * @return string
-     */
-    private function transformToRouteUrl(string $controllerName): string
-    {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $this->getCleanControllerName($controllerName)));
-    }
-
-    /**
-     * Transform CrudController name to string that can be used to define route name in snake_case format
-     *
-     * Example:
-     *    PriceListController => price_list
-     *    OrdersController => orders
-     *
-     * @param string $controllerName
-     * @return string
-     */
-    private function transformToRouteName(string $controllerName): string
-    {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $this->getCleanControllerName($controllerName)));
-    }
-
-    /**
-     * Remove "CrudController" or "Controller" from controller name to be able to use it with routes
-     *
-     * @param string $controllerName
-     * @return string
-     */
-    private function getCleanControllerName(string $controllerName): string
-    {
-        return str_replace(['CrudController', 'Controller'], '', $controllerName);
     }
 }

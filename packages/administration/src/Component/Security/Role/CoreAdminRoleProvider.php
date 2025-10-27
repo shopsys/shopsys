@@ -24,7 +24,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
     #[Override]
     public function getPriority(): int
     {
-        return -1;
+        return -2;
     }
 
     /**
