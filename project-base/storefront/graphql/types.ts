@@ -2865,6 +2865,8 @@ export type TypeQuery = {
   transport: Maybe<TypeTransport>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TypeTransport>;
+  /** Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet) */
+  withdrawalDeadline: Maybe<Scalars['DateTime']['output']>;
   /** Returns withdrawal instructions for the order */
   withdrawalInstructions: Scalars['String']['output'];
 };
@@ -3134,6 +3136,11 @@ export type TypeQueryTransportArgs = {
 
 export type TypeQueryTransportsArgs = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryWithdrawalDeadlineArgs = {
+  orderUrlHash: Scalars['String']['input'];
 };
 
 

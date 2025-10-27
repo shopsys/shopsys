@@ -1377,6 +1377,20 @@ Returns available transport methods based on the current cart state
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="query.withdrawaldeadline">withdrawalDeadline</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUrlHash</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="query.withdrawalinstructions">withdrawalInstructions</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

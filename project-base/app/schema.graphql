@@ -2417,6 +2417,8 @@ type Query {
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
   Variant: Variant
+  "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"
+  withdrawalDeadline(orderUrlHash: String!): DateTime
   "Returns withdrawal instructions for the order"
   withdrawalInstructions(orderUrlHash: String!): String!
 }
