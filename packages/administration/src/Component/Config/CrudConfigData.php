@@ -15,6 +15,8 @@ final readonly class CrudConfigData
      * @param string|null $submenuSection
      * @param bool $visibleInMenu
      * @param string|null $routePrefix
+     * @param string|null $customRoleConstant
+     * @param string|null $customRoleSection
      */
     public function __construct(
         private array $customPageTitles,
@@ -25,6 +27,8 @@ final readonly class CrudConfigData
         private ?string $submenuSection,
         private bool $visibleInMenu,
         private ?string $routePrefix,
+        private ?string $customRoleConstant,
+        private ?string $customRoleSection,
     ) {
     }
 
@@ -104,5 +108,21 @@ final readonly class CrudConfigData
     public function getRoutePrefix(): ?string
     {
         return $this->routePrefix;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomRoleConstant(): ?string
+    {
+        return $this->customRoleConstant;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomRoleSection(): ?string
+    {
+        return $this->customRoleSection;
     }
 }
