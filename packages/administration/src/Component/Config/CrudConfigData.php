@@ -4,56 +4,28 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-final class CrudConfigData
+final readonly class CrudConfigData
 {
-    public array $customPageTitles = [
-        ActionType::CREATE->value => null,
-        ActionType::EDIT->value => null,
-        ActionType::LIST->value => null,
-        ActionType::DETAIL->value => null,
-    ];
-
-    public ?string $menuTitle = null;
-
-    public bool $fullDisabled = false;
-
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<\Shopsys\AdministrationBundle\Component\Config\ActionType>
+     * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string> $customPageTitles
+     * @param string|null $menuTitle
+     * @param bool $fullDisabled
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType[] $enabledActions
+     * @param string $menuSection
+     * @param string|null $submenuSection
+     * @param bool $visibleInMenu
+     * @param string|null $routePrefix
      */
-    private ArrayCollection $enabledActions;
-
-    public string $menuSection = 'root';
-
-    public ?string $submenuSection = null;
-
-    public bool $visibleInMenu = true;
-
-    public ?string $routePrefix = null;
-
-    /**
-     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param string $entityName
-     */
-    public function __construct(private string $crudController, private string $entityName)
-    {
-        $this->enabledActions = new ArrayCollection([
-            ActionType::LIST,
-            ActionType::CREATE,
-            ActionType::EDIT,
-            ActionType::DETAIL,
-            ActionType::DELETE,
-        ]);
-
-        $this->customPageTitles = [
-            ActionType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $this->entityName]),
-            ActionType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $this->entityName]),
-            ActionType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $this->entityName]),
-            ActionType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $this->entityName]),
-        ];
-
-        $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $this->entityName]);
+    public function __construct(
+        private array $customPageTitles,
+        private ?string $menuTitle,
+        private bool $fullDisabled,
+        private array $enabledActions,
+        private string $menuSection,
+        private ?string $submenuSection,
+        private bool $visibleInMenu,
+        private ?string $routePrefix,
+    ) {
     }
 
     /**
@@ -61,7 +33,7 @@ final class CrudConfigData
      */
     public function getCrudController(): string
     {
-        return $this->crudController;
+        return '';
     }
 
     /**
@@ -69,7 +41,7 @@ final class CrudConfigData
      */
     public function getEntityName(): string
     {
-        return $this->entityName;
+        return '';
     }
 
     /**
@@ -78,7 +50,7 @@ final class CrudConfigData
      */
     public function getTitle(ActionType $pageType): string
     {
-        return $this->customPageTitles[$pageType->value];
+        return $this->customPageTitles[$pageType->value] ?? '';
     }
 
     /**
@@ -98,19 +70,7 @@ final class CrudConfigData
             return [];
         }
 
-        return $this->enabledActions->getValues();
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     */
-    public function enableAction(ActionType $actionType): void
-    {
-        if ($this->enabledActions->contains($actionType)) {
-            return;
-        }
-
-        $this->enabledActions->add($actionType);
+        return $this->enabledActions;
     }
 
     /**
@@ -119,19 +79,7 @@ final class CrudConfigData
      */
     public function isActionEnabled(ActionType $actionType): bool
     {
-        return $this->enabledActions->contains($actionType);
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     */
-    public function disableAction(ActionType $actionType): void
-    {
-        if (!$this->enabledActions->contains($actionType)) {
-            return;
-        }
-
-        $this->enabledActions->removeElement($actionType);
+        return in_array($actionType, $this->enabledActions, true);
     }
 
     /**
@@ -163,7 +111,7 @@ final class CrudConfigData
      */
     public function isVisibleInMenu(): bool
     {
-        return $this->visibleInMenu && $this->enabledActions->contains(ActionType::LIST);
+        return $this->visibleInMenu && $this->isActionEnabled(ActionType::LIST);
     }
 
     /**
