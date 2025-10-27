@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledException;
@@ -17,12 +16,12 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlineP
 class WithdrawalChecker
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected readonly Setting $setting,
+        protected readonly WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation,
         protected readonly OrderFacade $orderFacade,
         protected readonly Domain $domain,
     ) {
@@ -47,18 +46,12 @@ class WithdrawalChecker
             throw new WithdrawalAlreadyRequestedException('Withdrawal has already been requested for this order');
         }
 
-        $deliveredAt = $order->getDeliveredAt();
+        $withdrawalDeadline = $this->withdrawalDeadlineCalculation->getWithdrawalDeadline($order);
 
-        if ($deliveredAt === null) {
+        if ($withdrawalDeadline === null) {
             return;
         }
 
-        $withdrawalDeadlineDays = $this->setting->getForDomain(
-            Setting::WITHDRAWAL_DEADLINE_DAYS,
-            $order->getDomainId(),
-        );
-
-        $withdrawalDeadline = (clone $deliveredAt)->modify(sprintf('+%d days', $withdrawalDeadlineDays));
         $now = new DateTime();
 
         if ($now > $withdrawalDeadline) {

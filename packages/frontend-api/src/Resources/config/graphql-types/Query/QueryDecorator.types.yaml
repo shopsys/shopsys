@@ -473,3 +473,11 @@ QueryDecorator:
                     orderUrlHash:
                         type: "String!"
                 description: "Returns whether withdrawal can be requested for the order"
+            withdrawalDeadline:
+                type: "DateTime"
+                resolve: "@=query('withdrawalDeadlineQuery', args['orderUrlHash'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+                args:
+                    orderUrlHash:
+                        type: "String!"
+                description: "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"

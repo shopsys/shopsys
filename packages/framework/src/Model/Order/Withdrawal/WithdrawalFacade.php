@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
+use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -22,6 +23,7 @@ class WithdrawalFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker $withdrawalChecker
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -29,6 +31,7 @@ class WithdrawalFacade
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly WithdrawalChecker $withdrawalChecker,
+        protected readonly WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation,
     ) {
     }
 
@@ -60,6 +63,17 @@ class WithdrawalFacade
         } catch (WithdrawalException) {
             return false;
         }
+    }
+
+    /**
+     * @param string $orderUrlHash
+     * @return \DateTimeInterface|null
+     */
+    public function getWithdrawalDeadline(string $orderUrlHash): ?DateTimeInterface
+    {
+        $order = $this->orderFacade->getByUrlHashAndDomain($orderUrlHash, $this->domain->getId());
+
+        return $this->withdrawalDeadlineCalculation->getWithdrawalDeadline($order);
     }
 
     /**

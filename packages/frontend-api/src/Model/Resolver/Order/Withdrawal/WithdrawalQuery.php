@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order\Withdrawal;
 
+use DateTimeInterface;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -39,5 +40,18 @@ class WithdrawalQuery extends AbstractQuery
     public function canRequestOrderWithdrawalQuery(string $orderUrlHash): bool
     {
         return $this->withdrawalFacade->canRequestOrderWithdrawal($orderUrlHash);
+    }
+
+    /**
+     * @param string $orderUrlHash
+     * @return \DateTimeInterface|null
+     */
+    public function withdrawalDeadlineQuery(string $orderUrlHash): ?DateTimeInterface
+    {
+        try {
+            return $this->withdrawalFacade->getWithdrawalDeadline($orderUrlHash);
+        } catch (OrderNotFoundException) {
+            throw new OrderNotFoundUserError();
+        }
     }
 }
