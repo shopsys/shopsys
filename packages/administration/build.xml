@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Shopsys Administration Bundle" default="list" phingVersion="3">
+<project name="shopsys_administration" default="list" phingVersion="3">
 
     <import file="${path.framework}/build.xml"/>
 
