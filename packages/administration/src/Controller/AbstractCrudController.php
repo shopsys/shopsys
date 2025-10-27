@@ -8,7 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -69,8 +68,8 @@ abstract class AbstractCrudController extends AbstractController
             }
         });
         $datagrid = $this->datagridFactory->create($adapter, [
-            'crudConfig' => $this->getConfig(),
-            'name' => $this->getConfig()->getEntityName(),
+            'crudDefinition' => $this->definition,
+            'name' => $this->definition->entityName,
             'roleConstant' => SystemRole::ADMIN,
         ]);
         $this->configureDatagrid($datagrid);
@@ -80,7 +79,7 @@ abstract class AbstractCrudController extends AbstractController
         }
 
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
-            'title' => $this->getConfig()->getTitle(ActionType::LIST),
+            'title' => $this->definition->getConfig()->getTitle(ActionType::LIST),
             'grid' => $datagrid->createView(),
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
         ]);
@@ -93,7 +92,7 @@ abstract class AbstractCrudController extends AbstractController
     public function detailAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/detail.html.twig', [
-            'title' => $this->getConfig()->getTitle(ActionType::DETAIL),
+            'title' => $this->definition->getConfig()->getTitle(ActionType::DETAIL),
             'topActions' => $this->getConfiguredActions(ActionType::DETAIL),
         ]);
     }
@@ -105,7 +104,7 @@ abstract class AbstractCrudController extends AbstractController
     public function editAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
-            'title' => $this->getConfig()->getTitle(ActionType::EDIT),
+            'title' => $this->definition->getConfig()->getTitle(ActionType::EDIT),
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
         ]);
     }
@@ -116,7 +115,7 @@ abstract class AbstractCrudController extends AbstractController
     public function createAction(): Response
     {
         return $this->render('@ShopsysAdministration/crud/new.html.twig', [
-            'title' => $this->getConfig()->getTitle(ActionType::CREATE),
+            'title' => $this->definition->getConfig()->getTitle(ActionType::CREATE),
             'topActions' => $this->getConfiguredActions(ActionType::CREATE),
         ]);
     }
@@ -136,7 +135,7 @@ abstract class AbstractCrudController extends AbstractController
      */
     final protected function getConfiguredActions(ActionType $actionType): array
     {
-        $actionsConfig = new ActionsConfig(static::class, $this->getConfig()->getActions());
+        $actionsConfig = new ActionsConfig(static::class, $this->definition->getConfig()->getActions());
 
         $this->configureActions($actionsConfig);
 
@@ -145,13 +144,5 @@ abstract class AbstractCrudController extends AbstractController
         }
 
         return $actionsConfig->getActions($actionType);
-    }
-
-    /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfigData
-     */
-    final public function getConfig(): CrudConfigData
-    {
-        return $this->definition->getConfig();
     }
 }

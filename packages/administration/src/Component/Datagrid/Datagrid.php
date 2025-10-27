@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
-use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
+use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -72,14 +72,14 @@ final class Datagrid
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'name' => 'datagrid',
-            'crudConfig' => null,
+            'crudDefinition' => null,
             'pagination' => true,
         ]);
 
         $resolver->setRequired('roleConstant');
 
         $resolver->setAllowedTypes('name', 'string');
-        $resolver->setAllowedTypes('crudConfig', [CrudConfigData::class, 'null']);
+        $resolver->setAllowedTypes('crudDefinition', [Definition::class, 'null']);
         $resolver->setAllowedTypes('pagination', 'bool');
         $resolver->setAllowedTypes('roleConstant', 'string');
 
@@ -270,23 +270,23 @@ final class Datagrid
 
     private function configureDefaultCrudActions(): void
     {
-        if ($this->options['crudConfig'] === null) {
+        if ($this->options['crudDefinition'] === null) {
             return;
         }
 
-        /** @var \Shopsys\AdministrationBundle\Component\Config\CrudConfigData $crudConfig */
-        $crudConfig = $this->options['crudConfig'];
+        /** @var \Shopsys\AdministrationBundle\Component\Crud\Definition $crudDefinition */
+        $crudDefinition = $this->options['crudDefinition'];
 
         $this->actions->add(
             RowAction::create('edit', t('Edit'), 'pencil')
-                ->linkToCrud($crudConfig->getCrudController(), ActionType::EDIT, fn ($row) => (int)$row[$this->identificationName])
-                ->displayIf(fn () => $crudConfig->isActionEnabled(ActionType::EDIT)),
+                ->linkToCrud($crudDefinition->controllerClass, ActionType::EDIT, fn ($row) => (int)$row[$this->identificationName])
+                ->displayIf(fn () => $crudDefinition->getConfig()->isActionEnabled(ActionType::EDIT)),
         );
 
         $this->actions->add(
             RowAction::create('delete', t('Delete'), 'trash')
-                ->linkToCrud($crudConfig->getCrudController(), ActionType::DELETE, fn ($row) => (int)$row[$this->identificationName])
-                ->displayIf(fn () => $crudConfig->isActionEnabled(ActionType::DELETE))
+                ->linkToCrud($crudDefinition->controllerClass, ActionType::DELETE, fn ($row) => (int)$row[$this->identificationName])
+                ->displayIf(fn () => $crudDefinition->getConfig()->isActionEnabled(ActionType::DELETE))
                 ->setConfirmMessage(t('Do you really want to delete this item?')),
         );
     }

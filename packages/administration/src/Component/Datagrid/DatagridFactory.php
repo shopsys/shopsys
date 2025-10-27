@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 /**
  * @phpstan-type DatagridOptions array{
  *     name?: string,
- *     crudConfig?: \Shopsys\AdministrationBundle\Component\Config\CrudConfigData|null,
+ *     crudDefinition?: \Shopsys\AdministrationBundle\Component\Crud\Definition|null,
  *     pagination?: bool,
  *     roleConstant: string,
  * }

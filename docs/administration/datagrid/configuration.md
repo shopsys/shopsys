@@ -6,7 +6,7 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 
 - `roleConstant` (required, string) - The role constant that determines permission-based features in the datagrid. This is passed to the underlying Grid component to enable automatic permission checking. See [Grid Permission Integration](../internal-grid/index.md#automatic-permission-controls) for details on how permissions affect grid features.
 - `name` (optional, string) - The name of the datagrid
-- `crudConfig` (optional, object) - Crud Config provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
+- `crudDefinition` (optional, `Shopsys\AdministrationBundle\Component\Crud\Definition`) - Crud Definition provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
 - `pagination` (optional, bool) - Enable or disable pagination. Default is `true`
 
 
