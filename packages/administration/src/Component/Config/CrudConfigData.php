@@ -29,22 +29,6 @@ final readonly class CrudConfigData
     }
 
     /**
-     * @return string
-     */
-    public function getCrudController(): string
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName(): string
-    {
-        return '';
-    }
-
-    /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @return string
      */
