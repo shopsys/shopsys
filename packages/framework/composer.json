@@ -135,6 +135,9 @@
         "symfony/var-dumper": "^6.4",
         "symfony/yaml": "^6.4"
     },
+    "conflict": {
+        "doctrine/orm": ">=2.20.7"
+    },
     "extra": {
         "symfony": {
             "require": "^6.4",
