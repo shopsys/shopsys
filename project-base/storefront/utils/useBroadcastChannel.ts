@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { isClient } from 'utils/isClient';
 import { v4 as uuid } from 'uuid';
 
@@ -27,6 +27,12 @@ export const dispatchBroadcastChannel = (
 
 export const useBroadcastChannel = (name: BroadcastChannelsType, callBack: (messageEventData: any) => void) => {
     const domainConfig = useDomainConfig();
+    const callbackRef = useRef(callBack);
+
+    // Keep the callback ref up-to-date with the latest callback
+    useEffect(() => {
+        callbackRef.current = callBack;
+    }, [callBack]);
 
     useEffect(() => {
         const domainId = domainConfig.domainId;
@@ -43,12 +49,12 @@ export const useBroadcastChannel = (name: BroadcastChannelsType, callBack: (mess
                 messageEvent.data.domainId === domainId &&
                 (messageEvent.data.tabId !== tabId || broadcastChannelSameTabConfig[name])
             ) {
-                callBack(messageEvent.data);
+                callbackRef.current(messageEvent.data);
             }
         };
 
         return () => {
             channel.close();
         };
-    }, [domainConfig.domainId]);
+    }, [domainConfig.domainId, name]);
 };
