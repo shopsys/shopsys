@@ -195,6 +195,28 @@ class RouteConfigCustomization
                     ->setAuth(new NoAuth())
                     ->setExpectedStatusCode(200);
             })
+            ->customizeByRouteName('admin_administrator_promote-to-superadmin', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Standard admin is not allowed to promote to superadmin')
+                    ->addCallDuringTestExecution(
+                        function (RequestDataSet $requestDataSet, ContainerInterface $container) {
+                            $container = $container->get('test.service_container');
+                            /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
+                            $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
+                            /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
+                            $csrfTokenManager = $container->get('security.csrf.token_manager');
+
+                            $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
+                            $token = $csrfTokenManager->getToken($tokenId);
+
+                            $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
+                            $requestDataSet->setParameter($parameterName, $token->getValue());
+                        },
+                    )
+                    ->setExpectedStatusCode(308);
+                $config->addExtraRequestDataSet('Superadmin can promote to superadmin')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(302);
+            })
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
                     ->setExpectedStatusCode(308);
@@ -421,8 +443,7 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('First two role groups are system managed, so they can not be copied.')
                     ->setParameter('id', 3)
                     ->setExpectedStatusCode(200);
-            })
-        ;
+            });
     }
 
     /**

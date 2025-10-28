@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\PublicAccess;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
@@ -550,6 +551,33 @@ class AdministratorController extends AdminBaseController
             [
                 'email' => $administrator->getEmail(),
             ],
+        );
+
+        return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
+    }
+
+    /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/administrator/promote-to-superadmin/{id}', name: 'admin_administrator_promote-to-superadmin', requirements: ['id' => '\d+'])]
+    #[SuperAdminOnly]
+    public function promoteToSuperadminAction(int $id): Response
+    {
+        $administrator = $this->administratorFacade->getById($id);
+        $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
+
+        $administratorData->roleGroup = null;
+        $administratorData->roles = [SystemRole::SUPER_ADMIN];
+
+        $this->administratorFacade->edit($id, $administratorData);
+
+        $this->addSuccessFlash(
+            t(
+                'Administrator "%administrator_name%" now has superadmin permissions.',
+                ['%administrator_name%' => $administrator->getRealName()],
+            ),
         );
 
         return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
