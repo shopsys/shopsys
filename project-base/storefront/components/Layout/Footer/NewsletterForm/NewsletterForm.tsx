@@ -51,7 +51,7 @@ export const NewsletterForm: FC = () => {
                 <div>
                     <FormProvider {...formProviderMethods}>
                         <Form
-                            className="grid grid-cols-3 grid-rows-2 gap-2 lg:gap-3"
+                            className="grid grid-cols-3 items-start gap-2 lg:gap-3"
                             onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
                         >
                             <div className="col-span-2">

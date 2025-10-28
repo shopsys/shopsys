@@ -21,15 +21,17 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
             {articles.map((article) => (
                 <div key={article.uuid} className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5">
                     <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
-                        <Image
-                            alt={article.mainImage?.name || article.name}
-                            className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
-                            height={220}
-                            sizes="(max-width: 1023px) 0px, 144px"
-                            src={article.mainImage?.url}
-                            tid={TIDs.blog_preview_image}
-                            width={320}
-                        />
+                        <div className="vl:h-24 vl:w-36 aspect-video w-full flex-shrink-0 overflow-hidden rounded-xl">
+                            <Image
+                                alt={article.mainImage?.name || article.name}
+                                className="size-full object-cover"
+                                height={220}
+                                sizes="(max-width: 1023px) 0px, 144px"
+                                src={article.mainImage?.url}
+                                tid={TIDs.blog_preview_image}
+                                width={320}
+                            />
+                        </div>
                     </ArticleLink>
 
                     <div className="flex flex-col items-start gap-2">

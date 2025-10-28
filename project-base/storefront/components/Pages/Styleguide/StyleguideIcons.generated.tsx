@@ -23,6 +23,7 @@ import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
+import { FacebookSimpleIcon } from 'components/Basic/Icon/FacebookSimpleIcon';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
@@ -30,7 +31,7 @@ import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
-import { InfoIconInCircle } from 'components/Basic/Icon/InfoIconInCircle';
+import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
@@ -147,6 +148,10 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">FacebookIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <FacebookSimpleIcon className="size-10" />
+                <span className="text-center text-xs break-all">FacebookSimpleIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <FillIcon className="size-10" />
                 <span className="text-center text-xs break-all">FillIcon</span>
             </div>
@@ -175,8 +180,8 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">InfoIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <InfoIconInCircle className="size-10" />
-                <span className="text-center text-xs break-all">InfoIconInCircle</span>
+                <InfoInTriangleIcon className="size-10" />
+                <span className="text-center text-xs break-all">InfoInTriangleIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <InstagramIcon className="size-10" />

@@ -61,7 +61,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
 
                 <button
                     aria-label={t('Close filter panel', { ns: 'accessibility' })}
-                    className="text-icon-less hover:text-icon-accent flex cursor-pointer items-center justify-center"
+                    className="text-icon-less hover:text-icon-default flex cursor-pointer items-center justify-center"
                     tabIndex={0}
                     title={t('Close filter panel')}
                     type="button"
