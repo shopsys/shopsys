@@ -129,9 +129,17 @@ class AdministratorFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllListableQueryBuilder(): QueryBuilder
+    public function getAllListableExcludingSuperadminQueryBuilder(): QueryBuilder
     {
-        return $this->administratorRepository->getAllListableQueryBuilder();
+        return $this->administratorRepository->getAllListableExcludingSuperadminQueryBuilder();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryBuilder(): QueryBuilder
+    {
+        return $this->administratorRepository->getAllQueryBuilder();
     }
 
     /**

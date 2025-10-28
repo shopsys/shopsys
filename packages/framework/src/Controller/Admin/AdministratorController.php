@@ -79,7 +79,11 @@ class AdministratorController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
+        if ($this->getCurrentAdministrator()->isSuperadmin()) {
+            $queryBuilder = $this->administratorFacade->getAllQueryBuilder();
+        } else {
+            $queryBuilder = $this->administratorFacade->getAllListableExcludingSuperadminQueryBuilder();
+        }
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'a.id');
 
         $grid = $this->gridFactory->create('administratorList', $dataSource, AdminRoleConstant::ROLE_ADMINISTRATOR);
@@ -88,6 +92,11 @@ class AdministratorController extends AdminBaseController
         $grid->addColumn('realName', 'a.realName', t('Full name'), true);
         $grid->addColumn('userName', 'a.username', t('Username'), true);
         $grid->addColumn('email', 'a.email', t('Email'));
+
+        if ($this->getCurrentAdministrator()->isSuperadmin()) {
+            $grid->addColumn('superadmin', 'is_superadmin', t('Superadmin'))
+                ->setClassAttribute('text-center w-1');
+        }
 
         $grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id'])

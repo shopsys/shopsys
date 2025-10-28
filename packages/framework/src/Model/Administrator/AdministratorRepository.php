@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
+use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 
 class AdministratorRepository
 {
@@ -111,21 +113,39 @@ class AdministratorRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllListableQueryBuilder()
+    public function getAllListableExcludingSuperadminQueryBuilder(): QueryBuilder
     {
         return $this->getAdministratorRepository()->createQueryBuilder('a')
             ->leftJoin('a.roles', 'ar')
-            ->where('ar.role = :role')
-            ->orWhere('a.roleGroup is not NULL')
-            ->setParameter('role', SystemRole::ADMIN);
+            ->where('ar.role = :role OR a.roleGroup is not NULL')
+            ->andWhere('ar.role != :superadminRole OR ar.role IS NULL')
+            ->setParameter('role', SystemRole::ADMIN)
+            ->setParameter('superadminRole', SystemRole::SUPER_ADMIN);
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryBuilder(): QueryBuilder
+    {
+        $subquery = $this->em->createQueryBuilder()
+            ->select('1')
+            ->from(AdministratorRole::class, 'ar')
+            ->where('ar.administrator = a')
+            ->andWhere('ar.role = :superadminRole')
+            ->getDQL();
+
+        return $this->getAdministratorRepository()->createQueryBuilder('a')
+            ->addSelect(sprintf('CASE WHEN EXISTS(%s) THEN true ELSE false END AS is_superadmin', $subquery))
+            ->setParameter('superadminRole', SystemRole::SUPER_ADMIN);
     }
 
     /**
      * @return int
      */
-    public function getCountExcludingSuperadmin()
+    public function getCountExcludingSuperadmin(): int
     {
-        return (int)($this->getAllListableQueryBuilder()
+        return (int)($this->getAllListableExcludingSuperadminQueryBuilder()
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
     }
