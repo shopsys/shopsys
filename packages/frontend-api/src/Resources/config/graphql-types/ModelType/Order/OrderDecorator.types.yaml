@@ -159,3 +159,12 @@ OrderDecorator:
             withdrawalRequestedAt:
                 type: "DateTime"
                 description: "Date and time when the withdrawal was requested by customer"
+            withdrawalInstructions:
+                type: "String!"
+                description: "Returns withdrawal instructions for the order"
+            canRequestWithdrawal:
+                type: "Boolean!"
+                description: "Returns whether withdrawal can be requested for the order"
+            withdrawalDeadline:
+                type: "DateTime"
+                description: "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"

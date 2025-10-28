@@ -1,0 +1,13 @@
+query OrderWithdrawalDataQuery($urlHash: String!) {
+    order(urlHash: $urlHash) {
+        withdrawalFirstName
+        withdrawalLastName
+        withdrawalEmail
+        withdrawalTelephone
+        withdrawalRequestedAt
+        withdrawalNote
+        withdrawalInstructions
+        canRequestWithdrawal
+        withdrawalDeadline
+    }
+}

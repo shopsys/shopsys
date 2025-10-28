@@ -15,15 +15,15 @@ class CanRequestOrderWithdrawalQueryTest extends GraphQlTestCase
         $order = $this->getReferenceForDomain(OrderDataFixture::ORDER_DELIVERED_YESTERDAY, 1, Order::class);
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../_graphql/query/CanRequestOrderWithdrawalQuery.graphql',
+            __DIR__ . '/../_graphql/query/OrderWithdrawalDataQuery.graphql',
             [
-                'orderUrlHash' => $order->getUrlHash(),
+                'urlHash' => $order->getUrlHash(),
             ],
         );
 
-        $data = $this->getResponseDataForGraphQlType($response, 'canRequestOrderWithdrawal');
+        $data = $this->getResponseDataForGraphQlType($response, 'order');
 
-        $this->assertTrue($data);
+        $this->assertTrue($data['canRequestWithdrawal']);
     }
 
     public function testCannotRequestWithdrawalForCancelledOrder(): void
@@ -31,15 +31,15 @@ class CanRequestOrderWithdrawalQueryTest extends GraphQlTestCase
         $cancelledOrder = $this->getReferenceForDomain(OrderDataFixture::ORDER_CANCELLED, 1, Order::class);
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../_graphql/query/CanRequestOrderWithdrawalQuery.graphql',
+            __DIR__ . '/../_graphql/query/OrderWithdrawalDataQuery.graphql',
             [
-                'orderUrlHash' => $cancelledOrder->getUrlHash(),
+                'urlHash' => $cancelledOrder->getUrlHash(),
             ],
         );
 
-        $data = $this->getResponseDataForGraphQlType($response, 'canRequestOrderWithdrawal');
+        $data = $this->getResponseDataForGraphQlType($response, 'order');
 
-        $this->assertFalse($data);
+        $this->assertFalse($data['canRequestWithdrawal']);
     }
 
     public function testCannotRequestWithdrawalAfterDeadline(): void
@@ -47,15 +47,15 @@ class CanRequestOrderWithdrawalQueryTest extends GraphQlTestCase
         $expiredOrder = $this->getReferenceForDomain(OrderDataFixture::ORDER_DELIVERED_MONTH_AGO, 1, Order::class);
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../_graphql/query/CanRequestOrderWithdrawalQuery.graphql',
+            __DIR__ . '/../_graphql/query/OrderWithdrawalDataQuery.graphql',
             [
-                'orderUrlHash' => $expiredOrder->getUrlHash(),
+                'urlHash' => $expiredOrder->getUrlHash(),
             ],
         );
 
-        $data = $this->getResponseDataForGraphQlType($response, 'canRequestOrderWithdrawal');
+        $data = $this->getResponseDataForGraphQlType($response, 'order');
 
-        $this->assertFalse($data);
+        $this->assertFalse($data['canRequestWithdrawal']);
     }
 
     public function testCannotRequestWithdrawalWhenAlreadyRequested(): void
@@ -67,28 +67,29 @@ class CanRequestOrderWithdrawalQueryTest extends GraphQlTestCase
         );
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../_graphql/query/CanRequestOrderWithdrawalQuery.graphql',
+            __DIR__ . '/../_graphql/query/OrderWithdrawalDataQuery.graphql',
             [
-                'orderUrlHash' => $orderWithWithdrawal->getUrlHash(),
+                'urlHash' => $orderWithWithdrawal->getUrlHash(),
             ],
         );
 
-        $data = $this->getResponseDataForGraphQlType($response, 'canRequestOrderWithdrawal');
+        $data = $this->getResponseDataForGraphQlType($response, 'order');
 
-        $this->assertFalse($data);
+        $this->assertFalse($data['canRequestWithdrawal']);
     }
 
     public function testCannotRequestWithdrawalForNonExistentOrder(): void
     {
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../_graphql/query/CanRequestOrderWithdrawalQuery.graphql',
+            __DIR__ . '/../_graphql/query/OrderWithdrawalDataQuery.graphql',
             [
-                'orderUrlHash' => 'non-existent-hash-12345',
+                'urlHash' => 'non-existent-hash-12345',
             ],
         );
 
-        $data = $this->getResponseDataForGraphQlType($response, 'canRequestOrderWithdrawal');
-
-        $this->assertFalse($data);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertSame('order-not-found', $errors[0]['extensions']['userCode']);
     }
 }

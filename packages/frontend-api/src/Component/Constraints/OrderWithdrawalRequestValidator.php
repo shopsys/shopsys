@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledException;
-use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderNotFoundForWithdrawalException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalAlreadyRequestedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlinePassedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker;
@@ -18,9 +20,13 @@ class OrderWithdrawalRequestValidator extends ConstraintValidator
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker $withdrawalChecker
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly WithdrawalChecker $withdrawalChecker,
+        protected readonly OrderFacade $orderFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -36,8 +42,9 @@ class OrderWithdrawalRequestValidator extends ConstraintValidator
         }
 
         try {
-            $this->withdrawalChecker->checkOrderWithdrawal($value->orderUrlHash);
-        } catch (OrderNotFoundForWithdrawalException) {
+            $order = $this->orderFacade->getByUrlHashAndDomain($value->orderUrlHash, $this->domain->getId());
+            $this->withdrawalChecker->checkOrderWithdrawal($order);
+        } catch (OrderNotFoundException) {
             $this->context->buildViolation($constraint->orderNotFoundMessage)
                 ->setCode(OrderWithdrawalRequest::ORDER_NOT_FOUND_ERROR)
                 ->atPath('orderUrlHash')

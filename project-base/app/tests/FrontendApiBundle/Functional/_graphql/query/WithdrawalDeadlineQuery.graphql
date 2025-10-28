@@ -1,3 +1,0 @@
-query WithdrawalDeadlineQuery($orderUrlHash: String!) {
-    withdrawalDeadline(orderUrlHash: $orderUrlHash)
-}

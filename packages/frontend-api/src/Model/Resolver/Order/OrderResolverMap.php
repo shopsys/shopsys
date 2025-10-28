@@ -8,14 +8,17 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalFacade;
 
 class OrderResolverMap extends ResolverMap
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalFacade $withdrawalFacade
      */
     public function __construct(
         protected readonly Domain $domain,
+        protected readonly WithdrawalFacade $withdrawalFacade,
     ) {
     }
 
@@ -41,6 +44,15 @@ class OrderResolverMap extends ResolverMap
                 },
                 'items' => function (Order $order) {
                     return $order->getItemsSortedWithRelatedItems();
+                },
+                'withdrawalInstructions' => function (Order $order) {
+                    return $this->withdrawalFacade->getWithdrawalInstructions($order);
+                },
+                'canRequestWithdrawal' => function (Order $order) {
+                    return $this->withdrawalFacade->canRequestWithdrawal($order);
+                },
+                'withdrawalDeadline' => function (Order $order) {
+                    return $this->withdrawalFacade->getWithdrawalDeadline($order);
                 },
             ],
         ];
