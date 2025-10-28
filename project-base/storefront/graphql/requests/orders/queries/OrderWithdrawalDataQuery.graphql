@@ -1,0 +1,5 @@
+query OrderWithdrawalDataQuery($urlHash: String!) {
+    order(urlHash: $urlHash) {
+        ...OrderWithdrawalDataFragment
+    }
+}

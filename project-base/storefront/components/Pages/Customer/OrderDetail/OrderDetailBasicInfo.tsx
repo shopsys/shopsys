@@ -1,4 +1,5 @@
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
+import { OrderDetailWithdrawalSection } from './OrderDetailWithdrawalSection';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
@@ -209,6 +210,8 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         )}
                 </div>
             </div>
+
+            <OrderDetailWithdrawalSection order={order} />
 
             {!!order.note && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_note} title={t('Note')}>

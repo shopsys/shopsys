@@ -30,6 +30,7 @@ fragment OrderDetailFragment on Order {
         }
     }
     status
+    statusType
     firstName
     lastName
     email
@@ -68,4 +69,13 @@ fragment OrderDetailFragment on Order {
     hasExternalPayment
     hasPaymentInProcess
     lastExternalPaymentUrl
+    deliveredAt
+    withdrawalRequestedAt
+    withdrawalFirstName
+    withdrawalLastName
+    withdrawalEmail
+    withdrawalTelephone
+    withdrawalNote
+    canRequestWithdrawal
+    withdrawalDeadline
 }
