@@ -23,6 +23,7 @@ ux_icons:
         circle-plus: 'tabler:circle-plus'
         circle-remove: 'tabler:circle-minus'
         company: 'tabler:building'
+        crown: 'tabler:crown'
         delete: 'tabler:x'
         delete-thin: 'tabler:x'
         document-copy: 'tabler:clipboard-text-filled'

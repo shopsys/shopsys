@@ -3,7 +3,18 @@
 {% block title %}- {{ 'Editing administrator'|trans }} - {{ administrator.realName }}{% endblock %}
 
 {% block pre_title %}{{ 'Edit administrator'|trans }}{% endblock %}
-{% block h1 %}{{ administrator.realName }}{% endblock %}
+{% block h1 %}
+    {{ administrator.realName }}
+    {% if administrator.isSuperadmin() %}
+        <span class="badge fs-5 ms-2 bg-yellow text-yellow-fg"
+              data-bs-toggle="tooltip"
+              title="{{ 'Superadmins have all permissions including changing system configuration and access to hidden administration sections.'|trans }}"
+        >
+            {{ ux_icon('crown') }}
+            {{ 'Super Administrator'|trans }}
+        </span>
+    {% endif %}
+{% endblock %}
 
 {% block admin_log %}
     {% if lastAdminActivities|length > 0 %}
