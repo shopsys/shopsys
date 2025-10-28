@@ -17,11 +17,12 @@ type OrderDetailWithdrawalSectionProps = {
 export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps> = ({ order }) => {
     const { t } = useTranslation();
     const { formatDate } = useFormatDate();
-    const { canCreateComplaint } = useAuthorization();
+    const { canCreateComplaint, canRequestWithdrawal: userCanRequestWithdrawal } = useAuthorization();
     const { url } = useDomainConfig();
     const isUserLoggedIn = useIsUserLoggedIn();
 
-    const canRequestWithdrawal = order.canRequestWithdrawal;
+    const orderCanRequestWithdrawal = order.canRequestWithdrawal;
+    const canRequestWithdrawal = userCanRequestWithdrawal && orderCanRequestWithdrawal;
     const withdrawalDeadline = order.withdrawalDeadline;
     const hasWithdrawalRequested = !!order.withdrawalRequestedAt;
     const isCancelled = order.statusType === TypeOrderStatusEnum.Canceled;

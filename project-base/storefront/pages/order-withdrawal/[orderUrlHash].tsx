@@ -2,6 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderWithdrawalContent } from 'components/Pages/OrderWithdrawal/OrderWithdrawalContent';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
@@ -10,6 +11,7 @@ import {
     TypeOrderWithdrawalDataQueryVariables,
     useOrderWithdrawalDataQuery,
 } from 'graphql/requests/orders/queries/OrderWithdrawalDataQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -28,6 +30,7 @@ const OrderWithdrawalPage: FC = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const orderHash = getStringFromUrlQuery(router.query.orderUrlHash);
+    const { canRequestWithdrawal: userCanRequestWithdrawal } = useAuthorization();
 
     const [{ data: orderData, fetching: isOrderFetching }] = useOrderWithdrawalDataQuery({
         variables: { urlHash: orderHash },
@@ -42,7 +45,7 @@ const OrderWithdrawalPage: FC = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const hasAccess = isOrderFetching;
+    const hasAccess = userCanRequestWithdrawal || isOrderFetching;
 
     return (
         <>
@@ -102,6 +105,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 client,
                 ssrExchange,
                 domainConfig,
+                authenticationConfig: {
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+                },
             });
         },
 );

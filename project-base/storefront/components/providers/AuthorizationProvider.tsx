@@ -50,6 +50,11 @@ export const useAuthorization = () => {
         ? customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCompanyComplaintsView)
         : true;
 
+    const canRequestWithdrawal = isCompanyUser
+        ? customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation) &&
+          (canCreateOrder || canViewCompanyOrders)
+        : true;
+
     return {
         currentCustomerUserUuid: currentCustomerUser?.uuid,
         isB2B,
@@ -62,5 +67,6 @@ export const useAuthorization = () => {
         canCreateComplaint,
         canViewCompanyComplaints,
         canSeePrices,
+        canRequestWithdrawal,
     };
 };
