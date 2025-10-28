@@ -139,6 +139,9 @@ msgstr "URL detailu adminského dopytu"
 msgid "Administration localization was changed to \"%locale%\""
 msgstr "Lokalizácia administrácie bola zmenená na \"%locale%\""
 
+msgid "Administrator \"%administrator_name%\" now has superadmin permissions."
+msgstr "Administrátor \"%administrator_name%\" teraz má oprávnenia super administrátora."
+
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
 msgstr "Administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený. Odkaz na nastavenie hesla bol poslaný na jeho email."
 
@@ -228,6 +231,9 @@ msgstr "Použiť na vybrané produkty"
 
 msgid "Approved with zero amount"
 msgstr "Schválené s nulovou sumou"
+
+msgid "Are you sure you want to promote this user to Superadmin?"
+msgstr "Naozaj chcete povýšiť tohto používateľa na super administrátora?"
 
 msgid "Area"
 msgstr "Oblasť"
@@ -2647,6 +2653,9 @@ msgstr "Predpona promo kódu"
 msgid "Promo codes"
 msgstr "Zľavové kupóny"
 
+msgid "Promote user to Superadmin"
+msgstr "Povýšiť používateľa na super administrátora"
+
 msgid "Promoted categories"
 msgstr "Propagované kategórie"
 
@@ -3127,8 +3136,14 @@ msgstr "Odberateľ newslettera <strong>{{ email }}</strong> bol zmazaný"
 msgid "Successfully uploaded"
 msgstr "Úspešne nahrané"
 
+msgid "Super Administrator"
+msgstr "Super administrátor"
+
 msgid "Superadmin"
 msgstr "Superadmin"
+
+msgid "Superadmin permissions"
+msgstr "Oprávnenia superadmina"
 
 msgid "System data"
 msgstr "Systémové údaje"

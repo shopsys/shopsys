@@ -139,6 +139,9 @@ msgstr ""
 msgid "Administration localization was changed to \"%locale%\""
 msgstr ""
 
+msgid "Administrator \"%administrator_name%\" now has superadmin permissions."
+msgstr ""
+
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
 msgstr ""
 
@@ -227,6 +230,9 @@ msgid "Apply to selected products"
 msgstr ""
 
 msgid "Approved with zero amount"
+msgstr ""
+
+msgid "Are you sure you want to promote this user to Superadmin?"
 msgstr ""
 
 msgid "Area"
@@ -2647,6 +2653,9 @@ msgstr ""
 msgid "Promo codes"
 msgstr ""
 
+msgid "Promote user to Superadmin"
+msgstr ""
+
 msgid "Promoted categories"
 msgstr ""
 
@@ -3127,7 +3136,13 @@ msgstr ""
 msgid "Successfully uploaded"
 msgstr ""
 
+msgid "Super Administrator"
+msgstr ""
+
 msgid "Superadmin"
+msgstr ""
+
+msgid "Superadmin permissions"
 msgstr ""
 
 msgid "System data"

@@ -139,6 +139,9 @@ msgstr "URL detailu poptávky v administraci"
 msgid "Administration localization was changed to \"%locale%\""
 msgstr "Administrace byla přepnuta do jazyka \"%locale%\""
 
+msgid "Administrator \"%administrator_name%\" now has superadmin permissions."
+msgstr "Administrátor \"%administrator_name%\" nyní má oprávnění superadministrátora."
+
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
 msgstr "Byl vytvořen administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong>. Odkaz pro nastavení hesla byl odeslán na jeho e-mail."
 
@@ -228,6 +231,9 @@ msgstr "Aplikovat na vybrané produkty"
 
 msgid "Approved with zero amount"
 msgstr "Schváleno s nulovou částkou"
+
+msgid "Are you sure you want to promote this user to Superadmin?"
+msgstr "Opravdu chcete tomuto uživateli přidělit práva super administrátora?"
 
 msgid "Area"
 msgstr "Plocha"
@@ -2647,6 +2653,9 @@ msgstr "Prefix slevového kupónu"
 msgid "Promo codes"
 msgstr "Slevové kupóny"
 
+msgid "Promote user to Superadmin"
+msgstr "Povýšit uživatele na Super administrátora"
+
 msgid "Promoted categories"
 msgstr "Promované kategorie"
 
@@ -3127,8 +3136,14 @@ msgstr "Odběratel newsletteru <strong>{{ email }}</strong> byl smazán"
 msgid "Successfully uploaded"
 msgstr "Úspěšně nahráno"
 
+msgid "Super Administrator"
+msgstr "Super administrátor"
+
 msgid "Superadmin"
 msgstr "Superadmin"
+
+msgid "Superadmin permissions"
+msgstr "Oprávnění super administrátora"
 
 msgid "System data"
 msgstr "Systémové údaje"
