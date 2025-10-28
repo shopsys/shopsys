@@ -1889,6 +1889,8 @@ export type TypeOpeningHoursRange = {
 
 export type TypeOrder = {
   __typename?: 'Order';
+  /** Returns whether withdrawal can be requested for the order */
+  canRequestWithdrawal: Scalars['Boolean']['output'];
   /** Billing address city name */
   city: Scalars['String']['output'];
   /** The customer’s company name (only when ordered on the company behalf) */
@@ -1975,10 +1977,14 @@ export type TypeOrder = {
   urlHash: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  /** Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet) */
+  withdrawalDeadline: Maybe<Scalars['DateTime']['output']>;
   /** Email address for withdrawal request contact */
   withdrawalEmail: Maybe<Scalars['String']['output']>;
   /** First name for withdrawal request contact */
   withdrawalFirstName: Maybe<Scalars['String']['output']>;
+  /** Returns withdrawal instructions for the order */
+  withdrawalInstructions: Scalars['String']['output'];
   /** Last name for withdrawal request contact */
   withdrawalLastName: Maybe<Scalars['String']['output']>;
   /** Additional notes or instructions for withdrawal */
@@ -2777,8 +2783,6 @@ export type TypeQuery = {
   brandSearch: Array<TypeBrand>;
   /** Returns complete list of brands */
   brands: Array<TypeBrand>;
-  /** Returns whether withdrawal can be requested for the order */
-  canRequestOrderWithdrawal: Scalars['Boolean']['output'];
   /** Return cart of logged customer or cart by UUID for anonymous user */
   cart: Maybe<TypeCart>;
   /** Returns complete list of categories */
@@ -2865,10 +2869,6 @@ export type TypeQuery = {
   transport: Maybe<TypeTransport>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TypeTransport>;
-  /** Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet) */
-  withdrawalDeadline: Maybe<Scalars['DateTime']['output']>;
-  /** Returns withdrawal instructions for the order */
-  withdrawalInstructions: Scalars['String']['output'];
 };
 
 
@@ -2937,11 +2937,6 @@ export type TypeQueryBrandArgs = {
 
 export type TypeQueryBrandSearchArgs = {
   searchInput: TypeSearchInput;
-};
-
-
-export type TypeQueryCanRequestOrderWithdrawalArgs = {
-  orderUrlHash: Scalars['String']['input'];
 };
 
 
@@ -3136,16 +3131,6 @@ export type TypeQueryTransportArgs = {
 
 export type TypeQueryTransportsArgs = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
-export type TypeQueryWithdrawalDeadlineArgs = {
-  orderUrlHash: Scalars['String']['input'];
-};
-
-
-export type TypeQueryWithdrawalInstructionsArgs = {
-  orderUrlHash: Scalars['String']['input'];
 };
 
 export enum TypeRecommendationType {

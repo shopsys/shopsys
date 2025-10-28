@@ -477,20 +477,6 @@ Returns list of searched brands
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="query.canrequestorderwithdrawal">canRequestOrderWithdrawal</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Returns whether withdrawal can be requested for the order
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUrlHash</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="query.cart">cart</strong></td>
 <td valign="top"><a href="#cart">Cart</a></td>
 <td>
@@ -1374,34 +1360,6 @@ Returns available transport methods based on the current cart state
 <tr>
 <td colspan="2" valign="top"><strong id="query.variant">Variant</strong></td>
 <td valign="top"><a href="#variant">Variant</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="query.withdrawaldeadline">withdrawalDeadline</strong></td>
-<td valign="top"><a href="#datetime">DateTime</a></td>
-<td>
-
-Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUrlHash</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="query.withdrawalinstructions">withdrawalInstructions</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Returns withdrawal instructions for the order
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUrlHash</td>
-<td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -6525,6 +6483,15 @@ Opening time
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="order.canrequestwithdrawal">canRequestWithdrawal</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns whether withdrawal can be requested for the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6912,6 +6879,15 @@ UUID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.withdrawaldeadline">withdrawalDeadline</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.withdrawalemail">withdrawalEmail</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -6926,6 +6902,15 @@ Email address for withdrawal request contact
 <td>
 
 First name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalinstructions">withdrawalInstructions</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns withdrawal instructions for the order
 
 </td>
 </tr>

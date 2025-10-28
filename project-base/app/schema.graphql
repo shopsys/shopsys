@@ -1477,6 +1477,8 @@ type OpeningHoursRange {
 }
 
 type Order {
+  "Returns whether withdrawal can be requested for the order"
+  canRequestWithdrawal: Boolean!
   "Billing address city name"
   city: String!
   "The customer’s company name (only when ordered on the company behalf)"
@@ -1563,10 +1565,14 @@ type Order {
   urlHash: String!
   "UUID"
   uuid: Uuid!
+  "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"
+  withdrawalDeadline: DateTime
   "Email address for withdrawal request contact"
   withdrawalEmail: String
   "First name for withdrawal request contact"
   withdrawalFirstName: String
+  "Returns withdrawal instructions for the order"
+  withdrawalInstructions: String!
   "Last name for withdrawal request contact"
   withdrawalLastName: String
   "Additional notes or instructions for withdrawal"
@@ -2294,8 +2300,6 @@ type Query {
   brands: [Brand!]!
   "Returns list of searched brands"
   brandSearch(searchInput: SearchInput!): [Brand!]!
-  "Returns whether withdrawal can be requested for the order"
-  canRequestOrderWithdrawal(orderUrlHash: String!): Boolean!
   "Return cart of logged customer or cart by UUID for anonymous user"
   cart(cartInput: CartInput): Cart
   "Returns complete list of categories"
@@ -2417,10 +2421,6 @@ type Query {
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
   Variant: Variant
-  "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"
-  withdrawalDeadline(orderUrlHash: String!): DateTime
-  "Returns withdrawal instructions for the order"
-  withdrawalInstructions(orderUrlHash: String!): String!
 }
 
 enum RecommendationType {
