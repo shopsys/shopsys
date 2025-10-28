@@ -4,7 +4,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import {
     OrderWithdrawalInstructionsQueryDocument,
-    TypeOrderWithdrawalInstructionsQuery,
     TypeOrderWithdrawalInstructionsQueryVariables,
     useOrderWithdrawalInstructionsQuery,
 } from 'graphql/requests/orders/queries/OrderWithdrawalInstructionsQuery.generated';
@@ -12,8 +11,6 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useRouter } from 'next/router';
-import { OperationResult } from 'urql';
-import { createClient } from 'urql/createClient';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
@@ -25,7 +22,7 @@ const OrderWithdrawalSuccessPage: FC = () => {
     const router = useRouter();
     const orderHash = getStringFromUrlQuery(router.query.orderUrlHash);
 
-    const [{ data: orderData, fetching: isOrderFetching }] = useOrderWithdrawalInstructionsQuery({
+    const [{ data: orderData }] = useOrderWithdrawalInstructionsQuery({
         variables: { urlHash: orderHash },
     });
 
@@ -35,7 +32,7 @@ const OrderWithdrawalSuccessPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout isFetchingData={isOrderFetching} title={t('Withdrawal request submitted')}>
+            <CommonLayout pageTypeOverride="order-withdrawal-success" title={t('Withdrawal request submitted')}>
                 <Webline>
                     <ConfirmationPageContent
                         content={orderData?.order?.withdrawalInstructions}
@@ -48,7 +45,7 @@ const OrderWithdrawalSuccessPage: FC = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, t, ssrExchange }) =>
+    ({ redisClient, domainConfig, t }) =>
         async (context) => {
             if (typeof context.params?.orderUrlHash !== 'string') {
                 return {
@@ -59,37 +56,17 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 };
             }
 
-            const client = createClient({
-                t,
-                ssrExchange,
-                domainConfig,
-                redisClient,
+            return initServerSideProps<TypeOrderWithdrawalInstructionsQueryVariables>({
                 context,
-            });
-
-            const orderResponse: OperationResult<
-                TypeOrderWithdrawalInstructionsQuery,
-                TypeOrderWithdrawalInstructionsQueryVariables
-            > = await client!
-                .query(OrderWithdrawalInstructionsQueryDocument, {
-                    urlHash: context.params.orderUrlHash,
-                })
-                .toPromise();
-
-            if (!orderResponse.data?.order) {
-                return {
-                    redirect: {
-                        destination: getBasePathWithLocale('/', context.locale),
-                        statusCode: 301,
+                prefetchedQueries: [
+                    {
+                        query: OrderWithdrawalInstructionsQueryDocument,
+                        variables: { urlHash: context.params.orderUrlHash },
                     },
-                };
-            }
-
-            return initServerSideProps({
-                context,
-                client,
-                ssrExchange,
+                ],
+                redisClient,
                 domainConfig,
+                t,
             });
         },
 );

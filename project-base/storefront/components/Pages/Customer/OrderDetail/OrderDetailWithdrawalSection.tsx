@@ -75,7 +75,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
         return (
             <OrderDetailRowInfo title={withdrawalTitle}>
                 <div className="flex flex-col gap-2">
-                    <LinkButton href={withdrawalFormUrl} variant="inverted">
+                    <LinkButton href={withdrawalFormUrl} type="order-withdrawal" variant="inverted">
                         {t('Withdraw from contract')}
                     </LinkButton>
                 </div>

@@ -13,6 +13,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { useSessionStore } from 'store/useSessionStore';
 import { OrderWithdrawalFormType } from 'types/form';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
@@ -27,6 +28,7 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
     const { t } = useTranslation();
     const router = useRouter();
     const { url } = useDomainConfig();
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const [formProviderMethods] = useOrderWithdrawalForm(order);
     const formMeta = useOrderWithdrawalFormMeta(formProviderMethods);
     const [, orderWithdrawalRequest] = useOrderWithdrawalRequestMutation();
@@ -52,12 +54,22 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                     [{ url: '/order-withdrawal-success/:orderUrlHash', param: order.urlHash }],
                     url,
                 );
-                router.push(orderWithdrawalSuccessUrl);
+                updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-withdrawal-success' });
+                router.replace(orderWithdrawalSuccessUrl);
             }
 
             handleFormErrors(result.error, formProviderMethods, t, formMeta.messages.error);
         },
-        [orderWithdrawalRequest, order.urlHash, formProviderMethods, t, formMeta.messages.error, router],
+        [
+            orderWithdrawalRequest,
+            order.urlHash,
+            formProviderMethods,
+            t,
+            formMeta.messages.error,
+            router,
+            url,
+            updatePageLoadingState,
+        ],
     );
 
     return (

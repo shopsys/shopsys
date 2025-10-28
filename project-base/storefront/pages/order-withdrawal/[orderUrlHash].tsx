@@ -48,7 +48,12 @@ const OrderWithdrawalPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
-                <CommonLayout breadcrumbs={breadcrumbs} title={t('Withdrawal from contract')}>
+                <CommonLayout
+                    breadcrumbs={breadcrumbs}
+                    isFetchingData={isOrderFetching}
+                    pageTypeOverride="order-withdrawal"
+                    title={t('Withdrawal from contract')}
+                >
                     {!!orderData?.order && <OrderWithdrawalContent order={orderData.order} />}
                 </CommonLayout>
             </PageGuard>
