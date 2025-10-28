@@ -48,4 +48,25 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
         $this->assertSame($inputData['note'], $updatedOrder->getWithdrawalNote());
         $this->assertInstanceOf(DateTime::class, $updatedOrder->getWithdrawalRequestedAt());
     }
+
+    public function testAnonymousUserCannotRequestWithdrawalForRegisteredUserOrder(): void
+    {
+        $registeredUserOrder = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+
+        $inputData = [
+            'orderUrlHash' => $registeredUserOrder->getUrlHash(),
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'email' => 'john.doe@example.com',
+            'telephone' => '+420777888999',
+            'note' => 'I want to return this order.',
+        ];
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../_graphql/mutation/OrderWithdrawalRequestMutation.graphql',
+            $inputData,
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
 }

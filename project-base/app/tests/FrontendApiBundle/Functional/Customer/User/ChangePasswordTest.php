@@ -57,10 +57,6 @@ class ChangePasswordTest extends GraphQlWithLoginTestCase
             'newPassword' => 'user123',
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertSame('access-denied', $errors[0]['extensions']['userCode']);
-        $this->assertSame(403, $errors[0]['extensions']['code']);
+        $this->assertAccessDeniedError($response);
     }
 }

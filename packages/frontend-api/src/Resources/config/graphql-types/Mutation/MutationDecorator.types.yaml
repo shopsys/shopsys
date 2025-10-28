@@ -275,3 +275,4 @@ MutationDecorator:
                         type: OrderWithdrawalRequestInput!
                         validation: cascade
                 resolve: "@=mutation('orderWithdrawalRequestMutation', args)"
+                access: "@=isGranted('create_withdrawal_voter', args)"

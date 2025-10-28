@@ -334,6 +334,28 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
     }
 
+    public function testOrderWithdrawalRequestMutationIsAllowedForAnotherUserOrder(): void
+    {
+        $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $this->domain->getId(), Order::class);
+
+        $inputData = [
+            'orderUrlHash' => $anotherUserOrder->getUrlHash(),
+            'firstName' => 'Owner',
+            'lastName' => 'User',
+            'email' => 'owner@shopsys.com',
+            'telephone' => '+420777888999',
+            'note' => 'Requesting withdrawal for company order.',
+        ];
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/OrderWithdrawalRequestMutation.graphql',
+            $inputData,
+        );
+
+        $data = $this->getResponseDataForGraphQlType($response, 'OrderWithdrawalRequest');
+        $this->assertTrue($data);
+    }
+
     /**
      * @return \App\Model\Customer\User\CustomerUser
      */

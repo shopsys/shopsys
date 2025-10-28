@@ -38,18 +38,6 @@ abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginT
     /**
      * @param array $response
      */
-    protected function assertAccessDeniedError(array $response): void
-    {
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertSame('access-denied', $errors[0]['extensions']['userCode']);
-        $this->assertSame(403, $errors[0]['extensions']['code']);
-    }
-
-    /**
-     * @param array $response
-     */
     protected function assertAccessDeniedWarning(array $response): void
     {
         $this->assertResponseContainsArrayOfWarnings($response);

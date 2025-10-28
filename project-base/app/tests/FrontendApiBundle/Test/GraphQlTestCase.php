@@ -491,4 +491,16 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
         return $data;
     }
+
+    /**
+     * @param array $response
+     */
+    protected function assertAccessDeniedError(array $response): void
+    {
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('access-denied', $errors[0]['extensions']['userCode']);
+        $this->assertSame(403, $errors[0]['extensions']['code']);
+    }
 }

@@ -42,6 +42,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const string ORDER_WITH_WITHDRAWAL_REQUEST = 'order_with_withdrawal_request';
     public const string ORDER_DELIVERED_YESTERDAY = 'order_delivered_yesterday';
     public const string ORDER_DELIVERED_MONTH_AGO = 'order_delivered_month_ago';
+    public const string ORDER_CREATED_BY_VITEK = 'order_created_by_vitek';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -594,7 +595,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -6 day'))->setTime(5, 7, 38);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
@@ -607,6 +608,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             PaymentDataFixture::PAYMENT_CARD,
             $customerUser,
         );
+        $this->addReferenceForDomain(self::ORDER_CREATED_BY_VITEK, $order, $domainId);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);

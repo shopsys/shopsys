@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 
 use App\DataFixtures\Demo\CompanyDataFixture;
+use App\DataFixtures\Demo\CompanyOrderDataFixture;
+use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Tests\FrontendApiBundle\Functional\Order\MinimalOrderAsAuthenticatedCustomerUserTest;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
@@ -292,6 +294,25 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                         'country' => 'CZ',
                     ],
                 ],
+            ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    public function testOrderWithdrawalRequestMutationIsNotAllowed(): void
+    {
+        $order = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 1, $this->domain->getId(), Order::class);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/OrderWithdrawalRequestMutation.graphql',
+            [
+                'orderUrlHash' => $order->getUrlHash(),
+                'firstName' => 'John',
+                'lastName' => 'Doe',
+                'email' => 'john.doe@example.com',
+                'telephone' => '+420123456789',
+                'note' => 'Test withdrawal request',
             ],
         );
 
