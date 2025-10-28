@@ -168,6 +168,8 @@ context('Smoke tests', () => {
         ['/personal-data-overview/:hash']: { skip: true },
         ['/products/:productSlug']: { skip: true },
         ['/stores/:storeSlug']: { skip: true },
+        ['/order-withdrawal/:orderUrlHash']: { skip: true },
+        ['/order-withdrawal-success/:orderUrlHash']: { skip: true },
 
         // custom routes
         ['/electronics']: {
