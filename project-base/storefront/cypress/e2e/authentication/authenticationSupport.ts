@@ -119,7 +119,7 @@ export const checkRegistrationValidationErrors = () => {
     checkFormLineError('Please enter email');
     checkFormLineError('Please enter password');
     checkFormLineError('Please enter password again');
-    checkFormLineError('Please enter a valid phone number. Examples: 123456789, +420123456789');
+    checkFormLineError('Please enter phone number');
     checkFormLineError('Please enter first name');
     checkFormLineError('Please enter last name');
     checkFormLineError('Please enter street');

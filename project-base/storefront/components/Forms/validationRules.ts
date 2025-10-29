@@ -24,18 +24,18 @@ export const validateCustomer = (): Schema => {
 
 export const validateTelephone = (t: Translate): Schema => {
     return Yup.string()
-        .matches(
-            /^(\+[1-9]\d{0,3})?[0-9]+$/,
-            t('Please enter a valid phone number. Examples: 123456789, +420123456789'),
-        )
+        .matches(/^(\+[1-9]\d{0,3})?[0-9]+$/, {
+            excludeEmptyString: true,
+            message: t('Please enter a valid phone number. Examples: 123456789, +420123456789'),
+        })
         .test(
             'min-digits',
             t('Telephone number must contain at least {{ telephoneMinLength }} digits', {
                 telephoneMinLength: VALIDATION_CONSTANTS.telephoneMinLength,
             }),
             (value) => {
-                if (value === undefined) {
-                    return false;
+                if (!value) {
+                    return true;
                 }
                 const digits = value.replace(/\D/g, ''); // remove all non-digit characters
                 return digits.length >= VALIDATION_CONSTANTS.telephoneMinLength;
