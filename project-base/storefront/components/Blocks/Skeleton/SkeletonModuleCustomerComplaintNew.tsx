@@ -1,10 +1,10 @@
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
-import { SkeletonModuleHeadline } from './SkeletonModuleHeadline';
+import { SkeletonModulePageHero } from './SkeletonModulePageHero';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleCustomerComplaintNew: FC = () => (
     <SkeletonModuleCustomer>
-        <SkeletonModuleHeadline />
+        <SkeletonModulePageHero />
 
         <Skeleton className="h-12" />
 

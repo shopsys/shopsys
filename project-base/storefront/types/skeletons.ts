@@ -16,7 +16,7 @@ export enum SkeletonEnum {
     CustomerUsers = 'customer-users',
     EditProfile = 'editProfile',
     Flag = 'flag',
-    ForgotPassword = 'forgot-password',
+    ResetPassword = 'reset-password',
     Homepage = 'homepage',
     Login = 'login',
     OrderConfirmation = 'order-confirmation',

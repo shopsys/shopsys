@@ -23,8 +23,8 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({
 
     if (!items?.length && !areComplaintsFetching) {
         return (
-            <div className="vl:text-xl flex gap-2 text-lg">
-                <InfoIcon className="w-5" />
+            <div className="text-center">
+                <InfoIcon className="mr-2 size-5" />
                 {t('You have no complaints')}
             </div>
         );

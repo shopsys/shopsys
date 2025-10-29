@@ -1,16 +1,17 @@
 import {
     goToRegistrationPageFromHeader,
     fillInRegstrationForm,
-    checkRegistrationValidationErrorsPopup,
     submitRegistrationForm,
     clearAndFillInRegstrationFormEmail,
     clearAndFillInRegistrationFormPasswords,
+    checkRegistrationValidationErrors,
 } from './authenticationSupport';
 import { password, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkAndHideErrorToast,
     checkAndHideSuccessToast,
+    checkFormLineError,
     checkIsUserLoggedIn,
     checkPopupIsVisible,
     checkUrl,
@@ -72,8 +73,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
 
     it('[Empty Form] should disallow registration with empty registration form, but then allow after filling', function () {
         submitRegistrationForm();
-        checkRegistrationValidationErrorsPopup();
-        checkPopupIsVisible(true);
+        checkRegistrationValidationErrors();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after invalid try', {
             blackout: [
                 { tid: TIDs.footer_social_links },
@@ -100,7 +100,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         fillInRegstrationForm('commonCustomer', email);
         clearAndFillInRegistrationFormPasswords(password);
         submitRegistrationForm();
-        checkAndHideErrorToast('This email is already registered');
+        checkFormLineError('This email is already registered');
 
         clearAndFillInRegstrationFormEmail('registration-with-existing-email-different-email@shopsys.com');
         clearAndFillInRegistrationFormPasswords(password);

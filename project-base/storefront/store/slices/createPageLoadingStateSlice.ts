@@ -5,7 +5,7 @@ type CUSTOM_PAGE_TYPES = [
     'cart',
     'comparison',
     'contact-information',
-    'forgot-password',
+    'reset-password',
     'homepage',
     'order-confirmation',
     'orderDetail',

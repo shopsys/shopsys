@@ -1,7 +1,8 @@
 import { ProductComparisonContent } from './ProductComparisonContent';
-import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonModuleComparison';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -19,19 +20,27 @@ export const ProductComparison: FC = () => {
     return (
         <VerticalStack gap="md">
             <Webline>
-                <h1 className="mb-4">{title}</h1>
-
                 {isProductListFetching && <SkeletonModuleComparison />}
 
                 {comparison?.products && !isProductListFetching && (
-                    <ProductComparisonContent comparedProducts={comparison.products} />
+                    <>
+                        <h1 className="mb-4">{title}</h1>
+
+                        <ProductComparisonContent comparedProducts={comparison.products} />
+                    </>
                 )}
 
                 {!comparison?.products && !isProductListFetching && (
-                    <div className="my-28 flex items-center justify-center">
-                        <InfoIcon className="mr-4 w-8" />
-                        <div className="h3">{t('Comparison does not contain any products yet.')}</div>
-                    </div>
+                    <PageHero
+                        actionHref="/"
+                        actionSkeletonType="homepage"
+                        actionTitle={t('Find products')}
+                        icon={CompareIcon}
+                        title={t('Comparison')}
+                        description={t(
+                            'Your comparison list is empty! Start comparing products to see their features side by side.',
+                        )}
+                    />
                 )}
             </Webline>
 

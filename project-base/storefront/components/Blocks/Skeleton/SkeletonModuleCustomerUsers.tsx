@@ -1,4 +1,5 @@
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
+import { SkeletonModulePageHero } from './SkeletonModulePageHero';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonCustomerUsersTable: FC = () => (
@@ -11,7 +12,7 @@ export const SkeletonCustomerUsersTable: FC = () => (
 
 export const SkeletonModuleCustomerUsers: FC = () => (
     <SkeletonModuleCustomer>
-        <Skeleton className="h-8 w-72 lg:h-10" />
+        <SkeletonModulePageHero />
 
         <Skeleton className="h-9 w-36" />
 

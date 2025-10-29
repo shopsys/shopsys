@@ -1,9 +1,11 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { CreateComplaintPopupButton } from 'components/Blocks/Complaint/CreateComplaintPopupButton';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { ComplaintsContent } from 'components/Pages/Customer/Complaints/ComplaintsContent';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -51,14 +53,17 @@ const ComplaintsPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                breadcrumbsType="account"
-                pageHeading={t('My complaints')}
-                title={t('My complaints')}
-            >
+            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={t('My complaints')}>
+                <PageHero
+                    icon={ComplaintsIcon}
+                    title={t('My complaints')}
+                    description={t(
+                        'Track all your complaints, monitor resolutions, and receive updates on every status change.',
+                    )}
+                />
+
                 {canCreateComplaint && (
-                    <div className="flex gap-y-2">
+                    <div className="flex justify-center gap-y-2">
                         <LinkButton
                             aria-label={t('Go to new complaint page', { ns: 'accessibility' })}
                             size="small"
@@ -78,6 +83,7 @@ const ComplaintsPage: FC = () => {
                         />
                     </div>
                 )}
+
                 <SearchInput
                     ariaLabelForSearchButton={t('Search for a product you complained about', { ns: 'accessibility' })}
                     className="border-input-border-default w-full border"
@@ -87,6 +93,7 @@ const ComplaintsPage: FC = () => {
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
                     onClear={() => setSearchQueryValue('')}
                 />
+
                 <ComplaintsContent
                     areComplaintsFetching={complaintsDataFetching}
                     hasNextPage={complaintsData?.complaints.pageInfo.hasNextPage}

@@ -1,6 +1,8 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
@@ -44,12 +46,15 @@ const OrdersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                breadcrumbsType="account"
-                pageHeading={t('My orders')}
-                title={t('My orders')}
-            >
+            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={t('My orders')}>
+                <PageHero
+                    icon={SearchListIcon}
+                    title={t('My orders')}
+                    description={t(
+                        'View and manage your past orders, track order status, and monitor your shopping history.',
+                    )}
+                />
+
                 <OrdersContent
                     areOrdersFetching={areOrdersFetching}
                     hasNextPage={ordersData?.orders?.pageInfo.hasNextPage}

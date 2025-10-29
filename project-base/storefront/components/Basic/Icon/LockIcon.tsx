@@ -1,4 +1,4 @@
-export const LockCheckIcon: SvgFC = (props) => (
+export const LockIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <rect
             height="11.5"
@@ -20,7 +20,5 @@ export const LockCheckIcon: SvgFC = (props) => (
             strokeLinejoin="round"
             strokeWidth="2"
         />
-        <path d="M9.5 15L11.5 17" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-        <path d="M11.5 17L15 13.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
     </svg>
 );

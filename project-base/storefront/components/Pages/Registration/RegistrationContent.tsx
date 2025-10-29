@@ -3,12 +3,13 @@ import { RegistrationBillingAddress } from './RegistrationBillingAddress';
 import { RegistrationPassword } from './RegistrationPassword';
 import { RegistrationUser } from './RegistrationUser';
 import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
@@ -16,7 +17,7 @@ import { useRegistration } from 'utils/auth/useRegistration';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const RegistrationContent: FC = () => {
@@ -42,18 +43,16 @@ export const RegistrationContent: FC = () => {
         clearForm(registrationError, formProviderMethods, defaultValues);
     };
 
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
         <Webline width="lg">
             <VerticalStack gap="sm">
-                <h1>{t('New customer registration')}</h1>
-
-                <p className="sr-only" id="registration-form-description">
-                    {t('Registration form for registering a new customer. Please fill all required fields.', {
-                        ns: 'accessibility',
-                    })}
-                </p>
+                <PageHero
+                    description={t('Become a member in minutes and enjoy a seamless shopping experience every time.')}
+                    icon={UserIcon}
+                    title={t('Create your account')}
+                />
 
                 <FormProvider {...formProviderMethods}>
                     <Form

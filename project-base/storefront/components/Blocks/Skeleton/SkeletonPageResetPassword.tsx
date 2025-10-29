@@ -1,18 +1,20 @@
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
-import { SkeletonModuleHeadline } from './SkeletonModuleHeadline';
+import { SkeletonModulePageHero } from './SkeletonModulePageHero';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 
-export const SkeletonPageForgotPassword: FC = () => (
+export const SkeletonPageResetPassword: FC = () => (
     <>
         <SkeletonModuleBreadcrumbs count={2} />
 
         <Webline width="lg">
             <VerticalStack gap="sm">
-                <SkeletonModuleHeadline />
+                <SkeletonModulePageHero />
 
-                <Skeleton className="h-[180px] rounded-xl" />
+                <Skeleton className="h-[120px] rounded-xl" />
+
+                <Skeleton className="mx-auto h-9 w-32" />
             </VerticalStack>
         </Webline>
     </>

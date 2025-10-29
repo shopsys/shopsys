@@ -1,21 +1,20 @@
 import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
-import { UserText } from 'components/Basic/UserText/UserText';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
 import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -28,8 +27,6 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     const [, personalDataOverview] = usePersonalDataRequestMutation();
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
-
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onPersonalDataOverviewHandler = useCallback<SubmitHandler<PersonalDataOverviewFormType>>(
         async (personalDataOverviewFormData) => {
@@ -52,13 +49,13 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     return (
         <Webline width="lg">
             <VerticalStack gap="sm">
-                <h1>{t('Personal data overview')}</h1>
-
-                {contentSiteText && (
-                    <div className="[&_section]:text-justify" id="personal-data-overview-content">
-                        <UserText htmlContent={contentSiteText} />
-                    </div>
-                )}
+                <PageHero
+                    icon={UserIcon}
+                    title={t('Personal data overview')}
+                    description={
+                        contentSiteText ? <span dangerouslySetInnerHTML={{ __html: contentSiteText }} /> : undefined
+                    }
+                />
 
                 <FormProvider {...formProviderMethods}>
                     <Form
@@ -77,7 +74,6 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                                         required: true,
                                         type: 'email',
                                         autoComplete: 'email',
-                                        'aria-labelledby': 'personal-data-overview-content',
                                     }}
                                 />
                             </FormBlockWrapper>

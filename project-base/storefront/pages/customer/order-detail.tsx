@@ -1,8 +1,11 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     OrderAvailablePaymentsQueryDocument,
@@ -55,6 +58,12 @@ const OrderDetailPage: FC = () => {
                     breadcrumbsType="orderList"
                     isFetchingData={isOrderDetailFetching}
                 >
+                    <PageHero
+                        icon={DocumentIcon}
+                        title={t('Your order') + (orderData?.order?.number ? ' ' + orderData.order.number : '')}
+                        titleTid={TIDs.order_detail_number_heading}
+                    />
+
                     {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
                 </CustomerLayout>
             </PageGuard>

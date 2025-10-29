@@ -1,4 +1,5 @@
 import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
+import { TIDs } from 'cypress/tids';
 import { FieldError } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 
@@ -27,15 +28,18 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                 aria-hidden="true"
                 className={twJoin(
                     'text-text-error absolute flex w-4',
-                    isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
-                    isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
+                    isInputOrTextArea && `right-3.5 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
+                    isInputPassword && `right-12 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && 'top-1/2 right-1 -translate-y-1/2',
                     isSelect && '-top-10 right-11 z-[2]',
                     isDropzone && 'top-1 right-0',
                 )}
             />
             {error.message !== undefined && (
-                <span className={twJoin('font-secondary text-text-error text-sm', isCheckbox && 'block pr-6')}>
+                <span
+                    className={twJoin('font-secondary text-text-error text-sm', isCheckbox && 'block pr-6')}
+                    data-tid={TIDs.form_line_error}
+                >
                     {error.message}
                 </span>
             )}

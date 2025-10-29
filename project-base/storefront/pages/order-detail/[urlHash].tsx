@@ -1,9 +1,13 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     OrderAvailablePaymentsQueryDocument,
@@ -55,7 +59,15 @@ const OrderDetailByHashPage: FC = () => {
                 >
                     {!!orderData?.order && (
                         <Webline width="lg">
-                            <OrderDetailContent order={orderData.order} />
+                            <VerticalStack gap="sm">
+                                <PageHero
+                                    icon={DocumentIcon}
+                                    title={t('Your order') + ' ' + orderData.order.number}
+                                    titleTid={TIDs.order_detail_number_heading}
+                                />
+
+                                <OrderDetailContent order={orderData.order} />
+                            </VerticalStack>
                         </Webline>
                     )}
                 </CommonLayout>

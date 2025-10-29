@@ -2,7 +2,7 @@ import { useLoginForm, useLoginFormMeta } from './loginFormMeta';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SocialNetworkLogin } from 'components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -12,7 +12,6 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
-import { twJoin } from 'tailwind-merge';
 import { LoginFormType } from 'types/form';
 import { useLogin } from 'utils/auth/useLogin';
 import { blurInput } from 'utils/forms/blurInput';
@@ -24,13 +23,14 @@ export type LoginFormProps = {
     defaultEmail?: string;
     shouldOverwriteCustomerUserCart?: boolean;
     formWrapperClassName?: string;
-    formHeading: string;
+    formContentWrapperClassName?: string;
+    formHeading?: string;
 };
 
 export const LoginForm: FC<LoginFormProps> = ({
     defaultEmail,
     shouldOverwriteCustomerUserCart,
-    formWrapperClassName,
+    formContentWrapperClassName,
     formHeading,
 }) => {
     const { t } = useTranslation();
@@ -75,8 +75,8 @@ export const LoginForm: FC<LoginFormProps> = ({
                     className="flex w-full justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
                 >
-                    <FormBlockWrapper className={twJoin(formWrapperClassName, 'w-full')}>
-                        <FormHeading>{formHeading}</FormHeading>
+                    <FormContentWrapper className={formContentWrapperClassName}>
+                        {formHeading && <FormHeading>{formHeading}</FormHeading>}
 
                         <TextInputControlled
                             control={formProviderMethods.control}
@@ -117,9 +117,9 @@ export const LoginForm: FC<LoginFormProps> = ({
 
                             <div className="mb-4 whitespace-nowrap">
                                 <ExtendedNextLink
-                                    aria-label={t('Go to forgot password page', { ns: 'accessibility' })}
+                                    aria-label={t('Go to reset password page', { ns: 'accessibility' })}
                                     href={resetPasswordUrl}
-                                    skeletonType="forgot-password"
+                                    skeletonType="reset-password"
                                 >
                                     {t('Lost your password?')}
                                 </ExtendedNextLink>
@@ -133,7 +133,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                     />
                                 )}
                         </FormButtonWrapper>
-                    </FormBlockWrapper>
+                    </FormContentWrapper>
                 </Form>
             </FormProvider>
         </div>
