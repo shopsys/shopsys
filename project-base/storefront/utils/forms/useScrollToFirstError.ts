@@ -16,5 +16,5 @@ export const useScrollToFirstError = <T extends FieldValues>(
                 errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
-    }, [formProviderMethods.formState.isSubmitted, formProviderMethods.formState.errors, formName]);
+    }, [formProviderMethods.formState.submitCount, formProviderMethods.formState.errors, formName]);
 };
