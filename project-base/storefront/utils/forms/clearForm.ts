@@ -6,7 +6,7 @@ export const clearForm = <T extends FieldValues>(
     formProviderMethods: UseFormReturn<T>,
     defaultValues: DeepPartial<T>,
 ): void => {
-    if (formProviderMethods.formState.isSubmitSuccessful) {
-        formProviderMethods.reset(defaultValues, { keepValues: error !== undefined, keepErrors: true });
+    if (error === undefined) {
+        formProviderMethods.reset(defaultValues, { keepErrors: false });
     }
 };
