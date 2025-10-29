@@ -129,10 +129,13 @@
         "shopsys/biome-config": "18.0.x-dev",
         "shopsys/coding-standards": "18.0.x-dev",
         "sspooky13/yaml-standards": "^9.0",
-        "symfony/maker-bundle": "^1.62" ,
+        "symfony/maker-bundle": "^1.62",
         "symfony/process": "^6.4",
         "symfony/var-dumper": "^6.4",
         "symfony/yaml": "^6.4"
+    },
+    "conflict": {
+        "doctrine/orm": ">=2.20.7"
     },
     "extra": {
         "symfony": {
