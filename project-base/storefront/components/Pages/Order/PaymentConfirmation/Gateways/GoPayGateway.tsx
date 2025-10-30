@@ -13,6 +13,7 @@ type GoPayGatewayProps = {
     requiresAction?: boolean;
     isDisabled?: boolean;
     initialButtonText?: string;
+    onMaxTransactionCountReached?: () => void;
 };
 
 export const GoPayGateway: FC<GoPayGatewayProps> = ({
@@ -21,21 +22,33 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
     initialButtonText,
     className,
     isDisabled,
+    onMaxTransactionCountReached,
 }) => {
     const [initiatedPaymentGate, setInitiatedPaymentGate] = useState(!requiresAction);
+    const [isMaxTransactionCountReached, setIsMaxTransactionCountReached] = useState(false);
     const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<TypeGoPayCreatePaymentSetup | undefined>(undefined);
     const router = useRouter();
     const [, payOrder] = usePayOrderMutation();
     const { t } = useTranslation();
     const wasPaidRef = useRef(false);
 
+    const handleMaxTransactionCountReached = () => {
+        setIsMaxTransactionCountReached(true);
+        showErrorMessage(t('Max transaction count reached'));
+        onMaxTransactionCountReached?.();
+    };
+
     useEffect(() => {
         if (!wasPaidRef.current && initiatedPaymentGate) {
+            const query = {
+                ...router.query,
+                requiresAction: true,
+            };
             router
                 .replace(
                     {
                         pathname: router.pathname,
-                        query: router.query,
+                        query,
                     },
                     undefined,
                     { shallow: true },
@@ -44,11 +57,14 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                     payOrder({ orderUuid }).then((payOrderResult) => {
                         if (payOrderResult.error?.graphQLErrors) {
                             for (const error of payOrderResult.error.graphQLErrors) {
-                                showErrorMessage(
-                                    error.message.includes('Max transaction count reached')
-                                        ? t('Max transaction count reached')
-                                        : error.message,
+                                const isMaxTransactionCountReached = error.message.includes(
+                                    'Max transaction count reached',
                                 );
+                                if (isMaxTransactionCountReached) {
+                                    handleMaxTransactionCountReached();
+                                    return;
+                                }
+                                showErrorMessage(error.message);
                             }
                             setInitiatedPaymentGate(false);
                             return;
@@ -59,14 +75,39 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                 });
             wasPaidRef.current = true;
         }
-    }, [initiatedPaymentGate]);
+    }, [initiatedPaymentGate, orderUuid, router, payOrder, t]);
 
     const initGoPayCheckout = (gatewayUrl: string) => () => {
-        // @ts-expect-error 3rd party function
-        _gopay.checkout({
-            gatewayUrl,
-            inline: true,
-        });
+        const attemptCheckout = (attempt = 0) => {
+            const gopayGlobal = typeof window !== 'undefined' ? (window as any)._gopay : undefined;
+            if (gopayGlobal && typeof gopayGlobal.checkout === 'function') {
+                try {
+                    gopayGlobal.checkout({
+                        gatewayUrl,
+                        inline: true,
+                    });
+                } catch {
+                    showErrorMessage(t('Failed to initialize payment gateway. Please try again.'));
+                    setInitiatedPaymentGate(false);
+                }
+            } else if (attempt < 10) {
+                setTimeout(() => attemptCheckout(attempt + 1), Math.min(100 * (attempt + 1), 500));
+            } else {
+                showErrorMessage(t('Payment gateway failed to load. Please refresh the page.'));
+                setInitiatedPaymentGate(false);
+            }
+        };
+
+        attemptCheckout();
+    };
+
+    const handlePaymentButtonClick = () => {
+        setInitiatedPaymentGate(true);
+    };
+
+    const handlePaymentError = () => {
+        showErrorMessage(t('Failed to load payment gateway. Please try again.'));
+        setInitiatedPaymentGate(false);
     };
 
     return (
@@ -75,15 +116,17 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                 <Script
                     id="go-pay-embedded-js"
                     src={goPayPaymentSetup.embedJs}
+                    strategy="afterInteractive"
+                    onError={handlePaymentError}
                     onLoad={initGoPayCheckout(goPayPaymentSetup.gatewayUrl)}
                 />
             )}
-            {requiresAction && (
+            {requiresAction && !isMaxTransactionCountReached && (
                 <Button
                     className={className}
                     hasDisabledLook={isDisabled}
                     size="xlarge"
-                    onClick={() => setInitiatedPaymentGate(true)}
+                    onClick={handlePaymentButtonClick}
                 >
                     {initiatedPaymentGate ? (
                         <>

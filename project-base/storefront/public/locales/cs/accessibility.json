@@ -62,6 +62,7 @@
     "Go to my orders page": "Přejít na stránku mých objednávek",
     "Go to new complaint page": "Přejít na stránku nové reklamace",
     "Go to order detail number {{ orderNumber }}": "Přejít na detail objednávky číslo {{ orderNumber }}",
+    "Go to order detail page": "Přejít na stránku detailu objednávky",
     "Go to page {{ page }}": "Přejít na stránku {{ page }}",
     "Go to page with product variants of {{ productName }}": "Přejít na stránku s variantami produktu {{ productName }}",
     "Go to previous step": "Přejít na předchozí krok",
