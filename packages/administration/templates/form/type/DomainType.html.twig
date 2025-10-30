@@ -12,7 +12,7 @@
             {% endfor %}
         </select>
     {% else %}
-        <span class="input-group-text">{{ domainConfigs[0].url }}</span>
+        <span class="input-group-text overflow-y-scroll">{{ domainConfigs[0].url }}</span>
         <input type="hidden" {{ block('widget_attributes') }} value="{{ domainConfigs[0].id }}" />
     {% endif %}
 {% endblock domain_widget %}

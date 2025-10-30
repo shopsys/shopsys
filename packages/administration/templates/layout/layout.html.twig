@@ -115,7 +115,7 @@
                                 <span class="nav-link-icon">{{ ux_icon('forward-page') }}</span>
                                 <span class="d-none d-md-inline">{{ 'Go to Frontend'|trans }}</span>
                             </a>
-                            <ul class="dropdown-menu overflow-auto" style="max-height: 300px">
+                            <ul class="dropdown-menu dropdown-menu-end overflow-auto" style="max-height: 300px; max-width: 270px;">
                                 {% for domainConfig in getDomain().getAll() %}
                                     <li>
                                         <a href="{{ domainConfig.url }}"
@@ -123,7 +123,7 @@
                                            class="dropdown-item"
                                            title="{{ domainConfig.name }}"
                                         >
-                                            {{ domainConfig.url }}
+                                            {{ domainConfig.name }}
                                         </a>
                                     </li>
                                 {% endfor %}
