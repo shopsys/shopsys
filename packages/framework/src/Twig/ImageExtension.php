@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class ImageExtension extends AbstractExtension
@@ -52,6 +53,17 @@ class ImageExtension extends AbstractExtension
     {
         return [
             new TwigFunction('image', $this->getImageHtml(...), ['is_safe' => ['html']]),
+        ];
+    }
+
+    /**
+     * @return \Twig\TwigFilter[]
+     */
+    #[Override]
+    public function getFilters(): array
+    {
+        return [
+            new TwigFilter('escape_but_amp', [$this, 'escapeButAmp'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -215,5 +227,22 @@ class ImageExtension extends AbstractExtension
         }
 
         return $htmlAttributes;
+    }
+
+    /**
+     * @param string|null $string
+     * @return string
+     */
+    public function escapeButAmp(?string $string): string
+    {
+        if ($string === null) {
+            return '';
+        }
+
+        $escapedString = htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        $finalString = str_replace('&amp;', '&', $escapedString);
+
+        return $finalString;
     }
 }

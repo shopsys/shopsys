@@ -2,7 +2,13 @@
     <picture>
         {% apply spaceless %}
             {% set attr = attr|merge({'class': (attr.class|default('') ~ ' ' ~ imageCssClass)|trim}) %}
-            <img {% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} itemprop="image" />
+            <img {%- for attrname, attrvalue in attrForMS %}
+            {%- if attrname == 'src' -%}
+                {{- " " ~ attrname }}="{{ attrvalue|escape_but_amp }}"
+            {%- else -%}
+                {{- " " ~ attrname }}="{{ attrvalue }}"
+            {%- endif -%}
+        {%- endfor %} itemprop="image" />
         {% endapply %}
     </picture>
 {% endblock %}
