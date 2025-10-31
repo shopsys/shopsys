@@ -115,6 +115,7 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => 'Name prefix',
+                'display_mode' => 'columns',
             ])
             ->add('name', LocalizedType::class, [
                 'required' => false,
@@ -126,6 +127,7 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => 'Name',
+                'display_mode' => 'columns',
             ])
             ->add('nameSuffix', LocalizedType::class, [
                 'required' => false,
@@ -135,6 +137,7 @@ final class ProductFormType extends AbstractType
                     ],
                 ],
                 'label' => 'Name suffix',
+                'display_mode' => 'columns',
             ]);
 
         if ($this->isProductVariant($product) || $this->isProductMainVariant($product)) {
@@ -270,6 +273,10 @@ final class ProductFormType extends AbstractType
                 ],
                 'required' => false,
                 'label' => 'Flags',
+                'display_mode' => 'columns',
+                'row_attr' => [
+                    'class' => 'mb-3',
+                ],
             ])
             ->add('brand', ChoiceType::class, [
                 'required' => false,
@@ -383,6 +390,10 @@ final class ProductFormType extends AbstractType
         $builderDisplayAvailabilityGroup->add('domainHidden', MultidomainType::class, [
             'label' => 'Hide on domain',
             'entry_type' => YesNoType::class,
+            'display_mode' => 'columns',
+            'row_attr' => [
+                'class' => 'mb-3',
+            ],
         ]);
 
         $builderDisplayAvailabilityGroup
@@ -406,6 +417,7 @@ final class ProductFormType extends AbstractType
             ->add('domainSellingDenied', MultidomainType::class, [
                 'label' => 'Exclude from sale on domains',
                 'entry_type' => YesNoType::class,
+                'display_mode' => 'columns',
             ]);
 
         if ($this->isProductVariant($product)) {
@@ -413,6 +425,9 @@ final class ProductFormType extends AbstractType
                 ->add('categoriesByDomainId', DisplayOnlyType::class, [
                     'data' => t('You can set the categories on product detail of the main variant'),
                     'label' => 'Assign to category',
+                    'row_attr' => [
+                        'class' => 'mb-3',
+                    ],
                 ]);
         } else {
             $builderDisplayAvailabilityGroup
@@ -422,6 +437,10 @@ final class ProductFormType extends AbstractType
                     'options_by_domain_id' => $categoriesOptionsByDomainId,
                     'disabled' => $this->isProductVariant($product),
                     'label' => 'Assign to category',
+                    'display_mode' => 'columns',
+                    'row_attr' => [
+                        'class' => 'mb-3',
+                    ],
                 ]);
         }
         $builderDisplayAvailabilityGroup
@@ -445,6 +464,7 @@ final class ProductFormType extends AbstractType
                     'required' => true,
                 ],
                 'label' => 'Sorting priority',
+                'display_mode' => 'columns',
             ]);
 
         return $builderDisplayAvailabilityGroup;

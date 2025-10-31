@@ -33,6 +33,8 @@ final class HeurekaProductFormType extends AbstractType
             'label' => $this->translator->trans('Maximum price per click'),
             'entry_type' => MoneyType::class,
             'required' => false,
+            'layout' => 'block',
+            'display_mode' => 'columns',
             'entry_options' => [
                 'currency' => 'CZK',
                 'constraints' => [

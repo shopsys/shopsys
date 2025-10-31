@@ -76,7 +76,10 @@ class LocalizedType extends AbstractType
             'entry_options' => [],
             'main_constraints' => [],
             'layout' => null,
+            'display_mode' => 'stacked',
         ]);
+
+        $resolver->setAllowedValues('display_mode', ['stacked', 'columns']);
     }
 
     /**
@@ -90,5 +93,6 @@ class LocalizedType extends AbstractType
         }
 
         $view->vars['layout'] = $options['layout'];
+        $view->vars['display_mode'] = $options['display_mode'];
     }
 }
