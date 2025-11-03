@@ -1,23 +1,24 @@
-@import "@tabler/core/scss/tabler";
-@import "tom-select/src/scss/tom-select.bootstrap5";
-@import "@tabler/core/scss/vendor/tom-select";
-@import "@melloware/coloris/dist/coloris.css";
-@import "@tabler/core/scss/vendor/coloris";
-@import "nouislider/dist/nouislider.css";
-@import "~flatpickr/dist/flatpickr.css";
+@import '@tabler/core/scss/tabler';
+@import 'tom-select/src/scss/tom-select.bootstrap5';
+@import '@tabler/core/scss/vendor/tom-select';
+@import '@melloware/coloris/dist/coloris.css';
+@import '@tabler/core/scss/vendor/coloris';
+@import 'nouislider/dist/nouislider.css';
+@import '~flatpickr/dist/flatpickr.css';
 
-@import "ckeditor";
-@import "custom";
-@import "icons";
-@import "tabler-overrides";
-@import "role-grid";
-@import "tree";
-@import "mailer-info";
-@import "toc";
-@import "tom-select";
+@import 'ckeditor';
+@import 'custom';
+@import 'icons';
+@import 'tabler-overrides';
+@import 'role-grid';
+@import 'tree';
+@import 'mailer-info';
+@import 'toc';
+@import 'tom-select';
 
 // wrap long menu items in sidebar
-.sidebar .dropdown-menu .dropdown-header, .sidebar .dropdown-menu .dropdown-item {
+.sidebar .dropdown-menu .dropdown-header,
+.sidebar .dropdown-menu .dropdown-item {
     white-space: normal;
 }
 
@@ -32,4 +33,9 @@
 
 .navbar-brand-image {
     height: 3rem;
+}
+
+.modal-content > .btn-close {
+    width: 2.5rem;
+    height: 2.5rem;
 }
