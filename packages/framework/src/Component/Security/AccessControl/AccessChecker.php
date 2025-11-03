@@ -69,7 +69,11 @@ final readonly class AccessChecker implements AccessCheckerInterface
     #[Override]
     public function hasPermission(string $roleConstant, Permission $permission): bool
     {
-        $this->roleRegistry->getRole($roleConstant, AdminContext::class);
+        $role = $this->roleRegistry->getRole($roleConstant, AdminContext::class);
+
+        if ($role->isSingleRole()) {
+            return $this->authorizationChecker->isGranted($roleConstant);
+        }
 
         $roleWithPermission = RoleIdentifierHelper::getIdentifierWithPermission($roleConstant, $permission);
 
