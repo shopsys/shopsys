@@ -907,12 +907,6 @@ msgstr "Piatok"
 msgid "From"
 msgstr "Od"
 
-msgid "Full access"
-msgstr "Úplný prístup"
-
-msgid "Full access (view only)"
-msgstr "Úplný prístup (iba zobrazenie)"
-
 msgid "Future"
 msgstr "Budúcnosť"
 
