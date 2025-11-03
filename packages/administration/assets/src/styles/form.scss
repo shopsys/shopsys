@@ -1,0 +1,12 @@
+.form-check {
+    margin: 0.25rem;
+}
+
+.form-check-input:hover {
+    border-color: var(--border-color-hovered);
+    cursor: pointer;
+}
+
+.form-check-label:hover {
+    cursor: pointer;
+}
