@@ -45,8 +45,6 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
         // Those are special roles that are always present in the system.
         $roleCollection->add(new Role(SystemRole::ADMIN, t('Administrator'), allowOverwrite: false));
         $roleCollection->add(new Role(SystemRole::SUPER_ADMIN, t('Super Administrator'), allowOverwrite: false));
-        $roleCollection->add(new Role(SystemRole::ALL, t('Full access'), allowOverwrite: false));
-        $roleCollection->add(new Role(SystemRole::ALL_VIEW, t('Full access (view only)'), allowOverwrite: false));
         $roleCollection->add(new Role(SystemRole::PUBLIC_ACCESS, t('Public access'), allowOverwrite: false));
 
         $coreRoles = [

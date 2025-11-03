@@ -97,12 +97,6 @@ msgstr ""
 msgid "Free transport and payment"
 msgstr ""
 
-msgid "Full access"
-msgstr ""
-
-msgid "Full access (view only)"
-msgstr ""
-
 msgid "Heureka setting"
 msgstr ""
 
