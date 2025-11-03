@@ -1,4 +1,5 @@
 import { DomainConfigType } from './domainConfig';
+import { GetServerSidePropsContext } from 'next';
 
 export const DEFAULT_LOCALE = 'default';
 
@@ -6,10 +7,10 @@ export const getBaseUrlWithLocale = (baseUrl: string, locale = DEFAULT_LOCALE) =
     return `${baseUrl}${locale !== DEFAULT_LOCALE ? `/${locale}` : ''}`;
 };
 
-export const getBasePathWithLocale = (basePath: string, locale = DEFAULT_LOCALE) => {
+export const getBasePathWithLocale = (basePath: string, context: GetServerSidePropsContext) => {
     const normalizedBasePath = basePath.startsWith('/') ? basePath : `/${basePath}`;
 
-    return `${locale !== DEFAULT_LOCALE ? `/${locale}` : ''}${normalizedBasePath}`;
+    return `${context.locale !== DEFAULT_LOCALE ? `/${context.locale}` : ''}${normalizedBasePath}`;
 };
 
 export const getInternalGraphqlEndpoint = (internalEndpoint: string | undefined, locale = DEFAULT_LOCALE) => {

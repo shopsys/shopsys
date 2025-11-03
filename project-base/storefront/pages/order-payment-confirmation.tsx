@@ -169,7 +169,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     if (orderUuid === '') {
         return {
             redirect: {
-                destination: getBasePathWithLocale('/', domainConfig.defaultLocale),
+                destination: getBasePathWithLocale('/', context),
                 statusCode: 301,
             },
         };

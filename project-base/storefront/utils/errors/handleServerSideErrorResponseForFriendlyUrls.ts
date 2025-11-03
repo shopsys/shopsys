@@ -1,18 +1,16 @@
 import { isExpectedPriceFilterError } from './expectedErrors';
 import { isWithErrorDebugging } from './isWithErrorDebugging';
 import { mapGraphqlErrorForDevelopment } from './mapGraphqlErrorForDevelopment';
-import { IncomingMessage, ServerResponse } from 'http';
+import { GetServerSidePropsContext } from 'next';
 import { CombinedError } from 'urql';
 import { getLoginUrlWithRedirect } from 'utils/auth/getLoginUrlWithRedirect';
-import { DEFAULT_LOCALE } from 'utils/domain/domainUtils';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const handleServerSideErrorResponseForFriendlyUrls = (
     error: CombinedError | undefined,
     serverSideRequestData: unknown,
-    res: ServerResponse<IncomingMessage>,
+    context: GetServerSidePropsContext,
     domainUrl: string,
-    contextLocale: string = DEFAULT_LOCALE,
     urlSlug: string | undefined = undefined,
 ) => {
     if (error?.response.status === 401) {
@@ -20,7 +18,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
 
         return {
             redirect: {
-                destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, contextLocale),
+                destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl, context),
                 permanent: false,
             },
         };
@@ -43,7 +41,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
         };
     }
 
-    if (!serverSideRequestData && !(res.statusCode === 503)) {
+    if (!serverSideRequestData && !(context.res.statusCode === 503)) {
         return {
             notFound: true as const,
         };

@@ -83,9 +83,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     blogArticleResponse.error,
                     blogArticleResponse.data?.blogArticle,
-                    context.res,
+                    context,
                     domainConfig.url,
-                    context.locale,
                 );
 
                 if (serverSideErrorResponse) {

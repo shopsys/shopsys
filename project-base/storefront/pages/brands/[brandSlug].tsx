@@ -140,9 +140,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const serverSideBrandDetailErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     brandDetailResponse.error,
                     brandDetailResponse.data?.brand,
-                    context.res,
+                    context,
                     domainConfig.url,
-                    context.locale,
                     urlSlug,
                 );
 
@@ -153,9 +152,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const serverSideBrandProductsErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     brandProductsResponse.error,
                     brandProductsResponse.data?.products,
-                    context.res,
+                    context,
                     domainConfig.url,
-                    context.locale,
                     urlSlug,
                 );
 

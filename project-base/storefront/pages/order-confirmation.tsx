@@ -144,7 +144,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
             redirect: {
                 destination: getBasePathWithLocale(
                     getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0],
-                    domainConfig.defaultLocale,
+                    context,
                 ),
                 statusCode: 301,
             },

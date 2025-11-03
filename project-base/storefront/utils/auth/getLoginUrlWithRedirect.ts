@@ -1,3 +1,4 @@
+import { GetServerSidePropsContext } from 'next';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -5,11 +6,11 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 export const getLoginUrlWithRedirect = (
     redirectTargetUrl: string,
     domainUrl: string,
-    contextLocale: string,
+    context: GetServerSidePropsContext,
 ): string => {
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], domainUrl);
 
     const redirectQuery = redirectTargetUrl.length > 0 ? `?r=${getStringWithoutLeadingSlash(redirectTargetUrl)}` : '';
 
-    return getBasePathWithLocale(`${loginUrl}${redirectQuery}`, contextLocale);
+    return getBasePathWithLocale(`${loginUrl}${redirectQuery}`, context);
 };

@@ -105,9 +105,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                 productResponse.error,
                 productResponse.data?.product,
-                context.res,
+                context,
                 domainConfig.url,
-                context.locale,
             );
 
             if (serverSideErrorResponse) {
@@ -120,10 +119,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             ) {
                 return {
                     redirect: {
-                        destination: getBasePathWithLocale(
-                            productResponse.data.product.mainVariant.slug,
-                            domainConfig.defaultLocale,
-                        ),
+                        destination: getBasePathWithLocale(productResponse.data.product.mainVariant.slug, context),
                         permanent: false,
                     },
                 };
