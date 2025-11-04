@@ -1,7 +1,7 @@
 import { StyleguideSection } from './StyleguideElements';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormButtonWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Translate } from 'next-translate';
@@ -38,30 +38,38 @@ export const StyleguideFormExample: FC = () => {
     return (
         <FormProvider {...formProviderMethods}>
             <Form onSubmit={formProviderMethods.handleSubmit(onValidForm, onInvalidForm)}>
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName="example-form"
-                    name="optionalValue"
-                    render={(optionalValue) => <FormLine bottomGap>{optionalValue}</FormLine>}
-                    textInputProps={{
-                        label: 'Optional Value',
-                        type: 'text',
-                    }}
-                />
-                <TextInputControlled
-                    control={formProviderMethods.control}
-                    formName="example-form"
-                    name="requiredValue"
-                    render={(requiredInput) => <FormLine>{requiredInput}</FormLine>}
-                    textInputProps={{
-                        label: 'Required value',
-                        required: true,
-                        type: 'text',
-                    }}
-                />
-                <FormButtonWrapper>
-                    <SubmitButton>Submit form</SubmitButton>
-                </FormButtonWrapper>
+                <FormContentWrapper>
+                    <FormBlockWrapper>
+                        <FormHeading>Example form</FormHeading>
+
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            formName="example-form"
+                            name="optionalValue"
+                            render={(optionalValue) => <FormLine>{optionalValue}</FormLine>}
+                            textInputProps={{
+                                label: 'Optional Value',
+                                type: 'text',
+                            }}
+                        />
+
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            formName="example-form"
+                            name="requiredValue"
+                            render={(requiredInput) => <FormLine>{requiredInput}</FormLine>}
+                            textInputProps={{
+                                label: 'Required value',
+                                required: true,
+                                type: 'text',
+                            }}
+                        />
+                    </FormBlockWrapper>
+
+                    <FormButtonWrapper>
+                        <SubmitButton>Submit form</SubmitButton>
+                    </FormButtonWrapper>
+                </FormContentWrapper>
             </Form>
         </FormProvider>
     );

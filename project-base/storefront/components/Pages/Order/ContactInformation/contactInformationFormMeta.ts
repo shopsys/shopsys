@@ -245,7 +245,7 @@ export const useContactInformationFormMeta = (
                 },
                 [customerFieldName]: {
                     name: customerFieldName,
-                    label: t('You will shop with us as'),
+                    label: t('I will shop as'),
                     disabled: isB2B && isUserLoggedIn,
                     errorMessage: isEmailValid ? errors.customer?.message : undefined,
                 },
@@ -309,7 +309,7 @@ export const useContactInformationFormMeta = (
                 },
                 [isDeliveryAddressDifferentFromBillingFieldName]: {
                     name: isDeliveryAddressDifferentFromBillingFieldName,
-                    label: pickupPlace ? t('Enter the delivery information') : t('Enter the delivery address'),
+                    label: pickupPlace ? t('Order will pick up someone else') : t('Send to another delivery address'),
                     errorMessage: isEmailValid ? errors.isDeliveryAddressDifferentFromBilling?.message : undefined,
                 },
                 deliveryFirstName: {

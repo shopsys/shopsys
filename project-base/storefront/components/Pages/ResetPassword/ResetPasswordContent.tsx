@@ -73,15 +73,16 @@ export const ResetPasswordContent: FC = () => {
                                         'aria-labelledby': 'reset-password-form-description',
                                     }}
                                 />
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        aria-label={t('Submit form to reset your password', { ns: 'accessibility' })}
-                                        hasDisabledCursor={!!error || value.length === 0}
-                                    >
-                                        {t('Reset password')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
                             </FormBlockWrapper>
+
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    aria-label={t('Submit form to reset your password', { ns: 'accessibility' })}
+                                    hasDisabledCursor={!!error || value.length === 0}
+                                >
+                                    {t('Reset password')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

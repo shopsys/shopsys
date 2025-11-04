@@ -22,7 +22,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
     const isTextInputSmall = textInputSize === 'small';
 
     return (
-        <div className="relative mt-2">
+        <div className="relative">
             <CrossIcon
                 aria-hidden="true"
                 className={twJoin(

@@ -52,6 +52,7 @@ import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { ThumbUp } from 'components/Basic/Icon/ThumbUp';
+import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
 import { UpsFifthIcon } from 'components/Basic/Icon/UpsFifthIcon';
@@ -262,6 +263,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ThumbUp className="size-10" />
                 <span className="text-center text-xs break-all">ThumbUp</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <TrashCanIcon className="size-10" />
+                <span className="text-center text-xs break-all">TrashCanIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <TriangleIcon className="size-10" />

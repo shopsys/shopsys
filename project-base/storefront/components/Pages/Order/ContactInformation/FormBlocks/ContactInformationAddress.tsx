@@ -24,12 +24,13 @@ export const ContactInformationAddress: FC = () => {
     return (
         <FormBlockWrapper>
             <FormHeading>{t('Billing address')}</FormHeading>
+
             <FormLine>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.street.name}
-                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    render={(textInput) => <FormLine>{textInput}</FormLine>}
                     textInputProps={{
                         disabled: !canManageCompanyData,
                         label: formMeta.fields.street.label,
@@ -40,12 +41,13 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormLine>
+
             <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.city.name}
-                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    render={(textInput) => <FormLine className="col-span-3">{textInput}</FormLine>}
                     textInputProps={{
                         disabled: !canManageCompanyData,
                         label: formMeta.fields.city.label,
@@ -55,15 +57,12 @@ export const ContactInformationAddress: FC = () => {
                         onChange: (event) => updateContactInformation({ city: event.currentTarget.value }),
                     }}
                 />
+
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.postcode.name}
-                    render={(textInput) => (
-                        <FormLine bottomGap isSmallInput>
-                            {textInput}
-                        </FormLine>
-                    )}
+                    render={(textInput) => <FormLine className="col-start-4">{textInput}</FormLine>}
                     textInputProps={{
                         disabled: !canManageCompanyData,
                         label: formMeta.fields.postcode.label,
@@ -75,32 +74,35 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormColumn>
-            <FormLine>
-                <Controller
-                    name={formMeta.fields.country.name}
-                    render={({ fieldState: { error }, field }) => (
-                        <>
-                            <Select
-                                isRequired
-                                ariaLabel={t('Select country', { ns: 'accessibility' })}
-                                label={formMeta.fields.country.label}
-                                options={countriesAsSelectOptions}
-                                tid={formMeta.formName + '-' + formMeta.fields.country.name}
-                                activeOption={countriesAsSelectOptions.find(
-                                    (option) => option.value === field.value.value,
-                                )}
-                                onSelectOption={(...selectOnChangeEventData) => {
-                                    field.onChange(...selectOnChangeEventData);
-                                    updateContactInformation({
-                                        country: selectOnChangeEventData[0] as SelectOptionType,
-                                    });
-                                }}
-                            />
-                            <FormLineError error={error} inputType="select" />
-                        </>
-                    )}
-                />
-            </FormLine>
+
+            <FormColumn>
+                <FormLine className="col-span-3">
+                    <Controller
+                        name={formMeta.fields.country.name}
+                        render={({ fieldState: { error }, field }) => (
+                            <>
+                                <Select
+                                    isRequired
+                                    ariaLabel={t('Select country', { ns: 'accessibility' })}
+                                    label={formMeta.fields.country.label}
+                                    options={countriesAsSelectOptions}
+                                    tid={formMeta.formName + '-' + formMeta.fields.country.name}
+                                    activeOption={countriesAsSelectOptions.find(
+                                        (option) => option.value === field.value.value,
+                                    )}
+                                    onSelectOption={(...selectOnChangeEventData) => {
+                                        field.onChange(...selectOnChangeEventData);
+                                        updateContactInformation({
+                                            country: selectOnChangeEventData[0] as SelectOptionType,
+                                        });
+                                    }}
+                                />
+                                <FormLineError error={error} inputType="select" />
+                            </>
+                        )}
+                    />
+                </FormLine>
+            </FormColumn>
         </FormBlockWrapper>
     );
 };

@@ -26,7 +26,7 @@ import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderE
 import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
 import { useRouter } from 'next/router';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
-import { SubmitHandler, UseFormReturn, useWatch } from 'react-hook-form';
+import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
@@ -55,16 +55,6 @@ export const useContactInformationPageNavigation = () => {
     };
 
     return { goToPreviousStepFromContactInformationPage };
-};
-
-export const useShouldDisplayContactInformationForm = (
-    formProviderMethods: UseFormReturn<ContactInformation>,
-    formMeta: ContactInformationFormMetaType,
-) => {
-    const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const isEmailFilledCorrectly = !!emailValue && !formProviderMethods.formState.errors.email;
-
-    return isEmailFilledCorrectly;
 };
 
 export const useCreateOrder = (

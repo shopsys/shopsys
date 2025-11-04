@@ -29,3 +29,11 @@
 @utility hide-scrollbar {
     @apply [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
+
+@utility animate-in {
+    animation: animateIn 0.3s ease 0.15s both;
+}
+
+@utility scale-in {
+    animation: scaleIn 0.3s ease 0.15s both;
+}

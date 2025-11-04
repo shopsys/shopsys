@@ -9,8 +9,8 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
         <Popup className="w-full max-w-md" contentClassName="overflow-y-auto" title={t('Login')}>
             <LoginForm
                 defaultEmail={defaultEmail}
-                formContentWrapperClassName="!px-5"
                 formHeading={formHeading}
+                formWrapperClassName="!p-5 w-full"
                 shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
             />
         </Popup>

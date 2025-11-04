@@ -52,8 +52,10 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                 />
             )}
 
-            <div className="bg-background-default sticky -inset-4 mt-auto flex justify-between p-4">
-                <Button onClick={() => updatePortalContent(null)}>{t('Close')}</Button>
+            <div className="bg-background-default sticky -inset-4 mt-auto flex justify-between pt-3">
+                <Button variant="inverted" onClick={() => updatePortalContent(null)}>
+                    {t('Close')}
+                </Button>
 
                 <Button
                     hasDisabledLook={selectedStoreUuid === ''}

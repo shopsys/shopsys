@@ -34,7 +34,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
                 <main
                     aria-label={t('Order process main content', { ns: 'accessibility' })}
-                    className="mt-4 mb-10 flex flex-col"
+                    className="animate-in mt-4 mb-10 flex flex-col"
                     id="main-content"
                 >
                     <SkeletonManager

@@ -109,12 +109,12 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                     <fieldset>
                         <legend className="h4 mb-4">{t('Choose a password')}</legend>
 
-                        <FormColumn className="gap-3">
+                        <FormColumn>
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.password.name}
-                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                render={(passwordInput) => <FormLine className="col-span-2">{passwordInput}</FormLine>}
                                 passwordInputProps={{
                                     label: formMeta.fields.password.label,
                                     autoComplete: 'new-password',
@@ -126,7 +126,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 name={formMeta.fields.passwordConfirm.name}
-                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                render={(passwordInput) => <FormLine className="col-span-2">{passwordInput}</FormLine>}
                                 passwordInputProps={{
                                     label: formMeta.fields.passwordConfirm.label,
                                     autoComplete: 'new-password-confirm',

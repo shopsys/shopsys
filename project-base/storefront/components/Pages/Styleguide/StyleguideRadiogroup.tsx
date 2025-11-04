@@ -54,7 +54,7 @@ export const StyleguideRadiogroup: FC = () => {
                         },
                     ]}
                     render={(radiobutton, key) => (
-                        <FormLine key={key} bottomGap className="w-full flex-none lg:w-1/2">
+                        <FormLine key={key} className="w-full flex-none lg:w-1/2">
                             {radiobutton}
                         </FormLine>
                     )}
