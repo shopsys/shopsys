@@ -55,12 +55,10 @@ final class AutocompleteFavoriteFormType extends AbstractType
             $brandNames[$brand->getId()] = $brand->getName();
         }
 
-        $productsGroup = $builder->create('productsGroup', GroupType::class, [
-            'label' => 'Favorite Products',
-        ]);
-        $productsGroup->add(
+        $builder->add(
             $builder->create('products', ProductsType::class, [
                 'required' => false,
+                'label' => 'Favorite Products',
                 'sortable' => true,
                 'allow_variants' => false,
                 'attr' => [
@@ -100,7 +98,6 @@ final class AutocompleteFavoriteFormType extends AbstractType
         );
 
         $builder
-            ->add($productsGroup)
             ->add($categoriesGroup)
             ->add($brandsGroup)
             ->add('actionBar', ActionBarType::class, [

@@ -24,29 +24,33 @@
 {% block main_content_inner %}
     {{ form_row(form.products) }}
 
-    <div class="row mb-3">
-        <div class="col-3">
-            <label class="form-label">File</label>
+    <div class="card">
+        <div class="card-body">
 
-            <div class="card card-sm" style="max-width: 17.5rem;">
-                <div class="position-relative ratio ratio-16x9 overflow-hidden">
-                    {{ uploadedFilePreviewWithLink(entity) }}
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label class="form-label">File</label>
+
+                    <div class="card card-sm" style="max-width: 17.5rem;">
+                        <div class="position-relative ratio ratio-16x9 overflow-hidden">
+                            {{ uploadedFilePreviewWithLink(entity) }}
+                        </div>
+
+                        <div class="card-footer">
+                            {{ entity.nameWithExtension }}
+                        </div>
+                    </div>
                 </div>
-
-                <div class="card-footer">
-                    {{ entity.nameWithExtension }}
+                <div class="col">
+                    <label class="form-label">Replace file</label>
+                    {{ form_widget(form.files) }}
+                    {{ form_errors(form.files) }}
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <label class="form-label">Replace file</label>
-            {{ form_widget(form.files) }}
-            {{ form_errors(form.files) }}
+
+            <div>
+                {{ form_rest(form) }}
+            </div>
         </div>
     </div>
-
-    <div>
-        {{ form_rest(form) }}
-    </div>
-
 {% endblock %}
