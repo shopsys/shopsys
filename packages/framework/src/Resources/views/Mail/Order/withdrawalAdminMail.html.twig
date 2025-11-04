@@ -10,7 +10,8 @@
                 <tbody>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Order number'|trans }}:</strong> {{ order.number }}
+                            <strong>{{ 'Order number'|trans }}:</strong>
+                            <a href="{{ url('admin_order_edit', {id: order.id}) }}" style="color: #0066cc; text-decoration: none;">{{ order.number }}</a>
                         </td>
                     </tr>
                     <tr>
