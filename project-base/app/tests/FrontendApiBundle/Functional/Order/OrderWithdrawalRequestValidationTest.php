@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
-use Shopsys\FrontendApiBundle\Component\Constraints\OrderWithdrawalRequest;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
@@ -25,11 +24,11 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
         $this->assertSame(
-            OrderWithdrawalRequest::ORDER_CANCELLED_ERROR,
-            $validationErrors['input.orderUrlHash'][0]['code'],
+            'order-cancelled',
+            $errors[0]['extensions']['userCode'],
         );
     }
 
@@ -47,11 +46,11 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
         $this->assertSame(
-            OrderWithdrawalRequest::WITHDRAWAL_DEADLINE_PASSED_ERROR,
-            $validationErrors['input.orderUrlHash'][0]['code'],
+            'order-withdrawal-deadline-passed',
+            $errors[0]['extensions']['userCode'],
         );
     }
 
@@ -73,11 +72,11 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
         $this->assertSame(
-            OrderWithdrawalRequest::ALREADY_REQUESTED_ERROR,
-            $validationErrors['input.orderUrlHash'][0]['code'],
+            'order-withdrawal-already-requested',
+            $errors[0]['extensions']['userCode'],
         );
     }
 
@@ -93,11 +92,11 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
         $this->assertSame(
-            OrderWithdrawalRequest::ORDER_NOT_FOUND_ERROR,
-            $validationErrors['input.orderUrlHash'][0]['code'],
+            'order-not-found',
+            $errors[0]['extensions']['userCode'],
         );
     }
 }

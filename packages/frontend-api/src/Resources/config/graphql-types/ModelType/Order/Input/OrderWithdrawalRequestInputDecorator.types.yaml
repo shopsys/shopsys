@@ -3,8 +3,6 @@ OrderWithdrawalRequestInputDecorator:
     decorator: true
     config:
         description: "Input for requesting withdrawal from contract for an order"
-        validation:
-            -   Shopsys\FrontendApiBundle\Component\Constraints\OrderWithdrawalRequest: ~
         fields:
             orderUrlHash:
                 type: "String!"
