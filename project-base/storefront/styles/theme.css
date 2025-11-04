@@ -195,20 +195,20 @@
 
     --color-toast-bg-default: var(--color-brand-50);
     --color-toast-bg-error: var(--color-red-100);
-    --color-toast-bg-succes: var(--color-green-100);
+    --color-toast-bg-success: var(--color-green-100);
     --color-toast-bg-warning: var(--color-orange-100);
     --color-toast-border-default: var(--color-border-brand);
     --color-toast-border-error: var(--color-border-error);
-    --color-toast-border-succes: var(--color-border-success);
+    --color-toast-border-success: var(--color-border-success);
     --color-toast-border-warning: var(--color-icon-warning);
     --color-toast-icon-default: var(--color-icon-accent);
     --color-toast-icon-error: var(--color-icon-error);
-    --color-toast-icon-succes: var(--color-icon-success);
+    --color-toast-icon-success: var(--color-icon-success);
     --color-toast-icon-warning: var(--color-icon-warning);
-    --color-toast-text-default: var(--color-text-accent);
-    --color-toast-text-error: var(--color-text-error);
-    --color-toast-text-succes: var(--color-text-success);
-    --color-toast-text-warning: var(--color-text-warning);
+    --color-toast-text-default: var(--color-text-default);
+    --color-toast-text-error: var(--color-text-default);
+    --color-toast-text-success: var(--color-text-default);
+    --color-toast-text-warning: var(--color-text-default);
 
     --color-availability-in-stock: var(--color-text-success);
     --color-availability-out-of-stock: var(--color-text-error);

@@ -17,6 +17,7 @@ export const cache = cacheExchange({
         AdvertImage: keyUuid,
         AdvertPosition: (advertPositionData) => advertPositionData.positionName as string | null,
         ArticleSite: keyUuid,
+        AutocompleteFavorites: keyNull,
         Availability: keyName,
         BlogArticle: keyUuid,
         BlogCategory: keyUuid,

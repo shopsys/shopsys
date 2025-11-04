@@ -18,7 +18,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
     return (
         <>
             {articles.map((article) => (
-                <div key={article.uuid} className="flex max-w-80 snap-start flex-col gap-5">
+                <div key={article.uuid} className="vl:flex-1 vl:min-w-0 flex max-w-80 snap-start flex-col gap-5">
                     <ArticleLink href={article.link} tabIndex={-1} title={t('Article page')}>
                         <Image
                             alt={article.mainImage?.name || article.name}

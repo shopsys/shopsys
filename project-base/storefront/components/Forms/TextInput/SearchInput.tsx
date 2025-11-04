@@ -95,7 +95,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                     type="button"
                     onClick={handleClear}
                 >
-                    <CloseIcon className="text-icon-less hover:text-icon-accent size-4" />
+                    <CloseIcon className="text-icon-less hover:text-icon-default size-4" />
                 </button>
             )}
             {shouldShowSpinnerInInput && (

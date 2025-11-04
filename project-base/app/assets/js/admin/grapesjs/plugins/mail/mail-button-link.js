@@ -14,7 +14,6 @@ export default grapesjs.plugins.add('mail-button-link', editor => {
                 <a data-gjs-type='button-link'
                     style="
                     margin: 0.75rem auto; 
-                    display: block; 
                     height: fit-content; 
                     width: fit-content; 
                     cursor: pointer; 

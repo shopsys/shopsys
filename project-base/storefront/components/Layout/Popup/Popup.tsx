@@ -115,7 +115,7 @@ export const Popup: React.FC<PopupProps> = ({
                             {!hideCloseButton && (
                                 <button
                                     aria-label={t('Close popup', { ns: 'accessibility' })}
-                                    className="text-icon-less hover:text-icon-accent ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
+                                    className="text-icon-less hover:text-icon-default ml-auto flex size-9 cursor-pointer items-center justify-center rounded-sm"
                                     ref={closeButtonRef}
                                     tabIndex={0}
                                     onClick={handleClosePopup}
