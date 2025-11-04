@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use DateTimeInterface;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class WithdrawalDeadlineCalculation
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting $withdrawalSetting
      */
     public function __construct(
-        protected readonly Setting $setting,
+        protected readonly WithdrawalSetting $withdrawalSetting,
     ) {
     }
 
@@ -30,10 +29,7 @@ class WithdrawalDeadlineCalculation
             return null;
         }
 
-        $withdrawalDeadlineDays = $this->setting->getForDomain(
-            Setting::WITHDRAWAL_DEADLINE_DAYS,
-            $order->getDomainId(),
-        );
+        $withdrawalDeadlineDays = $this->withdrawalSetting->getDeadlineDays($order->getDomainId());
 
         return (clone $deliveredAt)->modify(sprintf('+%d days', $withdrawalDeadlineDays));
     }
