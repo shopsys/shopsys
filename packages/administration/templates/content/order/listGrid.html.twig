@@ -1,20 +1,16 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
-{% block grid_value_cell_id_preview %}
-    <div class="d-inline-block cursor-help"
-         data-bs-toggle="popover"
-         data-bs-trigger="hover"
-         data-bs-html="true"
-         data-bs-content="Loading..."
-         data-bs-container="body"
-         data-content-url="{{ url('admin_order_preview', {id: value}) }}"
-    >
-        {{ ux_icon('cart') }}
-    </div>
-{% endblock %}
-
 {% block grid_value_cell_id_number %}
     <a href="{{ url('admin_order_edit', { id: row.id }) }}">{{ value }}</a>
+    <span class="d-none d-md-inline-block ms-2 cursor-help"
+          data-bs-toggle="popover"
+          data-bs-trigger="hover"
+          data-bs-html="true"
+          data-bs-content="Loading..."
+          data-bs-container="body"
+          data-content-url="{{ url('admin_order_preview', {id: row.id}) }}">
+        {{ ux_icon('list-search') }}
+    </span>
 {% endblock %}
 
 {% block grid_value_cell_id_status_name %}

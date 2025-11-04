@@ -103,24 +103,26 @@
 {% endblock %}
 
 {% block grid_title_cell %}
-    {% if (column.sortable) %}
-        {% if grid.orderSourceColumnName == column.id and grid.orderDirection == 'asc' %}
-            {% set orderBy = '-' ~ column.id %}
+    <span class="d-inline-flex align-items-center gap-1">
+        {% if (column.sortable) %}
+            {% if grid.orderSourceColumnName == column.id and grid.orderDirection == 'asc' %}
+                {% set orderBy = '-' ~ column.id %}
+            {% else %}
+                {% set orderBy = column.id %}
+            {% endif %}
+            <a href="{{ gridView.url({'order': orderBy}) }}"
+               class="{{ grid.orderSourceColumnName == column.id ? 'table-sort link-primary ' ~ grid.orderDirection : 'table-sort link-secondary' }}"
+            >
+                {{ column.title }}
+            </a>
         {% else %}
-            {% set orderBy = column.id %}
-        {% endif %}
-        <a href="{{ gridView.url({'order': orderBy}) }}"
-           class="{{ grid.orderSourceColumnName == column.id ? 'table-sort link-primary ' ~ grid.orderDirection : 'table-sort link-secondary' }}"
-        >
             {{ column.title }}
-        </a>
-    {% else %}
-        {{ column.title }}
-    {% endif %}
+        {% endif %}
 
-    {% if column.help is not null %}
-        {{ info_icon(column.help) }}
-    {% endif %}
+        {% if column.help is not null %}
+            {{ info_icon(column.help) }}
+        {% endif %}
+    </span>
 {% endblock %}
 
 {% block grid_rows %}

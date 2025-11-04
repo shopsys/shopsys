@@ -240,17 +240,16 @@ class OrderController extends AdminBaseController
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 
-        $grid->addColumn('preview', 'o.id', t('Preview'))->setClassAttribute('w-1 d-none d-md-table-cell');
+        $grid->addColumn('status_name', 'statusName', t('Status'), true);
         $grid->addColumn('number', 'o.number', t('Order Nr.'), true);
         $grid->addColumn('created_at', 'o.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
 
         if ($this->domain->isMultidomain()) {
-            $grid->addColumn('domain_id', 'o.domainId', t('Domain'), true);
+            $grid->addColumn('domain_id', 'o.domainId', t('Domain'), true)->setClassAttribute('w-1 d-none d-md-table-cell text-center');
         }
-        $grid->addColumn('status_name', 'statusName', t('Status'), true);
         $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'), false)
-            ->setClassAttribute('text-right text-no-wrap');
+            ->setClassAttribute('text-no-wrap text-end');
 
 
         $grid->addEditActionColumn('admin_order_edit', ['id' => 'id']);
