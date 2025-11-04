@@ -147,9 +147,7 @@ export default class OrderItems {
         const setPricesManually = $orderItem.find('.js-set-prices-manually').is(':checked');
 
         $orderItem.find('.js-calculable-price').prop('readonly', !setPricesManually);
-        $orderItem
-            .find('.js-setting-prices-manually-warning')
-            .css('visibility', setPricesManually ? 'visible' : 'hidden');
+        $orderItem.find('.js-setting-prices-manually-warning').css('display', setPricesManually ? 'block' : 'none');
     }
 
     static init($container) {
