@@ -1,27 +1,86 @@
-<h1>{{ 'New Withdrawal Request'|trans }}</h1>
+<h1 style="margin: 0 0 20px 0; color: #333;">{{ 'New Withdrawal Request'|trans }}</h1>
 
-<p>{{ 'A customer has requested withdrawal from contract for the following order'|trans }}</p>
+<p style="margin: 0 0 20px 0; color: #666;">{{ 'A customer has requested withdrawal from contract for the following order'|trans }}</p>
 
-<h2>{{ 'Order information'|trans }}</h2>
-<ul>
-    <li><strong>{{ 'Order number'|trans }}:</strong> {{ order.number }}</li>
-    <li><strong>{{ 'Customer email'|trans }}:</strong> {{ order.email }}</li>
-    <li><strong>{{ 'Order date'|trans }}:</strong> {{ order.createdAt|formatDateTime }}</li>
-    {% if order.deliveredAt %}
-        <li><strong>{{ 'Delivered at'|trans }}:</strong> {{ order.deliveredAt|formatDateTime }}</li>
-    {% endif %}
-</ul>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 20px; border-top: 2px solid #efefef;">
+    <tr>
+        <td style="padding: 15px 0;">
+            <h2 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">{{ 'Order information'|trans }}</h2>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'Order number'|trans }}:</strong> {{ order.number }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'Customer email'|trans }}:</strong> {{ order.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'Order date'|trans }}:</strong> {{ order.createdAt|formatDateTime }}
+                        </td>
+                    </tr>
+                    {% if order.deliveredAt %}
+                        <tr>
+                            <td style="padding: 5px 0;">
+                                <strong>{{ 'Delivered at'|trans }}:</strong> {{ order.deliveredAt|formatDateTime }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
 
-<h2>{{ 'Withdrawal request details'|trans }}</h2>
-<ul>
-    <li><strong>{{ 'Requested at'|trans }}:</strong> {{ order.withdrawalRequestedAt|formatDateTime }}</li>
-    <li><strong>{{ 'First name'|trans }}:</strong> {{ order.withdrawalFirstName }}</li>
-    <li><strong>{{ 'Last name'|trans }}:</strong> {{ order.withdrawalLastName }}</li>
-    <li><strong>{{ 'Email'|trans }}:</strong> {{ order.withdrawalEmail }}</li>
-    {% if order.withdrawalTelephone %}
-        <li><strong>{{ 'Phone'|trans }}:</strong> {{ order.withdrawalTelephone }}</li>
-    {% endif %}
-    {% if order.withdrawalNote %}
-        <li><strong>{{ 'Note'|trans }}:</strong> {{ order.withdrawalNote }}</li>
-    {% endif %}
-</ul>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 20px; border-top: 2px solid #efefef;">
+    <tr>
+        <td style="padding: 15px 0;">
+            <h2 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">{{ 'Withdrawal request details'|trans }}</h2>
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <tbody>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'Requested at'|trans }}:</strong> {{ order.withdrawalRequestedAt|formatDateTime }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'First name'|trans }}:</strong> {{ order.withdrawalFirstName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'Last name'|trans }}:</strong> {{ order.withdrawalLastName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0;">
+                            <strong>{{ 'Email'|trans }}:</strong> {{ order.withdrawalEmail }}
+                        </td>
+                    </tr>
+                    {% if order.withdrawalTelephone %}
+                        <tr>
+                            <td style="padding: 5px 0;">
+                                <strong>{{ 'Phone'|trans }}:</strong> {{ order.withdrawalTelephone }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if order.withdrawalNote %}
+                        <tr>
+                            <td style="padding: 5px 0; border-top: 1px solid #efefef;">
+                                <strong style="display: block; margin-bottom: 5px;">{{ 'Note'|trans }}:</strong>
+                                <div style="background-color: #f9f9f9; padding: 10px; border-left: 3px solid #ddd;">
+                                    {{ order.withdrawalNote }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
