@@ -3220,6 +3220,9 @@ msgstr ""
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr ""
 
+msgid "The instructions are presented to the customer after they submit the order withdrawal request."
+msgstr ""
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr ""
 
@@ -3518,9 +3521,6 @@ msgid "Withdrawal Request"
 msgstr ""
 
 msgid "Withdrawal deadline (days)"
-msgstr ""
-
-msgid "Withdrawal from a contract"
 msgstr ""
 
 msgid "Withdrawal from contract"

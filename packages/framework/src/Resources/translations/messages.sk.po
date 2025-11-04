@@ -3220,6 +3220,9 @@ msgstr "Text"
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyššia priorita, tým vyššie bude krajina zobrazená v zoznamoch. Krajiny s rovnakou prioritou budú zotriadené alfabeticky."
 
+msgid "The instructions are presented to the customer after they submit the order withdrawal request."
+msgstr "Pokyny sú zákazníkovi zobrazeny po odoslaní žiadosti o odstúpenie od zmluvy."
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimálna veľkosť ikony je 46x26 px. Povolený je len PNG formát."
 
@@ -3519,9 +3522,6 @@ msgstr "Žiadosť o odstúpenie od zmluvy"
 
 msgid "Withdrawal deadline (days)"
 msgstr "Lehota na odstúpenie od zmluvy (dni)"
-
-msgid "Withdrawal from a contract"
-msgstr "Odstúpenie od zmluvy"
 
 msgid "Withdrawal from contract"
 msgstr "Odstúpenie od zmluvy"
