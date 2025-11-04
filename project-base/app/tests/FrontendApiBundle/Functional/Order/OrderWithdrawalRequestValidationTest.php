@@ -24,12 +24,7 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertSame(
-            'order-cancelled',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-cancelled');
     }
 
     public function testWithdrawalRequestAfterDeadlineFails(): void
@@ -46,12 +41,7 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertSame(
-            'order-withdrawal-deadline-passed',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-withdrawal-deadline-passed');
     }
 
     public function testWithdrawalRequestAlreadyRequestedFails(): void
@@ -72,12 +62,7 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertSame(
-            'order-withdrawal-already-requested',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-withdrawal-already-requested');
     }
 
     public function testWithdrawalRequestWithInvalidOrderUrlHashFails(): void
@@ -92,11 +77,6 @@ class OrderWithdrawalRequestValidationTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertSame(
-            'order-not-found',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-not-found');
     }
 }

@@ -105,17 +105,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
             'orderUuid' => $anotherUserOrder->getUuid(),
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertArrayHasKey(0, $errors);
-        $this->assertArrayHasKey('extensions', $errors[0]);
-
-        $extensions = $errors[0]['extensions'];
-
-        $this->assertSame('order-not-found', $extensions['userCode']);
-        $this->assertSame(404, $extensions['code']);
+        $this->assertUserError($response, 'order-not-found', 404);
     }
 
     /**
@@ -129,17 +119,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
             'number' => $complaint->getNumber(),
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertArrayHasKey(0, $errors);
-        $this->assertArrayHasKey('extensions', $errors[0]);
-
-        $extensions = $errors[0]['extensions'];
-
-        $this->assertSame('complaint-not-found', $extensions['userCode']);
-        $this->assertSame(404, $extensions['code']);
+        $this->assertUserError($response, 'complaint-not-found', 404);
     }
 
     /**

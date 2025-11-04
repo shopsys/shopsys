@@ -121,10 +121,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             'customerUserUuid' => $currentCustomerUser->getUuid(),
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertSame('cannot-remove-own-customer-user', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'cannot-remove-own-customer-user');
     }
 
     public function testRemoveUserFromAnotherCompanyIsNotAllowed(): void

@@ -116,16 +116,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertArrayHasKey(0, $errors);
-        $this->assertArrayHasKey('extensions', $errors[0]);
-        $this->assertArrayHasKey('userCode', $errors[0]['extensions']);
-        $this->assertSame(
-            'order-not-found',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-not-found');
     }
 
     /**

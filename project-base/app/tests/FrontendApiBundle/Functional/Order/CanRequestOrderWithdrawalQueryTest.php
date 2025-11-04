@@ -87,9 +87,6 @@ class CanRequestOrderWithdrawalQueryTest extends GraphQlTestCase
             ],
         );
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertArrayHasKey(0, $errors);
-        $this->assertSame('order-not-found', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'order-not-found');
     }
 }

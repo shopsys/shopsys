@@ -503,4 +503,38 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertSame('access-denied', $errors[0]['extensions']['userCode']);
         $this->assertSame(403, $errors[0]['extensions']['code']);
     }
+
+    /**
+     * @param array $response
+     * @param string $expectedErrorUserCode
+     * @param int|null $expectedErrorCode
+     */
+    protected function assertUserError(
+        array $response,
+        string $expectedErrorUserCode,
+        ?int $expectedErrorCode = null,
+    ): void {
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        $this->assertCount(1, $errors);
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertArrayHasKey('extensions', $errors[0]);
+        $extensions = $errors[0]['extensions'];
+        $this->assertArrayHasKey('userCode', $extensions);
+
+        $this->assertSame(
+            $expectedErrorUserCode,
+            $extensions['userCode'],
+        );
+
+        if ($expectedErrorCode === null) {
+            return;
+        }
+
+        $this->assertArrayHasKey('code', $extensions);
+        $this->assertSame(
+            $expectedErrorCode,
+            $extensions['code'],
+        );
+    }
 }

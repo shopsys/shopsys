@@ -73,10 +73,7 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-list-not-found'), $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-list-not-found'));
     }
 
     /**

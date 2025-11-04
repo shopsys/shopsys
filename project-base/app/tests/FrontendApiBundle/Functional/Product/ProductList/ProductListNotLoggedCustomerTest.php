@@ -80,10 +80,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'uuid' => null,
             'type' => $productListType,
         ]);
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame('invalid-find-criteria-for-product-list', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'invalid-find-criteria-for-product-list');
     }
 
     /**
@@ -118,10 +115,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame('customer-user-not-logged', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'customer-user-not-logged');
     }
 
     /**
@@ -230,10 +224,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'productUuid' => $productToAdd->getUuid(),
             'type' => $productListType,
         ]);
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-already-in-list'), $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-already-in-list'));
     }
 
     /**
@@ -254,10 +245,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame('product-not-found', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'product-not-found');
     }
 
     /**
@@ -278,10 +266,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-not-in-list'), $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-not-in-list'));
     }
 
     /**
@@ -296,10 +281,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-list-not-found'), $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-list-not-found'));
     }
 
     /**

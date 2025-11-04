@@ -77,12 +77,7 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
             'orderUuid' => $order->getUuid(),
         ]);
 
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertEquals(
-            'order-sent-page-not-available',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-sent-page-not-available');
 
         $order = $this->orderFacade->getByUuid($orderUuid);
         $order->setOrderPaymentStatusPageValidFromNow();
@@ -171,12 +166,7 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
             'orderUuid' => $orderUuid,
         ]);
 
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertEquals(
-            'order-sent-page-not-available',
-            $errors[0]['extensions']['userCode'],
-        );
+        $this->assertUserError($response, 'order-sent-page-not-available');
 
         $validityHash = Uuid::uuid4();
 
