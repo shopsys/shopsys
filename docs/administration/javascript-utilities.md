@@ -33,13 +33,14 @@ new ModalWindow({
 
 #### Configuration Options
 
-| Option    | Type   | Default | Description                                                                    |
-| --------- | ------ | ------- | ------------------------------------------------------------------------------ |
-| `content` | string | `''`    | HTML content for modal body                                                    |
-| `title`   | string | `null`  | Optional modal title                                                           |
-| `size`    | string | `'sm'`  | Modal size: `sm`, `md`, `lg`, or `xl`                                          |
-| `style`   | string | `null`  | Modal style: `primary`, `secondary`, `success`, `danger`, `warning`, or `info` |
-| `buttons` | Array  | `[]`    | Array of button configurations                                                 |
+| Option       | Type   | Default | Description                                                                    |
+| ------------ | ------ | ------- | ------------------------------------------------------------------------------ |
+| `content`    | string | `''`    | HTML content for modal body                                                    |
+| `title`      | string | `null`  | Optional modal title                                                           |
+| `size`       | string | `'sm'`  | Modal size: `sm`, `md`, `lg`, `xl`, or `fullscreen`                            |
+| `style`      | string | `null`  | Modal style: `primary`, `secondary`, `success`, `danger`, `warning`, or `info` |
+| `buttons`    | Array  | `[]`    | Array of button configurations                                                 |
+| `borderless` | bool   | `false` | Reduces padding of content                                                     |
 
 #### Button Configuration
 

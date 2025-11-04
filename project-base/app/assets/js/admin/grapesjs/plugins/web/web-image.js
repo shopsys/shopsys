@@ -55,6 +55,7 @@ export default grapesjs.plugins.add('custom-image', editor => {
                     },
                 },
                 attributes: {
+                    'data-gjs-type': 'image',
                     [IMAGE_POSITION_DATA_ATTRIBUTE]: 'left',
                     class: ['image-position-left'],
                 },

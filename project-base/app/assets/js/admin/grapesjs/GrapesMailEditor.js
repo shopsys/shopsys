@@ -109,20 +109,40 @@ export default class GrapesMailEditor {
             },
             assetManager: {
                 custom: {
+                    currentModal: null,
+
                     open(props) {
                         const iframeContent = `<iframe src="${elfinderUrl}" style="width: 100%; height: 800px; border: none;"></iframe>`;
 
-                        // eslint-disable-next-line no-new
-                        const modalInstance = new ModalWindow({
+                        this.currentModal = new ModalWindow({
                             content: iframeContent,
                             size: 'xl',
+                            borderless: true,
+                        });
+
+                        let isClosed = false;
+
+                        this.currentModal.element.on('hidden.bs.modal', () => {
+                            if (!isClosed) {
+                                isClosed = true;
+                                delete window.document.fileManagerInsertImageCallback;
+                                this.currentModal = null;
+                                props.close();
+                            }
                         });
 
                         window.document.fileManagerInsertImageCallback = (_selector, url) => {
                             props.options.target.set('src', url);
-                            modalInstance.element.modal('hide');
-                            props.close();
+                            this.currentModal.element.modal('hide');
                         };
+                    },
+
+                    close() {
+                        if (this.currentModal) {
+                            this.currentModal.element.modal('hide');
+                            delete window.document.fileManagerInsertImageCallback;
+                            this.currentModal = null;
+                        }
                     },
                 },
             },

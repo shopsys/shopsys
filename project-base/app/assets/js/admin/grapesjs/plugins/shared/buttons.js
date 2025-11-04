@@ -31,25 +31,41 @@ export default grapesjs.plugins.add('buttons', (editor, options) => {
     panels.removeButton('options', 'gjs-open-import-webpage');
     panels.removeButton('options', 'canvas-clear');
 
-    panels.addButton('options', {
-        id: BUTTON_SAVE,
-        context: BUTTON_SAVE,
-        className: 'fa fa-save',
-        command(editor) {
+    commands.add('save-template', {
+        run(editor) {
             const template = editor.runCommand('export-inlined-html');
             $(`#${textareaId}`).val(template);
 
             FormChangeInfo.showInfo();
             resetBody(editor);
         },
+        stop() {
+            // No-op: button is not toggleable
+        },
+    });
+
+    commands.add('close-editor', {
+        run(editor) {
+            resetBody(editor);
+        },
+        stop() {
+            // No-op: button is not toggleable
+        },
+    });
+
+    panels.addButton('options', {
+        id: BUTTON_SAVE,
+        context: BUTTON_SAVE,
+        className: 'fa fa-save',
+        command: 'save-template',
+        attributes: { title: BUTTON_SAVE },
     });
 
     panels.addButton('options', {
         id: BUTTON_CLOSE,
         context: BUTTON_CLOSE,
         className: 'fa fa-times',
-        command(editor) {
-            resetBody(editor);
-        },
+        command: 'close-editor',
+        attributes: { title: BUTTON_CLOSE },
     });
 });
