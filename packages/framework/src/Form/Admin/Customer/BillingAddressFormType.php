@@ -182,6 +182,7 @@ final class BillingAddressFormType extends AbstractType
                 'data_class' => BillingAddressData::class,
                 'disableCompanyCustomerCheckbox' => false,
                 'attr' => ['novalidate' => 'novalidate'],
+                'renders_in_own_card' => true,
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 

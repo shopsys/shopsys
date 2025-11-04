@@ -11,6 +11,40 @@ We use two types of naming for form types:
 
 Every form type has some default options that can be used for various things.
 
+### renders_in_own_card
+
+Controls how form fields are grouped into visual cards in the administration interface.
+
+#### Default value
+
+- `false` for most form types
+- `true` for `GroupType` and other specialized container types
+
+#### Behavior
+
+**When set to `false` (default)**:
+
+Fields are automatically grouped with adjacent fields into shared "auto cards".
+Consecutive fields without this option will be rendered together in a single card container.
+
+**When set to `true`**:
+
+The field breaks the auto-grouping sequence and is rendered separately.
+For types like `GroupType`, this means they render in their own styled card section.
+
+#### Visual impact
+
+In the administration interface, auto cards are rendered as Bootstrap card components (`<div class="card mb-3">`).
+This automatic grouping helps organize forms visually without requiring manual card creation.
+
+#### When to use
+
+You typically don't need to set this option explicitly, as the defaults work well:
+
+- Use `GroupType` when you want a labeled section in its own card
+- Regular fields will automatically group together visually
+- Only override this option if you need custom grouping behavior
+
 ## Form types
 
 We created some form types which can help you with creating your own form types.

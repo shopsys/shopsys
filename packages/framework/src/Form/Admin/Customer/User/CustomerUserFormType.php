@@ -284,6 +284,7 @@ final class CustomerUserFormType extends AbstractType
             ->setDefaults([
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'renders_in_own_card' => true,
                 'constraints' => [
                     new FieldsAreNotIdentical([
                         'field1' => 'email',

@@ -65,6 +65,7 @@ final class ProductsType extends AbstractType
             'allow_variants' => true,
             'label_button_add' => t('Add product'),
             'top_info_title' => '',
+            'renders_in_own_card' => true,
         ]);
     }
 

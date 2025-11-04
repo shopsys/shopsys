@@ -20,6 +20,7 @@ final class GroupType extends AbstractType
             ->setAllowedTypes('label', 'string')
             ->setDefaults([
                 'inherit_data' => true,
+                'renders_in_own_card' => true,
             ]);
     }
 }
