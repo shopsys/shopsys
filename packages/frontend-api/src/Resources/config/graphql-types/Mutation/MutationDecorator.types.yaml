@@ -61,7 +61,7 @@ MutationDecorator:
                     input:
                         type: ChangeCompanyDataInput!
                         validation: cascade
-                access: "@=isGranted('ROLE_API_ALL')"
+                access: "@=isGranted('ROLE_API_MANAGE_CUSTOMERS')"
                 resolve: "@=mutation('changeCompanyDataMutation', args, validator)"
             Register:
                 type: 'LoginResult!'

@@ -47,7 +47,7 @@ class CompanyOwnerVoter extends AbstractB2bVoter
     #[Override]
     protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token)
     {
-        if ($this->security->isGranted('ROLE_API_ALL')) {
+        if ($this->security->isGranted('ROLE_API_MANAGE_CUSTOMERS')) {
             return $this->isRoleApiAllGranted($token);
         }
 
