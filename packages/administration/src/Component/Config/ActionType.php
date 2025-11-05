@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
+use Shopsys\AdministrationBundle\Component\Crud\Handler\CrudHandlerInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+use Webmozart\Assert\Assert;
 
 enum ActionType: string
 {
@@ -43,5 +47,30 @@ enum ActionType: string
             ],
             self::DELETE => [new CanDelete()],
         };
+    }
+
+    /**
+     * @param class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface> $handlerClass
+     * @return array<\Shopsys\AdministrationBundle\Component\Config\ActionType>
+     */
+    public static function getActionsForHandlerClass(string $handlerClass): array
+    {
+        Assert::implementsInterface($handlerClass, HandlerInterface::class);
+        $interfaces = class_implements($handlerClass);
+
+        $actionsForHandlerInterface = [
+            DeleteHandlerInterface::class => [self::DELETE],
+            CrudHandlerInterface::class => [self::DELETE],
+        ];
+
+        $actions = [];
+
+        foreach ($interfaces as $interface) {
+            if (isset($actionsForHandlerInterface[$interface])) {
+                $actions = array_merge($actions, $actionsForHandlerInterface[$interface]);
+            }
+        }
+
+        return array_values(array_unique($actions, flags: SORT_REGULAR));
     }
 }

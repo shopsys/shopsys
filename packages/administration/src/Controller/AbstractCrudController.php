@@ -5,26 +5,42 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
+use Psr\Log\LoggerInterface;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
+use Shopsys\AdministrationBundle\Component\Doctrine\Util\ObjectNameHelper;
+use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
+use Throwable;
 
 abstract class AbstractCrudController extends AbstractController
 {
-    public Definition $definition;
+    use FlashMessageTrait;
+
+    protected Definition $definition;
 
     #[Required]
     public DatagridFactory $datagridFactory;
 
     #[Required]
     public OrmAdapterFactory $ormAdapterFactory;
+
+    #[Required]
+    public LoggerInterface $logger;
+
+    public function setDefinition(Definition $definition): void
+    {
+        $this->definition = $definition;
+    }
 
     public function configure(CrudConfig $config): void
     {
@@ -93,9 +109,47 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
-    public function deleteAction(int $id): Response
+    public function deleteAction(int $id): RedirectResponse
     {
-        return $this->redirect($this->generateUrl('admin_default_dashboard'));
+        /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface $handler */
+        $handler = $this->definition->getHandlerForAction(ActionType::DELETE);
+        $entity = $handler->getById($id);
+        $objectName = ObjectNameHelper::getObjectName($entity);
+
+        try {
+            $handler->delete($entity);
+
+            $this->addSuccessFlashTwig(
+                t('<strong>{{ objectName }}</strong> was deleted successfully.'),
+                [
+                    'objectName' => $objectName,
+                ],
+            );
+        } catch (Throwable $exception) {
+            $this->addErrorFlashTwig(
+                t('An error occurred while deleting <strong>{{ objectName }}</strong>.'),
+                [
+                    'objectName' => $objectName,
+                ],
+            );
+
+            $this->logger->error(
+                'Error from CrudController while running delete action',
+                [
+                    'message' => $exception->getMessage(),
+                    'controllerClass' => static::class,
+                    'action' => ActionType::DELETE,
+                    'exception' => $exception,
+                    'entityClass' => $this->definition->entityClass,
+                    'entityId' => $id,
+                    'entityName' => $objectName,
+                ],
+            );
+        }
+
+        return $this->redirect(
+            $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
+        );
     }
 
     /**

@@ -1,6 +1,6 @@
-# Extending existing Crud Controller
+# Extending existing CRUD Controller
 
-This guide will show you how to extend an existing Crud Controller in your project.
+This guide will show you how to extend an existing CRUD Controller in your project.
 
 Prerequisite is an existing CrudController class defined for example in `Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController`.
 
@@ -29,7 +29,7 @@ class OrderControllerExtension extends AbstractCrudControllerExtension
 
 Class will be automatically registered as a service and will be used as an extension for the `OrderCrudController`.
 
-## Override crud controller
+## Override CRUD controller
 
 That's it! Now you can override methods defined in `AbstractCrudControllerExtension` that copies the methods from the original Crud Controller.
 

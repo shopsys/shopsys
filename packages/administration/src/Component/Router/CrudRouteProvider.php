@@ -51,14 +51,9 @@ final class CrudRouteProvider
         return new CrudRouteItem(
             controller: CrudTransformationHelper::generateController($item->controllerClass, $pageType),
             route: $this->generateRoute($item, $pageType, $item->getConfig()->getRoutePrefix()),
-            routeName: $this->generateRouteName($item->controllerName, $pageType),
+            routeName: CrudTransformationHelper::generateRouteName($item->controllerName, $pageType),
             pageType: $pageType,
         );
-    }
-
-    private function generateRouteName(string $controllerName, ActionType $pageType): string
-    {
-        return 'admin_crud_' . CrudTransformationHelper::transformToRouteName($controllerName) . '_' . $pageType->value;
     }
 
     private function generateRoute(

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
+use RuntimeException;
+
 final readonly class CrudConfigData
 {
     /**
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string> $customPageTitles
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType[] $enabledActions
+     * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, null|class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
      */
     public function __construct(
         private array $customPageTitles,
@@ -21,7 +24,16 @@ final readonly class CrudConfigData
         private ?string $routePrefix,
         private ?string $customRoleConstant,
         private ?string $customRoleSection,
+        private array $handlerClasses,
     ) {
+        foreach ($this->enabledActions as $action) {
+            if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
+                throw new RuntimeException(sprintf(
+                    'Enabling "%s" action requires corresponding handler to be registered. Use "$crudConfig->registerHandler()" to register the required handler first.',
+                    $action->value,
+                ));
+            }
+        }
     }
 
     public function getTitle(ActionType $pageType): string
@@ -84,5 +96,13 @@ final readonly class CrudConfigData
     public function getCustomRoleSection(): ?string
     {
         return $this->customRoleSection;
+    }
+
+    /**
+     * @return array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>>
+     */
+    public function getHandlerClasses(): array
+    {
+        return $this->handlerClasses;
     }
 }
