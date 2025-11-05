@@ -75,3 +75,19 @@ textarea.form-control.is-invalid {
     overflow-y: scroll;
     height: calc(100vh - 63px);
 }
+
+.card-header {
+    background-color: var(--tblr-gray-200);
+}
+
+.card-header-light {
+    background-color: var(--tblr-gray-50);
+}
+
+.card-header-no-bg {
+    background-color: transparent;
+}
+
+.card-footer-no-bg {
+    background-color: transparent;
+}
