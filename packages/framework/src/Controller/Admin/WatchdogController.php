@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -134,6 +135,7 @@ class WatchdogController extends AdminBaseController
      */
     #[Route(path: '/watchdog/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): Response
     {
         try {

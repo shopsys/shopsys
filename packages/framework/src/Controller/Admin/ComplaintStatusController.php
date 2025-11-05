@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -48,13 +48,13 @@ class ComplaintStatusController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint-status/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
@@ -96,13 +96,13 @@ class ComplaintStatusController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @throws \Shopsys\FrameworkBundle\Component\ConfirmDelete\Exception\InvalidEntityPassedException
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint-status/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteConfirmAction(int $id): Response
     {
         try {

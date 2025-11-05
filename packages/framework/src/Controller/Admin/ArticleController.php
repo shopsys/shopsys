@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
@@ -169,12 +169,12 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): Response
     {
         try {
@@ -196,12 +196,12 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/article/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteConfirmAction(int $id): Response
     {
         $article = $this->articleFacade->getById($id);

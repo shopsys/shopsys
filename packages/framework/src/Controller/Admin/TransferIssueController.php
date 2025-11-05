@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -87,12 +87,12 @@ class TransferIssueController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/transfer/issue/delete/{id}', name: 'admin_transferissue_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

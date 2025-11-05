@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -263,12 +263,12 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): Response
     {
         try {
@@ -545,12 +545,12 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/send-reset-password/{id}', name: 'admin_administrator_send-reset-password', requirements: ['id' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
+    #[CsrfProtection]
     public function sendResetPasswordAction(int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
@@ -568,12 +568,12 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/promote-to-superadmin/{id}', name: 'admin_administrator_promote-to-superadmin', requirements: ['id' => '\d+'])]
     #[SuperAdminOnly]
+    #[CsrfProtection]
     public function promoteToSuperadminAction(int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);

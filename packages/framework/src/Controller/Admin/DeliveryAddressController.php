@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
@@ -155,12 +155,12 @@ class DeliveryAddressController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/delivery-address/delete/{id}', name: 'admin_delivery_address_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): RedirectResponse
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);
