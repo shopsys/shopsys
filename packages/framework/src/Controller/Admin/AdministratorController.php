@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\PublicAccess;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
@@ -598,7 +599,7 @@ class AdministratorController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/set-new-password/', name: 'admin_administrator_set-new-password')]
-    #[CanView]
+    #[PublicAccess]
     public function setNewPasswordAction(Request $request): Response
     {
         $email = $request->query->get('email', '');
