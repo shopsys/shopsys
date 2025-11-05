@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrontendApiBundle\Component\Security\FrontendApiRoleHierarchyProvider;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class CustomerUserRoleResolver
 {
     /**
-     * @param \Symfony\Component\Security\Core\Role\RoleHierarchyInterface $roleHierarchy
+     * @param \Shopsys\FrontendApiBundle\Component\Security\FrontendApiRoleHierarchyProvider $frontendApiRoleHierarchyProvider
      * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
-        protected readonly RoleHierarchyInterface $roleHierarchy,
+        protected readonly FrontendApiRoleHierarchyProvider $frontendApiRoleHierarchyProvider,
         protected readonly Security $security,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -26,9 +30,18 @@ class CustomerUserRoleResolver
      */
     public function getRolesForCustomerUser(CustomerUser $customerUser): array
     {
-        $roles = $this->roleHierarchy->getReachableRoleNames($customerUser->getRoles());
+        return $this->inMemoryCache->getOrSaveValue(
+            'customerUserRoles',
+            function () use ($customerUser) {
+                $hierarchy = $this->frontendApiRoleHierarchyProvider->generateRoleHierarchy();
+                $roleHierarchy = new RoleHierarchy($hierarchy);
 
-        return array_unique($roles);
+                $roles = $roleHierarchy->getReachableRoleNames($customerUser->getRoles());
+
+                return array_unique($roles);
+            },
+            $customerUser->getId(),
+        );
     }
 
     /**
