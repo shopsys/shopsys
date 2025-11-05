@@ -26,7 +26,12 @@
 
                 <li class="js-category-tree-item tree-item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
                     <div class="tree-item-content{{ disabledFormFields ? '' : ' js-category-tree-item-line' }}">
-                        <div class="js-category-tree-item-line js-category-tree-item-handle tree-item-label text-truncate{% if isForAllDomains %} cursor-grab{% endif %}">
+                        {% if isForAllDomains %}
+                            <div class="js-category-tree-item-handle cursor-move" title="{{ 'Move'|trans }}">
+                                {{ ux_icon('move', {class: 'icon icon-sm d-flex'}) }}
+                            </div>
+                        {% endif %}
+                        <div class="tree-item-label text-truncate">
                             {{ categoryWithPreloadedChildren.category.name|nameWithFallbackOnEmpty }}
                         </div>
 
