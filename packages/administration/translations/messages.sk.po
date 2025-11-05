@@ -337,6 +337,9 @@ msgstr "IČO"
 msgid "Complaint Nr."
 msgstr "Č. reklamácie"
 
+msgid "Complaint items"
+msgstr "Položky reklamácie"
+
 msgid "Complaint statuses"
 msgstr "Stavy reklamácií"
 

@@ -610,9 +610,6 @@ msgstr "Vytváření reklamace"
 msgid "Complaint detail URL"
 msgstr "URL detailu reklamace"
 
-msgid "Complaint items"
-msgstr "Položky reklamace"
-
 msgid "Complaint number"
 msgstr "Číslo reklamace"
 
