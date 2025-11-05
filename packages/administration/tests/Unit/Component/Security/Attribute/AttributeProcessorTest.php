@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use ReflectionMethod;
+use ReflectionClass;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
@@ -70,8 +70,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_USER_VIEW', $rules[0]->getRoleIdentifier());
@@ -89,8 +89,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_ADMIN_EDIT', $rules[0]->getRoleIdentifier());
@@ -107,8 +107,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_MANAGER_CREATE', $rules[0]->getRoleIdentifier());
@@ -125,8 +125,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_ADMIN_DELETE', $rules[0]->getRoleIdentifier());
@@ -143,8 +143,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_USER_VIEW', $rules[0]->getRoleIdentifier());
@@ -163,8 +163,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_EDITOR_VIEW', $rules[0]->getRoleIdentifier());
@@ -179,12 +179,12 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
+        $reflectionClass = new ReflectionClass($testClass);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Role must be specified either in Shopsys\FrameworkBundle\Component\Security\Attribute\CanView attribute or class-level ForRole attribute');
 
-        $this->processor->processMethod($method);
+        $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
     }
 
     public function testProcessMethodWithRequireRole(): void
@@ -201,8 +201,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(2, $rules);
         $this->assertEquals('ROLE_ADMIN', $rules[0]->getRoleIdentifier());
@@ -220,8 +220,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_USER_VIEW', $rules[0]->getRoleIdentifier());
@@ -238,8 +238,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals(SystemRole::SUPER_ADMIN, $rules[0]->getRoleIdentifier());
@@ -257,8 +257,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals(SystemRole::SUPER_ADMIN, $rules[0]->getRoleIdentifier());
@@ -275,8 +275,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals(SystemRole::PUBLIC_ACCESS, $rules[0]->getRoleIdentifier());
@@ -292,8 +292,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals(SystemRole::PUBLIC_ACCESS, $rules[0]->getRoleIdentifier());
@@ -310,8 +310,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_USER_VIEW', $rules[0]->getRoleIdentifier());
@@ -334,8 +334,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(3, $rules);
 
@@ -353,8 +353,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(0, $rules);
     }
@@ -370,8 +370,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_SPECIAL_VIEW', $rules[0]->getRoleIdentifier());
@@ -388,8 +388,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals(SystemRole::SUPER_ADMIN, $rules[0]->getRoleIdentifier());
@@ -408,8 +408,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals(SystemRole::PUBLIC_ACCESS, $rules[0]->getRoleIdentifier());
@@ -428,8 +428,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_API', $rules[0]->getRoleIdentifier());
@@ -448,8 +448,8 @@ class AttributeProcessorTest extends TestCase
             }
         };
 
-        $method = new ReflectionMethod($testClass, 'testMethod');
-        $rules = $this->processor->processMethod($method);
+        $reflectionClass = new ReflectionClass($testClass);
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
 
         $this->assertCount(1, $rules);
         $this->assertEquals('ROLE_USER_EDIT', $rules[0]->getRoleIdentifier());

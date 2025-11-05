@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Security\AccessControl;
 
 use Override;
-use ReflectionMethod;
+use ReflectionClass;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
@@ -91,7 +91,8 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $routeData = $this->attributeProcessor->processMethod(new ReflectionMethod($controllerObject, $method));
+        $reflectionClass = new ReflectionClass($controllerObject);
+        $routeData = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
         $routeAccessControlData = new RouteAccessControlData(
             null,
             $routeData,

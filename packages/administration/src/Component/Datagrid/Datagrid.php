@@ -76,12 +76,12 @@ final class Datagrid
             'pagination' => true,
         ]);
 
+        $resolver->setRequired('roleConstant');
+
         $resolver->setAllowedTypes('name', 'string');
         $resolver->setAllowedTypes('crudConfig', [CrudConfigData::class, 'null']);
         $resolver->setAllowedTypes('pagination', 'bool');
         $resolver->setAllowedTypes('roleConstant', 'string');
-
-        $resolver->setRequired('roleConstant');
 
         return $resolver->resolve($options);
     }

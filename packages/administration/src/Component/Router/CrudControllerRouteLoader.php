@@ -14,8 +14,6 @@ use Symfony\Component\Routing\RouteCollection;
 
 final class CrudControllerRouteLoader implements LoaderInterface
 {
-    private bool $loaded = false;
-
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $registry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
@@ -34,18 +32,11 @@ final class CrudControllerRouteLoader implements LoaderInterface
     #[Override]
     public function load($resource, ?string $type = null)
     {
-        if ($this->loaded === true) {
-            // Instead of throwing an exception, return an empty RouteCollection
-            return new RouteCollection();
-        }
-
         $routes = new RouteCollection();
 
         foreach ($this->registry->getItems() as $item) {
             $this->addRoutesForController($routes, $item);
         }
-
-        $this->loaded = true;
 
         return $routes;
     }
