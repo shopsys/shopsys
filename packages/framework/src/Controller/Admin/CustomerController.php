@@ -215,17 +215,17 @@ class CustomerController extends AdminBaseController
         $grid->enablePaging();
         $grid->setDefaultOrder('name');
 
-        $grid->addColumn('name', 'name', t('Full name'), true);
-        $grid->addColumn('city', 'city', t('City'), true);
-        $grid->addColumn('telephone', 'telephone', t('Telephone'), true);
+        $grid->addColumn('name', 'name', t('Full name'), true)->setClassAttribute('text-nowrap');
         $grid->addColumn('email', 'email', t('Email'), true);
-        $grid->addColumn('isActivated', 'isActivated', t('Active'), true);
+        $grid->addColumn('telephone', 'telephone', t('Telephone'), true);
+        $grid->addColumn('city', 'city', t('City'), true);
         $grid->addColumn('pricingGroup', 'pricingGroup', t('Pricing group'), true);
-        $grid->addColumn('orders_count', 'ordersCount', t('Number of orders'), true)->setClassAttribute('text-right');
+        $grid->addColumn('orders_count', 'ordersCount', t('Number of orders'), true)->setClassAttribute('text-end');
         $grid->addColumn('orders_sum_price', 'ordersSumPrice', t('Orders value'), true)
-            ->setClassAttribute('text-right');
+            ->setClassAttribute('text-end');
         $grid->addColumn('last_order_at', 'lastOrderAt', t('Last order'), true)
-            ->setClassAttribute('text-right');
+            ->setClassAttribute('text-end');
+        $grid->addColumn('isActivated', 'isActivated', t('Active'), true);
 
         $grid->addEditActionColumn('admin_customer_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_customer_delete', ['id' => 'id'])

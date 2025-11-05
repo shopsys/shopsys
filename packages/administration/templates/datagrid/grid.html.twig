@@ -96,7 +96,7 @@
                 </th>
             {% endfor %}
             {% if grid.actionColumns is not empty or grid.inlineEdit %}
-                <th class="text-end w-1 {{ grid.actionColumnClassAttribute }}">{{ 'Modifications'|trans }}</th>
+                <th class="text-center w-1 {{ grid.actionColumnClassAttribute }}">{{ 'Modifications'|trans }}</th>
             {% endif %}
         </tr>
     </thead>
@@ -181,7 +181,7 @@
             </td>
         {% endfor %}
         {% if grid.actionColumns|length > 0 or grid.inlineEdit %}
-            <td class="js-inline-edit-unmatched-inputs text-end w-1 text-nowrap align-middle">
+            <td class="js-inline-edit-unmatched-inputs text-center w-1 text-nowrap align-middle">
                 {% if grid.inlineEdit and form is defined %}
                     <div class="js-inline-edit-buttons">
                         <a href="#" class="btn btn-icon btn-ghost-success js-inline-edit-save test-inline-edit-save" title="{{ 'Save changes'|trans }}">

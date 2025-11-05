@@ -46,9 +46,9 @@ class ProductGridFactory
 
         $grid->addColumn('name', 'pt.name', t('Name'), true);
         $grid->addColumn('catnum', 'p.catnum', t('Catalog number'), true);
-        $grid->addColumn('price', 'priceForProductList', t('Price'), true)->setClassAttribute('text-right');
         $grid->addColumn('visibility', 'visibility', t('Visibility'))
-            ->setClassAttribute('text-center');
+            ->setClassAttribute('text-center table-col table-col-10');
+        $grid->addColumn('price', 'priceForProductList', t('Price'), true)->setClassAttribute('text-end');
 
         $grid->addEditActionColumn('admin_product_edit', ['id' => 'p.id']);
         $grid->addDeleteActionColumn('admin_product_delete', ['id' => 'p.id'])

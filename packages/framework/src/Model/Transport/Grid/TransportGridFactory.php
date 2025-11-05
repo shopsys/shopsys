@@ -63,7 +63,7 @@ class TransportGridFactory implements GridFactoryInterface
         $grid->enableDragAndDrop(Transport::class);
 
         $grid->addColumn('name', 'tt.name', t('Name'));
-        $grid->addColumn('prices', 'prices', t('Prices'))->setClassAttribute('w-25');
+        $grid->addColumn('prices', 'prices', t('Prices'))->setClassAttribute('w-25 text-end');
 
         $grid->addEditActionColumn('admin_transport_edit', ['id' => 't.id']);
         $grid->addDeleteActionColumn('admin_transport_delete', ['id' => 't.id'])

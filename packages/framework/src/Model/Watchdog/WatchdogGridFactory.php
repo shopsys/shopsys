@@ -72,9 +72,9 @@ class WatchdogGridFactory
         $grid->setDefaultOrder('createdAt', DataSourceInterface::ORDER_DESC);
 
         $grid->addColumn('watchdogEmail', 'w.email', t('Email'), true);
+        $grid->addColumn('validUntil', 'w.validUntil', t('Valid until'), true);
         $grid->addColumn('createdAt', 'w.createdAt', t('Created at'), true);
         $grid->addColumn('updatedAt', 'w.updatedAt', t('Updated at'), true);
-        $grid->addColumn('validUntil', 'w.validUntil', t('Valid until'), true);
         $grid->addDeleteActionColumn('admin_watchdog_delete', ['id' => 'w.id']);
 
         $grid->setTheme('@ShopsysAdministration/content/watchdog/listGrid.html.twig');

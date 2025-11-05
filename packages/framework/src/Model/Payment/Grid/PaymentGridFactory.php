@@ -63,7 +63,7 @@ class PaymentGridFactory implements GridFactoryInterface
         $grid->enableDragAndDrop(Payment::class);
 
         $grid->addColumn('name', 'pt.name', t('Name'));
-        $grid->addColumn('price', 'displayPrice', t('Price'))->setClassAttribute('w-25');
+        $grid->addColumn('price', 'displayPrice', t('Price'))->setClassAttribute('w-25 text-end');
 
         $grid->addEditActionColumn('admin_payment_edit', ['id' => 'p.id']);
         $grid->addDeleteActionColumn('admin_payment_delete', ['id' => 'p.id'])

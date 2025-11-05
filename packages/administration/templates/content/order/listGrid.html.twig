@@ -1,8 +1,8 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
 {% block grid_value_cell_id_number %}
-    <a href="{{ url('admin_order_edit', { id: row.id }) }}">{{ value }}</a>
-    <span class="d-none d-md-inline-block ms-2 cursor-help"
+    <a href="{{ url('admin_order_edit', { id: row.id }) }}" class="mr-2">{{ value }}</a>
+    <span class="d-none d-md-inline-block cursor-help"
           data-bs-toggle="popover"
           data-bs-trigger="hover"
           data-bs-html="true"
