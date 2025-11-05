@@ -3,6 +3,11 @@
 {% block aside %}
     <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
+            <h1 class="navbar-brand navbar-brand-autodark">
+                <a href="{{ url('admin_default_dashboard') }}">
+                    <img class="navbar-brand-image" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Platform">
+                </a>
+            </h1>
             <button class="navbar-toggler collapsed"
                     type="button"
                     data-bs-toggle="collapse"
@@ -13,11 +18,6 @@
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <h1 class="navbar-brand navbar-brand-autodark">
-                <a href="{{ url('admin_default_dashboard') }}">
-                    <img class="navbar-brand-image" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Platform">
-                </a>
-            </h1>
             <div class="collapse navbar-collapse" id="sidebar-menu">
                 {% block menu_panel %}
                     {{ knp_menu_render('admin_side_menu', {template: '@ShopsysAdministration/partial/side_menu.html.twig'}) }}
