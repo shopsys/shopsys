@@ -42,7 +42,15 @@ function initTooltip($container) {
 }
 
 function initPopover($container) {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
     $container.filterAllNodes('[data-bs-toggle="popover"]').each(function () {
+        const originalTrigger = this.getAttribute('data-bs-trigger');
+
+        if (isTouchDevice && originalTrigger && originalTrigger.includes('hover')) {
+            this.setAttribute('data-bs-trigger', 'click');
+        }
+
         new Popover(this);
     });
 }
