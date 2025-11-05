@@ -424,7 +424,7 @@ namespace App\Controller\Admin;
 
 use App\Grid\Salesman\SalesmanGridFactory;
 + use App\Model\Salesman\SalesmanFacade;
-+ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
++ use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 + use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -445,9 +445,9 @@ class SalesmanController extends AdminBaseController
 
 +    /**
 +     * @Route("/salesman/delete/{id}", requirements={"id" = "\d+"})
-+     * @CsrfProtection
 +     */
 +    #[CanDelete('ROLE_SALESMAN')]
++    #[CsrfProtection]
 +    public function deleteAction($id)
 +    {
 +        $this->salesmanFacade->deleteById($id);

@@ -440,9 +440,7 @@ services:
             $localeRoutersResourcesFilepathMask: '%shopsys.router.locale_router_filepath_mask%'
             $cacheDir: '%shopsys.router.localized.cache_dir%'
 
-    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector:
-        arguments:
-            - '@annotations.reader'
+    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector: ~
 
     Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface:
         class: Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessChecker

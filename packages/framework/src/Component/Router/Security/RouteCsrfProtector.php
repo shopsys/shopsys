@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\Security;
 
-use Doctrine\Common\Annotations\Reader;
 use Override;
 use ReflectionMethod;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -23,12 +23,10 @@ class RouteCsrfProtector implements EventSubscriberInterface
     protected const string CSRF_ROUTES_CACHE_NAMESPACE = 'csrfCheckedRoutes';
 
     /**
-     * @param \Doctrine\Common\Annotations\Reader $annotationReader
      * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $tokenManager
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
-        protected readonly Reader $annotationReader,
         protected readonly CsrfTokenManagerInterface $tokenManager,
         protected readonly InMemoryCache $inMemoryCache,
     ) {
@@ -127,7 +125,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
             function () use ($controllerName, $actionMethod) {
                 $method = new ReflectionMethod($controllerName, $actionMethod);
 
-                return $this->annotationReader->getMethodAnnotation($method, CsrfProtection::class) !== null;
+                return ReflectionHelper::getMethodAttribute($method, CsrfProtection::class) !== null;
             },
             $controllerName,
             $actionMethod,

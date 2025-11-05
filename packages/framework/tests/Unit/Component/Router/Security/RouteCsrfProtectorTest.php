@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router\Security;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
@@ -21,7 +20,6 @@ class RouteCsrfProtectorTest extends TestCase
     #[DoesNotPerformAssertions]
     public function testSubRequest(): void
     {
-        $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
         $event = new ControllerEvent(
@@ -31,14 +29,13 @@ class RouteCsrfProtectorTest extends TestCase
             HttpKernelInterface::SUB_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
         $routeCsrfProtector->onKernelController($event);
     }
 
     #[DoesNotPerformAssertions]
     public function testRequestWithoutProtection(): void
     {
-        $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
         $event = new ControllerEvent(
@@ -48,7 +45,7 @@ class RouteCsrfProtectorTest extends TestCase
             HttpKernelInterface::MAIN_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
         $routeCsrfProtector->onKernelController($event);
     }
 
@@ -62,7 +59,6 @@ class RouteCsrfProtectorTest extends TestCase
             [],
             ['_route' => 'someRouteName'],
         );
-        $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
             ->onlyMethods(['isTokenValid'])
             ->disableOriginalConstructor()
@@ -82,14 +78,13 @@ class RouteCsrfProtectorTest extends TestCase
             HttpKernelInterface::MAIN_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
         $routeCsrfProtector->onKernelController($event);
     }
 
     public function testRequestWithProtectionWithoutCsrfToken(): void
     {
         $request = new Request();
-        $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
         $event = new ControllerEvent(
@@ -99,7 +94,7 @@ class RouteCsrfProtectorTest extends TestCase
             HttpKernelInterface::MAIN_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
 
         $this->expectException(BadRequestHttpException::class);
         $routeCsrfProtector->onKernelController($event);
@@ -115,7 +110,6 @@ class RouteCsrfProtectorTest extends TestCase
             [],
             ['_route' => 'someRouteName'],
         );
-        $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
             ->onlyMethods(['isTokenValid'])
             ->disableOriginalConstructor()
@@ -135,7 +129,7 @@ class RouteCsrfProtectorTest extends TestCase
             HttpKernelInterface::MAIN_REQUEST,
         );
 
-        $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock, new InMemoryCache());
+        $routeCsrfProtector = new RouteCsrfProtector($tokenManagerMock, new InMemoryCache());
 
         $this->expectException(BadRequestHttpException::class);
         $routeCsrfProtector->onKernelController($event);
