@@ -16,7 +16,7 @@
 
 {% block list %}
     {% if item.level == 0 %}
-        <ul class="sidebar navbar-nav pt-lg-3">
+        <ul class="sidebar navbar-nav">
             {% for item in item.children %}
                 {{ block('item') }}
             {% endfor %}

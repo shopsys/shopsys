@@ -65,3 +65,13 @@ textarea.form-control.is-invalid {
 .markdown > table > :not(caption) > * > * {
     border-right-width: var(--tblr-border-width);
 }
+
+.navbar.navbar-vertical {
+    z-index: 1031 !important;
+}
+
+.navbar-collapse.collapse.show {
+    position: static;
+    overflow-y: scroll;
+    height: calc(100vh - 63px);
+}
