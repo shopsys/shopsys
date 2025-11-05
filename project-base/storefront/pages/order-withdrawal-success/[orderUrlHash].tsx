@@ -60,7 +60,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     if (typeof context.params?.orderUrlHash !== 'string') {
         return {
             redirect: {
-                destination: getBasePathWithLocale('/', context.locale),
+                destination: getBasePathWithLocale('/', context),
                 statusCode: 301,
             },
         };

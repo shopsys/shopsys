@@ -70,7 +70,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             if (typeof context.params?.orderUrlHash !== 'string') {
                 return {
                     redirect: {
-                        destination: getBasePathWithLocale('/', context.locale),
+                        destination: getBasePathWithLocale('/', context),
                         statusCode: 301,
                     },
                 };
@@ -94,7 +94,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             if (!orderResponse.data?.order) {
                 return {
                     redirect: {
-                        destination: getBasePathWithLocale('/', context.locale),
+                        destination: getBasePathWithLocale('/', context),
                         statusCode: 301,
                     },
                 };
