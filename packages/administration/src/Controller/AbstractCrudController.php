@@ -15,18 +15,15 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactor
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
 use Shopsys\AdministrationBundle\Component\Doctrine\Util\ObjectNameHelper;
-use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 
-abstract class AbstractCrudController extends AbstractController
+abstract class AbstractCrudController extends AdminBaseController
 {
-    use FlashMessageTrait;
-
     protected Definition $definition;
 
     #[Required]
