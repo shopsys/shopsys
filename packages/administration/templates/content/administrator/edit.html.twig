@@ -32,13 +32,13 @@
                             <div class="card timeline-event-card">
                                 <div class="card-body">
                                     <div class="text-secondary float-end">
-                                        {{ 'Last action' }}:
+                                        {{ 'Last action'|trans }}:
                                         {{ adminActivity.lastActionTime|formatDateTime }}
                                     </div>
-                                    <h4 class="mb-2">{{ 'Administrator logged in' }}</h4>
+                                    <h4 class="mb-2">{{ 'Administrator logged in'|trans }}</h4>
                                     <div class="text-secondary">
                                         {{ adminActivity.loginTime|formatDateTime }}
-                                        {{ 'from IP' }}
+                                        {{ 'from IP'|trans }}
                                         {{ adminActivity.ipAddress }}
                                     </div>
                                 </div>

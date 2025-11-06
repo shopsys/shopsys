@@ -29,7 +29,7 @@
 
             <div class="row mb-3">
                 <div class="col-3">
-                    <label class="form-label">File</label>
+                    <label class="form-label">{{ 'File'|trans }}</label>
 
                     <div class="card card-sm" style="max-width: 17.5rem;">
                         <div class="position-relative ratio ratio-16x9 overflow-hidden">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <label class="form-label">Replace file</label>
+                    <label class="form-label">{{ 'Replace file'|trans }}</label>
                     {{ form_widget(form.files) }}
                     {{ form_errors(form.files) }}
                 </div>

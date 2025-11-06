@@ -100,6 +100,9 @@ msgstr "Administrátor"
 msgid "Administrator activities history"
 msgstr "Historie aktivit administrátora"
 
+msgid "Administrator logged in"
+msgstr "Administrátor přihlášen"
+
 msgid "Administrator role group"
 msgstr "Skupiny práv pro administrátora"
 
@@ -1024,6 +1027,9 @@ msgstr "Posledních %limit% objednávek zákazníka"
 msgid "Last 7 days"
 msgstr "Posledních 7 dní"
 
+msgid "Last action"
+msgstr "Poslední akce"
+
 msgid "Last name"
 msgstr "Příjmení"
 
@@ -1593,6 +1599,9 @@ msgstr "Odebrat"
 
 msgid "Remove rule"
 msgstr "Odebrat pravidlo"
+
+msgid "Replace file"
+msgstr "Nahradit soubor"
 
 msgid "Request a one-time passcode by email"
 msgstr "Požádejte o jednorázový přístupový kód e-mailem"
@@ -2214,6 +2223,9 @@ msgstr "příznaků"
 
 msgid "from"
 msgstr "z"
+
+msgid "from IP"
+msgstr "z IP"
 
 msgid "g"
 msgstr "g"
