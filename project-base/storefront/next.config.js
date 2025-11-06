@@ -15,6 +15,7 @@ const nextConfig = {
         scrollRestoration: true,
         middlewarePrefetch: 'strict',
     },
+    output: 'standalone',
     reactStrictMode: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     images: {
