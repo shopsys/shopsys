@@ -16,6 +16,7 @@ use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInte
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -426,6 +427,10 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     #[Override]
     public function getRoles(): array
     {
+        if ($this->roles->exists(fn ($key, AdministratorRole $role) => $role->getRole() === SystemRole::SUPER_ADMIN)) {
+            return [SystemRole::SUPER_ADMIN];
+        }
+
         if ($this->roleGroup !== null) {
             return $this->roleGroup->getRoles();
         }

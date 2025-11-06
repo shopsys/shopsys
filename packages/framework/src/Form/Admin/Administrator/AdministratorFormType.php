@@ -160,6 +160,35 @@ final class AdministratorFormType extends AbstractType
                 'back_route' => 'admin_administrator_list',
                 'entity' => $adminToEdit,
             ]);
+
+        if ($options['scenario'] !== self::SCENARIO_EDIT || !$this->canWorkWithRoles($adminToEdit) || !$this->getCurrentAdministrator()->isSuperadmin()) {
+            return;
+        }
+
+        $builderPromoteGroup = $builder->create('promote', GroupType::class, [
+            'label' => 'Super Administrator',
+        ]);
+
+        $builderPromoteGroup->add('promoteToSuperadmin', DisplayOnlyUrlType::class, [
+            'route' => 'admin_administrator_promote-to-superadmin',
+            'route_params' => [
+                'id' => $adminToEdit->getId(),
+                RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute(
+                    'admin_administrator_promote-to-superadmin',
+                ),
+            ],
+            'route_attr' => [
+                'data-confirm-window' => null,
+                'data-confirm-style' => 'warning',
+                'data-confirm-message' => t('Are you sure you want to promote this user to Superadmin?'),
+            ],
+            'label' => 'Superadmin permissions',
+            'help' => 'Superadmins have all permissions including changing system configuration and access to hidden administration sections.',
+            'route_label' => t('Promote user to Superadmin'),
+            'link_target' => '_self',
+        ]);
+
+        $builder->add($builderPromoteGroup);
     }
 
     /**
@@ -176,14 +205,22 @@ final class AdministratorFormType extends AbstractType
             return false;
         }
 
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $currentAdministrator */
-        $currentAdministrator = $this->security->getUser();
-
-        if ($currentAdministrator->getId() === $adminToEdit->getId()) {
+        if ($this->getCurrentAdministrator()->getId() === $adminToEdit->getId()) {
             return false;
         }
 
         return $this->accessChecker->canEdit(AdminRoleConstant::ROLE_ADMINISTRATOR);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+     */
+    private function getCurrentAdministrator(): Administrator
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $currentAdministrator */
+        $currentAdministrator = $this->security->getUser();
+
+        return $currentAdministrator;
     }
 
     /**

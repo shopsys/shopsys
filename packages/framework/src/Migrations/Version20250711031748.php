@@ -51,6 +51,8 @@ class Version20250711031748 extends AbstractMigration
             ['name' => SystemRole::ALL_VIEW],
         );
 
+        $this->migrateSuperAdministrators();
+
         $administratorsWithSystemRoles = $this->connection->fetchAllAssociative(
             'SELECT DISTINCT administrator_id, 
                     MAX(CASE WHEN role = :role_all THEN 1 ELSE 0 END) as has_role_all
@@ -81,6 +83,29 @@ class Version20250711031748 extends AbstractMigration
             $this->sql(
                 'DELETE FROM administrator_roles WHERE administrator_id = :administrator_id',
                 ['administrator_id' => $administratorId],
+            );
+        }
+    }
+
+    public function migrateSuperAdministrators(): void
+    {
+        $superAdministratorIds = $this->connection->fetchAllAssociative(
+            'SELECT administrator_id FROM administrator_roles WHERE role = :superadmin_role',
+            ['superadmin_role' => SystemRole::SUPER_ADMIN],
+        );
+
+        foreach ($superAdministratorIds as $superAdministratorId) {
+            $this->sql(
+                'UPDATE administrators SET role_group_id = NULL WHERE id = :administrator_id AND role_group_id IS NOT NULL',
+                ['administrator_id' => $superAdministratorId['administrator_id']],
+            );
+
+            $this->sql(
+                'DELETE FROM administrator_roles WHERE administrator_id = :administrator_id AND role != :superadmin_role',
+                [
+                    'administrator_id' => $superAdministratorId['administrator_id'],
+                    'superadmin_role' => SystemRole::SUPER_ADMIN,
+                ],
             );
         }
     }

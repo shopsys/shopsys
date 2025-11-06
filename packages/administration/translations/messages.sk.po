@@ -1852,6 +1852,9 @@ msgstr "Super Administrator"
 msgid "Superadmin - URL addresses"
 msgstr "Superadmin - URL adresy"
 
+msgid "Superadmins have all permissions including changing system configuration and access to hidden administration sections."
+msgstr "Superadmini majú všetky povolenia vrátane zmeny systémovej konfigurácie a prístupu k skrytým sekciám administrácie."
+
 msgid "Switch domain"
 msgstr "Prepnúť doménu"
 

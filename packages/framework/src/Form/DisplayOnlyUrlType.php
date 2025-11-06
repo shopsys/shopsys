@@ -19,10 +19,11 @@ final class DisplayOnlyUrlType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['route', 'route_params', 'route_label', 'domain_id', 'link_target'])
+            ->setRequired(['route', 'route_params', 'route_label', 'route_attr', 'domain_id', 'link_target'])
             ->setAllowedTypes('route', ['string'])
             ->setAllowedTypes('route_params', ['array', 'null'])
             ->setAllowedTypes('route_label', ['string', 'null'])
+            ->setAllowedTypes('route_attr', ['array', 'null'])
             ->setAllowedTypes('domain_id', ['int', 'null'])
             ->setAllowedTypes('link_target', ['string', 'null'])
             ->setDefaults([
@@ -33,6 +34,7 @@ final class DisplayOnlyUrlType extends AbstractType
                 ],
                 'route_params' => [],
                 'route_label' => null,
+                'route_attr' => [],
                 'domain_id' => null,
                 'link_target' => '_blank',
             ]);
@@ -49,6 +51,7 @@ final class DisplayOnlyUrlType extends AbstractType
         $view->vars['route'] = $options['route'];
         $view->vars['route_params'] = $options['route_params'];
         $view->vars['route_label'] = $options['route_label'];
+        $view->vars['route_attr'] = $options['route_attr'];
         $view->vars['domain_id'] = $options['domain_id'];
         $view->vars['link_target'] = $options['link_target'];
     }

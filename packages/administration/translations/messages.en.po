@@ -1852,6 +1852,9 @@ msgstr ""
 msgid "Superadmin - URL addresses"
 msgstr ""
 
+msgid "Superadmins have all permissions including changing system configuration and access to hidden administration sections."
+msgstr ""
+
 msgid "Switch domain"
 msgstr ""
 
