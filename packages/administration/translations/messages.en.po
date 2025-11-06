@@ -907,12 +907,6 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-msgid "Full access"
-msgstr ""
-
-msgid "Full access (view only)"
-msgstr ""
-
 msgid "Future"
 msgstr ""
 

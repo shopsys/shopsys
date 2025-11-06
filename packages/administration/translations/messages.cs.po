@@ -907,12 +907,6 @@ msgstr "Pátek"
 msgid "From"
 msgstr "Od"
 
-msgid "Full access"
-msgstr "Plný přístup"
-
-msgid "Full access (view only)"
-msgstr "Plný přístup (pouze prohlížení)"
-
 msgid "Future"
 msgstr "Budoucí"
 
