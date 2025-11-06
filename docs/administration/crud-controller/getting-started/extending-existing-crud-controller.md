@@ -54,9 +54,15 @@ public function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-## Multiple extensions for one Crud Controller
+!!! tip "Using Hooks"
 
-You can also specify multiple extension classes for one Crud Controller. This is useful when building a complex system with multiple modules.
+    Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
+
+    See [Hooks System Reference](../reference/handlers.md#hooks-system) for complete documentation.
+
+## Multiple extensions for one CRUD Controller
+
+You can also specify multiple extension classes for one CRUD Controller. This is useful when building a complex system with multiple modules.
 
 ### Priority
 

@@ -31,11 +31,23 @@ final readonly class Definition
     }
 
     /**
-     * @return \Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension[]
+     * @template T of object
+     * @param class-string<T>|null $hookableInterface
+     * @return ($hookableInterface is null
+     *     ? array<\Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension>
+     *     : array<T&\Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension&\Shopsys\AdministrationBundle\Component\Crud\Extension\CrudHookableExtensionInterface>
+     * )
      */
-    public function getExtensions(): array
+    public function getExtensions(?string $hookableInterface = null): array
     {
-        return $this->extensions;
+        if ($hookableInterface === null) {
+            return $this->extensions;
+        }
+
+        return array_filter(
+            $this->extensions,
+            fn ($extension) => $extension instanceof $hookableInterface,
+        );
     }
 
     public function getConfig(): CrudConfigData

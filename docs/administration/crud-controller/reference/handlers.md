@@ -75,6 +75,68 @@ class OrderController extends AbstractCrudController
 
 ---
 
+## Hooks System
+
+Hooks allow you to extend CRUD operations with custom logic before, after, or on error conditions. They are implemented in [CRUD controller extensions](../getting-started/extending-existing-crud-controller.md) and provide cross-cutting concerns like logging, caching, and validation without modifying the handler.
+
+### Available Hook Interfaces
+
+All hook interfaces are located in the `Shopsys\AdministrationBundle\Component\Crud\Extension` namespace.
+
+Implement hook interfaces in your CRUD controller extensions:
+
+| Interface | When to Use | Methods Provided |
+|-----------|-------------|------------------|
+| `CrudDeleteHookExtensionInterface` | Extend delete operations with custom logic | `beforeDelete()`, `afterDelete()`, `onDeleteError()` |
+
+### Hook Execution Flow
+
+When a CRUD action is executed, hooks follow this pattern:
+
+```
+1. Entity retrieved (if applicable)
+   ↓
+2. All before<Action>() hooks executed (in extension priority order)
+   ↓
+3. Handler action method executed
+   ↓
+4. All after<Action>() hooks executed (in extension priority order)
+   ↓
+5. Success flash message shown
+   ↓
+6. Redirect to list page
+
+--- On Exception ---
+
+1. Exception caught at any step above
+   ↓
+2. All on<Action>Error() hooks executed
+   ↓
+3. SilencedExceptionEvent dispatched (database rollback)
+   ↓
+4. Error flash message shown
+   ↓
+5. Redirect to list page
+```
+
+**Where `<Action>` represents the CRUD operation** (e.g., Delete, Create, Edit)
+
+!!! note "Automatic Flash Messages"
+
+    The system automatically shows generic flash messages for CRUD operations. If you want to show a different message instead:
+
+    - **Success flow**: Add any flash message in your hooks or handler. The default success message will only be shown when no custom messages were added during the operation.
+    - **Error flow**: Call `addErrorFlash()` in your `on<Action>Error()` hook to provide a custom user-friendly message. The default error message will only be shown when no other error messages were provided.
+
+**Important Notes:**
+
+- All hooks run within the same database transaction
+- If any hook throws an exception, the entire transaction is rolled back
+- Multiple extensions can implement hooks - they execute in priority order (lower number = executes first)
+- Error hooks (`on<Action>Error`) receive the exception for inspection and custom error handling
+
+---
+
 ## Entity Naming
 
 When working with CRUD handlers, it's important to ensure your entities have proper string representations. Entity names are displayed throughout the CRUD interface in:
