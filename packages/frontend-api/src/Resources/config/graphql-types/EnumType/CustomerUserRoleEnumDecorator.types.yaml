@@ -6,6 +6,8 @@ CustomerUserRoleEnumDecorator:
         values:
             ROLE_API_ALL:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_ALL")'
+            ROLE_API_MANAGE_COMPANY_DATA:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_MANAGE_COMPANY_DATA")'
             ROLE_API_MANAGE_CUSTOMERS:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS")'
             ROLE_API_CUSTOMER_SELF_MANAGE:

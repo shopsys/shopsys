@@ -30,7 +30,7 @@ export const useAuthorization = () => {
     const canSeePrices = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSeesPrices);
     const canManageUsers = isCompanyUser && customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiManageCustomers);
     const canManageCompanyData =
-        !isCompanyUser || customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiManageCustomers);
+        !isCompanyUser || customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiManageCompanyData);
     const canManagePersonalData = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSelfManage);
 
     const canCreateOrder = isCompanyUser

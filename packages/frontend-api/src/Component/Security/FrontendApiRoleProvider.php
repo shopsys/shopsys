@@ -62,6 +62,7 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
         return [
             new Role(CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE, t('Customer self manage')),
             new Role(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS, t('Manage all customers under the user\'s company')),
+            new Role(CustomerUserRole::ROLE_API_MANAGE_COMPANY_DATA, t('Manage company data (e.g., billing address).')),
             new Role(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, t('Customer sees prices')),
             new Role(CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION, t('Cart manipulation and order creation')),
             new Role(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW, t('Access to all the orders created under the user\'s company')),
