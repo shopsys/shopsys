@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Security;
 
 use Override;
+use Shopsys\AdministrationBundle\Component\Security\Role\CustomerRoleSectionsProvider;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\CoreRoleProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
@@ -40,9 +41,15 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     #[Override]
     public function configureRoles(RoleCollection $roleCollection): void
     {
-        $roleCollection->add(new Role(CustomerUserRole::ROLE_API_ALL, t('All roles'), allowOverwrite: false));
+        $roleAll = new Role(CustomerUserRole::ROLE_API_ALL, t('All roles'));
+        $roleAll->setRoleSection(CustomerRoleSectionsProvider::ALL);
+        $roleAll->setOverwritable(false);
+
+        $roleCollection->add($roleAll);
 
         foreach ($this->getCustomerUserRoles() as $role) {
+            $role->setRoleSection(CustomerRoleSectionsProvider::INDIVIDUAL);
+            $role->setOverwritable(false);
             $roleCollection->add($role);
         }
     }
@@ -53,13 +60,13 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     protected function getCustomerUserRoles(): array
     {
         return [
-            new Role(CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE, t('Customer self manage'), allowOverwrite: false),
-            new Role(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS, t('Manage all customers under the user\'s company'), allowOverwrite: false),
-            new Role(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, t('Customer sees prices'), allowOverwrite: false),
-            new Role(CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION, t('Cart manipulation and order creation'), allowOverwrite: false),
-            new Role(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW, t('Access to all the orders created under the user\'s company'), allowOverwrite: false),
-            new Role(CustomerUserRole::ROLE_API_COMPLAINT_CREATION, t('Complaint creation'), allowOverwrite: false),
-            new Role(CustomerUserRole::ROLE_API_COMPANY_COMPLAINTS_VIEW, t('Access to all the complaints created under the user\'s company'), allowOverwrite: false),
+            new Role(CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE, t('Customer self manage')),
+            new Role(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS, t('Manage all customers under the user\'s company')),
+            new Role(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, t('Customer sees prices')),
+            new Role(CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION, t('Cart manipulation and order creation')),
+            new Role(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW, t('Access to all the orders created under the user\'s company')),
+            new Role(CustomerUserRole::ROLE_API_COMPLAINT_CREATION, t('Complaint creation')),
+            new Role(CustomerUserRole::ROLE_API_COMPANY_COMPLAINTS_VIEW, t('Access to all the complaints created under the user\'s company')),
         ];
     }
 }
