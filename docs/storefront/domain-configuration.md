@@ -263,7 +263,7 @@ The persist store is automatically isolated per domain through the `PersistStore
 ```typescript
 // PersistStoreProvider automatically isolates storage per domain
 <PersistStoreProvider>
-  <YourApp />
+    <YourApp />
 </PersistStoreProvider>
 
 // Internal implementation creates domain-specific store names:
