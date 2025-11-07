@@ -1,0 +1,200 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Mastra Assistant'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Integrations'|trans }}{% endblock %}
+{% block h1 %}{{ 'Mastra Assistant'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">{{ 'Conversation'|trans }}</h3>
+            <div>
+                <small class="text-muted me-3">
+                    {{ 'Resource'|trans }}: <code id="resource-id-display">{{ resourceId }}</code> |
+                    {{ 'Thread'|trans }}: <code id="thread-id-display">{{ threadId }}</code>
+                </small>
+                <a href="{{ url('admin_mastra_newconversation') }}" class="btn btn-sm btn-outline-secondary">
+                    {{ 'New Conversation'|trans }}
+                </a>
+            </div>
+        </div>
+        <div class="card-body" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;" id="chat-container">
+            <div id="messages-list">
+                <div class="text-muted text-center py-4">
+                    {{ 'Start a conversation by asking about the weather in any city.'|trans }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body">
+        <form id="mastra-form" onsubmit="return false;">
+            <div class="mb-3">
+                <label for="message-input" class="form-label">{{ 'Your message'|trans }}</label>
+                <input id="message-input"
+                       class="form-control"
+                       type="text"
+                       placeholder="{{ 'Ask about weather, e.g., &quot;What\'s the weather in London?&quot;'|trans }}"
+                />
+            </div>
+            <button id="send-btn" class="btn btn-primary" type="submit">
+                {{ 'Send'|trans }}
+            </button>
+        </form>
+    </div>
+
+    <style>
+        .message {
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            max-width: 85%;
+        }
+        .message-user {
+            background-color: #0d6efd;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+        .message-assistant {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            margin-right: auto;
+        }
+        .message-loading {
+            background-color: #e9ecef;
+            margin-right: auto;
+            font-style: italic;
+            color: #6c757d;
+        }
+        .message-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+            margin-right: auto;
+        }
+        .message-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+
+    <script>
+        (function () {
+            const threadId = '{{ threadId|e('js') }}';
+            const resourceId = '{{ resourceId|e('js') }}';
+            const form = document.getElementById('mastra-form');
+            const sendBtn = document.getElementById('send-btn');
+            const input = document.getElementById('message-input');
+            const messagesList = document.getElementById('messages-list');
+            const chatContainer = document.getElementById('chat-container');
+
+            let conversationHistory = [];
+
+            function scrollToBottom() {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            function createMessageElement(role, content, type = 'normal') {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+
+                if (type === 'loading') {
+                    messageDiv.className += ' message-loading';
+                } else if (type === 'error') {
+                    messageDiv.className += ' message-error';
+                } else if (role === 'user') {
+                    messageDiv.className += ' message-user';
+                } else {
+                    messageDiv.className += ' message-assistant';
+                }
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.textContent = content;
+
+                messageDiv.appendChild(contentDiv);
+                return messageDiv;
+            }
+
+            function addMessage(role, content, type = 'normal') {
+                if (messagesList.children.length === 1 && messagesList.children[0].classList.contains('text-muted')) {
+                    messagesList.innerHTML = '';
+                }
+
+                const messageEl = createMessageElement(role, content, type);
+                messagesList.appendChild(messageEl);
+                scrollToBottom();
+                return messageEl;
+            }
+
+            async function sendMessage() {
+                const message = input.value.trim();
+                if (!message) {
+                    return;
+                }
+
+                input.value = '';
+                sendBtn.disabled = true;
+
+                addMessage('user', message);
+                conversationHistory.push({ role: 'user', content: message });
+
+                const loadingEl = addMessage('assistant', '{{ 'Loading...'|trans }}', 'loading');
+
+                try {
+                    const res = await fetch('/mastra/api/agents/weatherAgent/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            messages: conversationHistory,
+                            threadId: threadId,
+                            resourceId: resourceId
+                        })
+                    });
+
+                    loadingEl.remove();
+
+                    if (!res.ok) {
+                        const text = await res.text().catch(() => '');
+                        throw new Error(`HTTP ${res.status}: ${text}`);
+                    }
+
+                    const json = await res.json();
+                    const responseText = json?.text ?? JSON.stringify(json, null, 2);
+
+                    addMessage('assistant', responseText);
+                    conversationHistory.push({ role: 'assistant', content: responseText });
+
+                } catch (err) {
+                    loadingEl.remove();
+                    const errorMessage = '{{ 'Error'|trans }}: ' + (err?.message || err);
+                    addMessage('assistant', errorMessage, 'error');
+                } finally {
+                    sendBtn.disabled = false;
+                    input.focus();
+                }
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                sendMessage();
+            });
+
+            sendBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                sendMessage();
+            });
+
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            input.focus();
+        })();
+    </script>
+{% endblock %}
