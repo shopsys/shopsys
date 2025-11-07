@@ -72,8 +72,7 @@
     {{ parent('number_widget') }}
 {% endblock number_widget %}
 
-{# Ensures that form fields without explicit group is wrapped in a card. See AutoCardGroupableExtension #}
-{%- block form_auto_group_widget -%}
+{%- block form_widget_compound -%}
     <div {{ block('widget_container_attributes') }}>
         {%- if form is rootform -%}
             {{ form_errors(form) }}

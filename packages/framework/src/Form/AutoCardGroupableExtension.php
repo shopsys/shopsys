@@ -36,8 +36,6 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
             return;
         }
 
-        $view->vars['block_prefixes'][] = 'form_auto_group';
-
         $this->addGroupingMetadataToView($view, $form);
     }
 
