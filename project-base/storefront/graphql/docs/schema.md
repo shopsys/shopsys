@@ -12023,6 +12023,15 @@ Product identifier
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="recoverpasswordinput.cartuuid">cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Uuid of the cart that should be merged to the cart of the user
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="recoverpasswordinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -12046,6 +12055,24 @@ Hash
 <td>
 
 New customer user password.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="recoverpasswordinput.productlistsuuids">productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="recoverpasswordinput.shouldoverwritecustomerusercart">shouldOverwriteCustomerUserCart</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid
 
 </td>
 </tr>

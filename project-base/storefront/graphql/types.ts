@@ -3099,12 +3099,18 @@ export enum TypeRecommendationType {
 }
 
 export type TypeRecoverPasswordInput = {
+  /** Uuid of the cart that should be merged to the cart of the user */
+  cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Customer user email. */
   email: Scalars['String']['input'];
   /** Hash */
   hash: Scalars['String']['input'];
   /** New customer user password. */
   newPassword: Scalars['Password']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
+  /** A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid */
+  shouldOverwriteCustomerUserCart: Scalars['Boolean']['input'];
 };
 
 export type TypeRefreshTokenInput = {

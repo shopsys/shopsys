@@ -8,10 +8,12 @@ export type TypeRecoverPasswordMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   hash: Types.Scalars['String']['input'];
   newPassword: Types.Scalars['Password']['input'];
+  cartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  productListsUuids: Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -98,11 +100,14 @@ export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPass
     
 
 export const RecoverPasswordMutationDocument = gql`
-    mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!) {
-  RecoverPassword(input: {email: $email, hash: $hash, newPassword: $newPassword}) {
+    mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!, $cartUuid: Uuid, $productListsUuids: [Uuid!]!) {
+  RecoverPassword(
+    input: {email: $email, hash: $hash, newPassword: $newPassword, cartUuid: $cartUuid, productListsUuids: $productListsUuids}
+  ) {
     tokens {
       ...TokenFragments
     }
+    showCartMergeInfo
   }
 }
     ${TokenFragments}`;

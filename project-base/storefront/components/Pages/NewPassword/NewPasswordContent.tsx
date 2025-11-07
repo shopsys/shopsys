@@ -13,9 +13,8 @@ import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mu
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
-import { useSessionStore } from 'store/useSessionStore';
 import { NewPasswordFormType } from 'types/form';
-import { useLogin } from 'utils/auth/useLogin';
+import { useLoginAfterPasswordRecovery } from 'utils/auth/useLogin';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -28,14 +27,15 @@ type NewPasswordContentProps = {
 
 export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash }) => {
     const { t } = useTranslation();
-    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const domainConfig = useDomainConfig();
+    const cartUuid = usePersistStore((store) => store.cartUuid);
+    const productListUuids = usePersistStore((s) => s.productListUuids);
     const [, newPassword] = useRecoverPasswordMutation();
-    const { url } = useDomainConfig();
+    const handleActionsAfterPasswordRecovery = useLoginAfterPasswordRecovery();
+    const { url } = domainConfig;
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
-    const login = useLogin();
-    const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
         fieldState: { error },
         field: { value: newPasswordValue },
@@ -43,25 +43,22 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
 
     const onNewPasswordHandler = useCallback<SubmitHandler<NewPasswordFormType>>(
         async (newPasswordFormData) => {
-            const formData = {
-                hash: hash,
-                email: email,
+            const newPasswordResult = await newPassword({
+                hash,
+                email,
                 newPassword: newPasswordFormData.newPassword,
-            };
-            const newPasswordResult = await newPassword(formData);
+                cartUuid: cartUuid ?? undefined,
+                productListsUuids: Object.values(productListUuids),
+            });
 
-            if (newPasswordResult.data?.RecoverPassword.tokens.accessToken !== undefined) {
+            const recoverPasswordData = newPasswordResult.data?.RecoverPassword;
+
+            if (recoverPasswordData?.tokens.accessToken) {
+                const { accessToken, refreshToken } = recoverPasswordData.tokens;
+
                 showSuccessMessage(formMeta.messages.success);
 
-                login(
-                    {
-                        email: email,
-                        password: formProviderMethods.getValues('newPassword'),
-                        previousCartUuid: cartUuid,
-                    },
-                    '/',
-                );
-                updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
+                handleActionsAfterPasswordRecovery(recoverPasswordData.showCartMergeInfo, accessToken, refreshToken);
             }
 
             handleFormErrors(newPasswordResult.error, formProviderMethods, t, formMeta.messages.error, formMeta.fields);
@@ -73,10 +70,12 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
             formMeta.messages.error,
             formMeta.messages.success,
             formProviderMethods,
+            handleActionsAfterPasswordRecovery,
             hash,
-            login,
             newPassword,
+            productListUuids,
             t,
+            domainConfig,
         ],
     );
 

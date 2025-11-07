@@ -2394,12 +2394,18 @@ enum RecommendationType {
 }
 
 input RecoverPasswordInput {
+  "Uuid of the cart that should be merged to the cart of the user"
+  cartUuid: Uuid = null
   "Customer user email."
   email: String!
   "Hash"
   hash: String!
   "New customer user password."
   newPassword: Password!
+  "Uuids of product lists that should be merged to the product lists of the user"
+  productListsUuids: [Uuid!]! = []
+  "A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid"
+  shouldOverwriteCustomerUserCart: Boolean! = false
 }
 
 input RefreshTokenInput {

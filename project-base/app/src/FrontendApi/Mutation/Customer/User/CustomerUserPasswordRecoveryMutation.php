@@ -56,11 +56,17 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
         $email = $input['email'];
         $hash = $input['hash'];
         $newPassword = $input['newPassword'];
+        $cartUuid = $input['cartUuid'] ?? null;
+        $productListsUuids = $input['productListsUuids'] ?? [];
+        $shouldOverwriteCustomerUserCart = $input['shouldOverwriteCustomerUserCart'] ?? false;
 
         $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
 
         $argumentData = $argument->getArrayCopy();
         $argumentData['input']['password'] = $newPassword;
+        $argumentData['input']['cartUuid'] = $cartUuid;
+        $argumentData['input']['productListsUuids'] = $productListsUuids;
+        $argumentData['input']['shouldOverwriteCustomerUserCart'] = $shouldOverwriteCustomerUserCart;
 
         /** @var \Overblog\GraphQLBundle\Definition\Argument $newArgument */
         $newArgument = $this->argumentFactory->create($argumentData);
