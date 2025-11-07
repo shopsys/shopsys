@@ -10,7 +10,7 @@ msgstr ""
 msgid "Access to all the orders created under the user's company"
 msgstr ""
 
-msgid "B2B data and user management"
+msgid "All roles"
 msgstr ""
 
 msgid "Cart manipulation and order creation"
@@ -26,6 +26,12 @@ msgid "Customer sees prices"
 msgstr ""
 
 msgid "Customer self manage"
+msgstr ""
+
+msgid "Manage all customers under the user's company"
+msgstr ""
+
+msgid "Manage company data (e.g., billing address)."
 msgstr ""
 
 msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."

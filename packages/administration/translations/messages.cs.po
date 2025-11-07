@@ -136,6 +136,9 @@ msgstr "Všechny domény"
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak se jednotková cena bez DPH a celkové ceny pro tuto položku přepočítají automaticky."
 
+msgid "All roles"
+msgstr "Všechny role"
+
 msgid "Alternate language"
 msgstr "Alternativní jazyky"
 
@@ -984,6 +987,9 @@ msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zano
 
 msgid "Incl. VAT"
 msgstr "Včetně DPH"
+
+msgid "Individual roles"
+msgstr "Jednotlivé role"
 
 msgid "Inquired product"
 msgstr "Poptávaný produkt"
