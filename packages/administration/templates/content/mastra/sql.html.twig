@@ -1,0 +1,382 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'SQL Assistant'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Integrations'|trans }}{% endblock %}
+{% block h1 %}{{ 'SQL Database Assistant'|trans }}{% endblock %}
+
+{% block main_content %}
+    {# Chat Container #}
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">{{ 'Conversation'|trans }}</h3>
+            <div>
+                <small class="text-muted me-3">
+                    {{ 'Resource'|trans }}: <code>{{ resourceId }}</code> |
+                    {{ 'Thread'|trans }}: <code>{{ threadId }}</code>
+                </small>
+                <a href="{{ url('admin_mastra_newsqlconversation') }}" class="btn btn-sm btn-outline-secondary">
+                    {{ 'New Conversation'|trans }}
+                </a>
+            </div>
+        </div>
+        <div class="card-body" style="max-height: 600px; overflow-y: auto; background-color: #f8f9fa;" id="chat-container">
+            <div id="messages-list">
+                <div class="alert alert-info">
+                    <h5>{{ 'Welcome to SQL Assistant'|trans }}</h5>
+                    <p>{{ 'Ask questions about your Shopsys database in natural language.'|trans }}</p>
+                    <p><strong>{{ 'Examples:'|trans }}</strong></p>
+                    <ul>
+                        <li>{{ 'Show me top 10 best-selling products'|trans }}</li>
+                        <li>{{ 'How many orders were placed last month?'|trans }}</li>
+                        <li>{{ 'List categories with the most products'|trans }}</li>
+                        <li>{{ 'What are the most popular brands?'|trans }}</li>
+                    </ul>
+                    <p class="mb-0"><em>{{ 'All queries will be shown for review before execution.'|trans }}</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Input Form #}
+    <div class="card">
+        <div class="card-body">
+            <form id="mastra-form" onsubmit="return false;">
+                <div class="mb-3">
+                    <label for="message-input" class="form-label">{{ 'Your question'|trans }}</label>
+                    <input id="message-input"
+                           class="form-control"
+                           type="text"
+                           placeholder="{{ 'Ask about products, orders, customers...'|trans }}"
+                    />
+                </div>
+                <button id="send-btn" class="btn btn-primary" type="submit">
+                    {{ 'Send'|trans }}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .message {
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            max-width: 90%;
+        }
+        .message-user {
+            background-color: #0d6efd;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+        .message-assistant {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            margin-right: auto;
+        }
+        .message-loading {
+            background-color: #e9ecef;
+            margin-right: auto;
+            font-style: italic;
+            color: #6c757d;
+        }
+        .message-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+            margin-right: auto;
+        }
+        .message-sql-preview {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+            margin-right: auto;
+        }
+        .sql-code {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+        .sql-approval-buttons {
+            margin-top: 12px;
+        }
+        .results-table {
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+        .results-table table {
+            width: 100%;
+            font-size: 13px;
+        }
+    </style>
+
+    <script>
+        (function () {
+            const threadId = '{{ threadId|e('js') }}';
+            const resourceId = '{{ resourceId|e('js') }}';
+            const form = document.getElementById('mastra-form');
+            const sendBtn = document.getElementById('send-btn');
+            const input = document.getElementById('message-input');
+            const messagesList = document.getElementById('messages-list');
+            const chatContainer = document.getElementById('chat-container');
+
+            let conversationHistory = [];
+            let pendingQuery = null;
+
+            function scrollToBottom() {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            function createMessageElement(role, content, type = 'normal') {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+
+                if (type === 'loading') {
+                    messageDiv.className += ' message-loading';
+                } else if (type === 'error') {
+                    messageDiv.className += ' message-error';
+                } else if (type === 'sql-preview') {
+                    messageDiv.className += ' message-sql-preview';
+                } else if (role === 'user') {
+                    messageDiv.className += ' message-user';
+                } else {
+                    messageDiv.className += ' message-assistant';
+                }
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+
+                if (typeof content === 'string') {
+                    contentDiv.innerHTML = content;
+                } else {
+                    contentDiv.appendChild(content);
+                }
+
+                messageDiv.appendChild(contentDiv);
+                return messageDiv;
+            }
+
+            function addMessage(role, content, type = 'normal') {
+                const welcomeAlert = messagesList.querySelector('.alert-info');
+                if (welcomeAlert) {
+                    welcomeAlert.remove();
+                }
+
+                const messageEl = createMessageElement(role, content, type);
+                messagesList.appendChild(messageEl);
+                scrollToBottom();
+                return messageEl;
+            }
+
+            function formatSqlPreview(sql, explanation) {
+                const container = document.createElement('div');
+
+                const title = document.createElement('strong');
+                title.textContent = '{{ 'Generated SQL Query:'|trans }}';
+                container.appendChild(title);
+
+                const sqlCode = document.createElement('div');
+                sqlCode.className = 'sql-code';
+                sqlCode.textContent = sql;
+                container.appendChild(sqlCode);
+
+                if (explanation) {
+                    const explDiv = document.createElement('div');
+                    explDiv.innerHTML = '<strong>{{ 'Explanation:'|trans }}</strong> ' + explanation;
+                    container.appendChild(explDiv);
+                }
+
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.className = 'sql-approval-buttons';
+
+                const approveBtn = document.createElement('button');
+                approveBtn.className = 'btn btn-success btn-sm me-2';
+                approveBtn.textContent = '{{ 'Execute Query'|trans }}';
+                approveBtn.onclick = () => executeApprovedQuery(sql);
+
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'btn btn-secondary btn-sm';
+                cancelBtn.textContent = '{{ 'Cancel'|trans }}';
+                cancelBtn.onclick = () => {
+                    addMessage('user', '{{ 'Query cancelled'|trans }}');
+                    pendingQuery = null;
+                };
+
+                buttonsDiv.appendChild(approveBtn);
+                buttonsDiv.appendChild(cancelBtn);
+                container.appendChild(buttonsDiv);
+
+                return container;
+            }
+
+            function formatResults(data, rowCount) {
+                if (!data || data.length === 0) {
+                    return '<em>{{ 'No results found'|trans }}</em>';
+                }
+
+                const container = document.createElement('div');
+                container.className = 'results-table';
+
+                const summary = document.createElement('p');
+                summary.innerHTML = `<strong>{{ 'Results:'|trans }}</strong> ${rowCount} {{ 'rows returned'|trans }}`;
+                container.appendChild(summary);
+
+                const table = document.createElement('table');
+                table.className = 'table table-sm table-bordered table-striped';
+
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                const firstRow = data[0];
+                for (const key in firstRow) {
+                    const th = document.createElement('th');
+                    th.textContent = key;
+                    headerRow.appendChild(th);
+                }
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+                for (const row of data) {
+                    const tr = document.createElement('tr');
+                    for (const key in row) {
+                        const td = document.createElement('td');
+                        td.textContent = row[key] !== null ? row[key] : '(null)';
+                        tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+                table.appendChild(tbody);
+                container.appendChild(table);
+
+                return container;
+            }
+
+            async function sendMessage() {
+                const message = input.value.trim();
+                if (!message) {
+                    return;
+                }
+
+                input.value = '';
+                sendBtn.disabled = true;
+
+                addMessage('user', message);
+                conversationHistory.push({ role: 'user', content: message });
+
+                const loadingEl = addMessage('assistant', '{{ 'Processing your query...'|trans }}', 'loading');
+
+                try {
+                    const res = await fetch('/mastra/api/agents/sqlAgent/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            messages: conversationHistory,
+                            threadId: threadId,
+                            resourceId: resourceId,
+                        })
+                    });
+
+                    loadingEl.remove();
+
+                    if (!res.ok) {
+                        const text = await res.text().catch(() => '');
+                        throw new Error(`HTTP ${res.status}: ${text}`);
+                    }
+
+                    const json = await res.json();
+                    const responseText = json?.text || '';
+
+                    if (responseText.toUpperCase().includes('SELECT')) {
+                        const sqlMatch = responseText.match(/```sql\n([\s\S]*?)\n```/);
+                        const sql = sqlMatch ? sqlMatch[1] : responseText;
+
+                        pendingQuery = sql;
+
+                        addMessage('assistant', formatSqlPreview(sql, '{{ 'Review and approve this query'|trans }}'), 'sql-preview');
+                    } else {
+                        addMessage('assistant', responseText);
+                        conversationHistory.push({ role: 'assistant', content: responseText });
+                    }
+
+                } catch (err) {
+                    loadingEl.remove();
+                    const errorMessage = '{{ 'Error'|trans }}: ' + (err?.message || err);
+                    addMessage('assistant', errorMessage, 'error');
+                } finally {
+                    sendBtn.disabled = false;
+                    input.focus();
+                }
+            }
+
+            async function executeApprovedQuery(sql) {
+                if (!sql) return;
+
+                const loadingEl = addMessage('assistant', '{{ 'Executing query...'|trans }}', 'loading');
+
+                try {
+                    const executionMessage = `Execute this SQL: ${sql}`;
+                    conversationHistory.push({ role: 'user', content: executionMessage });
+
+                    const res = await fetch('/mastra/api/agents/sqlAgent/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            messages: conversationHistory,
+                            threadId: threadId,
+                            resourceId: resourceId,
+                        })
+                    });
+
+                    loadingEl.remove();
+
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+
+                    const json = await res.json();
+
+                    if (json.toolResults && json.toolResults.length > 0) {
+                        const executionResult = json.toolResults.find(t => t.toolName === 'sql-execution');
+                        if (executionResult && executionResult.result.success) {
+                            addMessage('assistant', formatResults(executionResult.result.data, executionResult.result.rowCount));
+                        } else {
+                            addMessage('assistant', executionResult?.result?.error || '{{ 'Query execution failed'|trans }}', 'error');
+                        }
+                    } else {
+                        addMessage('assistant', json?.text || '{{ 'No results'|trans }}');
+                    }
+
+                    conversationHistory.push({ role: 'assistant', content: json?.text || '' });
+                    pendingQuery = null;
+
+                } catch (err) {
+                    loadingEl.remove();
+                    addMessage('assistant', '{{ 'Execution error'|trans }}: ' + (err?.message || err), 'error');
+                }
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                sendMessage();
+            });
+
+            sendBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                sendMessage();
+            });
+
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            input.focus();
+        })();
+    </script>
+{% endblock %}

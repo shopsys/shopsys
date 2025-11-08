@@ -188,6 +188,7 @@ class SideMenuBuilder
     public const string ROOT_INTEGRATIONS = 'integrations';
     public const string LIST_FEED = 'feeds';
     public const string MASTRA_DASHBOARD = 'mastra_dashboard';
+    public const string MASTRA_SQL_DASHBOARD = 'mastra_sql_dashboard';
     public const string SECTION_HEUREKA = 'heureka';
     public const string HEUREKA_SETTINGS = 'settings';
     public const string MAIL_ALLOWED_RECIPIENTS = 'mail_whitelist_overview';
@@ -857,6 +858,7 @@ class SideMenuBuilder
 
         $integrationsMenu->addChild(static::LIST_FEED, ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
         $integrationsMenu->addChild(static::MASTRA_DASHBOARD, ['route' => 'admin_mastra_dashboard', 'label' => t('Mastra Assistant')]);
+        $integrationsMenu->addChild(static::MASTRA_SQL_DASHBOARD, ['route' => 'admin_mastra_sqldashboard', 'label' => t('SQL Assistant')]);
 
         $heurekaMenu = $integrationsMenu->addChild(static::SECTION_HEUREKA, ['label' => t('Heureka')]);
         $heurekaMenu->addChild(static::HEUREKA_SETTINGS, ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);

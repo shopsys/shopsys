@@ -17,16 +17,17 @@
     "node": ">=20.9.0"
   },
   "dependencies": {
-    "@mastra/core": "^0.23.1",
-    "@mastra/evals": "^0.14.2",
-    "@mastra/libsql": "^0.16.1",
-    "@mastra/loggers": "^0.10.18",
-    "@mastra/memory": "^0.15.9",
+    "@mastra/core": "^0.24.0",
+    "@mastra/evals": "^0.14.3",
+    "@mastra/libsql": "^0.16.2",
+    "@mastra/loggers": "^0.10.19",
+    "@mastra/memory": "^0.15.11",
+    "pg": "^8.16.3",
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@types/node": "^24.9.1",
-    "mastra": "^0.17.5",
+    "@types/node": "^24.10.0",
+    "mastra": "^0.18.0",
     "typescript": "^5.9.3"
   }
 }
