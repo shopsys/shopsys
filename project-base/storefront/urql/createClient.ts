@@ -10,6 +10,8 @@ import { getServerConfigProperty } from 'utils/config/getNextConfig';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getExplicitPathDomainLocaleOrDefault, getInternalGraphqlEndpoint } from 'utils/domain/domainUtils';
 
+export const DOMAIN_ID_HEADER = 'X-Domain-Id' as const;
+
 export const createClient = ({
     t,
     ssrExchange,
@@ -39,6 +41,7 @@ export const createClient = ({
             fetchOptions: {
                 headers: {
                     OriginalHost: publicGraphqlEndpointObject.host,
+                    [DOMAIN_ID_HEADER]: domainConfig.domainId.toString(),
                     'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
                 },
             },
