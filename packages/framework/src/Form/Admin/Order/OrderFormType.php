@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -77,8 +78,15 @@ final class OrderFormType extends AbstractType
             ->add('orderItems', OrderItemsType::class, [
                 'order' => $order,
             ])
-            ->add($this->createPaymentTransactionsGroup($builder, $order))
-            ->add($this->createWithdrawalRequestGroup($builder))
+            ->add($this->createPaymentTransactionsGroup($builder, $order));
+
+        $withdrawalRequest = $order->getWithdrawalRequest();
+
+        if ($withdrawalRequest !== null) {
+            $builder->add($this->createWithdrawalRequestGroup($builder, $withdrawalRequest));
+        }
+
+        $builder
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_order_list',
                 'entity' => $options['order'],
@@ -600,63 +608,20 @@ final class OrderFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createWithdrawalRequestGroup(FormBuilderInterface $builder): FormBuilderInterface
-    {
+    private function createWithdrawalRequestGroup(
+        FormBuilderInterface $builder,
+        WithdrawalRequest $withdrawalRequest,
+    ): FormBuilderInterface {
         $builderWithdrawalRequestGroup = $builder->create('withdrawalRequestGroup', GroupType::class, [
             'label' => 'Withdrawal Request',
         ]);
 
         $builderWithdrawalRequestGroup
-            ->add('withdrawalFirstName', TextType::class, [
-                'required' => false,
-                'label' => 'First name',
-                'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                    ]),
-                ],
-            ])
-            ->add('withdrawalLastName', TextType::class, [
-                'required' => false,
-                'label' => 'Last name',
-                'constraints' => [
-                    new Constraints\Length([
-                        'max' => 100,
-                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                    ]),
-                ],
-            ])
-            ->add('withdrawalTelephone', TextType::class, [
-                'required' => false,
-                'label' => 'Telephone',
-                'constraints' => [
-                    new Constraints\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
-                    ]),
-                ],
-            ])
-            ->add('withdrawalEmail', EmailType::class, [
-                'required' => false,
-                'label' => 'Email',
-                'constraints' => [
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length([
-                        'max' => 255,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                    ]),
-                ],
-            ])
-            ->add('withdrawalNote', TextareaType::class, [
-                'required' => false,
-                'label' => 'Note',
-            ])
-            ->add('withdrawalRequestedAt', DateTimeType::class, [
-                'required' => false,
-                'label' => 'Requested at',
+            ->add('withdrawalRequest', OrderWithdrawalDisplayType::class, [
+                'withdrawal_request' => $withdrawalRequest,
             ]);
 
         return $builderWithdrawalRequestGroup;

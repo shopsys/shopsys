@@ -45,37 +45,37 @@
                 <tbody>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Requested at'|trans }}:</strong> {{ order.withdrawalRequestedAt|formatDateTime }}
+                            <strong>{{ 'Requested at'|trans }}:</strong> {{ withdrawalRequest.requestedAt|formatDateTime }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'First name'|trans }}:</strong> {{ order.withdrawalFirstName }}
+                            <strong>{{ 'First name'|trans }}:</strong> {{ withdrawalRequest.firstName }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Last name'|trans }}:</strong> {{ order.withdrawalLastName }}
+                            <strong>{{ 'Last name'|trans }}:</strong> {{ withdrawalRequest.lastName }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Email'|trans }}:</strong> {{ order.withdrawalEmail }}
+                            <strong>{{ 'Email'|trans }}:</strong> {{ withdrawalRequest.email }}
                         </td>
                     </tr>
-                    {% if order.withdrawalTelephone %}
+                    {% if withdrawalRequest.telephone %}
                         <tr>
                             <td style="padding: 5px 0;">
-                                <strong>{{ 'Phone'|trans }}:</strong> {{ order.withdrawalTelephone }}
+                                <strong>{{ 'Phone'|trans }}:</strong> {{ withdrawalRequest.telephone }}
                             </td>
                         </tr>
                     {% endif %}
-                    {% if order.withdrawalNote %}
+                    {% if withdrawalRequest.note %}
                         <tr>
                             <td style="padding: 5px 0; border-top: 1px solid #efefef;">
                                 <strong style="display: block; margin-bottom: 5px;">{{ 'Note'|trans }}:</strong>
                                 <div style="background-color: #f9f9f9; padding: 10px; border-left: 3px solid #ddd;">
-                                    {{ order.withdrawalNote }}
+                                    {{ withdrawalRequest.note }}
                                 </div>
                             </td>
                         </tr>

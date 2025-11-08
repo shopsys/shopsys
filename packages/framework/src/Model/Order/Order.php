@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
@@ -18,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -88,42 +88,6 @@ class Order
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $deliveredAt;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $withdrawalFirstName;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $withdrawalLastName;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    protected $withdrawalTelephone;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $withdrawalEmail;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $withdrawalNote;
-
-    /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $withdrawalRequestedAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
@@ -414,6 +378,13 @@ class Order
     protected $freeTransportAndPaymentApplied;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest|null
+     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest", mappedBy="order", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $withdrawalRequest;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -634,12 +605,6 @@ class Order
         $this->status = $orderData->status;
         $this->heurekaAgreement = $orderData->heurekaAgreement;
         $this->deliveredAt = $orderData->deliveredAt;
-        $this->withdrawalFirstName = $orderData->withdrawalFirstName;
-        $this->withdrawalLastName = $orderData->withdrawalLastName;
-        $this->withdrawalTelephone = $orderData->withdrawalTelephone;
-        $this->withdrawalEmail = $orderData->withdrawalEmail;
-        $this->withdrawalNote = $orderData->withdrawalNote;
-        $this->withdrawalRequestedAt = $orderData->withdrawalRequestedAt;
 
         $this->setDeliveryAddress($orderData);
 
@@ -920,65 +885,33 @@ class Order
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest|null
      */
-    public function getWithdrawalFirstName()
+    public function getWithdrawalRequest()
     {
-        return $this->withdrawalFirstName;
+        return $this->withdrawalRequest;
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest
      */
-    public function getWithdrawalLastName()
+    public function getWithdrawalRequestThrowExceptionWhenNull()
     {
-        return $this->withdrawalLastName;
+        $withdrawalRequest = $this->getWithdrawalRequest();
+
+        if ($withdrawalRequest === null) {
+            throw new LogicException('Order does not have a withdrawal request.');
+        }
+
+        return $withdrawalRequest;
     }
 
     /**
-     * @return string|null
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      */
-    public function getWithdrawalTelephone()
+    public function setWithdrawalRequest($withdrawalRequest): void
     {
-        return $this->withdrawalTelephone;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getWithdrawalEmail()
-    {
-        return $this->withdrawalEmail;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getWithdrawalNote()
-    {
-        return $this->withdrawalNote;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getWithdrawalRequestedAt()
-    {
-        return $this->withdrawalRequestedAt;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
-     */
-    public function setWithdrawalData(
-        WithdrawalRequestData $withdrawalRequestData,
-    ): void {
-        $this->withdrawalFirstName = $withdrawalRequestData->firstName;
-        $this->withdrawalLastName = $withdrawalRequestData->lastName;
-        $this->withdrawalEmail = $withdrawalRequestData->email;
-        $this->withdrawalTelephone = $withdrawalRequestData->telephone;
-        $this->withdrawalNote = $withdrawalRequestData->note;
-        $this->withdrawalRequestedAt = new DateTime();
+        $this->withdrawalRequest = $withdrawalRequest;
     }
 
     /**

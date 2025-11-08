@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
-use DateTime;
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -40,13 +40,15 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
 
         $this->em->clear();
         $updatedOrder = $this->orderFacade->getById($validOrder->getId());
+        $withdrawalRequest = $updatedOrder->getWithdrawalRequest();
 
-        $this->assertSame($inputData['firstName'], $updatedOrder->getWithdrawalFirstName());
-        $this->assertSame($inputData['lastName'], $updatedOrder->getWithdrawalLastName());
-        $this->assertSame($inputData['email'], $updatedOrder->getWithdrawalEmail());
-        $this->assertSame($inputData['telephone'], $updatedOrder->getWithdrawalTelephone());
-        $this->assertSame($inputData['note'], $updatedOrder->getWithdrawalNote());
-        $this->assertInstanceOf(DateTime::class, $updatedOrder->getWithdrawalRequestedAt());
+        $this->assertNotNull($withdrawalRequest);
+        $this->assertSame($inputData['firstName'], $withdrawalRequest->getFirstName());
+        $this->assertSame($inputData['lastName'], $withdrawalRequest->getLastName());
+        $this->assertSame($inputData['email'], $withdrawalRequest->getEmail());
+        $this->assertSame($inputData['telephone'], $withdrawalRequest->getTelephone());
+        $this->assertSame($inputData['note'], $withdrawalRequest->getNote());
+        $this->assertInstanceOf(DateTimeImmutable::class, $withdrawalRequest->getRequestedAt());
     }
 
     public function testAnonymousUserCannotRequestWithdrawalForRegisteredUserOrder(): void

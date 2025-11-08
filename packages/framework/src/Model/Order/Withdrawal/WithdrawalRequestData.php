@@ -30,4 +30,9 @@ class WithdrawalRequestData
      * @var string|null
      */
     public $note;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    public $requestedAt;
 }

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalAlreadyRequestedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlinePassedException;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderCancelledUserError;
@@ -24,11 +25,13 @@ class OrderWithdrawalRequestMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
         protected readonly Domain $domain,
+        protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,
     ) {
     }
 
@@ -42,7 +45,8 @@ class OrderWithdrawalRequestMutation extends AbstractMutation
 
         try {
             $order = $this->orderFacade->getByUrlHashAndDomain($input['orderUrlHash'], $this->domain->getId());
-            $this->withdrawalRequestFacade->createWithdrawalRequest($order, $input);
+            $withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromArray($input);
+            $this->withdrawalRequestFacade->createWithdrawalRequest($order, $withdrawalRequestData);
 
             return true;
         } catch (OrderNotFoundException) {

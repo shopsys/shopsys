@@ -17,7 +17,6 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
@@ -350,12 +349,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(7, 2, 31);
         $orderData->promoCode = 'promoCode123';
-        $orderData->withdrawalFirstName = 'Adam';
-        $orderData->withdrawalLastName = 'Bořič';
-        $orderData->withdrawalTelephone = '+420755496328';
-        $orderData->withdrawalEmail = 'no-reply@shopsys.com';
-        $orderData->withdrawalNote = t('Product does not match description, I want to return the entire order.', domain: Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, locale: $this->domain->getDomainConfigById($domainId)->getLocale());
-        $orderData->withdrawalRequestedAt = (new DateTime('now -1 day'))->setTime(14, 30, 15);
         $order = $this->createOrder(
             $orderData,
             [
@@ -364,6 +357,9 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::TRANSPORT_PPL,
             PaymentDataFixture::PAYMENT_CARD,
         );
+        /**
+         * Withdrawal request is created in a separate fixture, @see \App\DataFixtures\Demo\OrderWithdrawalRequestDataFixture
+         */
         $this->addReferenceForDomain(self::ORDER_WITH_WITHDRAWAL_REQUEST, $order, $domainId);
 
         $orderData = $this->orderDataFactory->create();
@@ -675,7 +671,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -1 day'))->setTime(22, 51, 55);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
@@ -683,6 +679,11 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::TRANSPORT_CZECH_POST,
             PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
         );
+
+        /**
+         * Withdrawal request is created in a separate fixture, @see \App\DataFixtures\Demo\OrderWithdrawalRequestDataFixture
+         */
+        $this->addReferenceForDomain(self::ORDER_WITH_WITHDRAWAL_REQUEST, $order, $domainId);
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(

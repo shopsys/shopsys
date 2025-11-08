@@ -35,7 +35,7 @@ class WithdrawalChecker
             throw new OrderCancelledException('Withdrawal is not allowed for cancelled orders');
         }
 
-        if ($order->getWithdrawalRequestedAt() !== null) {
+        if ($order->getWithdrawalRequest() !== null) {
             throw new WithdrawalAlreadyRequestedException('Withdrawal has already been requested for this order');
         }
 

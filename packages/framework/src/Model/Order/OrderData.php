@@ -160,36 +160,6 @@ class OrderData
     public $deliveredAt;
 
     /**
-     * @var string|null
-     */
-    public $withdrawalFirstName;
-
-    /**
-     * @var string|null
-     */
-    public $withdrawalLastName;
-
-    /**
-     * @var string|null
-     */
-    public $withdrawalTelephone;
-
-    /**
-     * @var string|null
-     */
-    public $withdrawalEmail;
-
-    /**
-     * @var string|null
-     */
-    public $withdrawalNote;
-
-    /**
-     * @var \DateTime|null
-     */
-    public $withdrawalRequestedAt;
-
-    /**
      * @var int|null
      */
     public $domainId;

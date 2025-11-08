@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Twig\Environment;
 
 class WithdrawalMail implements MessageFactoryInterface
@@ -51,9 +52,11 @@ class WithdrawalMail implements MessageFactoryInterface
     #[Override]
     public function createMessage(MailTemplate $mailTemplate, $order): MessageData
     {
+        $withdrawalRequest = $order->getWithdrawalRequestThrowExceptionWhenNull();
+
         return new MessageData(
-            $order->getWithdrawalEmail(),
-            $this->getBccEmails($mailTemplate, $order),
+            $withdrawalRequest->getEmail(),
+            $this->getBccEmails($mailTemplate, $order, $withdrawalRequest),
             $mailTemplate->getBody(),
             $mailTemplate->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $order->getDomainId()),
@@ -108,13 +111,17 @@ class WithdrawalMail implements MessageFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return string[]
      */
-    protected function getBccEmails(MailTemplate $mailTemplate, Order $order): array
-    {
+    protected function getBccEmails(
+        MailTemplate $mailTemplate,
+        Order $order,
+        WithdrawalRequest $withdrawalRequest,
+    ): array {
         $bccEmails = [$mailTemplate->getBccEmail()];
 
-        if ($order->getEmail() !== $order->getWithdrawalEmail()) {
+        if ($order->getEmail() !== $withdrawalRequest->getEmail()) {
             $bccEmails[] = $order->getEmail();
         }
 

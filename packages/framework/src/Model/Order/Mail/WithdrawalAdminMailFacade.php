@@ -52,8 +52,11 @@ class WithdrawalAdminMailFacade
      */
     protected function getMailBody(Order $order): string
     {
+        $withdrawalRequest = $order->getWithdrawalRequestThrowExceptionWhenNull();
+
         return $this->twig->render('@ShopsysFramework/Mail/Order/withdrawalAdminMail.html.twig', [
             'order' => $order,
+            'withdrawalRequest' => $withdrawalRequest,
         ]);
     }
 
