@@ -2,7 +2,7 @@ import { Agent } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
 import { databaseIntrospectionTool } from '../tools/database-introspection-tool';
-import { sqlGenerationTool } from '../tools/sql-generation-tool';
+import { schemaFormatterTool } from '../tools/sql-generation-tool';
 import { sqlExecutionTool } from '../tools/sql-execution-tool';
 
 export const sqlAgent = new Agent({
@@ -16,12 +16,13 @@ YOUR ROLE:
 - Suggest follow-up questions and insights
 
 WORKFLOW:
-1. When user asks a question, first introspect the database schema if needed
-2. Generate a SELECT query using the sql-generation tool
-3. IMPORTANT: Present the generated SQL to the user for review
-4. Wait for user approval before executing
-5. Execute the approved query (or modified version) using sql-execution tool
-6. Format and explain the results clearly
+1. When user asks a question about data, use database-introspection tool if you haven't seen the schema yet
+2. If needed, use schema-formatter tool to get formatted schema and SQL guidelines
+3. Based on the schema and guidelines, generate a SELECT query yourself
+4. IMPORTANT: Present the generated SQL to the user for review in a code block
+5. Wait for user approval before executing (user will say "yes", "execute", or provide modifications)
+6. When approved, execute the query using sql-execution tool
+7. Format and explain the results clearly
 
 SHOPSYS CONTEXT:
 - Multi-domain platform: domain_id (1, 2, 3...) represents different storefronts
@@ -74,10 +75,10 @@ This query counts how many times each product appears in order items and returns
 You: [Execute query and show results as formatted table]
 
 Be conversational, helpful, and educational. Explain database concepts when relevant.`,
-  model: 'openai/gpt-4o-mini',
+  model: 'openai/gpt-4o',
   tools: {
     databaseIntrospectionTool,
-    sqlGenerationTool,
+    schemaFormatterTool,
     sqlExecutionTool,
   },
   memory: new Memory({
