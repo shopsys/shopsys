@@ -47,12 +47,23 @@ export const sqlExecutionTool = createTool({
         throw new Error('Only SELECT queries are allowed');
       }
 
-      // Check for forbidden keywords
-      const queryUpper = context.sql.toUpperCase();
-      const forbiddenKeywords = ['DROP', 'DELETE', 'INSERT', 'UPDATE', 'ALTER', 'CREATE', 'TRUNCATE', 'GRANT', 'REVOKE'];
-      for (const keyword of forbiddenKeywords) {
-        if (queryUpper.includes(keyword)) {
-          throw new Error(`Forbidden keyword detected: ${keyword}`);
+      // Check for forbidden SQL commands (but allow them as column names)
+      // Use word boundaries to avoid false positives like "deleted" column
+      const forbiddenPatterns = [
+        /\bDROP\s+/i,
+        /\bDELETE\s+FROM\b/i,
+        /\bINSERT\s+INTO\b/i,
+        /\bUPDATE\s+\w+\s+SET\b/i,
+        /\bALTER\s+TABLE\b/i,
+        /\bCREATE\s+/i,
+        /\bTRUNCATE\s+/i,
+        /\bGRANT\s+/i,
+        /\bREVOKE\s+/i
+      ];
+
+      for (const pattern of forbiddenPatterns) {
+        if (pattern.test(context.sql)) {
+          throw new Error(`Forbidden SQL command detected: ${pattern.source}`);
         }
       }
 

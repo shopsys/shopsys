@@ -290,13 +290,42 @@
                     const json = await res.json();
                     const responseText = json?.text || '';
 
+                    // Debug: Log the full response
+                    console.log('Agent response:', json);
+                    console.log('Response text:', responseText);
+
                     if (responseText.toUpperCase().includes('SELECT')) {
-                        const sqlMatch = responseText.match(/```sql\n([\s\S]*?)\n```/);
-                        const sql = sqlMatch ? sqlMatch[1] : responseText;
+                        // Try multiple SQL extraction patterns
+                        let sql = null;
 
-                        pendingQuery = sql;
+                        // Pattern 1: ```sql ... ```
+                        let sqlMatch = responseText.match(/```sql\n([\s\S]*?)\n```/);
+                        if (sqlMatch) {
+                            sql = sqlMatch[1];
+                        } else {
+                            // Pattern 2: ``` ... ``` (no sql marker)
+                            sqlMatch = responseText.match(/```\n([\s\S]*?)\n```/);
+                            if (sqlMatch) {
+                                sql = sqlMatch[1];
+                            } else {
+                                // Pattern 3: Just extract the SELECT statement
+                                sqlMatch = responseText.match(/(SELECT[\s\S]*?;)/i);
+                                if (sqlMatch) {
+                                    sql = sqlMatch[1];
+                                }
+                            }
+                        }
 
-                        addMessage('assistant', formatSqlPreview(sql, '{{ 'Review and approve this query'|trans }}'), 'sql-preview');
+                        console.log('Extracted SQL:', sql);
+
+                        if (sql) {
+                            pendingQuery = sql;
+                            addMessage('assistant', formatSqlPreview(sql, responseText), 'sql-preview');
+                        } else {
+                            // Couldn't extract SQL, just show the response
+                            addMessage('assistant', responseText);
+                            conversationHistory.push({ role: 'assistant', content: responseText });
+                        }
                     } else {
                         addMessage('assistant', responseText);
                         conversationHistory.push({ role: 'assistant', content: responseText });
@@ -339,15 +368,30 @@
 
                     const json = await res.json();
 
+                    // Debug: Log execution response
+                    console.log('Execution response:', json);
+                    console.log('Tool results:', json.toolResults);
+
                     if (json.toolResults && json.toolResults.length > 0) {
-                        const executionResult = json.toolResults.find(t => t.toolName === 'sql-execution');
-                        if (executionResult && executionResult.result.success) {
-                            addMessage('assistant', formatResults(executionResult.result.data, executionResult.result.rowCount));
+                        // Tool name is 'sqlExecutionTool' not 'sql-execution'
+                        const executionResult = json.toolResults.find(t =>
+                            t.toolName === 'sqlExecutionTool' ||
+                            t.payload?.toolName === 'sqlExecutionTool'
+                        );
+                        console.log('Execution result:', executionResult);
+
+                        // Result is inside payload
+                        const result = executionResult?.payload?.result || executionResult?.result;
+
+                        if (result && result.success) {
+                            addMessage('assistant', formatResults(result.data, result.rowCount));
                         } else {
-                            addMessage('assistant', executionResult?.result?.error || '{{ 'Query execution failed'|trans }}', 'error');
+                            addMessage('assistant', result?.error || '{{ 'Query execution failed'|trans }}', 'error');
                         }
                     } else {
-                        addMessage('assistant', json?.text || '{{ 'No results'|trans }}');
+                        // No tool results - agent might have just responded with text
+                        const responseText = json?.text || '{{ 'No results'|trans }}';
+                        addMessage('assistant', responseText);
                     }
 
                     conversationHistory.push({ role: 'assistant', content: json?.text || '' });
