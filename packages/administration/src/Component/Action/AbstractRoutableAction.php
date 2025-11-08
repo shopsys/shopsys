@@ -24,7 +24,7 @@ abstract class AbstractRoutableAction extends AbstractAction
      * Can be used to generate link to another route in the application.
      * Parameters can be passed as array or Closure function that will return array.
      *
-     * @param string $route
+     * @param string $route #Route
      * @param array|\Closure(mixed): array $parameters
      * @return $this
      */
