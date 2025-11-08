@@ -13,8 +13,8 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -23,13 +23,13 @@ class ActionExtension extends AbstractExtension
     /**
      * @param \Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry $crudControllerRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $router
      * @param \Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface $routeAccessChecker
      */
     public function __construct(
         private readonly CrudControllerRegistry $crudControllerRegistry,
         private readonly CrudRouteProvider $crudRouteProvider,
-        private readonly RouterInterface $router,
+        private readonly AdministrationRouter $router,
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
     ) {
     }
@@ -88,10 +88,13 @@ class ActionExtension extends AbstractExtension
      */
     private function generateByRoute(string $routeName, array $parameters): ?string
     {
+        // Generate URL first to ensure that route exists and parameters are valid
+        $url = $this->router->generate($routeName, $parameters);
+
         if (!$this->routeAccessChecker->hasAccess($routeName, HttpMethod::GET)) {
             return null;
         }
 
-        return $this->router->generate($routeName, $parameters);
+        return $url;
     }
 }
