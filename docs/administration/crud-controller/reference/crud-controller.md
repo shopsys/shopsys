@@ -75,6 +75,19 @@ Fully disable the Crud Controller. Crud controller will not be accessible by the
 
 Set a prefix for the Crud Controller routes. The prefix is added to the base URL of the Crud Controller.
 
+#### `setCustomRoleConstant(?string $roleConstant)`
+
+Role constant is generated automatically from the controller name by default. If you want to use a custom role constant for permission checking, you can set it using this method.
+
+See [Admin Rights and Access Control](../../admin-rights.md)
+
+#### `setCustomRoleSection(string $roleSection)`
+
+By default, Menu section is used as role section. If you want to use a custom role section, you can set it using this method.
+
+Role sections can be found in the `Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider` class.
+
+
 Example:
 
 ```php

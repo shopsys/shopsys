@@ -37,6 +37,8 @@ class RouteAccessControlDataProviderTest extends TestCase
 
     private RoleRegistryInterface&MockObject $roleRegistry;
 
+    private AccessControlRuleFactory $accessControlRuleFactory;
+
     #[Override]
     protected function setUp(): void
     {
@@ -49,6 +51,7 @@ class RouteAccessControlDataProviderTest extends TestCase
 
         // Create real AttributeProcessor with mocked dependencies
         $accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
+        $this->accessControlRuleFactory = $accessControlRuleFactory;
         $this->attributeProcessor = new AttributeProcessor($accessControlRuleFactory);
 
         // Set up role registry to return mock roles for any identifier
@@ -236,7 +239,7 @@ class RouteAccessControlDataProviderTest extends TestCase
 
         $routeData = $result['admin_reflection_error'];
         $this->assertEquals('Tests\\AdministrationBundle\\Unit\\Component\\Security\\AccessControl\\RouteAccessControlDataProviderTest', $routeData->controllerClass);
-        $this->assertEquals('unknownMethod', $routeData->controllerMethod);
+        $this->assertEquals('nonExistentMethod', $routeData->controllerMethod);
         $this->assertEmpty($routeData->accessControlRules);
     }
 
@@ -308,6 +311,7 @@ class RouteAccessControlDataProviderTest extends TestCase
             $this->logger,
             'admin',
             $this->attributeProcessor,
+            $this->accessControlRuleFactory,
         );
     }
 

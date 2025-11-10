@@ -4,19 +4,54 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Webmozart\Assert\Assert;
 
 final class CrudConfig
 {
-    private CrudConfigData $crudConfigData;
+    /**
+     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string>
+     */
+    private array $customPageTitles;
+
+    public ?string $menuTitle = null;
+
+    private bool $fullDisabled = false;
 
     /**
-     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param class-string $entityClass
+     * @var \Doctrine\Common\Collections\ArrayCollection<\Shopsys\AdministrationBundle\Component\Config\ActionType>
      */
-    public function __construct(string $crudController, string $entityClass)
+    private ArrayCollection $enabledActions;
+
+    private string $menuSection = 'root';
+
+    private ?string $submenuSection = null;
+
+    private bool $visibleInMenu = true;
+
+    private ?string $routePrefix = null;
+
+    private ?string $customRoleConstant = null;
+
+    private ?string $customRoleSection = null;
+
+    /**
+     * @param string $entityName
+     */
+    public function __construct(string $entityName)
     {
-        $this->crudConfigData = new CrudConfigData($crudController, $entityClass);
+        $this->customPageTitles = [
+            ActionType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $entityName]),
+            ActionType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $entityName]),
+            ActionType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $entityName]),
+            ActionType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $entityName]),
+        ];
+
+        $this->enabledActions = new ArrayCollection([
+            ActionType::LIST,
+        ]);
+
+        $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $entityName]);
     }
 
     /**
@@ -28,7 +63,7 @@ final class CrudConfig
      */
     public function setTitle(ActionType $actionType, string $title): self
     {
-        $this->crudConfigData->customPageTitles[$actionType->value] = $title;
+        $this->customPageTitles[$actionType->value] = $title;
 
         return $this;
     }
@@ -41,7 +76,7 @@ final class CrudConfig
      */
     public function setMenuTitle(string $menuTitle): self
     {
-        $this->crudConfigData->menuTitle = $menuTitle;
+        $this->menuTitle = $menuTitle;
 
         return $this;
     }
@@ -61,7 +96,11 @@ final class CrudConfig
         Assert::allIsInstanceOf($actions, ActionType::class, 'The given action is not a valid action type');
 
         foreach ($actions as $action) {
-            $this->crudConfigData->enableAction($action);
+            if ($this->enabledActions->contains($action)) {
+                continue;
+            }
+
+            $this->enabledActions->add($action);
         }
 
         return $this;
@@ -82,7 +121,7 @@ final class CrudConfig
         Assert::allIsInstanceOf($actions, ActionType::class, 'The given action is not a valid action type');
 
         foreach ($actions as $action) {
-            $this->crudConfigData->disableAction($action);
+            $this->enabledActions->removeElement($action);
         }
 
         return $this;
@@ -97,8 +136,8 @@ final class CrudConfig
      */
     public function setMenuSection(string $menuSection, ?string $submenuSection = null): self
     {
-        $this->crudConfigData->menuSection = $menuSection;
-        $this->crudConfigData->submenuSection = $submenuSection;
+        $this->menuSection = $menuSection;
+        $this->submenuSection = $submenuSection;
 
         return $this;
     }
@@ -111,7 +150,7 @@ final class CrudConfig
      */
     public function visibleInMenu(bool $visible): self
     {
-        $this->crudConfigData->visibleInMenu = $visible;
+        $this->visibleInMenu = $visible;
 
         return $this;
     }
@@ -124,7 +163,7 @@ final class CrudConfig
      */
     public function disable(bool $disabled): self
     {
-        $this->crudConfigData->fullDisabled = $disabled;
+        $this->fullDisabled = $disabled;
 
         return $this;
     }
@@ -139,7 +178,35 @@ final class CrudConfig
      */
     public function setRoutePrefix(?string $routePrefix): self
     {
-        $this->crudConfigData->routePrefix = $routePrefix;
+        $this->routePrefix = $routePrefix;
+
+        return $this;
+    }
+
+    /**
+     * Set custom role constant for the CRUD controller. This will be used for access control checks.
+     * If not set, role constant will be generated from the controller name automatically.
+     *
+     * @param string|null $roleConstant
+     * @return $this
+     */
+    public function setCustomRoleConstant(?string $roleConstant): self
+    {
+        $this->customRoleConstant = $roleConstant;
+
+        return $this;
+    }
+
+    /**
+     * Set role section for role constant. If not set, role section will be got from menu section automatically.
+     *
+     * @see \Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider
+     * @param string $roleSection
+     * @return $this
+     */
+    public function setCustomRoleSection(string $roleSection): self
+    {
+        $this->customRoleSection = $roleSection;
 
         return $this;
     }
@@ -149,6 +216,17 @@ final class CrudConfig
      */
     public function getConfig(): CrudConfigData
     {
-        return $this->crudConfigData;
+        return new CrudConfigData(
+            $this->customPageTitles,
+            $this->menuTitle,
+            $this->fullDisabled,
+            $this->enabledActions->toArray(),
+            $this->menuSection,
+            $this->submenuSection,
+            $this->visibleInMenu,
+            $this->routePrefix,
+            $this->customRoleConstant,
+            $this->customRoleSection,
+        );
     }
 }
