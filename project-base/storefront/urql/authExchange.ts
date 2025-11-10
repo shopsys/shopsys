@@ -115,10 +115,22 @@ const refreshAuth = async (
     }
 };
 
+const willAuthError = (
+    domainConfig: DomainConfigType,
+    context?: GetServerSidePropsContext | NextPageContext,
+): boolean => {
+    const { accessToken, refreshToken } = getTokensFromCookies(domainConfig, context);
+
+    // If we have a refresh token but no access token, we should refresh
+    // This handles the case where access token expired but backend returns 200 with null instead of 401
+    return !!refreshToken && !accessToken;
+};
+
 export const getAuthExchangeOptions =
     (domainConfig: DomainConfigType, context?: GetServerSidePropsContext | NextPageContext) =>
     async (authUtilities: AuthUtilities): Promise<AuthConfig> => ({
         addAuthToOperation: (operation) => addAuthToOperation(operation, domainConfig, context),
         didAuthError,
+        willAuthError: () => willAuthError(domainConfig, context),
         refreshAuth: () => refreshAuth(authUtilities, domainConfig, context),
     });
