@@ -58,7 +58,7 @@ class AdministratorRoleFacade
     {
         $adminRole = SystemRole::ADMIN;
 
-        if ($administrator->isSuperadmin()) {
+        if ($administrator->isSuperadmin() || in_array(SystemRole::SUPER_ADMIN, $roles, true)) {
             $adminRole = SystemRole::SUPER_ADMIN;
         }
 
