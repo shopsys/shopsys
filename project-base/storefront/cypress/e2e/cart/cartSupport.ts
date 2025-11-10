@@ -1,6 +1,6 @@
 import { fillInEmailAndPasswordInLoginPopup } from 'e2e/authentication/authenticationSupport';
-import { buttonName, url } from 'fixtures/demodata';
-import { checkUrl } from 'support';
+import { url } from 'fixtures/demodata';
+import { checkUrl, translations } from 'support';
 import { TIDs } from 'tids';
 
 export const increaseCartItemQuantityWithSpinbox = (catnum: string) => {
@@ -64,7 +64,7 @@ export const goToHomepageFromHeader = () => {
 export const loginInThirdOrderStep = (password: string) => {
     cy.getByTID([TIDs.login_in_order_button]).click();
     fillInEmailAndPasswordInLoginPopup(undefined, password);
-    cy.getByTID([TIDs.layout_popup]).get('button').contains(buttonName.login).click();
+    cy.getByTID([TIDs.layout_popup]).get('button').contains(translations.button.login).click();
 };
 
 export const openHeaderCartByMouseover = () => {

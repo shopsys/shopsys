@@ -1,9 +1,9 @@
 import { MouseEventHandler } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
-type SortingBarItemProps = { isActive: boolean; href?: string; onClick?: () => void; ariaLabel: string };
+type SortingBarItemProps = { isActive: boolean; href?: string; onClick?: () => void; ariaLabel: string; tid?: string };
 
-export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, href, onClick, ariaLabel }) => {
+export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, href, onClick, ariaLabel, tid }) => {
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         e.preventDefault();
         onClick?.();
@@ -13,6 +13,7 @@ export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, hr
         <a
             aria-label={ariaLabel}
             aria-selected={isActive}
+            data-tid={tid}
             href={href}
             role="option"
             className={twMergeCustom(

@@ -1,5 +1,5 @@
 import { openHeaderCartByMouseover, removeFirstProductFromHeaderCart } from './cartSupport';
-import { products } from 'fixtures/demodata';
+import { staticData } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
@@ -14,10 +14,10 @@ const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.
 describe('Cart In Header Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
-        cy.addProductToCartForTest(products.helloKitty.uuid, 2).then((cart) =>
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 2).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
-        cy.addProductToCartForTest(products.philips32PFL4308.uuid);
+        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 

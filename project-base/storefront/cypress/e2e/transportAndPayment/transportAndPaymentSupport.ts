@@ -1,11 +1,9 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
-import { transport } from 'fixtures/demodata';
-import { changeElementText } from 'support';
 import { TIDs } from 'tids';
 
-export const chooseTransportPersonalCollectionAndStore = (storeName: string) => {
-    cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(transport.personalCollection.name).click();
+export const chooseTransportPersonalCollectionAndStore = (storeName: string, transportName: string) => {
+    cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(transportName).click();
     cy.getByTID([TIDs.layout_popup]);
     cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(storeName).click();
     cy.getByTID([TIDs.pages_order_pickupplace_popup_confirm]).scrollIntoView().click();

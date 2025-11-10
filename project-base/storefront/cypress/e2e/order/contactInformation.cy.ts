@@ -12,7 +12,7 @@ import {
     clickAddNewAddressButton,
     fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
-import { customer1, deliveryAddress, orderNote, payment, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkUrl,
@@ -95,14 +95,22 @@ describe('Contact Information Page Tests', () => {
 
     it('[Preserve Contact Form] should keep filled contact information after page refresh', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        fillEmailInThirdStep(customer1.email);
-        fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
-        fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
-        fillInNoteInThirdStep(orderNote);
+        fillEmailInThirdStep(staticData.customer1.email);
+        fillCustomerInformationInThirdStep(
+            staticData.customer1.phone,
+            staticData.customer1.firstName,
+            staticData.customer1.lastName,
+        );
+        fillBillingAdressInThirdStep(
+            staticData.customer1.billingStreet,
+            staticData.customer1.billingCity,
+            staticData.customer1.billingPostCode,
+        );
+        fillInNoteInThirdStep(staticData.orderNote);
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
@@ -118,14 +126,14 @@ describe('Contact Information Page Tests', () => {
                 generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
             );
             cy.addProductToCartForTest();
-            cy.preselectTransportForTest(transport.czechPost.uuid);
-            cy.preselectPaymentForTest(payment.onDelivery.uuid);
+            cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+            cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
             fillCustomerInformationInThirdStep('123', ' changed', ' changed');
             clearPostcodeInThirdStep();
             fillBillingAdressInThirdStep(' changed 123', ' changed', '29292');
-            fillInNoteInThirdStep(orderNote);
+            fillInNoteInThirdStep(staticData.orderNote);
             loseFocus();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
                 blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
@@ -138,22 +146,22 @@ describe('Contact Information Page Tests', () => {
             generateCustomerRegistrationData('commonCustomer', 'remove-contact-information-after-logout@shopsys.com'),
         );
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
         clickAddNewAddressButton();
-        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress);
+        fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form before logout', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         cy.logout();
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty contact information form after logout', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],

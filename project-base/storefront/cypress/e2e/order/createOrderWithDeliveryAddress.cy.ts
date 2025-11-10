@@ -14,7 +14,7 @@ import {
     clickAddNewAddressButton,
     fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
-import { deliveryAddress, deliveryAddress2, order, payment, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     clickOnLabel,
@@ -23,6 +23,7 @@ import {
     loseFocus,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -34,8 +35,8 @@ describe('Create Order With Delivery Address Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
 
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
         fillBillingInfoForDeliveryAddressTests();
@@ -48,7 +49,7 @@ describe('Create Order With Delivery Address Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        clearAndFillDeliveryAdressInThirdStep(staticData.deliveryAddress);
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
@@ -58,12 +59,12 @@ describe('Create Order With Delivery Address Tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.czechPost);
+        checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name);
+        checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
 
     it('[Preserve Form On Checkbox Change] should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
@@ -73,7 +74,7 @@ describe('Create Order With Delivery Address Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        clearAndFillDeliveryAdressInThirdStep(staticData.deliveryAddress);
         loseFocus();
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
@@ -87,12 +88,12 @@ describe('Create Order With Delivery Address Tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.czechPost);
+        checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name);
+        checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
 });
 
@@ -106,14 +107,14 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             generateCustomerRegistrationData('commonCustomer', 'delivery-address-popup-snapshots@shopsys.com'),
         );
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
         clickAddNewAddressButton();
-        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress);
+        fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information with new delivery address', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
@@ -121,11 +122,14 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.czechPost);
+        checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPageWithComplaintButton(transport.czechPost.name, payment.onDelivery.name);
+        checkOrderDetailFromOrderPageWithComplaintButton(
+            translations.transport.czechPost,
+            translations.payment.onDelivery,
+        );
     });
 
     it('[Logged Default Fill New] should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', function () {
@@ -141,7 +145,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         });
 
         clickAddNewAddressButton();
-        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress2);
+        fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'changed contact information after refresh', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
@@ -150,11 +154,11 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.czechPost);
+        checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name);
+        checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
 
     it('[Logged Default Fill New Default] should first select saved default delivery address for logged-in user, then fill new delivery address, then change it to a saved one and back to the new address which should stay filled', function () {
@@ -170,7 +174,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         });
 
         clickAddNewAddressButton();
-        fillAndSaveNewDeliveryAddressInPopup(deliveryAddress2);
+        fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress2);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with changed delivery address', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
@@ -190,11 +194,11 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.czechPost);
+        checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name);
+        checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
 });
 
@@ -203,8 +207,11 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
-        cy.preselectPaymentForTest(payment.cash.uuid);
+        cy.preselectTransportForTest(
+            staticData.transport.personalCollection.uuid,
+            staticData.transport.personalCollection.storeOstrava.uuid,
+        );
+        cy.preselectPaymentForTest(staticData.payment.cash.uuid);
 
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
         fillBillingInfoForDeliveryAddressTests();
@@ -217,7 +224,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
@@ -226,13 +233,13 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.presonalCollection);
+        checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
-            `${transport.personalCollection.name} ${transport.personalCollection.storeOstrava.name}`,
-            payment.cash.name,
+            `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
+            translations.payment.cash,
         );
     });
 
@@ -243,7 +250,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress);
         loseFocus();
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
@@ -257,13 +264,13 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.presonalCollection);
+        checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
-            `${transport.personalCollection.name} ${transport.personalCollection.storeOstrava.name}`,
-            payment.cash.name,
+            `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
+            translations.payment.cash,
         );
     });
 });
@@ -276,9 +283,9 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
     it('[Logged No Prefill On Pickup Preserve On Refresh] should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', function () {
         registerAndCreateOrderForDeliveryAddressTests(
             'no-prefill-contact-information-with-selected-pickup-place@shopsys.com',
-            transport.personalCollection.uuid,
-            transport.personalCollection.storeOstrava.uuid,
-            payment.cash.uuid,
+            staticData.transport.personalCollection.uuid,
+            staticData.transport.personalCollection.storeOstrava.uuid,
+            staticData.payment.cash.uuid,
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
@@ -288,7 +295,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
+        clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
@@ -297,22 +304,22 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.presonalCollection);
+        checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPageWithComplaintButton(
-            `${transport.personalCollection.name} ${transport.personalCollection.storeOstrava.name}`,
-            payment.cash.name,
+            `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
+            translations.payment.cash,
         );
     });
 
     it('[Logged No Prefill On Pickup Preserve On Checkbox Change] should not prefill delivery contact for logged-in user with saved address and pickup point, but keep filled delivery information after unchecking and checking checkbox for different delivery address', function () {
         registerAndCreateOrderForDeliveryAddressTests(
             'keep-delivery-address-with-saved-after-uncheck@shopsys.com',
-            transport.personalCollection.uuid,
-            transport.personalCollection.storeOstrava.uuid,
-            payment.cash.uuid,
+            staticData.transport.personalCollection.uuid,
+            staticData.transport.personalCollection.storeOstrava.uuid,
+            staticData.payment.cash.uuid,
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
@@ -322,7 +329,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
+        clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress2);
         loseFocus();
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
@@ -336,13 +343,13 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        checkOrderConfirmationStatusText(order.confirmation.presonalCollection);
+        checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPageWithComplaintButton(
-            `${transport.personalCollection.name} ${transport.personalCollection.storeOstrava.name}`,
-            payment.cash.name,
+            `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
+            translations.payment.cash,
         );
     });
 });

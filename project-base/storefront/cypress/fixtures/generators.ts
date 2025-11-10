@@ -1,6 +1,6 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { TypeRegistrationDataInput } from '../../graphql/types';
-import { password } from './demodata';
+import { staticData } from './demodata';
 import { v4 as uuid } from 'uuid';
 
 export const generateCreateOrderInput = (email?: string): TypeCreateOrderMutationVariables => ({
@@ -40,7 +40,7 @@ export const generateCustomerRegistrationData = (
         firstName: 'John',
         lastName: 'Doe',
         email: staticEmail ?? generateEmail(),
-        password,
+        password: staticData.user.password,
         telephone: '123456789',
         street: 'Uličnícká 123',
         city: 'Městečko',

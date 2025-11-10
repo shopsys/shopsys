@@ -5,7 +5,7 @@ import {
     addVariantToCartFromMainVariantDetail,
     searchProductByNameWithAutocomplete,
 } from './cartSupport';
-import { products, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import {
     checkPopupIsVisible,
     checkUrl,
@@ -16,6 +16,7 @@ import {
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
+import { visitEntityByUuid } from 'support/navigation';
 import { TIDs } from 'tids';
 
 const SUBGROUP_INDEX = 3;
@@ -30,7 +31,7 @@ describe('Product Add To Cart Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverview);
 
         goToPageThroughSimpleNavigation(22);
-        addProductToCartFromProductList(products.helloKitty.catnum);
+        addProductToCartFromProductList(staticData.products.helloKitty.catnum);
         checkPopupIsVisible();
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
@@ -45,7 +46,7 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Product Detail Add] should add product to cart from product detail', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(products.helloKitty.url);
+        visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         addToCartOnProductDetailPage();
         checkPopupIsVisible();
@@ -62,9 +63,9 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Category Page Add] should add product to cart from category page', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
-        addProductToCartFromProductList(products.helloKitty.catnum);
+        addProductToCartFromProductList(staticData.products.helloKitty.catnum);
         checkPopupIsVisible();
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
@@ -79,9 +80,9 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Product Variant Add] should add variant product to cart from product detail', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(products.philips32PFL4308.url);
+        visitEntityByUuid('product', staticData.products.televisionPhilipsM.uuid);
 
-        addVariantToCartFromMainVariantDetail(products.philips54CRT.catnum);
+        addVariantToCartFromMainVariantDetail(staticData.products.philips54CRT.catnum);
         checkPopupIsVisible();
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
@@ -95,7 +96,7 @@ describe('Product Add To Cart Tests', () => {
     it('[Promoted Products Add] should add product to cart from promoted products on homepage', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
-        addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
+        addProductToCartFromPromotedProductsOnHomepage(staticData.products.helloKitty.catnum);
         checkPopupIsVisible();
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
@@ -113,11 +114,11 @@ describe('Product Add To Cart Tests', () => {
     it('[Search Page Add] should add product to cart from search results page', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
-        searchProductByNameWithAutocomplete(products.helloKitty.name);
-        checkUrl(`${url.search}${encodeURIComponent(products.helloKitty.name).replace(/%20/g, '+')}`);
+        searchProductByNameWithAutocomplete(staticData.products.helloKitty.name);
+        checkUrl(`${url.search}${encodeURIComponent(staticData.products.helloKitty.name).replace(/%20/g, '+')}`);
         cy.waitForStableAndInteractiveDOM();
 
-        addProductToCartFromProductList(products.helloKitty.catnum);
+        addProductToCartFromProductList(staticData.products.helloKitty.catnum);
         checkPopupIsVisible();
         loseFocus();
         cy.waitForStableAndInteractiveDOM();

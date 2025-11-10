@@ -90,12 +90,15 @@ services:
             - storefront-acceptance-tests
         environment:
             - GROUP=${GROUP}
+            - TEST_LOCALE=${TEST_LOCALE:-en}
         volumes:
             - ./videos:/app/videos
             - ./screenshots:/app/screenshots
             - ./snapshotDiffs:/app/snapshotDiffs
             - ./project-base/storefront/config:/app/config
             - ./project-base/storefront/pages:/app/pages
+            - ./project-base/storefront/public/locales:/app/public/locales
+            - ./project-base/app/translations:/app/app-translations
         network_mode: "host"
 
     cypress-regenerate:
@@ -107,11 +110,15 @@ services:
             - storefront-acceptance-tests
         volumes:
             - ./snapshots:/app/snapshots
+            - ./project-base/storefront/config:/app/config
+            - ./project-base/storefront/public/locales:/app/public/locales
+            - ./project-base/app/translations:/app/app-translations
         network_mode: "host"
         environment:
             - TYPE=base
             - COMMAND=run
             - GROUP=${GROUP}
+            - TEST_LOCALE=${TEST_LOCALE:-en}
 
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest

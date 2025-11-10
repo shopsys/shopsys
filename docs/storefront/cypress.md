@@ -20,6 +20,195 @@ You should split your tests into domain-specific subfolders. This helps to balan
 
 Here you can put any static values and demodata you would need. This could be strings to fill-in in inputs, things you would expect to find in a page, etc.
 
+The fixtures folder contains several important files for managing test data:
+
+- `demodata.ts` - Contains static test data and URL generation logic
+- `translationKeys.ts` - Contains all English source strings used as translation keys
+- `generators.ts` - Functions for generating dynamic test data
+
+### Working with Translations
+
+When writing Cypress tests that work across multiple locales, it's crucial to handle translations properly. The codebase provides a robust system for dynamic translation loading based on the `TEST_LOCALE` environment variable.
+
+#### Translation Keys vs Pre-loaded Translations
+
+There are two main ways to access translations in your tests:
+
+1. **`translationKeys`** (from `translationKeys.ts`) - English source strings that serve as keys for `.po` files
+2. **`translations`** (from `support/index.ts`) - Pre-loaded translations based on `TEST_LOCALE`, available globally in tests
+
+**When to use each:**
+
+- Use `translationKeys` with the `t()` function for **dynamic translation at test runtime**
+- Use `translations` for **pre-loaded translations** that are loaded once at test initialization
+
+#### The `t()` Function for Dynamic Translation
+
+The `t()` function is the recommended way to get translations in your tests. It dynamically looks up translation keys in `.po` files based on the current `TEST_LOCALE`.
+
+```typescript
+import { translationKeys } from 'fixtures/demodata';
+import { t } from 'support';
+
+// Use t() with translation keys for dynamic translation
+t(translationKeys.order.confirmation.czechPost).then((translatedText) => {
+    cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).should('contain.text', translatedText);
+});
+```
+
+**How it works:**
+
+1. Takes an English source string (e.g., `'Czech post'`)
+2. Looks it up in `dataFixtures.{locale}.po` based on `TEST_LOCALE`
+3. Returns the translated text (e.g., `'Česká pošta'` for Czech, `'Slovenská pošta'` for Slovak)
+4. Falls back to the original key if translation not found
+
+#### Handling HTML Tags in Translation Keys
+
+Some translation keys in `.po` files include HTML tags (e.g., `<b>`, `<i>`). When checking text content, you may need to handle both cases:
+
+```typescript
+// Function that handles both with and without HTML tags
+export const checkOrderConfirmationStatusText = (transportSpecificTextKey: string) => {
+    const keyWithBold = `<b>${transportSpecificTextKey}</b>`;
+
+    t(keyWithBold).then((translatedWithBold) => {
+        if (translatedWithBold !== keyWithBold) {
+            // Translation found with bold tags - strip them for text comparison
+            const textWithoutTags = translatedWithBold.replace(/<\/?b>/g, '');
+            cy.getByTID([TIDs.pages_orderconfirmation]).should('contain.text', textWithoutTags);
+        } else {
+            // Try without bold tags
+            t(transportSpecificTextKey).then((translated) => {
+                cy.getByTID([TIDs.pages_orderconfirmation]).should('contain.text', translated);
+            });
+        }
+    });
+};
+```
+
+#### Best Practices for Translation Testing
+
+1. **Prefer Language-Independent Checks**: When possible, check for language-independent data (product codes, numbers, UUIDs) instead of translated text:
+
+```typescript
+// GOOD: Check for language-independent product identifier
+cy.getByTID([TIDs.order_detail_items]).should('contain.text', staticData.products.helloKitty.name); // Brand/model stays the same
+
+// AVOID: Checking full translated product names
+cy.getByTID([TIDs.order_detail_items]).should('contain.text', 'Television 22" Sencor...'); // "Television" is translated
+```
+
+3. **Use `translationKeys` with `t()` for Dynamic Translation**: When you need to verify translated content dynamically:
+
+```typescript
+// GOOD: Dynamic translation
+checkOrderConfirmationStatusText(translationKeys.order.confirmation.czechPost);
+
+// BAD: Hardcoded English text
+cy.contains('the Czech Post will try to deliver...');
+```
+
+3. **Use Localized URL Helpers**: Always get URLs from the `url` object to support multi-locale routing:
+
+```typescript
+// GOOD: Locale-aware URL
+cy.url().should('contain', url.order.orderDetail);
+
+// BAD: Hardcoded URL
+cy.url().should('contain', '/order-detail/');
+```
+
+4. **Single Domain Setup**: For single domain testing, you need to configure multiple files consistently. The `TEST_LOCALE` environment variable must match across all configuration files.
+
+**Files requiring `TEST_LOCALE` configuration:**
+
+- **`gitlab.ci.yml`** - Set `TEST_LOCALE` value for CI pipeline
+- **`docker-build.yaml`** - Set `TEST_LOCALE` value for Docker builds
+- **`docker-compose.github-actions.cypress.yml`** - Set `TEST_LOCALE` value for GitHub Actions
+- **`Makefile`** - Set `TEST_LOCALE` value (default is `en`)
+
+```bash
+# Default is en, change to your desired locale if needed
+-docker compose run --rm -e TEST_LOCALE=en cypress
++docker compose run --rm -e TEST_LOCALE=cs cypress
+```
+
+**Domain and locale configuration files:**
+
+- **`domains.yaml`** - Configure single domain with matching locale:
+
+```yaml
+domains:
+    - id: 1
+      load_demo_data: true
+      locale: en # Must match TEST_LOCALE and defaultLocale
+      name: shopsys
+      timezone: Europe/Prague
+      type: b2c
+```
+
+- **`next.config.js`** - Set correct `defaultLocale` in domains configuration:
+
+```javascript
+domains: [
+    {
+        publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
+        url: process.env.DOMAIN_HOSTNAME_1,
+        defaultLocale: 'en', // Must match TEST_LOCALE and domains.yaml locale
+        currencyCode: 'EUR',
+        // ... rest of config
+    },
+];
+```
+
+- **`parameters_common.yaml`** - Set `locale` (cs) and correct language order in `shopsys.allowed_admin_locales` (['cs', 'en', 'sk'])
+
+- **`config/routes.ts`** - Keep only single layout in routes array:
+
+```typescript
+export const routes = [
+    {
+        '/': '/',
+        '/cart': '/cart',
+        // ... single locale routes only
+    },
+];
+```
+
+**Important**: All locale values must be synchronized across these files for tests to work correctly. Mismatched locales will cause translation and routing issues in Cypress tests.
+
+#### Translation File Structure
+
+The translation system works with three layers:
+
+1. **`translationKeys.ts`** - English source strings organized by domain
+2. **`dataFixtures.{locale}.po`** - Backend translations (mounted from `/app/translations/`)
+3. **`common.json`** - Storefront translations (from `/public/locales/{locale}/`)
+
+The `t()` function searches in this order:
+
+1. First checks `common.json` for the key
+2. Falls back to `.po` files if not found
+3. Returns the original key if no translation exists
+
+This multi-layer approach ensures comprehensive translation coverage across the entire application.
+
+#### Docker Volume Configuration for Translations
+
+For Cypress tests to access translation files, ensure your `docker-compose.yml` includes these volume mounts for the cypress service:
+
+```yaml
+volumes:
+    - ./project-base/storefront/public/locales:/app/public/locales:delegated
+    - ./project-base/app/translations:/app/app-translations:delegated
+```
+
+These mounts provide:
+
+- `public/locales` - Storefront translations (`common.json`)
+- `app-translations` - Backend translations (`dataFixtures.{locale}.po`)
+
 ### support folder
 
 Here you can put various global helpers, such as custom cypress commands, or similar. Because cypress only allows one support file, if you use multiple, you will have to import them as a whole into `/cypress/index.ts`.
@@ -330,6 +519,22 @@ compareSnapshotCommand({
 
 You can run your tests both using the CLI (usually run as `cypress run`) and using the cypress interactive GUI (usually run using `cypress open`). To make sure that the test runs are consistent, use the provided make commands located in `Makefile` in the project root. These commands run the tests using a separate dedicated storefront copy (`storefront-cypress`). Furthermore, the back-end application is set to a test environment with a dedicated database. Last, but not least, running it via docker makes sure that your OS does not influence the tests, which can happen, e.g. by font smoothing, which causes differences in visual regression tests.
 
+### TEST_LOCALE Environment Variable
+
+All Cypress test commands use the `TEST_LOCALE` environment variable to determine which locale translations to load. The default value is `en` (English).
+
+To run tests with a different locale, you need to:
+
+1. Update the `TEST_LOCALE` value in the Makefile (or pass it directly to the docker command)
+2. Ensure all related configuration files match the locale (see [Single Domain Setup](#best-practices-for-translation-testing) section)
+
+Example of overriding the locale:
+
+```bash
+# Run tests with Czech locale instead of default English
+docker compose run --rm -e TYPE=actual -e COMMAND=run -e TEST_LOCALE=cs cypress
+```
+
 ### How to run tests using the CLI (`cypress run`)?
 
 There are six commands provided for you:
@@ -588,19 +793,47 @@ The E2E tests follow a **minimal critical coverage** approach that focuses on in
 
 #### 1. Price Filter + URL Persistence
 
-Tests the complete price filtering workflow with URL synchronization
+Tests the complete price filtering workflow with URL synchronization:
+
+- Applies price range filters
+- Verifies URL parameter updates
+- Tests persistence across page reloads
+- Validates filter state restoration
 
 #### 2. Multi-Filter Workflow
 
-Tests complex filter combinations and their interactions
+Tests complex filter combinations and their interactions:
+
+- Combines price, brand, and parameter filters
+- Verifies URL contains all active filters
+- Tests interaction between different filter types
 
 #### 3. Sort + Filter Integration
 
-Tests sorting behavior with active filters
+Tests sorting behavior with active filters using semantic selectors:
+
+- Applies price filter first
+- Uses test IDs to reliably select sort options
+- Verifies filters persist when changing sort order
+- Validates URL synchronization of both filters and sorting
+
+**Implementation Example:**
+
+```typescript
+// Wait for sorting options to be present (deferred component)
+cy.get('[data-tid^="blocks_sortingbar_option_"]').should('exist').first().click({ force: true });
+```
+
+This approach uses semantic selectors (test IDs) instead of fragile text-based selectors, making tests more reliable and maintainable across different locales.
 
 #### 4. Filter Reset Workflow
 
-Tests complete state reset across all filter types
+Tests complete state reset across all filter types:
+
+- Applies multiple filters
+- Tests reset button functionality
+- Verifies URL parameters are cleared
+- Validates UI state after reset
 
 ### Custom Commands for Filter Testing
 
@@ -625,10 +858,12 @@ Cypress.Commands.add('waitForFilterApplication', () => {
 
 The E2E tests use:
 
-- **Semantic Selectors**: Tests use TIDs (test IDs) for reliable element selection
-- **Visual Regression**: Screenshots validate UI state after filter operations
-- **URL Validation**: Ensures proper parameter synchronization
-- **Performance Monitoring**: Tests include assertions for filter operations
+- **Semantic Selectors (Test IDs)**: Tests use TIDs for reliable element selection that works across different locales and UI changes
+    - Example: `[data-tid^="blocks_sortingbar_option_"]` for sort options
+- **Locale-Independent Approach**: Test IDs remain stable regardless of translated text
+- **Deferred Component Handling**: Tests account for dynamically loaded components with appropriate timeouts
+- **URL Validation**: Ensures proper parameter synchronization across filter and sort operations
+- **Visual Regression**: Screenshots validate UI state after filter operations (optional)
 
 ### Integration with Unit Tests
 
@@ -642,9 +877,17 @@ The E2E tests complement the comprehensive unit test suite by:
 ### Best Practices for Filter E2E Tests
 
 1. **Focus on Integration**: Test scenarios that unit tests cannot cover
-2. **Use Semantic Selectors**: Prefer TIDs over CSS selectors for reliability
-3. **Validate State Persistence**: Test URL parameters and page reload behavior
-4. **Keep Tests Fast**: Focus on critical workflows to maintain CI performance
-5. **Avoid Edge Case Duplication**: Let unit tests handle detailed edge cases
-6. **Use Visual Regression**: Validate UI state with screenshots
-7. **Test Real User Workflows**: Simulate actual user behavior patterns
+2. **Use Semantic Selectors (Test IDs)**: Always prefer TIDs over text-based or CSS selectors for reliability
+    - ✅ Good: `cy.get('[data-tid^="blocks_sortingbar_option_"]')`
+    - ❌ Bad: `cy.get('button').contains(/sort|order|price/i)`
+3. **Avoid Text-Based Selectors**: Text changes with translations and UI updates
+    - TIDs remain stable across locales and design changes
+    - Text-based selectors like `.contains(/sort|price/i)` are fragile and locale-dependent
+4. **Handle Deferred Components**: Wait for dynamically loaded components with appropriate timeouts
+    - Example: Sorting bar uses deferred rendering (~450ms delay)
+5. **Validate State Persistence**: Test URL parameters and page reload behavior
+6. **Keep Tests Fast**: Focus on critical workflows to maintain CI performance
+7. **Avoid Edge Case Duplication**: Let unit tests handle detailed edge cases
+8. **Use Visual Regression**: Validate UI state with screenshots when needed
+9. **Test Real User Workflows**: Simulate actual user behavior patterns
+10. **Simplify When Possible**: Focus on the outcome (e.g., clicking sort options) rather than implementation details (e.g., button visibility logic)

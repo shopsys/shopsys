@@ -2,13 +2,14 @@ import {
     changeBlogArticleDynamicPartsToStaticDemodata,
     changeStoreOpeningHoursToStaticDemodata,
 } from './visitsSupport';
-import { url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
+import { visitEntityByUuid } from 'support/navigation';
 import { TIDs } from 'tids';
 
 const SUBGROUP_INDEX = 0;
@@ -36,7 +37,7 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Product Detail] should visit product detail with screenshot', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
+        visitEntityByUuid('product', staticData.products.helloKitty.uuid);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'product detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
@@ -50,7 +51,7 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Category Detail] should visit category detail with screenshot', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryPersonalComputers);
+        visitEntityByUuid('category', staticData.categories.personalComputers.uuid);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'category detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
@@ -77,7 +78,7 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Blog Detail] should visit blog article detail with screenshot', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.blogArticleGrapesJs);
+        visitEntityByUuid('blogArticle', staticData.blogArticle.grapesJs.uuid);
         changeBlogArticleDynamicPartsToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'blog article detail', {
             blackout: [

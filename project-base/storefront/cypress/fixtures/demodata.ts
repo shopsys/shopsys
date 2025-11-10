@@ -1,202 +1,136 @@
-export const brandSencor = 'Sencor';
-
-export const openingHours = '09:00 - 11:00, 13:00 - 17:00';
-export const buttonName = {
-    login: 'Login',
-};
-
-export const password = 'user123';
-
-export const user = {
-    email: 'no-reply@shopsys.com',
-    password: password,
-    uuid: '7b817d8b-41a3-4fc0-8570-08c9989f6dd9',
-};
-
-export const customer1 = {
-    email: 'no-reply123@shopsys.com',
-    emailRegistered: 'no-reply@shopsys.com',
-    firstName: 'jméno',
-    lastName: 'příjmení',
-    phone: '777666555',
-    billingStreet: 'fakturační ulice 1/15a',
-    billingCity: 'fakturační město',
-    billingPostCode: '70200',
-    password,
-};
-
-export const deliveryAddress = {
-    firstName: 'Janek',
-    lastName: 'Zpodgrunia',
-    company: 'Jankostaw',
-    phone: '162736482',
-    street: 'Jankowice 153a',
-    city: 'Jankowice',
-    postCode: '73961',
-    country: 'CZ',
-};
-
-export const deliveryAddress2 = {
-    firstName: 'Tomáš',
-    lastName: 'Marný',
-    company: 'Márnice s.r.o',
-    phone: '283918439',
-    street: 'Marné Město 153/13b',
-    city: 'Marné Město',
-    postCode: '73963',
-    country: 'CZ',
-};
-
-export const link = {
-    orderDetail: 'Track',
-    myAccount: 'My account',
-};
-
-export const orderNote = 'Just a tiny note in the order.';
-
-export const blogArticle = {
-    publicationDate: '10/26/1999',
-};
-
-export const payment = {
-    creditCard: {
-        uuid: '808f7a8a-6143-538e-a46d-3803519ecf00',
-        name: 'Credit card',
+export const staticData = {
+    brands: {
+        sencor: 'Sencor',
     },
-    cash: {
-        uuid: '6e48952e-0f71-503c-8b58-f0ae9fc350c0',
-        name: 'Cash',
+    user: {
+        email: 'no-reply@shopsys.com',
+        password: 'user123',
+        uuid: '7b817d8b-41a3-4fc0-8570-08c9989f6dd9',
     },
-    onDelivery: {
-        uuid: '2c3d2ede-bf1a-56bc-8c7d-44b7a672ef23',
-        name: 'Cash on delivery',
+    customer1: {
+        email: 'no-reply123@shopsys.com',
+        emailRegistered: 'no-reply@shopsys.com',
+        firstName: 'jméno',
+        lastName: 'příjmení',
+        phone: '777666555',
+        billingStreet: 'fakturační ulice 1/15a',
+        billingCity: 'fakturační město',
+        billingPostCode: '70200',
+        password: 'user123',
     },
-    payLater: {
-        name: 'Pay later',
+    deliveryAddress: {
+        firstName: 'Janek',
+        lastName: 'Zpodgrunia',
+        company: 'Jankostaw',
+        phone: '162736482',
+        street: 'Jankowice 153a',
+        city: 'Jankowice',
+        postCode: '73961',
+        country: 'CZ',
     },
-};
-
-export const placeholder = {
-    password: 'Password',
-    passwordConfirm: 'Password again',
-    email: 'Your email',
-    phone: 'Phone',
-    firstName: 'First Name',
-    lastName: 'Last Name',
-    street: 'Street and house no.',
-    city: 'City',
-    postCode: 'Postcode',
-    coupone: 'Coupon',
-    note: 'Note',
-    company: 'Company',
-    companyName: 'Company name',
-    companyNumber: 'Company number',
-    companyTaxNumber: 'Tax number',
-    passwordAgain: 'Password again',
-};
-
-export const products = {
-    helloKitty: {
-        uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
-        name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
-        fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
-        catnum: '9177759',
-        url: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
+    deliveryAddress2: {
+        firstName: 'Tomáš',
+        lastName: 'Marný',
+        company: 'Márnice s.r.o',
+        phone: '283918439',
+        street: 'Marné Město 153/13b',
+        city: 'Marné Město',
+        postCode: '73963',
+        country: 'CZ',
     },
-    philips32PFL4308: {
-        uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
-        url: '/television-philips-m',
-        catnum: '9176508',
+    payment: {
+        creditCard: { uuid: '808f7a8a-6143-538e-a46d-3803519ecf00' },
+        cash: { uuid: '6e48952e-0f71-503c-8b58-f0ae9fc350c0' },
+        onDelivery: { uuid: '2c3d2ede-bf1a-56bc-8c7d-44b7a672ef23' },
     },
-    a4techMouse: {
-        uuid: 'd5a669ed-46aa-5c55-b1fe-54e7b81de4cd',
-        catnum: '5960453',
-    },
-    philips54CRT: {
-        uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb	',
-        name: '54" Philips CRT [V]',
-        catnum: '9176588',
-    },
-} as const;
-
-export const promoCode = 'test';
-
-export const transport = {
-    personalCollection: {
-        uuid: 'b7461a55-b6e6-5b4f-a3c9-92f35366fe41',
-        name: 'Personal collection',
-        storeOstrava: {
-            uuid: '4bade3e5-3b8c-5e71-93a5-ae1d84564575',
-            name: 'Ostrava',
-        },
-        storePardubice: {
-            uuid: '415ee258-8641-5ad5-bfa4-31eb2a75588a',
-            name: 'Pardubice',
-        },
-    },
-    czechPost: {
-        uuid: 'f411f93c-6658-5bf6-ad68-cd69a83a88c0',
-        name: 'Czech post',
-    },
-    ppl: {
-        uuid: '5d4619f7-a98f-5bff-b296-2a0887430a63',
-        name: 'PPL',
-    },
-    droneDelivery: {
-        name: 'Drone delivery',
-    },
-};
-
-export const order = {
-    number: '1234567890',
-    numberHeading: 'Order number 1234567890',
-    creationDate: '10/26/1999 10:10 AM',
-    confirmation: {
-        presonalCollection: 'We are looking forward to your visit.',
-        czechPost:
-            'the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.',
-        packeta: 'Probably best value for your money',
-        drone: 'Expect delivery by the end of next month',
-        goPay: 'You have chosen GoPay Payment, you will be shown a payment gateway.',
-        card: 'You have chosen payment by credit card. Please finish it in two business days.',
-        orderCreatedText:
-            'Order number 1234567890 has been sent, thank you for your purchase. We will contact you about next order status.',
-    },
-    detail: {
-        products: {
-            helloKitty: {
-                ...products.helloKitty,
-                price: '€139.96',
-                quantity: '1 pcs',
-                promoCode: 'Promo code -10%',
+    transport: {
+        personalCollection: {
+            uuid: 'b7461a55-b6e6-5b4f-a3c9-92f35366fe41',
+            storeOstrava: {
+                uuid: '4bade3e5-3b8c-5e71-93a5-ae1d84564575',
+                name: 'Ostrava',
+            },
+            storePardubice: {
+                uuid: '415ee258-8641-5ad5-bfa4-31eb2a75588a',
+                name: 'Pardubice',
             },
         },
+        czechPost: { uuid: 'f411f93c-6658-5bf6-ad68-cd69a83a88c0' },
+        ppl: { uuid: '5d4619f7-a98f-5bff-b296-2a0887430a63' },
+    },
+    categories: {
+        electronics: { uuid: '9808de4b-f953-544e-82ec-8417c2893cbd' },
+        personalComputers: { uuid: 'e9129508-157a-5ae3-bba7-78632e0ee8fb' },
+    } as const,
+    products: {
+        helloKitty: {
+            uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
+            name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
+            catnum: '9177759',
+        },
+        philips32PFL4308: {
+            uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
+            catnum: '9176508',
+        },
+        televisionPhilipsM: {
+            uuid: 'f9c91468-c6b1-5b3f-b34e-1a2eef918504',
+        },
+        a4techMouse: {
+            uuid: 'd5a669ed-46aa-5c55-b1fe-54e7b81de4cd',
+            catnum: '5960453',
+        },
+        philips54CRT: {
+            uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb',
+            catnum: '9176588',
+        },
+    } as const,
+    order: {
+        number: '1234567890',
+        numberHeading: 'Order number 1234567890',
+        creationDate: '10/26/1999 10:10 AM',
+    },
+    blogArticle: {
+        publicationDate: '10/26/1999',
+        grapesJs: {
+            uuid: 'cf500b03-d2e4-5549-b3af-cefed894c1b4',
+        },
+    },
+    promoCode: 'test',
+    openingHours: '09:00 - 11:00, 13:00 - 17:00',
+    orderNote: 'Just a tiny note in the order.',
+    smokeTestRoutesUuids: {
+        category: '9808de4b-f953-544e-82ec-8417c2893cbd',
+        product: '55bb22ab-bb88-5459-a464-005b948d8c78',
+        blogCategory: 'f8129edb-3f92-5dfc-b6e5-261d85279485',
+        blogArticle: 'fd418fec-fcd5-58ac-8e65-1fbbcd4260e3',
+        brand: 'b077003c-3163-5126-890e-a2942355b17b',
+        flag: '1d016b34-f541-576c-a135-e81aaba6be0e',
+        store: '4bade3e5-3b8c-5e71-93a5-ae1d84564575',
+        article: '6fc1a70f-b7a4-5f1b-850d-bc7520ef13e5',
     },
 };
 
+const { routes } = require('/config/routes');
+const route = routes[0];
+
 export const url = {
-    cart: '/cart',
-    search: '/search?q=',
-    brandsOverview: '/brands-overview',
+    cart: route['/cart'] as string,
+    search: route['/search'] + '?q=',
+    brandsOverview: route['/brands-overview'] as string,
+    login: route['/login'] as string,
+    registration: route['/registration'] as string,
+    stores: route['/stores'] as string,
     order: {
-        transportAndPayment: '/order/transport-and-payment',
-        contactInformation: '/order/contact-information',
-        orderConfirmation: '/order-confirmation',
-        orderDetail: '/order-detail',
+        transportAndPayment: route['/order/transport-and-payment'] as string,
+        contactInformation: route['/order/contact-information'] as string,
+        orderConfirmation: route['/order-confirmation'] as string,
+        orderDetail: route['/order-detail/:urlHash']?.replace('/:urlHash', '') as string,
     },
-    login: '/login',
-    loginWithCustomerRedirect: '/login?r=customer',
     customer: {
-        orders: '/customer/orders',
-        editProfile: '/customer/edit-profile',
+        orders: route['/customer/orders'] as string,
+        editProfile: route['/customer/edit-profile'] as string,
     },
-    categoryElectronics: '/electronics',
-    categoryPersonalComputers: '/personal-computers-accessories',
-    productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
-    registration: '/registration',
-    stores: '/stores',
-    blogArticleGrapesJs: '/grapesjs-page',
-} as const;
+};
 
 export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store-1';
 

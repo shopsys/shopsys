@@ -6,7 +6,7 @@ import {
 } from './cartSupport';
 import { loginFromHeader, logoutFromHeader } from 'e2e/authentication/authenticationSupport';
 import { checkEmptyCartTextIsVisible, fillEmailInThirdStep } from 'e2e/order/orderSupport';
-import { password, payment, products, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkAndHideInfoToast,
@@ -17,6 +17,7 @@ import {
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -31,13 +32,13 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
     it('[Prefilled Cart] should log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
-        cy.addProductToCartForTest(products.philips32PFL4308.uuid).then((cart) =>
+        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
 
-        loginFromHeader(registrationInput.email, password);
-        checkAndHideSuccessToast('Successfully logged in');
+        loginFromHeader(registrationInput.email, staticData.user.password);
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after login', {
             blackout: [
@@ -49,7 +50,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         });
 
         goToHomepageFromHeader();
-        addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
+        addProductToCartFromPromotedProductsOnHomepage(staticData.products.helloKitty.catnum);
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {
@@ -62,7 +63,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         });
 
         logoutFromHeader();
-        checkAndHideSuccessToast('Successfully logged out');
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
         checkEmptyCartTextIsVisible();
@@ -73,11 +74,11 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
-        loginFromHeader(registrationInput.email, password);
-        checkAndHideSuccessToast('Successfully logged in');
+        loginFromHeader(registrationInput.email, staticData.user.password);
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
 
-        addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
+        addProductToCartFromPromotedProductsOnHomepage(staticData.products.helloKitty.catnum);
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {
@@ -90,7 +91,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         });
 
         logoutFromHeader();
-        checkAndHideSuccessToast('Successfully logged out');
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
         checkEmptyCartTextIsVisible();
@@ -101,11 +102,11 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
-        addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
+        addProductToCartFromPromotedProductsOnHomepage(staticData.products.helloKitty.catnum);
         checkPopupIsVisible(true);
 
-        loginFromHeader(registrationInput.email, password);
-        checkAndHideSuccessToast('Successfully logged in');
+        loginFromHeader(registrationInput.email, staticData.user.password);
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
 
         goToCartPageFromHeader();
@@ -119,13 +120,13 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         });
 
         logoutFromHeader();
-        checkAndHideSuccessToast('Successfully logged out');
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
         checkEmptyCartTextIsVisible();
 
         goToHomepageFromHeader();
-        addProductToCartFromPromotedProductsOnHomepage(products.a4techMouse.catnum);
+        addProductToCartFromPromotedProductsOnHomepage(staticData.products.a4techMouse.catnum);
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
 
@@ -137,9 +138,9 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
                 { tid: TIDs.footer_copyright },
             ],
         });
-        loginFromHeader(registrationInput.email, password);
-        checkAndHideSuccessToast('Successfully logged in');
-        checkAndHideInfoToast('Your cart has been modified. Please check the changes.');
+        loginFromHeader(registrationInput.email, staticData.user.password);
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
+        checkAndHideInfoToast(translations.toast.info.cartModified);
         cy.waitForHydration();
 
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after second login', {
@@ -156,7 +157,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         const email = 'discard-user-cart-after-login-in-order-3rd-step@shopsys.com';
         const registrationInput = generateCustomerRegistrationData('commonCustomer', email);
         cy.registerAsNewUser(registrationInput);
-        cy.addProductToCartForTest(products.philips32PFL4308.uuid);
+        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
 
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after first login', {
@@ -169,22 +170,24 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         });
 
         logoutFromHeader();
-        checkAndHideSuccessToast('Successfully logged out');
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
         checkEmptyCartTextIsVisible();
 
-        cy.addProductToCartForTest(products.helloKitty.uuid).then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid).then((cart) =>
+            cy.storeCartUuidInLocalStorage(cart.uuid),
+        );
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'third step before second login', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         fillEmailInThirdStep(email);
-        loginInThirdOrderStep(password);
-        checkAndHideSuccessToast('Successfully logged in');
+        loginInThirdOrderStep(staticData.user.password);
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'third step after second login', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
