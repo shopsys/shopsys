@@ -2352,8 +2352,9 @@ type Query {
   notificationBars: [NotificationBar!]
   "Returns order filtered using UUID, orderNumber, or urlHash"
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
+  "Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
   orderItems(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int): OrderItemConnection!
-  "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
+  "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
   orderItemsSearch(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
   "Returns HTML content for order payment page depending on the state of the payment."
   orderPaymentPageContent(orderUuid: Uuid!): OrderPaymentPageContent!

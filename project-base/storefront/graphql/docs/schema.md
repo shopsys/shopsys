@@ -809,7 +809,11 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <tr>
 <td colspan="2" valign="top"><strong id="query.orderitems">orderItems</strong></td>
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
-<td></td>
+<td>
+
+Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded
+
+</td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">after</td>
@@ -841,7 +845,7 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
 <td>
 
-Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords
+Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded
 
 </td>
 </tr>

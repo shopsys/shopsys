@@ -2827,8 +2827,9 @@ export type TypeQuery = {
   notificationBars: Maybe<Array<TypeNotificationBar>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<TypeOrder>;
+  /** Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded */
   orderItems: TypeOrderItemConnection;
-  /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords */
+  /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded */
   orderItemsSearch: TypeOrderItemConnection;
   /** Returns HTML content for order payment page depending on the state of the payment. */
   orderPaymentPageContent: TypeOrderPaymentPageContent;
