@@ -75,6 +75,7 @@
     * [OrderItemEdge](#orderitemedge)
     * [OrderPaymentPageContent](#orderpaymentpagecontent)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
+    * [OrderWithdrawalRequest](#orderwithdrawalrequest)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
     * [ParameterCheckboxFilterOption](#parametercheckboxfilteroption)
@@ -6888,24 +6889,6 @@ Returns withdrawal deadline for the order, null if not specified (when order has
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="order.withdrawalemail">withdrawalEmail</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Email address for withdrawal request contact
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="order.withdrawalfirstname">withdrawalFirstName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-First name for withdrawal request contact
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="order.withdrawalinstructions">withdrawalInstructions</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6915,38 +6898,11 @@ Returns withdrawal instructions for the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="order.withdrawallastname">withdrawalLastName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="order.withdrawalrequest">withdrawalRequest</strong></td>
+<td valign="top"><a href="#orderwithdrawalrequest">OrderWithdrawalRequest</a></td>
 <td>
 
-Last name for withdrawal request contact
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="order.withdrawalnote">withdrawalNote</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Additional notes or instructions for withdrawal
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="order.withdrawalrequestedat">withdrawalRequestedAt</strong></td>
-<td valign="top"><a href="#datetime">DateTime</a></td>
-<td>
-
-Date and time when the withdrawal was requested by customer
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="order.withdrawaltelephone">withdrawalTelephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Telephone number for withdrawal request contact
+Returns withdrawal request information for the order, null if no withdrawal was requested
 
 </td>
 </tr>
@@ -7287,6 +7243,75 @@ All currently available payment methods for the order (excluding the current one
 <td>
 
 Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderWithdrawalRequest
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.email">email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.firstname">firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.lastname">lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.note">note</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Additional notes or instructions for withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.requestedat">requestedAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time when the withdrawal was requested by customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.telephone">telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Telephone number for withdrawal request contact
 
 </td>
 </tr>

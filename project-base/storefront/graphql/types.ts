@@ -1979,20 +1979,10 @@ export type TypeOrder = {
   uuid: Scalars['Uuid']['output'];
   /** Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet) */
   withdrawalDeadline: Maybe<Scalars['DateTime']['output']>;
-  /** Email address for withdrawal request contact */
-  withdrawalEmail: Maybe<Scalars['String']['output']>;
-  /** First name for withdrawal request contact */
-  withdrawalFirstName: Maybe<Scalars['String']['output']>;
   /** Returns withdrawal instructions for the order */
   withdrawalInstructions: Scalars['String']['output'];
-  /** Last name for withdrawal request contact */
-  withdrawalLastName: Maybe<Scalars['String']['output']>;
-  /** Additional notes or instructions for withdrawal */
-  withdrawalNote: Maybe<Scalars['String']['output']>;
-  /** Date and time when the withdrawal was requested by customer */
-  withdrawalRequestedAt: Maybe<Scalars['DateTime']['output']>;
-  /** Telephone number for withdrawal request contact */
-  withdrawalTelephone: Maybe<Scalars['String']['output']>;
+  /** Returns withdrawal request information for the order, null if no withdrawal was requested */
+  withdrawalRequest: Maybe<TypeOrderWithdrawalRequest>;
 };
 
 /** A connection to a list of items. */
@@ -2184,6 +2174,22 @@ export enum TypeOrderStatusEnum {
   /** New */
   New = 'new'
 }
+
+export type TypeOrderWithdrawalRequest = {
+  __typename?: 'OrderWithdrawalRequest';
+  /** Email address for withdrawal request contact */
+  email: Scalars['String']['output'];
+  /** First name for withdrawal request contact */
+  firstName: Scalars['String']['output'];
+  /** Last name for withdrawal request contact */
+  lastName: Scalars['String']['output'];
+  /** Additional notes or instructions for withdrawal */
+  note: Maybe<Scalars['String']['output']>;
+  /** Date and time when the withdrawal was requested by customer */
+  requestedAt: Scalars['DateTime']['output'];
+  /** Telephone number for withdrawal request contact */
+  telephone: Scalars['String']['output'];
+};
 
 /** Input for requesting withdrawal from contract for an order */
 export type TypeOrderWithdrawalRequestInput = {

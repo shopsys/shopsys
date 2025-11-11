@@ -1567,20 +1567,10 @@ type Order {
   uuid: Uuid!
   "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"
   withdrawalDeadline: DateTime
-  "Email address for withdrawal request contact"
-  withdrawalEmail: String
-  "First name for withdrawal request contact"
-  withdrawalFirstName: String
   "Returns withdrawal instructions for the order"
   withdrawalInstructions: String!
-  "Last name for withdrawal request contact"
-  withdrawalLastName: String
-  "Additional notes or instructions for withdrawal"
-  withdrawalNote: String
-  "Date and time when the withdrawal was requested by customer"
-  withdrawalRequestedAt: DateTime
-  "Telephone number for withdrawal request contact"
-  withdrawalTelephone: String
+  "Returns withdrawal request information for the order, null if no withdrawal was requested"
+  withdrawalRequest: OrderWithdrawalRequest
 }
 
 "A connection to a list of items."
@@ -1764,6 +1754,21 @@ enum OrderStatusEnum {
   inProgress
   "New"
   new
+}
+
+type OrderWithdrawalRequest {
+  "Email address for withdrawal request contact"
+  email: String!
+  "First name for withdrawal request contact"
+  firstName: String!
+  "Last name for withdrawal request contact"
+  lastName: String!
+  "Additional notes or instructions for withdrawal"
+  note: String
+  "Date and time when the withdrawal was requested by customer"
+  requestedAt: DateTime!
+  "Telephone number for withdrawal request contact"
+  telephone: String!
 }
 
 "Input for requesting withdrawal from contract for an order"
