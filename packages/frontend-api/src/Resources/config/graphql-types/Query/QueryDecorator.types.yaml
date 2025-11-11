@@ -131,6 +131,7 @@ QueryDecorator:
                 args:
                     filter:
                         type: "OrderItemsFilterInput"
+                description: "Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
             orderItemsSearch:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
@@ -142,7 +143,7 @@ QueryDecorator:
                         type: "SearchInput!"
                     filter:
                         type: "OrderItemsFilterInput"
-                description: "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
+                description: "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"

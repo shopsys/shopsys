@@ -14,6 +14,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 use Tests\FrontendApiBundle\Test\SearchInputTestUtils;
@@ -21,6 +23,16 @@ use Tests\FrontendApiBundle\Test\SearchInputTestUtils;
 class SearchOrderItemsTest extends GraphQlWithLoginTestCase
 {
     use OrderItemsTestTrait;
+
+    /**
+     * @inject
+     */
+    private WithdrawalRequestFacade $withdrawalRequestFacade;
+
+    /**
+     * @inject
+     */
+    private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
 
     /**
      * @param array $queryVariables
@@ -42,6 +54,15 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         $expectedOrderItems = $this->getExpectedOrderItems($expectedOrderItemsIds);
 
         $this->assertOrderItemConnection($responseData, $expectedOrderItems, $expectedOrderItemsIds);
+    }
+
+    public function testSearchOrderItemsExcludesItemsFromOrdersWithWithdrawalRequest(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
+
+        $this->assertProductExistsInOrderItems($product, true);
+        $this->createWithdrawalRequest();
+        $this->assertProductExistsInOrderItems($product, false);
     }
 
     /**
@@ -120,5 +141,16 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
             ],
             [15, 20],
         ];
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param bool $shouldExist
+     */
+    private function assertProductExistsInOrderItems(Product $product, bool $shouldExist): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SearchOrderItemsQuery.graphql', SearchInputTestUtils::createSearchInputQueryVariables(''));
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orderItemsSearch');
+        $this->assertProductItemExistsInOrderItemsResponseData($product, $responseData, $shouldExist);
     }
 }
