@@ -18,29 +18,35 @@
 
 {% block admin_log %}
     {% if lastAdminActivities|length > 0 %}
-        <h2>{{ 'Administrator activities history'|trans }}</h2>
-        <ul class="timeline">
-            {% for adminActivity in lastAdminActivities %}
-                <li class="timeline-event">
-                    <div class="timeline-event-icon">
-                        {{ ux_icon('lock') }}
-                    </div>
-                    <div class="card timeline-event-card">
-                        <div class="card-body">
-                            <div class="text-secondary float-end">
-                                {{ 'Last action' }}:
-                                {{ adminActivity.lastActionTime|formatDateTime }}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Administrator activities history'|trans }}</h3>
+            </div>
+            <div class="card-body">
+                <ul class="timeline">
+                    {% for adminActivity in lastAdminActivities %}
+                        <li class="timeline-event">
+                            <div class="timeline-event-icon">
+                                {{ ux_icon('lock') }}
                             </div>
-                            <h4 class="mb-2">{{ 'Administrator logged in' }}</h4>
-                            <div class="text-secondary">
-                                {{ adminActivity.loginTime|formatDateTime }}
-                                {{ 'from IP' }}
-                                {{ adminActivity.ipAddress }}
+                            <div class="card timeline-event-card">
+                                <div class="card-body">
+                                    <div class="text-secondary float-end">
+                                        {{ 'Last action'|trans }}:
+                                        {{ adminActivity.lastActionTime|formatDateTime }}
+                                    </div>
+                                    <h4 class="mb-2">{{ 'Administrator logged in'|trans }}</h4>
+                                    <div class="text-secondary">
+                                        {{ adminActivity.loginTime|formatDateTime }}
+                                        {{ 'from IP'|trans }}
+                                        {{ adminActivity.ipAddress }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

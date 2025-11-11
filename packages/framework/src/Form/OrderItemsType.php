@@ -108,6 +108,7 @@ final class OrderItemsType extends AbstractType
             ->addAllowedTypes('order', [Order::class])
             ->setDefaults([
                 'inherit_data' => true,
+                'renders_in_own_card' => true,
             ]);
     }
 }

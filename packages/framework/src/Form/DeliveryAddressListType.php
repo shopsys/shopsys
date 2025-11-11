@@ -36,6 +36,7 @@ final class DeliveryAddressListType extends AbstractType
                 'allowEdit' => false,
                 'allowAdd' => false,
                 'mapped' => false,
+                'renders_in_own_card' => true,
             ]);
     }
 

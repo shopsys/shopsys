@@ -10,8 +10,10 @@
             </div>
         {% endif %}
 
-        {% for child in form %}
-            {{ form_widget(child) }}
-        {% endfor %}
+        <div class="space-y">
+            {% for child in form %}
+                {{ form_widget(child) }}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

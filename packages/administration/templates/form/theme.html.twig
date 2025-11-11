@@ -71,3 +71,34 @@
 
     {{ parent('number_widget') }}
 {% endblock number_widget %}
+
+{%- block form_widget_compound -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form is rootform -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+
+        {% set auto_card_blocks = auto_card_blocks|default([]) %}
+
+        {% if form is rootform and auto_card_blocks|length > 0 %}
+            {% for block in auto_card_blocks %}
+                {% if block.type == 'auto_card' %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            {% for child_name in block.children %}
+                                {{ form_row(form[child_name]) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    {{ form_row(form[block.child]) }}
+                {% endif %}
+            {% endfor %}
+
+            {{ form_rest(form) }}
+        {% else %}
+            {{- block('form_rows') -}}
+            {{- form_rest(form) -}}
+        {% endif %}
+    </div>
+{%- endblock -%}

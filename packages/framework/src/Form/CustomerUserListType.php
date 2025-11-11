@@ -40,6 +40,7 @@ final class CustomerUserListType extends AbstractType
                 'allowEdit' => false,
                 'allowAdd' => false,
                 'deleteConfirmMessage' => null,
+                'renders_in_own_card' => true,
             ]);
     }
 

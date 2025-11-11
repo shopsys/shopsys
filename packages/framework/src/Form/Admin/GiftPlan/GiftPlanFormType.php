@@ -91,16 +91,15 @@ final class GiftPlanFormType extends AbstractType
             ->add('validTo', DatePickerType::class, [
                 'required' => false,
                 'label' => 'Valid to',
-            ])
-            ->add('mainProducts', ProductsType::class, [
-                'required' => false,
-                'label' => 'Main products',
             ]);
         $builderSettingsGroup->get('validTo')->addModelTransformer($this->endOfDayTransformer);
 
-
         $builder
             ->add($builderSettingsGroup)
+            ->add('mainProducts', ProductsType::class, [
+                'required' => false,
+                'label' => 'Main products',
+            ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_giftplan_list',
                 'entity' => $options['giftPlan'],

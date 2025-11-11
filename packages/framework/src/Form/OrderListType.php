@@ -37,6 +37,7 @@ final class OrderListType extends AbstractType
             ->setDefaults([
                 'mapped' => false,
                 'limit' => 10,
+                'renders_in_own_card' => true,
             ]);
     }
 

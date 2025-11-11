@@ -100,6 +100,9 @@ msgstr ""
 msgid "Administrator activities history"
 msgstr ""
 
+msgid "Administrator logged in"
+msgstr ""
+
 msgid "Administrator role group"
 msgstr ""
 
@@ -1024,6 +1027,9 @@ msgstr ""
 msgid "Last 7 days"
 msgstr ""
 
+msgid "Last action"
+msgstr ""
+
 msgid "Last name"
 msgstr ""
 
@@ -1592,6 +1598,9 @@ msgid "Remove"
 msgstr ""
 
 msgid "Remove rule"
+msgstr ""
+
+msgid "Replace file"
 msgstr ""
 
 msgid "Request a one-time passcode by email"
@@ -2213,6 +2222,9 @@ msgid "flags"
 msgstr ""
 
 msgid "from"
+msgstr ""
+
+msgid "from IP"
 msgstr ""
 
 msgid "g"

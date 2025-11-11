@@ -35,6 +35,7 @@ final class PriceListProductsPickerType extends AbstractType
             'allow_delete' => true,
             'delete_empty' => true,
             'error_bubbling' => false,
+            'renders_in_own_card' => true,
         ]);
     }
 
