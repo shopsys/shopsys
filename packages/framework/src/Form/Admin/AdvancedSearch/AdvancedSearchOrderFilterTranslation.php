@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPriceFilterWit
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderProductFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStatusFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStreetFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderWithdrawalRequestFilter;
 
 class AdvancedSearchOrderFilterTranslation extends AdvancedSearchFilterTranslation
 {
@@ -35,5 +36,6 @@ class AdvancedSearchOrderFilterTranslation extends AdvancedSearchFilterTranslati
         $this->addFilterTranslation(OrderEmailFilter::NAME, t('Customer email address'));
         $this->addFilterTranslation(OrderCityFilter::NAME, t('Customer city'));
         $this->addFilterTranslation(OrderCustomerIdFilter::NAME, t('Customer ID'));
+        $this->addFilterTranslation(OrderWithdrawalRequestFilter::NAME, t('Withdrawal Request'));
     }
 }

@@ -3610,6 +3610,9 @@ msgstr "Vytvoření"
 msgid "delete"
 msgstr "Smazání"
 
+msgid "does not exist"
+msgstr "neexistuje"
+
 msgid "doesn't include"
 msgstr "neobsahuje"
 
@@ -3618,6 +3621,9 @@ msgstr "Editování"
 
 msgid "empty value"
 msgstr "prázdná hodnota"
+
+msgid "exists"
+msgstr "existuje"
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr "z \"oldReadableValue\" na \"newReadableValue\""

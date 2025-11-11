@@ -29,6 +29,8 @@ class AdvancedSearchOperatorTranslation
             AdvancedSearchFilterInterface::OPERATOR_LT => t('lower than'),
             AdvancedSearchFilterInterface::OPERATOR_GTE => t('higher or equal'),
             AdvancedSearchFilterInterface::OPERATOR_LTE => t('lower or equal'),
+            AdvancedSearchFilterInterface::OPERATOR_EXISTS => t('exists'),
+            AdvancedSearchFilterInterface::OPERATOR_DOES_NOT_EXIST => t('does not exist'),
         ];
     }
 

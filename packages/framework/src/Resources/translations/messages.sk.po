@@ -3610,6 +3610,9 @@ msgstr "vytvoriť"
 msgid "delete"
 msgstr "odstrániť"
 
+msgid "does not exist"
+msgstr "neexistuje"
+
 msgid "doesn't include"
 msgstr "neobsahuje"
 
@@ -3618,6 +3621,9 @@ msgstr "upraviť"
 
 msgid "empty value"
 msgstr "prázdna hodnota"
+
+msgid "exists"
+msgstr "existuje"
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr "z \"oldReadableValue\" na \"newReadableValue\""

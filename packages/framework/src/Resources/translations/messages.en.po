@@ -3610,6 +3610,9 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
+msgid "does not exist"
+msgstr ""
+
 msgid "doesn't include"
 msgstr ""
 
@@ -3617,6 +3620,9 @@ msgid "edit"
 msgstr ""
 
 msgid "empty value"
+msgstr ""
+
+msgid "exists"
 msgstr ""
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
