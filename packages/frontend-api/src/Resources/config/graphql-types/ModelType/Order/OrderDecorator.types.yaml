@@ -141,24 +141,9 @@ OrderDecorator:
             deliveredAt:
                 type: "DateTime"
                 description: "Date and time when the order was delivered to the customer"
-            withdrawalFirstName:
-                type: "String"
-                description: "First name for withdrawal request contact"
-            withdrawalLastName:
-                type: "String"
-                description: "Last name for withdrawal request contact"
-            withdrawalTelephone:
-                type: "String"
-                description: "Telephone number for withdrawal request contact"
-            withdrawalEmail:
-                type: "String"
-                description: "Email address for withdrawal request contact"
-            withdrawalNote:
-                type: "String"
-                description: "Additional notes or instructions for withdrawal"
-            withdrawalRequestedAt:
-                type: "DateTime"
-                description: "Date and time when the withdrawal was requested by customer"
+            withdrawalRequest:
+                type: "OrderWithdrawalRequest"
+                description: "Returns withdrawal request information for the order, null if no withdrawal was requested"
             withdrawalInstructions:
                 type: "String!"
                 description: "Returns withdrawal instructions for the order"

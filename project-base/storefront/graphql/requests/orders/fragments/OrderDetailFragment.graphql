@@ -70,12 +70,9 @@ fragment OrderDetailFragment on Order {
     hasPaymentInProcess
     lastExternalPaymentUrl
     deliveredAt
-    withdrawalRequestedAt
-    withdrawalFirstName
-    withdrawalLastName
-    withdrawalEmail
-    withdrawalTelephone
-    withdrawalNote
+    withdrawalRequest {
+        ...OrderWithdrawalRequestFragment
+    }
     canRequestWithdrawal
     withdrawalDeadline
 }

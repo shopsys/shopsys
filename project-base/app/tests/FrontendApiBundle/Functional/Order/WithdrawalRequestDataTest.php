@@ -23,11 +23,6 @@ class WithdrawalRequestDataTest extends GraphQlTestCase
 
         $data = $this->getResponseDataForGraphQlType($response, 'order');
 
-        $this->assertNotNull($data['withdrawalFirstName']);
-        $this->assertNotNull($data['withdrawalLastName']);
-        $this->assertNotNull($data['withdrawalEmail']);
-        $this->assertNotNull($data['withdrawalTelephone']);
-        $this->assertNotNull($data['withdrawalRequestedAt']);
-        $this->assertNotNull($data['withdrawalNote']);
+        $this->assertNotNull($data['withdrawalRequest']);
     }
 }

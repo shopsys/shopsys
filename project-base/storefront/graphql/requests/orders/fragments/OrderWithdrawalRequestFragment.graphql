@@ -1,0 +1,9 @@
+fragment OrderWithdrawalRequestFragment on OrderWithdrawalRequest {
+    __typename
+    email
+    firstName
+    lastName
+    telephone
+    note
+    requestedAt
+}

@@ -24,7 +24,8 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
     const orderCanRequestWithdrawal = order.canRequestWithdrawal;
     const canRequestWithdrawal = userCanRequestWithdrawal && orderCanRequestWithdrawal;
     const withdrawalDeadline = order.withdrawalDeadline;
-    const hasWithdrawalRequested = !!order.withdrawalRequestedAt;
+    const withdrawalRequest = order.withdrawalRequest;
+    const hasWithdrawalRequested = withdrawalRequest !== null;
     const isCancelled = order.statusType === TypeOrderStatusEnum.Canceled;
 
     const withdrawalTitle = t('Withdrawal from contract');
@@ -44,26 +45,26 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                 <div className="flex flex-col gap-2">
                     <span>
                         {t('Withdrawal was requested on {{ date }} with the following data:', {
-                            date: formatDate(order.withdrawalRequestedAt!),
+                            date: formatDate(withdrawalRequest.requestedAt),
                         })}
                     </span>
                     <div className="text-sm">
                         <div>
-                            <strong>{t('Contact person')}:</strong> {order.withdrawalFirstName}{' '}
-                            {order.withdrawalLastName}
+                            <strong>{t('Contact person')}:</strong> {withdrawalRequest.firstName}{' '}
+                            {withdrawalRequest.lastName}
                         </div>
                         <div>
-                            <strong>{t('Email')}:</strong> {order.withdrawalEmail}
+                            <strong>{t('Email')}:</strong> {withdrawalRequest.email}
                         </div>
-                        {order.withdrawalTelephone && (
+                        {withdrawalRequest.telephone && (
                             <div>
-                                <strong>{t('Phone')}:</strong> {order.withdrawalTelephone}
+                                <strong>{t('Phone')}:</strong> {withdrawalRequest.telephone}
                             </div>
                         )}
-                        {order.withdrawalNote && (
+                        {withdrawalRequest.note && (
                             <div className="mt-2">
                                 <strong>{t('Note')}:</strong>
-                                <div className="mt-1">{order.withdrawalNote}</div>
+                                <div className="mt-1">{withdrawalRequest.note}</div>
                             </div>
                         )}
                     </div>
