@@ -64,6 +64,10 @@ class ComplaintApiFacade
      */
     public function create(ComplaintData $complaintData): Complaint
     {
+        if ($complaintData->order !== null) {
+            $this->checkOrderHasNoWithdrawalRequest($complaintData->order);
+        }
+
         $complaintItemsData = [];
         $complaintItems = [];
 
@@ -104,6 +108,7 @@ class ComplaintApiFacade
 
         if ($orderUuid !== null) {
             $order = $this->orderApiFacade->getByUuid($orderUuid);
+            $this->checkOrderHasNoWithdrawalRequest($order);
         }
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
@@ -280,5 +285,15 @@ class ComplaintApiFacade
         }
 
         return $complaintItemsData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     */
+    protected function checkOrderHasNoWithdrawalRequest(Order $order): void
+    {
+        if ($order->getWithdrawalRequest() !== null) {
+            throw new InvalidAccessUserError('Cannot create complaint for order with withdrawal request');
+        }
     }
 }

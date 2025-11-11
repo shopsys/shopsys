@@ -9,6 +9,8 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Component\Constraints\ComplaintResolution;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,6 +24,16 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
      * @inject
      */
     protected ComplaintResolutionEnum $complaintResolutionEnum;
+
+    /**
+     * @inject
+     */
+    private WithdrawalRequestFacade $withdrawalRequestFacade;
+
+    /**
+     * @inject
+     */
+    private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
 
     public function testCreateComplaint(): void
     {
@@ -345,6 +357,30 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
         $this->assertArrayHasKey('input.items[0].manualComplaintItemName', $errors);
         $this->assertSame(NotBlank::IS_BLANK_ERROR, $errors['input.items[0].manualComplaintItemName'][0]['code']);
+    }
+
+    public function testCreateComplaintFromOrderWithWithdrawalRequestIsNotAllowed(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+
+        $withRequestData = $this->withdrawalRequestDataFactory->createFromArray([
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'email' => 'no-reply@shopsys.com',
+        ]);
+
+        $this->withdrawalRequestFacade->createOnly($order, $withRequestData);
+
+        $response = $this->createComplaint(
+            $order,
+            1,
+            $order->getProductItems()[0],
+            2,
+            $order->getProductItems()[1],
+            $this->complaintResolutionEnum::FIX,
+        );
+
+        $this->assertUserError($response, 'invalid-access');
     }
 
     /**
