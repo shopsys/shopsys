@@ -29,6 +29,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery simpleSearch(string $text)
  * @method \App\Model\Product\Search\FilterQuery search(string $text)
  * @method \App\Model\Product\Search\FilterQuery filterOnlyInStockOrAllowedNegativeStock()
+ * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdsArray(int[] $ids)
+ * @method \App\Model\Product\Search\FilterQuery filterWithActiveSpecialPriceOnly(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class FilterQuery extends BaseFilterQuery
 {
