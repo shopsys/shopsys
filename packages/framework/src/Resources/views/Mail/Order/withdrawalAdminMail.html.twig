@@ -1,33 +1,35 @@
-<h1 style="margin: 0 0 20px 0; color: #333;">{{ 'New Withdrawal Request'|trans }}</h1>
+{% set locale = getDomain().getDomainConfigById(order.domainId).getLocale() %}
 
-<p style="margin: 0 0 20px 0; color: #666;">{{ 'A customer has requested withdrawal from contract for the following order'|trans }}</p>
+<h1 style="margin: 0 0 20px 0; color: #333;">{{ 'New Withdrawal Request'|trans(locale: locale) }}</h1>
+
+<p style="margin: 0 0 20px 0; color: #666;">{{ 'A customer has requested withdrawal from contract for the following order'|trans(locale: locale) }}</p>
 
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 20px; border-top: 2px solid #efefef;">
     <tr>
         <td style="padding: 15px 0;">
-            <h2 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">{{ 'Order information'|trans }}</h2>
+            <h2 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">{{ 'Order information'|trans(locale: locale) }}</h2>
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                 <tbody>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Order number'|trans }}:</strong>
+                            <strong>{{ 'Order number'|trans(locale: locale) }}:</strong>
                             <a href="{{ url('admin_order_edit', {id: order.id}) }}" style="color: #0066cc; text-decoration: none;">{{ order.number }}</a>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Customer email'|trans }}:</strong> {{ order.email }}
+                            <strong>{{ 'Customer email'|trans(locale: locale) }}:</strong> {{ order.email }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Order date'|trans }}:</strong> {{ order.createdAt|formatDateTime }}
+                            <strong>{{ 'Order date'|trans(locale: locale) }}:</strong> {{ order.createdAt|formatDateTime(locale) }}
                         </td>
                     </tr>
                     {% if order.deliveredAt %}
                         <tr>
                             <td style="padding: 5px 0;">
-                                <strong>{{ 'Delivered at'|trans }}:</strong> {{ order.deliveredAt|formatDateTime }}
+                                <strong>{{ 'Delivered at'|trans(locale: locale) }}:</strong> {{ order.deliveredAt|formatDateTime(locale) }}
                             </td>
                         </tr>
                     {% endif %}
@@ -40,40 +42,40 @@
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-bottom: 20px; border-top: 2px solid #efefef;">
     <tr>
         <td style="padding: 15px 0;">
-            <h2 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">{{ 'Withdrawal request details'|trans }}</h2>
+            <h2 style="margin: 0 0 10px 0; color: #333; font-size: 18px;">{{ 'Withdrawal request details'|trans(locale: locale) }}</h2>
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                 <tbody>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Requested at'|trans }}:</strong> {{ withdrawalRequest.requestedAt|formatDateTime }}
+                            <strong>{{ 'Requested at'|trans(locale: locale) }}:</strong> {{ withdrawalRequest.requestedAt|formatDateTime(locale) }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'First name'|trans }}:</strong> {{ withdrawalRequest.firstName }}
+                            <strong>{{ 'First name'|trans(locale: locale) }}:</strong> {{ withdrawalRequest.firstName }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Last name'|trans }}:</strong> {{ withdrawalRequest.lastName }}
+                            <strong>{{ 'Last name'|trans(locale: locale) }}:</strong> {{ withdrawalRequest.lastName }}
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 0;">
-                            <strong>{{ 'Email'|trans }}:</strong> {{ withdrawalRequest.email }}
+                            <strong>{{ 'Email'|trans(locale: locale) }}:</strong> {{ withdrawalRequest.email }}
                         </td>
                     </tr>
                     {% if withdrawalRequest.telephone %}
                         <tr>
                             <td style="padding: 5px 0;">
-                                <strong>{{ 'Phone'|trans }}:</strong> {{ withdrawalRequest.telephone }}
+                                <strong>{{ 'Phone'|trans(locale: locale) }}:</strong> {{ withdrawalRequest.telephone }}
                             </td>
                         </tr>
                     {% endif %}
                     {% if withdrawalRequest.note %}
                         <tr>
                             <td style="padding: 5px 0; border-top: 1px solid #efefef;">
-                                <strong style="display: block; margin-bottom: 5px;">{{ 'Note'|trans }}:</strong>
+                                <strong style="display: block; margin-bottom: 5px;">{{ 'Note'|trans(locale: locale) }}:</strong>
                                 <div style="background-color: #f9f9f9; padding: 10px; border-left: 3px solid #ddd;">
                                     {{ withdrawalRequest.note }}
                                 </div>

@@ -721,6 +721,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
 
+    Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageHandler:
+        arguments:
+            $logger: '@monolog.logger.queue'
+
     Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker: ~
 
     Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting: ~

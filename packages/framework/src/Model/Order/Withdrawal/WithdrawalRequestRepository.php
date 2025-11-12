@@ -51,4 +51,21 @@ class WithdrawalRequestRepository
 
         return $withdrawalRequest;
     }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest
+     */
+    public function getById(int $id): WithdrawalRequest
+    {
+        $withdrawalRequest = $this->getRepository()->find($id);
+
+        if ($withdrawalRequest === null) {
+            throw new WithdrawalRequestNotFoundException(
+                'Withdrawal request with ID ' . $id . ' not found.',
+            );
+        }
+
+        return $withdrawalRequest;
+    }
 }

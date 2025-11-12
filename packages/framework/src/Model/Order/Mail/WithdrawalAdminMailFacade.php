@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -17,11 +18,13 @@ class WithdrawalAdminMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Twig\Environment $twig
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly Setting $setting,
         protected readonly Environment $twig,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -65,8 +68,10 @@ class WithdrawalAdminMailFacade
      */
     protected function getMailSubject(WithdrawalRequest $withdrawalRequest): string
     {
+        $order = $withdrawalRequest->getOrder();
+
         return t('New withdrawal request for order {orderNumber}', [
-            '{orderNumber}' => $withdrawalRequest->getOrder()->getNumber(),
-        ]);
+            '{orderNumber}' => $order->getNumber(),
+        ], locale: $this->domain->getDomainConfigById($order->getDomainId())->getLocale());
     }
 }

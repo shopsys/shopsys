@@ -5,27 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade;
-use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher;
 
 class WithdrawalRequestFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFactory $withdrawalRequestFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade $withdrawalAdminMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker $withdrawalChecker
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly WithdrawalRequestFactory $withdrawalRequestFactory,
-        protected readonly WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade,
-        protected readonly WithdrawalAdminMailFacade $withdrawalAdminMailFacade,
         protected readonly WithdrawalChecker $withdrawalChecker,
         protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
+        protected readonly WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher,
     ) {
     }
 
@@ -39,8 +36,7 @@ class WithdrawalRequestFacade
 
         $withdrawalRequest = $this->createOnly($order, $withdrawalRequestData);
 
-        $this->withdrawalCustomerMailFacade->sendEmail($withdrawalRequest);
-        $this->withdrawalAdminMailFacade->sendEmail($withdrawalRequest);
+        $this->withdrawalRequestMessageDispatcher->dispatchWithdrawalCreatedMessage($withdrawalRequest->getId());
     }
 
     /**
@@ -74,5 +70,14 @@ class WithdrawalRequestFacade
     public function getByOrder(Order $order): WithdrawalRequest
     {
         return $this->withdrawalRequestRepository->getByOrder($order);
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest
+     */
+    public function getById(int $id): WithdrawalRequest
+    {
+        return $this->withdrawalRequestRepository->getById($id);
     }
 }
