@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\InvalidQuantityUserError;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\MissingComplaintItemsUserError;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\OrderItemNotFoundUserError;
@@ -41,6 +42,7 @@ class ComplaintApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository $complaintRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -55,6 +57,7 @@ class ComplaintApiFacade
         protected readonly ComplaintItemDataApiFactory $complaintItemDataApiFactory,
         protected readonly ComplaintMailFacade $complaintMailFacade,
         protected readonly ComplaintRepository $complaintRepository,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -292,7 +295,7 @@ class ComplaintApiFacade
      */
     protected function checkOrderHasNoWithdrawalRequest(Order $order): void
     {
-        if ($order->getWithdrawalRequest() !== null) {
+        if ($this->withdrawalRequestFacade->findByOrder($order) !== null) {
             throw new InvalidAccessUserError('Cannot create complaint for order with withdrawal request');
         }
     }

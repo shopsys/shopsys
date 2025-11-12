@@ -9,16 +9,19 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 
 class OrderResolverMap extends ResolverMap
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalFacade $withdrawalFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly WithdrawalFacade $withdrawalFacade,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -53,6 +56,9 @@ class OrderResolverMap extends ResolverMap
                 },
                 'withdrawalDeadline' => function (Order $order) {
                     return $this->withdrawalFacade->getWithdrawalDeadline($order);
+                },
+                'withdrawalRequest' => function (Order $order) {
+                    return $this->withdrawalRequestFacade->findByOrder($order);
                 },
             ],
         ];

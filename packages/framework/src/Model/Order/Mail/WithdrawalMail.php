@@ -46,13 +46,13 @@ class WithdrawalMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     #[Override]
-    public function createMessage(MailTemplate $mailTemplate, $order): MessageData
+    public function createMessage(MailTemplate $mailTemplate, $withdrawalRequest): MessageData
     {
-        $withdrawalRequest = $order->getWithdrawalRequestThrowExceptionWhenNull();
+        $order = $withdrawalRequest->getOrder();
 
         return new MessageData(
             $withdrawalRequest->getEmail(),
@@ -61,17 +61,19 @@ class WithdrawalMail implements MessageFactoryInterface
             $mailTemplate->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $order->getDomainId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $order->getDomainId()),
-            $this->getVariablesReplacementsForBody($order),
-            $this->getVariablesReplacementsForSubject($order),
+            $this->getVariablesReplacementsForBody($withdrawalRequest),
+            $this->getVariablesReplacementsForSubject($withdrawalRequest),
         );
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return array<string, string>
      */
-    protected function getVariablesReplacementsForBody(Order $order): array
+    protected function getVariablesReplacementsForBody(WithdrawalRequest $withdrawalRequest): array
     {
+        $order = $withdrawalRequest->getOrder();
+
         return [
             self::VARIABLE_NUMBER => htmlspecialchars($order->getNumber(), ENT_QUOTES),
             self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
@@ -80,13 +82,13 @@ class WithdrawalMail implements MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return array<string, string>
      */
-    protected function getVariablesReplacementsForSubject(Order $order): array
+    protected function getVariablesReplacementsForSubject(WithdrawalRequest $withdrawalRequest): array
     {
         return [
-            self::VARIABLE_NUMBER => htmlspecialchars($order->getNumber(), ENT_QUOTES),
+            self::VARIABLE_NUMBER => htmlspecialchars($withdrawalRequest->getOrder()->getNumber(), ENT_QUOTES),
         ];
     }
 

@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -48,12 +49,14 @@ final class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         private readonly CountryFacade $countryFacade,
         private readonly OrderStatusFacade $orderStatusFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         private readonly Domain $domain,
+        private readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -80,7 +83,7 @@ final class OrderFormType extends AbstractType
             ])
             ->add($this->createPaymentTransactionsGroup($builder, $order));
 
-        $withdrawalRequest = $order->getWithdrawalRequest();
+        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
 
         if ($withdrawalRequest !== null) {
             $builder->add($this->createWithdrawalRequestGroup($builder, $withdrawalRequest));

@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
-use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Twig\Environment;
 
 class WithdrawalAdminMailFacade
@@ -26,10 +26,11 @@ class WithdrawalAdminMailFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      */
-    public function sendEmail(Order $order): void
+    public function sendEmail(WithdrawalRequest $withdrawalRequest): void
     {
+        $order = $withdrawalRequest->getOrder();
         $domainId = $order->getDomainId();
         $adminEmail = $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $domainId);
         $adminName = $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $domainId);
@@ -37,8 +38,8 @@ class WithdrawalAdminMailFacade
         $messageData = new MessageData(
             $adminEmail,
             null,
-            $this->getMailBody($order),
-            $this->getMailSubject($order),
+            $this->getMailBody($withdrawalRequest),
+            $this->getMailSubject($withdrawalRequest),
             $adminEmail,
             $adminName,
         );
@@ -47,27 +48,25 @@ class WithdrawalAdminMailFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return string
      */
-    protected function getMailBody(Order $order): string
+    protected function getMailBody(WithdrawalRequest $withdrawalRequest): string
     {
-        $withdrawalRequest = $order->getWithdrawalRequestThrowExceptionWhenNull();
-
         return $this->twig->render('@ShopsysFramework/Mail/Order/withdrawalAdminMail.html.twig', [
-            'order' => $order,
+            'order' => $withdrawalRequest->getOrder(),
             'withdrawalRequest' => $withdrawalRequest,
         ]);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @return string
      */
-    protected function getMailSubject(Order $order): string
+    protected function getMailSubject(WithdrawalRequest $withdrawalRequest): string
     {
         return t('New withdrawal request for order {orderNumber}', [
-            '{orderNumber}' => $order->getNumber(),
+            '{orderNumber}' => $withdrawalRequest->getOrder()->getNumber(),
         ]);
     }
 }

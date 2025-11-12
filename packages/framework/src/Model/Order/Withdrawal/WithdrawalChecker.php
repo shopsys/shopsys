@@ -18,11 +18,13 @@ class WithdrawalChecker
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
      */
     public function __construct(
         protected readonly WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation,
         protected readonly OrderFacade $orderFacade,
         protected readonly Domain $domain,
+        protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
     ) {
     }
 
@@ -35,7 +37,7 @@ class WithdrawalChecker
             throw new OrderCancelledException('Withdrawal is not allowed for cancelled orders');
         }
 
-        if ($order->getWithdrawalRequest() !== null) {
+        if ($this->withdrawalRequestRepository->findByOrder($order) !== null) {
             throw new WithdrawalAlreadyRequestedException('Withdrawal has already been requested for this order');
         }
 

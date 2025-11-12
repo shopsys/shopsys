@@ -30,9 +30,5 @@ class Version20251022164949 extends AbstractMigration
         $this->sql('COMMENT ON COLUMN withdrawal_requests.requested_at IS \'(DC2Type:datetime_immutable)\'');
         $this->sql('CREATE UNIQUE INDEX UNIQ_3E7DE8A8D9F6D38 ON withdrawal_requests (order_id)');
         $this->sql('ALTER TABLE withdrawal_requests ADD CONSTRAINT FK_3E7DE8A8D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-
-        $this->sql('ALTER TABLE orders ADD withdrawal_request_id INT DEFAULT NULL');
-        $this->sql('ALTER TABLE orders ADD CONSTRAINT FK_E52FFDEE2E695421 FOREIGN KEY (withdrawal_request_id) REFERENCES withdrawal_requests (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->sql('CREATE UNIQUE INDEX UNIQ_E52FFDEE2E695421 ON orders (withdrawal_request_id)');
     }
 }

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 
 class OrderItemApiFacade
 {
@@ -45,7 +46,10 @@ class OrderItemApiFacade
             ->select('oi')
             ->from(OrderItem::class, 'oi')
             ->join('oi.order', 'o')
-            ->andWhere('o.withdrawalRequest IS NULL');
+            ->andWhere('NOT EXISTS(
+               SELECT 1 FROM ' . WithdrawalRequest::class . ' wr
+               WHERE wr.order = o
+            )');
     }
 
     /**

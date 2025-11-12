@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use LogicException;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
@@ -376,13 +375,6 @@ class Order
      * @ORM\Column(type="boolean")
      */
     protected $freeTransportAndPaymentApplied;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest|null
-     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest", mappedBy="order", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $withdrawalRequest;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
@@ -882,36 +874,6 @@ class Order
     public function setDeliveredAt($deliveredAt)
     {
         $this->deliveredAt = $deliveredAt;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest|null
-     */
-    public function getWithdrawalRequest()
-    {
-        return $this->withdrawalRequest;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest
-     */
-    public function getWithdrawalRequestThrowExceptionWhenNull()
-    {
-        $withdrawalRequest = $this->getWithdrawalRequest();
-
-        if ($withdrawalRequest === null) {
-            throw new LogicException('Order does not have a withdrawal request.');
-        }
-
-        return $withdrawalRequest;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
-     */
-    public function setWithdrawalRequest($withdrawalRequest): void
-    {
-        $this->withdrawalRequest = $withdrawalRequest;
     }
 
     /**

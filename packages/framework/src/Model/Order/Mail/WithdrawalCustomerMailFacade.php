@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
-use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 
 class WithdrawalCustomerMailFacade
 {
@@ -27,36 +27,39 @@ class WithdrawalCustomerMailFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      */
-    public function sendEmail(Order $order): void
+    public function sendEmail(WithdrawalRequest $withdrawalRequest): void
     {
         $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
             WithdrawalMail::MAIL_TEMPLATE_NAME,
-            $order->getDomainId(),
+            $withdrawalRequest->getOrder()->getDomainId(),
         );
 
         if (!$mailTemplate->isSendMail()) {
             return;
         }
 
-        $this->sendMailTemplate($mailTemplate, $order);
+        $this->sendMailTemplate($mailTemplate, $withdrawalRequest);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
      * @param string|null $forceSendTo
      */
-    public function sendMailTemplate(MailTemplate $mailTemplate, Order $order, ?string $forceSendTo = null): void
-    {
-        $messageData = $this->withdrawalMail->createMessage($mailTemplate, $order);
+    public function sendMailTemplate(
+        MailTemplate $mailTemplate,
+        WithdrawalRequest $withdrawalRequest,
+        ?string $forceSendTo = null,
+    ): void {
+        $messageData = $this->withdrawalMail->createMessage($mailTemplate, $withdrawalRequest);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
 
         if ($forceSendTo !== null) {
             $messageData->toEmail = $forceSendTo;
         }
 
-        $this->mailer->sendForDomain($messageData, $order->getDomainId());
+        $this->mailer->sendForDomain($messageData, $withdrawalRequest->getOrder()->getDomainId());
     }
 }

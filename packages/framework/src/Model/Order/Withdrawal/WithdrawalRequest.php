@@ -24,7 +24,7 @@ class WithdrawalRequest
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
-     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="withdrawalRequest")
+     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $order;
@@ -73,7 +73,6 @@ class WithdrawalRequest
     {
         $this->order = $order;
         $this->setData($withdrawalRequestData);
-        $order->setWithdrawalRequest($this);
     }
 
     /**
@@ -135,5 +134,13 @@ class WithdrawalRequest
     public function getRequestedAt()
     {
         return $this->requestedAt;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

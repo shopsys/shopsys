@@ -10,16 +10,19 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMail;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 
 class WithdrawalMailTemplateSender implements MailTemplateSenderInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -55,6 +58,8 @@ class WithdrawalMailTemplateSender implements MailTemplateSenderInterface
         }
 
         $order = $this->orderFacade->getById($entityId);
-        $this->withdrawalCustomerMailFacade->sendMailTemplate($mailTemplate, $order, $mailTo);
+        $withdrawalRequest = $this->withdrawalRequestFacade->getByOrder($order);
+
+        $this->withdrawalCustomerMailFacade->sendMailTemplate($mailTemplate, $withdrawalRequest, $mailTo);
     }
 }

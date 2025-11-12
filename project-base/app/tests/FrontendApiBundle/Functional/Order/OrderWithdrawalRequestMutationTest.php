@@ -7,7 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
 use DateTimeImmutable;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
@@ -15,7 +15,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
     /**
      * @inject
      */
-    private OrderFacade $orderFacade;
+    private WithdrawalRequestFacade $withdrawalRequestFacade;
 
     public function testSuccessfulWithdrawalRequest(): void
     {
@@ -39,8 +39,7 @@ class OrderWithdrawalRequestMutationTest extends GraphQlTestCase
         $this->assertTrue($data);
 
         $this->em->clear();
-        $updatedOrder = $this->orderFacade->getById($validOrder->getId());
-        $withdrawalRequest = $updatedOrder->getWithdrawalRequest();
+        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($validOrder);
 
         $this->assertNotNull($withdrawalRequest);
         $this->assertSame($inputData['firstName'], $withdrawalRequest->getFirstName());
