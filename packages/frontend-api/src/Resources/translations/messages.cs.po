@@ -28,6 +28,9 @@ msgstr "Zákazník vidí ceny"
 msgid "Customer self manage"
 msgstr "Spravovat své údaje"
 
+msgid "Individual roles"
+msgstr "Jednotlivé role"
+
 msgid "Manage all customers under the user's company"
 msgstr "Spravovat všechny zákazníky pod firmou uživatele"
 

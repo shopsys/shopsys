@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\AdministrationBundle\Component\Security\Role;
+namespace Shopsys\FrontendApiBundle\Component\Security;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider;
 use Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection;
 
-class CustomerRoleSectionsProvider extends AbstractRoleSectionProvider
+class FrontendApiRoleSectionProvider extends AbstractRoleSectionProvider
 {
     public const string ALL = 'all';
     public const string INDIVIDUAL = 'individual';

@@ -28,6 +28,9 @@ msgstr ""
 msgid "Customer self manage"
 msgstr ""
 
+msgid "Individual roles"
+msgstr ""
+
 msgid "Manage all customers under the user's company"
 msgstr ""
 
