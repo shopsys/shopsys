@@ -309,7 +309,7 @@ QueryDecorator:
             customerUsers:
                 type: '[BaseCustomerUser!]!'
                 resolve: "@=query('customerUsersQuery')"
-                access: "@=isGranted('ROLE_API_ALL')"
+                access: "@=isGranted('ROLE_API_MANAGE_CUSTOMERS')"
                 description: "Returns all customer users assigned to the current customer"
             customerUserRoleGroups:
                 type: '[CustomerUserRoleGroup!]!'

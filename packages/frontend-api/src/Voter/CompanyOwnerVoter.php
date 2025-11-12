@@ -9,6 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -47,8 +48,8 @@ class CompanyOwnerVoter extends AbstractB2bVoter
     #[Override]
     protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token)
     {
-        if ($this->security->isGranted('ROLE_API_ALL')) {
-            return $this->isRoleApiAllGranted($token);
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS)) {
+            return $this->isCompanyCustomer($token);
         }
 
         return false;
@@ -58,7 +59,7 @@ class CompanyOwnerVoter extends AbstractB2bVoter
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return bool
      */
-    protected function isRoleApiAllGranted(TokenInterface $token): bool
+    protected function isCompanyCustomer(TokenInterface $token): bool
     {
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */
         $loggedUser = $token->getUser();

@@ -103,6 +103,7 @@ export default class RoleGroups {
         checkboxes.forEach(checkbox => {
             if (checkbox.checked !== shouldSelect) {
                 checkbox.checked = shouldSelect;
+                checkbox.dispatchEvent(new Event('change', { bubbles: true }));
                 if (checkbox.dataset.role) {
                     affectedRoles.add(checkbox.dataset.role);
                 }

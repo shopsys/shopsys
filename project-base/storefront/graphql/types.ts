@@ -1138,7 +1138,9 @@ export enum TypeCustomerUserRoleEnum {
   RoleApiCompanyOrdersView = 'ROLE_API_COMPANY_ORDERS_VIEW',
   RoleApiComplaintCreation = 'ROLE_API_COMPLAINT_CREATION',
   RoleApiCustomerSeesPrices = 'ROLE_API_CUSTOMER_SEES_PRICES',
-  RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE'
+  RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE',
+  RoleApiManageCompanyData = 'ROLE_API_MANAGE_COMPANY_DATA',
+  RoleApiManageCustomers = 'ROLE_API_MANAGE_CUSTOMERS'
 }
 
 export type TypeCustomerUserRoleGroup = {

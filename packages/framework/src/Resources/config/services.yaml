@@ -526,10 +526,6 @@ services:
         arguments:
             $resettableServices: !tagged kernel.reset
 
-    Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator:
-        tags:
-            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator }
-
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator }
@@ -785,8 +781,6 @@ services:
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent, method: onSecurityInteractiveLogin }
-
-    Shopsys\FrameworkBundle\Model\Security\Roles: ~
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
         arguments:

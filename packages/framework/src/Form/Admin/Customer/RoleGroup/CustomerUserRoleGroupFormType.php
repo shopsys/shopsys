@@ -49,6 +49,9 @@ final class CustomerUserRoleGroupFormType extends AbstractType
         $builder->add('roles', RolesType::class, [
             'label' => 'Role',
             'context' => FrontendApiContext::class,
+            'row_attr' => [
+                'data-js-customer-role-group' => null,
+            ],
         ]);
 
         $builder->add('actionBar', ActionBarType::class, [

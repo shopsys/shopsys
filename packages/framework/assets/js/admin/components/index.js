@@ -9,6 +9,7 @@ import './CKEditorPreview';
 import './choiceControl';
 import './Complaint';
 import './ConfirmDelete';
+import './CustomerRoleGroupForm';
 import './DynamicPlaceholder';
 import './EntityUrlsNew';
 import './EntityUrlsRow';

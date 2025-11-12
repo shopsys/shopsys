@@ -28,8 +28,9 @@ export const useAuthorization = () => {
     const isCompanyUser = isB2B && currentCustomerUser?.companyCustomer;
 
     const canSeePrices = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSeesPrices);
-    const canManageUsers = isCompanyUser && customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiAll);
-    const canManageCompanyData = !isCompanyUser || customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiAll);
+    const canManageUsers = isCompanyUser && customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiManageCustomers);
+    const canManageCompanyData =
+        !isCompanyUser || customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiManageCompanyData);
     const canManagePersonalData = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSelfManage);
 
     const canCreateOrder = isCompanyUser

@@ -12594,6 +12594,14 @@ Available customer user roles
 <td valign="top"><strong>ROLE_API_CUSTOMER_SELF_MANAGE</strong></td>
 <td></td>
 </tr>
+<tr>
+<td valign="top"><strong>ROLE_API_MANAGE_COMPANY_DATA</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_MANAGE_CUSTOMERS</strong></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 

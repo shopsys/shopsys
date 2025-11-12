@@ -10,8 +10,8 @@ msgstr "Prístup ku všetkým sťažnostiam vytvoreným v rámci spoločnosti po
 msgid "Access to all the orders created under the user's company"
 msgstr "Prístup ku všetkým objednávkam vytvoreným v rámci spoločnosti používateľa"
 
-msgid "B2B data and user management"
-msgstr "Správa údajov a používateľov B2B"
+msgid "All roles"
+msgstr "Všetky role"
 
 msgid "Cart manipulation and order creation"
 msgstr "Manipulácia s košíkom a vytváranie objednávok"
@@ -27,6 +27,12 @@ msgstr "Zákazník vidí ceny"
 
 msgid "Customer self manage"
 msgstr "Samospráva zákazníka"
+
+msgid "Manage all customers under the user's company"
+msgstr "Spravovať všetkých zákazníkov v rámci spoločnosti používateľa"
+
+msgid "Manage company data (e.g., billing address)."
+msgstr "Spravovať údaje spoločnosti (napr. fakturačnú adresu)."
 
 msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."
 msgstr "{0}Zákazník sa ešte neprihlásil.|[1,Inf[ Zákazník používa prihlásenie cez %loginTypes%."

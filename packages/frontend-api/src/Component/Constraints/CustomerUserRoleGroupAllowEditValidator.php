@@ -72,7 +72,7 @@ class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
         string $customerUserGroupRoleToBeSetUuid,
         string $editedCustomerUserUuid,
     ): bool {
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS)) {
             return $this->canEditCustomerUserRoleGroupForRoleApiAll(
                 $currentCustomerUser,
                 $customerUserGroupRoleToBeSetUuid,

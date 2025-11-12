@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -60,8 +61,8 @@ class CustomerUserVoter extends AbstractB2bVoter
             return $this->isUnauthenticatedAccessAllowed($inputData, $token);
         }
 
-        if ($this->security->isGranted('ROLE_API_ALL')) {
-            return $this->isRoleApiAllGranted($inputData, $token);
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS)) {
+            return $this->isEditedCustomerUserFromSameCompany($inputData, $token);
         }
 
         return false;
@@ -82,7 +83,7 @@ class CustomerUserVoter extends AbstractB2bVoter
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return bool
      */
-    protected function isRoleApiAllGranted(array $inputData, TokenInterface $token): bool
+    protected function isEditedCustomerUserFromSameCompany(array $inputData, TokenInterface $token): bool
     {
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */
         $loggedUser = $token->getUser();
