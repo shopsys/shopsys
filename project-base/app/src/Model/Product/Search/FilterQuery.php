@@ -27,6 +27,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdAscending()
  * @method \App\Model\Product\Search\FilterQuery filterOnlySellable()
  * @method \App\Model\Product\Search\FilterQuery filterBySellingFrom(\DateTimeImmutable $sellingFrom)
+ * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdsArray(int[] $ids)
+ * @method \App\Model\Product\Search\FilterQuery filterWithActiveSpecialPriceOnly(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class FilterQuery extends BaseFilterQuery
 {

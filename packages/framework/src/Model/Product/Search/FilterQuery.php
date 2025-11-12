@@ -371,7 +371,7 @@ class FilterQuery
 
     /**
      * @param int[] $ids
-     * @return $this
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function applyOrderingByIdsArray(array $ids): self
     {
@@ -713,7 +713,7 @@ class FilterQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return $this
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterWithActiveSpecialPriceOnly(PricingGroup $pricingGroup): self
     {
