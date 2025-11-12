@@ -2188,7 +2188,7 @@ export type TypeOrderWithdrawalRequest = {
   /** Date and time when the withdrawal was requested by customer */
   requestedAt: Scalars['DateTime']['output'];
   /** Telephone number for withdrawal request contact */
-  telephone: Scalars['String']['output'];
+  telephone: Maybe<Scalars['String']['output']>;
 };
 
 /** Input for requesting withdrawal from contract for an order */

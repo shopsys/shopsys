@@ -7312,7 +7312,7 @@ Date and time when the withdrawal was requested by customer
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="orderwithdrawalrequest.telephone">telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Telephone number for withdrawal request contact

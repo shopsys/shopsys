@@ -1768,7 +1768,7 @@ type OrderWithdrawalRequest {
   "Date and time when the withdrawal was requested by customer"
   requestedAt: DateTime!
   "Telephone number for withdrawal request contact"
-  telephone: String!
+  telephone: String
 }
 
 "Input for requesting withdrawal from contract for an order"
