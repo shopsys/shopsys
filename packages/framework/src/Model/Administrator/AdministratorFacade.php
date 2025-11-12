@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
@@ -131,7 +132,25 @@ class AdministratorFacade
      */
     public function getAllListableQueryBuilder(): QueryBuilder
     {
-        return $this->administratorRepository->getAllListableQueryBuilder();
+        DeprecationHelper::triggerMethod(__METHOD__, 'getAllListableExcludingSuperadminQueryBuilder');
+
+        return $this->getAllListableExcludingSuperadminQueryBuilder();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllListableExcludingSuperadminQueryBuilder(): QueryBuilder
+    {
+        return $this->administratorRepository->getAllListableExcludingSuperadminQueryBuilder();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryBuilder(): QueryBuilder
+    {
+        return $this->administratorRepository->getAllQueryBuilder();
     }
 
     /**

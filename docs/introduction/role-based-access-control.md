@@ -91,13 +91,13 @@ The system automatically manages role inheritance:
 
 ```
 ROLE_SUPER_ADMIN (highest)
-    └── ROLE_ADMIN
-        └── ROLE_ALL (all FULL permissions)
-            ├── ROLE_PRODUCT_FULL
-            │   ├── ROLE_PRODUCT_EDIT (includes VIEW)
-            │   ├── ROLE_PRODUCT_CREATE (includes VIEW)
-            │   └── ROLE_PRODUCT_DELETE (includes VIEW)
-            └── [other role hierarchies...]
+    └── ROLE_ALL (all FULL permissions)
+        ├── ROLE_PRODUCT_FULL
+        │   ├── ROLE_PRODUCT_EDIT (includes VIEW)
+        │   ├── ROLE_PRODUCT_CREATE (includes VIEW)
+        │   └── ROLE_PRODUCT_DELETE (includes VIEW)
+        └── [other role hierarchies...]
+ROLE_ADMIN (lowest) - allows login and access to basic admin functions
 ```
 
 !!! note

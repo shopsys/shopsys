@@ -11,7 +11,9 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\PublicAccess;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
@@ -77,16 +79,26 @@ class AdministratorController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
+        if ($this->getCurrentAdministrator()->isSuperadmin()) {
+            $queryBuilder = $this->administratorFacade->getAllQueryBuilder();
+        } else {
+            $queryBuilder = $this->administratorFacade->getAllListableExcludingSuperadminQueryBuilder();
+        }
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
         $grid = $this->gridFactory->create('administratorList', $dataSource, AdminRoleConstant::ROLE_ADMINISTRATOR);
         $grid->setDefaultOrder('realName');
 
         $grid->addColumn('realName', 'a.realName', t('Full name'), true);
+        $grid->addColumn('userName', 'a.username', t('Username'), true);
         $grid->addColumn('email', 'a.email', t('Email'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
+
+        if ($this->getCurrentAdministrator()->isSuperadmin()) {
+            $grid->addColumn('superadmin', 'is_superadmin', t('Superadmin'));
+        }
+
         $grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
         $grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id'])
             ->setConfirmMessage(t('Do you really want to remove this administrator?'));
@@ -555,15 +567,42 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/administrator/promote-to-superadmin/{id}', name: 'admin_administrator_promote-to-superadmin', requirements: ['id' => '\d+'])]
+    #[SuperAdminOnly]
+    public function promoteToSuperadminAction(int $id): Response
+    {
+        $administrator = $this->administratorFacade->getById($id);
+        $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
+
+        $administratorData->roleGroup = null;
+        $administratorData->roles = [SystemRole::SUPER_ADMIN];
+
+        $this->administratorFacade->edit($id, $administratorData);
+
+        $this->addSuccessFlash(
+            t(
+                'Administrator "%administrator_name%" now has superadmin permissions.',
+                ['%administrator_name%' => $administrator->getRealName()],
+            ),
+        );
+
+        return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/set-new-password/', name: 'admin_administrator_set-new-password')]
-    #[CanView]
+    #[PublicAccess]
     public function setNewPasswordAction(Request $request): Response
     {
-        $email = $request->query->get('email');
-        $hash = $request->query->get('hash');
+        $email = $request->query->get('email', '');
+        $hash = $request->query->get('hash', '');
 
         $administrator = $this->administratorFacade->getByEmail($email);
 

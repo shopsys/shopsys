@@ -202,6 +202,9 @@ msgstr "Administrace byla přepnuta do jazyka \"%locale%\""
 msgid "Administrator"
 msgstr "Administrátor"
 
+msgid "Administrator \"%administrator_name%\" now has superadmin permissions."
+msgstr "Administrátor \"%administrator_name%\" nyní má oprávnění superadministrátora."
+
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
 msgstr "Byl vytvořen administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong>. Odkaz pro nastavení hesla byl odeslán na jeho e-mail."
 
@@ -327,6 +330,9 @@ msgstr "Aplikovat na vybrané produkty"
 
 msgid "Approved with zero amount"
 msgstr "Schváleno s nulovou částkou"
+
+msgid "Are you sure you want to promote this user to Superadmin?"
+msgstr "Opravdu chcete tomuto uživateli přidělit práva super administrátora?"
 
 msgid "Area"
 msgstr "Plocha"
@@ -3466,6 +3472,9 @@ msgstr "Slevové kupóny"
 msgid "Promo codes - generated batches"
 msgstr "Slevoé kupóny - vygenerované dávky"
 
+msgid "Promote user to Superadmin"
+msgstr "Povýšit uživatele na Super administrátora"
+
 msgid "Promoted categories"
 msgstr "Promované kategorie"
 
@@ -4090,6 +4099,9 @@ msgstr "Úspěšně nahráno"
 msgid "Sunday"
 msgstr "Neděle"
 
+msgid "Super Administrator"
+msgstr "Super administrátor"
+
 msgid "Superadmin"
 msgstr "Superadmin"
 
@@ -4101,6 +4113,9 @@ msgstr "Superadmin - Nastavení prodeje s/bez DPH"
 
 msgid "Superadmin - URL addresses"
 msgstr "Superadmin - URL adresy"
+
+msgid "Superadmin permissions"
+msgstr "Oprávnění super administrátora"
 
 msgid "Switch locale"
 msgstr "Přepnout jazyk"

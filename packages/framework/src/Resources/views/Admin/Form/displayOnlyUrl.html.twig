@@ -8,9 +8,11 @@
                 {% set url = url(route, route_params) %}
             {% endif %}
 
-            <a href="{{ url }}" target="{{ link_target }}">
+            <a href="{{ url }}" target="{{ link_target }}" {% with {attr: route_attr} %}{{ block('attributes') }}{% endwith %}>
                 {% apply spaceless %}
-                    {{ ux_icon('forward-page', { class: 'in-icon in-icon--link ml5 mr5' }) }}
+                     {% if link_target is same as('_blank') %}
+                        {{ ux_icon('forward-page', { class: 'in-icon in-icon--link ml5 mr5' }) }}
+                    {% endif %}
                     {% if route_label is not empty %}
                         {{ route_label }}
                     {% else %}
