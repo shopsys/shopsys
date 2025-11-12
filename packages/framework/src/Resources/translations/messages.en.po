@@ -85,6 +85,12 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
+msgid "Access to all the complaints created under the user's company"
+msgstr ""
+
+msgid "Access to all the orders created under the user's company"
+msgstr ""
+
 msgid "Accessories"
 msgstr ""
 
@@ -182,6 +188,9 @@ msgid "Advertising <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Advertising system"
+msgstr ""
+
+msgid "All roles"
 msgstr ""
 
 msgid "All search results"
@@ -472,6 +481,9 @@ msgstr ""
 msgid "Cardholder canceled the payment"
 msgstr ""
 
+msgid "Cart manipulation and order creation"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -587,6 +599,9 @@ msgid "Complaint Nr."
 msgstr ""
 
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr ""
+
+msgid "Complaint creation"
 msgstr ""
 
 msgid "Complaint detail URL"
@@ -758,6 +773,12 @@ msgid "Customer name"
 msgstr ""
 
 msgid "Customer phone number"
+msgstr ""
+
+msgid "Customer sees prices"
+msgstr ""
+
+msgid "Customer self manage"
 msgstr ""
 
 msgid "Customer street"
@@ -1783,6 +1804,9 @@ msgstr ""
 msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
 msgstr ""
 
+msgid "Individual roles"
+msgstr ""
+
 msgid "Information about order rounding item (empty if there is no rounding)"
 msgstr ""
 
@@ -1928,6 +1952,12 @@ msgid "Main text"
 msgstr ""
 
 msgid "Main variant"
+msgstr ""
+
+msgid "Manage all customers under the user's company"
+msgstr ""
+
+msgid "Manage company data (e.g., billing address)"
 msgstr ""
 
 msgid "Map coordinates in decimal format"
