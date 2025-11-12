@@ -8,6 +8,7 @@ use App\Model\Product\Flag\FlagData;
 use App\Model\Product\Flag\FlagDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Override;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -24,6 +25,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
     public const string FLAG_PRODUCT_MADEIN_DE = 'product_madein_de';
     public const string FLAG_PRODUCT_PRICE_HIT = 'product_price_hit';
     public const string FLAG_PRODUCT_GIFT = 'product_gift';
+    private const string UUID_NAMESPACE = 'a1c4c08b-6e61-47b7-a41d-89f21bc570a1';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
@@ -130,6 +132,7 @@ final class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData->visible = true;
         $flagData->rgbColor = $rgbColor;
+        $flagData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $rgbColor)->toString();
 
         return $flagData;
     }
