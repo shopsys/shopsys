@@ -136,9 +136,6 @@ msgstr ""
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr ""
 
-msgid "All roles"
-msgstr ""
-
 msgid "Alternate language"
 msgstr ""
 
@@ -986,9 +983,6 @@ msgid "In a particular domain tab it is not possible to adjust the order and plu
 msgstr ""
 
 msgid "Incl. VAT"
-msgstr ""
-
-msgid "Individual roles"
 msgstr ""
 
 msgid "Inquired product"

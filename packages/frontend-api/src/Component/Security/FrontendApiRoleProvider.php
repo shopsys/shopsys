@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Security;
 
 use Override;
-use Shopsys\AdministrationBundle\Component\Security\Role\CustomerRoleSectionsProvider;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\CoreRoleProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
@@ -42,13 +41,13 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     public function configureRoles(RoleCollection $roleCollection): void
     {
         $roleAll = new Role(CustomerUserRole::ROLE_API_ALL, t('All roles'));
-        $roleAll->setRoleSection(CustomerRoleSectionsProvider::ALL);
+        $roleAll->setRoleSection(FrontendApiRoleSectionProvider::ALL);
         $roleAll->setOverwritable(false);
 
         $roleCollection->add($roleAll);
 
         foreach ($this->getCustomerUserRoles() as $role) {
-            $role->setRoleSection(CustomerRoleSectionsProvider::INDIVIDUAL);
+            $role->setRoleSection(FrontendApiRoleSectionProvider::INDIVIDUAL);
             $role->setOverwritable(false);
             $roleCollection->add($role);
         }
