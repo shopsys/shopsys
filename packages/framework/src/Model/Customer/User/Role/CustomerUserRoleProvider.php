@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Component\Security;
+namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\CoreRoleProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 
 /**
  * Provides Frontend API specific roles
  */
-class FrontendApiRoleProvider implements CoreRoleProviderInterface
+class CustomerUserRoleProvider implements CoreRoleProviderInterface
 {
     /**
      * @return int

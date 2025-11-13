@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Component\Security;
+namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 
 /**
  * Generates role hierarchy for Frontend API context
  */
-final class FrontendApiRoleHierarchyProvider extends AbstractRoleHierarchyProvider
+final class CustomerUserRoleHierarchyProvider extends AbstractRoleHierarchyProvider
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface $roleRegistry

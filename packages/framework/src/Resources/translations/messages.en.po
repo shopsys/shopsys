@@ -88,6 +88,12 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
+msgid "Access to all the complaints created under the user's company"
+msgstr ""
+
+msgid "Access to all the orders created under the user's company"
+msgstr ""
+
 msgid "Accessories"
 msgstr ""
 
@@ -394,6 +400,9 @@ msgstr ""
 msgid "Avg duration (mm:ss)"
 msgstr ""
 
+msgid "B2B data and user management"
+msgstr ""
+
 msgid "Back to category selection"
 msgstr ""
 
@@ -583,6 +592,9 @@ msgstr ""
 msgid "Cardholder canceled the payment"
 msgstr ""
 
+msgid "Cart manipulation and order creation"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -749,6 +761,9 @@ msgid "Complaint Nr."
 msgstr ""
 
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr ""
+
+msgid "Complaint creation"
 msgstr ""
 
 msgid "Complaint detail URL"
@@ -1067,6 +1082,12 @@ msgid "Customer name"
 msgstr ""
 
 msgid "Customer phone number"
+msgstr ""
+
+msgid "Customer sees prices"
+msgstr ""
+
+msgid "Customer self manage"
 msgstr ""
 
 msgid "Customer street"
