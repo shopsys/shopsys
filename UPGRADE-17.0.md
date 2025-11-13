@@ -60,6 +60,23 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 - we are currently not aware of easy way to automate this process, so you will need to do it manually
 - probably the easiest way is to run `composer install`, `php phing standards-fix` and `php phing phpstan` commands, which will fail on errors caused by incompatibility strict types and fix those errors manually
 
+### Upgrade from v17.0.0 to v17.0.1
+
+#### fixed superadmin behavior ([#4267](https://github.com/shopsys/shopsys/pull/4267))
+
+- method `Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade::getAllListableQueryBuilder()` is deprecated, use `getAllListableExcludingSuperadminQueryBuilder()` instead
+- method `Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository::getAllListableQueryBuilder()` is deprecated, use `getAllListableExcludingSuperadminQueryBuilder()` instead
+- see [project-base diff](https://www.github.com/shopsys/project-base/commit/0fa823b7106720e2dbed1d6677017c491fe668bb) to update your project
+
+#### moved frontend api roles to framework bundle ([#4270](https://github.com/shopsys/shopsys/pull/4270))
+
+- classes were moved from the frontend api package to the framework package
+    - `Shopsys\FrontendApiBundle\Component\Security\FrontendApiRoleHierarchyProvider` -> `Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleHierarchyProvider`
+    - `Shopsys\FrontendApiBundle\Component\Security\FrontendApiRoleProvider` -> `Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider`
+    - warning: this is a potencial BC break, if you used the classes directly!
+
+### Upgrade from v16.0.0 to v17.0.0
+
 #### Implement store features ([#3413](https://github.com/shopsys/shopsys/pull/3413))
 
 - [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the frontend-api packages:
