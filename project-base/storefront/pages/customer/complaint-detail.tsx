@@ -1,6 +1,8 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { ComplaintDetailContent } from 'components/Pages/Customer/ComplaintDetail/ComplaintDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -53,9 +55,11 @@ const ComplaintDetailPage: FC = () => {
                 >
                     {!!complaintData?.complaint && (
                         <>
-                            <h1 data-tid={TIDs.complaint_detail_number_heading}>
-                                {t('Your complaint')} {complaintData.complaint.number}
-                            </h1>
+                            <PageHero
+                                icon={DocumentIcon}
+                                title={t('Your complaint') + ' ' + complaintData.complaint.number}
+                                titleTid={TIDs.complaint_detail_number_heading}
+                            />
 
                             <ComplaintDetailContent complaint={complaintData.complaint} />
                         </>

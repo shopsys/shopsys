@@ -16,7 +16,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ email }) => {
     const onResetPasswordHandler = async () => {
         const resetPasswordResult = await resetPassword({ email: email });
 
-        if (resetPasswordResult.data?.RequestPasswordRecovery !== undefined) {
+        if (resetPasswordResult.data?.RequestPasswordRecovery) {
             showSuccessMessage(t('We sent an email with further steps to your address'));
             onGtmSendFormEventHandler(GtmFormType.forgotten_password);
         }

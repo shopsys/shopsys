@@ -1,9 +1,10 @@
-import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { Button } from 'components/Forms/Button/Button';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -19,12 +20,12 @@ export const Wishlist: FC = () => {
     return (
         <VerticalStack gap="md">
             <Webline>
-                <h1 className="mb-4">{title}</h1>
-
                 {isProductListFetching && <SkeletonModuleWishlist />}
 
                 {wishlist?.products && !isProductListFetching && (
                     <>
+                        <h1 className="mb-4">{title}</h1>
+
                         <div className="flex w-full flex-col items-center justify-between pb-2 lg:flex-row">
                             <Button
                                 aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
@@ -48,10 +49,16 @@ export const Wishlist: FC = () => {
                 )}
 
                 {!wishlist?.products && !isProductListFetching && (
-                    <div className="my-28 flex items-center justify-center">
-                        <InfoIcon className="mr-4 w-8" />
-                        <div className="h3">{t('There are no products in the wishlist. Add some first.')}</div>
-                    </div>
+                    <PageHero
+                        actionHref="/"
+                        actionSkeletonType="homepage"
+                        actionTitle={t('Discover our products')}
+                        icon={HeartIcon}
+                        title={t('Wishlist')}
+                        description={t(
+                            'Your wishlist is feeling empty! Add products you love so you can easily find them here later.',
+                        )}
+                    />
                 )}
             </Webline>
 

@@ -1,4 +1,5 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
+import { MailSecondaryIcon } from 'components/Basic/Icon/MailSecondaryIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -6,17 +7,16 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactFormMutation } from 'graphql/requests/contact/mutations/ContactFormMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -26,8 +26,6 @@ export const ContactContent: FC = () => {
     const formMeta = useContactFormMeta(formProviderMethods);
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [, contactForm] = useContactFormMutation();
-
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
         async (values) => {
@@ -51,16 +49,17 @@ export const ContactContent: FC = () => {
     );
 
     return (
-        <Webline width="lg">
+        <Webline className="mt-8" width="lg">
             <VerticalStack gap="sm">
-                <h1>{t('Write to us')}</h1>
-
-                {settingsData?.settings?.contactFormMainText && (
-                    <div
-                        dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }}
-                        id="contact-form-description"
-                    />
-                )}
+                <PageHero
+                    icon={MailSecondaryIcon}
+                    title={t('Write to us')}
+                    description={
+                        settingsData?.settings?.contactFormMainText ? (
+                            <span dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }} />
+                        ) : undefined
+                    }
+                />
 
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
@@ -76,7 +75,6 @@ export const ContactContent: FC = () => {
                                         required: true,
                                         type: 'text',
                                         autoComplete: 'name',
-                                        'aria-labelledby': 'contact-form-description',
                                     }}
                                 />
 

@@ -7,7 +7,7 @@ export const SkeletonPageArticle: FC = () => (
     <>
         <SkeletonModuleBreadcrumbs count={2} />
 
-        <Webline width="md">
+        <Webline width="vl">
             <VerticalStack gap="sm">
                 <Skeleton className="h-10 w-1/2" />
                 <Skeleton className="h-5 w-28 rounded-sm" />

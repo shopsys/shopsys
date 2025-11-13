@@ -142,10 +142,14 @@
     }
 
     .Toastify__toast-body {
-        @apply max-w-[90%];
+        @apply !text-text-default max-w-[90%];
 
         > div {
             @apply max-w-full;
+        }
+
+        span {
+            @apply focus-visible:outline-none;
         }
     }
 

@@ -400,3 +400,15 @@ export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshot
 export const checktHeadlineText = (text: string) => {
     return cy.get('h1').should('exist').and('be.visible').and('contain.text', text);
 };
+
+export const checkFormLineError = (errorText?: string) => {
+    if (errorText) {
+        const errorSpan = cy.getByTID([TIDs.form_line_error]).contains(errorText);
+        errorSpan.should('exist').and('be.visible');
+        return errorSpan;
+    } else {
+        const errorSpan = cy.getByTID([TIDs.form_line_error]).first();
+        errorSpan.should('exist').and('be.visible');
+        return errorSpan;
+    }
+};

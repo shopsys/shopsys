@@ -53,7 +53,7 @@ export const useRecoveryPasswordFormMeta = (
             formName: 'new-password-form',
             messages: {
                 error: t('An error occurred while changing your password'),
-                success: t('Your password has been changed and you are now logged in'),
+                success: t('Your password has been changed successfully'),
             },
             fields: {
                 newPassword: {

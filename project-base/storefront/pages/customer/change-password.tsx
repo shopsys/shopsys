@@ -1,5 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { ChangePasswordContent } from 'components/Pages/Customer/ChangePassword/ChangePasswordContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -28,14 +30,19 @@ const ChangePasswordPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                breadcrumbsType="account"
-                pageHeading={t('Change password')}
-                title={t('Change password')}
-            >
+            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="account" title={t('Change password')}>
                 {currentCustomerUserData !== undefined && (
-                    <ChangePasswordContent currentCustomerUser={currentCustomerUserData} />
+                    <>
+                        <PageHero
+                            icon={LockCheckIcon}
+                            title={t('Change password')}
+                            description={t(
+                                'Keep your account safe and sound by updating your password to something only you know.',
+                            )}
+                        />
+
+                        <ChangePasswordContent currentCustomerUser={currentCustomerUserData} />
+                    </>
                 )}
             </CustomerLayout>
         </>

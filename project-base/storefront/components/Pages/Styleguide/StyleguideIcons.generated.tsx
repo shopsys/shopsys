@@ -18,6 +18,7 @@ import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
@@ -34,6 +35,8 @@ import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { InfoInTriangleIcon } from 'components/Basic/Icon/InfoInTriangleIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
+import { LockCrossIcon } from 'components/Basic/Icon/LockCrossIcon';
+import { LockIcon } from 'components/Basic/Icon/LockIcon';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { MailSecondaryIcon } from 'components/Basic/Icon/MailSecondaryIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
@@ -129,6 +132,10 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">CrossIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <DocumentIcon className="size-10" />
+                <span className="text-center text-xs break-all">DocumentIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <DownloadIcon className="size-10" />
                 <span className="text-center text-xs break-all">DownloadIcon</span>
             </div>
@@ -191,6 +198,14 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <LockCheckIcon className="size-10" />
                 <span className="text-center text-xs break-all">LockCheckIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <LockCrossIcon className="size-10" />
+                <span className="text-center text-xs break-all">LockCrossIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <LockIcon className="size-10" />
+                <span className="text-center text-xs break-all">LockIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <MailIcon className="size-10" />

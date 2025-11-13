@@ -1,6 +1,8 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { CustomerUsersTable } from 'components/Pages/Customer/Users/CustomerUsersTable';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -60,7 +62,15 @@ const UsersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('Customer users')} title={t('Customer users')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} title={t('Customer users')}>
+                <PageHero
+                    icon={UserIcon}
+                    title={t('Customer users')}
+                    description={t(
+                        'Add, edit, and manage company users and permissions for seamless team collaboration and control.',
+                    )}
+                />
+
                 <div className="flex w-full flex-col gap-4">
                     <Button
                         aria-haspopup="dialog"

@@ -15,14 +15,14 @@ const ResetPasswordPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Forgotten password'), slug: resetPasswordUrl },
+        { __typename: 'Link', name: t('Reset password'), slug: resetPasswordUrl },
     ];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Forgotten password')}>
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('Reset password')}>
             <ResetPasswordContent />
         </CommonLayout>
     );

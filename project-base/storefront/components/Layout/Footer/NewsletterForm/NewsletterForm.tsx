@@ -13,7 +13,6 @@ import { NewsletterFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -22,8 +21,6 @@ export const NewsletterForm: FC = () => {
     const [, subscribeToNewsletter] = useNewsletterSubscribeMutation();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);
-
-    useErrorPopup(formProviderMethods, formMeta.fields);
 
     const onSubscribeToNewsletterHandler = useCallback<SubmitHandler<NewsletterFormType>>(
         async (newsletterFormData) => {

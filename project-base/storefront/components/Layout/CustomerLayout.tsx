@@ -6,11 +6,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { useRef } from 'react';
 
-type CustomerLayoutProps = {
-    pageHeading?: string;
-} & CommonLayoutProps;
-
-export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children, breadcrumbs, ...props }) => {
+export const CustomerLayout: FC<CommonLayoutProps> = ({ children, breadcrumbs, ...props }) => {
     const paginationScrollTargetRef = useRef<HTMLHeadingElement>(null);
 
     return (
@@ -23,11 +19,6 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children,
 
                     <VerticalStack gap="sm">
                         <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
-                            {pageHeading && (
-                                <h1 className="scroll-mt-4" ref={paginationScrollTargetRef}>
-                                    {pageHeading}
-                                </h1>
-                            )}
                             {children}
                         </PaginationProvider>
                     </VerticalStack>

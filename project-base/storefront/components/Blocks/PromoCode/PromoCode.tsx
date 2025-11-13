@@ -12,7 +12,7 @@ import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { blurInput } from 'utils/forms/blurInput';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const PromoCode: FC = () => {
@@ -24,7 +24,6 @@ export const PromoCode: FC = () => {
         success: t('Promo code was added to the order.'),
         error: t('There was an error while adding a promo code to the order.'),
     });
-    useErrorPopup(formProviderMethods, formMeta.fields);
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
 
@@ -35,6 +34,8 @@ export const PromoCode: FC = () => {
         },
         [applyPromoCodeToCart],
     );
+
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     if (promoCodes.length > 0) {
         return null;

@@ -1,9 +1,11 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { MINIMAL_SEARCH_QUERY_LENGTH } from 'components/Layout/Header/AutocompleteSearch/constants';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrderedItemsContent } from 'components/Pages/Customer/OrderedItems/OrderedItemsContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERED_ITEMS_FILTER, DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -91,12 +93,15 @@ const NewComplaintPage: FC = () => {
             <MetaRobots content="noindex" />
 
             <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
-                <CustomerLayout
-                    breadcrumbs={breadcrumbs}
-                    breadcrumbsType="complaintList"
-                    pageHeading={t('New complaint')}
-                    title={t('New complaint')}
-                >
+                <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" title={t('New complaint')}>
+                    <PageHero
+                        icon={ComplaintsIcon}
+                        title={t('New complaint')}
+                        description={t(
+                            'Have an issue with your purchase? Search for the product below and click the button to create a complaint.',
+                        )}
+                    />
+
                     <SearchInput
                         className="border-input-border-default w-full border"
                         label={t('Search for a product you want to complain about')}

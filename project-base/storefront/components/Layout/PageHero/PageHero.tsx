@@ -1,0 +1,61 @@
+import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
+import { ReactNode } from 'react';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
+
+type BasePageHeroProps = {
+    icon: React.ElementType;
+    title: string | ReactNode;
+    titleTid?: string;
+    description?: string | ReactNode;
+    descriptionProps?: React.HTMLAttributes<HTMLParagraphElement>;
+};
+
+type PageHeroProps = BasePageHeroProps &
+    (
+        | {
+              actionHref: string;
+              actionTitle: string;
+              actionSkeletonType: PageType;
+          }
+        | {
+              actionHref?: never;
+              actionTitle?: never;
+              actionSkeletonType?: never;
+          }
+    );
+
+export const PageHero: FC<PageHeroProps> = ({
+    icon: IconComponent,
+    title,
+    titleTid,
+    description,
+    descriptionProps,
+    actionHref,
+    actionTitle,
+    actionSkeletonType,
+}) => {
+    return (
+        <VerticalStack gap="xs">
+            <div className="bg-background-most mx-auto flex size-14 items-center justify-center rounded-full">
+                <IconComponent aria-hidden="true" className="size-7" focusable="false" />
+            </div>
+
+            <h1 className="h3 text-center" data-tid={titleTid}>
+                {title}
+            </h1>
+
+            {description && (
+                <p className="mx-auto max-w-[520px] text-center text-balance" {...descriptionProps}>
+                    {description}
+                </p>
+            )}
+
+            {actionHref && actionTitle && (
+                <LinkButton className="self-center" href={actionHref} skeletonType={actionSkeletonType}>
+                    {actionTitle}
+                </LinkButton>
+            )}
+        </VerticalStack>
+    );
+};

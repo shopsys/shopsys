@@ -45,7 +45,9 @@ export const usePasswordResetFormMeta = (
             formName: 'password-reset-form',
             messages: {
                 error: t('Could not reset password'),
-                success: t('We sent an email with further steps to your address'),
+                success: t(
+                    'We have sent password reset instructions to your email address. Please check your inbox and follow the link to create a new password.',
+                ),
             },
             fields: {
                 email: {

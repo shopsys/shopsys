@@ -1,6 +1,6 @@
 import { buttonName, placeholder, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkUrl } from 'support';
+import { checkFormLineError, checkUrl } from 'support';
 import { TIDs } from 'tids';
 
 export const goToRegistrationPageFromHeader = () => {
@@ -115,17 +115,15 @@ export const clearAndFillInRegistrationFormPasswords = (password: string) => {
         .type(password);
 };
 
-export const checkRegistrationValidationErrorsPopup = () => {
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter email').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter password').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter password again').should('exist');
-    cy.getByTID([TIDs.layout_popup])
-        .contains('li', 'Please enter a valid phone number. Examples: 123456789, +420123456789')
-        .should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter first name').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter last name').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter street').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter city').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter zip code').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'You have to agree with our privacy policy').should('exist');
+export const checkRegistrationValidationErrors = () => {
+    checkFormLineError('Please enter email');
+    checkFormLineError('Please enter password');
+    checkFormLineError('Please enter password again');
+    checkFormLineError('Please enter a valid phone number. Examples: 123456789, +420123456789');
+    checkFormLineError('Please enter first name');
+    checkFormLineError('Please enter last name');
+    checkFormLineError('Please enter street');
+    checkFormLineError('Please enter city');
+    checkFormLineError('Please enter zip code');
+    checkFormLineError('You have to agree with our privacy policy');
 };

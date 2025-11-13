@@ -11,7 +11,7 @@ type ArticleDetailContentProps = {
 
 export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article }) => {
     return (
-        <Webline width="md">
+        <Webline width="vl">
             <VerticalStack gap="sm">
                 <h1>{article.seoH1 || article.articleName}</h1>
 

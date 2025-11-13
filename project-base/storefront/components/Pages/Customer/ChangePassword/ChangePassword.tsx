@@ -62,6 +62,13 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
             if (applicationError !== undefined) {
                 if (applicationError.type === 'invalid-account-or-password') {
                     formProviderMethods.setError('oldPassword', { message: t('The current password is incorrect') });
+
+                    const input = document.getElementsByName('oldPassword')[0] as HTMLInputElement | undefined;
+
+                    if (input) {
+                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        input.focus();
+                    }
                 }
             } else {
                 showErrorMessage(formMeta.messages.error, GtmMessageOriginType.other);

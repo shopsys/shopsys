@@ -114,19 +114,19 @@ context('Smoke tests', () => {
         ['/product-comparison']: {
             skip: false,
             test: () => {
-                checktHeadlineText('Product comparison');
+                checktHeadlineText('Comparison');
             },
         },
         ['/registration']: {
             skip: false,
             test: () => {
-                checktHeadlineText('New customer registration');
+                checktHeadlineText('Create your account');
             },
         },
         ['/reset-password']: {
             skip: false,
             test: () => {
-                checktHeadlineText('Forgotten password');
+                checktHeadlineText('Reset your password');
             },
         },
         ['/search']: {
