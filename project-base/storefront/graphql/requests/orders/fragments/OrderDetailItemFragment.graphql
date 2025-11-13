@@ -19,6 +19,9 @@ fragment OrderDetailItemFragment on OrderItem {
         customerUser {
             uuid
         }
+        withdrawalRequest {
+            __typename
+        }
     }
     product {
         catalogNumber
