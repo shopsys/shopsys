@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher;
 
 class WithdrawalRequestFacade
@@ -79,5 +80,20 @@ class WithdrawalRequestFacade
     public function getById(int $id): WithdrawalRequest
     {
         return $this->withdrawalRequestRepository->getById($id);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
+     */
+    public function canRequestWithdrawal(Order $order): bool
+    {
+        try {
+            $this->withdrawalChecker->checkOrderWithdrawal($order);
+
+            return true;
+        } catch (WithdrawalException) {
+            return false;
+        }
     }
 }
