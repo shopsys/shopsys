@@ -29,10 +29,10 @@
     "require": {
         "knplabs/knp-menu-bundle": "^3.2",
         "php": "^8.3",
-        "shopsys/form-types-bundle": "17.0.x-dev",
-        "shopsys/framework": "17.0.x-dev",
-        "shopsys/migrations": "17.0.x-dev",
-        "shopsys/plugin-interface": "17.0.x-dev",
+        "shopsys/form-types-bundle": "dev-17.0 as 17.0.1",
+        "shopsys/framework": "dev-17.0 as 17.0.1",
+        "shopsys/migrations": "dev-17.0 as 17.0.1",
+        "shopsys/plugin-interface": "dev-17.0 as 17.0.1",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/form": "^6.4",
@@ -49,7 +49,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "17.0.x-dev"
+        "shopsys/coding-standards": "dev-17.0 as 17.0.1"
     },
     "extra": {
         "symfony": {
