@@ -4,37 +4,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Access to all the complaints created under the user's company"
-msgstr ""
-
-msgid "Access to all the orders created under the user's company"
-msgstr ""
-
-msgid "All roles"
-msgstr ""
-
-msgid "Cart manipulation and order creation"
-msgstr ""
-
-msgid "Complaint creation"
-msgstr ""
-
 msgid "Customer not found."
-msgstr ""
-
-msgid "Customer sees prices"
-msgstr ""
-
-msgid "Customer self manage"
-msgstr ""
-
-msgid "Individual roles"
-msgstr ""
-
-msgid "Manage all customers under the user's company"
-msgstr ""
-
-msgid "Manage company data (e.g., billing address)."
 msgstr ""
 
 msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."

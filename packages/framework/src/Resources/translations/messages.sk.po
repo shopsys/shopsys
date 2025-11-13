@@ -85,6 +85,12 @@ msgstr "<strong><a href=\"{{ url }}\">Panel upozornení</a></strong> bol úspeš
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kategória</a></strong> bola uložená"
 
+msgid "Access to all the complaints created under the user's company"
+msgstr "Prístup ku všetkým sťažnostiam vytvoreným v rámci spoločnosti používateľa"
+
+msgid "Access to all the orders created under the user's company"
+msgstr "Prístup ku všetkým objednávkam vytvoreným v rámci spoločnosti používateľa"
+
 msgid "Accessories"
 msgstr "Príslušenstvo"
 
@@ -183,6 +189,9 @@ msgstr "Reklama <strong>{{ name }}</strong> zmazaná"
 
 msgid "Advertising system"
 msgstr "Reklamáčný systém"
+
+msgid "All roles"
+msgstr "Všetky role"
 
 msgid "All search results"
 msgstr "Všetky výsledky vyhľadávania"
@@ -472,6 +481,9 @@ msgstr "Kanonická URL"
 msgid "Cardholder canceled the payment"
 msgstr "Držiteľ karty zrušil platbu"
 
+msgid "Cart manipulation and order creation"
+msgstr "Manipulácia s košíkom a vytváranie objednávok"
+
 msgid "Catalog number"
 msgstr "Katalógové číslo"
 
@@ -588,6 +600,9 @@ msgstr "Č. reklamácie"
 
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
 msgstr "Reklamácia č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> upravená"
+
+msgid "Complaint creation"
+msgstr "Vytvorenie reklamácie"
 
 msgid "Complaint detail URL"
 msgstr "URL detailu reklamácie"
@@ -759,6 +774,12 @@ msgstr "Meno zákazníka"
 
 msgid "Customer phone number"
 msgstr "Telefónne číslo zákazníka"
+
+msgid "Customer sees prices"
+msgstr "Zákazník vidí ceny"
+
+msgid "Customer self manage"
+msgstr "Samospráva zákazníka"
 
 msgid "Customer street"
 msgstr "Ulica zákazníka"
@@ -1783,6 +1804,9 @@ msgstr "Vrátane DPH"
 msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
 msgstr "Nesprávne nastavenia môžu mať negatívny vplyv na správnu funkčnosť e-shopu."
 
+msgid "Individual roles"
+msgstr "Individuálne role"
+
 msgid "Information about order rounding item (empty if there is no rounding)"
 msgstr "Informácie o položke zaokrúľovania objednávky (prázdne ak nie je zaokrúľovanie)"
 
@@ -1929,6 +1953,12 @@ msgstr "Hlavný text"
 
 msgid "Main variant"
 msgstr "Hlavný variant"
+
+msgid "Manage all customers under the user's company"
+msgstr "Spravovať všetkých zákazníkov v rámci spoločnosti používateľa"
+
+msgid "Manage company data (e.g., billing address)"
+msgstr "Spravovať údaje spoločnosti (napr. fakturačnú adresu)"
 
 msgid "Map coordinates in decimal format"
 msgstr "Mapové súradnice v decibelnom formáte"

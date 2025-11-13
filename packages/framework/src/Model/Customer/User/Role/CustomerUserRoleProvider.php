@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Component\Security;
+namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\CoreRoleProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 
 /**
  * Provides Frontend API specific roles
  */
-class FrontendApiRoleProvider implements CoreRoleProviderInterface
+class CustomerUserRoleProvider implements CoreRoleProviderInterface
 {
     /**
      * @return int
@@ -41,13 +40,13 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
     public function configureRoles(RoleCollection $roleCollection): void
     {
         $roleAll = new Role(CustomerUserRole::ROLE_API_ALL, t('All roles'));
-        $roleAll->setRoleSection(FrontendApiRoleSectionProvider::ALL);
+        $roleAll->setRoleSection(CustomerUserRoleSectionProvider::ALL);
         $roleAll->setOverwritable(false);
 
         $roleCollection->add($roleAll);
 
         foreach ($this->getCustomerUserRoles() as $role) {
-            $role->setRoleSection(FrontendApiRoleSectionProvider::INDIVIDUAL);
+            $role->setRoleSection(CustomerUserRoleSectionProvider::INDIVIDUAL);
             $role->setOverwritable(false);
             $roleCollection->add($role);
         }
@@ -61,7 +60,7 @@ class FrontendApiRoleProvider implements CoreRoleProviderInterface
         return [
             new Role(CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE, t('Customer self manage')),
             new Role(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS, t('Manage all customers under the user\'s company')),
-            new Role(CustomerUserRole::ROLE_API_MANAGE_COMPANY_DATA, t('Manage company data (e.g., billing address).')),
+            new Role(CustomerUserRole::ROLE_API_MANAGE_COMPANY_DATA, t('Manage company data (e.g., billing address)')),
             new Role(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, t('Customer sees prices')),
             new Role(CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION, t('Cart manipulation and order creation')),
             new Role(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW, t('Access to all the orders created under the user\'s company')),
