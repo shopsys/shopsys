@@ -705,6 +705,10 @@ services:
         arguments:
             $logger: '@monolog.logger.queue'
 
+    Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageMailHandler:
+        arguments:
+            $logger: '@monolog.logger.queue'
+
     Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack: ~
 
     Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor: ~
