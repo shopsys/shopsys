@@ -39,15 +39,9 @@ class Version20250404110544 extends AbstractMigration implements ContainerAwareI
             }
 
             $pageContent = t(
-                '<p>
-                    You’ve successfully selected a payment method. We’re now waiting for confirmation from the payment provider.
-                </p>
-                <p>    
-                    If you haven’t completed the payment yet, please check your email for payment instructions.
-                </p>
-                <p>
-                    <a href="{order_detail_url}" tabindex="0">Show order detail</a>
-                </p>',
+                '<p>You’ve successfully selected a payment method. We’re now waiting for confirmation from the payment provider.</p>
+                <p>If you haven’t completed the payment yet, please check your email for payment instructions.</p>
+                <p><a href="{order_detail_url}" tabindex="0">Show order detail</a></p>',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,

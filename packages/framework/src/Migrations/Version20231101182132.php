@@ -23,22 +23,28 @@ class Version20231101182132 extends AbstractMigration implements ContainerAwareI
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->setPageContent(
                 'paymentSuccessfulText',
-                t('
-                <p>
-                    Payment for order number {number} has been successful. <br /><br />
-                    <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
-                    {transport_instructions}
-                </p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getDomainLocale($domainId)),
+                t(
+                    '
+                <p>Payment for order number {number} has been successful. <br /><br />
+                <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
+                {transport_instructions}</p>',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getDomainLocale($domainId),
+                ),
                 $domainId,
             );
 
             $this->setPageContent(
                 'paymentFailedText',
-                t('
-                <p>
-                    Payment for order number {number} has failed. <br /><br />
-                    Please contact us to resolve the issue.
-                </p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getDomainLocale($domainId)),
+                t(
+                    '
+                <p>Payment for order number {number} has failed. <br /><br />
+                Please contact us to resolve the issue.</p>',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getDomainLocale($domainId),
+                ),
                 $domainId,
             );
         }
