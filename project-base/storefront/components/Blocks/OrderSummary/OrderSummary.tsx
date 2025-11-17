@@ -80,7 +80,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                 <OrderConfirmationSummary
                     roundingPrice={roundingPrice}
                     totalDiscountPrice={cart.totalDiscountPrice}
-                    totalItemsPriceBeforeDiscount={cart.totalItemsPriceBeforeDiscount}
+                    totalItemsPriceBeforeDiscount={cart.totalPriceWithoutDiscountTransportAndPayment}
                     totalPrice={cart.totalPrice}
                     totalProductDiscountPrice={cart.totalProductDiscountPrice}
                     payment={{

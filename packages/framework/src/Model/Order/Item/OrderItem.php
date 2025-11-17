@@ -528,6 +528,15 @@ class OrderItem
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT_GIFT);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
+     */
+    public function addPriceToUnitPrice(PriceInterface $priceToAdd): void
+    {
+        $this->unitPriceWithoutVat = $this->unitPriceWithoutVat->add($priceToAdd->getPriceWithoutVat());
+        $this->unitPriceWithVat = $this->unitPriceWithVat->add($priceToAdd->getPriceWithVat());
+    }
+
     protected function checkTypeDiscount(): void
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);

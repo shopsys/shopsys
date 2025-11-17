@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class QuantifiedProductPriceCalculation
 {
@@ -59,6 +60,44 @@ class QuantifiedProductPriceCalculation
             $customerUser,
         );
 
+        return $this->calculateQuantifiedItemPrice($quantifiedProduct, $productPrice, $product, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface
+     */
+    public function calculateBasicPrice(
+        QuantifiedProduct $quantifiedProduct,
+        int $domainId,
+        ?CustomerUser $customerUser = null,
+    ): QuantifiedItemPriceInterface {
+        $product = $quantifiedProduct->getProduct();
+
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
+            $product,
+            $domainId,
+            $customerUser,
+        );
+
+        return $this->calculateQuantifiedItemPrice($quantifiedProduct, $productPrice, $product, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $productPrice
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
+     */
+    protected function calculateQuantifiedItemPrice(
+        QuantifiedProduct $quantifiedProduct,
+        ProductPriceInterface $productPrice,
+        Product $product,
+        int $domainId,
+    ): QuantifiedItemPrice {
         switch ($this->pricingSetting->getInputPriceType()) {
             case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());

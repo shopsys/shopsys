@@ -59,7 +59,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         QuantifiedProduct $quantifiedProduct,
         OrderProcessingData $orderProcessingData,
     ): void {
-        $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
+        $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculateBasicPrice(
             $quantifiedProduct,
             $orderProcessingData->getDomainId(),
             $orderProcessingData->orderInput->getCustomerUser(),

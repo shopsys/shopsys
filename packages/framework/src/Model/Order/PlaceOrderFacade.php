@@ -113,7 +113,7 @@ class PlaceOrderFacade
 
         $this->fillOrderItems($order, $orderData);
 
-        $order->setTotalPrices($orderData->totalPrice, $orderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_PRODUCT, OrderItemTypeEnum::TYPE_PRODUCT_GIFT]));
+        $order->setTotalPrices($orderData->totalPrice, $orderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_PRODUCT, OrderItemTypeEnum::TYPE_PRODUCT_GIFT, OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT]));
 
         $this->em->flush();
 
@@ -129,7 +129,7 @@ class PlaceOrderFacade
         $alreadyCreatedOrderItems = [];
 
         foreach ($orderData->items as $orderItemData) {
-            if (array_key_exists($this->generateCacheKey($orderItemData), $alreadyCreatedOrderItems)) {
+            if ($orderItemData->type === OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT || array_key_exists($this->generateCacheKey($orderItemData), $alreadyCreatedOrderItems)) {
                 continue;
             }
 
@@ -139,6 +139,12 @@ class PlaceOrderFacade
             $this->em->persist($orderItem);
 
             foreach ($orderItemData->relatedOrderItemsData as $relatedOrderItemData) {
+                if ($relatedOrderItemData->type === OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT) {
+                    $orderItem->addPriceToUnitPrice($relatedOrderItemData->getUnitPrice());
+
+                    continue;
+                }
+
                 if (array_key_exists($this->generateCacheKey($relatedOrderItemData), $alreadyCreatedOrderItems)) {
                     $relatedOrderItem = $alreadyCreatedOrderItems[$this->generateCacheKey($relatedOrderItemData)];
                     $orderItem->addRelatedItem($relatedOrderItem);

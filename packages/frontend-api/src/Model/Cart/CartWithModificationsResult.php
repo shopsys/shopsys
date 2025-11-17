@@ -71,11 +71,7 @@ class CartWithModificationsResult
 
     protected ?PriceInterface $totalItemsPrice = null;
 
-    protected ?PriceInterface $totalItemsPriceBeforeDiscount = null;
-
     protected ?PriceInterface $totalProductDiscountPrice = null;
-
-    protected ?PriceInterface $totalPromoCodeDiscountPrice = null;
 
     protected ?PriceInterface $totalDiscountPrice = null;
 
@@ -241,26 +237,6 @@ class CartWithModificationsResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalItemsPriceBeforeDiscount(): PriceInterface
-    {
-        if (!$this->totalItemsPriceBeforeDiscount) {
-            throw new LogicException('Total items price before discount must be set before calling the getter.');
-        }
-
-        return $this->totalItemsPriceBeforeDiscount;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalItemsPriceBeforeDiscount
-     */
-    public function setTotalItemsPriceBeforeDiscount(PriceInterface $totalItemsPriceBeforeDiscount): void
-    {
-        $this->totalItemsPriceBeforeDiscount = $totalItemsPriceBeforeDiscount;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
     public function getTotalProductDiscountPrice(): PriceInterface
     {
         if (!$this->totalProductDiscountPrice) {
@@ -276,26 +252,6 @@ class CartWithModificationsResult
     public function setTotalProductDiscountPrice(PriceInterface $totalProductDiscountPrice): void
     {
         $this->totalProductDiscountPrice = $totalProductDiscountPrice;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
-     */
-    public function getTotalPromoCodeDiscountPrice(): PriceInterface
-    {
-        if (!$this->totalPromoCodeDiscountPrice) {
-            throw new LogicException('Total promo code discount price must be set before calling the getter.');
-        }
-
-        return $this->totalPromoCodeDiscountPrice;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPromoCodeDiscountPrice
-     */
-    public function setTotalPromoCodeDiscountPrice(PriceInterface $totalPromoCodeDiscountPrice): void
-    {
-        $this->totalPromoCodeDiscountPrice = $totalPromoCodeDiscountPrice;
     }
 
     /**

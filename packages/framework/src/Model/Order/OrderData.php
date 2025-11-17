@@ -349,6 +349,30 @@ class OrderData
             OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
             OrderItemTypeEnum::TYPE_DISCOUNT,
             OrderItemTypeEnum::TYPE_PROMOTION,
+            OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT,
+        ]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getTotalProductDiscountsPrice(): PriceInterface
+    {
+        return $this->getTotalPriceForItemTypes([
+            OrderItemTypeEnum::TYPE_PROMOTION,
+            OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT,
+        ]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getTotalDiscountsPrice(): PriceInterface
+    {
+        return $this->getTotalPriceForItemTypes([
+            OrderItemTypeEnum::TYPE_DISCOUNT,
+            OrderItemTypeEnum::TYPE_PROMOTION,
+            OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT,
         ]);
     }
 
@@ -361,7 +385,8 @@ class OrderData
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT])
-            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PROMOTION]);
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PROMOTION])
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRICE_LIST_DISCOUNT]);
     }
 
     /**
