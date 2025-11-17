@@ -45,56 +45,54 @@ export const NewsletterForm: FC = () => {
                     {t('Sign up for our newsletter and get 35% discount on running apparel')}
                 </div>
 
-                <div>
-                    <FormProvider {...formProviderMethods}>
-                        <Form
-                            className="grid grid-cols-3 items-start gap-2 lg:gap-3"
-                            onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
-                        >
-                            <div className="col-span-2">
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.email.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        'aria-label': t('To sign up for newsletter, enter', { ns: 'accessibility' }),
-                                        inputSize: 'small',
-                                        label: formMeta.fields.email.label,
-                                        required: true,
-                                        type: 'email',
-                                        autoComplete: 'email',
-                                    }}
-                                />
-                            </div>
+                <FormProvider {...formProviderMethods}>
+                    <Form
+                        className="grid grid-cols-3 items-start gap-2 lg:gap-3"
+                        onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
+                    >
+                        <div className="col-span-2">
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
+                                textInputProps={{
+                                    'aria-label': t('To sign up for newsletter, enter', { ns: 'accessibility' }),
+                                    inputSize: 'small',
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
+                            />
+                        </div>
 
-                            <div className="col-span-3 col-start-1 row-start-2">
-                                <CheckboxControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.privacyPolicy.name}
-                                    render={(checkbox) => <ChoiceFormLine className="mb-0">{checkbox}</ChoiceFormLine>}
-                                    checkboxProps={{
-                                        label: formMeta.fields.privacyPolicy.label,
-                                        required: true,
-                                    }}
-                                />
-                            </div>
+                        <div className="col-span-3 col-start-1 row-start-2">
+                            <CheckboxControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.privacyPolicy.name}
+                                render={(checkbox) => <ChoiceFormLine className="mb-0">{checkbox}</ChoiceFormLine>}
+                                checkboxProps={{
+                                    label: formMeta.fields.privacyPolicy.label,
+                                    required: true,
+                                }}
+                            />
+                        </div>
 
-                            <div className="col-start-3 row-start-1">
-                                <SubmitButton
-                                    aria-label={t('Submit form to sign up for newsletter', { ns: 'accessibility' })}
-                                    className="h-12 w-full py-0 sm:w-auto"
-                                    hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                    title={t('Sign up')}
-                                    variant="inverted"
-                                >
-                                    {t('Send')}
-                                </SubmitButton>
-                            </div>
-                        </Form>
-                    </FormProvider>
-                </div>
+                        <div className="col-start-3 row-start-1">
+                            <SubmitButton
+                                aria-label={t('Submit form to sign up for newsletter', { ns: 'accessibility' })}
+                                className="h-12 w-full py-0 sm:w-auto"
+                                hasDisabledCursor={!formProviderMethods.formState.isValid}
+                                title={t('Sign up')}
+                                variant="inverted"
+                            >
+                                {t('Send')}
+                            </SubmitButton>
+                        </div>
+                    </Form>
+                </FormProvider>
             </div>
         </FooterContainer>
     );
