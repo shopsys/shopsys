@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
@@ -161,12 +161,12 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/delete/{id}', name: 'admin_blogarticle_delete', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): Response
     {
         try {
@@ -188,12 +188,12 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/delete-confirm/{id}', name: 'admin_blogarticle_deleteconfirm', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteConfirmAction(int $id): Response
     {
         $message = t('Do you really want to remove this blog article?');

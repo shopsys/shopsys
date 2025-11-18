@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecoratorFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
@@ -338,12 +338,12 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -376,12 +376,12 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete-all/{id}', name: 'admin_customer_delete_all', requirements: ['id' => '\d+'])]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAllAction(int $id): Response
     {
         $customer = $this->customerFacade->getById($id);
@@ -405,12 +405,12 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/send-reset-password/{id}', name: 'admin_customer_send_reset_password', requirements: ['id' => '\d+'])]
     #[CanEdit]
+    #[CsrfProtection]
     public function sendResetPasswordAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);

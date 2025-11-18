@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use GuzzleHttp\Exception\GuzzleException;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -132,12 +132,12 @@ class LanguageConstantController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/constant/delete/')]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(Request $request): Response
     {
         $key = $request->query->get('key');

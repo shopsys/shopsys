@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\Security;
 
-use Doctrine\Common\Annotations\Reader;
 use Override;
 use ReflectionMethod;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -17,16 +18,17 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class RouteCsrfProtector implements EventSubscriberInterface
 {
-    public const CSRF_TOKEN_REQUEST_PARAMETER = 'routeCsrfToken';
-    public const CSRF_TOKEN_ID_PREFIX = 'route_';
+    public const string CSRF_TOKEN_REQUEST_PARAMETER = 'routeCsrfToken';
+    public const string CSRF_TOKEN_ID_PREFIX = 'route_';
+    protected const string CSRF_ROUTES_CACHE_NAMESPACE = 'csrfCheckedRoutes';
 
     /**
-     * @param \Doctrine\Common\Annotations\Reader $annotationReader
      * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $tokenManager
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
-        protected readonly Reader $annotationReader,
         protected readonly CsrfTokenManagerInterface $tokenManager,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -106,9 +108,27 @@ class RouteCsrfProtector implements EventSubscriberInterface
             $action = '__invoke';
         }
 
-        $method = new ReflectionMethod($controller, $action);
-        $annotation = $this->annotationReader->getMethodAnnotation($method, CsrfProtection::class);
+        return $this->isActionProtected($controller, $action);
+    }
 
-        return $annotation !== null;
+    /**
+     * @param object|class-string $controller
+     * @param string $actionMethod
+     * @return bool
+     */
+    public function isActionProtected(object|string $controller, string $actionMethod): bool
+    {
+        $controllerName = is_object($controller) ? get_class($controller) : $controller;
+
+        return $this->inMemoryCache->getOrSaveValue(
+            static::CSRF_ROUTES_CACHE_NAMESPACE,
+            function () use ($controllerName, $actionMethod) {
+                $method = new ReflectionMethod($controllerName, $actionMethod);
+
+                return ReflectionHelper::getMethodAttribute($method, CsrfProtection::class) !== null;
+            },
+            $controllerName,
+            $actionMethod,
+        );
     }
 }

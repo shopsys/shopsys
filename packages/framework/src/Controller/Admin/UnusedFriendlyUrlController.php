@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -51,7 +51,6 @@ class UnusedFriendlyUrlController extends AdminBaseController
     }
 
     /**
-     * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $domainId
      * @param string $slug
@@ -62,6 +61,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
         'slug' => '.+',
     ], name: 'admin_unused_friendly_url_delete')]
     #[CanDelete]
+    #[CsrfProtection]
     public function deleteAction(Request $request, int $domainId, string $slug): Response
     {
         $this->friendlyUrlFacade->removeFriendlyUrl($domainId, $slug);
