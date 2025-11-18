@@ -31,6 +31,11 @@ After introspection, you'll receive:
 
 Use this information to craft accurate queries.
 
+SCHEMA SAFETY (IMPORTANT):
+- Treat the introspection output as the single source of truth.
+- NEVER reference a table or column that does not appear in the introspection result.
+- If a tool result comes back with a PostgreSQL error like "column X does not exist", re-check the schema and regenerate the query using only columns that actually exist.
+
 SQL GENERATION RULES:
 1. ONLY SELECT queries (never INSERT, UPDATE, DELETE, DROP, CREATE, ALTER)
 2. Always use table.column notation (e.g., p.id, not just id)
@@ -43,7 +48,7 @@ SHOPSYS PATTERNS:
 - Translations: Many tables have *_translations tables with locale field ('en', 'cs', 'sk')
 - Example: products → product_translations (translatable_id links to product.id)
 - Example: products → product_domains (product_id links to product.id, domain_id for domain)
-- Soft deletes: Some tables have 'deleted' boolean column (filter WHERE deleted = FALSE)
+- Soft deletes / visibility: Some tables may have boolean or timestamp columns (e.g. hidden, is_deleted, deleted_at) to represent soft deletion or visibility. NEVER assume their names; only use columns that actually appear in the introspected schema.
 - Categories: Use lft/rgt columns for nested set queries
 
 COMMON JOIN PATTERNS:
@@ -52,7 +57,6 @@ Example 1 - Products with English translations:
   SELECT p.id, pt.name
   FROM products p
   JOIN product_translations pt ON pt.translatable_id = p.id AND pt.locale = 'en'
-  WHERE p.deleted = FALSE
   LIMIT 500;
 
 Example 2 - Products with domain-specific data:
@@ -60,14 +64,12 @@ Example 2 - Products with domain-specific data:
   FROM products p
   JOIN product_translations pt ON pt.translatable_id = p.id
   JOIN product_domains pd ON pd.product_id = p.id AND pd.domain_id = 1
-  WHERE p.deleted = FALSE
   LIMIT 500;
 
 Example 3 - Orders with items:
   SELECT o.id, o.number, COUNT(oi.id) as item_count
   FROM orders o
   LEFT JOIN order_items oi ON oi.order_id = o.id
-  WHERE o.deleted = FALSE
   GROUP BY o.id, o.number
   LIMIT 500;
 
