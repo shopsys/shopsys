@@ -404,6 +404,32 @@
                         return;
                     }
 
+                    const hasToolResults = Array.isArray(json.toolResults) && json.toolResults.length > 0;
+
+                    if (hasToolResults) {
+                        // Agent executed a tool (possibly SQL) directly in the generation step.
+                        console.warn('[Mastra SQL Assistant] Agent executed tool(s) during SQL generation step (sendMessage).', json);
+
+                        const executionResult = json.toolResults.find(t =>
+                            t.toolName === 'sqlExecutionTool' ||
+                            t.payload?.toolName === 'sqlExecutionTool'
+                        );
+
+                        if (executionResult) {
+                            const result = executionResult?.payload?.result || executionResult?.result;
+
+                            if (result && result.success) {
+                                addMessage('assistant', formatResults(result.data, result.rowCount));
+                            } else {
+                                addMessage('assistant', result?.error || '{{ 'Query execution failed'|trans }}', 'error');
+                            }
+
+                            pendingQuery = null;
+                            return;
+                        }
+                        // If there are only non-SQL tools (e.g. introspection), fall through to normal text handling below.
+                    }
+
                     if (responseText.toUpperCase().includes('SELECT')) {
                         // Try multiple SQL extraction patterns
                         let sql = null;
