@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -126,5 +127,66 @@ class MastraController extends AdminBaseController
         }
 
         return $threadId;
+    }
+
+    /**
+     * Get conversation history for a specific thread from Mastra Memory
+     *
+     * @param string $threadId Thread ID to fetch messages for
+     * @return \Symfony\Component\HttpFoundation\JsonResponse JSON array of messages
+     */
+    #[Route(path: '/mastra/api/memory/threads/{threadId}/messages')]
+    public function getThreadMessages(string $threadId): JsonResponse
+    {
+        $messages = [];
+
+        try {
+            $dbPath = dirname(__DIR__, 5) . '/mastra-service/.mastra/mastra.db';
+
+            if (!file_exists($dbPath)) {
+                return new JsonResponse([
+                    'messages' => [],
+                    'threadId' => $threadId,
+                    'error' => 'Mastra database not found',
+                ]);
+            }
+
+            $pdo = new \PDO('sqlite:' . $dbPath);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $pdo->prepare("
+                SELECT
+                    id,
+                    role,
+                    json_extract(content, '$.content') as content,
+                    createdAt
+                FROM mastra_messages
+                WHERE thread_id = :threadId
+                ORDER BY createdAt ASC
+            ");
+
+            $stmt->execute(['threadId' => $threadId]);
+            $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach ($rows as $row) {
+                $messages[] = [
+                    'id' => $row['id'],
+                    'role' => $row['role'],
+                    'content' => $row['content'] ?? '',
+                    'createdAt' => $row['createdAt'],
+                ];
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'messages' => [],
+                'threadId' => $threadId,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return new JsonResponse([
+            'messages' => $messages,
+            'threadId' => $threadId,
+        ]);
     }
 }

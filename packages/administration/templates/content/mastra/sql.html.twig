@@ -124,7 +124,6 @@
             const messagesList = document.getElementById('messages-list');
             const chatContainer = document.getElementById('chat-container');
 
-            let conversationHistory = [];
             let pendingQuery = null;
 
             function scrollToBottom() {
@@ -265,7 +264,6 @@
                 sendBtn.disabled = true;
 
                 addMessage('user', message);
-                conversationHistory.push({ role: 'user', content: message });
 
                 const loadingEl = addMessage('assistant', '{{ 'Processing your query...'|trans }}', 'loading');
 
@@ -274,7 +272,7 @@
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            messages: conversationHistory,
+                            messages: [{ role: 'user', content: message }],
                             threadId: threadId,
                             resourceId: resourceId,
                         })
@@ -324,11 +322,9 @@
                         } else {
                             // Couldn't extract SQL, just show the response
                             addMessage('assistant', responseText);
-                            conversationHistory.push({ role: 'assistant', content: responseText });
                         }
                     } else {
                         addMessage('assistant', responseText);
-                        conversationHistory.push({ role: 'assistant', content: responseText });
                     }
 
                 } catch (err) {
@@ -348,13 +344,12 @@
 
                 try {
                     const executionMessage = `Execute this SQL: ${sql}`;
-                    conversationHistory.push({ role: 'user', content: executionMessage });
 
                     const res = await fetch('/mastra/api/agents/sqlAgent/generate', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            messages: conversationHistory,
+                            messages: [{ role: 'user', content: executionMessage }],
                             threadId: threadId,
                             resourceId: resourceId,
                         })
@@ -394,12 +389,36 @@
                         addMessage('assistant', responseText);
                     }
 
-                    conversationHistory.push({ role: 'assistant', content: json?.text || '' });
                     pendingQuery = null;
 
                 } catch (err) {
                     loadingEl.remove();
                     addMessage('assistant', '{{ 'Execution error'|trans }}: ' + (err?.message || err), 'error');
+                }
+            }
+
+            async function loadConversationHistory() {
+                try {
+                    const res = await fetch(`/mastra/api/memory/threads/${threadId}/messages`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        const messages = data.messages || [];
+
+                        if (messages.length > 0) {
+                            // Remove welcome message
+                            const welcomeAlert = messagesList.querySelector('.alert-info');
+                            if (welcomeAlert) {
+                                welcomeAlert.remove();
+                            }
+
+                            // Display all historical messages
+                            messages.forEach(msg => {
+                                addMessage(msg.role, msg.content);
+                            });
+                        }
+                    }
+                } catch (err) {
+                    console.error('Failed to load conversation history:', err);
                 }
             }
 
@@ -419,6 +438,9 @@
                     sendMessage();
                 }
             });
+
+            // Load conversation history on page load
+            loadConversationHistory();
 
             input.focus();
         })();
