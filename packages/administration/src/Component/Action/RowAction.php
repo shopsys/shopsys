@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Action;
 
+use Closure;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface;
@@ -20,6 +21,13 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     private ?string $additionalClass = null;
 
     private ?string $confirmMessage = null;
+
+    /**
+     * @var null|\Closure(mixed): string|null
+     */
+    private ?Closure $disabledMessageCallback = null;
+
+    private bool $isDisabled = false;
 
     /**
      * Sets additional classes for row action. Use this method to add custom classes. Default classes are required for proper functionality.
@@ -51,6 +59,22 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
         return $this;
     }
 
+    /**
+     * Set message for disabled action
+     *
+     * The closure receives row data and should return:
+     * - string: Action is disabled with this message shown as tooltip
+     * - null: Action is enabled
+     *
+     * @param \Closure(mixed): ?string $callback Function receives row data and returns tooltip message if disabled, or null if enabled
+     */
+    public function setDisabledMessage(Closure $callback): self
+    {
+        $this->disabledMessageCallback = $callback;
+
+        return $this;
+    }
+
     #[Override]
     public static function create(string $name, string $label, ?string $icon = null): static
     {
@@ -71,6 +95,18 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             throw new InvalidArgumentException('Route must be set for row action. Use one of the "linkTo*" methods.');
         }
 
+        // Evaluate disabled message callback and modify action state if disabled
+        if ($this->disabledMessageCallback !== null) {
+            $disabledMessage = call_user_func($this->disabledMessageCallback, $data);
+
+            if ($disabledMessage !== null) {
+                $this->isDisabled = true;
+                $this->label = $disabledMessage;
+                $this->confirmMessage = null;
+                $this->renderTooltip = true;
+            }
+        }
+
         return parent::validate($data);
     }
 
@@ -87,6 +123,10 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
         $this->attributes['class'] = self::DEFAULT_CLASSES;
 
+        if ($this->isDisabled) {
+            $this->attributes['class'] .= ' link-disabled';
+        }
+
         if ($this->renderTooltip) {
             $this->attributes['data-bs-toggle'] = 'tooltip';
             $this->attributes['data-bs-placement'] = 'left';
@@ -98,7 +138,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             $this->attributes['class'] .= ' ' . $this->additionalClass;
         }
 
-        if ($this->confirmMessage) {
+        if ($this->confirmMessage !== null) {
             $this->attributes['data-confirm-message'] = $this->confirmMessage;
             $this->attributes['data-confirm-window'] = true;
         }
@@ -108,6 +148,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             'label' => $this->label,
             'icon' => $this->icon,
             'actionRoute' => $this->actionRoute,
+            'disabled' => $this->isDisabled,
         ];
     }
 

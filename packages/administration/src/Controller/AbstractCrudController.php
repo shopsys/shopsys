@@ -175,7 +175,6 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * @param \Closure $callback
      * @param class-string<\Shopsys\AdministrationBundle\Component\Crud\Extension\CrudHookableExtensionInterface>|null $hookableInterface
      */
     private function executeExtensions(Closure $callback, ?string $hookableInterface = null): void

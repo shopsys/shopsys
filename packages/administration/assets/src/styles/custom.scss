@@ -76,3 +76,9 @@
 .white-space-normal {
     white-space: normal !important;
 }
+
+.link-disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    pointer-events: auto;
+}

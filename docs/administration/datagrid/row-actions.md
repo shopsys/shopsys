@@ -71,6 +71,16 @@ $rowAction = RowAction::create('name', t('Label'), 'icon')
     ->displayIf(fn (array $row) => $row['domainId'] === 1)
     // By default, the tooltip is displayed after hovering over the action. You can disable it if you want
     ->showTooltip(false)
+    // You can also disable the action based on some condition. The action will be displayed but not clickable
+    // Message will be shown on hover
+    ->setDisabledMessage(fn (array $row) => $row['isPublished'] ? t('Article is already published') : null)
+    // You can also use more complex logic
+    ->setDisabledMessage(function ($row) {
+        if ($row['isPublished']) { return t('Article is already published'); }
+        if ($row['title'] === '') { return t('Article must have a title to be published'); }
+        
+        return null;
+    })
     ;
 
 $rowAction

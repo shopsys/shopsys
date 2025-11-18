@@ -146,11 +146,14 @@ class GridView
             return;
         }
 
-        if ($actionColumn->validate($row) === false) {
+        // Clone action for each row to avoid state pollution between rows
+        $rowAction = clone $actionColumn;
+
+        if ($rowAction->validate($row) === false) {
             return;
         }
 
-        $renderData = $actionColumn->renderData();
+        $renderData = $rowAction->renderData();
         echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
     }
 
