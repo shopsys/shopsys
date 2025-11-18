@@ -225,6 +225,75 @@
                 addMessage('assistant', container, 'error');
             }
 
+            function renderMarkdown(md) {
+                if (!md) {
+                    return '';
+                }
+
+                let html = md;
+
+                // Code blocks ``` ... ```
+                html = html.replace(/```([\s\S]*?)```/g, (match, code) => {
+                    const escaped = code
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                    return '<pre><code>' + escaped + '</code></pre>';
+                });
+
+                // Headings
+                html = html.replace(/^######\s+(.+)$/gm, '<h6>$1</h6>');
+                html = html.replace(/^#####\s+(.+)$/gm, '<h5>$1</h5>');
+                html = html.replace(/^####\s+(.+)$/gm, '<h4>$1</h4>');
+                html = html.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+                html = html.replace(/^##\s+(.+)$/gm, '<h2>$1</h2>');
+                html = html.replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+
+                // Bold and italic
+                html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+                html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+                html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+                // Inline code
+                html = html.replace(/`([^`]+)`/g, (match, code) => {
+                    const escaped = code
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                    return '<code>' + escaped + '</code>';
+                });
+
+                // Unordered lists
+                html = html.replace(/(^|\n)([-*]\s+.+(\n[-*]\s+.+)*)/g, (match, prefix, list) => {
+                    const items = list.split(/\n/).map(line => line.replace(/^[-*]\s+/, '').trim());
+                    const lis = items.map(i => '<li>' + i + '</li>').join('');
+                    return prefix + '<ul>' + lis + '</ul>';
+                });
+
+                // Ordered lists
+                html = html.replace(/(^|\n)((\d+)\.\s+.+(\n\d+\.\s+.+)*)/g, (match, prefix, list) => {
+                    const items = list.split(/\n/).map(line => line.replace(/^\d+\.\s+/, '').trim());
+                    const lis = items.map(i => '<li>' + i + '</li>').join('');
+                    return prefix + '<ol>' + lis + '</ol>';
+                });
+
+                // Paragraphs: split by blank lines
+                const blocks = html.split(/\n{2,}/);
+                html = blocks.map(block => {
+                    const trimmed = block.trim();
+                    if (!trimmed) {
+                        return '';
+                    }
+                    if (/^<(h\d|ul|ol|pre|table|blockquote)/.test(trimmed)) {
+                        return trimmed;
+                    }
+                    return '<p>' + trimmed + '</p>';
+                }).join('\n');
+
+                return html;
+            }
+
             function scrollToBottom() {
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -249,7 +318,11 @@
                 contentDiv.className = 'message-content';
 
                 if (typeof content === 'string') {
-                    contentDiv.innerHTML = content;
+                    if (role === 'assistant' && type === 'normal') {
+                        contentDiv.innerHTML = renderMarkdown(content);
+                    } else {
+                        contentDiv.innerHTML = content;
+                    }
                 } else {
                     contentDiv.appendChild(content);
                 }
