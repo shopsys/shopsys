@@ -108,9 +108,29 @@
             margin-top: 12px;
             overflow-x: auto;
         }
-        .results-table table {
+.results-table table {
             width: 100%;
             font-size: 13px;
+        }
+        .tool-call {
+            margin-top: 8px;
+        }
+        .tool-call summary {
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .tool-call-body {
+            margin-top: 4px;
+        }
+        .tool-call-json {
+            background-color: #f8f9fa;
+            color: #212529; /* override theme light text color so it's visible on light background */
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 260px;
+            overflow: auto;
         }
     </style>
 
@@ -426,6 +446,41 @@
                 return container;
             }
 
+            function createToolCallElement(toolName, state, input, output) {
+                const details = document.createElement('details');
+                details.className = 'tool-call';
+
+                const summary = document.createElement('summary');
+                const stateLabel = state ? ` (${state})` : '';
+                summary.textContent = `${toolName}${stateLabel}`;
+                details.appendChild(summary);
+
+                const body = document.createElement('div');
+                body.className = 'tool-call-body';
+
+                const pre = document.createElement('pre');
+                pre.className = 'tool-call-json';
+
+                const payload = {};
+                if (input && Object.keys(input).length > 0) {
+                    payload.input = input;
+                }
+                if (output !== undefined && output !== null) {
+                    payload.output = output;
+                }
+
+                try {
+                    pre.textContent = JSON.stringify(payload, null, 2);
+                } catch (e) {
+                    pre.textContent = String(output ?? '');
+                }
+
+                body.appendChild(pre);
+                details.appendChild(body);
+
+                return details;
+            }
+
             async function sendMessage(messageOverride = null) {
                 const message = messageOverride !== null ? messageOverride : input.value.trim();
                 if (!message) {
@@ -467,6 +522,18 @@
                     // Debug: Log the full response
                     console.log('Agent response:', json);
                     console.log('Response text:', responseText);
+
+                    // Render any tool calls (e.g. databaseIntrospectionTool, sqlExecutionTool)
+                    if (Array.isArray(json.toolResults)) {
+                        json.toolResults.forEach((t) => {
+                            const toolName = t.toolName || t.payload?.toolName || 'tool';
+                            const input = t.args || t.payload?.args || {};
+                            const output = t.result || t.payload?.result;
+                            const state = t.state || 'output-available';
+                            const toolEl = createToolCallElement(toolName, state, input, output);
+                            addMessage('assistant', toolEl);
+                        });
+                    }
 
                     if (isEmptyAgentResponse(json)) {
                         showAgentEmptyError(json, 'SQL generation', () => {
@@ -580,6 +647,18 @@
                     console.log('Execution response:', json);
                     console.log('Tool results:', json.toolResults);
 
+                    // Render any tool calls for the execution step
+                    if (Array.isArray(json.toolResults)) {
+                        json.toolResults.forEach((t) => {
+                            const toolName = t.toolName || t.payload?.toolName || 'tool';
+                            const input = t.args || t.payload?.args || {};
+                            const output = t.result || t.payload?.result;
+                            const state = t.state || 'output-available';
+                            const toolEl = createToolCallElement(toolName, state, input, output);
+                            addMessage('assistant', toolEl);
+                        });
+                    }
+
                     if (isEmptyAgentResponse(json)) {
                         showAgentEmptyError(json, 'SQL execution', () => {
                             if (lastExecutionSql) {
@@ -651,19 +730,39 @@
 
                             history.forEach((msg) => {
                                 const role = msg.role || 'assistant';
+                                const parts = Array.isArray(msg.parts) ? msg.parts : [];
 
-                                if (Array.isArray(msg.parts) && msg.parts.length > 0) {
-                                    // UI message shape: use only text parts to avoid dumping tool payloads
-                                    const textParts = msg.parts.filter((p) => p.type === 'text' && typeof p.text === 'string');
-                                    if (textParts.length === 0) {
-                                        return;
-                                    }
+                                const textParts = parts.filter(
+                                    (p) => p.type === 'text' && typeof p.text === 'string'
+                                );
+                                const toolParts = parts.filter(
+                                    (p) => typeof p.type === 'string' && p.type.indexOf('tool-') === 0
+                                );
+
+                                if (textParts.length > 0) {
                                     const combined = textParts.map((p) => p.text).join('\n\n');
                                     addMessage(role, combined);
                                 } else if (typeof msg.content === 'string') {
                                     // Core message shape with simple string content
                                     addMessage(role, msg.content);
                                 }
+
+                                // Render any tool call parts as expandable blocks
+                                toolParts.forEach((toolPart) => {
+                                    const toolName = toolPart.toolName
+                                        || (toolPart.type || '').replace(/^tool-/, '')
+                                        || 'tool';
+                                    const state = toolPart.state || 'output-available';
+                                    const input = toolPart.input || {};
+                                    const output = toolPart.output;
+                                    const toolEl = createToolCallElement(
+                                        toolName,
+                                        state,
+                                        input,
+                                        output
+                                    );
+                                    addMessage('assistant', toolEl);
+                                });
                             });
                         }
                     }
