@@ -17,7 +17,7 @@ parameters:
         product-feed-google: { path: '%shopsys.framework.root_dir%/../product-feed-google', namespace: 'Shopsys\ProductFeed\GoogleBundle', app_namespace: 'App\ProductFeed\Google' }
         product-feed-heureka: { path: '%shopsys.framework.root_dir%/../product-feed-heureka', namespace: 'Shopsys\ProductFeed\HeurekaBundle', app_namespace: 'App\ProductFeed\Heureka' }
         product-feed-heureka-delivery: { path: '%shopsys.framework.root_dir%/../product-feed-heureka-delivery', namespace: 'Shopsys\ProductFeed\HeurekaDeliveryBundle', app_namespace: 'App\ProductFeed\HeurekaDelivery' }
-        product-feed-luigis-box: {path: '%shopsys.framework.root_dir%/../product-feed-heureka-delivery', namespace: 'Shopsys\ProductFeed\LuigisBoxBundle', app_namespace: 'App\ProductFeed\LuigisBox' }
+        product-feed-luigis-box: { path: '%shopsys.framework.root_dir%/../product-feed-luigis-box', namespace: 'Shopsys\ProductFeed\LuigisBoxBundle', app_namespace: 'App\ProductFeed\LuigisBox' }
         product-feed-mergado: { path: '%shopsys.framework.root_dir%/../product-feed-mergado', namespace: 'Shopsys\ProductFeed\MergadoBundle', app_namespace: 'App\ProductFeed\Mergado' }
         product-feed-zbozi: { path: '%shopsys.framework.root_dir%/../product-feed-zbozi', namespace: 'Shopsys\ProductFeed\ZboziBundle', app_namespace: 'App\ProductFeed\Zbozi' }
         s3-bridge: { path: '%shopsys.framework.root_dir%/../s3-bridge', namespace: 'Shopsys\S3Bridge', app_namespace: 'App\S3Bridge' }
