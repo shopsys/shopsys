@@ -125,6 +125,105 @@
             const chatContainer = document.getElementById('chat-container');
 
             let pendingQuery = null;
+            let lastUserQuestion = null;
+            let lastExecutionSql = null;
+
+            function isEmptyAgentResponse(json) {
+                if (!json || typeof json !== 'object') {
+                    return false;
+                }
+
+                const hasToolResults = Array.isArray(json.toolResults) && json.toolResults.length > 0;
+                const hasText = typeof json.text === 'string' && json.text.trim().length > 0;
+
+                let totalTokens = null;
+                if (json.usage && typeof json.usage.totalTokens === 'number') {
+                    totalTokens = json.usage.totalTokens;
+                } else if (Array.isArray(json.steps) && json.steps[0]?.usage?.totalTokens !== undefined) {
+                    totalTokens = json.steps[0].usage.totalTokens;
+                }
+
+                const zeroTokens = totalTokens === 0;
+
+                return !hasToolResults && !hasText && zeroTokens;
+            }
+
+            function showAgentEmptyError(json, contextLabel, retryCallback) {
+                console.error('[Mastra SQL Assistant] Empty agent response during ' + contextLabel, json);
+
+                const container = document.createElement('div');
+
+                const title = document.createElement('strong');
+                title.textContent = '{{ 'The SQL assistant returned no output.'|trans }}';
+                container.appendChild(title);
+
+                const desc = document.createElement('p');
+                desc.textContent = '{{ 'This is likely an internal error in the AI service. No SQL was executed.'|trans }}';
+                container.appendChild(desc);
+
+                const details = document.createElement('ul');
+                details.style.fontSize = '12px';
+
+                function addDetail(label, value) {
+                    if (!value) {
+                        return;
+                    }
+                    const li = document.createElement('li');
+                    li.textContent = label + ': ' + value;
+                    details.appendChild(li);
+                }
+
+                addDetail('Context', contextLabel);
+                addDetail('Thread ID', json.threadId);
+                addDetail('Resource ID', json.resourceId);
+                addDetail('Trace ID', json.traceId);
+                addDetail('Finish reason', json.finishReason || (Array.isArray(json.steps) && json.steps[0]?.finishReason));
+
+                if (json.usage && typeof json.usage.totalTokens === 'number') {
+                    addDetail('Total tokens', String(json.usage.totalTokens));
+                }
+
+                if (details.children.length > 0) {
+                    const detailsTitle = document.createElement('p');
+                    detailsTitle.textContent = '{{ 'Debug details for developers:'|trans }}';
+                    container.appendChild(detailsTitle);
+                    container.appendChild(details);
+                }
+
+                if (Array.isArray(json.warnings) && json.warnings.length > 0) {
+                    const warningsTitle = document.createElement('p');
+                    warningsTitle.textContent = '{{ 'Warnings:'|trans }}';
+                    container.appendChild(warningsTitle);
+
+                    const warningsList = document.createElement('ul');
+                    warningsList.style.fontSize = '12px';
+
+                    json.warnings.forEach((w) => {
+                        const li = document.createElement('li');
+                        li.textContent = typeof w === 'string' ? w : JSON.stringify(w);
+                        warningsList.appendChild(li);
+                    });
+
+                    container.appendChild(warningsList);
+                }
+
+                if (typeof retryCallback === 'function') {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.style.marginTop = '8px';
+
+                    const retryBtn = document.createElement('button');
+                    retryBtn.className = 'btn btn-warning btn-sm';
+                    retryBtn.textContent = '{{ 'Retry'|trans }}';
+                    retryBtn.onclick = () => {
+                        retryCallback();
+                    };
+
+                    actionsDiv.appendChild(retryBtn);
+                    container.appendChild(actionsDiv);
+                }
+
+                addMessage('assistant', container, 'error');
+            }
 
             function scrollToBottom() {
                 chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -254,16 +353,20 @@
                 return container;
             }
 
-            async function sendMessage() {
-                const message = input.value.trim();
+            async function sendMessage(messageOverride = null) {
+                const message = messageOverride !== null ? messageOverride : input.value.trim();
                 if (!message) {
                     return;
                 }
 
-                input.value = '';
+                if (messageOverride === null) {
+                    input.value = '';
+                }
+
                 sendBtn.disabled = true;
 
                 addMessage('user', message);
+                lastUserQuestion = message;
 
                 const loadingEl = addMessage('assistant', '{{ 'Processing your query...'|trans }}', 'loading');
 
@@ -291,6 +394,15 @@
                     // Debug: Log the full response
                     console.log('Agent response:', json);
                     console.log('Response text:', responseText);
+
+                    if (isEmptyAgentResponse(json)) {
+                        showAgentEmptyError(json, 'SQL generation', () => {
+                            if (lastUserQuestion) {
+                                sendMessage(lastUserQuestion);
+                            }
+                        });
+                        return;
+                    }
 
                     if (responseText.toUpperCase().includes('SELECT')) {
                         // Try multiple SQL extraction patterns
@@ -324,7 +436,7 @@
                             addMessage('assistant', responseText);
                         }
                     } else {
-                        addMessage('assistant', responseText);
+                        addMessage('assistant', responseText || '{{ 'No results'|trans }}');
                     }
 
                 } catch (err) {
@@ -339,6 +451,8 @@
 
             async function executeApprovedQuery(sql) {
                 if (!sql) return;
+
+                lastExecutionSql = sql;
 
                 const loadingEl = addMessage('assistant', '{{ 'Executing query...'|trans }}', 'loading');
 
@@ -367,7 +481,20 @@
                     console.log('Execution response:', json);
                     console.log('Tool results:', json.toolResults);
 
-                    if (json.toolResults && json.toolResults.length > 0) {
+                    if (isEmptyAgentResponse(json)) {
+                        showAgentEmptyError(json, 'SQL execution', () => {
+                            if (lastExecutionSql) {
+                                executeApprovedQuery(lastExecutionSql);
+                            }
+                        });
+                        pendingQuery = null;
+                        return;
+                    }
+
+                    const hasToolResults = Array.isArray(json.toolResults) && json.toolResults.length > 0;
+                    const hasText = typeof json.text === 'string' && json.text.trim().length > 0;
+
+                    if (hasToolResults) {
                         // Tool name is 'sqlExecutionTool' not 'sql-execution'
                         const executionResult = json.toolResults.find(t =>
                             t.toolName === 'sqlExecutionTool' ||
@@ -383,10 +510,16 @@
                         } else {
                             addMessage('assistant', result?.error || '{{ 'Query execution failed'|trans }}', 'error');
                         }
+                    } else if (hasText) {
+                        // No tool results - agent responded with plain text
+                        addMessage('assistant', json.text);
                     } else {
-                        // No tool results - agent might have just responded with text
-                        const responseText = json?.text || '{{ 'No results'|trans }}';
-                        addMessage('assistant', responseText);
+                        // Unexpected shape but not the classic empty-agent case
+                        showAgentEmptyError(json, 'SQL execution', () => {
+                            if (lastExecutionSql) {
+                                executeApprovedQuery(lastExecutionSql);
+                            }
+                        });
                     }
 
                     pendingQuery = null;
