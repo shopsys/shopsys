@@ -631,21 +631,39 @@
 
             async function loadConversationHistory() {
                 try {
-                    const res = await fetch(`/mastra/api/memory/threads/${threadId}/messages`);
+                    const res = await fetch(`/mastra/api/memory/threads/${encodeURIComponent(threadId)}/messages?agentId=sqlAgent`);
                     if (res.ok) {
                         const data = await res.json();
-                        const messages = data.messages || [];
 
-                        if (messages.length > 0) {
+                        // Prefer Mastra's UI-friendly representation if available
+                        const uiMessages = Array.isArray(data.uiMessages) ? data.uiMessages : [];
+                        const coreMessages = Array.isArray(data.messages) ? data.messages : [];
+
+                        // If no uiMessages are present (older versions), fall back to core messages
+                        const history = uiMessages.length > 0 ? uiMessages : coreMessages;
+
+                        if (history.length > 0) {
                             // Remove welcome message
                             const welcomeAlert = messagesList.querySelector('.alert-info');
                             if (welcomeAlert) {
                                 welcomeAlert.remove();
                             }
 
-                            // Display all historical messages
-                            messages.forEach(msg => {
-                                addMessage(msg.role, msg.content);
+                            history.forEach((msg) => {
+                                const role = msg.role || 'assistant';
+
+                                if (Array.isArray(msg.parts) && msg.parts.length > 0) {
+                                    // UI message shape: use only text parts to avoid dumping tool payloads
+                                    const textParts = msg.parts.filter((p) => p.type === 'text' && typeof p.text === 'string');
+                                    if (textParts.length === 0) {
+                                        return;
+                                    }
+                                    const combined = textParts.map((p) => p.text).join('\n\n');
+                                    addMessage(role, combined);
+                                } else if (typeof msg.content === 'string') {
+                                    // Core message shape with simple string content
+                                    addMessage(role, msg.content);
+                                }
                             });
                         }
                     }
