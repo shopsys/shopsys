@@ -7,7 +7,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { LoginFormType } from 'types/form';
 import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import * as Yup from 'yup';
 
 export const useLoginForm = (defaultEmail?: string): [UseFormReturn<LoginFormType>, LoginFormType] => {

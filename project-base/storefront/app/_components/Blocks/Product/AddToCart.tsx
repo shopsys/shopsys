@@ -10,7 +10,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>

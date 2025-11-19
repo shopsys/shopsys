@@ -6,7 +6,7 @@ import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 const WatchdogPopup = dynamic(
     () => import('components/Blocks/Popup/WatchdogPopup').then((component) => component.WatchdogPopup),

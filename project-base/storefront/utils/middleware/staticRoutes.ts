@@ -5,7 +5,20 @@ import { getHostAndDomainFromRequest } from 'utils/domain/getHostAndDomainFromRe
 
 export const handleStaticRoutes = (request: NextRequest, previousResponse: NextResponse) => {
     // Resolve domain and pass to app router via headers
-    const { domainId, host } = getHostAndDomainFromRequest(request);
+    const { domainId, host, redirect } = getHostAndDomainFromRequest(request);
+
+    // Handle redirect when accessing domain base URL that needs redirect
+    if (redirect) {
+        const normalizedHost = host.endsWith('/') ? host.slice(0, -1) : host;
+        const targetUrl = new URL(normalizedHost);
+        targetUrl.search = request.nextUrl.search;
+        
+        return NextResponse.redirect(targetUrl, {
+            status: 302,
+            headers: previousResponse.headers,
+        });
+    }
+
     previousResponse.headers.set('x-domain-id', domainId.toString());
     previousResponse.headers.set('x-domain-url', host);
 

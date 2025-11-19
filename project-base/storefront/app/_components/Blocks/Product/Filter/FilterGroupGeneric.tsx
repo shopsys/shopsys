@@ -15,7 +15,7 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type FilterFieldType = 'flags' | 'brands';
 

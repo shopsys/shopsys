@@ -2,7 +2,7 @@
 
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type ProductAvailabilityProps = {
     availability: TypeAvailability;

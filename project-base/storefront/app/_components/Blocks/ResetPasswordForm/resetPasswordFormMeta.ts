@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ResetPasswordFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import * as Yup from 'yup';
 
 export const useResetPasswordForm = (): [UseFormReturn<ResetPasswordFormType>, ResetPasswordFormType] => {

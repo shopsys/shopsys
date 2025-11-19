@@ -21,7 +21,19 @@ export const handleFriendlyUrls = async (
 };
 
 async function resolveFriendlyUrl(request: NextRequest, previousResponse: NextResponse): Promise<NextResponse> {
-    const { domainId, host } = getHostAndDomainFromRequest(request);
+    const { domainId, host, redirect } = getHostAndDomainFromRequest(request);
+
+    // Handle redirect when accessing domain base URL that needs redirect
+    if (redirect) {
+        const normalizedHost = host.endsWith('/') ? host.slice(0, -1) : host;
+        const targetUrl = new URL(normalizedHost);
+        targetUrl.search = request.nextUrl.search; // Preserve query params
+        
+        return NextResponse.redirect(targetUrl, {
+            status: 302,
+            headers: previousResponse.headers,
+        });
+    }
 
     // Pass domain info to app router via headers
     previousResponse.headers.set('x-domain-id', domainId.toString());

@@ -9,7 +9,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { LoginFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type UseLoginProps = {
     shouldOverwriteCustomerUserCart?: boolean;

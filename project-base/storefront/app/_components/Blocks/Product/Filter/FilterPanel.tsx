@@ -12,7 +12,7 @@ import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilter
 import { TypeCategoryAutomatedFilterEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { isPriceVisible } from 'utils/mappers/price';
 
 export type FilterPanelProps = {

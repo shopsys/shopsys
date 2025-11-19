@@ -7,7 +7,7 @@ import { ProductListItemImage } from 'app/_components/Blocks/Product/ProductsLis
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;

@@ -36,6 +36,22 @@ const domainsConfig = [
         isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
         type: CustomerUserAreaEnum.B2B,
     },
+    {
+        publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_3 ?? '',
+        url: process.env.DOMAIN_HOSTNAME_3 ?? '',
+        defaultLocale: 'sk' as Locale,
+        currencyCode: 'EUR',
+        fallbackTimezone: 'Europe/Prague',
+        domainId: 3,
+        mapSetting: {
+            latitude: 48.669,
+            longitude: 19.699,
+            zoom: 7,
+        },
+        gtmId: process.env.GTM_ID,
+        isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('3'),
+        type: CustomerUserAreaEnum.B2B,
+    },
 ];
 
 export default domainsConfig;

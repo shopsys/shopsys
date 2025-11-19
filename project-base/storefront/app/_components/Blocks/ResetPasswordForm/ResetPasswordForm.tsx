@@ -17,7 +17,7 @@ import { ResetPasswordFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export type ResetPasswordFormProps = {

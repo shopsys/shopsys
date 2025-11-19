@@ -9,7 +9,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type UseRegistrationProps = {
     formMeta: RegistrationFormMetaType;

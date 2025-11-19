@@ -12,7 +12,7 @@ import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlic
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;

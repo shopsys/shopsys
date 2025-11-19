@@ -3,7 +3,7 @@
 import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type FilterGroupInStockProps = {
     inStockCount: number;

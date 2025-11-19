@@ -27,7 +27,7 @@ import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import * as Yup from 'yup';
 
 type UseRegistrationFormProps = {

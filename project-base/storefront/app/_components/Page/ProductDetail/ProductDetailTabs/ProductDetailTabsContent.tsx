@@ -3,7 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'app/_components/Basic/Tabs/Tabs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ReactNode, useState } from 'react';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 export type ProductDetailTabsContentProps = {
     description?: ReactNode;

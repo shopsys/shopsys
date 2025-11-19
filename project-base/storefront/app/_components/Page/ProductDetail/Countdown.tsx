@@ -4,7 +4,7 @@ import { SkeletonModuleCountdown } from 'components/Blocks/Skeleton/SkeletonModu
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import React from 'react';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useCountdown } from 'utils/useCountdown';
 
 dayjs.extend(duration);
