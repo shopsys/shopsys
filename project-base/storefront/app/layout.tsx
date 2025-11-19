@@ -4,7 +4,6 @@ import { Footer } from 'app/_components/Layout/Footer/Footer';
 import { Header } from 'app/_components/Layout/Header/Header';
 import { NotificationBars } from 'app/_components/Layout/NotificationBars/NotificationBars';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
-import { SkeletonLayout } from 'components/Blocks/Skeleton/SkeletonLayout';
 import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
@@ -33,8 +32,8 @@ const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
             {domainConfig.gtmId && <GoogleTagManager gtmId={domainConfig.gtmId!} />}
             {/* suppressHydrationWarning for ignoring grammarly extension */}
             <body suppressHydrationWarning>
-                <Suspense fallback={<SkeletonLayout />}>
-                    <Providers>
+                <Providers>
+                    <>
                         <NotificationBars />
 
                         <div className="flex min-h-dvh flex-col">
@@ -42,9 +41,7 @@ const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
 
                             {breadcrumbs}
 
-                            <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">
-                                <Suspense fallback={<div>Layout loading...</div>}>{children}</Suspense>
-                            </main>
+                            <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">{children}</main>
 
                             <Footer />
 
@@ -52,8 +49,8 @@ const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
                                 <DeferredUserConsent />
                             </Suspense>
                         </div>
-                    </Providers>
-                </Suspense>
+                    </>
+                </Providers>
             </body>
         </html>
     );
