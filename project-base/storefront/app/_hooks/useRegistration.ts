@@ -3,13 +3,14 @@
 import { useHandleActionsAfterRegistration } from './useHandleActionsAfterRegistration';
 import { registrationAction } from 'app/_actions/registrationAction';
 import { RegistrationFormMetaType } from 'app/_components/Blocks/Registration/registrationFormMeta';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeRegistrationMutationVariables } from 'graphql/requests/registration/mutations/RegistrationMutation.ssr';
+import { Translate } from 'next-translate';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type UseRegistrationProps = {
     formMeta: RegistrationFormMetaType;
@@ -52,7 +53,7 @@ export const useRegistration = ({ formMeta }: UseRegistrationProps) => {
         const { error, showCartMergeInfo } = await registrationAction(registrationData);
 
         if (error) {
-            handleFormErrors(error, formProviderMethods, t, formMeta.messages.error);
+            handleFormErrors(error, formProviderMethods, t as Translate, formMeta.messages.error);
             return;
         }
 

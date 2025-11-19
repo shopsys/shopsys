@@ -1,6 +1,5 @@
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
-import { headers } from 'next/headers';
 import { formatDate, formatDateAndTime } from 'utils/formaters/formatDate';
 
 export async function getFormatDate(): Promise<{

@@ -6,13 +6,13 @@ import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQu
 import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.ssr';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type FilterSelectedParametersProps = {
     filterOptions: TypeProductFilterOptionsFragment;

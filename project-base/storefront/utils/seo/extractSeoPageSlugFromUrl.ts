@@ -11,7 +11,7 @@ export const extractSeoPageSlugFromUrl = (url: string, domain: string): string |
     }
 
     if (slugOrI18nPagePath in staticRewritePathsForDomain) {
-        return staticRewritePathsForDomain[slugOrI18nPagePath as StaticRewritePathKeyType] ?? null;
+        return staticRewritePathsForDomain[slugOrI18nPagePath as StaticRewritePathKeyType];
     }
 
     const path = Object.values(staticRewritePathsForDomain).find((path) => path === slugOrI18nPagePath);

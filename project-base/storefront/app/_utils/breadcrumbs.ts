@@ -1,7 +1,7 @@
 import { getInternationalizedStaticUrl } from './getInternationalizedStaticUrls';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';
 import { DynamicBreadcrumbsSettings, StaticBreadcrumb, StaticBreadcrumbsSettings } from 'types/breadcrumbs';
-import { Translate } from 'types/translation';
+import { Translate, TranslationKeys } from 'types/translation';
 
 export const getBreadcrumbs = async (
     staticRoutes: StaticBreadcrumbsSettings,
@@ -33,7 +33,7 @@ export const mapToBreadcrumbFragments = (staticBreadcrumbs: StaticBreadcrumb[], 
         (breadcrumb) =>
             ({
                 __typename: 'Link',
-                name: t(breadcrumb.name),
+                name: t(breadcrumb.name as TranslationKeys),
                 slug: breadcrumb.slug ? getInternationalizedStaticUrl(breadcrumb.slug) : '',
             }) as TypeBreadcrumbFragment,
     );

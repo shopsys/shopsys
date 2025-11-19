@@ -12,10 +12,10 @@ import { Flag } from 'app/_components/Basic/Flag/Flag';
 import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type FilterFieldType = 'flags' | 'brands';
 

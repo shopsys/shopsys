@@ -2,11 +2,11 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import * as Yup from 'yup';
 
 export const usePersonalDataExportForm = (): [

@@ -9,11 +9,11 @@ import {
     validateLastName,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { InquiryFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import * as Yup from 'yup';
 
 export const useInquiryForm = (

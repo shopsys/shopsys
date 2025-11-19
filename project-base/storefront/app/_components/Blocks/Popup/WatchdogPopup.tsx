@@ -12,13 +12,13 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useCurrentCustomerData } from 'components/providers/AuthProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmCreateWatchdotEventHandler } from 'gtm/handlers/onGtmCreateWatchdotEventHandler';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import DOMPurify from 'isomorphic-dompurify';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type CollapsibleTextProps = {
     text: string;

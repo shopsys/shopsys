@@ -1,8 +1,8 @@
 'use client';
 
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type ProductAvailabilityProps = {
     availability: TypeAvailability;

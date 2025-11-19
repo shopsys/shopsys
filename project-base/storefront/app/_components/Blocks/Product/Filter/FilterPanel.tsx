@@ -8,11 +8,11 @@ import { useCurrentFilterQuery } from 'app/_utils/queryParams/useCurrentFilterQu
 import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuery';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.ssr';
 import { TypeCategoryAutomatedFilterEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { isPriceVisible } from 'utils/mappers/price';
 
 export type FilterPanelProps = {

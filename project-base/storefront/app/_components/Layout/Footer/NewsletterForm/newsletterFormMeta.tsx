@@ -4,12 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useAppConfig } from 'components/providers/AppConfigProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import * as Yup from 'yup';
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {

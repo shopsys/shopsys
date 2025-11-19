@@ -9,15 +9,16 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypePasswordRecoveryMutationVariables } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.ssr';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
+import { Translate } from 'next-translate';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ResetPasswordFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export type ResetPasswordFormProps = {
@@ -39,7 +40,7 @@ export const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ formHeading }) =
         const response = await resetPasswordAction(resetPasswordData);
 
         if (response.error) {
-            handleFormErrors(response.error, formProviderMethods, t, formMeta.messages.error);
+            handleFormErrors(response.error, formProviderMethods, t as Translate, formMeta.messages.error);
 
             return;
         }

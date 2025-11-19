@@ -28,7 +28,7 @@ async function resolveFriendlyUrl(request: NextRequest, previousResponse: NextRe
         const normalizedHost = host.endsWith('/') ? host.slice(0, -1) : host;
         const targetUrl = new URL(normalizedHost);
         targetUrl.search = request.nextUrl.search; // Preserve query params
-        
+
         return NextResponse.redirect(targetUrl, {
             status: 302,
             headers: previousResponse.headers,

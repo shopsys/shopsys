@@ -5,9 +5,9 @@ import { ProductFlags } from 'app/_components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';
 import { ProductListItemImage } from 'app/_components/Blocks/Product/ProductsList/ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;

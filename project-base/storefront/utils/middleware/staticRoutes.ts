@@ -12,7 +12,7 @@ export const handleStaticRoutes = (request: NextRequest, previousResponse: NextR
         const normalizedHost = host.endsWith('/') ? host.slice(0, -1) : host;
         const targetUrl = new URL(normalizedHost);
         targetUrl.search = request.nextUrl.search;
-        
+
         return NextResponse.redirect(targetUrl, {
             status: 302,
             headers: previousResponse.headers,

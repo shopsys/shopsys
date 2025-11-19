@@ -12,12 +12,12 @@ import { useUpdateFilterQuery } from 'app/_utils/queryParams/useUpdateFilterQuer
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
-import { useTranslation } from 'components/providers/TranslationProvider';
 
 type FilterGroupParametersProps = {
     title: string;

@@ -4,13 +4,13 @@ import { useAddToCart } from 'app/_hooks/useAddToCart';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>

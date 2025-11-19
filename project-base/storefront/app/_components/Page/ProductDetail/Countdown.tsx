@@ -1,10 +1,10 @@
 'use client';
 
 import { SkeletonModuleCountdown } from 'components/Blocks/Skeleton/SkeletonModuleCountdown';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import React from 'react';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { useCountdown } from 'utils/useCountdown';
 
 dayjs.extend(duration);
