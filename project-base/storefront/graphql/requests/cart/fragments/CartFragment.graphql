@@ -10,13 +10,10 @@ fragment CartFragment on Cart {
     totalItemsPrice {
         ...PriceFragment
     }
-    totalItemsPriceBeforeDiscount {
+    totalPriceWithoutDiscountTransportAndPayment {
         ...PriceFragment
     }
     totalProductDiscountPrice {
-        ...PriceFragment
-    }
-    totalPromoCodeDiscountPrice {
         ...PriceFragment
     }
     totalDiscountPrice {

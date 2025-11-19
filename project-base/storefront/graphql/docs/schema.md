@@ -3322,7 +3322,7 @@ Selected pickup place identifier if provided
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total of all discounts (product discounts + promo code discounts)
+Total of all discounts (product special price lists + promo code discounts + X+Y promotion discounts)
 
 </td>
 </tr>
@@ -3332,15 +3332,6 @@ Total of all discounts (product discounts + promo code discounts)
 <td>
 
 Total items price (excluding transport and payment)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="cart.totalitemspricebeforediscount">totalItemsPriceBeforeDiscount</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total items price before any discounts are applied (sum of all products at basic prices)
 
 </td>
 </tr>
@@ -3367,16 +3358,7 @@ Total price (excluding discount, transport and payment)
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total discount from product special prices (difference between basic and selling prices)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="cart.totalpromocodediscountprice">totalPromoCodeDiscountPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total discount from promo codes and promotions
+Total discount from product special price lists and X+Y promotion discounts
 
 </td>
 </tr>

@@ -33,6 +33,10 @@ class OrderItemData
      */
     public $unitPriceWithoutVat;
 
+    public $basicUnitPriceWithVat;
+
+    public $basicUnitPriceWithoutVat;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
@@ -42,6 +46,10 @@ class OrderItemData
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public $totalPriceWithoutVat;
+
+    public $basicTotalPriceWithVat;
+
+    public $basicTotalPriceWithoutVat;
 
     /**
      * @var string|null

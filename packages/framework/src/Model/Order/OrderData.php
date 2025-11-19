@@ -344,6 +344,7 @@ class OrderData
      */
     public function getProductsTotalPriceAfterAppliedDiscounts(): PriceInterface
     {
+        // TODO I need this somehow to include the discounts from price lists
         return $this->getTotalPriceForItemTypes([
             OrderItemTypeEnum::TYPE_PRODUCT,
             OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
@@ -355,8 +356,32 @@ class OrderData
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
+    public function getTotalProductDiscountsPrice(): PriceInterface
+    {
+        // TODO I need this somehow to include the discounts from price lists
+        return $this->getTotalPriceForItemTypes([
+            OrderItemTypeEnum::TYPE_PROMOTION,
+        ]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
+    public function getTotalDiscountsPrice(): PriceInterface
+    {
+        // TODO I need this somehow to include the discounts from price lists
+        return $this->getTotalPriceForItemTypes([
+            OrderItemTypeEnum::TYPE_DISCOUNT,
+            OrderItemTypeEnum::TYPE_PROMOTION,
+        ]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     */
     public function getTotalPriceWithoutDiscountTransportAndPayment(): PriceInterface
     {
+        // TODO I need this somehow to include the discounts from price lists
         return $this->totalPrice
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])

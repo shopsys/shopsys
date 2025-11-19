@@ -516,20 +516,16 @@ export type TypeCart = {
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
   selectedPickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
-  /** Total of all discounts (product discounts + promo code discounts) */
+  /** Total of all discounts (product special price lists + promo code discounts + X+Y promotion discounts) */
   totalDiscountPrice: TypePrice;
   /** Total items price (excluding transport and payment) */
   totalItemsPrice: TypePrice;
-  /** Total items price before any discounts are applied (sum of all products at basic prices) */
-  totalItemsPriceBeforeDiscount: TypePrice;
   /** Total price including transport and payment */
   totalPrice: TypePrice;
   /** Total price (excluding discount, transport and payment) */
   totalPriceWithoutDiscountTransportAndPayment: TypePrice;
-  /** Total discount from product special prices (difference between basic and selling prices) */
+  /** Total discount from product special price lists and X+Y promotion discounts */
   totalProductDiscountPrice: TypePrice;
-  /** Total discount from promo codes and promotions */
-  totalPromoCodeDiscountPrice: TypePrice;
   /** Selected transport if transport provided */
   transport: Maybe<TypeTransport>;
   /** UUID of the cart, null for authenticated user */

@@ -34,26 +34,26 @@ export const CartPreview: FC<CartPreviewProps> = ({ wrapperRef }) => {
         isPriceVisible(cart.totalProductDiscountPrice.priceWithVat) &&
         mapPriceForCalculations(cart.totalProductDiscountPrice.priceWithVat) > 0;
 
-    const hasPromoCodeDiscounts =
-        isPriceVisible(cart.totalPromoCodeDiscountPrice.priceWithVat) &&
-        mapPriceForCalculations(cart.totalPromoCodeDiscountPrice.priceWithVat) > 0;
+    console.log(cart.totalDiscountPrice);
 
     const hasTotalDiscounts =
         isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
         mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0;
 
+
+    console.log(hasTotalDiscounts);
     return (
         <div className="bg-background-more font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" overlayClassName="rounded-xl" />}
 
-            {(hasProductDiscounts || hasPromoCodeDiscounts || promoCodes.length > 0) && (
+            {(hasProductDiscounts || promoCodes.length > 0) && (
                 <div className="border-border-less mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
-                    {isPriceVisible(cart.totalItemsPriceBeforeDiscount.priceWithVat) && hasTotalDiscounts && (
+                    {isPriceVisible(cart.totalPriceWithoutDiscountTransportAndPayment.priceWithVat) && hasTotalDiscounts && (
                         <div className="flex items-center justify-between">
                             <p>{t('Price before discount')}</p>
 
                             <span className="whitespace-nowrap">
-                                {formatPrice(cart.totalItemsPriceBeforeDiscount.priceWithVat)}
+                                {formatPrice(cart.totalPriceWithoutDiscountTransportAndPayment.priceWithVat)}
                             </span>
                         </div>
                     )}
@@ -72,7 +72,7 @@ export const CartPreview: FC<CartPreviewProps> = ({ wrapperRef }) => {
                         <div className="flex w-full items-center gap-2">
                             <p>{t('Promo code')}</p>
 
-                            <Flag className={hasPromoCodeDiscounts ? '' : 'ml-auto'} type="discount">
+                            <Flag type="discount">
                                 {promoCodes[0].code}
                             </Flag>
 
@@ -88,12 +88,6 @@ export const CartPreview: FC<CartPreviewProps> = ({ wrapperRef }) => {
                             >
                                 {t('Remove')}
                             </button>
-
-                            {hasPromoCodeDiscounts && (
-                                <span className="text-price-discounted ml-auto">
-                                    {'-' + formatPrice(cart.totalPromoCodeDiscountPrice.priceWithVat)}
-                                </span>
-                            )}
                         </div>
                     )}
 
