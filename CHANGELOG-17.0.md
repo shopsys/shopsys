@@ -38,6 +38,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Release notes generated using configuration in .github/release.yml at 17.0 -->
 
+## [v17.0.1](https://github.com/shopsys/shopsys/compare/v17.0.0...v17.0.1) (2025-11-19)
+
+## What's Changed
+
+### :bug: Bug Fixes
+
+- minor fixes in RBAC by @henzigo in https://github.com/shopsys/shopsys/pull/4251
+- doctrine/orm >=2.20.7 marked as conflicting by @grossmannmartin in https://github.com/shopsys/shopsys/commit/a792eb6e1d55caccba2ad506c80b80427810c6ae
+- ensure AccessChecker::hasPermission works properly with single roles by @vitek-rostislav in https://github.com/shopsys/shopsys/commit/5ebce7fe5fd50bac39bc55b7d15a97c8dc253421 and https://github.com/shopsys/shopsys/commit/dbad735d7e69ebbdc619ab5def780456fd41ee92 (backported from https://github.com/shopsys/shopsys/pull/4257)
+- fixed superadmin behavior by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4267
+- customer user now has properly resolved roles no matter the current context by @grossmannmartin in https://github.com/shopsys/shopsys/commit/efe46ce184b455c3ccaeb0aed5d130020030d158
+- moved frontend api roles to the framework bundle by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4270
+
+**Full Changelog**: https://github.com/shopsys/shopsys/compare/v17.0.0...v17.0.1
+
 ## [v17.0.0](https://github.com/shopsys/shopsys/compare/v16.0.0...v17.0.0) (2025-09-10)
 
 ### :construction: Changes that require additional implementation if you are using Frontend API
