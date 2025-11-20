@@ -5,7 +5,7 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
-import { useState } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -19,15 +19,28 @@ const GALLERY_SHOWN_ITEMS_COUNT = 5;
 export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps> = ({ complaintItem, complaint }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
     const galleryAdditionalItemsCount = (complaintItem.files?.length ?? 0) - GALLERY_SHOWN_ITEMS_COUNT;
-    const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
     const complaintOrder = complaintItem.orderItem?.order;
     const { currentCustomerUserUuid, canViewCompanyOrders, canCreateOrder } = useAuthorization();
     const complaintOrderBelongsToCurrentCustomer = complaintOrder?.customerUser?.uuid === currentCustomerUserUuid;
     const hasAccessToOrder = canViewCompanyOrders || (canCreateOrder && complaintOrderBelongsToCurrentCustomer);
+
+    const openGallery = (initialIndex: number) => {
+        if (complaintItem.files && complaintItem.files.length > 0) {
+            updatePortalContent(
+                <ModalGallery
+                    galleryName={complaintItem.productName}
+                    initialIndex={initialIndex}
+                    items={complaintItem.files}
+                    onCloseModal={() => updatePortalContent(null)}
+                />,
+            );
+        }
+    };
 
     return (
         <>
@@ -105,13 +118,13 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                 tabIndex={0}
                                 title={t('Open gallery')}
                                 className={twJoin(
-                                    'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
+                                    'outline-border-default flex w-full cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
                                     isWithAdditionalImages && 'relative',
                                 )}
-                                onClick={() => setSelectedGalleryItemIndex(imagePosition)}
+                                onClick={() => openGallery(imagePosition)}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter' || e.key === ' ') {
-                                        setSelectedGalleryItemIndex(imagePosition);
+                                        openGallery(imagePosition);
                                     }
                                 }}
                             >
@@ -136,15 +149,6 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     );
                 })}
             </ul>
-
-            {selectedGalleryItemIndex !== undefined && complaintItem.files && complaintItem.files.length > 0 && (
-                <ModalGallery
-                    galleryName={complaintItem.productName}
-                    initialIndex={selectedGalleryItemIndex}
-                    items={complaintItem.files}
-                    onCloseModal={() => setSelectedGalleryItemIndex(undefined)}
-                />
-            )}
         </>
     );
 };

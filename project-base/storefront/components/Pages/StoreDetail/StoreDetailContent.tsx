@@ -1,19 +1,15 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Image } from 'components/Basic/Image/Image';
 import { Infobox } from 'components/Basic/Infobox/Infobox';
+import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { StoreContact } from 'components/Blocks/StoreList/StoreContact';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-
-const ModalGallery = dynamic(() =>
-    import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
-);
 
 type StoreDetailContentProps = {
     store: TypeStoreDetailFragment;
@@ -21,8 +17,18 @@ type StoreDetailContentProps = {
 
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const { t } = useTranslation();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
+    const openGallery = (initialIndex: number) => {
+        updatePortalContent(
+            <ModalGallery
+                galleryName={store.storeName}
+                initialIndex={initialIndex}
+                items={store.storeImages}
+                onCloseModal={() => updatePortalContent(null)}
+            />,
+        );
+    };
 
     return (
         <VerticalStack gap="sm">
@@ -100,7 +106,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 tabIndex={0}
                                 title={t('View store image')}
                                 type="button"
-                                onClick={() => setSelectedGalleryItemIndex(index)}
+                                onClick={() => openGallery(index)}
                             >
                                 <Image
                                     alt={image.name || `${t('Store image of')} ${store.storeName} - ${index + 1}`}
@@ -114,15 +120,6 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         ))}
                     </div>
                 </Webline>
-            )}
-
-            {selectedGalleryItemIndex !== undefined && (
-                <ModalGallery
-                    galleryName={store.storeName}
-                    initialIndex={selectedGalleryItemIndex}
-                    items={store.storeImages}
-                    onCloseModal={() => setSelectedGalleryItemIndex(undefined)}
-                />
             )}
         </VerticalStack>
     );

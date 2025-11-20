@@ -7,6 +7,7 @@ import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import { RefObject, createRef, forwardRef, useEffect, useState } from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -85,14 +86,14 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     useFocusTrap(modalRef);
 
     return (
-        <div
-            aria-label={t('Gallery', { ns: 'accessibility' })}
-            aria-modal="true"
-            className="z-maximum bg-background-default focus-visible:outline-background-accent fixed inset-0 flex flex-col p-2 select-none focus-visible:outline-4 focus-visible:outline-offset-[-2px]"
-            ref={modalRef}
-            role="dialog"
-        >
-            <div className="flex w-full flex-1 flex-col justify-center">
+        <RemoveScroll>
+            <div
+                aria-label={t('Gallery', { ns: 'accessibility' })}
+                aria-modal="true"
+                className="z-maximum bg-background-default focus-visible:outline-background-accent fixed inset-0 flex flex-col p-2 select-none focus-visible:outline-4 focus-visible:outline-offset-[-2px]"
+                ref={modalRef}
+                role="dialog"
+            >
                 <div
                     className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center"
                     {...handlers}
@@ -196,7 +197,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
                 <ButtonClose title={t('Close')} onClick={onCloseModal} />
             </div>
-        </div>
+        </RemoveScroll>
     );
 };
 
