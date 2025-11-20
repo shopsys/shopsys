@@ -78,7 +78,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 # install PostgreSQl client for dumping database
 RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] https://apt.postgresql.org/pub/repos/apt/ $DEBIAN_VERSION-pgdg main" | tee /etc/apt/sources.list.d/PostgreSQL.list && \
-    apt-get update && apt-get install -y --no-install-recommends postgresql-client-12 && apt-get clean
+    apt-get update && apt-get install -y --no-install-recommends postgresql-client-17 && apt-get clean
 
 # install redis extension
 RUN pecl install redis-5.3.7 && \
