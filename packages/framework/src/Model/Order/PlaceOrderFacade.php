@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
@@ -25,7 +24,6 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -38,7 +36,6 @@ class PlaceOrderFacade
         protected readonly OrderFactory $orderFactory,
         protected readonly EntityManagerInterface $em,
         protected readonly OrderItemFactory $orderItemFactory,
-        protected readonly OrderMailFacade $orderMailFacade,
         protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
@@ -82,7 +79,6 @@ class PlaceOrderFacade
             $this->newsletterFacade->addSubscribedEmailIfNotExists($order->getEmail(), $order->getDomainId());
         }
 
-        $this->orderMailFacade->sendEmail($order);
         $this->placedOrderMessageDispatcher->dispatchPlacedOrderMessage($order->getId());
 
         return $order;
