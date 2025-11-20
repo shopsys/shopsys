@@ -1,5 +1,3 @@
-version: "3.7"
-
 x-variables:
     common_build_args: &common_build_args
         www_data_uid: 1000
