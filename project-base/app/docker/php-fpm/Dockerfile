@@ -1,4 +1,4 @@
-FROM shopsys/php-image:14.5 as base
+FROM shopsys/php-image:14.5 AS base
 
 ARG project_root=.
 
@@ -9,7 +9,7 @@ COPY ${project_root}/docker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/php
 
 ########################################################################################################################
 
-FROM base as development
+FROM base AS development
 
 USER root
 
@@ -26,7 +26,7 @@ USER www-data
 
 ########################################################################################################################
 
-FROM base as production
+FROM base AS production
 
 ARG project_root=.
 
@@ -41,13 +41,13 @@ RUN php phing build-deploy-part-1-db-independent clean
 
 ########################################################################################################################
 
-FROM production as production-project
+FROM production AS production-project
 
 RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge
 
 ########################################################################################################################
 
-FROM base as ci
+FROM base AS ci
 
 COPY --chown=www-data:www-data / /var/www/html
 
