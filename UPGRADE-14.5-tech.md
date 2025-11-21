@@ -59,3 +59,15 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 -   update Twig to the latest version to prevent security issues
 -   upgrade doctrine/persistence to ^3.3.3
 -   see #project-base-diff to update your project
+
+#### upgrade PostgreSQL version to 17.4 ([#4278](https://github.com/shopsys/shopsys/pull/4278))
+
+-   CAUTION: upgrade and deploy the application BEFORE upgrading the database to PostgreSQL 17.4
+    -   otherwise the application will not work properly
+-   rename reserved database function `normalize` to non-reserved name `normalized`
+    -   create migration to change `normalize()` function to `normalized()` if you had used it in some indexes, functions, or somewhere else
+    -   don't forget to rename this function in SQLs in repositories, commands, or somewhere else where is used
+-   codeception acceptance tests now use pg_restore to dump DB from an SQL file
+    -   `Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider::getConnectionDsn()` method was removed without replacement
+        -   if needed, compose the DSN manually using the provided credentials
+-   see #project-base-diff to update your project
