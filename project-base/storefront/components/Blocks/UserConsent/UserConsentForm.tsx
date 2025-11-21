@@ -1,4 +1,5 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -62,7 +63,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     i18nKey="userConsentPolicyLink"
                     components={{
                         link: userConsentPolicyArticleUrl ? (
-                            <a
+                            <ExtendedNextLink
                                 aria-labelledby="user-consent-policy-link"
                                 href={userConsentPolicyArticleUrl}
                                 rel="noreferrer"

@@ -68,12 +68,7 @@ export const useRegistrationAfterOrderFormMeta = (
                             i18nKey="I agree with terms and conditions and privacy policy"
                             components={{
                                 lnk1: termsAndConditionUrl ? (
-                                    <Link
-                                        isExternal
-                                        className="inline text-sm"
-                                        href={termsAndConditionUrl}
-                                        target="_blank"
-                                    />
+                                    <Link className="inline text-sm" href={termsAndConditionUrl} target="_blank" />
                                 ) : (
                                     <span className={linkPlaceholderTwClass} />
                                 ),
