@@ -145,7 +145,7 @@
         "shopsys/deployment": "^2.1.2",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/ordered-form": "^5.2",
-        "snc/redis-bundle": "^4.4.1",
+        "snc/redis-bundle": "^4.8.0",
         "spatie/opening-hours": "^3.0",
         "stof/doctrine-extensions-bundle": "^1.3.0",
         "symfony-cmf/routing": "^2.0.3",
