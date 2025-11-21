@@ -15,3 +15,14 @@
     grid-template-columns: repeat(auto-fill, 17.5rem);
     column-gap: 1rem;
 }
+
+// add margin to last card to ensure scroll navigation works properly when card height is too low
+#product_form > .card:has(+ .action-bar-bottom) {
+    @include media-breakpoint-up(xl) {
+        margin-bottom: 20vh !important;
+    }
+
+    @include media-breakpoint-up(xxl) {
+        margin-bottom: 50vh !important;
+    }
+}
