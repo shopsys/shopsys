@@ -507,9 +507,9 @@ https://github.com/vrana/adminer/blob/master/readme.txt
 
 ### Elasticsearch
 
-Image: `docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2`  
+Image: `docker.elastic.co/elasticsearch/elasticsearch:7.17.2`  
 License: Apache License 2.0  
-https://github.com/elastic/elasticsearch/blob/v7.10.2/LICENSE.txt
+https://github.com/elastic/elasticsearch/blob/v7.17.2/LICENSE.txt
 
 ### Elasticsearch ICU Analysis plugin
 
@@ -518,9 +518,9 @@ https://github.com/elastic/elasticsearch/blob/master/LICENSE.txt
 
 ### Kibana
 
-Image: `docker.elastic.co/kibana/kibana-oss:7.6.0`  
+Image: `docker.elastic.co/kibana/kibana:7.17.2`  
 License: Apache License 2.0  
-https://github.com/elastic/kibana/blob/v7.6.0/LICENSE.txt
+https://github.com/elastic/kibana/blob/v7.17.2/LICENSE.txt
 
 ### Node
 
