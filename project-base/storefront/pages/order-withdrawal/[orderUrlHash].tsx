@@ -106,6 +106,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 ssrExchange,
                 domainConfig,
                 authenticationConfig: {
+                    authenticationRequired: orderResponse.data.order.customerUser !== null,
                     authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
                 },
             });

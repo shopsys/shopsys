@@ -8,4 +8,7 @@ fragment OrderWithdrawalDataFragment on Order {
     email
     telephone
     canRequestWithdrawal
+    customerUser {
+        billingAddressUuid
+    }
 }

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeOrderWithdrawalDataFragment = { __typename: 'Order', uuid: string, number: string, urlHash: string, firstName: string | null, lastName: string | null, email: string, telephone: string, canRequestWithdrawal: boolean };
+export type TypeOrderWithdrawalDataFragment = { __typename: 'Order', uuid: string, number: string, urlHash: string, firstName: string | null, lastName: string | null, email: string, telephone: string, canRequestWithdrawal: boolean, customerUser: { __typename?: 'CompanyCustomerUser', billingAddressUuid: string } | { __typename?: 'CurrentCompanyCustomerUser', billingAddressUuid: string } | { __typename?: 'CurrentRegularCustomerUser', billingAddressUuid: string } | { __typename?: 'RegularCustomerUser', billingAddressUuid: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -97,5 +97,8 @@ export const OrderWithdrawalDataFragment = gql`
   email
   telephone
   canRequestWithdrawal
+  customerUser {
+    billingAddressUuid
+  }
 }
     `;
