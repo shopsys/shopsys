@@ -62,7 +62,7 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
             }
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = 'productName_' . $index;
-            $queryBuilder->andWhere('NORMALIZE(pt.name) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+            $queryBuilder->andWhere('NORMALIZED(pt.name) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }

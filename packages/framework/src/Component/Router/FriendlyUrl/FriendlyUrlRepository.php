@@ -189,7 +189,7 @@ class FriendlyUrlRepository
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
-                ->andWhere('NORMALIZE(fu.slug) LIKE NORMALIZE(:text)');
+                ->andWhere('NORMALIZED(fu.slug) LIKE NORMALIZED(:text)');
             $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }

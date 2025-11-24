@@ -3,7 +3,7 @@ version: "3.4"
 services:
     postgres:
         restart: always
-        image: postgres:12.1-alpine
+        image: postgres:17.4-alpine
         volumes:
             - postgres-conf:/var/lib/postgresql/conf
         environment:

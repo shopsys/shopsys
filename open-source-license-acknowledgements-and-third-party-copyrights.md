@@ -471,7 +471,7 @@ These images and packages are configured in `docker-compose.yml` and in `Dockerf
 
 ### Postgres
 
-Image: `postgres:12.1-alpine`  
+Image: `postgres:17.4-alpine`  
 License: PostgreSQL License  
 https://www.postgresql.org/about/licence/
 
