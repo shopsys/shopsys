@@ -138,7 +138,7 @@ services:
             - traefik.enable=false
 
     rabbitmq:
-        image: rabbitmq:3.12-management-alpine
+        image: rabbitmq:4.1-management-alpine
         ports:
             - "15672:15672"
 

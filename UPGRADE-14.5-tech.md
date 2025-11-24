@@ -87,3 +87,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 - see #project-base-diff to update your project
 - upgrade `redis` package on the storefront and check your custom code for compatibility
 - if you have installed Review server, then don't forget to update the `redis` service in `docker-compose.yml` to the `7.4-alpine`.
+
+#### upgrade rabbitMQ version ([#4279](https://github.com/shopsys/shopsys/pull/4279))
+
+-   see #project-base-diff to update your project
