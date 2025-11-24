@@ -2172,7 +2172,9 @@ export enum TypeOrderStatusEnum {
   /** In progress */
   InProgress = 'inProgress',
   /** New */
-  New = 'new'
+  New = 'new',
+  /** Withdrawn */
+  Withdrawn = 'withdrawn'
 }
 
 export type TypeOrderWithdrawalRequest = {

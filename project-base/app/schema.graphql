@@ -1754,6 +1754,8 @@ enum OrderStatusEnum {
   inProgress
   "New"
   new
+  "Withdrawn"
+  withdrawn
 }
 
 type OrderWithdrawalRequest {
