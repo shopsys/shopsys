@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\ComposerJsonFileManipulator;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
@@ -30,6 +31,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -44,6 +46,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -69,6 +72,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return [Stage::AFTER_RELEASE];

@@ -15,6 +15,7 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\RemoveLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetFrameworkBundleVersionToDevReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetMutualDependenciesToDevelopmentVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetPhpImageVersionInDockerfileReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\AfterRelease\UpdateVersionInDocsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\VerifyInitialBranchReleaseWorker;
@@ -29,6 +30,7 @@ return [
     SetFrameworkBundleVersionToDevReleaseWorker::class,
     SetMutualDependenciesToDevelopmentVersionReleaseWorker::class,
     SetPhpImageVersionInDockerfileReleaseWorker::class,
+    UpdateVersionInDocsReleaseWorker::class,
     EnableMergingReleaseWorker::class,
     CheckShopsysInstallReleaseWorker::class,
     EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class,

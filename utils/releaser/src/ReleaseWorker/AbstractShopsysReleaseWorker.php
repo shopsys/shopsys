@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use Nette\Utils\Strings;
+use Override;
 use PharIo\Version\Version;
 use RuntimeException;
 use Shopsys\Releaser\Command\SymfonyStyleFactory;
 use Shopsys\Releaser\Process\ProcessRunner;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
@@ -19,10 +21,11 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
     /**
-     * If you modify this list do not forget updating:
-     *      /.ci/monorepo_functions.sh
+     * If you modify this list, do not forget updating:
+     *      /.github/monorepo/monorepo_functions.sh
      *      /docs/introduction/monorepo.md
      *      /CHANGELOG-XX.X.md
+     *      /packages/framework/src/Resources/config/packages_registry.yaml
      *      "replace" section in monorepo's composer.json as well
      *
      * @var string[]
@@ -60,11 +63,11 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     protected string $currentBranchName;
 
     /**
-     * @required
      * @param \Shopsys\Releaser\Command\SymfonyStyleFactory $symfonyStyleFactory
      * @param \Shopsys\Releaser\Process\ProcessRunner $processRunner
      * @throws \Shopsys\Releaser\Exception\ShouldNotHappenException
      */
+    #[Required]
     public function setup(
         SymfonyStyleFactory $symfonyStyleFactory,
         ProcessRunner $processRunner,
@@ -203,6 +206,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
      * @param string $stage
      * @return bool
      */
+    #[Override]
     public function belongToStage(string $stage): bool
     {
         return in_array($stage, $this->getAllowedStages(), true);

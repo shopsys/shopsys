@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
+namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 
-final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
+final class CheckCopyrightYearReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -21,7 +21,7 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return sprintf('[Manually] Enable merging to "%s" branch', $this->currentBranchName);
+        return 'Check that the year in the LICENSE and other files is set correctly to the current year';
     }
 
     /**
@@ -33,13 +33,9 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note(
-            sprintf(
-                'Enable merging to "%s" - let your colleagues know in "team_ssfw" Slack channel.',
-                $this->currentBranchName,
-            ),
-        );
-        $this->confirm(sprintf('Confirm merging to "%s" is enabled.', $this->currentBranchName));
+        $this->symfonyStyle->confirm('Confirm that the year in the LICENSE and other files is set correctly to the current year');
+
+        $this->success();
     }
 
     /**
@@ -48,6 +44,6 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
     #[Override]
     protected function getAllowedStages(): array
     {
-        return [Stage::AFTER_RELEASE];
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

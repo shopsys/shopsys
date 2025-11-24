@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\Tests;
 
 use Iterator;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\Releaser\IntervalEvaluator;
 
@@ -12,6 +13,7 @@ final class IntervalEvaluatorTest extends TestCase
 {
     private IntervalEvaluator $intervalEvaluator;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->intervalEvaluator = new IntervalEvaluator();
@@ -30,7 +32,7 @@ final class IntervalEvaluatorTest extends TestCase
     /**
      * @return \Iterator
      */
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         yield ['v1.1.1', true];
 

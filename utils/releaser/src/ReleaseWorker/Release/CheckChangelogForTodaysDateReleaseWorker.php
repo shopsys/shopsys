@@ -9,6 +9,7 @@ use Nette\IOException;
 use Nette\Utils\DateTime;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
@@ -29,6 +30,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -45,6 +47,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -72,7 +75,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
             return;
         } catch (LogicException) {
-            $this->symfonyStyle->error('Unable to find current release headline in file "%s".');
+            $this->symfonyStyle->error(sprintf(
+                'Unable to find current release headline in file "%s".',
+                $changelogFilePath,
+            ));
             $this->renderCommonError();
 
             return;
@@ -119,6 +125,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return [Stage::RELEASE];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Nette\Utils\FileSystem;
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
@@ -14,6 +15,12 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
+    private const string REGEX_PATTERN_PR_LINK = '/\[#(\d+)\]\(https:\/\/github\.com\/shopsys\/shopsys\/pull\/\d+\)/';
+    private const string SEE_PROJECT_BASE_DIFF_LINE = 'see #project-base-diff to update your project';
+    private const string PROJECT_BASE_DIFF_LINK_TEXT = '[project-base diff]';
+
+    private string $temporaryDirectoryPath;
+
     /**
      * @param \Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator $versionUpgradeFileManipulator
      */
@@ -27,6 +34,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -38,10 +46,15 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
+        $this->processRunner->run(
+            sprintf('php phing -D version=%s upgrade-merge', $version->getMajor()->getValue() . '.' . $version->getMinor()->getValue()),
+        );
+
         $this->updateUpgradeFileWithReleasedVersion($version, $initialBranchName);
 
         $this->success();
@@ -54,15 +67,24 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             - check the correctness of the order of Shopsys packages and sections,
             - check whether there are no duplicated instructions for modifying docker related files,
             - check links whether they point to the repository in the "%s" version
-            - make sure, that every subsection of UPGRADE notes has link to correct pull request
-            - check "see #project-base-diff to update your project" is added to the all the upgrade notes and add the line where it is missing (at least to all the Storefront entries)
-            - replace all occurrences of #project-base-diff with link to project-base commit of the change
-                - you can find the commit hashes quickly by executing following on the project-base repository:
-                  git log --oneline --format="%%H %%s" | grep -E \'\(#[0-9]+\)$\'',
+            - make sure, that every subsection of UPGRADE notes has link to correct pull request',
             $versionString,
         ));
 
         $this->confirm('Confirm that all subsections of UPGRADE notes has their links to correct pull request.');
+
+        $this->symfonyStyle->note(sprintf(
+            '
+Now will run process that automatically replaces #project-base-diff hashes with links.
+During the process you might be asked to fill correct commit SHA1 as it might not be automatically retrieved.
+This command (that needs to be run in project-base repository with %s branch) might help you in looking for correct commit:
+git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_commit_from_pr>"',
+            $initialBranchName,
+        ));
+
+        $this->updateUpgradeNotesWithProjectBaseDiffLinks($initialBranchName, $this->getPathToUpgradeFile($initialBranchName));
+        $this->processRunner->run('php phing markdown-fix');
+
         $this->confirm('Confirm that all #project-base-diff occurrences has been replaced by correct project-base commit links.');
         $this->confirm('Confirm that all upgrading files are ready for the release.');
 
@@ -72,9 +94,41 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return [Stage::RELEASE_CANDIDATE];
+    }
+
+    /**
+     * @param string $initialBranchName
+     * @return string
+     */
+    private function getPathToUpgradeFile(string $initialBranchName): string
+    {
+        return getcwd() . '/UPGRADE-' . $initialBranchName . '.md';
+    }
+
+    /**
+     * @param string $initialBranchName
+     */
+    private function cloneProjectBaseToTemporaryFolder(string $initialBranchName): void
+    {
+        $this->temporaryDirectoryPath = trim($this->processRunner->run('mktemp -d -t shopsys-upgrade-notes-XXXX'));
+
+        $this->processRunner->run(
+            sprintf(
+                'git clone --bare --single-branch --branch=%s %s %s',
+                $initialBranchName,
+                'https://github.com/shopsys/project-base.git',
+                $this->temporaryDirectoryPath,
+            ),
+        );
+    }
+
+    private function clearTemporaryFolder(): void
+    {
+        $this->processRunner->run('rm -rf ' . $this->temporaryDirectoryPath);
     }
 
     /**
@@ -83,7 +137,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function updateUpgradeFileWithReleasedVersion(Version $version, string $initialBranchName): void
     {
-        $upgradeFilePath = getcwd() . '/UPGRADE-' . $initialBranchName . '.md';
+        $upgradeFilePath = $this->getPathToUpgradeFile($initialBranchName);
         $upgradeFileContent = FileSystem::read($upgradeFilePath);
 
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
@@ -201,8 +255,6 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
                     $commitLinesRaw,
                 );
 
-                array_pop($commitLines);
-
                 $commitLinesByPrNumber[$prNumber] = $commitLines;
             } catch (ProcessFailedException) {
                 $commitLinesByPrNumber[$prNumber] = null;
@@ -308,7 +360,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         }
 
         foreach ($commitLinesByPrNumber as $prNumber => $commitLines) {
-            if ($commitLines === null) {
+            if ($commitLines === null || count($commitLines) === 0) {
                 $this->symfonyStyle->warning('For PR #' . $prNumber . ' has been found #project-base-diff hash but no corresponding commit.');
 
                 $commitSha = $this->symfonyStyle->ask('Enter commit SHA1 from project-base repository for PR #' . $prNumber);

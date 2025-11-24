@@ -69,7 +69,7 @@ final class PackageProvider
      */
     private function getPackageVersions(string $package): array
     {
-        $url = 'https://repo.packagist.org/p/' . $package . '.json';
+        $url = 'https://repo.packagist.org/p2/' . $package . '.json';
         $remoteContent = FileSystem::read($url);
         $json = Json::decode($remoteContent, Json::FORCE_ARRAY);
 
@@ -77,7 +77,9 @@ final class PackageProvider
             return [];
         }
 
-        return array_keys($json['packages'][$package]);
+        return array_map(static function ($pkg) {
+            return $pkg['version'];
+        }, $json['packages'][$package]);
     }
 
     /**
