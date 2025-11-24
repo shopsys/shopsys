@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Webmozart\Assert\Assert;
 
 /**
  * @ORM\Table(name="cart_items")
@@ -83,7 +82,7 @@ class CartItem
      */
     public function changeQuantity(int $newQuantity): void
     {
-        if (Assert::integer($newQuantity) === false || $newQuantity <= 0) {
+        if ($newQuantity <= 0) {
             throw new InvalidQuantityException($newQuantity);
         }
 
