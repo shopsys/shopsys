@@ -77,3 +77,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 -   see #project-base-diff to update your project
 -   remember to update your local docker-compose.yml file and rebuild the containers
 -   if necessary, update the CI configuration with the new version of the nginx image
+
+#### remove warnings from docker ([#4277](https://github.com/shopsys/shopsys/pull/4277))
+
+-   see #project-base-diff to update your project
