@@ -58,6 +58,7 @@ class OrderStatusGridFactory implements GridFactoryInterface
             'TYPE_NEW' => OrderStatusTypeEnum::TYPE_NEW,
             'TYPE_DONE' => OrderStatusTypeEnum::TYPE_DONE,
             'TYPE_CANCELED' => OrderStatusTypeEnum::TYPE_CANCELED,
+            'TYPE_WITHDRAWN' => OrderStatusTypeEnum::TYPE_WITHDRAWN,
         ]);
 
         return $grid;

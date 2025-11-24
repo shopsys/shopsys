@@ -17,6 +17,9 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
@@ -61,6 +64,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver $mailDisplayPriceResolver
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -74,6 +78,7 @@ class OrderMail implements MessageFactoryInterface
         protected readonly HiddenPriceExtension $hiddenPriceExtension,
         protected readonly PaymentInstructionFacade $paymentInstructionFacade,
         protected readonly MailDisplayPriceResolver $mailDisplayPriceResolver,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -85,9 +90,21 @@ class OrderMail implements MessageFactoryInterface
     #[Override]
     public function createMessage(MailTemplate $mailTemplate, $order)
     {
+        $toEmail = $order->getEmail();
+        $bccMail = $mailTemplate->getBccEmail();
+
+        if ($mailTemplate->getOrderStatus()?->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN) {
+            $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+            if ($withdrawalRequest !== null) {
+                $bccMail = $this->getBccEmailsForWithdrawal($mailTemplate, $order, $withdrawalRequest);
+                $toEmail = $withdrawalRequest->getEmail();
+            }
+        }
+
         return new MessageData(
-            $order->getEmail(),
-            $mailTemplate->getBccEmail(),
+            $toEmail,
+            $bccMail,
             $mailTemplate->getBody(),
             $mailTemplate->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $order->getDomainId()),
@@ -402,5 +419,25 @@ class OrderMail implements MessageFactoryInterface
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
         ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
+     * @return string[]
+     */
+    protected function getBccEmailsForWithdrawal(
+        MailTemplate $mailTemplate,
+        Order $order,
+        WithdrawalRequest $withdrawalRequest,
+    ): array {
+        $bccEmails = [$mailTemplate->getBccEmail()];
+
+        if ($order->getEmail() !== $withdrawalRequest->getEmail()) {
+            $bccEmails[] = $order->getEmail();
+        }
+
+        return array_filter($bccEmails);
     }
 }

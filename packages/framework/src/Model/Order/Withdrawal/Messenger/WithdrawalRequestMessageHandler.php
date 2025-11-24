@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade;
-use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -15,13 +15,13 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class WithdrawalRequestMessageHandler
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailFacade $withdrawalMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade $withdrawalAdminMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        protected readonly WithdrawalCustomerMailFacade $withdrawalCustomerMailFacade,
+        protected readonly WithdrawalMailFacade $withdrawalMailFacade,
         protected readonly WithdrawalAdminMailFacade $withdrawalAdminMailFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
         protected readonly LoggerInterface $logger,
@@ -36,7 +36,7 @@ class WithdrawalRequestMessageHandler
         try {
             $withdrawalRequest = $this->withdrawalRequestFacade->getById($message->withdrawalRequestId);
 
-            $this->withdrawalCustomerMailFacade->sendEmail($withdrawalRequest);
+            $this->withdrawalMailFacade->sendMail($withdrawalRequest->getOrder());
             $this->logger->info('Withdrawal request email prepared to be sent to customer', [
                 'withdrawalRequestId' => $message->withdrawalRequestId,
             ]);

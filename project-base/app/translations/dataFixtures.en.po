@@ -1885,6 +1885,9 @@ msgstr ""
 msgid "Withdrawal from contract"
 msgstr ""
 
+msgid "Withdrawn"
+msgstr ""
+
 msgid "Xtreamer SW4"
 msgstr ""
 

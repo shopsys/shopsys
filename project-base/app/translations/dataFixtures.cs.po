@@ -1885,6 +1885,9 @@ msgstr "Drátová"
 msgid "Withdrawal from contract"
 msgstr "Odstoupení od smlouvy"
 
+msgid "Withdrawn"
+msgstr "Odstoupeno od smlouvy"
+
 msgid "Xtreamer SW4"
 msgstr "Xtreamer SW4"
 

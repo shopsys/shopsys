@@ -334,7 +334,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_WITHDRAWN, OrderStatus::class);
         $orderData->trackingNumber = '1234567890';
         $orderData->firstName = 'Adam';
         $orderData->lastName = 'Bořič';
@@ -658,7 +658,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_WITHDRAWN, OrderStatus::class);
         $orderData->firstName = 'Václav';
         $orderData->lastName = 'Svěrkoš';
         $orderData->email = 'no-reply@shopsys.com';

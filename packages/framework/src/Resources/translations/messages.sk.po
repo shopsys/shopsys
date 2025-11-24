@@ -3532,6 +3532,9 @@ msgstr "Pokyny po odstúpenie"
 msgid "Withdrawal request details"
 msgstr "Detaily žiadosti o odstúpenie"
 
+msgid "Withdrawn"
+msgstr "Odstúpené od zmluvy"
+
 msgid "XML Feeds"
 msgstr "XML Feedy"
 

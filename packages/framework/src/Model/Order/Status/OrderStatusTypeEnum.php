@@ -12,4 +12,5 @@ class OrderStatusTypeEnum extends AbstractEnum
     public const string TYPE_IN_PROGRESS = 'in_progress';
     public const string TYPE_DONE = 'done';
     public const string TYPE_CANCELED = 'cancelled';
+    public const string TYPE_WITHDRAWN = 'withdrawn';
 }

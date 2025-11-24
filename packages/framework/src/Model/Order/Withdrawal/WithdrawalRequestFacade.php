@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher;
 
@@ -17,6 +19,7 @@ class WithdrawalRequestFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker $withdrawalChecker
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -24,6 +27,7 @@ class WithdrawalRequestFacade
         protected readonly WithdrawalChecker $withdrawalChecker,
         protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
         protected readonly WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher,
+        protected readonly OrderStatusFacade $orderStatusFacade,
     ) {
     }
 
@@ -36,6 +40,8 @@ class WithdrawalRequestFacade
         $this->withdrawalChecker->checkOrderWithdrawal($order);
 
         $withdrawalRequest = $this->createOnly($order, $withdrawalRequestData);
+
+        $this->updateOrderStatusToWithdrawn($order);
 
         $this->withdrawalRequestMessageDispatcher->dispatchWithdrawalCreatedMessage($withdrawalRequest->getId());
     }
@@ -95,5 +101,14 @@ class WithdrawalRequestFacade
         } catch (WithdrawalException) {
             return false;
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     */
+    protected function updateOrderStatusToWithdrawn(Order $order): void
+    {
+        $order->setStatus($this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN));
+        $this->em->flush();
     }
 }

@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalAlreadyRequestedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlinePassedException;
@@ -16,13 +15,11 @@ class WithdrawalChecker
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
      */
     public function __construct(
         protected readonly WithdrawalDeadlineCalculation $withdrawalDeadlineCalculation,
-        protected readonly OrderFacade $orderFacade,
         protected readonly Domain $domain,
         protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
     ) {

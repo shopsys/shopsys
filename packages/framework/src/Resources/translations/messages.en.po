@@ -3532,6 +3532,9 @@ msgstr ""
 msgid "Withdrawal request details"
 msgstr ""
 
+msgid "Withdrawn"
+msgstr ""
+
 msgid "XML Feeds"
 msgstr ""
 

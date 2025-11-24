@@ -1945,6 +1945,9 @@ msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčno
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které byly úspěšně vyřízeny."
 
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders with withdrawal requests."
+msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky s požadavkem na odstoupení od smlouvy."
+
 msgid "This status can't be deleted. This is automatically assigned status to all new complaints."
 msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým reklamacím."
 

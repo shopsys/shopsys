@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
@@ -87,6 +88,9 @@ class OrderMailTest extends TransactionFunctionalTestCase
             ->disableOriginalConstructor()->getMock();
         $mailDisplayPriceResolverMock = $this->getMockBuilder(MailDisplayPriceResolver::class)
             ->disableOriginalConstructor()->getMock();
+        $withdrawalRequestFacadeMock = $this->getMockBuilder(
+            WithdrawalRequestFacade::class,
+        )->disableOriginalConstructor()->getMock();
 
         $orderMail = new OrderMail(
             $settingMock,
@@ -100,6 +104,7 @@ class OrderMailTest extends TransactionFunctionalTestCase
             $hiddenPriceExtensionMock,
             $paymentInstructionFacadeMock,
             $mailDisplayPriceResolverMock,
+            $withdrawalRequestFacadeMock,
         );
 
         $order = $this->getReference('order_1', Order::class);
