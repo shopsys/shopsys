@@ -91,3 +91,10 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 #### upgrade rabbitMQ version ([#4279](https://github.com/shopsys/shopsys/pull/4279))
 
 -   see #project-base-diff to update your project
+
+#### upgrade Elastic and Kibana to version 7.17.2 ([#4283](https://github.com/shopsys/shopsys/pull/4283))
+
+-   update Elasticsearch and Kibana to version 7.17.2 on all your environments
+    -   you can use docker images `docker.elastic.co/elasticsearch/elasticsearch:7.17.2` and `docker.elastic.co/kibana/kibana:7.17.2`
+-   make the same changes in your uncommitted `docker-compose.yml` file and recreate the `elasticsearch` and `kibana` containers
+-   see #project-base-diff to update your project
