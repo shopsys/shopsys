@@ -71,3 +71,9 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
     -   `Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider::getConnectionDsn()` method was removed without replacement
         -   if needed, compose the DSN manually using the provided credentials
 -   see #project-base-diff to update your project
+
+#### upgrade nginx to the new version ([#4276](https://github.com/shopsys/shopsys/pull/4276))
+
+-   see #project-base-diff to update your project
+-   remember to update your local docker-compose.yml file and rebuild the containers
+-   if necessary, update the CI configuration with the new version of the nginx image
