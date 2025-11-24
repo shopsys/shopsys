@@ -3217,6 +3217,9 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
+msgid "The customer has requested a withdrawal from the order with the following details."
+msgstr ""
+
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr ""
 

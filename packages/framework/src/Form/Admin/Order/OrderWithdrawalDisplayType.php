@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
@@ -32,6 +33,10 @@ final class OrderWithdrawalDisplayType extends AbstractType
         $withdrawalRequest = $options['withdrawal_request'];
 
         $builder
+            ->add('withdrawalWarning', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_WARNING,
+                'data' => t('The customer has requested a withdrawal from the order with the following details.'),
+            ])
             ->add('firstName', DisplayOnlyType::class, [
                 'label' => 'First name',
                 'data' => $withdrawalRequest->getFirstName(),

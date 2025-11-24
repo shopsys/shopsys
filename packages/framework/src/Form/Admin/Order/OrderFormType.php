@@ -71,6 +71,13 @@ final class OrderFormType extends AbstractType
         $order = $options['order'];
         $domainId = $order->getDomainId();
         $countries = $this->countryFacade->getAllOnDomain($domainId);
+
+        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+        if ($withdrawalRequest !== null) {
+            $builder->add($this->createWithdrawalRequestGroup($builder, $withdrawalRequest));
+        }
+
         $builder
             ->add($this->createBasicInformationGroup($builder, $order))
             ->add($this->createPersonalDataGroup($builder))
@@ -82,12 +89,6 @@ final class OrderFormType extends AbstractType
                 'order' => $order,
             ])
             ->add($this->createPaymentTransactionsGroup($builder, $order));
-
-        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
-
-        if ($withdrawalRequest !== null) {
-            $builder->add($this->createWithdrawalRequestGroup($builder, $withdrawalRequest));
-        }
 
         $builder
             ->add('actionBar', ActionBarType::class, [

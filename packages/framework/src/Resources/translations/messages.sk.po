@@ -3217,6 +3217,9 @@ msgstr "Testovací e-mail bol odoslaný na %email%."
 msgid "Text"
 msgstr "Text"
 
+msgid "The customer has requested a withdrawal from the order with the following details."
+msgstr "Zákazník požiadal o odstúpenie od objednávky s nasledujúcimi údajmi."
+
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyššia priorita, tým vyššie bude krajina zobrazená v zoznamoch. Krajiny s rovnakou prioritou budú zotriadené alfabeticky."
 
