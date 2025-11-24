@@ -81,7 +81,7 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmo
     apt-get update && apt-get install -y --no-install-recommends postgresql-client-17 && apt-get clean
 
 # install redis extension
-RUN pecl install redis-5.3.7 && \
+RUN pecl install redis && \
     docker-php-ext-enable redis
 
 # install amqp extension
