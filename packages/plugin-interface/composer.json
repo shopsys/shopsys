@@ -2,7 +2,11 @@
     "name": "shopsys/plugin-interface",
     "type": "library",
     "description": "General Shopsys Platform plugin interface",
-    "keywords": ["plugin", "Shopsys Platform", "SSFW"],
+    "keywords": [
+        "plugin",
+        "Shopsys Platform",
+        "SSFW"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +24,7 @@
         "symfony/monolog-bridge": "^5.4.0"
     },
     "require-dev": {
-        "shopsys/coding-standards": "14.5.x-dev"
+        "shopsys/coding-standards": "dev-rc-14-5-0 as 14.5.0"
     },
     "config": {
         "allow-plugins": {
