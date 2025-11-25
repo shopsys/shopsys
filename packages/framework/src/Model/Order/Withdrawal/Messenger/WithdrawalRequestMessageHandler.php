@@ -6,8 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade;
-use Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -15,16 +17,18 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class WithdrawalRequestMessageHandler
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMailFacade $withdrawalMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalAdminMailFacade $withdrawalAdminMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
     public function __construct(
-        protected readonly WithdrawalMailFacade $withdrawalMailFacade,
+        protected readonly OrderMailFacade $orderMailFacade,
         protected readonly WithdrawalAdminMailFacade $withdrawalAdminMailFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
         protected readonly LoggerInterface $logger,
+        protected readonly OrderStatusFacade $orderStatusFacade,
     ) {
     }
 
@@ -35,8 +39,9 @@ class WithdrawalRequestMessageHandler
     {
         try {
             $withdrawalRequest = $this->withdrawalRequestFacade->getById($message->withdrawalRequestId);
+            $withdrawnOrderStatus = $this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN);
 
-            $this->withdrawalMailFacade->sendMail($withdrawalRequest->getOrder());
+            $this->orderMailFacade->sendEmail($withdrawalRequest->getOrder(), $withdrawnOrderStatus);
             $this->logger->info('Withdrawal request email prepared to be sent to customer', [
                 'withdrawalRequestId' => $message->withdrawalRequestId,
             ]);

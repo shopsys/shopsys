@@ -29,10 +29,11 @@ class OrderMailFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      */
-    public function sendEmail(Order $order)
+    public function sendEmail(Order $order, OrderStatus $orderStatus): void
     {
-        $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
+        $mailTemplate = $this->getMailTemplateByStatusAndDomainId($orderStatus, $order->getDomainId());
 
         if (!$mailTemplate->isSendMail()) {
             return;

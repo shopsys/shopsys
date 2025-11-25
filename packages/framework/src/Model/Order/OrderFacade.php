@@ -161,7 +161,7 @@ class OrderFacade
         $this->em->flush();
 
         if ($orderEditResult->isStatusChanged()) {
-            $this->orderMailFacade->sendEmail($order);
+            $this->orderMailFacade->sendEmail($order, $order->getStatus());
             $this->orderDeliveryDateFacade->setDeliveredNowIfNecessary($order);
         }
 
