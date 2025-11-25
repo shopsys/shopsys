@@ -1,10 +1,10 @@
 # Releasing a new version of Shopsys Platform
 
-For releasing a new version of Shopsys Platform, we are leveraging `release` command from [symplify/monorepo-builder](https://github.com/Symplify/MonorepoBuilder) package.
+For releasing a new version of Shopsys Platform, we are leveraging `monorepo:release` command.
 
 All the source codes and configuration of our release process can be found in the `utils/releaser` folder located in the monorepo's root.
 
-Each step of the release process is defined as an implementation of `Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface`,
+Each step of the release process is defined as an implementation of `\Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker`,
 therefore, we refer to the step definitions as to "release workers".
 
 ## Stages
@@ -35,7 +35,7 @@ The whole release process is divided into 3 stages that are run separately:
 To perform a desired stage, run the following command in the `php-fpm` docker container and follow the instructions that you'll be asked in the console.
 
 ```sh
-vendor/bin/monorepo-builder release <release-number> --stage <stage> --initial-branch <initial-branch> -v
+php bin/console monorepo:release <release-number> --stage <stage> --initial-branch <initial-branch> -v
 ```
 
 !!! note
@@ -47,7 +47,7 @@ vendor/bin/monorepo-builder release <release-number> --stage <stage> --initial-b
 If you want only to display a particular stage, along with the release worker class names, add the `--dry-run` argument:
 
 ```sh
-vendor/bin/monorepo-builder release <release-number> --dry-run --stage <stage> --initial-branch <initial-branch> -v
+php bin/console monorepo:release <release-number> --dry-run --stage <stage> --initial-branch <initial-branch> -v
 ```
 
 !!! note

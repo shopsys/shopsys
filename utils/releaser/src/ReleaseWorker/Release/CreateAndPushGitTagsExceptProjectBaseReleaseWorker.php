@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\Release;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\Packagist\PackageProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
@@ -16,7 +17,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      *
      * @var string[]
      */
-    public const EXCLUDED_PACKAGES = [
+    public const array EXCLUDED_PACKAGES = [
         // excluded from the initial tagging as there needs to be another commit with composer.lock and package-lock.json
         // @see https://github.com/shopsys/shopsys/pull/1264
         'shopsys/shopsys',
@@ -35,6 +36,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -46,6 +48,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -165,17 +168,18 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $versionString,
         );
 
-        $headers = get_headers($url, true);
+        $headers = @get_headers($url, true);
 
         return $headers[0] === 'HTTP/1.1 200 OK';
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE;
+        return [Stage::RELEASE];
     }
 
     /**

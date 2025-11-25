@@ -17,6 +17,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -25,11 +26,12 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -44,6 +46,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
             'Instructions for project base preparation:
 
 git clone https://github.com/shopsys/project-base.git
+cd project-base
 git checkout %1$s
 ',
             $branchName,

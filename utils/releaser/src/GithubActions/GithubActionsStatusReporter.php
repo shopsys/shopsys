@@ -15,13 +15,14 @@ final class GithubActionsStatusReporter
      *
      * @var string[]
      */
-    private const EXTRA_PACKAGES = [];
+    private const array EXTRA_PACKAGES = [];
 
     /**
      * Packages that are on Packagist, but the GitHub Actions are not run on them
      */
-    private const IGNORED_PACKAGES = [
+    private const array IGNORED_PACKAGES = [
         'shopsys/deployment',
+        'shopsys/biome-config',
     ];
 
     /**

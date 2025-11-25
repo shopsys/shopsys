@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker;
 
+use Override;
 use PharIo\Version\Version;
 
 abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysReleaseWorker
@@ -12,6 +13,7 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -38,6 +40,7 @@ docker rm $(docker ps -a -q)
 docker rmi --force $(docker images -q)
 
 # install the application following the corresponding installation guide
+see https://docs.shopsys.com/en/latest/installation/installation-guide/
 
 # run the test suites including acceptance tests:
 docker compose exec php-fpm php phing tests tests-acceptance

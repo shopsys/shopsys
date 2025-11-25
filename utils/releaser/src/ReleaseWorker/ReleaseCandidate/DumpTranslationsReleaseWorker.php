@@ -4,26 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
-     */
-    public function __construct(SymfonyStyle $symfonyStyle)
-    {
-        $this->symfonyStyle = $symfonyStyle;
-    }
-
     /**
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -35,6 +28,7 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -67,11 +61,12 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -79,10 +74,10 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function hasOnlyDeletedFiles(): bool
     {
-        $allFilesStatus = $this->getProcessResult(['git', 'status', '-s']);
+        $allFilesStatus = $this->processRunner->run('git status --porcelain');
         $allFilesCount = $this->countFilesInStatus($allFilesStatus);
 
-        $deletedFilesStatus = $this->getProcessResult(['git', 'ls-files', '-d']);
+        $deletedFilesStatus = $this->processRunner->run('git ls-files -d');
         $deletedFilesCount = $this->countFilesInStatus($deletedFilesStatus);
 
         // has only deleted files or has also some modified/added files

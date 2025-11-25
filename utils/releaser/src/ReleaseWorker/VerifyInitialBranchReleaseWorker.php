@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker;
 
+use Override;
 use PharIo\Version\Version;
+use Shopsys\Releaser\Stage;
 
-abstract class AbstractVerifyInitialBranchReleaseWorker extends AbstractShopsysReleaseWorker
+final class VerifyInitialBranchReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -24,6 +27,7 @@ abstract class AbstractVerifyInitialBranchReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -33,5 +37,14 @@ abstract class AbstractVerifyInitialBranchReleaseWorker extends AbstractShopsysR
         );
         $this->symfonyStyle->note(sprintf('Currently, you are on "%s" branch.', $this->currentBranchName));
         $this->confirm('Confirm you are on the proper branch.');
+    }
+
+    /**
+     * @return string[]
+     */
+    #[Override]
+    protected function getAllowedStages(): array
+    {
+        return Stage::getAllStages();
     }
 }

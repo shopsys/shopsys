@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Nette\Utils\Strings;
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Finder\Finder;
 
@@ -16,13 +16,14 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @var string
      */
-    private const TODO_PLACEHOLDER = '<!--- TODO';
+    private const string TODO_PLACEHOLDER = '<!--- TODO';
 
     /**
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -34,6 +35,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -62,7 +64,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
         }
 
         if ($isPassing) {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         } else {
             $this->confirm(
                 sprintf(
@@ -74,11 +76,12 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**

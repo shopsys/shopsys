@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -17,6 +17,7 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -28,6 +29,7 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -45,14 +47,15 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
                 $this->work($version);
             }
         }
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

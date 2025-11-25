@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Nette\Utils\FileSystem;
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -27,6 +26,7 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -38,6 +38,7 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -49,15 +50,16 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
             $version->getVersionString(),
         ));
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -66,10 +68,10 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
     private function updateFrameworkBundleVersion(Version $version): void
     {
         $upgradeFilePath = getcwd() . FrameworkBundleVersionFileManipulator::FRAMEWORK_BUNDLE_VERSION_FILE_PATH;
-        $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
+        $upgradeFileContent = FileSystem::read($upgradeFilePath);
 
         $newUpgradeContent = $this->frameworkBundleVersionFileManipulator->updateFrameworkBundleVersion(
-            $upgradeFileInfo,
+            $upgradeFileContent,
             $version,
         );
 

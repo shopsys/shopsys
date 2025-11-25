@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\GithubActions\GithubActionsStatusReporter;
 
@@ -15,7 +16,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
     /**
      * @var string
      */
-    private const STATUS_SUCCESS = 'success';
+    private const string STATUS_SUCCESS = 'success';
 
     /**
      * @param \Shopsys\Releaser\GithubActions\GithubActionsStatusReporter $githubActionsStatusReporter
@@ -29,6 +30,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -45,6 +47,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -55,7 +58,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         );
         $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
             'shopsys',
-            $this->getBranchName(),
+            $initialBranchName,
             $githubToken,
         );
 

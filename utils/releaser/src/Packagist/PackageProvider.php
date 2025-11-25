@@ -13,7 +13,7 @@ final class PackageProvider
     /**
      * @var string
      */
-    private const PACKAGE_NAMES = 'packageNames';
+    private const string PACKAGE_NAMES = 'packageNames';
 
     /**
      * @param string $organization
@@ -52,7 +52,7 @@ final class PackageProvider
      * @param array $json
      * @param string $url
      */
-    private function ensureIsValidResponse(array $json, string $url)
+    private function ensureIsValidResponse(array $json, string $url): void
     {
         if (isset($json[self::PACKAGE_NAMES])) {
             return;
@@ -69,7 +69,7 @@ final class PackageProvider
      */
     private function getPackageVersions(string $package): array
     {
-        $url = 'https://repo.packagist.org/p/' . $package . '.json';
+        $url = 'https://repo.packagist.org/p2/' . $package . '.json';
         $remoteContent = FileSystem::read($url);
         $json = Json::decode($remoteContent, Json::FORCE_ARRAY);
 
@@ -77,7 +77,9 @@ final class PackageProvider
             return [];
         }
 
-        return array_keys($json['packages'][$package]);
+        return array_map(static function ($pkg) {
+            return $pkg['version'];
+        }, $json['packages'][$package]);
     }
 
     /**

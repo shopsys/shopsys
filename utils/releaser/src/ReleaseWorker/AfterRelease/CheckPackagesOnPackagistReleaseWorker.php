@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\Packagist\PackageProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 
 final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysReleaseWorker
@@ -20,11 +20,12 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    #[Override]
+    protected function getAllowedStages(): array
     {
-        return Stage::AFTER_RELEASE;
+        return [Stage::AFTER_RELEASE];
     }
 
     /**
@@ -32,6 +33,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -43,6 +45,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -68,7 +71,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
 
             $this->confirm('Confirm the missing versions are fixed');
         } else {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         }
     }
 }

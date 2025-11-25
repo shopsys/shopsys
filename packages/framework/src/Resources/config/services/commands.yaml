@@ -11,16 +11,6 @@ services:
         arguments:
             $configFilepath: '%shopsys.domain_urls_config_filepath%'
 
-    Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand:
-        arguments:
-            - '%kernel.project_dir%/web'
-            - '%kernel.environment%'
-
-    Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand:
-        arguments:
-            - '%kernel.project_dir%/web'
-            - '%kernel.environment%'
-
     Shopsys\FrameworkBundle\Command\CreateApplicationDirectoriesCommand:
         arguments:
             $defaultInternalDirectories: '%shopsys.framework.default_internal_directories%'
