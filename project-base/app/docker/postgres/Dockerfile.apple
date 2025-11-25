@@ -1,0 +1,4 @@
+FROM postgres:17.4-alpine
+
+RUN wget -O /var/lib/postgresql/data/postgresql.conf \
+   https://raw.githubusercontent.com/shopsys/shopsys/HEAD/project-base/app/docker/postgres/postgres.conf

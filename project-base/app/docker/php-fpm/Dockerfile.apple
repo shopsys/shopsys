@@ -1,0 +1,106 @@
+FROM shopsys/php-image:17.0 AS base
+
+ARG project_root=.
+ENV PHPSTAN_MAX_PROCS 8
+
+USER root
+
+# copy custom php.ini configuration
+# TODO - Restore this when buidl context for Apple Container is working with context correctly
+# COPY ${project_root}/docker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/php.ini
+
+# Download php-ini-overrides.ini directly from GitHub
+RUN wget -O /usr/local/etc/php/php.ini \
+   https://raw.githubusercontent.com/shopsys/shopsys/HEAD/project-base/app/docker/php-fpm/php-ini-overrides.ini
+
+# Your can add your custom commands here (e.g. installing additional PHP extensions)
+
+RUN apk add --no-cache \
+        libxslt-dev \
+    && docker-php-ext-install xsl
+
+USER www-data
+
+########################################################################################################################
+
+FROM base AS production_builder
+USER root
+
+# Copy project source code
+COPY --chown=www-data:www-data / /var/www/html
+
+USER www-data
+RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev \
+    && php phing build-deploy-part-1-db-independent clean
+
+RUN rm -rf /var/www/html/node_modules
+
+RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge || true # Hack for monorepo to continue build
+
+########################################################################################################################
+##################################### Production stage #################################################################
+########################################################################################################################
+FROM base AS production
+
+# Copy PHP-FPM configuration
+# TODO - Restore this when buidl context for Apple Container is working with context correctly
+# COPY ${project_root}/docker/php-fpm/production-www.conf /usr/local/etc/php-fpm.d/www.conf
+# Download production www.conf from GitHub
+
+USER root
+
+RUN wget -O /usr/local/etc/php-fpm.d/www.conf \
+    https://raw.githubusercontent.com/shopsys/shopsys/HEAD/project-base/app/docker/php-fpm/production-www.conf
+
+USER www-data
+COPY --from=production_builder /var/www/html/ /var/www/html/
+
+########################################################################################################################
+##################################### Development stage ################################################################
+########################################################################################################################
+FROM base AS development
+USER root
+ARG www_data_uid
+ARG www_data_gid
+
+RUN apk add --no-cache \
+    git \
+    linux-headers \
+    mc \
+    nodejs \
+    npm \
+    shadow
+
+RUN if [ -n "${www_data_gid}" ] && ! getent group ${www_data_gid} >/dev/null; then \
+        if getent group www-data >/dev/null; then groupmod -g ${www_data_gid} www-data; fi; \
+    fi && \
+    if [ -n "${www_data_uid}" ] && ! id -u ${www_data_uid} >/dev/null; then \
+        if id -u www-data >/dev/null; then usermod -u ${www_data_uid} www-data; fi; \
+    fi
+
+USER www-data
+
+########################################################################################################################
+##################################### Development with blackfire ##########################
+########################################################################################################################
+FROM development AS development_blackfire
+USER root
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+&& architecture=$(uname -m) \
+&& curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/alpine/$architecture/$version \
+&& mkdir -p /tmp/blackfire \
+&& tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+&& mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
+&& printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
+&& rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
+
+RUN mkdir -p /tmp/blackfire \
+    && architecture=$(uname -m) \
+    && curl -A "Docker" -L https://blackfire.io/api/v1/releases/cli/linux/$architecture | tar zxp -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
+    && rm -Rf /tmp/blackfire
+
+
+# Please note that the Blackfire Probe is dependent on the session module.
+# If it isn't present in your install, you will need to enable it yourself.
+USER www-data
