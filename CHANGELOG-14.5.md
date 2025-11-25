@@ -1,4 +1,4 @@
-# Changelog for 14.5.0-tech.X
+# Changelog for 14.5.0 (Technology Update Release)
 
 All notable changes that change in some way the behavior of any of our packages are maintained by the monorepo repository.
 
@@ -33,6 +33,29 @@ You can see all the changes done to the package that you carry about with this t
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
 <!-- Add generated changelog below this line -->
-<!-- Release notes generated using configuration in .github/release.yml at 14.0 -->
 
-## [v14.5.0-tech.1](https://github.com/shopsys/shopsys/compare/v14.0.1...v14.5.0-tech.1) (2025-11-30)
+## [v14.5.0](https://github.com/shopsys/shopsys/compare/v14.0.1...v14.5.0) (2025-11-26)
+
+<!-- Release notes generated using configuration in .github/release.yml at 14.5 -->
+
+## What's Changed
+
+### :hammer: Developer experience and refactoring
+
+-   removed docker deprecations by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4277
+
+### :cloud: Infrastructure
+
+-   upgraded PostgreSQL to version 17.4 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4278
+-   upgraded Nginx to version 1.29 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4276
+-   upgraded Redis by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4280
+-   upgraded RabbitMQ by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4279
+-   upgraded Elasticsearch and Kibana by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4283
+-   upgraded shopsys/deployment package by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4285
+
+### :placard: Upgraded Dependencies
+
+-   bump doctrine/persistence and twig/twig by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4275
+-   Update BE Node version from 16 to 24 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/4282
+
+**Full Changelog**: https://github.com/shopsys/shopsys/compare/v14.0.1...v14.5.0
