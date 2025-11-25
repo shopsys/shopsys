@@ -5,7 +5,7 @@ front_customer_order_detail_unregistered:
     path: /detail-objednavky/{urlHash}
 
 front_login:
-    path: /prihlaseni
+    path: /prihlasenie
 
 front_logout:
     # controller's action is unnecessary, because firewall processes whole request
@@ -25,7 +25,7 @@ front_customer_activation:
     path: /potvrdenie-registracie
 
 front_brand_list:
-    path: /prehled-znacek
+    path: /prehlad-znaciek
 
 front_personal_data:
     path: /prehlad-osobnych-udajov
@@ -40,4 +40,4 @@ front_stores:
     path: /obchodne-domy
 
 front_complaint_detail:
-    path: /zakaznik/detail-reklamace
+    path: /zakaznik/detail-reklamacie
