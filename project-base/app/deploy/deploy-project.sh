@@ -54,7 +54,7 @@ function deploy() {
         ["DATA_BRIDGE_PASSWORD"]=${DATA_BRIDGE_PASSWORD}
 
         ["S3_ENDPOINT"]=${S3_ENDPOINT}
-        ["S3_ACCESS_KEY"]=${S3_ACCESS_KEY}
+        ["S3_ACCESS_KEY"]=${PROJECT_NAME}
         ["S3_SECRET"]=${S3_SECRET}
         ["S3_REGION"]=${S3_REGION}
         ["S3_BUCKET_NAME"]=${PROJECT_NAME}
@@ -114,7 +114,6 @@ function deploy() {
     source "${DEPLOY_TARGET_PATH}/functions.sh"
     source "${DEPLOY_TARGET_PATH}/parts/domains.sh"
     source "${DEPLOY_TARGET_PATH}/parts/domain-rabbitmq-management.sh"
-    source "${BASE_PATH}/deploy/parts/whitelist-ip.sh"
     source "${DEPLOY_TARGET_PATH}/parts/environment-variables.sh"
     source "${DEPLOY_TARGET_PATH}/parts/kubernetes-variables.sh"
     source "${DEPLOY_TARGET_PATH}/parts/cron.sh"

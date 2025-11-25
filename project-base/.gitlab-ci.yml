@@ -15,8 +15,8 @@ stages:
         -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
 
 variables:
-    TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}
-    STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-storefront
+    TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}
+    STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}-storefront
     HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
     HOSTS: ${HOST}, cs.${HOST}
     COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
@@ -99,6 +99,9 @@ tests:functional-and-acceptance:
     <<: *only-default
     tags:
         - tests
+    needs:
+        - build
+        - build-storefront
     script:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker compose up -d
@@ -239,7 +242,7 @@ service:merge_request:
 
 .deploy: &deploy
     image:
-        name: shopsys/kubernetes-buildpack:1.1
+        name: shopsys/kubernetes-buildpack:1.2
     stage: deploy
     needs:
         - build
@@ -262,7 +265,7 @@ deploy:production:
     <<: *deploy
     resource_group: deploy_production
     variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_PROD}
+        KUBE_CONFIG: ${KUBE_PROD}
     rules:
         -   if: '$MIRROR_ONLY == "true"'
             when: never
@@ -283,7 +286,7 @@ deploy:devel:
     <<: *deploy
     resource_group: deploy_devel
     variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
+        KUBE_CONFIG: ${KUBE_DEV}
     rules:
         -   if: '$MIRROR_ONLY == "true"'
             when: never
@@ -300,7 +303,7 @@ deploy:alpha:
     <<: *deploy
     resource_group: deploy_alpha
     variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
+        KUBE_CONFIG: ${KUBE_DEV}
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
@@ -314,7 +317,7 @@ deploy:alpha:
 test:gatling:
     stage: test
     image:
-        name: shopsys/kubernetes-buildpack:1.1
+        name: shopsys/kubernetes-buildpack:1.2
     tags:
         - tests
     variables:

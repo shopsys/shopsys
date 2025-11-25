@@ -98,3 +98,14 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
     -   you can use docker images `docker.elastic.co/elasticsearch/elasticsearch:7.17.2` and `docker.elastic.co/kibana/kibana:7.17.2`
 -   make the same changes in your uncommitted `docker-compose.yml` file and recreate the `elasticsearch` and `kibana` containers
 -   see #project-base-diff to update your project
+
+#### upgrade shopsys/deployment package ([#4285](https://github.com/shopsys/shopsys/pull/4285))
+
+-   before upgrading the deployment package, look closely at the changes in the deployment package: https://github.com/shopsys/deployment/compare/v2.1.0...v4.2.0
+-   some manifests were updated and require a newer version of Kubernetes
+-   upgrade the deployment package to version 4.2.0:
+    -   in your `app/composer.json` upgrade version of `shopsys/deployment` package:
+    -   run `composer update shopsys/deployment`
+    -   look at the changes in the deployment package and apply them to your project: https://github.com/shopsys/deployment/blob/main/UPGRADE.md
+-   use `WHITELIST_IPS` variable to define whitelist IPs for ingress. See: https://github.com/shopsys/deployment?tab=readme-ov-file#whitelist-ip-addresses
+-   see #project-base-diff to update your project
