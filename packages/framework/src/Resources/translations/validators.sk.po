@@ -205,6 +205,9 @@ msgstr "Heslo nemôže byť rovnaké ako časť e-mailu pred znakom @"
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
 
+msgid "Phone number cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Please choose advertisement area"
 msgstr "Prosím, vyberte reklamný priestor"
 

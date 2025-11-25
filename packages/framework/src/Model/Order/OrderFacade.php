@@ -28,7 +28,9 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -50,7 +52,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -79,13 +81,14 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDeliveryDateFacade $orderDeliveryDateFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
         protected readonly OrderRepository $orderRepository,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
-        protected readonly OrderStatusRepository $orderStatusRepository,
+        protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly OrderHashGeneratorRepository $orderHashGeneratorRepository,
         protected readonly Setting $setting,
@@ -114,6 +117,7 @@ class OrderFacade
         protected readonly OrderProcessor $orderProcessor,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly OrderDeliveryDateFacade $orderDeliveryDateFacade,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -174,7 +178,31 @@ class OrderFacade
 
         $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
 
+        $this->processWithdrawalRequest($order, $orderData);
+
         return $order;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     */
+    protected function processWithdrawalRequest(Order $order, OrderData $orderData): void
+    {
+        if ($orderData->withdrawalRequestData === null) {
+            return;
+        }
+
+        $existingWithdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+        if ($existingWithdrawalRequest !== null) {
+            $this->withdrawalRequestFacade->edit(
+                $existingWithdrawalRequest->getId(),
+                $orderData->withdrawalRequestData,
+            );
+        } elseif ($orderData->status === $this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN)) {
+            $this->withdrawalRequestFacade->createOnly($order, $orderData->withdrawalRequestData);
+        }
     }
 
     /**

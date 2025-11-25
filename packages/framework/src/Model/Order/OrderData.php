@@ -235,6 +235,11 @@ class OrderData
     public $trackingNumber;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData|null
+     */
+    public $withdrawalRequestData;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public $totalPrice;

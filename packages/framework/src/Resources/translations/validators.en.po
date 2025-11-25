@@ -205,6 +205,9 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr ""
 
+msgid "Phone number cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Please choose advertisement area"
 msgstr ""
 

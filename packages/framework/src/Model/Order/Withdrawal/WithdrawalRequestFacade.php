@@ -6,10 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalException;
-use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher;
 
 class WithdrawalRequestFacade
 {
@@ -18,32 +15,13 @@ class WithdrawalRequestFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFactory $withdrawalRequestFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker $withdrawalChecker
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestRepository $withdrawalRequestRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly WithdrawalRequestFactory $withdrawalRequestFactory,
         protected readonly WithdrawalChecker $withdrawalChecker,
         protected readonly WithdrawalRequestRepository $withdrawalRequestRepository,
-        protected readonly WithdrawalRequestMessageDispatcher $withdrawalRequestMessageDispatcher,
-        protected readonly OrderStatusFacade $orderStatusFacade,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
-     */
-    public function createWithdrawalRequest(Order $order, WithdrawalRequestData $withdrawalRequestData): void
-    {
-        $this->withdrawalChecker->checkOrderWithdrawal($order);
-
-        $withdrawalRequest = $this->createOnly($order, $withdrawalRequestData);
-
-        $this->updateOrderStatusToWithdrawn($order);
-
-        $this->withdrawalRequestMessageDispatcher->dispatchWithdrawalCreatedMessage($withdrawalRequest->getId());
     }
 
     /**
@@ -56,6 +34,22 @@ class WithdrawalRequestFacade
         $withdrawalRequest = $this->withdrawalRequestFactory->create($order, $withdrawalRequestData);
 
         $this->em->persist($withdrawalRequest);
+        $this->em->flush();
+
+        return $withdrawalRequest;
+    }
+
+    /**
+     * @param int $withdrawalRequestId
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
+     * @return \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest
+     */
+    public function edit(int $withdrawalRequestId, WithdrawalRequestData $withdrawalRequestData): WithdrawalRequest
+    {
+        $withdrawalRequest = $this->withdrawalRequestRepository->getById($withdrawalRequestId);
+
+        $withdrawalRequest->edit($withdrawalRequestData);
+
         $this->em->flush();
 
         return $withdrawalRequest;
@@ -101,14 +95,5 @@ class WithdrawalRequestFacade
         } catch (WithdrawalException) {
             return false;
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    protected function updateOrderStatusToWithdrawn(Order $order): void
-    {
-        $order->setStatus($this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN));
-        $this->em->flush();
     }
 }

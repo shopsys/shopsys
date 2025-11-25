@@ -33,7 +33,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
@@ -104,7 +105,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(OrderNumberSequenceRepository::class),
             $orderRepositoryMock,
             $this->createMock(OrderUrlGenerator::class),
-            $this->createMock(OrderStatusRepository::class),
+            $this->createMock(OrderStatusFacade::class),
             $this->createMock(OrderMailFacade::class),
             $this->createMock(OrderHashGeneratorRepository::class),
             $this->createMock(Setting::class),
@@ -133,6 +134,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(OrderProcessor::class),
             $this->createMock(PaymentFacade::class),
             $this->createMock(OrderDeliveryDateFacade::class),
+            $this->createMock(WithdrawalRequestFacade::class),
         );
     }
 

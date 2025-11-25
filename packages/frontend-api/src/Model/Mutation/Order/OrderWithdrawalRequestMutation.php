@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\OrderCancelledExcep
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalAlreadyRequestedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\Exception\WithdrawalDeadlinePassedException;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Order\WithdrawalRequestApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderCancelledUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\WithdrawalAlreadyRequestedUserError;
@@ -23,13 +23,13 @@ class OrderWithdrawalRequestMutation extends AbstractMutation
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\WithdrawalRequestApiFacade $withdrawalRequestApiFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
-        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        protected readonly WithdrawalRequestApiFacade $withdrawalRequestApiFacade,
         protected readonly Domain $domain,
         protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,
     ) {
@@ -46,7 +46,7 @@ class OrderWithdrawalRequestMutation extends AbstractMutation
         try {
             $order = $this->orderFacade->getByUrlHashAndDomain($input['orderUrlHash'], $this->domain->getId());
             $withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromArray($input);
-            $this->withdrawalRequestFacade->createWithdrawalRequest($order, $withdrawalRequestData);
+            $this->withdrawalRequestApiFacade->createWithdrawalRequest($order, $withdrawalRequestData);
 
             return true;
         } catch (OrderNotFoundException) {

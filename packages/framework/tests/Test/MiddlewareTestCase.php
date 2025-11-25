@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -47,10 +49,15 @@ class MiddlewareTestCase extends TestCase
         $paymentTransactionRefundDataFactory = $this->createMock(PaymentTransactionRefundDataFactory::class);
         $orderItemDataFactory = $this->createMock(OrderItemDataFactory::class);
 
+        $withdrawalRequestDataFactory = $this->createMock(WithdrawalRequestDataFactory::class);
+        $withdrawalRequestFacade = $this->createMock(WithdrawalRequestFacade::class);
+
         $orderDataFactory = new OrderDataFactory(
             $orderItemDataFactory,
             $paymentTransactionRefundDataFactory,
             $orderItemTypeEnum,
+            $withdrawalRequestDataFactory,
+            $withdrawalRequestFacade,
         );
         $orderData = $orderDataFactory->create();
 

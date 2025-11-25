@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
@@ -16,11 +18,15 @@ class OrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
         protected readonly OrderItemTypeEnum $orderItemTypeEnum,
+        protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -125,6 +131,12 @@ class OrderDataFactory
         $orderData->trackingNumber = $order->getTrackingNumber();
         $orderData->promoCode = $order->getPromoCode();
         $orderData->freeTransportAndPaymentApplied = $order->isFreeTransportAndPaymentApplied();
+
+        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+        if ($withdrawalRequest !== null) {
+            $orderData->withdrawalRequestData = $this->withdrawalRequestDataFactory->createFromWithdrawalRequest($withdrawalRequest);
+        }
     }
 
     /**

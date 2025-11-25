@@ -89,6 +89,14 @@ class WithdrawalRequest
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData $withdrawalRequestData
+     */
+    public function edit(WithdrawalRequestData $withdrawalRequestData): void
+    {
+        $this->setData($withdrawalRequestData);
+    }
+
+    /**
      * @return int
      */
     public function getId()

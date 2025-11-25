@@ -17,13 +17,16 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\OrderItemsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
@@ -72,12 +75,6 @@ final class OrderFormType extends AbstractType
         $domainId = $order->getDomainId();
         $countries = $this->countryFacade->getAllOnDomain($domainId);
 
-        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
-
-        if ($withdrawalRequest !== null) {
-            $builder->add($this->createWithdrawalRequestGroup($builder, $withdrawalRequest));
-        }
-
         $builder
             ->add($this->createBasicInformationGroup($builder, $order))
             ->add($this->createPersonalDataGroup($builder))
@@ -119,6 +116,17 @@ final class OrderFormType extends AbstractType
                         $validationGroups[] = static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS;
                     }
 
+                    /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
+                    $order = $form->getConfig()->getOption('order');
+                    $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+                    if (
+                        $withdrawalRequest !== null ||
+                        $orderData->status?->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN
+                    ) {
+                        $validationGroups[] = OrderWithdrawalFormType::VALIDATION_GROUP_WITHDRAWAL_REQUIRED;
+                    }
+
                     return $validationGroups;
                 },
             ]);
@@ -135,6 +143,15 @@ final class OrderFormType extends AbstractType
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => 'Basic information',
         ]);
+        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+        if ($withdrawalRequest !== null) {
+            $builderBasicInformationGroup
+                ->add('withdrawalWarning', MessageType::class, [
+                    'message_level' => MessageType::MESSAGE_LEVEL_WARNING,
+                    'data' => t('There is a withdrawal request for this order.'),
+                ]);
+        }
 
         $builderBasicInformationGroup
             ->add('id', DisplayOnlyType::class, [
@@ -173,9 +190,19 @@ final class OrderFormType extends AbstractType
                 'choices' => $this->orderStatusFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'choice_attr' => function (OrderStatus $orderStatus) {
+                    return [
+                        'data-js-order-status-type' => $orderStatus->getType(),
+                    ];
+                },
                 'multiple' => false,
                 'expanded' => false,
+                'attr' => [
+                    'data-js-order-status-select' => null,
+                ],
             ]);
+
+        $builderBasicInformationGroup->add($this->createWithdrawalRequestGroup($builderBasicInformationGroup, $withdrawalRequest));
 
         if ($order->getCreatedAsAdministrator() || $order->getCreatedAsAdministratorName()) {
             $builderBasicInformationGroup
@@ -612,20 +639,29 @@ final class OrderFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest|null $withdrawalRequest
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createWithdrawalRequestGroup(
         FormBuilderInterface $builder,
-        WithdrawalRequest $withdrawalRequest,
+        ?WithdrawalRequest $withdrawalRequest,
     ): FormBuilderInterface {
+        $rowAttr = [
+            'data-withdrawal-request-exists' => $withdrawalRequest !== null ? 'true' : 'false',
+        ];
+
+        if ($withdrawalRequest === null) {
+            $rowAttr['style'] = 'display: none;';
+        }
+
         $builderWithdrawalRequestGroup = $builder->create('withdrawalRequestGroup', GroupType::class, [
             'label' => 'Withdrawal Request',
+            'row_attr' => $rowAttr,
         ]);
 
         $builderWithdrawalRequestGroup
-            ->add('withdrawalRequest', OrderWithdrawalDisplayType::class, [
-                'withdrawal_request' => $withdrawalRequest,
+            ->add('withdrawalRequestData', OrderWithdrawalFormType::class, [
+                'label' => false,
             ]);
 
         return $builderWithdrawalRequestGroup;

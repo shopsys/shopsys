@@ -3217,9 +3217,6 @@ msgstr "Testovací e-mail bol odoslaný na %email%."
 msgid "Text"
 msgstr "Text"
 
-msgid "The customer has requested a withdrawal from the order with the following details."
-msgstr "Zákazník požiadal o odstúpenie od objednávky s nasledujúcimi údajmi."
-
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyššia priorita, tým vyššie bude krajina zobrazená v zoznamoch. Krajiny s rovnakou prioritou budú zotriadené alfabeticky."
 
@@ -3231,6 +3228,9 @@ msgstr "Optimálna veľkosť ikony je 46x26 px. Povolený je len PNG formát."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové množstvá sú nastavené pre varianty produktu osobne."
+
+msgid "There is a withdrawal request for this order."
+msgstr "Pre túto objednávku evidujeme žiadosť o odstúpenie od zmluvy."
 
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Pri uklade dšla chyba. Objednávka nie je uložená."

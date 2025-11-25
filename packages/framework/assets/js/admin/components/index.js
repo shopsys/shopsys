@@ -33,6 +33,7 @@ import './NumberSlider';
 import './OpeningHoursCollection';
 import './OrderItems';
 import './OrderTransportAndPaymentPrefiller';
+import './OrderWithdrawal';
 import './Parameters';
 import './Payment';
 import './Product';
