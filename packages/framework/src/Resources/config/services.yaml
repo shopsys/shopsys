@@ -209,7 +209,7 @@ services:
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier:
         arguments:
             $environment: '%kernel.environment%'
-            $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
+            $forceElasticLimit: '%env(bool:FORCE_ELASTIC_LIMITS)%'
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry:
         arguments:
