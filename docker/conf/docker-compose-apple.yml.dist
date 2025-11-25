@@ -1,11 +1,11 @@
 services:
     postgres:
         build:
-            context: app
-            dockerfile: app/docker/postgres/Dockerfile.apple
+            context: project-base/app
+            dockerfile: project-base/app/docker/postgres/Dockerfile.apple
         container_name: postgres
         volumes:
-            - postgres-data:/var/lib/postgresql/data
+            - /private/var/www/shopsys/project-base/app/var/postgres-data:/var/lib/postgresql/data
         environment:
             PGDATA: /var/lib/postgresql/data/pgdata
             POSTGRES_USER: root
@@ -16,14 +16,14 @@ services:
 
     webserver:
         build:
-            context: app
-            dockerfile: app/docker/nginx/Dockerfile.apple
+            context: project-base/app
+            dockerfile: project-base/app/docker/nginx/Dockerfile.apple
         container_name: webserver
         depends_on:
             - php-fpm
             - storefront
         volumes:
-            - /private/var/www/globus/app:/var/www/html
+            - /private/var/www/shopsys/project-base/app:/var/www/html
         ports:
             - "8000:8080"
         platform: linux/arm64
@@ -31,18 +31,19 @@ services:
 
     storefront:
         restart: always
-        image: node:20-alpine3.17
+        build:
+            context: project-base/app
+            dockerfile: project-base/storefront/docker/dev.Dockerfile
+            target: development
         container_name: storefront
-        working_dir: /home/node/app
+        command: # Optional
+            - dev # change to `- build` if you want to test application build
         volumes:
-            - /private/var/www/globus/storefront:/home/node/app
+            - /private/var/www/shopsys/project-base/storefront:/home/node/app
         ports:
             - "3000:3000"
-        environment:
-            APP_ENV: development
-            NEXT_TELEMETRY_DISABLED: 1
-            NEXT_PUBLIC_GRAPHQL_ENDPOINT: http://webserver:8080/graphql/
-        command: ["/bin/sh", "-c", "corepack enable && corepack prepare --activate pnpm@9.0.5 && pnpm install && pnpm run dev"]
+            - "9229:9229"
+            - "9230:9230"
         platform: linux/arm64
         dns_search: shopsys
 
@@ -86,53 +87,50 @@ services:
         #
     php-fpm:
         build:
-            context: app
-            dockerfile: app/docker/php-fpm/Dockerfile.apple
+            context: project-base/app
+            dockerfile: project-base/app/docker/php-fpm/Dockerfile.apple
             target: development
             args:
-                www_data_uid: 1000
-                www_data_gid: 1000
-                project_root: /private/var/www/globus/app
+                www_data_uid: 501
+                www_data_gid: 20
+                project_root: /private/var/www/shopsys/project-base/app
         container_name: php-fpm
+        volumes:
+            - /private/var/www/globus/app:/var/www/html
+        environment:
+            LOCAL_PATH_TO_PROJECT_ROOT: /var/www/html
+        ports:
+            - "35729:35729"
         deploy:
             resources:
                 limits:
                     cpus: 8
                     memory: 9000M
-        volumes:
-            - /private/var/www/globus/app:/var/www/html
-        ports:
-            - "35729:35729"
-            - "9000:9000"
-        depends_on:
-            - postgres
-            - redis
         platform: linux/arm64
         dns_search: shopsys
 
     php-consumer:
         restart: always
         build:
-            context: app
-            dockerfile: app/docker/php-fpm/Dockerfile.apple
+            context: project-base/app
+            dockerfile: project-base/app/docker/php-fpm/Dockerfile.apple
             target: development
             args:
-                www_data_uid: 1000
-                www_data_gid: 1000
-                project_root: /private/var/www/globus/app
+                www_data_uid: 501
+                www_data_gid: 20
+                project_root: /private/var/www/shopsys/project-base/app
         depends_on:
             - php-fpm
             - rabbitmq
         container_name: php-consumer
-        working_dir: /var/www/html
         volumes:
-            - /private/var/www/globus/app:/var/www/html
+            - /private/var/www/shopsys/project-base/app:/var/www/html
         entrypoint: ["/bin/sh", "/var/www/html/docker/php-fpm/consumer-entrypoint.sh"]
         platform: linux/arm64
         dns_search: shopsys
 
     rabbitmq:
-        image: rabbitmq:3.12-management-alpine
+        image: rabbitmq:4.1-management-alpine
         container_name: rabbitmq
         ports:
             - "15672:15672"
@@ -184,15 +182,20 @@ services:
 
     elasticsearch:
         build:
-            context: app
-            dockerfile: app/docker/elasticsearch/Dockerfile
+            context: project-base/app
+            dockerfile: project-base/app/docker/elasticsearch/Dockerfile
         container_name: elasticsearch
+        ulimits:
+            nofile:
+                soft: 65536
+                hard: 65536
         ports:
             - "9200:9200"
         volumes:
-            - elasticsearch-data:/usr/share/elasticsearch/data
+            - /private/var/www/shopsys/project-base/app/var/elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             discovery.type: single-node
+                - bootstrap.memory_lock=true
             ES_JAVA_OPTS: "-Xms1g -Xmx1g"
         deploy:
             resources:
