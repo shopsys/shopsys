@@ -1,6 +1,6 @@
 ARG LINUX_DISTRIBUTION=alpine
 ARG project_root='/'
-ARG NODE_MAJOR=20
+ARG NODE_MAJOR=24
 ARG PHP_VERSION=8.3
 
 # Node and Composer are already installed in the node_builder and composer_builder stages
