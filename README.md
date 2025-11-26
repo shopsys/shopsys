@@ -38,7 +38,7 @@ Shopsys Platform is a fully functional e-commerce solution with all the basic fu
 -   Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
 -   Basic GraphQL Front-end API for implementation of own front-end and PWA
 
-### Plans for next releases
+### Plans for the next releases
 
 An overview of our goals and priorities can be found in our [Shopsys Platform Roadmap](https://www.shopsys.com/product-roadmap/)
 
