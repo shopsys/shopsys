@@ -279,3 +279,30 @@ Value for the field is resolved by one of the previously mentioned field mapper 
 - `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`
 
 Methods are searched in the order above and if the corresponding method does not exist, resolving falls back to the default (see `Overblog\GraphQLBundle\Resolver\FieldResolver` class).
+
+### Overriding GraphQL Input Validation
+
+When you define a `validation` section in your project's GraphQL type that inherits from a framework decorator, the validation array is **replaced entirely**, not merged.
+Your custom constraints will only work if you also include all the framework's original constraints.
+
+!!! warning
+
+    Framework constraints must be listed first, before your custom ones.
+
+```yaml
+# project-base/app/config/graphql/types/.../YourInput.types.yaml
+YourInput:
+    type: input-object
+    inherits:
+        - 'FrameworkInputDecorator'
+    config:
+        validation:
+            # Framework constraints FIRST
+            - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint: ~
+            # Your custom constraints AFTER
+            - App\Component\Constraints\YourCustomConstraint: ~
+```
+
+!!! note
+
+    Check the corresponding decorator file in `packages/frontend-api/src/Resources/config/graphql-types/` to see which constraints you need to include.
