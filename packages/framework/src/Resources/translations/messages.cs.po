@@ -424,15 +424,6 @@ msgstr "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla
 msgid "Blog category <strong>{{ name }}</strong> has been removed"
 msgstr "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
 
-msgid "Blog category is hidden on all domains"
-msgstr "Rubrika blogu je skrytá na všech doménách"
-
-msgid "Blog category is visible on all domains"
-msgstr "Rubrika blogu je viditelná na všech doménách"
-
-msgid "Blog category is visible on some domains"
-msgstr "Rubrika blogu je viditelná na některých doménách"
-
 msgid "Brand"
 msgstr "Značka"
 
@@ -2640,12 +2631,6 @@ msgstr "Produkt je variantou"
 
 msgid "Product name"
 msgstr "Název produktu"
-
-msgid "Product name in default language is not entered"
-msgstr "Název zboží ve výchozím jazyce není vyplněn"
-
-msgid "Product not in e-shop."
-msgstr "Zboží se nenachází v eshopu."
 
 msgid "Product saved in order"
 msgstr "Zboží bylo uloženo do objednávky"

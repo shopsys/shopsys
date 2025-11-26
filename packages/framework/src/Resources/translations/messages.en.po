@@ -424,15 +424,6 @@ msgstr ""
 msgid "Blog category <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
-msgid "Blog category is hidden on all domains"
-msgstr ""
-
-msgid "Blog category is visible on all domains"
-msgstr ""
-
-msgid "Blog category is visible on some domains"
-msgstr ""
-
 msgid "Brand"
 msgstr ""
 
@@ -2639,12 +2630,6 @@ msgid "Product is variant"
 msgstr ""
 
 msgid "Product name"
-msgstr ""
-
-msgid "Product name in default language is not entered"
-msgstr ""
-
-msgid "Product not in e-shop."
 msgstr ""
 
 msgid "Product saved in order"

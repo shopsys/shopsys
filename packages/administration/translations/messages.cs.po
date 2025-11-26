@@ -226,6 +226,15 @@ msgstr "Rubriky blogu"
 msgid "Blog category"
 msgstr "Rubrika blogu"
 
+msgid "Blog category is hidden on all domains"
+msgstr "Rubrika blogu je skrytá na všech doménách"
+
+msgid "Blog category is visible on all domains"
+msgstr "Rubrika blogu je viditelná na všech doménách"
+
+msgid "Blog category is visible on some domains"
+msgstr "Rubrika blogu je viditelná na některých doménách"
+
 msgid "Brand"
 msgstr "Značka"
 

@@ -226,6 +226,15 @@ msgstr "Blogové kategórie"
 msgid "Blog category"
 msgstr "Blogová kategória"
 
+msgid "Blog category is hidden on all domains"
+msgstr "Kategória blogu je skrytá na všetkých doménach"
+
+msgid "Blog category is visible on all domains"
+msgstr "Kategória blogu je viditeľná na všetkých doménach"
+
+msgid "Blog category is visible on some domains"
+msgstr "Kategória blogu je viditeľná na niektorých doménach"
+
 msgid "Brand"
 msgstr "Značka"
 
