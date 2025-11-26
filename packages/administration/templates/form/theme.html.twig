@@ -78,22 +78,44 @@
             {{ form_errors(form) }}
         {%- endif -%}
 
-        {% set auto_card_blocks = auto_card_blocks|default([]) %}
+        {% if form is rootform and has_auto_cardable_fields|default(false) %}
+            {# Iterate through children and group consecutive auto-card fields #}
+            {% set current_auto_card_field_names = [] %}
+            {% for child_name, child in form.children %}
+                {# Skip invisible fields (hidden, action bars, etc.) - they'll be rendered by form_rest #}
+                {% if not child.vars.is_invisible_field|default(false) %}
+                    {% if child.vars.renders_in_own_card|default(false) %}
+                        {# Render any accumulated auto-card fields first #}
+                        {% if current_auto_card_field_names|length > 0 %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    {% for field_name in current_auto_card_field_names %}
+                                        {{ form_row(form[field_name]) }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% set current_auto_card_field_names = [] %}
+                        {% endif %}
 
-        {% if form is rootform and auto_card_blocks|length > 0 %}
-            {% for block in auto_card_blocks %}
-                {% if block.type == 'auto_card' %}
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            {% for child_name in block.children %}
-                                {{ form_row(form[child_name]) }}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% else %}
-                    {{ form_row(form[block.child]) }}
+                        {# Render field that has its own card #}
+                        {{ form_row(form[child_name]) }}
+                    {% else %}
+                        {# Collect consecutive auto-card field names #}
+                        {% set current_auto_card_field_names = current_auto_card_field_names|merge([child_name]) %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
+
+            {# Render any remaining auto-card fields #}
+            {% if current_auto_card_field_names|length > 0 %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        {% for field_name in current_auto_card_field_names %}
+                            {{ form_row(form[field_name]) }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
 
             {{ form_rest(form) }}
         {% else %}

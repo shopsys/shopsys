@@ -36,20 +36,21 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
             return;
         }
 
-        $this->addGroupingMetadataToView($view, $form);
+        $this->markChildrenWithCardMetadata($view, $form);
     }
 
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
      */
-    private function addGroupingMetadataToView(FormView $view, FormInterface $form): void
+    private function markChildrenWithCardMetadata(FormView $view, FormInterface $form): void
     {
-        $cardBlocks = [];
-        $currentUngroupedSequence = [];
+        $hasAutoCardableFields = false;
 
         foreach ($view->children as $name => $childView) {
             if (!isset($form[$name])) {
+                $childView->vars['is_invisible_field'] = true;
+
                 continue;
             }
 
@@ -57,37 +58,20 @@ final class AutoCardGroupableExtension extends AbstractTypeExtension
             $childFormType = $child->getConfig()->getType()->getInnerType();
 
             if ($this->isInvisibleType($childFormType::class)) {
+                $childView->vars['is_invisible_field'] = true;
+
                 continue;
             }
 
             $isRenderedInOwnCard = $child->getConfig()->getOption('renders_in_own_card', false);
+            $childView->vars['renders_in_own_card'] = $isRenderedInOwnCard;
 
-            if ($isRenderedInOwnCard) {
-                if (count($currentUngroupedSequence) > 0) {
-                    $cardBlocks[] = [
-                        'type' => 'auto_card',
-                        'children' => $currentUngroupedSequence,
-                    ];
-                    $currentUngroupedSequence = [];
-                }
-
-                $cardBlocks[] = [
-                    'type' => 'card',
-                    'child' => $name,
-                ];
-            } else {
-                $currentUngroupedSequence[] = $name;
+            if (!$isRenderedInOwnCard) {
+                $hasAutoCardableFields = true;
             }
         }
 
-        if (count($currentUngroupedSequence) > 0) {
-            $cardBlocks[] = [
-                'type' => 'auto_card',
-                'children' => $currentUngroupedSequence,
-            ];
-        }
-
-        $view->vars['auto_card_blocks'] = $cardBlocks;
+        $view->vars['has_auto_cardable_fields'] = $hasAutoCardableFields;
     }
 
     /**
