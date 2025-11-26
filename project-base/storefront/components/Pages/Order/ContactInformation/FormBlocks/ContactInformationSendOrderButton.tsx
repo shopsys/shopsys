@@ -64,7 +64,6 @@ export const ContactInformationSendOrderButton: FC = () => {
                         components={{
                             lnk1: termsAndConditionsArticleUrl ? (
                                 <Link
-                                    isExternal
                                     aria-label={t('Go to terms and conditions article', { ns: 'accessibility' })}
                                     className="font-secondary inline text-sm font-semibold"
                                     href={termsAndConditionsArticleUrl}
@@ -75,7 +74,6 @@ export const ContactInformationSendOrderButton: FC = () => {
                             ),
                             lnk2: privacyPolicyArticleUrl ? (
                                 <Link
-                                    isExternal
                                     aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
                                     className="font-secondary inline text-sm font-semibold"
                                     href={privacyPolicyArticleUrl}

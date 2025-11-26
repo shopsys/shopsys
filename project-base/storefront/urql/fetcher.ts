@@ -1,6 +1,7 @@
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { DOMAIN_ID_HEADER } from 'urql/createClient';
 import { isClient } from 'utils/isClient';
 
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
@@ -95,9 +96,9 @@ export const fetcher =
             const body = removeDirectiveFromQuery(init.body, [CACHE_REGEXP, FRIENDLY_URL_REGEXP]);
             const headers = init.headers ? new Headers(init.headers) : new Headers();
             const host = headers.get('OriginalHost');
-            const locale = headers.get('Locale');
+            const domainId = headers.get(DOMAIN_ID_HEADER);
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${locale && locale !== 'default' ? locale + ':' : ''}`;
+            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? domainId + ':' : ''}`;
             const hash = `${key}${md5(body).toString().substring(0, 7)}`;
             const fromCache = await redisClient.get(hash);
 
