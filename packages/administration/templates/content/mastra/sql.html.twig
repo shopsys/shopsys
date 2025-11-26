@@ -92,14 +92,19 @@
             border: 2px solid #ffc107;
             margin-right: auto;
         }
-        .sql-code {
+        .sql-code, .message-content pre {
             background-color: #f8f9fa;
+            color: #212529;
             padding: 12px;
             border-radius: 4px;
             font-family: 'Courier New', monospace;
             font-size: 13px;
             overflow-x: auto;
             margin: 8px 0;
+        }
+        .message-content pre code {
+            color: inherit;
+            word-break: normal;
         }
         .sql-approval-buttons {
             margin-top: 12px;
@@ -144,9 +149,7 @@
             const messagesList = document.getElementById('messages-list');
             const chatContainer = document.getElementById('chat-container');
 
-            let pendingQuery = null;
             let lastUserQuestion = null;
-            let lastExecutionSql = null;
 
             function isEmptyAgentResponse(json) {
                 if (!json || typeof json !== 'object') {
@@ -363,38 +366,30 @@
                 return messageEl;
             }
 
-            function formatSqlPreview(sql, explanation) {
+            function formatProposal(text) {
                 const container = document.createElement('div');
 
-                const title = document.createElement('strong');
-                title.textContent = '{{ 'Generated SQL Query:'|trans }}';
-                container.appendChild(title);
-
-                const sqlCode = document.createElement('div');
-                sqlCode.className = 'sql-code';
-                sqlCode.textContent = sql;
-                container.appendChild(sqlCode);
-
-                if (explanation) {
-                    const explDiv = document.createElement('div');
-                    explDiv.innerHTML = '<strong>{{ 'Explanation:'|trans }}</strong> ' + explanation;
-                    container.appendChild(explDiv);
-                }
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = renderMarkdown(text);
+                container.appendChild(contentDiv);
 
                 const buttonsDiv = document.createElement('div');
                 buttonsDiv.className = 'sql-approval-buttons';
 
                 const approveBtn = document.createElement('button');
                 approveBtn.className = 'btn btn-success btn-sm me-2';
-                approveBtn.textContent = '{{ 'Execute Query'|trans }}';
-                approveBtn.onclick = () => executeApprovedQuery(sql);
+                approveBtn.textContent = '{{ 'Execute'|trans }}';
+                approveBtn.onclick = () => {
+                    buttonsDiv.style.display = 'none';
+                    executeApprovedQuery();
+                };
 
                 const cancelBtn = document.createElement('button');
                 cancelBtn.className = 'btn btn-secondary btn-sm';
                 cancelBtn.textContent = '{{ 'Cancel'|trans }}';
                 cancelBtn.onclick = () => {
-                    addMessage('user', '{{ 'Query cancelled'|trans }}');
-                    pendingQuery = null;
+                    buttonsDiv.remove();
+                    addMessage('user', '{{ 'Cancel'|trans }}');
                 };
 
                 buttonsDiv.appendChild(approveBtn);
@@ -571,36 +566,7 @@
                     }
 
                     if (responseText.toUpperCase().includes('SELECT')) {
-                        // Try multiple SQL extraction patterns
-                        let sql = null;
-
-                        // Pattern 1: ```sql ... ```
-                        let sqlMatch = responseText.match(/```sql\n([\s\S]*?)\n```/);
-                        if (sqlMatch) {
-                            sql = sqlMatch[1];
-                        } else {
-                            // Pattern 2: ``` ... ``` (no sql marker)
-                            sqlMatch = responseText.match(/```\n([\s\S]*?)\n```/);
-                            if (sqlMatch) {
-                                sql = sqlMatch[1];
-                            } else {
-                                // Pattern 3: Just extract the SELECT statement
-                                sqlMatch = responseText.match(/(SELECT[\s\S]*?;)/i);
-                                if (sqlMatch) {
-                                    sql = sqlMatch[1];
-                                }
-                            }
-                        }
-
-                        console.log('Extracted SQL:', sql);
-
-                        if (sql) {
-                            pendingQuery = sql;
-                            addMessage('assistant', formatSqlPreview(sql, responseText), 'sql-preview');
-                        } else {
-                            // Couldn't extract SQL, just show the response
-                            addMessage('assistant', responseText);
-                        }
+                        addMessage('assistant', formatProposal(responseText));
                     } else {
                         addMessage('assistant', responseText || '{{ 'No results'|trans }}');
                     }
@@ -615,15 +581,11 @@
                 }
             }
 
-            async function executeApprovedQuery(sql) {
-                if (!sql) return;
-
-                lastExecutionSql = sql;
-
+            async function executeApprovedQuery() {
                 const loadingEl = addMessage('assistant', '{{ 'Executing query...'|trans }}', 'loading');
 
                 try {
-                    const executionMessage = `Execute this SQL: ${sql}`;
+                    const executionMessage = 'Approved, please execute.';
 
                     const res = await fetch('/mastra/api/agents/sqlAgent/generate', {
                         method: 'POST',
@@ -661,11 +623,8 @@
 
                     if (isEmptyAgentResponse(json)) {
                         showAgentEmptyError(json, 'SQL execution', () => {
-                            if (lastExecutionSql) {
-                                executeApprovedQuery(lastExecutionSql);
-                            }
+                            executeApprovedQuery();
                         });
-                        pendingQuery = null;
                         return;
                     }
 
@@ -674,34 +633,36 @@
 
                     if (hasToolResults) {
                         // Tool name is 'sqlExecutionTool' not 'sql-execution'
-                        const executionResult = json.toolResults.find(t =>
+                        const sqlResults = json.toolResults.filter(t =>
                             t.toolName === 'sqlExecutionTool' ||
                             t.payload?.toolName === 'sqlExecutionTool'
                         );
-                        console.log('Execution result:', executionResult);
 
-                        // Result is inside payload
-                        const result = executionResult?.payload?.result || executionResult?.result;
+                        if (sqlResults.length > 0) {
+                            sqlResults.forEach(executionResult => {
+                                console.log('Execution result:', executionResult);
+                                // Result is inside payload
+                                const result = executionResult?.payload?.result || executionResult?.result;
 
-                        if (result && result.success) {
-                            addMessage('assistant', formatResults(result.data, result.rowCount));
-                        } else {
-                            addMessage('assistant', result?.error || '{{ 'Query execution failed'|trans }}', 'error');
+                                if (result && result.success) {
+                                    addMessage('assistant', formatResults(result.data, result.rowCount));
+                                } else {
+                                    addMessage('assistant', result?.error || '{{ 'Query execution failed'|trans }}', 'error');
+                                }
+                            });
                         }
-                    } else if (hasText) {
-                        // No tool results - agent responded with plain text
+                    }
+                    
+                    if (hasText) {
+                        // Agent response text (summary/explanation)
                         addMessage('assistant', json.text);
-                    } else {
+                    } else if (!hasToolResults && !hasText) {
                         // Unexpected shape but not the classic empty-agent case
                         showAgentEmptyError(json, 'SQL execution', () => {
-                            if (lastExecutionSql) {
-                                executeApprovedQuery(lastExecutionSql);
-                            }
+                            executeApprovedQuery();
                         });
                     }
-
-                    pendingQuery = null;
-
+                    
                 } catch (err) {
                     loadingEl.remove();
                     addMessage('assistant', '{{ 'Execution error'|trans }}: ' + (err?.message || err), 'error');

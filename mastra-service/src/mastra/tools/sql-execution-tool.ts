@@ -42,8 +42,14 @@ export const sqlExecutionTool = createTool({
 
     try {
       // Security validation: Only SELECT queries
-      const trimmedQuery = context.sql.trim().toLowerCase();
-      if (!trimmedQuery.startsWith('select')) {
+      let trimmedQuery = context.sql.trim();
+      // Remove leading parentheses (common in UNION queries)
+      while (trimmedQuery.startsWith('(')) {
+        trimmedQuery = trimmedQuery.substring(1).trim();
+      }
+      
+      const lowerQuery = trimmedQuery.toLowerCase();
+      if (!lowerQuery.startsWith('select') && !lowerQuery.startsWith('with')) {
         throw new Error('Only SELECT queries are allowed');
       }
 

@@ -77,7 +77,7 @@ RESPONSE FORMAT:
 Always show SQL in markdown code block, explain it, then ask for approval before executing.
 
 Be helpful and educational!`,
-  model: 'openai/gpt-4o',
+  model: 'openai/gpt-5-mini',
   tools: {
     databaseIntrospectionTool,
     sqlExecutionTool,
