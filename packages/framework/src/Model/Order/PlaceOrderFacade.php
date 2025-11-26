@@ -52,8 +52,21 @@ class PlaceOrderFacade
         OrderData $orderData,
         ?string $deliveryAddressUuid = null,
     ): Order {
+        $alreadyDecreasedPromoCodeIds = [];
+
         foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_DISCOUNT) as $discount) {
+            if ($discount->promoCode === null) {
+                continue;
+            }
+
+            $promoCodeId = $discount->promoCode->getId();
+
+            if (in_array($promoCodeId, $alreadyDecreasedPromoCodeIds, true)) {
+                continue;
+            }
+
             $discount->promoCode->decreaseRemainingUses();
+            $alreadyDecreasedPromoCodeIds[] = $promoCodeId;
         }
 
         if ($orderData->freeTransportAndPaymentApplied && $orderData->promoCode !== null) {
