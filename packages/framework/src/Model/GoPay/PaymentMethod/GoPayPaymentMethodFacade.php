@@ -175,7 +175,7 @@ class GoPayPaymentMethodFacade
     protected function updateSwiftsFromRawData(GoPayPaymentMethod $goPayPaymentMethod, array $goPayMethodRawData): void
     {
         $bankSwiftsBySwift = $this->goPayBankSwiftRepository->getAllIndexedBySwiftByPaymentMethod($goPayPaymentMethod);
-        $goPayBankSwiftsRawData = $goPayMethodRawData['enabledSwifts'];
+        $goPayBankSwiftsRawData = $goPayMethodRawData['enabledSwifts'] ?? null;
 
         if ($goPayBankSwiftsRawData === null) {
             $goPayBankSwiftsRawData = [];
