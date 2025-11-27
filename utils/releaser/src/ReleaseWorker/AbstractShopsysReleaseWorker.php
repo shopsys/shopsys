@@ -43,6 +43,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/biome-config',
         'shopsys/convertim',
         'shopsys/maker',
+        'shopsys/product-feed-mergado',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
