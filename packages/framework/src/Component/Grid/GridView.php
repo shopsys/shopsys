@@ -146,15 +146,13 @@ class GridView
             return;
         }
 
-        // Clone action for each row to avoid state pollution between rows
-        $rowAction = clone $actionColumn;
+        $actionData = $actionColumn->build($row);
 
-        if ($rowAction->validate($row) === false) {
+        if ($actionData === null) {
             return;
         }
 
-        $renderData = $rowAction->renderData();
-        echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
+        echo $this->twig->render($actionData['template'], [...$actionData['parameters'], 'row' => $row]);
     }
 
     public function renderTitleCell(Column $column): void

@@ -23,11 +23,13 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     private ?string $confirmMessage = null;
 
     /**
-     * @var null|\Closure(mixed): string|null
+     * @var array<\Closure(mixed, self): void>
      */
-    private ?Closure $disabledMessageCallback = null;
+    private array $callbacks = [];
 
     private bool $isDisabled = false;
+
+    private ?string $disabledMessage = null;
 
     /**
      * Sets additional classes for row action. Use this method to add custom classes. Default classes are required for proper functionality.
@@ -60,17 +62,33 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     }
 
     /**
-     * Set message for disabled action
+     * Adds a callback that will be executed during action build
      *
-     * The closure receives row data and should return:
-     * - string: Action is disabled with this message shown as tooltip
-     * - null: Action is enabled
+     * The callback receives row data and the action instance, allowing dynamic modification
+     * of the action based on the current row. Multiple callbacks can be added and will be
+     * executed in order.
      *
-     * @param \Closure(mixed): ?string $callback Function receives row data and returns tooltip message if disabled, or null if enabled
+     * @param \Closure(mixed, self): void $callback Function receives row data and action instance
      */
-    public function setDisabledMessage(Closure $callback): self
+    public function addCallback(Closure $callback): self
     {
-        $this->disabledMessageCallback = $callback;
+        $this->callbacks[] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Disables the action and shows a message as tooltip
+     *
+     * This method should be called from within an addCallback closure to conditionally
+     * disable the action based on row data.
+     *
+     * @param string $message Message to show as tooltip on the disabled action
+     */
+    public function disableWithMessage(string $message): self
+    {
+        $this->isDisabled = true;
+        $this->disabledMessage = $message;
 
         return $this;
     }
@@ -86,28 +104,20 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
     }
 
     /**
-     * Validate action configuration before rendering
+     * Prepare action configuration before rendering
      */
     #[Override]
-    public function validate(mixed $data): bool
+    protected function prepareAction(mixed $data): bool
     {
         if ($this->actionRoute === null) {
             throw new InvalidArgumentException('Route must be set for row action. Use one of the "linkTo*" methods.');
         }
 
-        // Evaluate disabled message callback and modify action state if disabled
-        if ($this->disabledMessageCallback !== null) {
-            $disabledMessage = call_user_func($this->disabledMessageCallback, $data);
-
-            if ($disabledMessage !== null) {
-                $this->isDisabled = true;
-                $this->label = $disabledMessage;
-                $this->confirmMessage = null;
-                $this->renderTooltip = true;
-            }
+        foreach ($this->callbacks as $callback) {
+            $callback($data, $this);
         }
 
-        return parent::validate($data);
+        return parent::prepareAction($data);
     }
 
     #[Override]
@@ -125,6 +135,8 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
         if ($this->isDisabled) {
             $this->attributes['class'] .= ' link-disabled';
+            $this->confirmMessage = null;
+            $this->renderTooltip = true;
         }
 
         if ($this->renderTooltip) {
@@ -132,7 +144,7 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             $this->attributes['data-bs-placement'] = 'left';
         }
 
-        $this->attributes['title'] = $this->label;
+        $this->attributes['title'] = $this->disabledMessage ?? $this->label;
 
         if ($this->additionalClass !== null) {
             $this->attributes['class'] .= ' ' . $this->additionalClass;

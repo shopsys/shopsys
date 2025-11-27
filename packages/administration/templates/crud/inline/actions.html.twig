@@ -1,7 +1,7 @@
 {% macro render(actions, data = null) %}
     {% for action in actions %}
-        {% if action.validate(data) %}
-            {% set actionData = action.renderData %}
+        {% set actionData = action.build(data) %}
+        {% if actionData is not null %}
             {{ include(actionData.template, actionData.parameters) }}
         {% endif %}
     {% endfor %}
