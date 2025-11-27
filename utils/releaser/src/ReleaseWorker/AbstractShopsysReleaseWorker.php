@@ -40,6 +40,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/read-model',
         // used in newer versions
         'shopsys/administration',
+        'shopsys/biome-config',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
