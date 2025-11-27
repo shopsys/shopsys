@@ -1,9 +1,11 @@
 import { useOrderWithdrawalForm, useOrderWithdrawalFormMeta } from './orderWithdrawalFormMeta';
+import { DocumentDeleteIcon } from 'components/Basic/Icon/DocumentDeleteIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
+import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -75,40 +77,23 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
     return (
         <Webline width="lg">
             <VerticalStack gap="sm">
-                <h1>{t('Withdrawal from contract')}</h1>
-
-                <p>
-                    {t('Order number')}: <strong>{order.number}</strong>
-                </p>
+                <PageHero
+                    icon={DocumentDeleteIcon}
+                    title={t('Withdrawal from contract')}
+                    description={t(
+                        'Please fill in the following data to request a withdrawal from the order {{ orderNumber }}.',
+                        {
+                            orderNumber: order.number,
+                        },
+                    )}
+                />
 
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
                         <FormContentWrapper>
                             <FormBlockWrapper>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.firstName.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        label: formMeta.fields.firstName.label,
-                                        required: true,
-                                        type: 'text',
-                                        autoComplete: 'given-name',
-                                    }}
-                                />
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.lastName.name}
-                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        label: formMeta.fields.lastName.label,
-                                        required: true,
-                                        type: 'text',
-                                        autoComplete: 'family-name',
-                                    }}
-                                />
+                                <FormHeading>{t('Personal data')}</FormHeading>
+
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -121,41 +106,77 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                                         autoComplete: 'email',
                                     }}
                                 />
+
+                                <FormColumn>
+                                    <TextInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.firstName.name}
+                                        render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                        textInputProps={{
+                                            label: formMeta.fields.firstName.label,
+                                            required: true,
+                                            type: 'text',
+                                            autoComplete: 'given-name',
+                                        }}
+                                    />
+
+                                    <TextInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.lastName.name}
+                                        render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                        textInputProps={{
+                                            label: formMeta.fields.lastName.label,
+                                            required: true,
+                                            type: 'text',
+                                            autoComplete: 'family-name',
+                                        }}
+                                    />
+                                </FormColumn>
+
+                                <FormColumn>
+                                    <TextInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.telephone.name}
+                                        render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
+                                        textInputProps={{
+                                            label: formMeta.fields.telephone.label,
+                                            required: false,
+                                            type: 'tel',
+                                            autoComplete: 'tel',
+                                        }}
+                                    />
+                                </FormColumn>
+                            </FormBlockWrapper>
+
+                            <FormBlockWrapper>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
-                                    name={formMeta.fields.telephone.name}
+                                    name={formMeta.fields.note.name}
                                     render={(textInput) => <FormLine>{textInput}</FormLine>}
                                     textInputProps={{
-                                        label: formMeta.fields.telephone.label,
-                                        required: false,
-                                        type: 'tel',
-                                        autoComplete: 'tel',
-                                    }}
-                                />
-                                <TextareaControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.note.name}
-                                    render={(textarea) => <FormLine>{textarea}</FormLine>}
-                                    textareaProps={{
                                         label: formMeta.fields.note.label,
                                         required: false,
-                                        rows: 4,
+                                        type: 'text',
+                                        autoComplete: 'note',
                                     }}
                                 />
-                                <FormButtonWrapper>
-                                    <SubmitButton
-                                        hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                        aria-label={t('Submit withdrawal request for order {{ orderNumber }}', {
-                                            ns: 'accessibility',
-                                            orderNumber: order.number,
-                                        })}
-                                    >
-                                        {t('Confirm withdrawal from contract')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
                             </FormBlockWrapper>
+
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    hasDisabledCursor={!formProviderMethods.formState.isValid}
+                                    aria-label={t('Submit withdrawal request for order {{ orderNumber }}', {
+                                        ns: 'accessibility',
+                                        orderNumber: order.number,
+                                    })}
+                                >
+                                    {t('Confirm withdrawal from contract')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>
                 </FormProvider>

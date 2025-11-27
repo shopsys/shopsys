@@ -1,10 +1,12 @@
-import { OrderDetailRowInfo } from './OrderDetailBasicInfo';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { TypeOrderStatusEnum } from 'graphql/types';
+import Trans from 'next-translate/Trans';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -28,8 +30,6 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
     const hasWithdrawalRequested = withdrawalRequest !== null;
     const isCancelled = order.statusType === TypeOrderStatusEnum.Canceled;
 
-    const withdrawalTitle = t('Withdrawal from contract');
-
     const [newComplaintUrl, withdrawalFormUrl] = getInternationalizedStaticUrls(
         ['/customer/new-complaint', { url: '/order-withdrawal/:orderUrlHash', param: order.urlHash }],
         url,
@@ -41,78 +41,73 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
 
     if (hasWithdrawalRequested) {
         return (
-            <OrderDetailRowInfo title={withdrawalTitle}>
-                <div className="flex flex-col gap-2">
-                    <span>
-                        {t('Withdrawal was requested on {{ date }} with the following data:', {
-                            date: formatDate(withdrawalRequest.requestedAt),
-                        })}
-                    </span>
-                    <div className="text-sm">
-                        <div>
-                            <strong>{t('Contact person')}:</strong> {withdrawalRequest.firstName}{' '}
-                            {withdrawalRequest.lastName}
-                        </div>
-                        <div>
-                            <strong>{t('Email')}:</strong> {withdrawalRequest.email}
-                        </div>
-                        {withdrawalRequest.telephone && (
-                            <div>
-                                <strong>{t('Phone')}:</strong> {withdrawalRequest.telephone}
-                            </div>
-                        )}
-                        {withdrawalRequest.note && (
-                            <div className="mt-2">
-                                <strong>{t('Note')}:</strong>
-                                <div className="mt-1">{withdrawalRequest.note}</div>
-                            </div>
-                        )}
-                    </div>
+            <div className="bg-toast-bg-warning border-toast-border-warning flex flex-col gap-2.5 rounded-xl border-1 p-5">
+                <p className="h4">{t('Withdrawal request was submitted')}</p>
+
+                <div className="vl:flex-row flex flex-col flex-wrap gap-x-10 gap-y-5">
+                    <OrderItemColumnInfo title={t('Requested on')}>
+                        {formatDate(withdrawalRequest.requestedAt)}
+                    </OrderItemColumnInfo>
+                    <OrderItemColumnInfo title={t('Contact person')}>
+                        {withdrawalRequest.firstName} {withdrawalRequest.lastName}
+                    </OrderItemColumnInfo>
+                    <OrderItemColumnInfo title={t('Email')}>{withdrawalRequest.email}</OrderItemColumnInfo>
+                    {withdrawalRequest.telephone && (
+                        <OrderItemColumnInfo title={t('Phone')}>{withdrawalRequest.telephone}</OrderItemColumnInfo>
+                    )}
+                    {withdrawalRequest.note && (
+                        <OrderItemColumnInfo title={t('Note')}>{withdrawalRequest.note}</OrderItemColumnInfo>
+                    )}
                 </div>
-            </OrderDetailRowInfo>
+            </div>
         );
     }
 
     if (canRequestWithdrawal) {
         return (
-            <OrderDetailRowInfo title={withdrawalTitle}>
-                <div className="flex flex-col gap-2">
-                    <LinkButton href={withdrawalFormUrl} type="order-withdrawal" variant="inverted">
-                        {t('Withdraw from contract')}
-                    </LinkButton>
-                </div>
-            </OrderDetailRowInfo>
+            <div className="flex flex-col items-center gap-2">
+                <p className="mx-auto max-w-[520px] text-center text-sm text-balance">
+                    {t('You can withdraw from this order within 14 days of delivery.')}
+                </p>
+                <LinkButton href={withdrawalFormUrl} size="small" type="order-withdrawal" variant="inverted">
+                    {t('Request withdrawal')}
+                </LinkButton>
+            </div>
         );
     }
 
     if (isCancelled) {
-        return (
-            <OrderDetailRowInfo title={withdrawalTitle}>
-                <div className="flex flex-col gap-2">
-                    <span>{t('Withdrawal is not possible for cancelled orders')}</span>
-                </div>
-            </OrderDetailRowInfo>
-        );
+        return null;
     }
 
     return (
-        <OrderDetailRowInfo title={withdrawalTitle}>
-            <div className="flex flex-col gap-2">
-                <span>
-                    {t('Withdrawal deadline expired on {{ date }}', {
-                        date: formatDate(withdrawalDeadline!),
-                    })}
-                </span>
+        <div className="bg-toast-bg-warning border-toast-border-warning flex items-center gap-2 rounded-xl border-1 p-5">
+            <InfoIcon className="text-icon-warning size-5" />
+            <p className="text-sm">
+                {t('Withdrawal deadline expired on {{ date }}', {
+                    date: formatDate(withdrawalDeadline!),
+                })}
+                .
                 {isUserLoggedIn && canCreateComplaint && (
-                    <ExtendedNextLink
-                        aria-label={t('Go to create complaint page', { ns: 'accessibility' })}
-                        href={newComplaintUrl}
-                        type="complaintNew"
-                    >
-                        {t('If you want to complain, you can create a complaint')}
-                    </ExtendedNextLink>
+                    <>
+                        {' '}
+                        <Trans
+                            defaultTrans="If you have an issue with this order, you can create a <lnk>complaint</lnk>."
+                            i18nKey="OrderWithdrawalComplaintInfo"
+                            components={{
+                                lnk: (
+                                    <ExtendedNextLink
+                                        aria-label={t('Go to create complaint page', { ns: 'accessibility' })}
+                                        className="font-secondary inline text-sm font-semibold"
+                                        href={newComplaintUrl}
+                                        type="complaintNew"
+                                    />
+                                ),
+                            }}
+                        />
+                    </>
                 )}
-            </div>
-        </OrderDetailRowInfo>
+            </p>
+        </div>
     );
 };

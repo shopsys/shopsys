@@ -1,5 +1,4 @@
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
-import { OrderDetailWithdrawalSection } from './OrderDetailWithdrawalSection';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
@@ -77,7 +76,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     <div className="flex shrink-0 gap-4">
                         <Button
                             tid={TIDs.order_detail_repeat_order_button}
-                            variant="inverted"
+                            variant="secondary"
                             aria-label={t('Repeat order number {{ orderNumber }}', {
                                 ns: 'accessibility',
                                 orderNumber: order.number,
@@ -210,8 +209,6 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         )}
                 </div>
             </div>
-
-            <OrderDetailWithdrawalSection order={order} />
 
             {!!order.note && (
                 <OrderDetailRowInfo tid={TIDs.order_detail_note} title={t('Note')}>
