@@ -326,6 +326,8 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: docker compose up -d php-fpm
+            -   name: Check Composer GitHub OAuth authentication
+                run: docker compose exec -T php-fpm composer diagnose | grep -A2 "Checking github.com" || echo "GitHub OAuth check not found in output"
             -   name: Check standards
                 run: |
                     docker compose exec -T php-fpm touch ./project-base/app/DEVELOPMENT
