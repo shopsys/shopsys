@@ -287,17 +287,17 @@ Your custom constraints will only work if you also include all the decorator's o
 
 !!! warning
 
-    Framework constraints must be listed first, before your custom ones.
+    FrontendApi constraints must be listed first, before your custom ones.
 
 ```yaml
 # project-base/app/config/graphql/types/.../YourInput.types.yaml
 YourInput:
     type: input-object
     inherits:
-        - 'FrameworkInputDecorator'
+        - 'FrontendApiInputDecorator'
     config:
         validation:
-            # Framework constraints FIRST
+            # All original decorator constraints FIRST
             - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint: ~
             # Your custom constraints AFTER
             - App\Component\Constraints\YourCustomConstraint: ~
@@ -313,13 +313,15 @@ If you want to remove or replace a validation constraint from the decorator, you
 This effectively skips the constraint because the group will never be active during validation.
 
 ```yaml
-# project-base/app/config/graphql/types/.../YourInput.types.yaml
+# app/config/graphql/types/.../YourInput.types.yaml
 YourInput:
     type: input-object
     inherits:
-        - 'FrameworkInputDecorator'
+        - ' FrontendApiInputDecorator'
     config:
         validation:
+            # All original decorator constraints FIRST
+            ...
             # Disable the original constraint by assigning a non-existent group
             - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint:
                 groups: "removed-validation"
