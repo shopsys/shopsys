@@ -40,10 +40,10 @@ class ProductManualInputPriceFacade
 
         if ($manualInputPrice === null) {
             $manualInputPrice = $this->productManualInputPriceFactory->create($product, $pricingGroup, $inputPrice);
+            $this->em->persist($manualInputPrice);
         } else {
             $manualInputPrice->setInputPrice($inputPrice);
         }
-        $this->em->persist($manualInputPrice);
     }
 
     /**
