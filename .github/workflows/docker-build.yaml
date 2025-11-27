@@ -907,6 +907,7 @@ jobs:
             -   name: Build application
                 run: |
                     docker compose up -d
+                    docker compose exec -T php-fpm composer diagnose | grep -A2 "Checking github.com" || echo "GitHub OAuth check not found in output"
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction --dev
                     docker compose exec -T php-fpm npm install
             -   name: Checks dependency licenses in Composer and NPM (php-fpm & storefront)
