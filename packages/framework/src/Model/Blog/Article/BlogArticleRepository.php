@@ -110,15 +110,17 @@ class BlogArticleRepository
     /**
      * @param int|null $domainId
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
+     * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForQuickSearch(?int $domainId, QuickSearchFormData $searchData): QueryBuilder
-    {
+    public function getQueryBuilderForQuickSearch(
+        ?int $domainId,
+        QuickSearchFormData $searchData,
+        string $locale,
+    ): QueryBuilder {
         if ($domainId === null) {
-            $locale = $this->localization->getCurrentLocaleForTranslatableEntities();
             $queryBuilder = $this->getAllBlogArticlesByLocaleQueryBuilder($locale);
         } else {
-            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
             $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory($domainId, $locale);
         }
 

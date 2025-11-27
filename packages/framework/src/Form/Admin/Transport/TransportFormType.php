@@ -95,7 +95,7 @@ final class TransportFormType extends AbstractType
                 'required' => false,
                 'choices' => $this->paymentFacade->getAll(),
                 'choice_label' => function (Payment $payment) {
-                    return $payment->getName() ?? t('Name in default language is not entered') . ' (ID: ' . $payment->getId() . ')';
+                    return $payment->getName() ?? t('Name has not been entered in your current language') . ' (ID: ' . $payment->getId() . ')';
                 },
                 'choice_value' => 'id',
                 'multiple' => true,

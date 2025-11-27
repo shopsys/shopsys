@@ -16,24 +16,42 @@
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
-    {% macro blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, isFirstLevel, isForAllDomains) %}
+    {% macro blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, isFirstLevel, isForAllDomains, visibilityOfBlogCategoriesIndexedById) %}
         {% import _self as self %}
         <ul class="js-category-tree-items js-protect-root {{ isFirstLevel ? 'tree' : 'tree-group' }}">
             {% for blogCategoryWithPreloadedChildren in blogCategoriesWithPreloadedChildren %}
-                <li class="js-category-tree-item tree-item" id="js-category-tree-{{ blogCategoryWithPreloadedChildren.blogCategory.id }}">
+                {% set blogCategoryId = blogCategoryWithPreloadedChildren.blogCategory.id %}
+                <li class="js-category-tree-item tree-item" id="js-category-tree-{{ blogCategoryId }}">
                     <div class="tree-item-content js-category-tree-item-line">
                         <div class="js-category-tree-item-line js-category-tree-item-handle tree-item-label text-truncate{% if isForAllDomains %} cursor-grab{% endif %}">
-                            {{ blogCategoryWithPreloadedChildren.blogCategory.name }}
+                            {{ blogCategoryWithPreloadedChildren.blogCategory.name|nameWithFallbackOnEmpty }}
                         </div>
 
                         <div class="tree-item-actions">
-                            <a href="{{ url('admin_blogcategory_edit', {id: blogCategoryWithPreloadedChildren.blogCategory.id}) }}"
+                            {% if visibilityOfBlogCategoriesIndexedById is not null %}
+                                {% if visibilityOfBlogCategoriesIndexedById[blogCategoryId] is defined %}
+                                    {% if visibilityOfBlogCategoriesIndexedById[blogCategoryId] is same as('all') %}
+                                        <span class="text-success" title="{{ 'Blog category is visible on all domains'|trans }}">
+                                            {{ ux_icon('visible') }}
+                                        </span>
+                                    {% else %}
+                                        <span class="text-warning" title="{{ 'Blog category is visible on some domains'|trans }}">
+                                            {{ ux_icon('visible') }}
+                                        </span>
+                                    {% endif %}
+                                {% else %}
+                                    <span title="{{ 'Blog category is hidden on all domains'|trans }}">
+                                        {{ ux_icon('invisible') }}
+                                    </span>
+                                {% endif %}
+                            {% endif %}
+                            <a href="{{ url('admin_blogcategory_edit', {id: blogCategoryId}) }}"
                                class="link-secondary"
                             >{{ ux_icon('pencil') }}</a>
 
                             {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_blogcategory_delete' %}
                         {% set blogCategoryDeleteUrl = url('admin_blogcategory_delete', {
-                            id: blogCategoryWithPreloadedChildren.blogCategory.id,
+                            id: blogCategoryId,
                             (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                         }) %}
                         {% if blogCategoryWithPreloadedChildren.blogCategory.level is not same as(0) %}
@@ -46,7 +64,7 @@
                         </div>
                     </div>
 
-                    {{ self.blogCategoryTreeItem(blogCategoryWithPreloadedChildren.children, false, isForAllDomains) }}
+                    {{ self.blogCategoryTreeItem(blogCategoryWithPreloadedChildren.children, false, isForAllDomains, visibilityOfBlogCategoriesIndexedById) }}
                 </li>
             {% endfor %}
         </ul>
@@ -56,7 +74,7 @@
         <div class="card-body">
             {% if isForAllDomains %}
                 <div id="js-category-tree-sorting">
-                    {{ self.blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, true, isForAllDomains) }}
+                    {{ self.blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, true, isForAllDomains, visibilityOfBlogCategoriesIndexedById) }}
                 </div>
 
                 {% if can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_BLOG_CATEGORY')) %}
@@ -79,7 +97,7 @@
                     {{ 'It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains'|trans }}
                 </div>
 
-                {{ self.blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, true, isForAllDomains) }}
+                {{ self.blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, true, isForAllDomains, visibilityOfBlogCategoriesIndexedById) }}
             {% endif %}
         </div>
     </div>

@@ -33,7 +33,7 @@ class NameFallbackExtension extends AbstractExtension
         }
 
         if ($value === null || $value === '') {
-            return t('Name in default language is not entered');
+            return t('Name has not been entered in your current language');
         }
 
         return $value;

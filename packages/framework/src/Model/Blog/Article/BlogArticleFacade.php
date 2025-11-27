@@ -166,12 +166,14 @@ class BlogArticleFacade
     /**
      * @param int|null $selectedDomainId
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
+     * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderForQuickSearch(
         ?int $selectedDomainId,
         QuickSearchFormData $searchData,
+        string $locale,
     ): QueryBuilder {
-        return $this->blogArticleRepository->getQueryBuilderForQuickSearch($selectedDomainId, $searchData);
+        return $this->blogArticleRepository->getQueryBuilderForQuickSearch($selectedDomainId, $searchData, $locale);
     }
 }

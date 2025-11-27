@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
@@ -34,6 +35,7 @@ class BlogCategoryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
@@ -41,6 +43,7 @@ class BlogCategoryController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly Localization $localization,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -153,6 +156,7 @@ class BlogCategoryController extends AdminBaseController
             'blogCategoriesWithPreloadedChildren' => $blogCategoriesWithPreloadedChildren,
             'isForAllDomains' => ($selectedDomainId === null),
             'domainFilterNamespace' => $domainFilterNamespace,
+            'visibilityOfBlogCategoriesIndexedById' => $selectedDomainId === null ? $this->getVisibleBlogCategoryIdsForAllDomains() : null,
         ]);
     }
 
@@ -228,5 +232,15 @@ class BlogCategoryController extends AdminBaseController
         }
 
         return $this->json($blogCategoriesData);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getVisibleBlogCategoryIdsForAllDomains(): array
+    {
+        $domainsCount = count($this->domain->getAll());
+
+        return $this->blogCategoryFacade->getVisibilityOfBlogCategoriesIndexedById($domainsCount);
     }
 }

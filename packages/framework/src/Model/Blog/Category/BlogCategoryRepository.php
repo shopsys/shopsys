@@ -362,4 +362,27 @@ class BlogCategoryRepository extends NestedTreeRepository
             return null;
         }
     }
+
+    /**
+     * @param int $domainCount
+     * @return array<int, string>
+     */
+    public function getVisibilityOfBlogCategoriesIndexedById(int $domainCount): array
+    {
+        $visibilityOfBlogCategoriesIndexedById = [];
+
+        $result = $this->getAllQueryBuilder()
+            ->select('bc.id, COUNT(bcd.domainId) AS domainCount')
+            ->join(BlogCategoryDomain::class, 'bcd', Join::WITH, 'bcd.blogCategory = bc')
+            ->andWhere('bcd.visible = TRUE')
+            ->groupBy('bc.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach ($result as $row) {
+            $visibilityOfBlogCategoriesIndexedById[$row['id']] = $row['domainCount'] === $domainCount ? 'all' : 'partial';
+        }
+
+        return $visibilityOfBlogCategoriesIndexedById;
+    }
 }
