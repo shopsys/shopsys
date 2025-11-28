@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
@@ -54,8 +54,8 @@ class Cart
     protected $items;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $modifiedAt;
 
@@ -116,7 +116,7 @@ class Cart
         $this->cartIdentifier = $cartIdentifier;
         $this->customerUser = $customerUser;
         $this->items = new ArrayCollection();
-        $this->modifiedAt = new DateTime();
+        $this->modifiedAt = new DateTimeImmutable();
         $this->promoCodes = new ArrayCollection();
     }
 
@@ -274,11 +274,11 @@ class Cart
 
     public function setModifiedNow(): void
     {
-        $this->modifiedAt = new DateTime();
+        $this->modifiedAt = new DateTimeImmutable();
     }
 
     /**
-     * @param \DateTime $modifiedAt
+     * @param \DateTimeImmutable $modifiedAt
      */
     public function setModifiedAt($modifiedAt)
     {

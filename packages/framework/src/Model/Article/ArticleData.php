@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use DateTime;
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class ArticleData
@@ -60,7 +60,7 @@ class ArticleData
     public $uuid;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createdAt;
 
@@ -83,6 +83,6 @@ class ArticleData
     {
         $this->urls = new UrlListData();
         $this->hidden = false;
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
     }
 }

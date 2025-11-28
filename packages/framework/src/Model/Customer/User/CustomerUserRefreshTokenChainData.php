@@ -27,7 +27,7 @@ class CustomerUserRefreshTokenChainData
     public $deviceId;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $expiredAt;
 

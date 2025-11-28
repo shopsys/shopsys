@@ -27,12 +27,12 @@ class PromoCodeData
     public $domainId;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $datetimeValidFrom;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $datetimeValidTo;
 

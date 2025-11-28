@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,14 +52,14 @@ class PromoCode
     protected $domainId;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
     protected $datetimeValidFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
     protected $datetimeValidTo;
 
@@ -160,7 +160,7 @@ class PromoCode
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDatetimeValidFrom()
     {
@@ -168,7 +168,7 @@ class PromoCode
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDatetimeValidTo()
     {

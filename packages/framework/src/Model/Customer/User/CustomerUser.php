@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
@@ -68,13 +68,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $password;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      */
     protected $lastActivity;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
@@ -105,8 +105,8 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $resetPasswordHash;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $resetPasswordHashValidThrough;
 
@@ -143,8 +143,8 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $roleGroup;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @var \DateTimeImmutable|null
      */
     protected $lastSecurityChange;
 
@@ -162,7 +162,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         if ($customerUserData->createdAt !== null) {
             $this->createdAt = $customerUserData->createdAt;
         } else {
-            $this->createdAt = new DateTime();
+            $this->createdAt = new DateTimeImmutable();
         }
         $this->setData($customerUserData);
     }
@@ -225,7 +225,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     #[Override]
     public function getLastActivity()
@@ -234,7 +234,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @param \DateTime $lastActivity
+     * @param \DateTimeImmutable $lastActivity
      */
     #[Override]
     public function setLastActivity($lastActivity)
@@ -330,7 +330,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -385,8 +385,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->email = $data['email'];
         $this->password = $data['password'];
         $this->domainId = $data['domainId'];
-        $this->lastActivity = new DateTime();
-        $this->lastActivity->setTimestamp($data['timestamp']);
+        $this->lastActivity = (new DateTimeImmutable())->setTimestamp($data['timestamp']);
     }
 
     /**
@@ -428,7 +427,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function setResetPasswordHash($resetPasswordHash): void
     {
         $this->resetPasswordHash = $resetPasswordHash;
-        $this->resetPasswordHashValidThrough = new DateTime('+48 hours');
+        $this->resetPasswordHashValidThrough = new DateTimeImmutable('+48 hours');
     }
 
     /**
@@ -442,7 +441,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
             return false;
         }
 
-        $now = new DateTime();
+        $now = new DateTimeImmutable();
 
         return $this->resetPasswordHashValidThrough !== null && $this->resetPasswordHashValidThrough >= $now;
     }
@@ -505,6 +504,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
 
     public function updateLastSecurityChange(): void
     {
-        $this->lastSecurityChange = new DateTime();
+        $this->lastSecurityChange = new DateTimeImmutable();
     }
 }

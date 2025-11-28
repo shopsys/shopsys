@@ -30,8 +30,8 @@ class PersonalDataAccessRequest
     protected $email;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
@@ -82,7 +82,7 @@ class PersonalDataAccessRequest
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {

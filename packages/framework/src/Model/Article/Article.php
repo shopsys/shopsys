@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
@@ -100,8 +100,8 @@ class Article implements OrderableEntityInterface
     protected $hidden;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
@@ -154,7 +154,7 @@ class Article implements OrderableEntityInterface
         $this->seoH1 = $articleData->seoH1;
         $this->placement = $articleData->placement;
         $this->hidden = $articleData->hidden;
-        $this->createdAt = $articleData->createdAt ?? new DateTime();
+        $this->createdAt = $articleData->createdAt ?? new DateTimeImmutable();
         $this->external = $articleData->external;
         $this->type = $articleData->type;
         $this->url = $articleData->url;
@@ -258,7 +258,7 @@ class Article implements OrderableEntityInterface
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {

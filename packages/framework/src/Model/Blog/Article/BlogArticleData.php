@@ -69,7 +69,7 @@ class BlogArticleData
     public $visibleOnHomepage;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $publishDate;
 

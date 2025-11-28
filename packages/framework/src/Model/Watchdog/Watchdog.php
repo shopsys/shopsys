@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,20 +43,20 @@ class Watchdog
     protected $product;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $validUntil;
 
@@ -68,15 +68,15 @@ class Watchdog
         $this->product = $watchdogData->product;
         $this->email = $watchdogData->email;
         $this->domainId = $watchdogData->domainId;
-        $this->createdAt = $watchdogData->createdAt ?? new DateTime();
-        $this->updatedAt = $watchdogData->updatedAt ?? new DateTime();
-        $this->validUntil = $watchdogData->validUntil ?? new DateTime(static::VALIDITY_PERIOD);
+        $this->createdAt = $watchdogData->createdAt ?? new DateTimeImmutable();
+        $this->updatedAt = $watchdogData->updatedAt ?? new DateTimeImmutable();
+        $this->validUntil = $watchdogData->validUntil ?? new DateTimeImmutable(static::VALIDITY_PERIOD);
     }
 
     public function updateValidity()
     {
-        $this->updatedAt = new DateTime();
-        $this->validUntil = new DateTime(static::VALIDITY_PERIOD);
+        $this->updatedAt = new DateTimeImmutable();
+        $this->validUntil = new DateTimeImmutable(static::VALIDITY_PERIOD);
     }
 
     /**
@@ -104,7 +104,7 @@ class Watchdog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -112,7 +112,7 @@ class Watchdog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getUpdatedAt()
     {
@@ -120,7 +120,7 @@ class Watchdog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getValidUntil()
     {

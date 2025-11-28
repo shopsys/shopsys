@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -54,8 +54,8 @@ class CartItem
     protected $watchedPrice;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $addedAt;
 
@@ -89,7 +89,7 @@ class CartItem
         $this->product = $product;
         $this->setWatchedPrice($watchedPrice);
         $this->changeQuantity($quantity);
-        $this->addedAt = new DateTime();
+        $this->addedAt = new DateTimeImmutable();
         $this->uuid = Uuid::uuid4()->toString();
         $this->setType($type);
     }
@@ -169,7 +169,7 @@ class CartItem
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getAddedAt()
     {
@@ -177,9 +177,9 @@ class CartItem
     }
 
     /**
-     * @param \DateTime $addedAt
+     * @param \DateTimeImmutable $addedAt
      */
-    public function changeAddedAt(DateTime $addedAt): void
+    public function changeAddedAt(DateTimeImmutable $addedAt): void
     {
         $this->addedAt = $addedAt;
     }

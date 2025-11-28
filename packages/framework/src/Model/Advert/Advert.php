@@ -81,14 +81,14 @@ class Advert
     protected $categories;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
     protected $datetimeVisibleFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
     protected $datetimeVisibleTo;
 
@@ -217,7 +217,7 @@ class Advert
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDatetimeVisibleFrom()
     {
@@ -225,7 +225,7 @@ class Advert
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDatetimeVisibleTo()
     {

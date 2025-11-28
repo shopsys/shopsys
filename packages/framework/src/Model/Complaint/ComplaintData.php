@@ -22,7 +22,7 @@ class ComplaintData
     public $number;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createdAt;
 

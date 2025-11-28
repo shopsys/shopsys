@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -70,21 +70,21 @@ class Order
     protected $customerUser;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     #[ExcludeLog]
     protected $orderPaymentStatusPageValidFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $deliveredAt;
 
@@ -401,7 +401,7 @@ class Order
         $this->deleted = false;
 
         if ($orderData->createdAt === null) {
-            $this->createdAt = new DateTime();
+            $this->createdAt = new DateTimeImmutable();
         } else {
             $this->createdAt = $orderData->createdAt;
         }
@@ -840,7 +840,7 @@ class Order
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -848,7 +848,7 @@ class Order
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getOrderPaymentStatusPageValidFrom()
     {
@@ -857,11 +857,11 @@ class Order
 
     public function setOrderPaymentStatusPageValidFromNow(): void
     {
-        $this->orderPaymentStatusPageValidFrom = new DateTime();
+        $this->orderPaymentStatusPageValidFrom = new DateTimeImmutable();
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDeliveredAt()
     {
@@ -869,7 +869,7 @@ class Order
     }
 
     /**
-     * @param \DateTime $deliveredAt
+     * @param \DateTimeImmutable $deliveredAt
      */
     public function setDeliveredAt($deliveredAt)
     {

@@ -42,7 +42,7 @@ class CustomerUserData
     public $salesRepresentative;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createdAt;
 

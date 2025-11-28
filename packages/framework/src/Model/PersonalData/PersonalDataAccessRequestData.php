@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\PersonalData;
 class PersonalDataAccessRequestData
 {
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createAt;
 

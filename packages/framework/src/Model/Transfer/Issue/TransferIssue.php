@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transfer\Issue;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
@@ -53,14 +53,14 @@ class TransferIssue
     protected $message;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="deleted_at", type="datetime_immutable", nullable=true)
      */
     protected $deletedAt;
 
@@ -70,7 +70,7 @@ class TransferIssue
      */
     public function __construct(Transfer $transfer, TransferIssueData $transferIssueData)
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
         $this->transfer = $transfer;
         $this->severity = $transferIssueData->severity;
         $this->message = $transferIssueData->message;
@@ -109,7 +109,7 @@ class TransferIssue
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -117,7 +117,7 @@ class TransferIssue
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDeletedAt()
     {
@@ -125,7 +125,7 @@ class TransferIssue
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param \DateTimeImmutable $dateTime
      */
     public function setDeletedAt($dateTime): void
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Activity;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
@@ -36,14 +36,14 @@ class AdministratorActivity
     protected $ipAddress;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $loginTime;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $lastActionTime;
 
@@ -57,13 +57,13 @@ class AdministratorActivity
     ) {
         $this->administrator = $administrator;
         $this->ipAddress = $ipAddress;
-        $this->loginTime = new DateTime();
-        $this->lastActionTime = new DateTime();
+        $this->loginTime = new DateTimeImmutable();
+        $this->lastActionTime = new DateTimeImmutable();
     }
 
     public function updateLastActionTime()
     {
-        $this->lastActionTime = new DateTime();
+        $this->lastActionTime = new DateTimeImmutable();
     }
 
     /**
@@ -75,7 +75,7 @@ class AdministratorActivity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getLoginTime()
     {
@@ -83,7 +83,7 @@ class AdministratorActivity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getLastActionTime()
     {
