@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class OrderDataFixture
@@ -188,7 +189,7 @@ class OrderDataFixture
         $orderData->deliveryPostcode = $this->faker->postcode;
         $orderData->deliveryCountry = $this->getRandomCountryFromFirstDomain();
         $orderData->note = $this->faker->text(200);
-        $orderData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
+        $orderData->createdAt = DatePoint::createFromMutable($this->faker->dateTimeBetween('-1 year', 'now'));
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 

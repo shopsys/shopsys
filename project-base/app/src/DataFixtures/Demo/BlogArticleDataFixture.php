@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -19,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
+use Symfony\Component\Clock\DatePoint;
 
 class BlogArticleDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -166,7 +166,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
 
-        $dateTime = new DateTime(sprintf('-%s days', $this->articleCounter + 3));
+        $dateTime = (new DatePoint())->modify(sprintf('-%s days', $this->articleCounter + 3));
         $blogArticleData->publishDate = $dateTime->setTime(0, 0);
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article example ' . $this->articleCounter)->toString();
 
@@ -208,7 +208,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for search testing')->toString();
-        $blogArticleData->publishDate = new DateTime('-1 days');
+        $blogArticleData->publishDate = (new DatePoint())->modify('-1 days');
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -239,7 +239,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private function createBlockArticleForProductsTest(): void
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
-        $blogArticleData->publishDate = new DateTime('-2 days');
+        $blogArticleData->publishDate = (new DatePoint())->modify('-2 days');
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for products testing')->toString();
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
@@ -291,7 +291,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private function createBlockArticleWithGrapesJs(): void
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
-        $blogArticleData->publishDate = new DateTime('-3 days');
+        $blogArticleData->publishDate = (new DatePoint())->modify('-3 days');
         $firstDomainUrl = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getUrl();
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'GrapesJS page')->toString();
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -21,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Clock\DatePoint;
 
 class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -71,7 +71,7 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
             $giftPlanData->name = 'Gift plan valid';
             $giftPlanData->domainId = $domainId;
             $giftPlanData->validFrom = null;
-            $giftPlanData->validTo = new DateTime('now + 30 days');
+            $giftPlanData->validTo = (new DatePoint())->modify('+30 days');
             $giftPlanData->giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
             $giftPlanData->mainProducts = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14')];
             $giftPlan = $this->createGiftPlan($giftPlanData);
@@ -82,7 +82,7 @@ class GiftPlanDataFixture extends AbstractReferenceFixture implements DependentF
             $giftPlanData->name = 'Gift plan invalid';
             $giftPlanData->domainId = $domainId;
             $giftPlanData->validFrom = null;
-            $giftPlanData->validTo = new DateTime('now - 3 days');
+            $giftPlanData->validTo = (new DatePoint())->modify('-3 days');
             $giftPlanData->giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
             $giftPlanData->mainProducts = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14')];
             $giftPlan = $this->createGiftPlan($giftPlanData);

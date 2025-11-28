@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
-use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
@@ -20,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
+use Symfony\Component\Clock\DatePoint;
 
 class TestCustomerProvider
 {
@@ -59,7 +59,7 @@ class TestCustomerProvider
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
         $customerUserData->pricingGroup = $pricingGroup;
-        $customerUserData->createdAt = new DateTime();
+        $customerUserData->createdAt = new DatePoint();
         $customerUserData->roleGroup = $customerUserRoleGroup;
 
         $billingAddressData = self::getBillingAddressData($customer, $isCompany);
@@ -90,7 +90,7 @@ class TestCustomerProvider
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
         $customerUserData->pricingGroup = $pricingGroup;
-        $customerUserData->createdAt = new DateTime();
+        $customerUserData->createdAt = new DatePoint();
 
         $billingAddressData = self::getEmptyBillingAddressData($customer);
         $customerData->billingAddress = new BillingAddress($billingAddressData);

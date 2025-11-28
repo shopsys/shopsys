@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
-use DateTime;
+use DateTimeImmutable;
 
 class OrderFilter
 {
     /**
-     * @param \DateTime|null $createdAfter
+     * @param \DateTimeImmutable|null $createdAfter
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null $statuses
      * @param string|null $orderItemsCatnum
      * @param string|null $orderItemsProductUuid
      */
     public function __construct(
-        protected ?DateTime $createdAfter = null,
+        protected ?DateTimeImmutable $createdAfter = null,
         protected ?array $statuses = null,
         protected ?string $orderItemsCatnum = null,
         protected ?string $orderItemsProductUuid = null,
@@ -23,9 +23,9 @@ class OrderFilter
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getCreatedAfter(): ?DateTime
+    public function getCreatedAfter(): ?DateTimeImmutable
     {
         return $this->createdAfter;
     }

@@ -17,7 +17,7 @@ class CustomerUserLoginTypeData
     public $loginType;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      */
     public $lastLoggedInAt;
 

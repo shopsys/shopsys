@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use DateTime;
+use DateTimeImmutable;
 
 class CustomerUserLoginInformationProvider
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getLastLogin(CustomerUser $customerUser): ?DateTime
+    public function getLastLogin(CustomerUser $customerUser): ?DateTimeImmutable
     {
         return null;
     }

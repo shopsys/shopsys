@@ -12,8 +12,9 @@ class CartFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(protected readonly EntityNameResolver $entityNameResolver)
-    {
+    public function __construct(
+        protected readonly EntityNameResolver $entityNameResolver,
+    ) {
     }
 
     /**
@@ -24,6 +25,9 @@ class CartFactory
     {
         $entityClassName = $this->entityNameResolver->resolve(Cart::class);
 
-        return new $entityClassName($customerUserIdentifier->getCartIdentifier(), $customerUserIdentifier->getCustomerUser());
+        return new $entityClassName(
+            $customerUserIdentifier->getCartIdentifier(),
+            $customerUserIdentifier->getCustomerUser(),
+        );
     }
 }

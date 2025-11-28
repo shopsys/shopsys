@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
-use DateTime;
-use DateTimeImmutable;
+use DateTimeInterface;
 use IntlDateFormatter;
 use Override;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Symfony\Component\Clock\DatePoint;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -149,19 +149,15 @@ class DateTimeFormatterExtension extends AbstractExtension
 
     /**
      * @param mixed $value
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
     protected function convertToDateTime($value)
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             return $value;
         }
 
-        if ($value instanceof DateTimeImmutable) {
-            return new DateTime($value->format(DATE_ISO8601));
-        }
-
-        return new DateTime($value);
+        return new DatePoint($value);
     }
 
     /**

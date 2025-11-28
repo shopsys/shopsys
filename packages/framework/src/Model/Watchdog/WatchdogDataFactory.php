@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
+use Psr\Clock\ClockInterface;
+
 class WatchdogDataFactory
 {
+    /**
+     * @param \Psr\Clock\ClockInterface $clock
+     */
+    public function __construct(
+        protected readonly ClockInterface $clock,
+    ) {
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogData
      */

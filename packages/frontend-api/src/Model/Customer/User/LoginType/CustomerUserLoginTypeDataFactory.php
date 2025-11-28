@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
-use DateTime;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserLoginTypeDataFactory
 {
+    /**
+     * @param \Psr\Clock\ClockInterface $clock
+     */
+    public function __construct(
+        protected readonly ClockInterface $clock,
+    ) {
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $loginType
@@ -25,7 +33,7 @@ class CustomerUserLoginTypeDataFactory
         $customerUserLoginTypeData->customerUser = $customerUser;
         $customerUserLoginTypeData->loginType = $loginType;
         $customerUserLoginTypeData->externalId = $externalId;
-        $customerUserLoginTypeData->lastLoggedInAt = new DateTime();
+        $customerUserLoginTypeData->lastLoggedInAt = $this->clock->now();
 
         return $customerUserLoginTypeData;
     }

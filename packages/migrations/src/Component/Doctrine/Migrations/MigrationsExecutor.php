@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
-use DateTimeImmutable;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\EventDispatcher;
 use Doctrine\Migrations\Events;
@@ -18,6 +17,7 @@ use Doctrine\Migrations\Version\ExecutionResult;
 use Doctrine\Migrations\Version\Executor;
 use Doctrine\Migrations\Version\State;
 use Override;
+use Psr\Clock\ClockInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -41,11 +41,13 @@ class MigrationsExecutor implements Executor
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Symfony\Component\Stopwatch\Stopwatch $stopwatch
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         DependencyFactory $dependencyFactory,
         protected readonly LoggerInterface $logger,
         protected readonly Stopwatch $stopwatch,
+        protected readonly ClockInterface $clock,
     ) {
         $this->schemaDiffProvider = $dependencyFactory->getSchemaDiffProvider();
         $this->metadataStorage = $dependencyFactory->getMetadataStorage();
@@ -75,7 +77,7 @@ class MigrationsExecutor implements Executor
             $migratorConfiguration,
         );
 
-        $result = new ExecutionResult($plan->getVersion(), $plan->getDirection(), new DateTimeImmutable());
+        $result = new ExecutionResult($plan->getVersion(), $plan->getDirection(), $this->clock->now());
         $this->executeMigration($plan, $result, $migratorConfiguration);
         $result->setSql($this->sqlQueries);
 

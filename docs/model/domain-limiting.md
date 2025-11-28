@@ -39,7 +39,7 @@ The following code snippet shows how to iterate over the domains and create a pr
 ```php
 $blogArticleData = $this->blogArticleDataFactory->create();
 
-$blogArticleData->publishDate = new DateTime('2024-01-01');
+$blogArticleData->publishDate = new DatePoint('2024-01-01');
 
 foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
     $blogArticleData->names[$locale] = t('Blog article example', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

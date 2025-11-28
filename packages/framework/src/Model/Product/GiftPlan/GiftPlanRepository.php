@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\Exception\GiftPlanNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -16,10 +16,12 @@ class GiftPlanRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -105,7 +107,7 @@ class GiftPlanRepository
      */
     public function findActiveGiftPlansByMainProductAndDomainId(Product $mainProduct, int $domainId): array
     {
-        $now = new DateTime();
+        $now = $this->clock->now();
 
         $qb = $this->getRepository()->createQueryBuilder('gp')
             ->innerJoin('gp.mainProducts', 'mp')
@@ -132,7 +134,7 @@ class GiftPlanRepository
             return [];
         }
 
-        $now = new DateTime();
+        $now = $this->clock->now();
 
         $qb = $this->getRepository()->createQueryBuilder('gp')
             ->select('DISTINCT mp.id AS mainProductId, gift.id AS giftProductId')

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
@@ -93,9 +92,9 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->setTranslations($blogArticleData);
 
         $this->hidden = $blogArticleData->hidden;
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = $blogArticleData->createdAt;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->publishDate = $blogArticleData->publishDate ?? new DateTimeImmutable();
+        $this->publishDate = $blogArticleData->publishDate;
         $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
     }
 
@@ -113,7 +112,7 @@ class BlogArticle extends AbstractTranslatableEntity
 
         $this->hidden = $blogArticleData->hidden;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->publishDate = $blogArticleData->publishDate ?? new DateTimeImmutable();
+        $this->publishDate = $blogArticleData->publishDate;
     }
 
     /**

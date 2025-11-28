@@ -5,6 +5,83 @@ That is for better portability and integration with other systems.
 Also, it allows you to work with time values more freely.
 It's easy to implement show dates that suites your needs, for example, each user has its own timezone.
 
+## Getting Current Time with Clock
+
+Shopsys Platform uses the [Symfony Clock component](https://symfony.com/doc/current/components/clock.html) for all time-related operations.
+**Never use `new DateTime()` or `new DateTimeImmutable()` when you need to get the current time.**
+
+### Why Use Clock Instead of DateTime
+
+Using `new DateTime()` directly creates several problems:
+
+1. **Untestable code** - Tests cannot control what "now" means, leading to flaky tests
+2. **Non-deterministic behavior** - The same code can produce different results depending on when it runs
+
+### In Services (with Dependency Injection)
+
+In services, facades, repositories, and form types, inject `ClockInterface` and use `$this->clock->now()`:
+
+```php
+use Psr\Clock\ClockInterface;
+
+class OrderService
+{
+    public function __construct(
+        private readonly ClockInterface $clock,
+    ) {}
+
+    public function createOrder(OrderData $orderData): Order
+    {
+        $orderData->createdAt = $this->clock->now();
+        // ...
+    }
+}
+```
+
+### In Entities, Data Objects, Fixtures, and Tests
+
+In places where dependency injection is not available (entities, data objects, data fixtures, tests), use `new DatePoint()`:
+
+```php
+use Symfony\Component\Clock\DatePoint;
+
+// Getting current time
+$now = new DatePoint();
+
+// Getting relative time from now (note the parentheses around new DatePoint())
+$yesterday = (new DatePoint())->modify('-1 day');
+$nextWeek = (new DatePoint())->modify('+1 week');
+$twoHoursAgo = (new DatePoint())->modify('-2 hours');
+```
+
+### When to Use Each Approach
+
+| Scenario                            | Use                                        |
+| ----------------------------------- | ------------------------------------------ |
+| In services (DI available)          | `$this->clock->now()`                      |
+| In entities/data objects/fixtures   | `new DatePoint()`                          |
+| In tests                            | `new DatePoint()`                          |
+| Relative time (with DI)             | `$this->clock->now()->modify('-30 days')`  |
+| Relative time (without DI)          | `(new DatePoint())->modify('-30 days')`    |
+| Parsing stored datetime string      | `new DatePoint($storedValue)`              |
+| Fixed/constant dates                | `new DatePoint('2024-01-01')`              |
+| Creating from format                | `DatePoint::createFromFormat(...)`         |
+
+### In Tests
+
+Tests use `new DatePoint()` for time calculations:
+
+```php
+use Symfony\Component\Clock\DatePoint;
+
+// Set entity timestamp relative to current time
+$cart->setModifiedAt((new DatePoint())->modify('-131 days'));
+
+// For services with injected ClockInterface, mock it:
+$clock = $this->createMock(ClockInterface::class);
+$clock->method('now')->willReturn(new DatePoint());
+```
+
 ## Configuration
 
 What timezone will be used is controlled by the implementation of `DisplayTimeZoneProviderInterface`.
@@ -59,6 +136,24 @@ $dateFormOtherSource = '2020-08-24 18:30:02';
 $dateTime = new \DateTime($dateFormOtherSource, new \DateTimeZone('Europe/Prague'));
 $dateTime->setTimezone(new \DateTimeZone('UTC'));
 ```
+
+In services with injected `ClockInterface`, use `$this->clock->now()` instead.
+
+### Parsing External Dates
+
+When storing dates from external sources (e.g., from 3rd party application), parse them with `DatePoint` and convert to UTC timezone:
+
+```php
+use Symfony\Component\Clock\DatePoint;
+
+$dateFromOtherSource = '2020-08-24 18:30:02';
+$dateTime = new DatePoint($dateFromOtherSource, new \DateTimeZone('Europe/Prague'));
+$dateTimeUtc = $dateTime->setTimezone(new \DateTimeZone('UTC'));
+```
+
+!!! note
+
+    Always use `DatePoint` instead of `DateTimeImmutable` for consistency across the codebase.
 
 ## Exceptions
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
@@ -15,10 +15,12 @@ class LoginListener
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -31,7 +33,7 @@ class LoginListener
         $user = $token->getUser();
 
         if ($user instanceof TimelimitLoginInterface) {
-            $user->setLastActivity(new DateTime());
+            $user->setLastActivity($this->clock->now());
         }
 
         if ($user instanceof UniqueLoginInterface) {

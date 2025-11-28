@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transfer\Issue;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(
@@ -70,7 +70,7 @@ class TransferIssue
      */
     public function __construct(Transfer $transfer, TransferIssueData $transferIssueData)
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DatePoint();
         $this->transfer = $transfer;
         $this->severity = $transferIssueData->severity;
         $this->message = $transferIssueData->message;

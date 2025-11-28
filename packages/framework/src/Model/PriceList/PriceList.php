@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="price_lists")
@@ -84,7 +84,7 @@ class PriceList
         $this->domainId = $priceListData->domainId;
         $this->validFrom = $priceListData->validFrom;
         $this->validTo = $priceListData->validTo;
-        $this->lastUpdate = new DateTimeImmutable();
+        $this->lastUpdate = new DatePoint();
 
         // products with prices are not set here, they are set in the PriceListFacade::refreshPriceListProductPrices method
         $this->priceListProductPrices->clear();

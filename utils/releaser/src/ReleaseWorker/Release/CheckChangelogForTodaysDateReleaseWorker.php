@@ -6,7 +6,6 @@ namespace Shopsys\Releaser\ReleaseWorker\Release;
 
 use LogicException;
 use Nette\IOException;
-use Nette\Utils\DateTime;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
 use Override;
@@ -14,6 +13,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
+use Symfony\Component\Clock\DatePoint;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -110,7 +110,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
      */
     private function getTodayAsString(): string
     {
-        return (new DateTime())->format('Y-m-d');
+        return (new DatePoint())->format('Y-m-d');
     }
 
     private function renderCommonError(): void

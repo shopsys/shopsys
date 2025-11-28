@@ -85,7 +85,6 @@ final class ImportPriceListFormType extends AbstractType
             ])
             ->add('validFrom', DateTimeType::class, [
                 'label' => 'Valid from',
-                'input' => 'datetime_immutable',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter valid from date']),
@@ -96,7 +95,6 @@ final class ImportPriceListFormType extends AbstractType
             ])
             ->add('validTo', DateTimeType::class, [
                 'label' => 'Valid to',
-                'input' => 'datetime_immutable',
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter valid to date']),

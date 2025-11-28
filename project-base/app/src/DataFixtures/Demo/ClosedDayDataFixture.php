@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Symfony\Component\Clock\DatePoint;
 
 class ClosedDayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -63,17 +63,17 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
         $locale = $domainConfig->getLocale();
 
         yield [
-            new DateTimeImmutable('24.12.' . date('Y')),
+            new DatePoint('24.12.' . date('Y')),
             t('Christmas Eve', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
 
         yield [
-            new DateTimeImmutable('25.12.' . date('Y')),
+            new DatePoint('25.12.' . date('Y')),
             t('Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
 
         yield [
-            new DateTimeImmutable('26.12.' . date('Y')),
+            new DatePoint('26.12.' . date('Y')),
             t(' Second Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
     }

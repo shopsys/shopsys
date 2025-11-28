@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Form;
 
-use DateTime;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
@@ -46,7 +46,7 @@ class DateTimeTypeTest extends TypeTestCase
 
         $form->submit($input);
 
-        $this->assertEquals(new DateTime($expected), $form->getData());
+        $this->assertEquals(new DatePoint($expected), $form->getData());
     }
 
     /**

@@ -12,7 +12,6 @@ use App\Model\Category\Category;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -27,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
@@ -211,11 +211,8 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsVisibleOnAnyDomainWhenSellingInFuture(): void
     {
-        $sellingFrom = new DateTime('now');
-        $sellingFrom->modify('+1 day');
-
         $productData = $this->getDefaultProductData();
-        $productData->sellingFrom = $sellingFrom;
+        $productData->sellingFrom = (new DatePoint())->modify('+1 day');
 
         $productVisibility = $this->createProductAndGetVisibility($productData);
 
@@ -235,11 +232,8 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsVisibleOnAnyDomainWhenSellingInPast(): void
     {
-        $sellingTo = new DateTime('now');
-        $sellingTo->modify('-1 day');
-
         $productData = $this->getDefaultProductData();
-        $productData->sellingTo = $sellingTo;
+        $productData->sellingTo = (new DatePoint())->modify('-1 day');
 
         $productVisibility = $this->createProductAndGetVisibility($productData);
 
@@ -266,14 +260,9 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsVisibleOnAnyDomainWhenSellingNow(): void
     {
-        $sellingFrom = new DateTime('now');
-        $sellingFrom->modify('-1 day');
-        $sellingTo = new DateTime('now');
-        $sellingTo->modify('+1 day');
-
         $productData = $this->getDefaultProductData();
-        $productData->sellingFrom = $sellingFrom;
-        $productData->sellingTo = $sellingTo;
+        $productData->sellingFrom = (new DatePoint())->modify('-1 day');
+        $productData->sellingTo = (new DatePoint())->modify('+1 day');
 
         $productVisibility = $this->createProductAndGetVisibility($productData);
 

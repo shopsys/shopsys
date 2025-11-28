@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
-use DateTimeImmutable;
 use DateTimeInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPage;
@@ -19,11 +19,13 @@ class OrderSentPageContentQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade $orderContentPageFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\PaymentContentPage\PaymentContentPageFactory $paymentContentPageFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly OrderContentPageFacade $orderContentPageFacade,
         protected readonly PaymentContentPageFactory $paymentContentPageFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -72,7 +74,7 @@ class OrderSentPageContentQuery extends AbstractQuery
      */
     public function assertDateTimeIsRecent(?DateTimeInterface $checkDateTime): void
     {
-        $fiveMinutesAgo = new DateTimeImmutable('-5 minutes');
+        $fiveMinutesAgo = $this->clock->now()->modify('-5 minutes');
 
         if ($checkDateTime === null || $checkDateTime < $fiveMinutesAgo) {
             throw new OrderSentPageNotAvailableUserError('You cannot request page content for order older than 5 minutes.');

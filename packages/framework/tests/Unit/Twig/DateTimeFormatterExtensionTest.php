@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Twig;
 
-use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
 class DateTimeFormatterExtensionTest extends TestCase
@@ -25,10 +25,10 @@ class DateTimeFormatterExtensionTest extends TestCase
     public static function formatDateDataProvider(): array
     {
         return [
-            ['input' => new DateTime('2015-04-08'), 'locale' => 'cs', 'result' => '8. 4. 2015'],
+            ['input' => new DatePoint('2015-04-08'), 'locale' => 'cs', 'result' => '8. 4. 2015'],
             ['input' => '2015-04-08', 'locale' => 'cs', 'result' => '8. 4. 2015'],
 
-            ['input' => new DateTime('2015-04-08'), 'locale' => 'en', 'result' => '2015-04-08'],
+            ['input' => new DatePoint('2015-04-08'), 'locale' => 'en', 'result' => '2015-04-08'],
             ['input' => '2015-04-08', 'locale' => 'en', 'result' => '2015-04-08'],
         ];
     }

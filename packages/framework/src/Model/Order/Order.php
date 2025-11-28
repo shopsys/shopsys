@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -23,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="orders")
@@ -400,11 +400,7 @@ class Order
         $this->setCustomerUser($customerUser);
         $this->deleted = false;
 
-        if ($orderData->createdAt === null) {
-            $this->createdAt = new DateTimeImmutable();
-        } else {
-            $this->createdAt = $orderData->createdAt;
-        }
+        $this->createdAt = $orderData->createdAt;
         $this->domainId = $orderData->domainId;
         $this->urlHash = $urlHash;
         $this->currency = $orderData->currency;
@@ -857,7 +853,7 @@ class Order
 
     public function setOrderPaymentStatusPageValidFromNow(): void
     {
-        $this->orderPaymentStatusPageValidFrom = new DateTimeImmutable();
+        $this->orderPaymentStatusPageValidFrom = new DatePoint();
     }
 
     /**

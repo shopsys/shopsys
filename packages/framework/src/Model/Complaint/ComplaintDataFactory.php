@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Complaint;
 
+use Psr\Clock\ClockInterface;
+
 class ComplaintDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory $complaintItemDataFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly ComplaintItemDataFactory $complaintItemDataFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -19,7 +23,10 @@ class ComplaintDataFactory
      */
     public function create(): ComplaintData
     {
-        return $this->createInstance();
+        $complaintData = $this->createInstance();
+        $complaintData->createdAt = $this->clock->now();
+
+        return $complaintData;
     }
 
     /**
@@ -54,6 +61,7 @@ class ComplaintDataFactory
         $complaintData->uuid = $complaint->getUuid();
         $complaintData->domainId = $complaint->getDomainId();
         $complaintData->number = $complaint->getNumber();
+        $complaintData->createdAt = $complaint->getCreatedAt();
         $complaintData->status = $complaint->getStatus();
         $complaintData->order = $complaint->getOrder();
         $complaintData->customerUser = $complaint->getCustomerUser();

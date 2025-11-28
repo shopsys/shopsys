@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Security;
 
-use DateTime;
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -23,14 +23,14 @@ class LoginAsUserExchangeTokenFactory
      * @param string $hashedToken
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \DateTime $expiresAt
+     * @param \DateTimeImmutable $expiresAt
      * @return \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeToken
      */
     public function create(
         string $hashedToken,
         CustomerUser $customerUser,
         Administrator $administrator,
-        DateTime $expiresAt,
+        DateTimeImmutable $expiresAt,
     ): LoginAsUserExchangeToken {
         $entityClassName = $this->entityNameResolver->resolve(LoginAsUserExchangeToken::class);
 

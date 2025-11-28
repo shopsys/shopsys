@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\SpecialPrice;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Resolver\Price\ProductPriceQuery;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 final class ProductPriceQueryTest extends TransactionFunctionalTestCase
@@ -105,7 +105,7 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertMoney('139.96', $priceInfo->basicPrice->getPriceWithVat());
         $this->assertMoney('24.29', $priceInfo->basicPrice->getVatAmount());
         $this->assertSame(14.0, $priceInfo->percentageDiscount);
-        $this->assertEquals(new DateTimeImmutable('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
+        $this->assertEquals(new DatePoint('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
     }
 
     public function testProperSpecialPriceIsReturnedWhenMultiple(): void
@@ -163,7 +163,7 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertMoney('139.96', $priceInfo->basicPrice->getPriceWithVat());
         $this->assertMoney('24.29', $priceInfo->basicPrice->getVatAmount());
         $this->assertSame(14.0, $priceInfo->percentageDiscount);
-        $this->assertEquals(new DateTimeImmutable('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
+        $this->assertEquals(new DatePoint('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
     }
 
     public function testOutdatedSpecialPriceIsSkipped(): void
@@ -221,7 +221,7 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertMoney('139.96', $priceInfo->basicPrice->getPriceWithVat());
         $this->assertMoney('24.29', $priceInfo->basicPrice->getVatAmount());
         $this->assertSame(14.0, $priceInfo->percentageDiscount);
-        $this->assertEquals(new DateTimeImmutable('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
+        $this->assertEquals(new DatePoint('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
     }
 
     public function testHigherSpecialPriceIsSkipped(): void
@@ -309,7 +309,7 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertMoney('139.96', $priceInfo->basicPrice->getPriceWithVat());
         $this->assertMoney('24.29', $priceInfo->basicPrice->getVatAmount());
         $this->assertNull($priceInfo->percentageDiscount);
-        $this->assertEquals(new DateTimeImmutable('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
+        $this->assertEquals(new DatePoint('2084-01-10 08:30:00'), $priceInfo->nextPriceChange);
     }
 
     /**
@@ -348,7 +348,7 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
         $this->assertMoney($expectedPriceWithVat, $priceInfo->priceWithVat);
         $this->assertMoney($expectedVatAmount, $priceInfo->vatAmount);
         $this->assertSame($expectedPercentageDiscount, $priceInfo->percentageDiscount);
-        $this->assertEquals(new DateTimeImmutable($expectedNextPriceChange), $priceInfo->nextPriceChange);
+        $this->assertEquals(new DatePoint($expectedNextPriceChange), $priceInfo->nextPriceChange);
         $this->assertTrue($priceInfo->isPriceFrom);
         $this->assertMoney('115.67', $priceInfo->basicPrice->getPriceWithoutVat());
         $this->assertMoney('139.96', $priceInfo->basicPrice->getPriceWithVat());

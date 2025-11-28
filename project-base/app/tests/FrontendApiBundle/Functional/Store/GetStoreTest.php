@@ -23,6 +23,8 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Store\OpeningHours\StoreOpeningTypeEnum;
+use Symfony\Component\Clock\DatePoint;
+use Symfony\Component\Clock\Test\ClockSensitiveTrait;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -69,6 +71,14 @@ class GetStoreTest extends GraphQlTestCase
     private OpeningHoursRangeDataFactory $openingHoursRangeDataFactory;
 
     private DateTimeImmutable $now;
+
+    #[Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        static::mockTime(new DatePoint('12:00:00'));
+    }
 
     public function testGetStoreByUuid(): void
     {
@@ -569,7 +579,7 @@ class GetStoreTest extends GraphQlTestCase
     private function getNow(): DateTimeImmutable
     {
         if (!isset($this->now)) {
-            $this->now = new DateTimeImmutable('now', new DateTimeZone('Europe/Prague'));
+            $this->now = (new DatePoint())->setTimezone(new DateTimeZone('Europe/Prague'));
         }
 
         return $this->now;
@@ -580,7 +590,7 @@ class GetStoreTest extends GraphQlTestCase
      */
     protected static function getToday(): DateTimeImmutable
     {
-        return new DateTimeImmutable('today', new DateTimeZone('Europe/Prague'));
+        return (new DatePoint())->setTimezone(new DateTimeZone('Europe/Prague'))->modify('today');
     }
 
     /**

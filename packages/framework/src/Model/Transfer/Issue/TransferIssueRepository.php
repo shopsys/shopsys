@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transfer\Issue;
 
-use DateTime;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
 
 class TransferIssueRepository
@@ -19,9 +19,12 @@ class TransferIssueRepository
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(protected EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -43,10 +46,10 @@ class TransferIssueRepository
     }
 
     /**
-     * @param \DateTime $fromDateTime
+     * @param \DateTimeImmutable $fromDateTime
      * @return int
      */
-    public function getTransferIssuesCountFrom(DateTime $fromDateTime): int
+    public function getTransferIssuesCountFrom(DateTimeImmutable $fromDateTime): int
     {
         return $this->getQueryBuilder()
             ->select('COUNT(ti) as count')
@@ -58,10 +61,10 @@ class TransferIssueRepository
     }
 
     /**
-     * @param \DateTime $fromDateTime
+     * @param \DateTimeImmutable $fromDateTime
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getTransferIssuesQueryBuilderForDataGrid(DateTime $fromDateTime): QueryBuilder
+    public function getTransferIssuesQueryBuilderForDataGrid(DateTimeImmutable $fromDateTime): QueryBuilder
     {
         return $this->getQueryBuilder()
             ->select('ti, t')
@@ -84,7 +87,7 @@ class TransferIssueRepository
 
     public function deleteOldTransferIssues(): void
     {
-        $removeIssuesOfOlderDate = new DateTimeImmutable('- ' . self::TRANSFER_ISSUES_KEEP_DAYS_LIMIT . ' days midnight');
+        $removeIssuesOfOlderDate = $this->clock->now()->modify('- ' . self::TRANSFER_ISSUES_KEEP_DAYS_LIMIT . ' days midnight');
         $this->em->getConnection()->executeStatement(
             'DELETE FROM transfer_issues WHERE created_at < :removeIssuesOfOlderDate',
             ['removeIssuesOfOlderDate' => $removeIssuesOfOlderDate],

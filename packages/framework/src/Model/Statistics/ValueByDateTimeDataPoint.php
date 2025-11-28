@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Statistics;
 
-use DateTime;
+use DateTimeInterface;
 
 class ValueByDateTimeDataPoint
 {
@@ -12,15 +12,15 @@ class ValueByDateTimeDataPoint
 
     /**
      * @param mixed $count
-     * @param \DateTime $dateTime
+     * @param \DateTimeInterface $dateTime
      */
-    public function __construct($count, protected readonly DateTime $dateTime)
+    public function __construct($count, protected readonly DateTimeInterface $dateTime)
     {
         $this->value = (int)$count;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
     public function getDateTime()
     {

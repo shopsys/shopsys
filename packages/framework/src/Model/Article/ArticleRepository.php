@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -142,8 +145,8 @@ class ArticleRepository
             ->select('a')
             ->from(Article::class, 'a')
             ->where('a.hidden = false')
-            ->andWhere('a.createdAt <= :todayDate')
-            ->setParameter('todayDate', new DateTime());
+            ->andWhere('a.createdAt <= :now')
+            ->setParameter('now', $this->clock->now());
     }
 
     /**

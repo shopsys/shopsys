@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class PersonalDataAccessRequestFacade
@@ -15,12 +15,14 @@ class PersonalDataAccessRequestFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory $personalDataAccessRequestFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HashGenerator $hashGenerator,
         protected readonly PersonalDataAccessRequestRepository $personalDataAccessRequestRepository,
         protected readonly PersonalDataAccessRequestFactory $personalDataAccessRequestFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -36,7 +38,7 @@ class PersonalDataAccessRequestFacade
         $hash = $this->getUniqueHash();
 
         $personalDataAccessRequestData->hash = $hash;
-        $personalDataAccessRequestData->createAt = new DateTime();
+        $personalDataAccessRequestData->createAt = $this->clock->now();
         $personalDataAccessRequestData->domainId = $domainId;
 
         $dataAccessRequest = $this->personalDataAccessRequestFactory->create($personalDataAccessRequestData);

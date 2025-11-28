@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\BestsellingProduct;
 
-use DateTime;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
@@ -17,11 +17,13 @@ class BestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\AutomaticBestsellingProductRepository $automaticBestsellingProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository $manualBestsellingProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator $bestsellingProductCombinator
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly AutomaticBestsellingProductRepository $automaticBestsellingProductRepository,
         protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
         protected readonly BestsellingProductCombinator $bestsellingProductCombinator,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -54,7 +56,7 @@ class BestsellingProductFacade
             $domainId,
             $category,
             $pricingGroup,
-            new DateTime(static::ORDERS_CREATED_AT_LIMIT),
+            $this->clock->now()->modify(static::ORDERS_CREATED_AT_LIMIT),
             $limit,
         );
 

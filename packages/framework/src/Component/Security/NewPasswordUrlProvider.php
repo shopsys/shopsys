@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Security;
 
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
@@ -15,10 +16,12 @@ class NewPasswordUrlProvider
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\AdministrationRouter $administrationRouter
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly AdministrationRouter $administrationRouter,
+        protected readonly ClockInterface $clock,
     ) {
     }
 

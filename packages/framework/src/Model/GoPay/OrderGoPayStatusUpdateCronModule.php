@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\GoPay;
 
-use DateInterval;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Monolog\Logger;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -25,6 +24,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -32,14 +32,14 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
         protected readonly OrderFacade $orderFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
     #[Override]
     public function run(): void
     {
-        $now = new DateTime();
-        $twentyOneDaysAgo = $now->sub(DateInterval::createFromDateString('21 days'));
+        $twentyOneDaysAgo = $this->clock->now()->modify('-21 days');
         $orders = $this->goPayFacade->getAllUnpaidGoPayOrders($twentyOneDaysAgo);
 
         $this->logger->info('Downloading status updates for orders.', [

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
-use DateTimeImmutable;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
@@ -70,6 +70,7 @@ final class ProductFormType extends AbstractType
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum $productTypeEnum
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
@@ -85,6 +86,7 @@ final class ProductFormType extends AbstractType
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly ProductTypeEnum $productTypeEnum,
         private readonly SpecialPriceFacade $specialPriceFacade,
+        private readonly ClockInterface $clock,
     ) {
     }
 
@@ -401,7 +403,7 @@ final class ProductFormType extends AbstractType
                 'required' => false,
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
                 'label' => 'Selling start date',
-                ...($product === null ? ['data' => new DateTimeImmutable()] : []),
+                ...($product === null ? ['data' => $this->clock->now()] : []),
             ])
             ->add('sellingTo', DatePickerType::class, [
                 'required' => false,

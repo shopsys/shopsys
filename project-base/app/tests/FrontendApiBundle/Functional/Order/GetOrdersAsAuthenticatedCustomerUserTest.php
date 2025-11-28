@@ -6,9 +6,9 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
-use DateTime;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 
@@ -112,7 +112,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ];
 
         // filter by order created after date
-        yield [['filter' => ['createdAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)]], null, null];
+        yield [['filter' => ['createdAfter' => (new DatePoint())->modify('-1 year')->format(DateTimeInterface::ATOM)]], null, null];
 
         // filter by order status
         yield [['filter' => ['status' => 'inProgress']], 0, 1];

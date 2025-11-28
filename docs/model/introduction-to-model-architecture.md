@@ -148,7 +148,7 @@ class CartRepository
                 FROM carts C
                 WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
             [
-                'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
+                'timeLimit' => (new DatePoint())->modify('-' . $daysLimit . ' days'),
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
@@ -158,7 +158,7 @@ class CartRepository
         $this->em->getConnection()->executeStatement(
             'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
             [
-                'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
+                'timeLimit' => (new DatePoint())->modify('-' . $daysLimit . ' days'),
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
@@ -221,7 +221,7 @@ class CartFacade
         foreach ($cart->getItems() as $item) {
             if ($item->getProduct() === $product) {
                 $item->changeQuantity($item->getQuantity() + $quantity);
-                $item->changeAddedAt(new DateTime());
+                $item->changeAddedAt(new DatePoint());
                 $result = new AddProductResult($item, false, $quantity);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();

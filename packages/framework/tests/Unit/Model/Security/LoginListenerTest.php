@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Security;
 
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Security\LoginListener;
@@ -53,7 +54,9 @@ class LoginListenerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock);
+        $clockMock = $this->createMock(ClockInterface::class);
+
+        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock, $clockMock);
 
         $authenticatorMock = $this->getMockBuilder(AuthenticatorInterface::class)
             ->getMock();

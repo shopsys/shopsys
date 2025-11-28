@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use DateTime;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -19,11 +19,13 @@ class ProductVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerDecorator $em,
         protected readonly Domain $domain,
         protected readonly PricingGroupRepository $pricingGroupRepository,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -134,7 +136,7 @@ class ProductVisibilityRepository
     protected function calculateIndependentVisibility(?array $productIds)
     {
         $variables = [
-            'now' => new DateTime(),
+            'now' => $this->clock->now(),
             'locale' => null,
             'domainId' => null,
             'pricingGroupId' => null,
@@ -143,7 +145,7 @@ class ProductVisibilityRepository
         ];
 
         $variableTypes = [
-            'now' => Types::DATETIME_MUTABLE,
+            'now' => Types::DATETIME_IMMUTABLE,
             'locale' => Types::STRING,
             'domainId' => Types::INTEGER,
             'pricingGroupId' => Types::INTEGER,

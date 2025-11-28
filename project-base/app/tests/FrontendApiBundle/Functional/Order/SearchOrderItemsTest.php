@@ -8,7 +8,6 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
-use DateTime;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
@@ -16,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 use Tests\FrontendApiBundle\Test\SearchInputTestUtils;
@@ -100,7 +100,7 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         yield [
             [
                 ...SearchInputTestUtils::createSearchInputQueryVariables('Hello Kitty'),
-                'filter' => ['orderCreatedAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)],
+                'filter' => ['orderCreatedAfter' => (new DatePoint())->modify('-1 year')->format(DateTimeInterface::ATOM)],
             ],
             [15, 20],
         ];

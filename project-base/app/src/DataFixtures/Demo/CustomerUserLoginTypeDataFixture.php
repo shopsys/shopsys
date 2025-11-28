@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Customer\User\CustomerUser;
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
+use Symfony\Component\Clock\DatePoint;
 
 class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -64,7 +64,7 @@ class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implemen
             $customerUser,
             LoginTypeEnum::WEB,
         );
-        $customerUserLoginTypeWebData->lastLoggedInAt = new DateTime('-1 hour');
+        $customerUserLoginTypeWebData->lastLoggedInAt = (new DatePoint())->modify('-1 hour');
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes($customerUserLoginTypeWebData);
     }
 
@@ -78,7 +78,7 @@ class CustomerUserLoginTypeDataFixture extends AbstractReferenceFixture implemen
             LoginTypeEnum::FACEBOOK,
             '1234567890',
         );
-        $customerUserLoginTypeFacebookData->lastLoggedInAt = new DateTime();
+        $customerUserLoginTypeFacebookData->lastLoggedInAt = new DatePoint();
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes($customerUserLoginTypeFacebookData);
     }
 }

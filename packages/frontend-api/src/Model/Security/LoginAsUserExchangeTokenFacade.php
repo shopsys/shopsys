@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Security;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
@@ -17,12 +17,14 @@ class LoginAsUserExchangeTokenFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFactory $loginAsUserExchangeTokenFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly LoginAsUserExchangeTokenRepository $loginAsUserExchangeTokenRepository,
         protected readonly LoginAsUserExchangeTokenFactory $loginAsUserExchangeTokenFactory,
         protected readonly EntityManagerInterface $entityManager,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -36,7 +38,7 @@ class LoginAsUserExchangeTokenFacade
         Administrator $administrator,
     ): string {
         $unencryptedToken = bin2hex(random_bytes(32));
-        $expiresAt = new DateTime('+2 minutes');
+        $expiresAt = $this->clock->now()->modify('+2 minutes');
 
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher(Administrator::class);
         $hashedToken = $passwordHasher->hash($unencryptedToken);

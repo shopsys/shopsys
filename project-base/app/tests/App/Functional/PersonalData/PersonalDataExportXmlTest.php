@@ -16,7 +16,6 @@ use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Product\Product;
-use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Xml\XmlNormalizerHelper;
@@ -37,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Watchdog\Watchdog;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogData;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Functional\Model\Order\TestOrderProvider;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Twig\Environment;
@@ -159,7 +159,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customerUserData->firstName = 'Jaromír';
         $customerUserData->lastName = 'Jágr';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUserData->createdAt = new DateTime('2018-04-13');
+        $customerUserData->createdAt = new DatePoint('2018-04-13');
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->telephone = '+420987654321';
         $customerUserData->customer = $customer;
@@ -180,7 +180,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->currency = $currency;
         $orderData->status = $status;
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->createdAt = new DateTime('2018-04-13');
+        $orderData->createdAt = new DatePoint('2018-04-13');
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->lastName = 'Bořič';
         $orderData->firstName = 'Adam';
@@ -212,7 +212,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $complaintData->domainId = Domain::FIRST_DOMAIN_ID;
         $complaintData->number = '1523596513';
         $complaintData->order = $order;
-        $complaintData->createdAt = new DateTime('2018-04-13');
+        $complaintData->createdAt = new DatePoint('2018-04-13');
         $complaintData->customerUser = $customerUser;
         $complaintData->deliveryFirstName = 'Adam';
         $complaintData->deliveryLastName = 'Bořič';
@@ -240,9 +240,9 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $watchdogData->domainId = Domain::FIRST_DOMAIN_ID;
         $watchdogData->email = $email;
         $watchdogData->product = $product;
-        $watchdogData->createdAt = new DateTime('2018-04-13');
-        $watchdogData->updatedAt = new DateTime('2018-04-13');
-        $watchdogData->validUntil = new DateTime('2020-04-13');
+        $watchdogData->createdAt = new DatePoint('2018-04-13');
+        $watchdogData->updatedAt = new DatePoint('2018-04-13');
+        $watchdogData->validUntil = new DatePoint('2020-04-13');
 
         return new Watchdog($watchdogData);
     }

@@ -8,13 +8,13 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
-use DateTime;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 
@@ -92,7 +92,7 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
             [
                 'last' => 4,
                 'filter' => [
-                    'orderCreatedAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM),
+                    'orderCreatedAfter' => (new DatePoint())->modify('-1 year')->format(DateTimeInterface::ATOM),
                 ],
             ],
             [26, 25, 24, 23],

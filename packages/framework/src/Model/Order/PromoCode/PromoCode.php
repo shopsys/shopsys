@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

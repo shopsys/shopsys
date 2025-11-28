@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 
 class PersonalDataAccessRequestRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -23,7 +26,7 @@ class PersonalDataAccessRequestRepository
      */
     public function findByHashAndDomainId($hash, $domainId)
     {
-        $dateTime = new DateTime('-1 day');
+        $dateTime = $this->clock->now()->modify('-1 day');
 
         return $this->getQueryBuilder()
             ->where('pdar.hash = :hash')

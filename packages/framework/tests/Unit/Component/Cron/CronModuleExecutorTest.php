@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
+use Symfony\Component\Clock\Clock;
 
 class CronModuleExecutorTest extends TestCase
 {
@@ -106,6 +107,6 @@ class CronModuleExecutorTest extends TestCase
             );
         }
 
-        return new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper);
+        return new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper, Clock::get());
     }
 }

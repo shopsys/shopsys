@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
-use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
+use Symfony\Component\Clock\DatePoint;
 
 class SpecialPriceApiFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFactory $specialPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly SpecialPriceFactory $specialPriceFactory,
         protected readonly PriceFactory $priceFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -50,7 +53,7 @@ class SpecialPriceApiFactory
      */
     protected function findRelevantSpecialPrice(array $specialPricesArray): ?SpecialPrice
     {
-        $currentDateTime = new DateTimeImmutable();
+        $currentDateTime = $this->clock->now();
         $usedProductIds = [];
         $finalSpecialPrice = null;
 
@@ -88,8 +91,8 @@ class SpecialPriceApiFactory
     {
         return $this->specialPriceFactory->create(
             $this->priceFactory->createPriceFromArray($priceArray),
-            new DateTimeImmutable($specialPriceArray['valid_from']),
-            new DateTimeImmutable($specialPriceArray['valid_to']),
+            new DatePoint($specialPriceArray['valid_from']),
+            new DatePoint($specialPriceArray['valid_to']),
             $specialPriceArray['price_list_id'],
             $specialPriceArray['price_list_name'],
             $priceArray['product_id'],

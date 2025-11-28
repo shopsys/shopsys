@@ -8,7 +8,6 @@ use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Customer\User\CurrentCustomerUser;
 use App\Model\Product\ProductRepository;
-use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
@@ -21,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
@@ -86,7 +86,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->getCartFacadeForUnregisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 131 days'));
+        $cart->setModifiedAt((new DatePoint())->modify('- 131 days'));
 
         $this->em->flush();
 
@@ -101,7 +101,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->getCartFacadeForUnregisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 129 days'));
+        $cart->setModifiedAt((new DatePoint())->modify('- 129 days'));
 
         $this->em->flush();
 
@@ -116,7 +116,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->getCartFacadeForRegisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 131 days'));
+        $cart->setModifiedAt((new DatePoint())->modify('- 131 days'));
 
         $this->em->flush();
 
@@ -131,7 +131,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->getCartFacadeForRegisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 129 days'));
+        $cart->setModifiedAt((new DatePoint())->modify('- 129 days'));
 
         $this->em->flush();
 

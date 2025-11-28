@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use LogicException;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
@@ -16,9 +16,11 @@ class AdvertRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -78,7 +80,7 @@ class AdvertRepository
      */
     public function getVisibleAdvertsQueryBuilder(int $domainId): QueryBuilder
     {
-        $dateToday = (new DateTimeImmutable())->format('Y-m-d 00:00:00');
+        $dateToday = $this->clock->now()->format('Y-m-d 00:00:00');
 
         return $this->em->createQueryBuilder()
             ->select('a')

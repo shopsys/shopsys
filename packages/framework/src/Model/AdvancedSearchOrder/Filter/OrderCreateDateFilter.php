@@ -65,8 +65,8 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
                 continue;
             }
 
-            /** @var \DateTime $inputDate */
-            $inputDate = clone $ruleData->value;
+            /** @var \DateTimeImmutable $inputDate */
+            $inputDate = $ruleData->value;
 
             $parameterName = 'orderCreatedAt_' . $index;
             $parameterName2 = 'orderCreatedAt_' . $index . '_2';
@@ -78,8 +78,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
                 $queryBuilder->andWhere('o.createdAt >= :' . $parameterName)
                     ->setParameter($parameterName, $inputDate);
             } elseif ($ruleData->operator === self::OPERATOR_IS) {
-                $dateDayAfter = clone $inputDate;
-                $dateDayAfter->modify('+1 day');
+                $dateDayAfter = $inputDate->modify('+1 day');
 
                 $queryBuilder->andWhere('o.createdAt BETWEEN :' . $parameterName . ' AND :' . $parameterName2)
                     ->setParameter($parameterName, $inputDate)

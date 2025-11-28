@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -70,8 +73,7 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId(int $domainId): array
     {
-        $dateToday = new DateTime();
-        $dateToday = $dateToday->format('Y-m-d 00:00:00');
+        $dateToday = $this->clock->now()->format('Y-m-d 00:00:00');
 
         $queryBuilder = $this->getSliderItemQueryBuilder()
             ->where('si.domainId = :domainId')

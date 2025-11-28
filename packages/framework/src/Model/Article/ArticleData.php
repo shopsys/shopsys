@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Symfony\Component\Clock\DatePoint;
 
 class ArticleData
 {
@@ -83,6 +83,6 @@ class ArticleData
     {
         $this->urls = new UrlListData();
         $this->hidden = false;
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DatePoint();
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Complaint;
 
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -165,11 +164,7 @@ class Complaint
      */
     public function __construct(ComplaintData $complaintData, array $complaintItems)
     {
-        if ($complaintData->createdAt === null) {
-            $this->createdAt = new DateTimeImmutable();
-        } else {
-            $this->createdAt = $complaintData->createdAt;
-        }
+        $this->createdAt = $complaintData->createdAt;
 
         $this->uuid = $complaintData->uuid ?? Uuid::uuid4()->toString();
         $this->number = $complaintData->number;

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository;
@@ -29,10 +30,13 @@ class NewsletterFacadeTest extends TestCase
 
         $this->em = $this->createMock(EntityManager::class);
         $this->newsletterRepository = $this->createMock(NewsletterRepository::class);
+        $clock = $this->createMock(ClockInterface::class);
+
         $this->newsletterFacade = new NewsletterFacade(
             $this->em,
             $this->newsletterRepository,
             new NewsletterSubscriberFactory(new EntityNameResolver([])),
+            $clock,
         );
     }
 

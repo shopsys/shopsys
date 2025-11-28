@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Clock\DatePoint;
 
 class SpecialPriceRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -57,7 +60,7 @@ class SpecialPriceRepository
         int $domainId,
         array $variantIds = [],
     ): QueryBuilder {
-        $currentDate = new DateTimeImmutable();
+        $currentDate = $this->clock->now();
 
         return $this->em->createQueryBuilder()
             ->select('pwp.priceAmount, pl.validFrom, pl.validTo, IDENTITY(pwp.product) as productId, pl.name as productListName, pl.id as productListId')
@@ -80,6 +83,6 @@ class SpecialPriceRepository
                 WHEN :currentDate BETWEEN pl.validFrom AND pl.validTo THEN pl.lastUpdate ELSE :minDate
             END', 'DESC')
             ->addOrderBy('pl.validFrom', 'ASC') // Current sorted by lastUpdate DESC, future by validFrom ASC
-            ->setParameter('minDate', new DateTimeImmutable('1970-01-01 00:00:00'));
+            ->setParameter('minDate', new DatePoint('1970-01-01 00:00:00'));
     }
 }

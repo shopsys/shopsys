@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Twig\Runtime;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use IntlDateFormatter;
 use LogicException;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
+use Symfony\Component\Clock\DatePoint;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class DateTimeAgoRuntime implements RuntimeExtensionInterface
@@ -17,10 +18,12 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -34,8 +37,8 @@ class DateTimeAgoRuntime implements RuntimeExtensionInterface
             return '';
         }
 
-        $today = (new DateTimeImmutable())->format('Y-m-d');
-        $yesterday = (new DateTimeImmutable('yesterday'))->format('Y-m-d');
+        $today = $this->clock->now()->format('Y-m-d');
+        $yesterday = (new DatePoint('yesterday'))->format('Y-m-d');
         $dateStr = $dateTime->format('Y-m-d');
 
         if ($dateStr !== $today && $dateStr !== $yesterday) {

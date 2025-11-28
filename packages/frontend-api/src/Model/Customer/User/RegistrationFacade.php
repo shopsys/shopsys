@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressCompanyNumberIsNotUniqueException;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
@@ -29,6 +29,7 @@ class RegistrationFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $frameworkCustomerUserUpdateDataFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
@@ -38,6 +39,7 @@ class RegistrationFacade
         protected readonly OrderFacade $orderFacade,
         protected readonly EntityManagerInterface $em,
         protected readonly FrameworkCustomerUserUpdateDataFactory $frameworkCustomerUserUpdateDataFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -83,7 +85,7 @@ class RegistrationFacade
             throw new RegisterByOrderIsNotPossibleUserError('Order is owned by another customer.');
         }
 
-        if ($order->getCreatedAt() < new DateTime('-1 hour')) {
+        if ($order->getCreatedAt() < $this->clock->now()->modify('-1 hour')) {
             throw new RegisterByOrderIsNotPossibleUserError('Registration for a established order is possible only within an hour of establishment of an order.');
         }
 

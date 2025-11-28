@@ -32,7 +32,7 @@ class FriendlyUrlData
     public $redirectCode;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $lastModification;
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(
@@ -90,8 +90,8 @@ class EntityLog
     protected $logCollectionNumber;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
@@ -102,7 +102,7 @@ class EntityLog
         EntityLogData $entityLogData,
     ) {
         $this->setData($entityLogData);
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DatePoint();
         $this->logCollectionNumber = '';
     }
 
@@ -212,7 +212,7 @@ class EntityLog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {

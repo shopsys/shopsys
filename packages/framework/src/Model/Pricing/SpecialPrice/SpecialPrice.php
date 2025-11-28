@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Symfony\Component\Clock\DatePoint;
 
 class SpecialPrice
 {
@@ -27,7 +27,9 @@ class SpecialPrice
      */
     public function isFuturePrice(): bool
     {
-        return $this->validFrom > new DateTimeImmutable();
+        $now = new DatePoint();
+
+        return $this->validFrom > $now;
     }
 
     /**
@@ -35,6 +37,8 @@ class SpecialPrice
      */
     public function isNowActive(): bool
     {
-        return $this->validFrom <= new DateTimeImmutable() && $this->validTo >= new DateTimeImmutable();
+        $now = new DatePoint();
+
+        return $this->validFrom <= $now && $this->validTo >= $now;
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -20,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitF
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Symfony\Component\Clock\DatePoint;
 
 class PromoCodeDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -95,7 +95,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-not-yet-valid';
         $promoCodeData->domainId = $domainId;
-        $promoCodeData->datetimeValidFrom = new DateTime('+1 year');
+        $promoCodeData->datetimeValidFrom = (new DatePoint())->modify('+1 year');
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
         $this->addReferenceForDomain(self::NOT_YET_VALID_PROMO_CODE, $promoCode, $domainId);
@@ -103,7 +103,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-no-longer-valid';
         $promoCodeData->domainId = $domainId;
-        $promoCodeData->datetimeValidTo = new DateTime('-1 year');
+        $promoCodeData->datetimeValidTo = (new DatePoint())->modify('-1 year');
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
         $this->addReferenceForDomain(self::NO_LONGER_VALID_PROMO_CODE, $promoCode, $domainId);

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Article;
 
 use App\Model\Article\Article;
-use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFactory;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ArticleTest extends TransactionFunctionalTestCase
@@ -32,7 +32,7 @@ class ArticleTest extends TransactionFunctionalTestCase
         $articleData->seoTitle = 'Demonstrative seo title';
         $articleData->seoMetaDescription = 'Demonstrative seo description';
         $articleData->seoH1 = 'Demonstrative seo H1';
-        $articleData->createdAt = new DateTime('2000-01-01T01:01:01');
+        $articleData->createdAt = new DatePoint('2000-01-01T01:01:01');
 
         $article = $this->articleFactory->create($articleData);
 
@@ -51,6 +51,6 @@ class ArticleTest extends TransactionFunctionalTestCase
         $this->assertSame('Demonstrative seo title', $refreshedArticle->getSeoTitle());
         $this->assertSame('Demonstrative seo description', $refreshedArticle->getSeoMetaDescription());
         $this->assertSame('Demonstrative seo H1', $refreshedArticle->getSeoH1());
-        $this->assertEquals(new DateTime('2000-01-01T01:01:01'), $refreshedArticle->getCreatedAt());
+        $this->assertEquals(new DatePoint('2000-01-01T01:01:01'), $refreshedArticle->getCreatedAt());
     }
 }

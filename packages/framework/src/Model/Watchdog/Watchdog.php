@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="watchdogs")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Watchdog
 {
-    protected const VALIDITY_PERIOD = '2 years';
+    protected const string VALIDITY_PERIOD = '2 years';
 
     /**
      * @var int
@@ -68,15 +68,15 @@ class Watchdog
         $this->product = $watchdogData->product;
         $this->email = $watchdogData->email;
         $this->domainId = $watchdogData->domainId;
-        $this->createdAt = $watchdogData->createdAt ?? new DateTimeImmutable();
-        $this->updatedAt = $watchdogData->updatedAt ?? new DateTimeImmutable();
-        $this->validUntil = $watchdogData->validUntil ?? new DateTimeImmutable(static::VALIDITY_PERIOD);
+        $this->createdAt = $watchdogData->createdAt ?? new DatePoint();
+        $this->updatedAt = $watchdogData->updatedAt ?? new DatePoint();
+        $this->validUntil = $watchdogData->validUntil ?? new DatePoint(static::VALIDITY_PERIOD);
     }
 
     public function updateValidity()
     {
-        $this->updatedAt = new DateTimeImmutable();
-        $this->validUntil = new DateTimeImmutable(static::VALIDITY_PERIOD);
+        $this->updatedAt = new DatePoint();
+        $this->validUntil = new DatePoint(static::VALIDITY_PERIOD);
     }
 
     /**

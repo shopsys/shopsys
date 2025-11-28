@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 
 class OrderDeliveryDateFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -24,7 +26,7 @@ class OrderDeliveryDateFacade
     public function setDeliveredNowIfNecessary(Order $order): void
     {
         if ($this->shouldSetDeliveredAt($order)) {
-            $order->setDeliveredAt(new DateTime('now'));
+            $order->setDeliveredAt($this->clock->now());
             $this->em->flush();
         }
     }

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension\Model\Order;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="orders")
@@ -34,9 +35,9 @@ class Order
     protected string $number;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
-    protected DateTime $createdAt;
+    protected DateTimeImmutable $createdAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Order\OrderItem>
@@ -63,7 +64,7 @@ class Order
     public function __construct()
     {
         $this->items = new ArrayCollection();
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DatePoint();
         $this->uuid = Uuid::uuid4()->toString();
     }
 

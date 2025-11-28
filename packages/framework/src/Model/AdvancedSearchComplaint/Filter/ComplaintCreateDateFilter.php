@@ -64,8 +64,8 @@ class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
                 continue;
             }
 
-            /** @var \DateTime $inputDate */
-            $inputDate = clone $ruleData->value;
+            /** @var \DateTimeImmutable $inputDate */
+            $inputDate = $ruleData->value;
 
             $parameterName = 'complaintCreatedAt_' . $index;
             $parameterName2 = 'complaintCreatedAt_' . $index . '_2';
@@ -77,8 +77,7 @@ class ComplaintCreateDateFilter implements AdvancedSearchFilterInterface
                 $queryBuilder->andWhere('cmp.createdAt >= :' . $parameterName)
                     ->setParameter($parameterName, $inputDate);
             } elseif ($ruleData->operator === self::OPERATOR_IS) {
-                $dateDayAfter = clone $inputDate;
-                $dateDayAfter->modify('+1 day');
+                $dateDayAfter = $inputDate->modify('+1 day');
 
                 $queryBuilder->andWhere('cmp.createdAt BETWEEN :' . $parameterName . ' AND :' . $parameterName2)
                     ->setParameter($parameterName, $inputDate)

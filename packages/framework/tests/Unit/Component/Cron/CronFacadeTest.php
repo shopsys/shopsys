@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
-use DateTime;
 use Monolog\Logger;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +16,8 @@ use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
+use Symfony\Component\Clock\Clock;
+use Symfony\Component\Clock\DatePoint;
 
 class CronFacadeTest extends TestCase
 {
@@ -82,7 +83,7 @@ class CronFacadeTest extends TestCase
             $validServiceId => $validCronModuleServiceMock,
             $invalidServiceId => $invalidCronModuleServiceMock,
         ], $cronTimeResolverMock);
-        $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->scheduleModulesByTime(new DateTime());
+        $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->scheduleModulesByTime(new DatePoint());
     }
 
     public function testRunScheduledModules()
@@ -121,7 +122,7 @@ class CronFacadeTest extends TestCase
         $loggerMock = $this->createMock(Logger::class);
         $bytesHelper = new BytesHelper();
 
-        $cronModuleExecutor = new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper);
+        $cronModuleExecutor = new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper, Clock::get());
 
         return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $cronModuleExecutor);
     }

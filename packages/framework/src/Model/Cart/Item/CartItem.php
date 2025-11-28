@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="cart_items")
@@ -89,7 +89,7 @@ class CartItem
         $this->product = $product;
         $this->setWatchedPrice($watchedPrice);
         $this->changeQuantity($quantity);
-        $this->addedAt = new DateTimeImmutable();
+        $this->addedAt = new DatePoint();
         $this->uuid = Uuid::uuid4()->toString();
         $this->setType($type);
     }
@@ -176,12 +176,9 @@ class CartItem
         return $this->addedAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $addedAt
-     */
-    public function changeAddedAt(DateTimeImmutable $addedAt): void
+    public function setAddedAtToNow(): void
     {
-        $this->addedAt = $addedAt;
+        $this->addedAt = new DatePoint();
     }
 
     /**

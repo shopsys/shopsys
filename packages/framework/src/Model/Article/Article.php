@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
@@ -154,7 +153,7 @@ class Article implements OrderableEntityInterface
         $this->seoH1 = $articleData->seoH1;
         $this->placement = $articleData->placement;
         $this->hidden = $articleData->hidden;
-        $this->createdAt = $articleData->createdAt ?? new DateTimeImmutable();
+        $this->createdAt = $articleData->createdAt;
         $this->external = $articleData->external;
         $this->type = $articleData->type;
         $this->url = $articleData->url;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Statistics;
 
-use DateTime;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,15 +23,17 @@ class StatisticsRepository
     }
 
     /**
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param \DateTimeImmutable $start
+     * @param \DateTimeImmutable $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end): array
-    {
+    public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(
+        DateTimeImmutable $start,
+        DateTimeImmutable $end,
+    ): array {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
-        $resultSetMapping->addScalarResult('date', 'date', Types::DATE_MUTABLE);
+        $resultSetMapping->addScalarResult('date', 'date', Types::DATE_IMMUTABLE);
 
         $query = $this->em->createNativeQuery(
             'SELECT DATE(u.created_at) AS date, COUNT(u.created_at) AS count
@@ -55,15 +56,15 @@ class StatisticsRepository
     }
 
     /**
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param \DateTimeImmutable $start
+     * @param \DateTimeImmutable $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end): array
+    public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTimeImmutable $start, DateTimeImmutable $end): array
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
-        $resultSetMapping->addScalarResult('date', 'date', Types::DATE_MUTABLE);
+        $resultSetMapping->addScalarResult('date', 'date', Types::DATE_IMMUTABLE);
 
         $query = $this->em->createNativeQuery(
             'SELECT DATE(o.created_at) AS date, COUNT(o.created_at) AS count

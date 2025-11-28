@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use DateInterval;
-use DateTime;
-use DateTimeImmutable;
 use DateTimeZone;
 use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Builder;
@@ -16,6 +14,7 @@ use Lcobucci\JWT\Validation\Constraint\IssuedBy;
 use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -40,12 +39,14 @@ class TokenFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider $jwtConfigurationProvider
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer $tokenCustomerUserTransformer
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly JwtConfigurationProvider $jwtConfigurationProvider,
         protected readonly TokenCustomerUserTransformer $tokenCustomerUserTransformer,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -103,7 +104,7 @@ class TokenFacade
      */
     protected function getTokenBuilderWithExpiration(int $expiration, int $domainId): Builder
     {
-        $currentTime = new DateTimeImmutable();
+        $currentTime = $this->clock->now();
         $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
         return $this->jwtConfigurationProvider->getConfiguration()
@@ -180,7 +181,7 @@ class TokenFacade
             $customerUser,
             $randomChain,
             $deviceId,
-            DateTime::createFromImmutable($refreshToken->claims()->get('exp')),
+            $refreshToken->claims()->get('exp'),
             $administrator,
         );
 

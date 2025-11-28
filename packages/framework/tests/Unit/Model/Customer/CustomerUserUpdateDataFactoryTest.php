@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
@@ -186,6 +187,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
                 $this->createMock(CustomerUserRoleGroupFacade::class),
                 $this->createMock(CustomerRepository::class),
                 $this->createMock(NewsletterFacade::class),
+                $this->createMock(ClockInterface::class),
             ),
         );
     }

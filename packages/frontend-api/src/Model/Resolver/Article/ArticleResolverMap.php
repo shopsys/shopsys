@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
-use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
+use Symfony\Component\Clock\DatePoint;
 
 class ArticleResolverMap extends ResolverMap
 {
@@ -21,7 +21,7 @@ class ArticleResolverMap extends ResolverMap
                 return '/' . $articleData['mainSlug'];
             },
             'createdAt' => static function (array $blogArticleData) {
-                return new DateTime($blogArticleData['createdAt']);
+                return new DatePoint($blogArticleData['createdAt']);
             },
         ];
 

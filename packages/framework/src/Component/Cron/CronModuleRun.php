@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,14 +41,14 @@ class CronModuleRun
     protected $status;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     protected $startedAt;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     protected $finishedAt;
 
@@ -61,15 +61,15 @@ class CronModuleRun
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
      * @param string $status
-     * @param \DateTime $startedAt
-     * @param \DateTime $finishedAt
+     * @param \DateTimeImmutable $startedAt
+     * @param \DateTimeImmutable $finishedAt
      * @param int $duration
      */
     public function __construct(
         CronModule $cronModule,
         string $status,
-        DateTime $startedAt,
-        DateTime $finishedAt,
+        DateTimeImmutable $startedAt,
+        DateTimeImmutable $finishedAt,
         int $duration,
     ) {
         $this->cronModule = $cronModule;
@@ -96,7 +96,7 @@ class CronModuleRun
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getStartedAt()
     {
@@ -104,7 +104,7 @@ class CronModuleRun
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getFinishedAt()
     {

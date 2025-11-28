@@ -31,6 +31,7 @@ final class DatePickerType extends AbstractType
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'html5' => false,
+            'input' => 'datetime_immutable',
             'attr' => [
                 'data-js-datepicker' => 'true',
             ],

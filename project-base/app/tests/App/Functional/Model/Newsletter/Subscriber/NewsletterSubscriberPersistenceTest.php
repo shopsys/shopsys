@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Newsletter\Subscriber;
 
-use DateTimeImmutable;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
@@ -16,7 +16,7 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
     {
         $newsletterSubscriber = new NewsletterSubscriber(
             'no-reply2@shopsys.com',
-            new DateTimeImmutable('2018-02-06 15:15:48'),
+            new DatePoint('2018-02-06 15:15:48'),
             1,
         );
 
