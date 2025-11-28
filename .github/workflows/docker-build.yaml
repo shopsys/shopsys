@@ -48,7 +48,7 @@ jobs:
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
                     BRANCH_NAME="${BRANCH,,}"
-                    BRANCH_NAME_ESCAPED="${BRANCH_NAME//./-}"
+                    BRANCH_NAME_ESCAPED="${BRANCH_NAME//[\/.]/-}"
                     echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
                     echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME_ESCAPED}" >> $GITHUB_OUTPUT
                     echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
@@ -714,8 +714,8 @@ jobs:
         steps:
             -   name: Create branch directory
                 run: |
-                    rm -rf ${BRANCH_NAME}
-                    mkdir ${BRANCH_NAME}
+                    rm -rf ${BRANCH_NAME_ESCAPED}
+                    mkdir ${BRANCH_NAME_ESCAPED}
             -   name: Set ENV variables required for review
                 run: |
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
@@ -732,21 +732,21 @@ jobs:
                 uses: actions/download-artifact@v4
                 with:
                     name: set-urls-for-review
-                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
+                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             -   name: Download rabbitmq-vhost-sh from artifacts
                 uses: actions/download-artifact@v4
                 with:
                     name: rabbitmq-vhost-sh
-                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
+                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             -   name: Move docker-compose.review.yml to branch folder
                 if: "contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
-                    mv docker-compose.review.yml ${BRANCH_NAME}/docker-compose.yml
+                    mv docker-compose.review.yml ${BRANCH_NAME_ESCAPED}/docker-compose.yml
             -   name: Move docker-compose.review.simplified.yml to branch folder
                 if: "!contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
-                    mv docker-compose.review.simplified.yml ${BRANCH_NAME}/docker-compose.yml
-                    bash ./${BRANCH_NAME}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
+                    mv docker-compose.review.simplified.yml ${BRANCH_NAME_ESCAPED}/docker-compose.yml
+                    bash ./${BRANCH_NAME_ESCAPED}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
             -   name: Update docker-compose.yaml with secrets
                 run: |
                     sed -i "s#GOPAY_GOID#${{ secrets.GOPAY_GOID }}#" "${BRANCH_NAME}/docker-compose.yml"
@@ -756,7 +756,7 @@ jobs:
                     sed -i "s#PACKETERY_API_PASSWORD_VALUE#${{ secrets.PACKETERY_API_PASSWORD }}#" "${BRANCH_NAME}/docker-compose.yml"
             -   name: Start project
                 run: |
-                    cd ${BRANCH_NAME}
+                    cd ${BRANCH_NAME_ESCAPED}
                     chmod +x set-urls-for-review.sh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
                     docker compose down -v --remove-orphans || true
