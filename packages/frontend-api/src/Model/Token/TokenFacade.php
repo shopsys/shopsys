@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use DateInterval;
-use DateTimeZone;
-use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\UnencryptedToken;
@@ -24,7 +22,6 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageExcep
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Throwable;
-use function date_default_timezone_get;
 
 class TokenFacade
 {
@@ -146,7 +143,7 @@ class TokenFacade
 
         $validator = $jwtConfiguration->validator();
 
-        if (!$validator->validate($token, new StrictValidAt(new SystemClock(new DateTimeZone(date_default_timezone_get()))))) {
+        if (!$validator->validate($token, new StrictValidAt($this->clock))) {
             throw new ExpiredTokenUserMessageException('Token is expired. Please renew.');
         }
 
