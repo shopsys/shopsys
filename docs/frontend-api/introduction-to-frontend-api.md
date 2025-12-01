@@ -279,3 +279,56 @@ Value for the field is resolved by one of the previously mentioned field mapper 
 - `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`
 
 Methods are searched in the order above and if the corresponding method does not exist, resolving falls back to the default (see `Overblog\GraphQLBundle\Resolver\FieldResolver` class).
+
+### Overriding GraphQL Input Validation
+
+When you define a `validation` section in your project's GraphQL type that inherits from a frontend-api bundle decorator, the validation array is **replaced entirely**, not merged.
+Your custom constraints will only work if you also include all the decorator's original constraints.
+
+!!! warning
+
+    FrontendApi constraints must be listed first, before your custom ones.
+
+```yaml
+# project-base/app/config/graphql/types/.../YourInput.types.yaml
+YourInput:
+    type: input-object
+    inherits:
+        - 'FrontendApiInputDecorator'
+    config:
+        validation:
+            # All original decorator constraints FIRST
+            - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint: ~
+            # Your custom constraints AFTER
+            - App\Component\Constraints\YourCustomConstraint: ~
+```
+
+!!! note
+
+    Check the corresponding decorator file in `packages/frontend-api/src/Resources/config/graphql-types/` to see which constraints you need to include.
+
+#### Removing or Replacing Validation Constraints
+
+If you want to remove or replace a validation constraint from the decorator, you can disable it by assigning a non-existent validation group.
+This effectively skips the constraint because the group will never be active during validation.
+
+```yaml
+# app/config/graphql/types/.../YourInput.types.yaml
+YourInput:
+    type: input-object
+    inherits:
+        - ' FrontendApiInputDecorator'
+    config:
+        validation:
+            # All original decorator constraints FIRST
+            ...
+            # Disable the original constraint by assigning a non-existent group
+            - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint:
+                groups: "removed-validation"
+            # Add your replacement constraint (or omit if you just want to remove validation)
+            - App\Component\Constraints\YourReplacementConstraint: ~
+```
+
+!!! tip
+
+    Using a descriptive group name like `removed-validation` makes it clear that the constraint is intentionally deactivated.
