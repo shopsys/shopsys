@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use DateTimeImmutable;
 use DateTimeZone;
 use Nette\Utils\Json;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -30,6 +31,8 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetStoreTest extends GraphQlTestCase
 {
+    use ClockSensitiveTrait;
+
     /**
      * @inject
      */
