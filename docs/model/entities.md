@@ -402,6 +402,29 @@ You may initialize a default value in the constructor or in the data factory (e.
 
 You can read more about the `Money` class in [How to Work with Money](../model/how-to-work-with-money.md).
 
+#### DateTime
+
+To transfer date-time values, use `\DateTimeImmutable` (optionally nullable).
+Initialize default timestamps in the data factory using the Clock component:
+
+```php
+use Psr\Clock\ClockInterface;
+
+class OrderDataFactory
+{
+    public function __construct(
+        private readonly ClockInterface $clock,
+    ) {}
+
+    protected function fillNew(OrderData $orderData): void
+    {
+        $orderData->createdAt = $this->clock->now();
+    }
+}
+```
+
+See [Working with date-time values](../introduction/working-with-date-time-values.md) for more details on Clock usage.
+
 #### Images
 
 To transfer images via the system, use PHPDoc annotation `\Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData` and initialize the field in the constructor as you can see in `BrandData` example above.

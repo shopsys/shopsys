@@ -56,16 +56,16 @@ $twoHoursAgo = (new DatePoint())->modify('-2 hours');
 
 ### When to Use Each Approach
 
-| Scenario                            | Use                                        |
-| ----------------------------------- | ------------------------------------------ |
-| In services (DI available)          | `$this->clock->now()`                      |
-| In entities/data objects/fixtures   | `new DatePoint()`                          |
-| In tests                            | `new DatePoint()`                          |
-| Relative time (with DI)             | `$this->clock->now()->modify('-30 days')`  |
-| Relative time (without DI)          | `(new DatePoint())->modify('-30 days')`    |
-| Parsing stored datetime string      | `new DatePoint($storedValue)`              |
-| Fixed/constant dates                | `new DatePoint('2024-01-01')`              |
-| Creating from format                | `DatePoint::createFromFormat(...)`         |
+| Scenario                          | Use                                       |
+| --------------------------------- | ----------------------------------------- |
+| In services (DI available)        | `$this->clock->now()`                     |
+| In entities/data objects/fixtures | `new DatePoint()`                         |
+| In tests                          | `new DatePoint()`                         |
+| Relative time (with DI)           | `$this->clock->now()->modify('-30 days')` |
+| Relative time (without DI)        | `(new DatePoint())->modify('-30 days')`   |
+| Parsing stored datetime string    | `new DatePoint($storedValue)`             |
+| Fixed/constant dates              | `new DatePoint('2024-01-01')`             |
+| Creating from format              | `DatePoint::createFromFormat(...)`        |
 
 ### In Tests
 
@@ -128,16 +128,28 @@ Both of them are aware of `DisplayTimeZoneProvider` and convert the values to th
 
 ## Filling the dates programmatically
 
-When storing dates in different way than using application forms (e.g., from 3rd party application), it is necessary to convert them into UTC timezone.
-This can be done like this:
+### Setting Current Time
+
+When you need to set a timestamp to "now" in entities or data objects, use `DatePoint`:
 
 ```php
-$dateFormOtherSource = '2020-08-24 18:30:02';
-$dateTime = new \DateTime($dateFormOtherSource, new \DateTimeZone('Europe/Prague'));
-$dateTime->setTimezone(new \DateTimeZone('UTC'));
+use Symfony\Component\Clock\DatePoint;
+
+$entity->setCreatedAt(new DatePoint());
+$entity->setModifiedAt((new DatePoint())->modify('-1 hour'));
 ```
 
 In services with injected `ClockInterface`, use `$this->clock->now()` instead.
+
+### Parsing External Dates
+
+When storing dates from external sources (e.g., from 3rd party application), parse them with `DateTimeImmutable` and convert to UTC timezone:
+
+```php
+$dateFromOtherSource = '2020-08-24 18:30:02';
+$dateTime = new \DateTimeImmutable($dateFromOtherSource, new \DateTimeZone('Europe/Prague'));
+$dateTimeUtc = $dateTime->setTimezone(new \DateTimeZone('UTC'));
+```
 
 ### Parsing External Dates
 
