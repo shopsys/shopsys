@@ -3,6 +3,8 @@
         <div class="alert-icon">
             {{ ux_icon(form.vars.message_level, {class: 'icon alert-icon'}) }}
         </div>
-        {{ data|raw }}
+        <div>
+            {{ data|raw }}
+        </div>
     </div>
 {% endblock %}
