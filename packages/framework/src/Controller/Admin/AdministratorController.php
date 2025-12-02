@@ -501,6 +501,8 @@ class AdministratorController extends AdminBaseController
             TextType::class,
             [
                 'label' => t('Authentication code'),
+                'row_attr' => ['class' => 'flex-column'],
+                'label_attr' => ['class' => 'col-xl-12'],
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter code']),
                     new Callback($twoFactorCodeValidationCallback),
@@ -512,7 +514,11 @@ class AdministratorController extends AdminBaseController
             ? t('Confirm code and disable two-factor authentication')
             : t('Confirm code and enable two-factor authentication');
 
-        $form->add('verify', SubmitType::class, ['label' => $label]);
+        $form->add('verify', SubmitType::class, [
+            'label' => $label,
+            'row_attr' => ['class' => 'flex-column'],
+            'attr' => ['class' => 'white-space-normal btn-primary mt-4'],
+        ]);
 
         return $form;
     }
@@ -539,7 +545,11 @@ class AdministratorController extends AdminBaseController
         $formFactory = $this->container->get('form.factory');
 
         $formSendEmail = $formFactory->createNamed('formSendEmail');
-        $formSendEmail->add('send', SubmitType::class, ['label' => t('Send me authentication code')]);
+        $formSendEmail->add('send', SubmitType::class, [
+            'label' => t('Send me authentication code'),
+            'row_attr' => ['class' => 'flex-column'],
+            'attr' => ['class' => 'white-space-normal btn-primary'],
+        ]);
 
         return $formSendEmail;
     }
