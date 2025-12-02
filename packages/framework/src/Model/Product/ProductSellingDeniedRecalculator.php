@@ -54,17 +54,22 @@ class ProductSellingDeniedRecalculator
                 WHEN (
                     p.selling_denied = TRUE
                     OR
-                    pv.visible = FALSE
-                    OR
                     pd.domain_hidden = TRUE
                     OR
                     pd.selling_denied = TRUE
+                    OR (
+                        p.is_allowed_negative_stock = FALSE AND NOT EXISTS (
+                            SELECT 1 FROM product_stocks as ps
+                            JOIN stock_domains as sd ON ps.stock_id = sd.stock_id AND sd.domain_id = :domainId AND sd.is_enabled = TRUE
+                            WHERE ps.product_id = p.id 
+                            AND ps.product_quantity > 0
+                        )
+                    )
                 )
                 THEN TRUE
                 ELSE FALSE
             END
             FROM products AS p
-            JOIN product_visibilities AS pv ON pv.product_id = p.id AND pv.domain_id = :domainId
             WHERE p.id = pd.product_id
                 AND pd.domain_id = :domainId
             ' . (count($productIds) > 0 ? ' AND p.id IN (:productIds)' : '');
