@@ -4,6 +4,11 @@ services:
             context: project-base/app
             dockerfile: project-base/app/docker/postgres/Dockerfile.apple
         container_name: postgres
+        deploy:
+            resources:
+                limits:
+                    cpus: 10
+                    memory: 9000M
         volumes:
             - /private/var/www/shopsys/project-base/app/var/postgres-data:/var/lib/postgresql/data
         environment:
@@ -13,39 +18,40 @@ services:
             POSTGRES_DB: shopsys
         platform: linux/arm64
         dns_search: shopsys
+        dns_domain: shopsys
 
-    webserver:
-        build:
-            context: project-base/app
-            dockerfile: project-base/app/docker/nginx/Dockerfile.apple
-        container_name: webserver
-        depends_on:
-            - php-fpm
-            - storefront
-        volumes:
-            - /private/var/www/shopsys/project-base/app:/var/www/html
-        ports:
-            - "8000:8080"
-        platform: linux/arm64
-        dns_search: shopsys
+        #    webserver:
+        #        build:
+        #            context: project-base/app
+        #            dockerfile: project-base/app/docker/nginx/Dockerfile.apple
+        #        container_name: webserver
+        #        depends_on:
+        #            - php-fpm
+        #            - storefront
+        #        volumes:
+        #            - /private/var/www/shopsys/project-base/app:/var/www/html
+        #        ports:
+        #            - "8000:8080"
+        #        platform: linux/arm64
+        #        dns_search: shopsys
 
-    storefront:
-        restart: always
-        build:
-            context: project-base/app
-            dockerfile: project-base/storefront/docker/dev.Dockerfile
-            target: development
-        container_name: storefront
-        command: # Optional
-            - dev # change to `- build` if you want to test application build
-        volumes:
-            - /private/var/www/shopsys/project-base/storefront:/home/node/app
-        ports:
-            - "3000:3000"
-            - "9229:9229"
-            - "9230:9230"
-        platform: linux/arm64
-        dns_search: shopsys
+        #    storefront:
+        #        restart: always
+        #        build:
+        #            context: project-base/app
+        #            dockerfile: project-base/storefront/docker/dev.Dockerfile
+        #            target: development
+        #        container_name: storefront
+        #        command: # Optional
+        #            - dev # change to `- build` if you want to test application build
+        #        volumes:
+        #            - /private/var/www/shopsys/project-base/storefront:/home/node/app
+        #        ports:
+        #            - "3000:3000"
+        #            - "9229:9229"
+        #            - "9230:9230"
+        #        platform: linux/arm64
+        #        dns_search: shopsys
 
         #    storefront-cypress:
         #        restart: always
@@ -96,7 +102,7 @@ services:
                 project_root: /private/var/www/shopsys/project-base/app
         container_name: php-fpm
         volumes:
-            - /private/var/www/globus/app:/var/www/html
+            - /private/var/www/shopsys:/var/www/html
         environment:
             LOCAL_PATH_TO_PROJECT_ROOT: /var/www/html
         ports:
@@ -104,10 +110,11 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: 8
+                    cpus: 10
                     memory: 9000M
         platform: linux/arm64
         dns_search: shopsys
+        dns_domain: shopsys
 
     php-consumer:
         restart: always
@@ -142,6 +149,12 @@ services:
         container_name: redis
         platform: linux/arm64
         dns_search: shopsys
+        dns_domain: shopsys
+        deploy:
+            resources:
+                limits:
+                    cpus: 10
+                    memory: 9000M
         #
         #    redis-commander:
         #        container_name: shopsys-framework-redis-commander
@@ -195,15 +208,16 @@ services:
             - /private/var/www/shopsys/project-base/app/var/elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             discovery.type: single-node
-                - bootstrap.memory_lock=true
+            bootstrap.memory_lock: "true"
             ES_JAVA_OPTS: "-Xms1g -Xmx1g"
         deploy:
             resources:
                 limits:
-                    memory: 2048M
-                    cpus: 3
+                    cpus: 10
+                    memory: 9000M
         platform: linux/arm64
         dns_search: shopsys
+        dns_domain: shopsys
 
 #    kibana:
 #        image: docker.elastic.co/kibana/kibana:7.17.2
