@@ -44,12 +44,12 @@ class CurrencyGridFactory implements GridFactoryInterface
 
         $grid = $this->gridFactory->create('currencyList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
-        $grid->addColumn('name', 'c.name', t('Name'), true);
-        $grid->addColumn('code', 'c.code', t('Code'), true);
+        $grid->addColumn('name', 'c.name', t('Name'), true)->setClassAttribute('min-w-150');
+        $grid->addColumn('code', 'c.code', t('Code'), true)->setClassAttribute('min-w-150');
         $grid->addColumn('minFractionDigits', 'c.minFractionDigits', t('Min fraction digits'), true);
-        $grid->addColumn('roundingType', 'c.roundingType', t('Rounding type'), true);
-        $grid->addColumn('exchangeRate', 'c.exchangeRate', t('Exchange rate'), true);
-        $grid->addColumn('roundingPlacesPriceWithoutVat', 'c.roundingPlacesPriceWithoutVat', t('Rounding places of price without VAT and VAT amount'), true);
+        $grid->addColumn('roundingType', 'c.roundingType', t('Rounding type'), true)->setClassAttribute('min-w-250');
+        $grid->addColumn('exchangeRate', 'c.exchangeRate', t('Exchange rate'), true)->setClassAttribute('min-w-250');
+        $grid->addColumn('roundingPlacesPriceWithoutVat', 'c.roundingPlacesPriceWithoutVat', t('Rounding places of price without VAT and VAT amount'), true)->setClassAttribute('white-space-normal min-w-250 max-w-300');
 
         $grid->addDeleteActionColumn('admin_currency_deleteconfirm', ['id' => 'c.id'])
             ->setAjaxConfirm();
