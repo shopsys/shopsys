@@ -28,16 +28,16 @@
     </div>
     <hr>
 
-    <div class="row mb-3 d-none d-md-block">
+    <div class="row">
         <div class="col">
             <h4>{{ inputPriceLabel() }}</h4>
         </div>
-        <div class="col text-end">
+        <div class="col text-end d-none d-md-block">
             <h4>{{ 'Selling prices'|trans }}</h4>
         </div>
     </div>
 
-    <div class="row mb-3 align-items-center">
+    <div class="row align-items-center">
         {{ form_label(form.pricesIndexedByDomainId[domainId]) }}
 
         <div class="col-12 col-md-6">
@@ -45,15 +45,19 @@
             {{ form_errors(form.pricesIndexedByDomainId[domainId] ) }}
         </div>
 
+        <div class="mt-2 d-md-none">
+            <h4>{{ 'Selling prices'|trans }}</h4>
+        </div>
+
         {% set price = pricesIndexedByDomainId[domainId] %}
 
         {% if price %}
-            <div class="col-6 col-md-2 text-end">
+            <div class="col-6 col-md-2 text-md-end ms-auto">
                 {{ price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
                 <br>
                 <span class="small">{{ 'Excl. VAT'|trans }}</span>
             </div>
-            <div class="col-6 col-md-2 text-end">
+            <div class="col-6 col-md-2 text-md-end">
                 <strong>
                     {{ price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}
                 </strong>
