@@ -6,7 +6,7 @@ import {
 import { createClient } from 'urql/createClient';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
-import { getHostFromDomain, getLocalePrefix } from 'utils/domain/domainUtils';
+import { DEFAULT_LOCALE, getHostFromDomain, getLocalePrefix } from 'utils/domain/domainUtils';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -25,8 +25,8 @@ const domains = getPublicConfigProperty('domains', []) as DomainConfigType[];
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, ssrExchange }) => async (context) => {
     const domainConfig = getDomainConfig(context);
 
-    // Return 404 if robots.txt is accessed from a domain with locale suffix
-    if (getLocalePrefix(domainConfig) !== '') {
+    // Allow only root /robots.txt, return 404 for locale-prefixed URLs
+    if (context.locale !== DEFAULT_LOCALE) {
         return {
             notFound: true,
         };
