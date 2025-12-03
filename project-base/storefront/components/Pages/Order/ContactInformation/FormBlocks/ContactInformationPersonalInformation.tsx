@@ -78,6 +78,7 @@ export const ContactInformationPersonalInformation: FC = () => {
                             aria-haspopup="dialog"
                             className="cursor-pointer text-sm underline hover:no-underline"
                             data-tid={TIDs.login_in_order_button}
+                            tabIndex={0}
                             type="button"
                             onClick={openLoginPopup}
                         >
