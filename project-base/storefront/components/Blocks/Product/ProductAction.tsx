@@ -68,6 +68,10 @@ export const ProductAction: FC<ProductActionProps> = ({
         );
     }
 
+    if (!product.isAllowedNegativeStock) {
+        return null;
+    }
+
     return (
         <AddToCart
             ariaPrice={product.price.priceWithVat}
@@ -79,7 +83,7 @@ export const ProductAction: FC<ProductActionProps> = ({
             gtmProductListName={gtmProductListName}
             isWithSpinbox={isWithSpinbox}
             listIndex={listIndex}
-            maxQuantity={product.isAllowedNegativeStock ? null : product.stockQuantity}
+            maxQuantity={product.stockQuantity}
             minQuantity={1}
             productUuid={product.uuid}
             showResponsiveCartIcon={showResponsiveCartIcon}

@@ -51,7 +51,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         );
     }
 
-    if (!canCreateOrder) {
+    if (!canCreateOrder || !product.isAllowedNegativeStock) {
         return null;
     }
 
@@ -64,7 +64,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
             <Spinbox
                 defaultValue={1}
                 id={product.uuid}
-                max={product.isAllowedNegativeStock ? null : product.stockQuantity}
+                max={product.stockQuantity}
                 min={1}
                 ref={spinboxRef}
                 size="xlarge"
