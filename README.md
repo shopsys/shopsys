@@ -81,12 +81,16 @@ Or ultimately, just [report an issue](https://github.com/shopsys/shopsys/issues/
 
 ## License
 
-We distribute the main parts of Shopsys Platform under two different licenses:
+The core of the Shopsys Platform is provided under the **Development License**.  
+This license allows you to:
 
-- [Community License](./LICENSE) in MIT style for growing small to mid-size e-commerce sites with total online sales less than 12.000.000 EUR / year (3.000.000 EUR / quarter)
-- Commercial License
+- **use the software free of charge** for **evaluation, development, testing, and experimentation**,
+- **modify the source code** for these non-production purposes.
 
-Learn the principles on which we distribute our product on our website at [Licenses and Pricing section](https://www.shopsys.com/licensing).
+The Development License **does not permit** using the platform to run a live e-commerce site, process real orders, or operate the software in any **commercial or production environment**.
+
+To deploy the Shopsys Platform for a real online store or any commercial use case, a **Commercial License** is required.  
+For licensing inquiries, please contact us via [contact form](https://www.shopsys.com/contact/).
 
 Some of Shopsys Platform repositories including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) and [Monorepo Tools](https://github.com/shopsys/monorepo-tools) are distributed under standard MIT license so generally you can use it without any restriction. The information about the license is placed in the LICENSE file in the root of each repository.
 
