@@ -155,6 +155,11 @@ class OrderData
     public $createdAt;
 
     /**
+     * @var \DateTime|null
+     */
+    public $deliveredAt;
+
+    /**
      * @var int|null
      */
     public $domainId;
@@ -228,6 +233,11 @@ class OrderData
      * @var string|null
      */
     public $trackingNumber;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestData|null
+     */
+    public $withdrawalRequestData;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price

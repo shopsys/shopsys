@@ -1547,6 +1547,8 @@ export type TypeMutation = {
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean']['output'];
+  /** Request withdrawal from contract for an order */
+  OrderWithdrawalRequest: Scalars['Boolean']['output'];
   /** Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer */
   PayOrder: TypePaymentSetupCreationData;
   /** Recover password using hash required from RequestPasswordRecovery */
@@ -1692,6 +1694,11 @@ export type TypeMutationLoginViaExchangeTokenArgs = {
 
 export type TypeMutationNewsletterSubscribeArgs = {
   input: TypeNewsletterSubscriptionDataInput;
+};
+
+
+export type TypeMutationOrderWithdrawalRequestArgs = {
+  input: TypeOrderWithdrawalRequestInput;
 };
 
 
@@ -1882,6 +1889,8 @@ export type TypeOpeningHoursRange = {
 
 export type TypeOrder = {
   __typename?: 'Order';
+  /** Returns whether withdrawal can be requested for the order */
+  canRequestWithdrawal: Scalars['Boolean']['output'];
   /** Billing address city name */
   city: Scalars['String']['output'];
   /** The customer’s company name (only when ordered on the company behalf) */
@@ -1896,6 +1905,8 @@ export type TypeOrder = {
   creationDate: Scalars['DateTime']['output'];
   /** The registered customer user who made the order (or null if the order was made by an unregistered user) */
   customerUser: Maybe<TypeBaseCustomerUser>;
+  /** Date and time when the order was delivered to the customer */
+  deliveredAt: Maybe<Scalars['DateTime']['output']>;
   /** City name for delivery */
   deliveryCity: Maybe<Scalars['String']['output']>;
   /** Company name for delivery */
@@ -1966,6 +1977,12 @@ export type TypeOrder = {
   urlHash: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+  /** Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet) */
+  withdrawalDeadline: Maybe<Scalars['DateTime']['output']>;
+  /** Returns withdrawal instructions for the order */
+  withdrawalInstructions: Scalars['String']['output'];
+  /** Returns withdrawal request information for the order, null if no withdrawal was requested */
+  withdrawalRequest: Maybe<TypeOrderWithdrawalRequest>;
 };
 
 /** A connection to a list of items. */
@@ -2155,8 +2172,42 @@ export enum TypeOrderStatusEnum {
   /** In progress */
   InProgress = 'inProgress',
   /** New */
-  New = 'new'
+  New = 'new',
+  /** Withdrawn */
+  Withdrawn = 'withdrawn'
 }
+
+export type TypeOrderWithdrawalRequest = {
+  __typename?: 'OrderWithdrawalRequest';
+  /** Email address for withdrawal request contact */
+  email: Scalars['String']['output'];
+  /** First name for withdrawal request contact */
+  firstName: Scalars['String']['output'];
+  /** Last name for withdrawal request contact */
+  lastName: Scalars['String']['output'];
+  /** Additional notes or instructions for withdrawal */
+  note: Maybe<Scalars['String']['output']>;
+  /** Date and time when the withdrawal was requested by customer */
+  requestedAt: Scalars['DateTime']['output'];
+  /** Telephone number for withdrawal request contact */
+  telephone: Maybe<Scalars['String']['output']>;
+};
+
+/** Input for requesting withdrawal from contract for an order */
+export type TypeOrderWithdrawalRequestInput = {
+  /** Email address for withdrawal confirmation */
+  email: Scalars['String']['input'];
+  /** First name of the person requesting withdrawal */
+  firstName: Scalars['String']['input'];
+  /** Last name of the person requesting withdrawal */
+  lastName: Scalars['String']['input'];
+  /** Additional note or reason for withdrawal (optional) */
+  note: InputMaybe<Scalars['String']['input']>;
+  /** Order URL hash to identify the order */
+  orderUrlHash: Scalars['String']['input'];
+  /** Telephone number (optional) */
+  telephone: InputMaybe<Scalars['String']['input']>;
+};
 
 /** Information about pagination in a connection. */
 export type TypePageInfo = {
@@ -2778,8 +2829,9 @@ export type TypeQuery = {
   notificationBars: Maybe<Array<TypeNotificationBar>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<TypeOrder>;
+  /** Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded */
   orderItems: TypeOrderItemConnection;
-  /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords */
+  /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded */
   orderItemsSearch: TypeOrderItemConnection;
   /** Returns HTML content for order payment page depending on the state of the payment. */
   orderPaymentPageContent: TypeOrderPaymentPageContent;

@@ -21,6 +21,8 @@ interface AdvancedSearchFilterInterface
     public const string OPERATOR_GTE = 'gte';
     public const string OPERATOR_LT = 'lt';
     public const string OPERATOR_LTE = 'lte';
+    public const string OPERATOR_EXISTS = 'exists';
+    public const string OPERATOR_DOES_NOT_EXIST = 'doesNotExist';
 
     /**
      * Returns a unique name of the filter

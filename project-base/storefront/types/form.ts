@@ -86,6 +86,14 @@ export type RegistrationFormType = {
     newsletterSubscription: boolean;
 };
 
+export type OrderWithdrawalFormType = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    telephone: string;
+    note: string;
+};
+
 export type UserConsentFormType = Record<keyof GtmConsentInfoType, boolean>;
 
 export type PromoCodeFormType = {

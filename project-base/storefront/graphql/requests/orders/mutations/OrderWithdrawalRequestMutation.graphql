@@ -1,0 +1,3 @@
+mutation OrderWithdrawalRequestMutation($input: OrderWithdrawalRequestInput!) {
+    OrderWithdrawalRequest(input: $input)
+}

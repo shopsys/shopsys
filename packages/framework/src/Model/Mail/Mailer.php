@@ -71,12 +71,14 @@ class Mailer
         $email
             ->subject($subject)
             ->from(new Address($messageData->fromEmail, $messageData->fromName))
-            ->to($messageData->toEmail)
+            ->to(...$messageData->getToEmailAsArray())
             ->text(htmlspecialchars_decode(strip_tags($body)))
             ->html($body);
 
-        if ($messageData->bccEmail !== null) {
-            $email->addBcc($messageData->bccEmail);
+        $bccEmails = $messageData->getBccEmailAsArray();
+
+        if (count($bccEmails) > 0) {
+            $email->bcc(...$bccEmails);
         }
 
         if ($messageData->replyTo !== null) {

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 
 class OrderItemApiFacade
 {
@@ -29,7 +30,7 @@ class OrderItemApiFacade
      */
     public function findMappedByUuid(array $uuids): array
     {
-        return $this->createOrderItemQueryBuilder()
+        return $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
             ->andWhere('oi.uuid IN (:uuids)')->setParameter(':uuids', $uuids)
             ->indexBy('oi', 'oi.uuid')
             ->getQuery()
@@ -39,11 +40,16 @@ class OrderItemApiFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function createOrderItemQueryBuilder(): QueryBuilder
+    protected function createOrderItemExcludingOrdersWithWithdrawalQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('oi')
-            ->from(OrderItem::class, 'oi');
+            ->from(OrderItem::class, 'oi')
+            ->join('oi.order', 'o')
+            ->andWhere('NOT EXISTS(
+               SELECT 1 FROM ' . WithdrawalRequest::class . ' wr
+               WHERE wr.order = o
+            )');
     }
 
     /**
@@ -247,8 +253,7 @@ class OrderItemApiFacade
         CustomerUser $customerUser,
         OrderItemsFilter $filter,
     ): QueryBuilder {
-        $queryBuilder = $this->createOrderItemQueryBuilder()
-            ->join('oi.order', 'o')
+        $queryBuilder = $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
             ->andWhere('o.customerUser = :customerUser')
             ->setParameter(':customerUser', $customerUser);
 
@@ -312,8 +317,7 @@ class OrderItemApiFacade
         Customer $customer,
         OrderItemsFilter $filter,
     ): QueryBuilder {
-        $queryBuilder = $this->createOrderItemQueryBuilder()
-            ->join('oi.order', 'o')
+        $queryBuilder = $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
             ->andWhere('o.customer = :customer')
             ->setParameter(':customer', $customer);
 

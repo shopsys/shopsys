@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory;
@@ -56,6 +57,8 @@ class ComplaintApiFacadeTest extends TestCase
 
     private MockObject $complaintRepository;
 
+    private MockObject $withdrawalRequestFacade;
+
     #[Override]
     protected function setUp(): void
     {
@@ -71,6 +74,7 @@ class ComplaintApiFacadeTest extends TestCase
         $this->complaintItemDataApiFactory = $this->createMock(ComplaintItemDataApiFactory::class);
         $this->complaintMailFacade = $this->createMock(ComplaintMailFacade::class);
         $this->complaintRepository = $this->createMock(ComplaintRepository::class);
+        $this->withdrawalRequestFacade = $this->createMock(WithdrawalRequestFacade::class);
 
         $this->complaintApiFacade = new ComplaintApiFacade(
             $this->em,
@@ -85,6 +89,7 @@ class ComplaintApiFacadeTest extends TestCase
             $this->complaintItemDataApiFactory,
             $this->complaintMailFacade,
             $this->complaintRepository,
+            $this->withdrawalRequestFacade,
         );
     }
 

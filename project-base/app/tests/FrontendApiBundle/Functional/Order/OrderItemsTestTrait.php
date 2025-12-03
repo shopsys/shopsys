@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Item\OrderItem;
+use App\Model\Order\Order;
+use App\Model\Product\Product;
 
 trait OrderItemsTestTrait
 {
@@ -76,5 +79,52 @@ trait OrderItemsTestTrait
             $this->assertArrayHasKey('number', $node['order'], $orderItemMessage);
             $this->assertSame($expectedOrderItem->getOrder()->getNumber(), $node['order']['number'], $orderItemMessage);
         }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $responseData
+     * @param bool $shouldExist
+     */
+    protected function assertProductItemExistsInOrderItemsResponseData(
+        Product $product,
+        array $responseData,
+        bool $shouldExist,
+    ): void {
+        $contains = false;
+
+        foreach ($responseData['edges'] as $edge) {
+            $node = $edge['node'];
+
+            if ($node['catnum'] === $product->getCatnum()) {
+                $contains = true;
+
+                break;
+            }
+        }
+
+        if ($shouldExist) {
+            $this->assertTrue($contains, sprintf(
+                'Expected order items to contain product item with catnum %s, but it was not found.',
+                $product->getCatnum(),
+            ));
+        } else {
+            $this->assertFalse($contains, sprintf(
+                'Expected order items to not contain product item with catnum %s, but it was found.',
+                $product->getCatnum(),
+            ));
+        }
+    }
+
+    private function createWithdrawalRequest(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 5, Order::class);
+        $withRequestData = $this->withdrawalRequestDataFactory->createFromArray([
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'email' => 'no-reply@shopsys.com',
+        ]);
+
+        $this->withdrawalRequestFacade->createOnly($order, $withRequestData);
     }
 }

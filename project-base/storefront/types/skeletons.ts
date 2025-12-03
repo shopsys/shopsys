@@ -31,4 +31,6 @@ export enum SkeletonEnum {
     TransportAndPayment = 'transport-and-payment',
     Wishlist = 'wishlist',
     UserConsent = 'user-consent',
+    OrderWithdrawal = 'order-withdrawal',
+    OrderWithdrawalSuccess = 'order-withdrawal-success',
 }

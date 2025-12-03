@@ -117,9 +117,6 @@ class RegisterByOrderTest extends GraphQlTestCase
      */
     private function assertOrderCannotBePairedUserErrorIsReturned(array $response): void
     {
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame('register-by-order-is-not-possible', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'register-by-order-is-not-possible');
     }
 }

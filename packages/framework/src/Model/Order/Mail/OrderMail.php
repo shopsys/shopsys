@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageFactoryInterface;
@@ -16,8 +17,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
@@ -49,13 +52,7 @@ class OrderMail implements MessageFactoryInterface
     public const string VARIABLE_ROUNDING_INFO = '{rounding_info}';
     public const string VARIABLE_ADDRESSES = '{addresses}';
 
-    public const string DISPLAY_PRICE_WITH_VAT = 'with_vat';
-    public const string DISPLAY_PRICE_WITHOUT_VAT = 'without_vat';
-    public const string DISPLAY_PRICE_BOTH = 'both';
-    protected const string DISPLAY_PRICE_SELLING = 'selling_price';
-
     /**
-     * @param string $mailTemplateDisplayPrice
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Twig\Environment $twig
@@ -65,11 +62,11 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver $mailDisplayPriceResolver
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
-        protected readonly string $mailTemplateDisplayPrice,
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly Environment $twig,
@@ -79,8 +76,9 @@ class OrderMail implements MessageFactoryInterface
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly HiddenPriceExtension $hiddenPriceExtension,
-        protected readonly PricingSetting $pricingSetting,
         protected readonly PaymentInstructionFacade $paymentInstructionFacade,
+        protected readonly MailDisplayPriceResolver $mailDisplayPriceResolver,
+        protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -92,9 +90,21 @@ class OrderMail implements MessageFactoryInterface
     #[Override]
     public function createMessage(MailTemplate $mailTemplate, $order)
     {
+        $toEmail = $order->getEmail();
+        $bccMail = $mailTemplate->getBccEmail();
+
+        if ($mailTemplate->getOrderStatus()?->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN) {
+            $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+            if ($withdrawalRequest !== null) {
+                $bccMail = $this->getBccEmailsForWithdrawal($mailTemplate, $order, $withdrawalRequest);
+                $toEmail = $withdrawalRequest->getEmail();
+            }
+        }
+
         return new MessageData(
-            $order->getEmail(),
-            $mailTemplate->getBccEmail(),
+            $toEmail,
+            $bccMail,
             $mailTemplate->getBody(),
             $mailTemplate->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $order->getDomainId()),
@@ -303,7 +313,7 @@ class OrderMail implements MessageFactoryInterface
             'order' => $order,
             'orderItemTotalPricesById' => $orderItemTotalPricesById,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
-            'displayPrice' => $this->getDisplayPrice(),
+            'displayPrice' => $this->mailDisplayPriceResolver->getDisplayPrice(),
         ]);
     }
 
@@ -354,7 +364,7 @@ class OrderMail implements MessageFactoryInterface
             'orderTransportItem' => $orderTransportItem,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
             'orderTransportTotalPrice' => $orderItemTotalPricesById[$orderTransportItem->getId()],
-            'displayPrice' => $this->getDisplayPrice(),
+            'displayPrice' => $this->mailDisplayPriceResolver->getDisplayPrice(),
         ]);
     }
 
@@ -372,7 +382,7 @@ class OrderMail implements MessageFactoryInterface
             'orderPaymentItem' => $orderPaymentItem,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
             'orderPaymentTotalPrice' => $orderItemTotalPricesById[$orderPaymentItem->getId()],
-            'displayPrice' => $this->getDisplayPrice(),
+            'displayPrice' => $this->mailDisplayPriceResolver->getDisplayPrice(),
         ]);
     }
 
@@ -412,16 +422,22 @@ class OrderMail implements MessageFactoryInterface
     }
 
     /**
-     * @return string
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest
+     * @return string[]
      */
-    protected function getDisplayPrice(): string
-    {
-        if ($this->mailTemplateDisplayPrice === static::DISPLAY_PRICE_SELLING) {
-            return $this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT
-                ? static::DISPLAY_PRICE_WITH_VAT
-                : static::DISPLAY_PRICE_WITHOUT_VAT;
+    protected function getBccEmailsForWithdrawal(
+        MailTemplate $mailTemplate,
+        Order $order,
+        WithdrawalRequest $withdrawalRequest,
+    ): array {
+        $bccEmails = [$mailTemplate->getBccEmail()];
+
+        if ($order->getEmail() !== $withdrawalRequest->getEmail()) {
+            $bccEmails[] = $order->getEmail();
         }
 
-        return static::DISPLAY_PRICE_BOTH;
+        return array_filter($bccEmails);
     }
 }

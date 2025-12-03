@@ -1,0 +1,14 @@
+fragment OrderWithdrawalDataFragment on Order {
+    __typename
+    uuid
+    number
+    urlHash
+    firstName
+    lastName
+    email
+    telephone
+    canRequestWithdrawal
+    customerUser {
+        billingAddressUuid
+    }
+}

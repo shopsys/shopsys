@@ -39,16 +39,6 @@ class SeoPageTest extends GraphQlTestCase
             'pageSlug' => 'non-existent-page-slug',
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertArrayHasKey(0, $errors);
-        $this->assertArrayHasKey('extensions', $errors[0]);
-
-        $extensions = $errors[0]['extensions'];
-
-        $this->assertSame('seo-page-not-found', $extensions['userCode']);
-        $this->assertSame(404, $extensions['code']);
+        $this->assertUserError($response, 'seo-page-not-found', 404);
     }
 }

@@ -27,6 +27,8 @@ type CUSTOM_PAGE_TYPES = [
     'wishlist',
     'customer-users',
     'user-consent',
+    'order-withdrawal',
+    'order-withdrawal-success',
 ];
 
 export type PageType = FriendlyPagesTypesKey | CUSTOM_PAGE_TYPES[number];

@@ -67,7 +67,7 @@ export const ContactInformationDeliveryAddressForm = () => {
                     render={(textInput) => <FormLine className="col-span-2">{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.deliveryTelephone.label,
-                        required: true,
+                        required: false,
                         type: 'tel',
                         autoComplete: 'tel',
                         onChange: (event) =>

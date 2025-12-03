@@ -16,3 +16,6 @@ OrderStatusEnumDecorator:
             canceled:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_CANCELED")'
                 description: "Canceled"
+            withdrawn:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_WITHDRAWN")'
+                description: "Withdrawn"

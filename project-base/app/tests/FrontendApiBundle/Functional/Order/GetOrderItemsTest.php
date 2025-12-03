@@ -13,12 +13,24 @@ use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 
 class GetOrderItemsTest extends GraphQlWithLoginTestCase
 {
     use OrderItemsTestTrait;
+
+    /**
+     * @inject
+     */
+    private WithdrawalRequestFacade $withdrawalRequestFacade;
+
+    /**
+     * @inject
+     */
+    private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
 
     /**
      * @param array $queryVariables
@@ -40,6 +52,15 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
         $expectedOrderItems = $this->getExpectedOrderItems($expectedOrderItemsIds);
 
         $this->assertOrderItemConnection($responseData, $expectedOrderItems, $expectedOrderItemsIds);
+    }
+
+    public function testGetOrderItemsExcludesItemsFromOrdersWithWithdrawalRequest(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
+
+        $this->assertProductExistsInOrderItems($product, true);
+        $this->createWithdrawalRequest();
+        $this->assertProductExistsInOrderItems($product, false);
     }
 
     /**
@@ -107,5 +128,16 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
             ],
             [1],
         ];
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param bool $shouldExist
+     */
+    private function assertProductExistsInOrderItems(Product $product, bool $shouldExist): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderItemsQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orderItems');
+        $this->assertProductItemExistsInOrderItemsResponseData($product, $responseData, $shouldExist);
     }
 }

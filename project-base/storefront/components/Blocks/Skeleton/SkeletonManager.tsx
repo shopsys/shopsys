@@ -19,6 +19,8 @@ import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageFlag } from './SkeletonPageFlag';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageLogin } from './SkeletonPageLogin';
+import { SkeletonPageOrderWithdrawal } from './SkeletonPageOrderWithdrawal';
+import { SkeletonPageOrderWithdrawalSuccess } from './SkeletonPageOrderWithdrawalSuccess';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
@@ -117,6 +119,10 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageLogin />;
         case SkeletonEnum.OrderConfirmation:
             return <SkeletonPageConfirmation />;
+        case SkeletonEnum.OrderWithdrawal:
+            return <SkeletonPageOrderWithdrawal />;
+        case SkeletonEnum.OrderWithdrawalSuccess:
+            return <SkeletonPageOrderWithdrawalSuccess />;
         case SkeletonEnum.Product:
             return <SkeletonPageProductDetail />;
         case SkeletonEnum.ProductMainVariant:

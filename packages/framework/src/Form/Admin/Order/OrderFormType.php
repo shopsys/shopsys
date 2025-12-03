@@ -10,19 +10,25 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionsType;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
+use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCompanyNameType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\OrderItemsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -46,12 +52,14 @@ final class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
      */
     public function __construct(
         private readonly CountryFacade $countryFacade,
         private readonly OrderStatusFacade $orderStatusFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         private readonly Domain $domain,
+        private readonly WithdrawalRequestFacade $withdrawalRequestFacade,
     ) {
     }
 
@@ -66,6 +74,7 @@ final class OrderFormType extends AbstractType
         $order = $options['order'];
         $domainId = $order->getDomainId();
         $countries = $this->countryFacade->getAllOnDomain($domainId);
+
         $builder
             ->add($this->createBasicInformationGroup($builder, $order))
             ->add($this->createPersonalDataGroup($builder))
@@ -76,7 +85,9 @@ final class OrderFormType extends AbstractType
             ->add('orderItems', OrderItemsType::class, [
                 'order' => $order,
             ])
-            ->add($this->createPaymentTransactionsGroup($builder, $order))
+            ->add($this->createPaymentTransactionsGroup($builder, $order));
+
+        $builder
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_order_list',
                 'entity' => $options['order'],
@@ -105,6 +116,17 @@ final class OrderFormType extends AbstractType
                         $validationGroups[] = static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS;
                     }
 
+                    /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
+                    $order = $form->getConfig()->getOption('order');
+                    $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+                    if (
+                        $withdrawalRequest !== null ||
+                        $orderData->status?->getType() === OrderStatusTypeEnum::TYPE_WITHDRAWN
+                    ) {
+                        $validationGroups[] = OrderWithdrawalFormType::VALIDATION_GROUP_WITHDRAWAL_REQUIRED;
+                    }
+
                     return $validationGroups;
                 },
             ]);
@@ -121,6 +143,15 @@ final class OrderFormType extends AbstractType
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => 'Basic information',
         ]);
+        $withdrawalRequest = $this->withdrawalRequestFacade->findByOrder($order);
+
+        if ($withdrawalRequest !== null) {
+            $builderBasicInformationGroup
+                ->add('withdrawalWarning', MessageType::class, [
+                    'message_level' => MessageType::MESSAGE_LEVEL_WARNING,
+                    'data' => t('There is a withdrawal request for this order.'),
+                ]);
+        }
 
         $builderBasicInformationGroup
             ->add('id', DisplayOnlyType::class, [
@@ -159,9 +190,19 @@ final class OrderFormType extends AbstractType
                 'choices' => $this->orderStatusFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'choice_attr' => function (OrderStatus $orderStatus) {
+                    return [
+                        'data-js-order-status-type' => $orderStatus->getType(),
+                    ];
+                },
                 'multiple' => false,
                 'expanded' => false,
+                'attr' => [
+                    'data-js-order-status-select' => null,
+                ],
             ]);
+
+        $builderBasicInformationGroup->add($this->createWithdrawalRequestGroup($builderBasicInformationGroup, $withdrawalRequest));
 
         if ($order->getCreatedAsAdministrator() || $order->getCreatedAsAdministratorName()) {
             $builderBasicInformationGroup
@@ -239,6 +280,10 @@ final class OrderFormType extends AbstractType
                         'max' => 100,
                     ]),
                 ],
+            ])
+            ->add('deliveredAt', DateTimeType::class, [
+                'label' => 'Delivered at',
+                'required' => false,
             ]);
 
         $promoCode = $order->getPromoCode();
@@ -590,5 +635,35 @@ final class OrderFormType extends AbstractType
         ]);
 
         return $builderPaymentGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest|null $withdrawalRequest
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createWithdrawalRequestGroup(
+        FormBuilderInterface $builder,
+        ?WithdrawalRequest $withdrawalRequest,
+    ): FormBuilderInterface {
+        $rowAttr = [
+            'data-withdrawal-request-exists' => $withdrawalRequest !== null ? 'true' : 'false',
+        ];
+
+        if ($withdrawalRequest === null) {
+            $rowAttr['style'] = 'display: none;';
+        }
+
+        $builderWithdrawalRequestGroup = $builder->create('withdrawalRequestGroup', GroupType::class, [
+            'label' => 'Withdrawal Request',
+            'row_attr' => $rowAttr,
+        ]);
+
+        $builderWithdrawalRequestGroup
+            ->add('withdrawalRequestData', OrderWithdrawalFormType::class, [
+                'label' => false,
+            ]);
+
+        return $builderWithdrawalRequestGroup;
     }
 }

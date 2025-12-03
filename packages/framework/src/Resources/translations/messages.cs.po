@@ -85,6 +85,9 @@ msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla ús
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
 
+msgid "A customer has requested withdrawal from contract for the following order"
+msgstr "Zákazník požádal o odstoupení od smlouvy pro následující objednávku"
+
 msgid "Access to all the complaints created under the user's company"
 msgstr "Přístup ke všem reklamacím vytvořeným pod firmou uživatele"
 
@@ -760,6 +763,9 @@ msgstr "Aktivace zákazníka"
 msgid "Customer city"
 msgstr "Město zákazníka"
 
+msgid "Customer email"
+msgstr "E-mail zákazníka"
+
 msgid "Customer email address"
 msgstr "E-mailová adresa zákazníka"
 
@@ -903,6 +909,9 @@ msgstr "Výchozí sklad"
 
 msgid "Delete"
 msgstr "Smazat"
+
+msgid "Delivered at"
+msgstr "Doručeno dne"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
@@ -2050,6 +2059,9 @@ msgstr "Nová"
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
+msgid "New Withdrawal Request"
+msgstr "Nová žádost o odstoupení od smlouvy"
+
 msgid "New administrator"
 msgstr "Nový administrátor"
 
@@ -2139,6 +2151,9 @@ msgstr "Nová prodejna"
 
 msgid "New warehouse"
 msgstr "Nový sklad"
+
+msgid "New withdrawal request for order {orderNumber}"
+msgstr "Nová žádost o odstoupení od smlouvy pro objednávku {orderNumber}"
 
 msgid "No"
 msgstr "Ne"
@@ -2248,6 +2263,9 @@ msgstr "Stránka s potvrzením objednávky"
 msgid "Order confirmation page content modified"
 msgstr "Nastavení obsahu stránky s potvrzením objednávky bylo upraveno"
 
+msgid "Order date"
+msgstr "Datum objednávky"
+
 msgid "Order detail"
 msgstr "Detail objednávky"
 
@@ -2259,6 +2277,9 @@ msgstr "Objednávka nebyla odeslána do GoPay"
 
 msgid "Order in CZK round to whole crowns"
 msgstr "Objednávku v CZK zaokrouhlit na celé koruny"
+
+msgid "Order information"
+msgstr "Informace o objednávce"
 
 msgid "Order must contain at least one item"
 msgstr "Objednávka musí obsahovat alespoň jednu položku"
@@ -2721,6 +2742,9 @@ msgstr "Smazáno %dataType%: \"%readableValue%\""
 
 msgid "Replace file"
 msgstr "Nahradit soubor"
+
+msgid "Requested at"
+msgstr "Požadováno dne"
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
@@ -3196,11 +3220,17 @@ msgstr "Text"
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."
 
+msgid "The instructions are presented to the customer after they submit the order withdrawal request."
+msgstr "Instrukce jsou zákazníkovi zobrazeny poté, co odešle žádost o odstoupení od smlouvy."
+
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
+
+msgid "There is a withdrawal request for this order."
+msgstr "Pro tuto objednávku evidujeme žádost o odstoupení od smlouvy."
 
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
@@ -3490,6 +3520,24 @@ msgstr "Hlídací psi"
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
 
+msgid "Withdrawal Request"
+msgstr "Žádost o odstoupení od smlouvy"
+
+msgid "Withdrawal deadline (days)"
+msgstr "Lhůta pro odstoupení (dny)"
+
+msgid "Withdrawal from contract"
+msgstr "Odstoupení od smlouvy"
+
+msgid "Withdrawal instructions"
+msgstr "Pokyny po odstoupení"
+
+msgid "Withdrawal request details"
+msgstr "Podrobnosti žádosti o odstoupení"
+
+msgid "Withdrawn"
+msgstr "Odstoupeno od smlouvy"
+
 msgid "XML Feeds"
 msgstr "XML Feedy"
 
@@ -3568,6 +3616,9 @@ msgstr "Vytvoření"
 msgid "delete"
 msgstr "Smazání"
 
+msgid "does not exist"
+msgstr "neexistuje"
+
 msgid "doesn't include"
 msgstr "neobsahuje"
 
@@ -3576,6 +3627,9 @@ msgstr "Editování"
 
 msgid "empty value"
 msgstr "prázdná hodnota"
+
+msgid "exists"
+msgstr "existuje"
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr "z \"oldReadableValue\" na \"newReadableValue\""

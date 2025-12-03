@@ -1352,6 +1352,8 @@ type Mutation {
   Logout: Boolean!
   "Subscribe for e-mail newsletter"
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
+  "Request withdrawal from contract for an order"
+  OrderWithdrawalRequest(input: OrderWithdrawalRequestInput!): Boolean!
   "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
   PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
   "Recover password using hash required from RequestPasswordRecovery"
@@ -1475,6 +1477,8 @@ type OpeningHoursRange {
 }
 
 type Order {
+  "Returns whether withdrawal can be requested for the order"
+  canRequestWithdrawal: Boolean!
   "Billing address city name"
   city: String!
   "The customer’s company name (only when ordered on the company behalf)"
@@ -1489,6 +1493,8 @@ type Order {
   creationDate: DateTime!
   "The registered customer user who made the order (or null if the order was made by an unregistered user)"
   customerUser: BaseCustomerUser
+  "Date and time when the order was delivered to the customer"
+  deliveredAt: DateTime
   "City name for delivery"
   deliveryCity: String
   "Company name for delivery"
@@ -1559,6 +1565,12 @@ type Order {
   urlHash: String!
   "UUID"
   uuid: Uuid!
+  "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"
+  withdrawalDeadline: DateTime
+  "Returns withdrawal instructions for the order"
+  withdrawalInstructions: String!
+  "Returns withdrawal request information for the order, null if no withdrawal was requested"
+  withdrawalRequest: OrderWithdrawalRequest
 }
 
 "A connection to a list of items."
@@ -1742,6 +1754,39 @@ enum OrderStatusEnum {
   inProgress
   "New"
   new
+  "Withdrawn"
+  withdrawn
+}
+
+type OrderWithdrawalRequest {
+  "Email address for withdrawal request contact"
+  email: String!
+  "First name for withdrawal request contact"
+  firstName: String!
+  "Last name for withdrawal request contact"
+  lastName: String!
+  "Additional notes or instructions for withdrawal"
+  note: String
+  "Date and time when the withdrawal was requested by customer"
+  requestedAt: DateTime!
+  "Telephone number for withdrawal request contact"
+  telephone: String
+}
+
+"Input for requesting withdrawal from contract for an order"
+input OrderWithdrawalRequestInput {
+  "Email address for withdrawal confirmation"
+  email: String!
+  "First name of the person requesting withdrawal"
+  firstName: String!
+  "Last name of the person requesting withdrawal"
+  lastName: String!
+  "Additional note or reason for withdrawal (optional)"
+  note: String = null
+  "Order URL hash to identify the order"
+  orderUrlHash: String!
+  "Telephone number (optional)"
+  telephone: String = null
 }
 
 "Information about pagination in a connection."
@@ -2309,8 +2354,9 @@ type Query {
   notificationBars: [NotificationBar!]
   "Returns order filtered using UUID, orderNumber, or urlHash"
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
+  "Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
   orderItems(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int): OrderItemConnection!
-  "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
+  "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded"
   orderItemsSearch(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
   "Returns HTML content for order payment page depending on the state of the payment."
   orderPaymentPageContent(orderUuid: Uuid!): OrderPaymentPageContent!

@@ -1,0 +1,23 @@
+OrderWithdrawalRequestDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            firstName:
+                type: "String!"
+                description: "First name for withdrawal request contact"
+            lastName:
+                type: "String!"
+                description: "Last name for withdrawal request contact"
+            telephone:
+                type: "String"
+                description: "Telephone number for withdrawal request contact"
+            email:
+                type: "String!"
+                description: "Email address for withdrawal request contact"
+            note:
+                type: "String"
+                description: "Additional notes or instructions for withdrawal"
+            requestedAt:
+                type: "DateTime!"
+                description: "Date and time when the withdrawal was requested by customer"

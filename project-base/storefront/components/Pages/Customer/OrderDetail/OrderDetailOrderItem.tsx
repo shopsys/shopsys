@@ -105,6 +105,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
 
                             {canCreateComplaint &&
                                 isUserLoggedIn &&
+                                orderItem.order.withdrawalRequest === null &&
                                 orderItem.type === TypeOrderItemTypeEnum.Product && (
                                     <button
                                         aria-haspopup="dialog"

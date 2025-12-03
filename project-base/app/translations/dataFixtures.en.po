@@ -1375,6 +1375,9 @@ msgstr ""
 msgid "Processor frequency"
 msgstr ""
 
+msgid "Product does not match description, I want to return the entire order."
+msgstr ""
+
 msgid "Product gift"
 msgstr ""
 
@@ -1880,6 +1883,9 @@ msgid "Wired"
 msgstr ""
 
 msgid "Withdrawal from contract"
+msgstr ""
+
+msgid "Withdrawn"
 msgstr ""
 
 msgid "Xtreamer SW4"

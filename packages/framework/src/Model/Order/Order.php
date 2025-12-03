@@ -83,6 +83,12 @@ class Order
     protected $orderPaymentStatusPageValidFrom;
 
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deliveredAt;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem",
@@ -590,6 +596,7 @@ class Order
 
         $this->status = $orderData->status;
         $this->heurekaAgreement = $orderData->heurekaAgreement;
+        $this->deliveredAt = $orderData->deliveredAt;
 
         $this->setDeliveryAddress($orderData);
 
@@ -851,6 +858,22 @@ class Order
     public function setOrderPaymentStatusPageValidFromNow(): void
     {
         $this->orderPaymentStatusPageValidFrom = new DateTime();
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDeliveredAt()
+    {
+        return $this->deliveredAt;
+    }
+
+    /**
+     * @param \DateTime $deliveredAt
+     */
+    public function setDeliveredAt($deliveredAt)
+    {
+        $this->deliveredAt = $deliveredAt;
     }
 
     /**

@@ -1,0 +1,4 @@
+fragment OrderWithdrawalInstructionsFragment on Order {
+    __typename
+    withdrawalInstructions
+}

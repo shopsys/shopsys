@@ -64,6 +64,23 @@ class OrderStatusRepository
     }
 
     /**
+     * @param string $statusType
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+     */
+    public function getByType(string $statusType): OrderStatus
+    {
+        $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => $statusType]);
+
+        if ($orderStatus === null) {
+            $message = 'Order status with type ' . $statusType . ' not found.';
+
+            throw new OrderStatusNotFoundException($message);
+        }
+
+        return $orderStatus;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function getDefault()

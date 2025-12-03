@@ -1375,6 +1375,9 @@ msgstr "Pravděpodobně ta nejlepší volba"
 msgid "Processor frequency"
 msgstr "Frekvence procesoru"
 
+msgid "Product does not match description, I want to return the entire order."
+msgstr "Produkt neodpovídá popisu, chci vrátit celou objednávku."
+
 msgid "Product gift"
 msgstr "Dárkový produkt"
 
@@ -1881,6 +1884,9 @@ msgstr "Drátová"
 
 msgid "Withdrawal from contract"
 msgstr "Odstoupení od smlouvy"
+
+msgid "Withdrawn"
+msgstr "Odstoupeno od smlouvy"
 
 msgid "Xtreamer SW4"
 msgstr "Xtreamer SW4"

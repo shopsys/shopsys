@@ -12,10 +12,10 @@
                 <strong>{{ orderPaymentItem.name }}</strong>
             </td>
             <td align="right">
-                {% set doNotDisplayBoth = displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
-                {% set displayBoth = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
-                {% set displayWithoutVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_WITHOUT_VAT')) or displayBoth %}
-                {% set displayWithVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_WITH_VAT')) or displayBoth %}
+                {% set doNotDisplayBoth = displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
+                {% set displayBoth = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
+                {% set displayWithoutVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITHOUT_VAT')) or displayBoth %}
+                {% set displayWithVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITH_VAT')) or displayBoth %}
                 {% set isZeroPrice = orderPaymentTotalPrice.priceWithVat.isZero is same as(true) %}
 
                 {% if displayWithoutVat %}

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\PrivacyPolicySettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\TermsAndConditionsSettingFormType;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,10 +22,12 @@ class LegalConditionsController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting $withdrawalSetting
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
+        protected readonly WithdrawalSetting $withdrawalSetting,
     ) {
     }
 
@@ -40,6 +43,8 @@ class LegalConditionsController extends AdminBaseController
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $settingData = [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($domainId),
+            'withdrawalDeadlineDays' => $this->withdrawalSetting->getDeadlineDays($domainId),
+            'withdrawalInstructions' => $this->withdrawalSetting->getInstructions($domainId),
         ];
 
         $form = $this->createForm(TermsAndConditionsSettingFormType::class, $settingData, [
@@ -52,6 +57,9 @@ class LegalConditionsController extends AdminBaseController
             $formData = $form->getData();
 
             $this->legalConditionsFacade->setTermsAndConditions($domainId, $formData['termsAndConditionsArticle']);
+
+            $this->withdrawalSetting->setDeadlineDays($formData['withdrawalDeadlineDays'], $domainId);
+            $this->withdrawalSetting->setInstructions($formData['withdrawalInstructions'], $domainId);
 
             $this->addSuccessFlashTwig(t('Legal conditions settings modified.'));
 

@@ -83,11 +83,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
             ],
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $extensions = $errors[0]['extensions'];
-
-        self::assertSame('order-not-found', $extensions['userCode']);
+        $this->assertUserError($response, 'order-not-found');
     }
 
     public function testChangePaymentInOrderMutationNonExistingPayment(): void
@@ -100,11 +96,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
             ],
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $extensions = $errors[0]['extensions'];
-
-        self::assertSame('payment-not-found', $extensions['userCode']);
+        $this->assertUserError($response, 'payment-not-found');
     }
 
     #[Group('multidomain')]

@@ -121,10 +121,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             'customerUserUuid' => $currentCustomerUser->getUuid(),
         ]);
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertSame('cannot-remove-own-customer-user', $errors[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'cannot-remove-own-customer-user');
     }
 
     public function testRemoveUserFromAnotherCompanyIsNotAllowed(): void
@@ -332,6 +329,28 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertArrayHasKey('email', $responseData);
         $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
+    }
+
+    public function testOrderWithdrawalRequestMutationIsAllowedForAnotherUserOrder(): void
+    {
+        $anotherUserOrder = $this->getReferenceForDomain(CompanyOrderDataFixture::COMPANY_ORDER_PREFIX . 3, $this->domain->getId(), Order::class);
+
+        $inputData = [
+            'orderUrlHash' => $anotherUserOrder->getUrlHash(),
+            'firstName' => 'Owner',
+            'lastName' => 'User',
+            'email' => 'owner@shopsys.com',
+            'telephone' => '+420777888999',
+            'note' => 'Requesting withdrawal for company order.',
+        ];
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/OrderWithdrawalRequestMutation.graphql',
+            $inputData,
+        );
+
+        $data = $this->getResponseDataForGraphQlType($response, 'OrderWithdrawalRequest');
+        $this->assertTrue($data);
     }
 
     /**

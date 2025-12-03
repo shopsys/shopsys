@@ -199,8 +199,7 @@ final class PaymentFormType extends AbstractType
                 'entry_type' => CKEditorType::class,
                 'label' => 'Instructions',
                 'entry_options' => [
-                    'help' => $this->buildInstructionsHelpHtml(),
-                    'help_html' => true,
+                    'available_variables' => $this->paymentInstructionFacade->getInstructionsPlaceholders(),
                 ],
             ]);
 
@@ -431,23 +430,5 @@ final class PaymentFormType extends AbstractType
                 '%domains%' => implode(', ', $domainNames),
             ]),
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    protected function buildInstructionsHelpHtml(): string
-    {
-        $items = [];
-
-        foreach ($this->paymentInstructionFacade->getInstructionsPlaceholders() as $placeholder => $desc) {
-            $items[] = sprintf('<li><code>%s</code> &ndash; %s</li>', $placeholder, $desc);
-        }
-
-        return sprintf(
-            '<div><h5>%s</h5><ul class="list-unstyled">%s</ul></div>',
-            t('Available placeholders'),
-            implode('', $items),
-        );
     }
 }

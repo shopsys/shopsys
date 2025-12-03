@@ -680,6 +680,10 @@ services:
         arguments:
             $allowedAdminLocales: '%shopsys.allowed_admin_locales%'
 
+    Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver:
+        arguments:
+            $mailTemplateDisplayPrice: '%shopsys.mail_template.display_price%'
+
     Shopsys\FrameworkBundle\Model\Mail\MailEmbedCollector: ~
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration: ~
@@ -697,9 +701,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
 
-    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail:
-        arguments:
-            $mailTemplateDisplayPrice: '%shopsys.mail_template.display_price%'
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Mail\WithdrawalMail: ~
 
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:
@@ -716,6 +720,14 @@ services:
     Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Withdrawal\Messenger\WithdrawalRequestMessageHandler:
+        arguments:
+            $logger: '@monolog.logger.queue'
+
+    Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalChecker: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalSetting: ~
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider:
         arguments:

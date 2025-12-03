@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnknownNameTranslati
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 
 class OrderStatusDataFixture extends AbstractReferenceFixture
 {
@@ -18,6 +19,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     public const string ORDER_STATUS_IN_PROGRESS = 'order_status_in_progress';
     public const string ORDER_STATUS_DONE = 'order_status_done';
     public const string ORDER_STATUS_CANCELED = 'order_status_canceled';
+    public const string ORDER_STATUS_WITHDRAWN = 'order_status_withdrawn';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
@@ -39,6 +41,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
         $this->createOrderStatusReference(2, self::ORDER_STATUS_IN_PROGRESS);
         $this->createOrderStatusReference(3, self::ORDER_STATUS_DONE);
         $this->createOrderStatusReference(4, self::ORDER_STATUS_CANCELED);
+        $this->createOrderStatusReference($this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_WITHDRAWN)->getId(), self::ORDER_STATUS_WITHDRAWN);
     }
 
     /**
@@ -61,6 +64,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
                 self::ORDER_STATUS_IN_PROGRESS => t('In Progress', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 self::ORDER_STATUS_DONE => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 self::ORDER_STATUS_CANCELED => t('Canceled', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                self::ORDER_STATUS_WITHDRAWN => t('Withdrawn', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 default => throw new UnknownNameTranslationForOrderStatusReferenceNameException($referenceName),
             };
         }

@@ -24,6 +24,8 @@
         {% set status_class = 'green' %}
     {% elseif row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_CANCELED')) %}
         {% set status_class = 'red' %}
+    {% elseif row.statusType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_WITHDRAWN')) %}
+        {% set status_class = 'black' %}
     {% else %}
         {% set status_class = 'blue' %}
     {% endif %}

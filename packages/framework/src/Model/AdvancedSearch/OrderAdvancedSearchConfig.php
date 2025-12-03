@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPriceFilterWit
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderProductFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStatusFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStreetFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderWithdrawalRequestFilter;
 
 class OrderAdvancedSearchConfig extends AdvancedSearchConfig
 {
@@ -32,6 +33,7 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter $orderEmailFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter $orderCityFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCustomerIdFilter $orderCustomerIdFilter
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderWithdrawalRequestFilter $orderWithdrawalFilter
      * @throws \Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterAlreadyExistsException
      */
     public function __construct(
@@ -47,6 +49,7 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         OrderEmailFilter $orderEmailFilter,
         OrderCityFilter $orderCityFilter,
         OrderCustomerIdFilter $orderCustomerIdFilter,
+        OrderWithdrawalRequestFilter $orderWithdrawalFilter,
     ) {
         parent::__construct();
 
@@ -62,5 +65,6 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($orderStreetFilter);
         $this->registerFilter($orderCityFilter);
         $this->registerFilter($orderCustomerIdFilter);
+        $this->registerFilter($orderWithdrawalFilter);
     }
 }

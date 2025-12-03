@@ -1,0 +1,56 @@
+OrderWithdrawalRequestInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Input for requesting withdrawal from contract for an order"
+        fields:
+            orderUrlHash:
+                type: "String!"
+                description: "Order URL hash to identify the order"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter order URL hash"
+            firstName:
+                type: "String!"
+                description: "First name of the person requesting withdrawal"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String!"
+                description: "Last name of the person requesting withdrawal"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
+            email:
+                type: "String!"
+                description: "Email address for withdrawal confirmation"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+            telephone:
+                type: "String"
+                description: "Telephone number (optional)"
+                defaultValue: null
+                validation:
+                    -   Length:
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[0-9\+]+$/'
+                            message: "Please enter only numbers and the + character"
+            note:
+                type: "String"
+                description: "Additional note or reason for withdrawal (optional)"
+                defaultValue: null

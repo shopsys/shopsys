@@ -76,7 +76,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     <div className="flex shrink-0 gap-4">
                         <Button
                             tid={TIDs.order_detail_repeat_order_button}
-                            variant="inverted"
+                            variant="secondary"
                             aria-label={t('Repeat order number {{ orderNumber }}', {
                                 ns: 'accessibility',
                                 orderNumber: order.number,

@@ -1,0 +1,4 @@
+OrderWithdrawalRequest:
+    type: object
+    inherits:
+        - 'OrderWithdrawalRequestDecorator'

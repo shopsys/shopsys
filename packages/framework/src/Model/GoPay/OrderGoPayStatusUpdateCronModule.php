@@ -95,7 +95,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             $this->logger->info('Sending order e-mail.', [
                 'orderId' => $orderId,
             ]);
-            $this->orderMailFacade->sendEmail($order);
+            $this->orderMailFacade->sendEmail($order, $order->getStatus());
         }
 
         $this->em->flush();

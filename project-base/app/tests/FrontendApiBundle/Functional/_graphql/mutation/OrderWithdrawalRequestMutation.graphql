@@ -1,0 +1,19 @@
+mutation OrderWithdrawalRequest(
+    $orderUrlHash: String!
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $telephone: String
+    $note: String
+) {
+    OrderWithdrawalRequest(
+        input: {
+            orderUrlHash: $orderUrlHash
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            telephone: $telephone
+            note: $note
+        }
+    )
+}

@@ -75,6 +75,7 @@
     * [OrderItemEdge](#orderitemedge)
     * [OrderPaymentPageContent](#orderpaymentpagecontent)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
+    * [OrderWithdrawalRequest](#orderwithdrawalrequest)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
     * [ParameterCheckboxFilterOption](#parametercheckboxfilteroption)
@@ -136,6 +137,7 @@
     * [OrderFilterInput](#orderfilterinput)
     * [OrderInput](#orderinput)
     * [OrderItemsFilterInput](#orderitemsfilterinput)
+    * [OrderWithdrawalRequestInput](#orderwithdrawalrequestinput)
     * [ParameterFilter](#parameterfilter)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [ProductFilter](#productfilter)
@@ -807,7 +809,11 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <tr>
 <td colspan="2" valign="top"><strong id="query.orderitems">orderItems</strong></td>
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
-<td></td>
+<td>
+
+Returns list of order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded
+
+</td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">after</td>
@@ -839,7 +845,7 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
 <td>
 
-Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords
+Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords. Order items from orders that have a withdrawal request are always excluded
 
 </td>
 </tr>
@@ -1704,6 +1710,20 @@ Subscribe for e-mail newsletter
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#newslettersubscriptiondatainput">NewsletterSubscriptionDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.orderwithdrawalrequest">OrderWithdrawalRequest</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Request withdrawal from contract for an order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#orderwithdrawalrequestinput">OrderWithdrawalRequestInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -6468,6 +6488,15 @@ Opening time
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="order.canrequestwithdrawal">canRequestWithdrawal</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns whether withdrawal can be requested for the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6527,6 +6556,15 @@ Date and time when the order was created
 <td>
 
 The registered customer user who made the order (or null if the order was made by an unregistered user)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.deliveredat">deliveredAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date and time when the order was delivered to the customer
 
 </td>
 </tr>
@@ -6842,6 +6880,33 @@ Unique url hash that can be used to
 <td>
 
 UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawaldeadline">withdrawalDeadline</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalinstructions">withdrawalInstructions</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns withdrawal instructions for the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="order.withdrawalrequest">withdrawalRequest</strong></td>
+<td valign="top"><a href="#orderwithdrawalrequest">OrderWithdrawalRequest</a></td>
+<td>
+
+Returns withdrawal request information for the order, null if no withdrawal was requested
 
 </td>
 </tr>
@@ -7182,6 +7247,75 @@ All currently available payment methods for the order (excluding the current one
 <td>
 
 Current payment method used in the order. Null if the original payment is not available anymore due to the reached limit of max payment transactions count.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderWithdrawalRequest
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.email">email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.firstname">firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.lastname">lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name for withdrawal request contact
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.note">note</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Additional notes or instructions for withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.requestedat">requestedAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time when the withdrawal was requested by customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequest.telephone">telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Telephone number for withdrawal request contact
 
 </td>
 </tr>
@@ -11797,6 +11931,76 @@ Filter order items by type
 </tbody>
 </table>
 
+### OrderWithdrawalRequestInput
+
+Input for requesting withdrawal from contract for an order
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.email">email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address for withdrawal confirmation
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.firstname">firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name of the person requesting withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.lastname">lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name of the person requesting withdrawal
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.note">note</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Additional note or reason for withdrawal (optional)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.orderurlhash">orderUrlHash</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Order URL hash to identify the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderwithdrawalrequestinput.telephone">telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Telephone number (optional)
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ParameterFilter
 
 Represents a parameter filter
@@ -12800,6 +13004,14 @@ In progress
 <td>
 
 New
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>withdrawn</strong></td>
+<td>
+
+Withdrawn
 
 </td>
 </tr>

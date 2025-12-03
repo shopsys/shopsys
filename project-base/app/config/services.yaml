@@ -282,8 +282,6 @@ services:
         alias: App\Model\Order\Item\OrderItemFactory
 
     Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail:
-        arguments:
-            $mailTemplateDisplayPrice: '%shopsys.mail_template.display_price%'
         class: App\Model\Order\Mail\OrderMail
 
     Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade:

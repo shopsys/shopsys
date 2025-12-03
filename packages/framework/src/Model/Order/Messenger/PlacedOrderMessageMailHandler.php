@@ -8,6 +8,8 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -17,11 +19,13 @@ class PlacedOrderMessageMailHandler
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly LoggerInterface $logger,
+        protected readonly OrderStatusFacade $orderStatusFacade,
     ) {
     }
 
@@ -32,7 +36,8 @@ class PlacedOrderMessageMailHandler
     {
         try {
             $order = $this->orderFacade->getById($placedOrderMessage->orderId);
-            $this->orderMailFacade->sendEmail($order);
+            $orderStatusNew = $this->orderStatusFacade->getByType(OrderStatusTypeEnum::TYPE_NEW);
+            $this->orderMailFacade->sendEmail($order, $orderStatusNew);
             $this->logger->info(
                 'Email for new order prepared successfully',
                 ['orderId' => $placedOrderMessage->orderId],

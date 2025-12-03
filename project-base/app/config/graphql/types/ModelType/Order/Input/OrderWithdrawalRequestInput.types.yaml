@@ -1,0 +1,4 @@
+OrderWithdrawalRequestInput:
+    type: input-object
+    inherits:
+        - 'OrderWithdrawalRequestInputDecorator'
