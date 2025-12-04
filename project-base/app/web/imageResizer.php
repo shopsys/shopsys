@@ -16,7 +16,7 @@ require $projectRootDirectory . '/vendor/symfony/dotenv/Dotenv.php';
 
 $CDN_API_KEY = $_ENV['CDN_API_KEY'] ?? null;
 $CDN_API_SALT = $_ENV['CDN_API_SALT'] ?? null;
-$CDN_DOMAIN = $_ENV['CDN_DOMAIN'] ?? '//';
+$CDN_DOMAIN = $_ENV['CDN_DOMAIN'] ?? '';
 $CDN_RESIZE_DISABLE = $_ENV['CDN_RESIZE_DISABLE'] ?? false;
 
 $imagePath = $_SERVER['DOCUMENT_URI'] ?? '';
@@ -41,7 +41,7 @@ if ($width === 0 && $height === 0) {
     exit();
 }
 
-if ($CDN_DOMAIN === '//' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
+if ($CDN_DOMAIN === '' || $CDN_API_KEY === null || $CDN_API_SALT === null) {
     # see https://docs.imgproxy.net/usage/processing
     $imgProxyInternalUrl = $_ENV['IMG_PROXY_INTERNAL_URL'] ?? 'http://img-proxy:8080';
     $webserverInternalUrl = $_ENV['WEBSERVER_INTERNAL_URL'] ?? 'http://webserver:8080';
