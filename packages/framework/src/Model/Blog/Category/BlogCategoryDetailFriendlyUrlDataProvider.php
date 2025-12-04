@@ -42,7 +42,8 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
             ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 'bc.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId')
             ->setParameter('routeName', static::ROUTE_NAME)
             ->setParameter('domainId', $domainConfig->getId())
-            ->where('f.entityId IS NULL');
+            ->where('f.entityId IS NULL')
+            ->andWhere('bct.name IS NOT NULL');
 
         $scalarData = $queryBuilder->getQuery()->getScalarResult();
 
