@@ -33,7 +33,7 @@ services:
             - nginx-conf:/etc/nginx/conf.d/
         labels:
             - traefik.backend=BRANCH_NAME
-            - traefik.http.routers.BRANCH_NAME.rule=${TRAEFIK_HOSTS}
+            - traefik.http.routers.BRANCH_NAME.rule=TRAEFIK_HOSTS
             - traefik.http.routers.BRANCH_NAME.entrypoints=http,https
             - traefik.http.routers.BRANCH_NAME.tls.certresolver=letsencrypt
             - traefik.http.services.BRANCH_NAME.loadbalancer.server.port=8080
