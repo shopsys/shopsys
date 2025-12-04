@@ -115,7 +115,7 @@ jobs:
                     echo "DOCKER_ELASTICSEARCH_REPOSITORY_TAG=${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
-                    echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_OUTPUT
+                    echo "TRAEFIK_HOSTS=Host(\`$HOST\`) || Host(\`cz.$HOST\`)" >> $GITHUB_OUTPUT
             -   name: Prepare docker-compose.yml file from docker-compose.github-actions.yml.dist
                 run: |
                     sh .github/prepare-docker-compose-file.sh \
