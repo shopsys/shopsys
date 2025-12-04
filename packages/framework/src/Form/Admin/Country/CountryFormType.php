@@ -75,7 +75,10 @@ final class CountryFormType extends AbstractType
                     ]),
                 ],
                 'label' => 'Code',
-                'help' => t('Country code in ISO 3166-1 alpha-2'),
+                'help_html' => true,
+                'help' => t('Country code in <a href="%wikiLink%" target="_blank">ISO 3166-1 alpha-2</a>', [
+                    '%wikiLink%' => 'https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2',
+                ]),
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,

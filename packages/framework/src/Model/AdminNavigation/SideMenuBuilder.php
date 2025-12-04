@@ -154,6 +154,7 @@ class SideMenuBuilder
     public const string LIST_CLOSED_DAY = 'closed_day';
     public const string NEW_CLOSED_DAY = 'closed_day_new';
     public const string EDIT_CLOSED_DAY = 'closed_day_edit';
+    public const string HOLIDAYS_IMPORT = 'closed_day_holidaysimport';
     public const string SECTION_SEO = 'seo';
     public const string SEO = 'seo';
     public const string ROBOTS = 'robots';
@@ -835,6 +836,7 @@ class SideMenuBuilder
         $closedDayMenu = $listsMenu->addChild(static::LIST_CLOSED_DAY, ['route' => 'admin_closedday_list', 'label' => t('Holidays and internal days')]);
         $closedDayMenu->addChild(static::NEW_CLOSED_DAY, ['route' => 'admin_closedday_new', 'label' => t('New closed day'), 'display' => false]);
         $closedDayMenu->addChild(static::EDIT_CLOSED_DAY, ['route' => 'admin_closedday_edit', 'label' => t('Holiday / internal day detail'), 'display' => false]);
+        $closedDayMenu->addChild(static::HOLIDAYS_IMPORT, ['route' => 'admin_closedday_holidaysimport', 'label' => t('Holidays import'), 'display' => false]);
 
         $seoMenu = $menu->addChild(static::SECTION_SEO, ['label' => t('SEO')]);
         $seoMenu->addChild(static::SEO, ['route' => 'admin_seo_index', 'label' => t('SEO')]);

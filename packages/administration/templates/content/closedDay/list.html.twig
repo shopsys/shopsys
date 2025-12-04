@@ -12,6 +12,10 @@
 {% endblock %}
 
 {% block btn %}
+    <a href="{{ url('admin_closedday_holidaysimport') }}" class="btn btn-secondary">
+        {{ ux_icon('download') }}
+        {{ 'Import holidays'|trans }}
+    </a>
     <a href="{{ url('admin_closedday_new') }}" class="btn btn-primary">
         {{ ux_icon('plus') }}
         {{ 'Create new holiday or internal day'|trans }}
