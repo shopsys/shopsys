@@ -30,7 +30,7 @@ export default class SelectToggle {
 
         const $firstEnabled = $select.find(`option[data-js-toggle-option=${domainId}]:not(:disabled)`).first();
 
-        if ($firstEnabled.length > 0 && $firstEnabled.val() !== '') {
+        if ($firstEnabled.val() !== $select.val() && $firstEnabled.length > 0 && $firstEnabled.val() !== '') {
             $select.val($firstEnabled.val()).trigger('change');
         }
 

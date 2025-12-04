@@ -6,7 +6,7 @@ export default class Complaint {
         this.$bankAccountNumberRow = $container.find('[data-js-complaint-bank-account-number]');
 
         this.$complaintResolutionInput.on('change', () => this.handleResolutionChange());
-        this.$complaintResolutionInput.trigger('change');
+        this.handleResolutionChange();
     }
 
     handleResolutionChange() {

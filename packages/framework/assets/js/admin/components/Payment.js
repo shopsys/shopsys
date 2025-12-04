@@ -21,7 +21,7 @@ export default class Payment {
         };
 
         $paymentTypeSelect.on('change', onPaymentChange);
-        $paymentTypeSelect.change();
+        onPaymentChange();
     }
 
     static init($container) {
