@@ -1,4 +1,5 @@
 BRANCH_NAME=${1,,}
+BRANCH_NAME="${BRANCH_NAME//[\/.]/-}"
 
 if [ -n "$BRANCH_NAME" ]; then
     echo "Info: Trying to cancel review for branch ${BRANCH_NAME}"
