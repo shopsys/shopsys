@@ -58,7 +58,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     {
         $mainPageBlogCategory = $this->blogCategoryFacade->getRootBlogCategory();
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
-        $mainPageBlogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Main blog page')->toString();
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();

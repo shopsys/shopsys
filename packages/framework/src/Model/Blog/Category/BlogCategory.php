@@ -105,7 +105,6 @@ class BlogCategory extends AbstractTranslatableEntity
         $this->setParent($blogCategoryData->parent);
         $this->setTranslations($blogCategoryData);
         $this->setDomains($blogCategoryData);
-        $this->uuid = $blogCategoryData->uuid;
     }
 
     /**
