@@ -72,7 +72,7 @@ class RegistrationData
     public $domainId;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createdAt;
 

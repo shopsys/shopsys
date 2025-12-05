@@ -17,12 +17,12 @@ class NotificationBarData
     public $text;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $validityFrom;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $validityTo;
 

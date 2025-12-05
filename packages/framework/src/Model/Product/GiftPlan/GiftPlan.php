@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -62,14 +61,14 @@ class GiftPlan
     protected $giftProduct;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $validFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $validTo;
 
@@ -165,7 +164,7 @@ class GiftPlan
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getValidFrom()
     {
@@ -173,7 +172,7 @@ class GiftPlan
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getValidTo()
     {

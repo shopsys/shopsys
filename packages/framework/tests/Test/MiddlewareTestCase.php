@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Test;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
@@ -48,6 +49,7 @@ class MiddlewareTestCase extends TestCase
         $orderItemTypeEnum = new OrderItemTypeEnum();
         $paymentTransactionRefundDataFactory = $this->createMock(PaymentTransactionRefundDataFactory::class);
         $orderItemDataFactory = $this->createMock(OrderItemDataFactory::class);
+        $clockMock = $this->createMock(ClockInterface::class);
 
         $withdrawalRequestDataFactory = $this->createMock(WithdrawalRequestDataFactory::class);
         $withdrawalRequestFacade = $this->createMock(WithdrawalRequestFacade::class);
@@ -58,6 +60,7 @@ class MiddlewareTestCase extends TestCase
             $orderItemTypeEnum,
             $withdrawalRequestDataFactory,
             $withdrawalRequestFacade,
+            $clockMock,
         );
         $orderData = $orderDataFactory->create();
 

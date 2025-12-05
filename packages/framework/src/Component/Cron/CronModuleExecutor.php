@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 use DateInterval;
 use DateTimeImmutable;
 use Monolog\Logger;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
@@ -25,13 +26,15 @@ class CronModuleExecutor
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Bytes\BytesHelper $bytesHelper
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly CronConfig $cronConfig,
         protected readonly Logger $logger,
         protected readonly BytesHelper $bytesHelper,
+        protected readonly ClockInterface $clock,
     ) {
-        $this->startedAt = new DateTimeImmutable('now');
+        $this->startedAt = $this->clock->now();
     }
 
     /**
@@ -100,6 +103,6 @@ class CronModuleExecutor
             return false;
         }
 
-        return $canRunUntil > new DateTimeImmutable('now');
+        return $canRunUntil > $this->clock->now();
     }
 }

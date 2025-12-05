@@ -85,6 +85,7 @@ class BlogArticleDataFactory
         $blogArticleData->hidden = $blogArticle->isHidden();
         $blogArticleData->visibleOnHomepage = $blogArticle->isVisibleOnHomepage();
         $blogArticleData->publishDate = $blogArticle->getPublishDate();
+        $blogArticleData->createdAt = $blogArticle->getCreatedAt();
         $blogArticleData->blogCategoriesByDomainId = $blogArticle->getBlogCategoriesIndexedByDomainId();
         $blogArticleData->uuid = $blogArticle->getUuid();
 

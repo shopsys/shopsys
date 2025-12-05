@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
-use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrameworkBundle\Unit\TestCase;
 
 class UserTest extends TestCase
@@ -31,19 +31,19 @@ class UserTest extends TestCase
         return [
             [
                 'resetPasswordHash' => 'validHash',
-                'resetPasswordHashValidThrough' => new DateTime('+1 hour'),
+                'resetPasswordHashValidThrough' => (new DatePoint())->modify('+1 hour'),
                 'sentHash' => 'validHash',
                 'isExpectedValid' => true,
             ],
             [
                 'resetPasswordHash' => null,
-                'resetPasswordHashValidThrough' => new DateTime('+1 hour'),
+                'resetPasswordHashValidThrough' => (new DatePoint())->modify('+1 hour'),
                 'sentHash' => 'hash',
                 'isExpectedValid' => false,
             ],
             [
                 'resetPasswordHash' => 'validHash',
-                'resetPasswordHashValidThrough' => new DateTime('+1 hour'),
+                'resetPasswordHashValidThrough' => (new DatePoint())->modify('+1 hour'),
                 'sentHash' => 'invalidHash',
                 'isExpectedValid' => false,
             ],
@@ -55,7 +55,7 @@ class UserTest extends TestCase
             ],
             [
                 'resetPasswordHash' => 'validHash',
-                'resetPasswordHashValidThrough' => new DateTime('-1 hour'),
+                'resetPasswordHashValidThrough' => (new DatePoint())->modify('-1 hour'),
                 'sentHash' => 'validHash',
                 'isExpectedValid' => false,
             ],

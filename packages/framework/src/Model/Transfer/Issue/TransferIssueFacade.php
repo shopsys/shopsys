@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transfer\Issue;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Transfer\Transfer;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,12 +19,14 @@ class TransferIssueFacade
      * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
      * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferRepository $transferRepository
      * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFactory $transferIssueFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TransferIssueRepository $transferIssueRepository,
         protected readonly TransferRepository $transferRepository,
         protected readonly TransferIssueFactory $transferIssueFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -46,17 +49,16 @@ class TransferIssueFacade
      */
     public function getTransferIssuesQueryBuilderForDataGrid(): QueryBuilder
     {
-        $fromDateTime = new DateTime();
-        $fromDateTime->modify('-7 days');
+        $fromDateTime = $this->clock->now()->modify('-7 days');
 
         return $this->transferIssueRepository->getTransferIssuesQueryBuilderForDataGrid($fromDateTime);
     }
 
     /**
-     * @param \DateTime $fromDateTime
+     * @param \DateTimeImmutable $fromDateTime
      * @return int
      */
-    public function getTransferIssuesCountFrom(DateTime $fromDateTime): int
+    public function getTransferIssuesCountFrom(DateTimeImmutable $fromDateTime): int
     {
         return $this->transferIssueRepository->getTransferIssuesCountFrom($fromDateTime);
     }
@@ -72,7 +74,7 @@ class TransferIssueFacade
             throw new NotFoundHttpException('Transfer issue ' . $id . ' not found');
         }
 
-        $transferIssue->setDeletedAt(new DateTime());
+        $transferIssue->setDeletedAt($this->clock->now());
         $this->em->flush();
     }
 

@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category\AutomatedFilter;
 
-use DateTimeImmutable;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 
 class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
 {
     protected const int MAX_PRODUCT_AGE_IN_DAYS = 30;
     public const string DATABASE_VALUE = 'newProducts';
+
+    /**
+     * @param \Psr\Clock\ClockInterface $clock
+     */
+    public function __construct(
+        protected readonly ClockInterface $clock,
+    ) {
+    }
 
     /**
      * {@inheritdoc}
@@ -37,7 +45,7 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     #[Override]
     public function applyFilter(FilterQuery $filterQuery): FilterQuery
     {
-        return $filterQuery->filterBySellingFrom(new DateTimeImmutable('-' . self::MAX_PRODUCT_AGE_IN_DAYS . ' days'));
+        return $filterQuery->filterBySellingFrom($this->clock->now()->modify('-' . self::MAX_PRODUCT_AGE_IN_DAYS . ' days'));
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
@@ -17,12 +18,14 @@ class CustomerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
         protected readonly CustomerRepository $customerRepository,
         protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -40,6 +43,7 @@ class CustomerUserDataFactory
     public function create(): CustomerUserData
     {
         $customerUserData = $this->createInstance();
+        $customerUserData->createdAt = $this->clock->now();
         $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
 
         return $customerUserData;
@@ -52,6 +56,7 @@ class CustomerUserDataFactory
     public function createForCustomer(Customer $customer): CustomerUserData
     {
         $customerUserData = $this->createInstance();
+        $customerUserData->createdAt = $this->clock->now();
         $customerUserData->customer = $customer;
         $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
 
@@ -80,6 +85,7 @@ class CustomerUserDataFactory
     public function createForDomainId(int $domainId): CustomerUserData
     {
         $customerUserData = $this->createInstance();
+        $customerUserData->createdAt = $this->clock->now();
         $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
         $this->fillForDomainId($customerUserData, $domainId);
 

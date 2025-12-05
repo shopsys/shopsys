@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Form;
 
-use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Form\FormTimeProvider;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
+use Symfony\Component\Clock\Clock;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -38,11 +39,11 @@ class FormTimeProviderTest extends TestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['getSession'])
             ->getMock();
-        $sessionMock->expects($this->atLeastOnce())->method('get')->willReturn(new DateTime($formCreatedAt));
+        $sessionMock->expects($this->atLeastOnce())->method('get')->willReturn(new DatePoint($formCreatedAt));
         $sessionMock->expects($this->atLeastOnce())->method('has')->willReturn(true);
         $requestStackMock->expects($this->atLeastOnce())->method('getSession')->willReturn($sessionMock);
 
-        $formTimeProvider = new FormTimeProvider($requestStackMock);
+        $formTimeProvider = new FormTimeProvider($requestStackMock, Clock::get());
 
         $options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] = $minimumSeconds;
         $this->assertSame($isValid, $formTimeProvider->isFormTimeValid('formName', $options));

@@ -9,7 +9,6 @@ use App\Model\Payment\Payment;
 use App\Model\Product\Brand\Brand;
 use App\Model\Slider\SliderItemFacade;
 use App\Model\Transport\Transport;
-use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ImageDataFixture extends AbstractFileFixture implements DependentFixtureInterface
@@ -381,7 +381,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
                 'type' => $type,
                 'extension' => self::IMAGE_TYPE,
                 'position' => $position,
-                'modified_at' => new DateTimeImmutable('2015-04-16 11:36:06'),
+                'modified_at' => new DatePoint('2015-04-16 11:36:06'),
             ],
             [
                 'id' => Types::INTEGER,

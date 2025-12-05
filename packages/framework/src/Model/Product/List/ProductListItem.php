@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="product_list_items")
@@ -58,7 +58,7 @@ class ProductListItem
         $this->uuid = Uuid::uuid4()->toString();
         $this->productList = $productList;
         $this->product = $product;
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DatePoint();
     }
 
     /**

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
@@ -24,6 +24,7 @@ class AdministratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
      * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -32,6 +33,7 @@ class AdministratorFacade
         protected readonly AdministratorRoleFacade $administratorRoleFacade,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
         protected readonly TokenStorageInterface $tokenStorage,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -156,7 +158,7 @@ class AdministratorFacade
      */
     public function setAdministratorTransferIssuesLastSeenDateTime(Administrator $administrator): void
     {
-        $administrator->setTransferIssuesLastSeenDateTime(new DateTime());
+        $administrator->setTransferIssuesLastSeenDateTime($this->clock->now());
         $this->em->flush();
     }
 

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\MappedSuperclass
@@ -29,8 +29,8 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     protected $extension;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $modifiedAt;
 
@@ -166,7 +166,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getModifiedAt()
     {
@@ -211,6 +211,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
-        $this->modifiedAt = new DateTime();
+        $this->modifiedAt = new DatePoint();
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
-use DateTime;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
@@ -23,11 +23,13 @@ class AdministratorUserProvider implements UserProviderInterface
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly AdministratorRepository $administratorRepository,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
         protected readonly AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -89,12 +91,12 @@ class AdministratorUserProvider implements UserProviderInterface
         }
 
         if ($administrator instanceof TimelimitLoginInterface) {
-            if (time() - $administrator->getLastActivity()->getTimestamp() > 3600 * 5) {
+            if ($this->clock->now()->getTimestamp() - $administrator->getLastActivity()->getTimestamp() > 3600 * 5) {
                 throw new AuthenticationExpiredException('Admin was too long inactive.');
             }
 
             if ($freshAdministrator !== null) {
-                $freshAdministrator->setLastActivity(new DateTime());
+                $freshAdministrator->setLastActivity($this->clock->now());
             }
         }
 

@@ -17,7 +17,7 @@ class SettingValueFactory
 
     /**
      * @param string $name
-     * @param \DateTime|string|int|float|bool|null $value
+     * @param \DateTimeInterface|string|int|float|bool|null $value
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Setting\SettingValue
      */

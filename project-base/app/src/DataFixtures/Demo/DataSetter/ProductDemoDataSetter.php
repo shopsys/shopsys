@@ -10,7 +10,6 @@ use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductData;
-use DateTime;
 use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -24,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockRepository;
+use Symfony\Component\Clock\DatePoint;
 
 class ProductDemoDataSetter
 {
@@ -79,7 +79,7 @@ class ProductDemoDataSetter
      */
     public function setSellingFrom(ProductData $productData, string $date): void
     {
-        $productData->sellingFrom = new DateTime($date);
+        $productData->sellingFrom = new DatePoint($date);
     }
 
     /**
@@ -88,7 +88,7 @@ class ProductDemoDataSetter
      */
     public function setSellingTo(ProductData $productData, string $date): void
     {
-        $productData->sellingTo = new DateTime($date);
+        $productData->sellingTo = new DatePoint($date);
     }
 
     /**

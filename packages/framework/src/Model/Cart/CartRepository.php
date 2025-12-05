@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
-use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 
 class CartRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -54,20 +57,20 @@ class CartRepository
                 FROM carts C
                 WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
             [
-                'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
+                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'timeLimit' => Types::DATETIME_IMMUTABLE,
             ],
         );
 
         $this->em->getConnection()->executeStatement(
             'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
             [
-                'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
+                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'timeLimit' => Types::DATETIME_IMMUTABLE,
             ],
         );
     }
@@ -83,20 +86,20 @@ class CartRepository
                 FROM carts C
                 WHERE C.modified_at <= :timeLimit AND customer_user_id IS NOT NULL)',
             [
-                'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
+                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'timeLimit' => Types::DATETIME_IMMUTABLE,
             ],
         );
 
         $this->em->getConnection()->executeStatement(
             'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NOT NULL',
             [
-                'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
+                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'timeLimit' => Types::DATETIME_IMMUTABLE,
             ],
         );
     }

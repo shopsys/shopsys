@@ -63,8 +63,8 @@ class FriendlyUrl
     protected $redirectCode;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $lastModification;
 
@@ -152,7 +152,7 @@ class FriendlyUrl
     }
 
     /**
-     * @param \DateTime|null $lastModification
+     * @param \DateTimeImmutable|null $lastModification
      */
     public function setLastModification($lastModification): void
     {
@@ -176,7 +176,7 @@ class FriendlyUrl
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getLastModification()
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
-use DateTime;
+use DateTimeImmutable;
 use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider as BaseCustomerUserLoginInformationProvider;
@@ -25,7 +25,7 @@ class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformat
      * {@inheritdoc}
      */
     #[Override]
-    public function getLastLogin(CustomerUser $customerUser): ?DateTime
+    public function getLastLogin(CustomerUser $customerUser): ?DateTimeImmutable
     {
         return $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser, LoginTypeEnum::ADMIN)?->getLastLoggedInAt();
     }

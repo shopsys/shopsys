@@ -13,6 +13,7 @@ use Lcobucci\JWT\Token\Builder;
 use Lcobucci\JWT\UnencryptedToken;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
@@ -23,6 +24,7 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageE
 use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -64,9 +66,9 @@ class TokenFacadeTest extends TestCase
         $builder = (new Builder(new JoseEncoder(), ChainedFormatter::default()))
             ->issuedBy(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL)
             ->permittedFor(DomainConfigHelper::DEFAULT_EXAMPLE_COM_BASE_URL)
-            ->issuedAt(new DateTimeImmutable())
-            ->canOnlyBeUsedAfter(new DateTimeImmutable('- 10 minutes'))
-            ->expiresAt(new DateTimeImmutable('+ 10 minutes'));
+            ->issuedAt(new DatePoint())
+            ->canOnlyBeUsedAfter((new DatePoint())->modify('- 10 minutes'))
+            ->expiresAt((new DatePoint())->modify('+ 10 minutes'));
 
         $jwtConfiguration = $this->createJwtConfiguration();
         $signer = $jwtConfiguration->signer();
@@ -115,7 +117,7 @@ class TokenFacadeTest extends TestCase
         yield [
             'issuedBy' => null,
             'privateKey' => null,
-            'expiresAt' => new DateTimeImmutable('- 5 minutes'),
+            'expiresAt' => (new DatePoint())->modify('- 5 minutes'),
             'exceptionClass' => ExpiredTokenUserMessageException::class,
         ];
     }
@@ -134,11 +136,15 @@ class TokenFacadeTest extends TestCase
         $jwtConfigurationProvider->method('getConfiguration')
             ->willReturn($this->createJwtConfiguration());
 
+        $clock = $this->createMock(ClockInterface::class);
+        $clock->method('now')->willReturn(new DatePoint());
+
         return new TokenFacade(
             $domain,
             $customerUserFacade,
             $jwtConfigurationProvider,
             new TokenCustomerUserTransformer(),
+            $clock,
         );
     }
 

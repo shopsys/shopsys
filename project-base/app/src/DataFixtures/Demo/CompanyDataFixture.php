@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Symfony\Component\Clock\DatePoint;
 
 class CompanyDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -184,7 +185,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
             self::UUID_NAMESPACE_CUSTOMER,
             $domainId . $customerDataProvider[self::KEY_CUSTOMER_USER_DATA_FIRST_NAME],
         )->toString();
-        $customerUserData->createdAt = $this->faker->dateTimeBetween('-1 week');
+        $customerUserData->createdAt = DatePoint::createFromMutable($this->faker->dateTimeBetween('-1 week'));
         $customerUserData->defaultDeliveryAddress = $defaultDeliveryAddress;
         $customerUserData->pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, $domainId, PricingGroup::class);
         $customerUserData->domainId = $domainId;

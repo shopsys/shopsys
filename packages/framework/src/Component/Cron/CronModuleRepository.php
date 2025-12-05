@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
-use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 
 class CronModuleRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory $cronModuleFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CronModuleFactory $cronModuleFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -129,10 +131,10 @@ class CronModuleRepository
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cron_module_runs WHERE finished_at <= :timeLimit',
             [
-                'timeLimit' => new DateTime('-' . $numberOfDays . ' days'),
+                'timeLimit' => $this->clock->now()->modify('-' . $numberOfDays . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'timeLimit' => Types::DATETIME_IMMUTABLE,
             ],
         );
     }

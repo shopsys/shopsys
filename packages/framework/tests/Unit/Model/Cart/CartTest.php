@@ -17,7 +17,7 @@ class CartTest extends TestCase
     public function testGetItemsCountZero()
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $this->assertSame(0, $cart->getItemsCount());
     }
@@ -34,7 +34,7 @@ class CartTest extends TestCase
         $productData2->name = ['cs' => 'Product 2'];
         $product2 = Product::create($productData2);
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);
@@ -49,7 +49,7 @@ class CartTest extends TestCase
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $this->assertTrue($cart->isEmpty());
     }
@@ -61,7 +61,7 @@ class CartTest extends TestCase
         $productData->name = ['cs' => 'Product 1'];
         $product = Product::create($productData);
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem = new CartItem($cart, $product, 1, Money::zero());
         $cart->addItem($cartItem);
@@ -81,7 +81,7 @@ class CartTest extends TestCase
 
         $product2 = Product::create($productData2);
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);

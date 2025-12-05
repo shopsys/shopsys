@@ -13,7 +13,6 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
-use DateTimeImmutable;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -26,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
+use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
 class FilterQueryTest extends ParameterTransactionFunctionalTestCase
@@ -280,7 +280,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     public function testFilterBySellingFrom(): void
     {
         $filter = $this->createFilter()
-            ->filterBySellingFrom(new DateTimeImmutable('-30 days'))
+            ->filterBySellingFrom((new DatePoint())->modify('-30 days'))
             ->applyOrderingByIdAscending();
         $this->assertIdsWithFilter($filter, [44, 144]);
     }

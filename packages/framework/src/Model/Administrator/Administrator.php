@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
-use DateTime;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
@@ -19,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -41,7 +40,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH,
     ];
 
-    public const int RESET_PASSWORD_HASH_VALID_HOURS = 24;
+    protected const int RESET_PASSWORD_HASH_VALID_HOURS = 24;
 
     /**
      * @var int
@@ -76,7 +75,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $loginToken;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      */
     protected $lastActivity;
 
@@ -109,14 +108,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $roles;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $rolesChangedAt;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $transferIssuesLastSeenDateTime;
 
@@ -171,7 +170,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $resetPasswordHashValidThrough;
 
@@ -180,7 +179,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      */
     public function __construct(AdministratorData $administratorData)
     {
-        $this->lastActivity = new DateTime();
+        $this->lastActivity = new DatePoint();
         $this->gridLimits = new ArrayCollection();
         $this->loginToken = '';
         $this->roles = new ArrayCollection();
@@ -287,7 +286,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     #[Override]
     public function getLastActivity()
@@ -352,7 +351,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getRolesChangedAt()
     {
@@ -361,7 +360,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
 
     public function setRolesChangedNow(): void
     {
-        $this->rolesChangedAt = new DateTime();
+        $this->rolesChangedAt = new DatePoint();
     }
 
     /**
@@ -374,7 +373,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @param \DateTime $lastActivity
+     * @param \DateTimeImmutable $lastActivity
      */
     #[Override]
     public function setLastActivity($lastActivity)
@@ -383,7 +382,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTime}
+     * @return array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTimeImmutable}
      */
     public function __serialize(): array
     {
@@ -399,7 +398,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @param array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTime} $data
+     * @param array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTimeImmutable} $data
      */
     public function __unserialize(array $data): void
     {
@@ -409,8 +408,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->realName = $data['realName'];
         $this->loginToken = $data['loginToken'];
         $this->rolesChangedAt = $data['rolesChangedAt'];
-        $this->lastActivity = new DateTime();
-        $this->lastActivity->setTimestamp($data['timestamp']);
+        $this->lastActivity = (new DatePoint())->setTimestamp($data['timestamp']);
     }
 
     /**
@@ -486,7 +484,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getTransferIssuesLastSeenDateTime()
     {
@@ -494,7 +492,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @param \DateTime $transferIssuesLastSeenDateTime
+     * @param \DateTimeImmutable $transferIssuesLastSeenDateTime
      */
     public function setTransferIssuesLastSeenDateTime($transferIssuesLastSeenDateTime): void
     {
@@ -656,7 +654,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function setResetPasswordHash($resetPasswordHash): void
     {
         $this->resetPasswordHash = $resetPasswordHash;
-        $this->resetPasswordHashValidThrough = new DateTimeImmutable('+' . self::RESET_PASSWORD_HASH_VALID_HOURS . ' hours');
+        $this->resetPasswordHashValidThrough = (new DatePoint())->modify('+' . self::RESET_PASSWORD_HASH_VALID_HOURS . ' hours');
     }
 
     /**
@@ -679,8 +677,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
             return false;
         }
 
-        $now = new DateTime();
-
-        return $this->resetPasswordHashValidThrough !== null && $this->resetPasswordHashValidThrough >= $now;
+        return $this->resetPasswordHashValidThrough !== null && $this->resetPasswordHashValidThrough >= new DatePoint();
     }
 }

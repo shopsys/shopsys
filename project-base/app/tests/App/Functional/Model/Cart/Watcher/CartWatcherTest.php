@@ -69,7 +69,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
         $cartItem = new CartItem($cart, $product, 1, $productPrice->getPrice()->getPriceWithVat());
         $cart->addItem($cartItem);
 
@@ -104,7 +104,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $currentCustomerUserMock = $this->createCustomerUserMock();
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
         $cart->addItem($cartItemMock);
 
         $notListableItems = $this->cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);
@@ -133,7 +133,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             $this->giftPlanSettingFacade,
         );
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
         $cart->addItem($cartItemMock);
 
         $notListableItems = $cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);

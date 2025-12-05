@@ -150,12 +150,12 @@ class OrderData
     public $items = [];
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $deliveredAt;
 

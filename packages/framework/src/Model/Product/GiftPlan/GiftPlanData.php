@@ -32,12 +32,12 @@ class GiftPlanData
     public $giftProduct;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $validFrom;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $validTo;
 

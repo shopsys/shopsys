@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
@@ -29,6 +29,7 @@ class FriendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
      * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -39,6 +40,7 @@ class FriendlyUrlFacade
         protected readonly FriendlyUrlFactory $friendlyUrlFactory,
         protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
         protected readonly CacheInterface $mainFriendlyUrlSlugCache,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -387,7 +389,7 @@ class FriendlyUrlFacade
 
         $friendlyUrl->setRedirectCode($friendlyUrlData->redirectCode);
         $friendlyUrl->setRedirectTo($friendlyUrlData->redirectTo);
-        $friendlyUrl->setLastModification(new DateTime('now'));
+        $friendlyUrl->setLastModification($this->clock->now());
         $this->em->flush();
     }
 

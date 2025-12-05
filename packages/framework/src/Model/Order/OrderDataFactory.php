@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -20,6 +21,7 @@ class OrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory $withdrawalRequestDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
@@ -27,6 +29,7 @@ class OrderDataFactory
         protected readonly OrderItemTypeEnum $orderItemTypeEnum,
         protected readonly WithdrawalRequestDataFactory $withdrawalRequestDataFactory,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -44,6 +47,7 @@ class OrderDataFactory
     public function create(): OrderData
     {
         $orderData = $this->createInstance();
+        $orderData->createdAt = $this->clock->now();
 
         return $this->fillZeroPrices($orderData);
     }

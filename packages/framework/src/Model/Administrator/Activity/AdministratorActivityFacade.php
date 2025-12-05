@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Activity;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityFacade
@@ -13,11 +14,13 @@ class AdministratorActivityFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityRepository $administratorActivityRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory $administratorActivityFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityRepository $administratorActivityRepository,
         protected readonly AdministratorActivityFactory $administratorActivityFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 

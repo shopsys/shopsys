@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Price;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use LogicException;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
@@ -15,6 +15,14 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class PriceInfoFactory
 {
+    /**
+     * @param \Psr\Clock\ClockInterface $clock
+     */
+    public function __construct(
+        protected readonly ClockInterface $clock,
+    ) {
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $basicProductPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null $specialPrice
@@ -65,7 +73,7 @@ class PriceInfoFactory
      */
     protected function determineNextPriceChange(SpecialPrice $specialPrice): DateTimeInterface
     {
-        $now = new DateTimeImmutable();
+        $now = $this->clock->now();
 
         $futureDates = [];
 

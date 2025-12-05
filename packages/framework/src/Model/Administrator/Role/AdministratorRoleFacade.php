@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
@@ -14,11 +15,13 @@ class AdministratorRoleFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory $administratorRoleFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory $administratorRoleDataFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorRoleFactory $administratorRoleFactory,
         protected readonly AdministratorRoleDataFactory $administratorRoleDataFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 

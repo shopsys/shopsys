@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\ScalarType;
 
-use DateTime;
 use DateTimeInterface;
 use GraphQL\Language\AST\StringValueNode;
+use Symfony\Component\Clock\DatePoint;
 
 class DateTimeType
 {
@@ -21,19 +21,19 @@ class DateTimeType
 
     /**
      * @param string $value
-     * @return \DateTime
+     * @return \Symfony\Component\Clock\DatePoint
      */
-    public static function parseValue(string $value): DateTime
+    public static function parseValue(string $value): DatePoint
     {
-        return new DateTime($value);
+        return new DatePoint($value);
     }
 
     /**
      * @param \GraphQL\Language\AST\StringValueNode $valueNode
-     * @return \DateTime
+     * @return \Symfony\Component\Clock\DatePoint
      */
-    public static function parseLiteral(StringValueNode $valueNode): DateTime
+    public static function parseLiteral(StringValueNode $valueNode): DatePoint
     {
-        return new DateTime($valueNode->value);
+        return new DatePoint($valueNode->value);
     }
 }

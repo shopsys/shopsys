@@ -11,7 +11,6 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
 use App\Model\Transport\Transport;
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -22,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+use Symfony\Component\Clock\DatePoint;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -1403,7 +1403,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = 'UE75HU7500';
         $productData->ean = '8845781245932';
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '140486.8');
-        $this->productDemoDataSetter->setSellingFrom($productData, (new DateTime('-1d'))->format('d.m.Y'));
+        $this->productDemoDataSetter->setSellingFrom($productData, (new DatePoint())->modify('-1 day')->format('d.m.Y'));
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_TOYS]);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
@@ -3663,7 +3663,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '8331B006';
         $productData->ean = '8845781245938';
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '1314.1');
-        $this->productDemoDataSetter->setSellingFrom($productData, (new DateTime('-1d'))->format('d.m.Y'));
+        $this->productDemoDataSetter->setSellingFrom($productData, (new DatePoint())->modify('-1 day')->format('d.m.Y'));
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_TOYS]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];

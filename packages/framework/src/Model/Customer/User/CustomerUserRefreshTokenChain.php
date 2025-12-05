@@ -40,8 +40,8 @@ class CustomerUserRefreshTokenChain
     protected $deviceId;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $expiredAt;
 

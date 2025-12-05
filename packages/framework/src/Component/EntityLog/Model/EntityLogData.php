@@ -57,7 +57,7 @@ class EntityLogData
     public $logCollectionNumber = null;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $createdAt = null;
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Security;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
@@ -14,10 +14,12 @@ class LoginAsUserExchangeTokenRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -31,7 +33,7 @@ class LoginAsUserExchangeTokenRepository
             ->select('e')
             ->from(LoginAsUserExchangeToken::class, 'e')
             ->where('e.expiresAt > :now')
-            ->setParameter('now', new DateTime())
+            ->setParameter('now', $this->clock->now())
             ->getQuery()
             ->getResult();
 
@@ -60,7 +62,7 @@ class LoginAsUserExchangeTokenRepository
         $this->entityManager->createQueryBuilder()
             ->delete(LoginAsUserExchangeToken::class, 'e')
             ->where('e.expiresAt < :now')
-            ->setParameter('now', new DateTime())
+            ->setParameter('now', $this->clock->now())
             ->getQuery()
             ->execute();
     }

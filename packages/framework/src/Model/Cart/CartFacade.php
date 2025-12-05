@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
@@ -87,7 +86,7 @@ class CartFacade
                 }
 
                 $productCartItem->changeQuantity($newQuantity);
-                $productCartItem->changeAddedAt(new DateTime());
+                $productCartItem->setAddedAtToNow();
                 $result = new AddProductResult($productCartItem, false, $newQuantity, $notOnStockQuantity);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();

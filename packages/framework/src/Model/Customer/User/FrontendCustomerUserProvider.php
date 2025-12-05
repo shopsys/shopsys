@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use DateTime;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
@@ -19,10 +19,12 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly Domain $domain,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -81,7 +83,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
             if (time() - $customerUser->getLastActivity()->getTimestamp() > 3600 * 24) {
                 throw new UserNotFoundException('User was too long unactive');
             }
-            $customerUser->setLastActivity(new DateTime());
+            $customerUser->setLastActivity($this->clock->now());
         }
 
         if ($customerUser instanceof UniqueLoginInterface) {

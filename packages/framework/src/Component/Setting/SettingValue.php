@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -20,7 +20,7 @@ use function is_object;
  */
 class SettingValue
 {
-    protected const DATETIME_STORED_FORMAT = DateTime::ISO8601;
+    protected const DATETIME_STORED_FORMAT = DateTimeInterface::ISO8601;
 
     protected const TYPE_STRING = 'string';
     protected const TYPE_INTEGER = 'integer';
@@ -63,7 +63,7 @@ class SettingValue
 
     /**
      * @param string $name
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      * @param int $domainId
      */
     public function __construct($name, $value, $domainId)
@@ -74,7 +74,7 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      */
     public function edit($value)
     {
@@ -90,7 +90,7 @@ class SettingValue
     }
 
     /**
-     * @return \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
+     * @return \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
      */
     public function getValue()
     {
@@ -125,7 +125,7 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      */
     protected function setValue($value)
     {
@@ -145,7 +145,7 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|mixed|null $value
+     * @param \DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|mixed|null $value
      * @return string
      */
     protected function getValueType($value)
@@ -170,7 +170,7 @@ class SettingValue
             return static::TYPE_NULL;
         }
 
-        if ($value instanceof DateTime) {
+        if ($value instanceof DateTimeInterface) {
             return static::TYPE_DATETIME;
         }
 
@@ -184,7 +184,7 @@ class SettingValue
         )
             . sprintf(
                 ' Supported is "%s", "%s", string, integer, float, boolean or null.',
-                DateTime::class,
+                DateTimeInterface::class,
                 Money::class,
             );
 

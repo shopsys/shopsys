@@ -73,14 +73,14 @@ class Product extends AbstractTranslatableEntity
     protected $ean;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $sellingFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $sellingTo;
 
@@ -421,7 +421,7 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getSellingFrom()
     {
@@ -429,7 +429,7 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getSellingTo()
     {

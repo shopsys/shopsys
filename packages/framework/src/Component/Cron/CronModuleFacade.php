@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 
@@ -22,6 +22,7 @@ class CronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFilter $cronFilter
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory $cronModuleRunFactory
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -29,6 +30,7 @@ class CronModuleFacade
         protected readonly CronFilter $cronFilter,
         protected readonly CronModuleRunFactory $cronModuleRunFactory,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -135,7 +137,7 @@ class CronModuleFacade
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
-        $lastCronDuration = time() - $cronModule->getLastStartedAt()->getTimestamp();
+        $lastCronDuration = $this->clock->now()->getTimestamp() - $cronModule->getLastStartedAt()->getTimestamp();
 
         /**
          * We want to avoid flushing the whole identity map (using EntityManager::flush())
@@ -159,7 +161,7 @@ class CronModuleFacade
             [
                 'errorStatus' => CronModule::CRON_STATUS_ERROR,
                 'serviceId' => $cronModuleConfig->getServiceId(),
-                'now' => (new DateTime())->format('Y-m-d H:i:s'),
+                'now' => $this->clock->now()->format('Y-m-d H:i:s'),
                 'lastDuration' => $lastCronDuration,
             ],
         );
@@ -171,7 +173,7 @@ class CronModuleFacade
                 'cronModuleId' => $cronModule->getServiceId(),
                 'status' => CronModule::CRON_STATUS_ERROR,
                 'startedAt' => $cronModule->getLastStartedAt()->format('Y-m-d H:i:s'),
-                'finishedAt' => (new DateTime())->format('Y-m-d H:i:s'),
+                'finishedAt' => $this->clock->now()->format('Y-m-d H:i:s'),
                 'duration' => $lastCronDuration,
             ],
         );

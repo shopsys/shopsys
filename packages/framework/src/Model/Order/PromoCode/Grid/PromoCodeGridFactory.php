@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -24,6 +24,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -31,6 +32,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly PromoCodeLimitRepository $promoCodeLimitRepository,
         protected readonly QueryBuilderWithRowManipulatorDataSourceFactory $queryBuilderWithRowManipulatorDataSourceFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -53,7 +55,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
             ->setParameter('domainId', $this->adminDomainTabsFacade->getSelectedDomainId());
 
         $manipulator = function ($row) {
-            $now = new DateTime('now');
+            $now = $this->clock->now();
 
             $row['pc']['isActive'] = $row['pc']['enabled'] &&
                 ($row['pc']['datetimeValidFrom'] === null || $row['pc']['datetimeValidFrom'] <= $now) &&

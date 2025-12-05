@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Statistics;
 
 use DateInterval;
-use DateTime;
+use DateTimeInterface;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
 class ValueByDateTimeDataPointFormatter
@@ -19,15 +19,15 @@ class ValueByDateTimeDataPointFormatter
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
-     * @param \DateTime $startDateTime
-     * @param \DateTime $endDateTime
+     * @param \DateTimeInterface $startDateTime
+     * @param \DateTimeInterface $endDateTime
      * @param \DateInterval $interval
      * @return array
      */
     public function normalizeDataPointsByDateTimeIntervals(
         array $valueByDateTimeDataPoints,
-        DateTime $startDateTime,
-        DateTime $endDateTime,
+        DateTimeInterface $startDateTime,
+        DateTimeInterface $endDateTime,
         DateInterval $interval,
     ) {
         $currentProcessedDateTime = $startDateTime;
@@ -41,10 +41,10 @@ class ValueByDateTimeDataPointFormatter
             if ($dateKey !== false) {
                 $returnStatisticCounts[] = $valueByDateTimeDataPoints[$dateKey];
             } else {
-                $returnStatisticCounts[] = new ValueByDateTimeDataPoint(0, clone $currentProcessedDateTime);
+                $returnStatisticCounts[] = new ValueByDateTimeDataPoint(0, $currentProcessedDateTime);
             }
 
-            $currentProcessedDateTime->add($interval);
+            $currentProcessedDateTime = $currentProcessedDateTime->add($interval);
         } while ($currentProcessedDateTime < $endDateTime);
 
         return $returnStatisticCounts;
@@ -67,7 +67,7 @@ class ValueByDateTimeDataPointFormatter
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
-     * @return \DateTime[]
+     * @return \DateTimeInterface[]
      */
     protected function getDateTimes(array $valueByDateTimeDataPoints)
     {

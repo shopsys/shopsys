@@ -39,12 +39,12 @@ class ProductData
     public $ean;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $sellingFrom;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $sellingTo;
 

@@ -21,7 +21,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param \DateTime $value
+     * @param \DateTimeInterface $value
      * @param int $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param string|null $locale

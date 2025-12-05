@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use DateInterval;
-use DateTime;
-use DateTimeImmutable;
-use DateTimeZone;
-use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\UnencryptedToken;
@@ -16,6 +12,7 @@ use Lcobucci\JWT\Validation\Constraint\IssuedBy;
 use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -25,7 +22,6 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageExcep
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Throwable;
-use function date_default_timezone_get;
 
 class TokenFacade
 {
@@ -40,12 +36,14 @@ class TokenFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider $jwtConfigurationProvider
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer $tokenCustomerUserTransformer
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly JwtConfigurationProvider $jwtConfigurationProvider,
         protected readonly TokenCustomerUserTransformer $tokenCustomerUserTransformer,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -103,7 +101,7 @@ class TokenFacade
      */
     protected function getTokenBuilderWithExpiration(int $expiration, int $domainId): Builder
     {
-        $currentTime = new DateTimeImmutable();
+        $currentTime = $this->clock->now();
         $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
         return $this->jwtConfigurationProvider->getConfiguration()
@@ -145,7 +143,7 @@ class TokenFacade
 
         $validator = $jwtConfiguration->validator();
 
-        if (!$validator->validate($token, new StrictValidAt(new SystemClock(new DateTimeZone(date_default_timezone_get()))))) {
+        if (!$validator->validate($token, new StrictValidAt($this->clock))) {
             throw new ExpiredTokenUserMessageException('Token is expired. Please renew.');
         }
 
@@ -180,7 +178,7 @@ class TokenFacade
             $customerUser,
             $randomChain,
             $deviceId,
-            DateTime::createFromImmutable($refreshToken->claims()->get('exp')),
+            $refreshToken->claims()->get('exp'),
             $administrator,
         );
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Blog;
 
-use DateTime;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
@@ -34,10 +34,12 @@ final class BlogArticleFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -197,7 +199,7 @@ final class BlogArticleFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter date of creation']),
                 ],
                 'label' => 'Date of publication',
-                'data' => $blogArticle === null ? new DateTime() : $blogArticle->getPublishDate(),
+                'data' => $blogArticle === null ? $this->clock->now() : $blogArticle->getPublishDate(),
             ]);
 
         return $builderSettingsGroup;

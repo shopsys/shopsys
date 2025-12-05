@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
@@ -15,11 +15,13 @@ class NewsletterFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository $newsletterRepository
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory $newsletterSubscriberFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly NewsletterRepository $newsletterRepository,
         protected readonly NewsletterSubscriberFactory $newsletterSubscriberFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -35,7 +37,7 @@ class NewsletterFacade
 
         $newsletterSubscriber = $this->newsletterSubscriberFactory->create(
             $email,
-            new DateTimeImmutable(),
+            $this->clock->now(),
             $domainId,
         );
         $this->em->persist($newsletterSubscriber);

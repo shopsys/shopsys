@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="cron_modules")
@@ -49,14 +49,14 @@ class CronModule
     protected $status;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $lastStartedAt;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $lastFinishedAt;
 
@@ -153,16 +153,16 @@ class CronModule
 
     public function updateLastStartedAt(): void
     {
-        $this->lastStartedAt = new DateTime();
+        $this->lastStartedAt = new DatePoint();
     }
 
     public function updateLastFinishedAt(): void
     {
-        $this->lastFinishedAt = new DateTime();
+        $this->lastFinishedAt = new DatePoint();
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getLastStartedAt()
     {
@@ -170,7 +170,7 @@ class CronModule
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getLastFinishedAt()
     {

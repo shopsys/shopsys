@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
@@ -31,6 +31,7 @@ class BlogArticleExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -42,6 +43,7 @@ class BlogArticleExportRepository
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly BlogCategoryFacade $blogCategoryFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -98,10 +100,10 @@ class BlogArticleExportRepository
             ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
             ->setParameter('locale', $locale)
             ->join('ba.domains', 'bad', Join::WITH, 'bad.domainId = :domainId')
-            ->andWhere('ba.publishDate <= :todayDate')
+            ->andWhere('ba.publishDate <= :now')
             ->andWhere('bad.visible = true')
             ->andWhere('ba.hidden = false')
-            ->setParameter('todayDate', (new DateTime())->format('Y-m-d H:i:s'))
+            ->setParameter('now', $this->clock->now())
             ->setParameter('domainId', $domainId)
             ->getQuery()->getSingleScalarResult());
     }

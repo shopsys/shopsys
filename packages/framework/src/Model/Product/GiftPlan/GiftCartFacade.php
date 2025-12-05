@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -57,7 +56,7 @@ class GiftCartFacade
 
             if ($giftCartItem) {
                 $giftCartItem->changeQuantity($giftQuantity);
-                $giftCartItem->changeAddedAt(new DateTime());
+                $giftCartItem->setAddedAtToNow();
 
                 continue;
             }
@@ -168,7 +167,7 @@ class GiftCartFacade
             }
 
             $item->changeQuantity($giftQuantity);
-            $item->changeAddedAt(new DateTime());
+            $item->setAddedAtToNow();
             $this->em->flush();
         }
 

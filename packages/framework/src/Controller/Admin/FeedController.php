@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -18,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -135,7 +135,7 @@ class FeedController extends AdminBaseController
                     'feedName' => $feedInfo->getName(),
                     'domainConfig' => $domainConfig,
                     'url' => $this->feedFacade->getFeedUrl($feedInfo, $domainConfig),
-                    'created' => $feedTimestamp === null ? null : (new DateTime())->setTimestamp($feedTimestamp),
+                    'created' => $feedTimestamp === null ? null : (new DatePoint())->setTimestamp($feedTimestamp),
                     'generate' => null,
                     'schedule' => $feedModulesIndexedByDomainId[$domainId]->isScheduled(),
                     'additionalInformation' => $feedInfo->getAdditionalInformation(),

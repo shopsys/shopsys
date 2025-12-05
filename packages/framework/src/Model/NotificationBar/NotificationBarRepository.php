@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFoundException;
 
 class NotificationBarRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -56,7 +59,7 @@ class NotificationBarRepository
             ->andWhere('nb.hidden = FALSE')
             ->setParameters([
                 'domainId' => $domainId,
-                'now' => new DateTime(),
+                'now' => $this->clock->now(),
             ])
             ->getQuery()->execute();
     }
@@ -69,7 +72,7 @@ class NotificationBarRepository
     {
         return $this->getAllByDomainIdQueryBuilder($domainId)
             ->addSelect('CASE WHEN (nb.hidden = FALSE AND (nb.validityFrom IS NULL OR nb.validityFrom <= :now) AND (nb.validityTo IS NULL OR nb.validityTo > :now)) THEN TRUE ELSE FALSE END AS visibility')
-            ->setParameter('now', new DateTime())
+            ->setParameter('now', $this->clock->now())
             ->orderBy('nb.id');
     }
 

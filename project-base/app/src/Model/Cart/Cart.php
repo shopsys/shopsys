@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  * @property \App\Model\Transport\Transport|null $transport
  * @property \App\Model\Payment\Payment|null $payment
- * @method __construct(string $cartIdentifier, \App\Model\Customer\User\CustomerUser|null $customerUser = null)
+ * @method __construct(string $cartIdentifier, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method \App\Model\Transport\Transport|null getTransport()
  * @method \App\Model\Payment\Payment|null getPayment()
  * @method \App\Model\Cart\Item\CartItem getItemByUuid(string $itemUuid)

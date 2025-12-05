@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
+use Symfony\Component\Clock\DatePoint;
 
 class WatchdogDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -121,10 +121,10 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
         $watchdogData->email = $data[self::ATTRIBUTE_EMAIL_KEY];
         $watchdogData->product = $product;
 
-        $createdAt = new DateTime('now' . ' - ' . random_int(1, 365) . ' days');
+        $createdAt = (new DatePoint())->modify('-' . random_int(1, 365) . ' days');
 
         $watchdogData->createdAt = $createdAt;
-        $watchdogData->validUntil = (clone $createdAt)->modify('+ 2 years');
+        $watchdogData->validUntil = $createdAt->modify('+ 2 years');
 
         $this->watchdogFacade->create($watchdogData);
     }

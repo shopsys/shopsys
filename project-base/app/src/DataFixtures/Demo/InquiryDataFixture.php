@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Product;
-use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -13,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
+use Symfony\Component\Clock\DatePoint;
 
 class InquiryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -58,7 +58,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'CZ12345678';
         $inquiryData->note = 'Hello, I am interested in learning more about the specifications and pricing for the product. Could you provide detailed information regarding the material quality, warranty period, and the estimated delivery time if we place a bulk order of around 500 units? Additionally, are there any discounts available for bulk purchases or long-term partnerships? We’re evaluating several suppliers, and I’d like to have this information to finalize our decision. Looking forward to your response. Thank you.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-03 10:28:23');
+        $inquiryData->createdAt = new DatePoint('2024-09-03 10:28:23');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -71,7 +71,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US98765432';
         $inquiryData->note = 'Can I get more details?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-03 7:51:10');
+        $inquiryData->createdAt = new DatePoint('2024-09-03 7:51:10');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -84,7 +84,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'What is the cost for personal use?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-03 7:55:14');
+        $inquiryData->createdAt = new DatePoint('2024-09-03 7:55:14');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -97,7 +97,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'UK11223344';
         $inquiryData->note = 'Looking for AI powered solution.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:34:17');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 8:34:17');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -110,7 +110,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'DE55667788';
         $inquiryData->note = 'Interested in product.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:19:42');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 8:19:42');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -124,7 +124,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->note = 'Can I order without a company?';
         $inquiryData->product = null;
         $inquiryData->productCatnum = 'CAT-9476068';
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:51:07');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 8:51:07');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -137,7 +137,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US66778899';
         $inquiryData->note = 'Can you provide details on the product?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:08:42');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 9:08:42');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -150,7 +150,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Just inquiring for personal use.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:17:39');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 9:17:39');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -163,7 +163,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US44556677';
         $inquiryData->note = 'Do you sell in large numbers?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:18:22');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 9:18:22');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -176,7 +176,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'I don’t have a company, is that okay?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:04:53');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:04:53');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -189,7 +189,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'JP33445566';
         $inquiryData->note = 'Does it handle building security systems?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:14:41');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:14:41');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -202,7 +202,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Interested in individual pricing.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:02:05');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:02:05');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -215,7 +215,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US55667744';
         $inquiryData->note = 'Can you provide more details?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:06:42');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:06:42');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -229,7 +229,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->note = 'Looking to order as an individual.';
         $inquiryData->product = null;
         $inquiryData->productCatnum = 'CAT-7241618';
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:42:54');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:42:54');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -242,7 +242,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US77665544';
         $inquiryData->note = 'Could I get pricing for use in drones?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:53:05');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:53:05');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -255,7 +255,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Do you offer discounts for individuals?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:30:35');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:30:35');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -268,7 +268,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US55443322';
         $inquiryData->note = 'Can you provide a quote?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:38:27');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:38:27');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -282,7 +282,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->note = 'What’s the pricing structure for individual customers?';
         $inquiryData->product = null;
         $inquiryData->productCatnum = 'CAT-7334636';
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:30:44');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:30:44');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -295,7 +295,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'JP99887766';
         $inquiryData->note = 'Can I get information?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:58:20');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:58:20');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -309,7 +309,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->note = 'I would like to inquire as an individual.';
         $inquiryData->product = null;
         $inquiryData->productCatnum = 'CAT-9743326';
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:33:58');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:33:58');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -322,7 +322,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US22334455';
         $inquiryData->note = 'I am interested in your vault systems.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:56:50');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:56:50');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -335,7 +335,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US77665588';
         $inquiryData->note = 'Can you provide more details?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:48:56');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:48:56');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -348,7 +348,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'I want to know if you offer individual pricing.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:18:35');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:18:35');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -361,7 +361,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'JP99887744';
         $inquiryData->note = 'Can you provide details about incorporating into cyber software?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:55:34');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:55:34');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -374,7 +374,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'I am interested in an individual product purchase.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:07:41');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:07:41');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -387,7 +387,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US33445599';
         $inquiryData->note = 'Could you provide more info on the technology?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:17:27');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:17:27');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -400,7 +400,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Is there an option for private customers?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:10:56');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:10:56');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -413,7 +413,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US77665522';
         $inquiryData->note = 'Interested in details about development.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:25:41');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 09:25:41');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
@@ -426,7 +426,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'What’s the pricing for non-corporate orders?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:04:51');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:04:51');
         $this->inquiryFacade->create($inquiryData);
     }
 
@@ -446,7 +446,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US66778899';
         $inquiryData->note = 'Can you provide more information about the product line?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:22:14');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 9:22:14');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create($domainId);
@@ -460,7 +460,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->note = 'Do you offer products for individual use?';
         $inquiryData->product = null;
         $inquiryData->productCatnum = 'CAT-9564280';
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:15:41');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:15:41');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create($domainId);
@@ -473,7 +473,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US44556677';
         $inquiryData->note = 'Interested in more details on your memory research products.';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:18:11');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 10:18:11');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create($domainId);
@@ -486,7 +486,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Do you have custom pricing for individuals?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 17:42:37');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 17:42:37');
         $this->inquiryFacade->create($inquiryData);
 
         $inquiryData = $this->inquiryDataFactory->create($domainId);
@@ -499,7 +499,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyTaxNumber = 'US99887755';
         $inquiryData->note = 'Can you provide more info?';
         $inquiryData->product = $inquiryProduct;
-        $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 19:12:47');
+        $inquiryData->createdAt = new DatePoint('2024-09-02 19:12:47');
         $this->inquiryFacade->create($inquiryData);
     }
 

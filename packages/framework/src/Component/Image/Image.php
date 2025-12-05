@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Image;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="images", indexes={@ORM\Index(columns={"entity_name", "entity_id", "type"})})
@@ -73,8 +73,8 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $position;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $modifiedAt;
 
@@ -203,7 +203,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
-        $this->modifiedAt = new DateTime();
+        $this->modifiedAt = new DatePoint();
     }
 
     /**
@@ -272,7 +272,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getModifiedAt()
     {

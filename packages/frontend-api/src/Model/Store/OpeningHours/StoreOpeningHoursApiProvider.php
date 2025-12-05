@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Store\OpeningHours;
 
 use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
@@ -17,12 +18,14 @@ class StoreOpeningHoursApiProvider
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      * @param \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\OpeningHoursWithDateDataFactory $openingHoursWithDateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly OpeningHoursWithDateDataFactory $openingHoursWithDateDataFactory,
         protected readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -34,7 +37,9 @@ class StoreOpeningHoursApiProvider
     {
         $openingHoursData = [];
 
-        $today = new DateTimeImmutable('today', $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
+        $today = $this->clock->now()
+            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()))
+            ->setTime(0, 0, 0);
 
         for ($i = 0; $i <= 6; $i++) {
             $day = $today->modify("+{$i} days");
@@ -73,7 +78,7 @@ class StoreOpeningHoursApiProvider
      */
     public function getStatus(Store $store): string
     {
-        $now = new DateTimeImmutable(timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
+        $now = $this->clock->now()->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
         $oneHourLater = $now->modify('+1 hour');
         $openingHoursSetting = $this->storeOpeningHoursProvider->getOpeningHoursSetting($store);
 

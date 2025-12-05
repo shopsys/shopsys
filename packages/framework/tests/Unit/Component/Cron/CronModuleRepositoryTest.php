@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Cron\CronModule;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Symfony\Component\Clock\Clock;
 
 class CronModuleRepositoryTest extends TestCase
 {
@@ -19,7 +20,7 @@ class CronModuleRepositoryTest extends TestCase
         $doctrineRepositoryMock = $this->createNullDoctrineRepositoryMock();
         $em = $this->createEntityManagerMockWithRepository($doctrineRepositoryMock);
 
-        $repository = new CronModuleRepository($em, new CronModuleFactory(new EntityNameResolver([])));
+        $repository = new CronModuleRepository($em, new CronModuleFactory(new EntityNameResolver([])), Clock::get());
         $cronModule = $repository->getCronModuleByServiceId('serviceId');
         $this->assertInstanceOf(CronModule::class, $cronModule);
     }

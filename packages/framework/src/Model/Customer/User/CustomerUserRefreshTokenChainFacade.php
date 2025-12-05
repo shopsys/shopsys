@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use DateTime;
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
@@ -28,7 +28,7 @@ class CustomerUserRefreshTokenChainFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $tokenChain
      * @param string $deviceId
-     * @param \DateTime $tokenExpiration
+     * @param \DateTimeImmutable $tokenExpiration
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain
      */
@@ -36,7 +36,7 @@ class CustomerUserRefreshTokenChainFacade
         CustomerUser $customerUser,
         string $tokenChain,
         string $deviceId,
-        DateTime $tokenExpiration,
+        DateTimeImmutable $tokenExpiration,
         ?Administrator $administrator,
     ): CustomerUserRefreshTokenChain {
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);

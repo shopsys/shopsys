@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDeliveryDateFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
+use Symfony\Component\Clock\Clock;
 
 class OrderDeliveryDateFacadeTest extends TestCase
 {
@@ -69,7 +70,7 @@ class OrderDeliveryDateFacadeTest extends TestCase
     {
         $emMock = $this->createMock(EntityManagerInterface::class);
 
-        return new OrderDeliveryDateFacade($emMock);
+        return new OrderDeliveryDateFacade($emMock, Clock::get());
     }
 
     /**

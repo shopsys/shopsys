@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace FrontendApiBundle\Functional\Customer\User;
 
 use App\Model\Customer\User\CustomerUserFacade;
-use DateTime;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class LoginInfoTest extends GraphQlWithLoginTestCase
@@ -53,7 +53,7 @@ class LoginInfoTest extends GraphQlWithLoginTestCase
             self::EXPECTED_LOGIN_TYPE,
             self::EXPECTED_EXTERNAL_ID,
         );
-        $customerUserLoginTypeFacebookData->lastLoggedInAt = new DateTime('+1 second');
+        $customerUserLoginTypeFacebookData->lastLoggedInAt = (new DatePoint())->modify('+1 second');
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes($customerUserLoginTypeFacebookData);
     }
 }

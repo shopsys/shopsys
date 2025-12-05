@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -23,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="orders")
@@ -70,21 +70,21 @@ class Order
     protected $customerUser;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     #[ExcludeLog]
     protected $orderPaymentStatusPageValidFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected $deliveredAt;
 
@@ -400,11 +400,7 @@ class Order
         $this->setCustomerUser($customerUser);
         $this->deleted = false;
 
-        if ($orderData->createdAt === null) {
-            $this->createdAt = new DateTime();
-        } else {
-            $this->createdAt = $orderData->createdAt;
-        }
+        $this->createdAt = $orderData->createdAt;
         $this->domainId = $orderData->domainId;
         $this->urlHash = $urlHash;
         $this->currency = $orderData->currency;
@@ -840,7 +836,7 @@ class Order
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -848,7 +844,7 @@ class Order
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getOrderPaymentStatusPageValidFrom()
     {
@@ -857,11 +853,11 @@ class Order
 
     public function setOrderPaymentStatusPageValidFromNow(): void
     {
-        $this->orderPaymentStatusPageValidFrom = new DateTime();
+        $this->orderPaymentStatusPageValidFrom = new DatePoint();
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDeliveredAt()
     {
@@ -869,7 +865,7 @@ class Order
     }
 
     /**
-     * @param \DateTime $deliveredAt
+     * @param \DateTimeImmutable $deliveredAt
      */
     public function setDeliveredAt($deliveredAt)
     {

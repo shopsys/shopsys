@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Setting;
 
-use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValue;
 use stdClass;
+use Symfony\Component\Clock\DatePoint;
 
 class SettingValueTest extends TestCase
 {
@@ -55,7 +55,7 @@ class SettingValueTest extends TestCase
 
     public function testStoreDatetime()
     {
-        $value = new DateTime('2017-01-01 12:34:56');
+        $value = new DatePoint('2017-01-01 12:34:56');
         $settingValue = new SettingValue('name', $value, 1);
         $this->assertEquals($value, $settingValue->getValue());
     }

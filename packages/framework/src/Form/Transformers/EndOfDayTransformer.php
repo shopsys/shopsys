@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Override;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class EndOfDayTransformer implements DataTransformerInterface
@@ -22,7 +22,7 @@ class EndOfDayTransformer implements DataTransformerInterface
             return null;
         }
 
-        return DateTimeImmutable::createFromInterface($value)->modify('-1 day');
+        return DatePoint::createFromInterface($value)->modify('-1 day');
     }
 
     /**
@@ -36,6 +36,6 @@ class EndOfDayTransformer implements DataTransformerInterface
             return null;
         }
 
-        return DateTimeImmutable::createFromInterface($value)->modify('+1 day');
+        return DatePoint::createFromInterface($value)->modify('+1 day');
     }
 }

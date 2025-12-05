@@ -230,7 +230,7 @@ class DefaultController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronConfigs
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule[] $cronModules
-     * @return array<int, array<string, bool|\DateTime|int|string|null>>
+     * @return array<int, array<string, bool|\DateTimeInterface|int|string|null>>
      */
     public function prepareDataForCronInstanceGridView(array $cronConfigs, array $cronModules): array
     {

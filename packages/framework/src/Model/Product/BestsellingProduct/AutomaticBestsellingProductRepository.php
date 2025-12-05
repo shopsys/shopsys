@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\BestsellingProduct;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -26,7 +26,7 @@ class AutomaticBestsellingProductRepository
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \DateTime $ordersCreatedAtLimit
+     * @param \DateTimeImmutable $ordersCreatedAtLimit
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
@@ -34,7 +34,7 @@ class AutomaticBestsellingProductRepository
         $domainId,
         Category $category,
         PricingGroup $pricingGroup,
-        DateTime $ordersCreatedAtLimit,
+        DateTimeImmutable $ordersCreatedAtLimit,
         $maxResults,
     ) {
         $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(

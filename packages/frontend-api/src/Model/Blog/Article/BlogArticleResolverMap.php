@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Blog\Article;
 
-use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Symfony\Component\Clock\DatePoint;
 
 class BlogArticleResolverMap extends ResolverMap
 {
@@ -37,10 +37,10 @@ class BlogArticleResolverMap extends ResolverMap
                     return $this->blogCategoryFacade->getVisibleByIds($this->domain->getId(), $blogArticleData['categories']);
                 },
                 'publishDate' => static function (array $blogArticleData) {
-                    return new DateTime($blogArticleData['publishDate']);
+                    return new DatePoint($blogArticleData['publishDate']);
                 },
                 'createdAt' => static function (array $blogArticleData) {
-                    return new DateTime($blogArticleData['createdAt']);
+                    return new DatePoint($blogArticleData['createdAt']);
                 },
                 'slug' => static function (array $blogArticleData) {
                     return '/' . $blogArticleData['mainSlug'];

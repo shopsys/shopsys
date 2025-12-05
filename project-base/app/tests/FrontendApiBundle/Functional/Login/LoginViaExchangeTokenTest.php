@@ -8,12 +8,12 @@ use App\DataFixtures\Demo\AdministratorDataFixture;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Administrator\Administrator;
 use App\Model\Customer\User\CustomerUser;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserExchangeTokenFactory;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
+use Symfony\Component\Clock\DatePoint;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use Throwable;
@@ -155,7 +155,7 @@ class LoginViaExchangeTokenTest extends GraphQlTestCase
      */
     private function createExpiredExchangeToken(CustomerUser $customerUser, Administrator $administrator): string
     {
-        $expiredDate = new DateTime('-1 minute');
+        $expiredDate = (new DatePoint())->modify('-1 minute');
         $unencryptedToken = 'xxx';
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher(Administrator::class);
         $hashedToken = $passwordHasher->hash($unencryptedToken);

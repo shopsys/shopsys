@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Security;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -36,8 +36,8 @@ class LoginAsUserExchangeToken
     protected $administrator;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $expiresAt;
 
@@ -45,13 +45,13 @@ class LoginAsUserExchangeToken
      * @param string $token
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \DateTime $expiresAt
+     * @param \DateTimeImmutable $expiresAt
      */
     public function __construct(
         string $token,
         CustomerUser $customerUser,
         Administrator $administrator,
-        DateTime $expiresAt,
+        DateTimeImmutable $expiresAt,
     ) {
         $this->token = $token;
         $this->customerUser = $customerUser;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
@@ -327,14 +327,14 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $refreshTokenChain
      * @param string $deviceId
-     * @param \DateTime $tokenExpiration
+     * @param \DateTimeImmutable $tokenExpiration
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
      */
     public function addRefreshTokenChain(
         CustomerUser $customerUser,
         string $refreshTokenChain,
         string $deviceId,
-        DateTime $tokenExpiration,
+        DateTimeImmutable $tokenExpiration,
         ?Administrator $administrator,
     ): void {
         $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(

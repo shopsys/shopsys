@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
-use DateTimeImmutable;
 use Monolog\Logger;
 use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class RemoveOldProductListsCronModule implements SimpleCronModuleInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -30,6 +32,6 @@ class RemoveOldProductListsCronModule implements SimpleCronModuleInterface
     #[Override]
     public function run(): void
     {
-        $this->productListFacade->removeOldAnonymousProductLists(new DateTimeImmutable('-31day'));
+        $this->productListFacade->removeOldAnonymousProductLists($this->clock->now()->modify('-31 day'));
     }
 }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
@@ -26,6 +26,7 @@ class BlogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -33,6 +34,7 @@ class BlogArticleRepository
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly TransformStringHelper $transformStringHelper,
         protected readonly Localization $localization,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -141,10 +143,10 @@ class BlogArticleRepository
     {
         return $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->join('ba.domains', 'bad', Join::WITH, 'bad.domainId = :domainId')
-            ->andWhere('ba.publishDate <= :todayDate')
+            ->andWhere('ba.publishDate <= :now')
             ->andWhere('bad.visible = true')
             ->andWhere('ba.hidden = false')
-            ->setParameter('todayDate', (new DateTime())->format('Y-m-d H:i:s'))
+            ->setParameter('now', $this->clock->now())
             ->setParameter('domainId', $domainId);
     }
 

@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\PriceList\Exception\PriceListNotFoundException;
 
 class PriceListRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -55,7 +57,7 @@ class PriceListRepository
                     WHEN :now < pl.validFrom THEN 1
                     ELSE -1
                 END AS validityStatus')
-            ->setParameter('now', new DateTimeImmutable());
+            ->setParameter('now', $this->clock->now());
     }
 
     /**

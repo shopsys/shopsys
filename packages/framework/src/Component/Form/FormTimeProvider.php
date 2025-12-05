@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Form;
 
-use DateTime;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class FormTimeProvider
 {
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly RequestStack $requestStack,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
     /**
      * @param string $name
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function generateFormTime($name)
     {
-        $startTime = new DateTime();
+        $startTime = $this->clock->now();
         $key = $this->getSessionKey($name);
         $this->requestStack->getSession()->set($key, $startTime);
 
@@ -44,7 +46,7 @@ class FormTimeProvider
         }
 
         if ($options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] !== null) {
-            return new DateTime(
+            return $this->clock->now()->modify(
                 '-' . $options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] . ' second',
             ) >= $startTime;
         }
@@ -65,7 +67,7 @@ class FormTimeProvider
 
     /**
      * @param string $name
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function findFormTime($name)
     {

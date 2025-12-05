@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Inquiry;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="inquiries")
@@ -107,7 +107,7 @@ class Inquiry
      */
     public function __construct(InquiryData $inquiryData)
     {
-        $this->createdAt = $inquiryData->createdAt ?? new DateTimeImmutable();
+        $this->createdAt = $inquiryData->createdAt ?? new DatePoint();
         $this->domainId = $inquiryData->domainId;
 
         $this->setData($inquiryData);

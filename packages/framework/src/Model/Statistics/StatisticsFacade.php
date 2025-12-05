@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Statistics;
 
 use DateInterval;
-use DateTime;
 use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 
 class StatisticsFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsRepository $statisticsRepository
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter
+     * @param \Psr\Clock\ClockInterface $clock
      */
     public function __construct(
         protected readonly StatisticsRepository $statisticsRepository,
         protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -25,8 +27,8 @@ class StatisticsFacade
      */
     public function getCustomersRegistrationsCountByDayInLastTwoWeeks(): array
     {
-        $startDataTime = new DateTime('- 2 weeks midnight');
-        $tomorrowDateTime = new DateTime('tomorrow');
+        $startDataTime = $this->clock->now()->modify('- 2 weeks midnight');
+        $tomorrowDateTime = $this->clock->now()->modify('tomorrow');
 
         $valueByDateTimeDataPoints = $this->statisticsRepository->getCustomersRegistrationsCountByDayBetweenTwoDateTimes(
             $startDataTime,
@@ -48,8 +50,8 @@ class StatisticsFacade
      */
     public function getNewOrdersCountByDayInLastTwoWeeks(): array
     {
-        $startDataTime = new DateTime('- 2 weeks midnight');
-        $tomorrowDateTime = new DateTime('tomorrow');
+        $startDataTime = $this->clock->now()->modify('- 2 weeks midnight');
+        $tomorrowDateTime = $this->clock->now()->modify('tomorrow');
 
         $valueByDateTimeDataPoints = $this->statisticsRepository->getNewOrdersCountByDayBetweenTwoDateTimes(
             $startDataTime,
@@ -73,7 +75,7 @@ class StatisticsFacade
      */
     public function getNewCustomersCount(int $fromDays, ?int $toDays = null): int
     {
-        $startDateTime = new DateTimeImmutable('- ' . $fromDays . ' days');
+        $startDateTime = $this->clock->now()->modify('- ' . $fromDays . ' days');
         $endDateTime = $this->getToDateTime($toDays);
 
         return $this->statisticsRepository->getNewCustomersCountBetweenDates($startDateTime, $endDateTime);
@@ -86,7 +88,7 @@ class StatisticsFacade
      */
     public function getOrdersCount(int $fromDays, ?int $toDays = null): int
     {
-        $startDateTime = new DateTimeImmutable('- ' . $fromDays . ' days');
+        $startDateTime = $this->clock->now()->modify('- ' . $fromDays . ' days');
         $endDateTime = $this->getToDateTime($toDays);
 
         return $this->statisticsRepository->getOrdersCountBetweenDates($startDateTime, $endDateTime);
@@ -99,7 +101,7 @@ class StatisticsFacade
      */
     public function getOrdersValue(int $fromDays, ?int $toDays = null): int
     {
-        $startDateTime = new DateTimeImmutable('- ' . $fromDays . ' days');
+        $startDateTime = $this->clock->now()->modify('- ' . $fromDays . ' days');
         $endDateTime = $this->getToDateTime($toDays);
 
         return $this->statisticsRepository->getOrdersValueBetweenDates($startDateTime, $endDateTime);
@@ -112,9 +114,9 @@ class StatisticsFacade
     protected function getToDateTime(?int $toDays = null): DateTimeImmutable
     {
         if ($toDays === null) {
-            $endDateTime = new DateTimeImmutable('now');
+            $endDateTime = $this->clock->now();
         } else {
-            $endDateTime = new DateTimeImmutable('- ' . $toDays . ' days');
+            $endDateTime = $this->clock->now()->modify('- ' . $toDays . ' days');
         }
 
         return $endDateTime;

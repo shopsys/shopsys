@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,8 +35,8 @@ class CustomerUserLoginType
     protected $loginType;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     protected $lastLoggedInAt;
 
@@ -60,7 +59,7 @@ class CustomerUserLoginType
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param \DateTimeImmutable $dateTime
      */
     public function setLastLoggedInAt($dateTime): void
     {
@@ -84,7 +83,7 @@ class CustomerUserLoginType
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getLastLoggedInAt()
     {

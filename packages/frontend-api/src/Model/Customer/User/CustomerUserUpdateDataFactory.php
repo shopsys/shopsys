@@ -108,7 +108,10 @@ class CustomerUserUpdateDataFactory
         $billingAddressData->activated = $registrationData->activated;
 
         $customerUserData = $this->customerUserDataFactory->createForDomainId($registrationData->domainId);
-        $customerUserData->createdAt = $registrationData->createdAt;
+
+        if ($registrationData->createdAt !== null) {
+            $customerUserData->createdAt = $registrationData->createdAt;
+        }
         $customerUserData->email = $registrationData->email;
         $customerUserData->lastName = $registrationData->lastName;
         $customerUserData->password = $registrationData->password;

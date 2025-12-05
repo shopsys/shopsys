@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\GoPay;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use GoPay\Definition\Response\PaymentStatus;
@@ -26,10 +26,10 @@ class GoPayRepository
     }
 
     /**
-     * @param \DateTime $fromDate
+     * @param \DateTimeImmutable $fromDate
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
+    public function getAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): array
     {
         $queryBuilder = $this->orderRepository->createOrderQueryBuilder()
             ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')

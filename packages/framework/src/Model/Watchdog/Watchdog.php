@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="watchdogs")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Watchdog
 {
-    protected const VALIDITY_PERIOD = '2 years';
+    protected const string VALIDITY_PERIOD = '2 years';
 
     /**
      * @var int
@@ -43,20 +43,20 @@ class Watchdog
     protected $product;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $validUntil;
 
@@ -68,15 +68,15 @@ class Watchdog
         $this->product = $watchdogData->product;
         $this->email = $watchdogData->email;
         $this->domainId = $watchdogData->domainId;
-        $this->createdAt = $watchdogData->createdAt ?? new DateTime();
-        $this->updatedAt = $watchdogData->updatedAt ?? new DateTime();
-        $this->validUntil = $watchdogData->validUntil ?? new DateTime(static::VALIDITY_PERIOD);
+        $this->createdAt = $watchdogData->createdAt ?? new DatePoint();
+        $this->updatedAt = $watchdogData->updatedAt ?? new DatePoint();
+        $this->validUntil = $watchdogData->validUntil ?? new DatePoint(static::VALIDITY_PERIOD);
     }
 
     public function updateValidity()
     {
-        $this->updatedAt = new DateTime();
-        $this->validUntil = new DateTime(static::VALIDITY_PERIOD);
+        $this->updatedAt = new DatePoint();
+        $this->validUntil = new DatePoint(static::VALIDITY_PERIOD);
     }
 
     /**
@@ -104,7 +104,7 @@ class Watchdog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -112,7 +112,7 @@ class Watchdog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getUpdatedAt()
     {
@@ -120,7 +120,7 @@ class Watchdog
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getValidUntil()
     {

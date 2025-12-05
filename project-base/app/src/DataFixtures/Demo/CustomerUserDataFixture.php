@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
+use Symfony\Component\Clock\DatePoint;
 
 class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -93,7 +94,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
             foreach ($customersDataProvider as $customerDataProvider) {
                 $customerUserUpdateData = $this->getCustomerUserUpdateData($domainId, $customerDataProvider);
-                $customerUserUpdateData->customerUserData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+                $customerUserUpdateData->customerUserData->createdAt = DatePoint::createFromMutable($this->faker->dateTimeBetween('-1 week', 'now'));
 
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 

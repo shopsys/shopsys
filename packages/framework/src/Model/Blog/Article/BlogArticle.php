@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
@@ -58,8 +57,8 @@ class BlogArticle extends AbstractTranslatableEntity
     protected $hidden;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 
@@ -70,8 +69,8 @@ class BlogArticle extends AbstractTranslatableEntity
     protected $visibleOnHomepage;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $publishDate;
 
@@ -93,9 +92,9 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->setTranslations($blogArticleData);
 
         $this->hidden = $blogArticleData->hidden;
-        $this->createdAt = new DateTime();
+        $this->createdAt = $blogArticleData->createdAt;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->publishDate = $blogArticleData->publishDate ?? new DateTime();
+        $this->publishDate = $blogArticleData->publishDate;
         $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
     }
 
@@ -113,7 +112,7 @@ class BlogArticle extends AbstractTranslatableEntity
 
         $this->hidden = $blogArticleData->hidden;
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
-        $this->publishDate = $blogArticleData->publishDate ?? new DateTime();
+        $this->publishDate = $blogArticleData->publishDate;
     }
 
     /**
@@ -365,7 +364,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getCreatedAt()
     {
@@ -381,7 +380,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getPublishDate()
     {

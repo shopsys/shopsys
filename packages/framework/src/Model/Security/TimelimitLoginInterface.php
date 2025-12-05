@@ -7,12 +7,12 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 interface TimelimitLoginInterface
 {
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getLastActivity();
 
     /**
-     * @param \DateTime $lastActivity
+     * @param \DateTimeImmutable $lastActivity
      */
     public function setLastActivity($lastActivity);
 }

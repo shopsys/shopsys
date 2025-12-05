@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
-use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
+use Symfony\Component\Clock\DatePoint;
 
 class CronTimeResolverTest extends TestCase
 {
@@ -103,6 +103,6 @@ class CronTimeResolverTest extends TestCase
 
         $cronTimeResolver = new CronTimeResolver();
 
-        $this->assertSame($isValid, $cronTimeResolver->isValidAtTime($cronTimeMock, new DateTime($dateTimeString)));
+        $this->assertSame($isValid, $cronTimeResolver->isValidAtTime($cronTimeMock, new DatePoint($dateTimeString)));
     }
 }

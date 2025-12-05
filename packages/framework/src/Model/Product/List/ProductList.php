@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="product_lists")
@@ -73,13 +73,13 @@ class ProductList
         $this->uuid = $productListData->uuid ?? Uuid::uuid4()->toString();
         $this->type = $productListData->type;
         $this->items = new ArrayCollection();
-        $this->createdAt = new DateTimeImmutable();
-        $this->setUpdatedAtToNow();
+        $this->createdAt = new DatePoint();
+        $this->updatedAt = new DatePoint();
     }
 
     public function setUpdatedAtToNow(): void
     {
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new DatePoint();
     }
 
     /**

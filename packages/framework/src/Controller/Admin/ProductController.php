@@ -407,6 +407,8 @@ class ProductController extends AdminBaseController
      */
     protected function setSellingToUntilEndOfDay(?ProductData $productData): void
     {
-        $productData?->sellingTo?->modify('+1 day -1 second');
+        if ($productData?->sellingTo !== null) {
+            $productData->sellingTo = $productData->sellingTo->modify('+1 day -1 second');
+        }
     }
 }

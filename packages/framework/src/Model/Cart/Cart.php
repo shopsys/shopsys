@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Symfony\Component\Clock\DatePoint;
 
 /**
  * @ORM\Table(name="carts")
@@ -54,8 +54,8 @@ class Cart
     protected $items;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $modifiedAt;
 
@@ -111,12 +111,12 @@ class Cart
      * @param string $cartIdentifier
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
-    public function __construct(string $cartIdentifier, ?CustomerUser $customerUser = null)
+    public function __construct(string $cartIdentifier, ?CustomerUser $customerUser)
     {
         $this->cartIdentifier = $cartIdentifier;
         $this->customerUser = $customerUser;
         $this->items = new ArrayCollection();
-        $this->modifiedAt = new DateTime();
+        $this->modifiedAt = new DatePoint();
         $this->promoCodes = new ArrayCollection();
     }
 
@@ -274,11 +274,11 @@ class Cart
 
     public function setModifiedNow(): void
     {
-        $this->modifiedAt = new DateTime();
+        $this->modifiedAt = new DatePoint();
     }
 
     /**
-     * @param \DateTime $modifiedAt
+     * @param \DateTimeImmutable $modifiedAt
      */
     public function setModifiedAt($modifiedAt)
     {

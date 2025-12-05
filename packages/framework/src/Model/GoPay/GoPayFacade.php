@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\GoPay;
 
-use DateTime;
+use DateTimeImmutable;
 use GoPay\Definition\Response\PaymentStatus;
 use Nette\Utils\Arrays;
 use Override;
@@ -142,10 +142,10 @@ class GoPayFacade implements PaymentServiceInterface
     }
 
     /**
-     * @param \DateTime $fromDate
+     * @param \DateTimeImmutable $fromDate
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
+    public function getAllUnpaidGoPayOrders(DateTimeImmutable $fromDate): array
     {
         return $this->goPayRepository->getAllUnpaidGoPayOrders($fromDate);
     }

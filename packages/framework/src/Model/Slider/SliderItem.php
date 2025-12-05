@@ -76,14 +76,14 @@ class SliderItem implements OrderableEntityInterface
     protected $opacity;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
     protected $datetimeVisibleFrom;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="datetime_immutable",nullable=true)
      */
     protected $datetimeVisibleTo;
 
@@ -201,7 +201,7 @@ class SliderItem implements OrderableEntityInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDatetimeVisibleFrom()
     {
@@ -209,7 +209,7 @@ class SliderItem implements OrderableEntityInterface
     }
 
     /**
-     * @param \DateTime|null $datetimeVisibleFrom
+     * @param \DateTimeImmutable|null $datetimeVisibleFrom
      */
     public function setDatetimeVisibleFrom($datetimeVisibleFrom)
     {
@@ -217,7 +217,7 @@ class SliderItem implements OrderableEntityInterface
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDatetimeVisibleTo()
     {
@@ -225,7 +225,7 @@ class SliderItem implements OrderableEntityInterface
     }
 
     /**
-     * @param \DateTime|null $datetimeVisibleTo
+     * @param \DateTimeImmutable|null $datetimeVisibleTo
      */
     public function setDatetimeVisibleTo($datetimeVisibleTo)
     {

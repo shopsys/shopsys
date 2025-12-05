@@ -47,12 +47,12 @@ class SliderItemData
     public $opacity;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $datetimeVisibleFrom;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      */
     public $datetimeVisibleTo;
 

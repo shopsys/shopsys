@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
+use Psr\Clock\ClockInterface;
 
 class CustomerUserRefreshTokenChainRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Psr\Clock\ClockInterface $clock
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ClockInterface $clock,
+    ) {
     }
 
     /**
@@ -92,7 +92,7 @@ class CustomerUserRefreshTokenChainRepository
             ->andWhere('curtc.deviceId = :deviceId')
             ->setParameters([
                 'customerUser' => $customerUser,
-                'now' => new DateTime(),
+                'now' => $this->clock->now(),
                 'deviceId' => $deviceId,
             ])
             ->getQuery()->getResult();
@@ -112,7 +112,7 @@ class CustomerUserRefreshTokenChainRepository
         $this->em->createQueryBuilder()
             ->delete(CustomerUserRefreshTokenChain::class, 'curtc')
             ->where('curtc.expiredAt < :now')
-            ->setParameter('now', new DateTime())
+            ->setParameter('now', $this->clock->now())
             ->getQuery()
             ->execute();
     }

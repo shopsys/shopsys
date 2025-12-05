@@ -11,7 +11,6 @@ use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
-use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -24,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Symfony\Component\Clock\DatePoint;
 
 class CompanyOrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -79,7 +79,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -3 day'))->setTime(12, 40, 22);
+        $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(12, 40, 22);
 
         $this->createOrder(
             $orderData,
@@ -100,7 +100,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 34, 19);
+        $orderData->createdAt = (new DatePoint())->modify('-11 day')->setTime(4, 34, 19);
         $orderData->promoCode = 'promoCode123';
         $this->createOrder(
             $orderData,
@@ -124,7 +124,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -3 day'))->setTime(18, 27, 36);
+        $orderData->createdAt = (new DatePoint())->modify('-3 day')->setTime(18, 27, 36);
         $order = $this->createOrder(
             $orderData,
             [
@@ -144,7 +144,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -1 day'))->setTime(18, 30, 01);
+        $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(18, 30, 01);
         $order = $this->createOrder(
             $orderData,
             [
@@ -163,7 +163,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -2 day'))->setTime(1, 46, 6);
+        $orderData->createdAt = (new DatePoint())->modify('-2 day')->setTime(1, 46, 6);
         $this->createOrder(
             $orderData,
             [
@@ -185,7 +185,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = (new DateTime('now -1 day'))->setTime(18, 30, 01);
+        $orderData->createdAt = (new DatePoint())->modify('-1 day')->setTime(18, 30, 01);
         $this->createOrder(
             $orderData,
             [
