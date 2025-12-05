@@ -158,7 +158,7 @@
     >
         {% if (grid.dragAndDrop or grid.multipleDragAndDrop) %}
             <td class="align-middle">
-                {% if (row is not null) %}{{ ux_icon('move', { class: 'js-move-handle cursor-move' }) }}{% endif %}
+                {% if (row is not null) %}{{ ux_icon('move', { class: 'js-move-handle cursor-move icon icon-sm' }) }}{% endif %}
             </td>
         {% endif %}
         {% if grid.enabledSelecting %}
