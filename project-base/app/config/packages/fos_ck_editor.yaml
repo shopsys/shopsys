@@ -8,7 +8,7 @@ fos_ck_editor:
             shiftEnterMode: 1
             filebrowserBrowseRoute: elfinder
             bodyClass: 'user-text'
-            height: 800
+            height: 400
             removePlugins: 'magicline'
             toolbar:
                 - ['Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'Subscript', '-', 'RemoveFormat']
