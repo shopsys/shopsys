@@ -41,6 +41,7 @@ class HolidaysImportFacade
                 $closedDayData->domainId = $domainId;
                 $closedDayData->date = $holiday['date'];
                 $closedDayData->name = $holiday['name'];
+                $closedDayData->isPublicHoliday = true;
 
                 $this->closedDayFacade->create($closedDayData);
                 $importedHolidays++;
