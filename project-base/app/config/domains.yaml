@@ -2,20 +2,20 @@ domains:
     -   id: 1
         load_demo_data: true
         locale: en
-        name: shopsys
+        name: B2C - EN
         timezone: Europe/Prague
         type: b2c
 
     -   id: 2
         load_demo_data: true
         locale: cs
-        name: 2.shopsys
+        name: B2B - CZ
         timezone: Europe/Prague
         type: b2b
 
     -   id: 3
         load_demo_data: true
         locale: sk
-        name: shopsys/sk
+        name: B2B - SK
         timezone: Europe/Prague
         type: b2b
