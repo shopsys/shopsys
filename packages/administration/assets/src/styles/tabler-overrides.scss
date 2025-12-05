@@ -91,3 +91,26 @@ textarea.form-control.is-invalid {
 .card-footer-no-bg {
     background-color: transparent;
 }
+
+.fixed-alert {
+    position: fixed;
+    z-index: 1099;
+    padding: 1.1rem;
+}
+
+@media (min-width: 768px) {
+    .fixed-alert {
+        width: 500px;
+        top: 40px;
+        right: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .fixed-alert {
+        width: 100%;
+        top: 0;
+        right: 0;
+        border-radius: 0;
+    }
+}

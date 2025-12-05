@@ -61,7 +61,7 @@ export default class FileUpload {
     }
 
     updateFileStatus(status, message) {
-        this.$status.parent().stop(true, true).show();
+        this.$status.stop(true, true).show();
         this.$status.text(message).removeClass('error success uploading').addClass(status);
     }
 

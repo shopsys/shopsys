@@ -20,10 +20,8 @@
                 </div>
             {% endblock abstract_file_upload_widget_uploaded_files %}
 
-            <div class="position-fixed top-0 end-0 m-6" style="display: none; z-index: 1090">
-                <div class="js-file-upload-status alert alert-info alert-important" role="alert">
-                    {{ 'Status'|trans }}: {{ 'Successfully uploaded'|trans }}
-                </div>
+            <div class="js-file-upload-status alert alert-info alert-important fixed-alert" style="display: none;" role="alert">
+                {{ 'Status'|trans }}: {{ 'Successfully uploaded'|trans }}
             </div>
         </div>
 
