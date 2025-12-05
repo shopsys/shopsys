@@ -76,6 +76,7 @@ ux_icons:
         square-off: 'tabler:square-off'
         support: 'tabler:headset'
         tag: 'tabler:tag-filled'
+        toc: 'tabler:menu-4'
         trash: 'tabler:trash-x-filled'
         trending-down: 'tabler:trending-down'
         trending-up: 'tabler:trending-up'

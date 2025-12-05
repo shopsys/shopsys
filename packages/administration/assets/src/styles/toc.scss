@@ -11,3 +11,34 @@
         max-height: calc(100vh - 16rem);
     }
 }
+
+.mobile-toc-button {
+    position: fixed;
+    bottom: 4rem;
+    right: 1rem;
+    z-index: 1030;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+
+    svg {
+        margin: 0 !important;
+    }
+}
+
+#mobile-toc {
+    .nav-link {
+        padding: var(--tblr-nav-link-padding-y) var(--tblr-nav-link-padding-x);
+        font-size: var(--tblr-nav-link-font-size);
+        font-weight: var(--tblr-nav-link-font-weight);
+
+        &.active {
+            font-weight: var(--tblr-font-weight-bold);
+            color: var(--tblr-nav-link-active-color);
+        }
+    }
+}
+
+#mobile-toc-menu.offcanvas {
+    transition: transform 0.2s ease-in-out;
+}

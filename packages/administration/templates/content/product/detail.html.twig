@@ -18,12 +18,41 @@
                 </div>
                 <button
                     type="button"
-                    id="back-to-top-button"
-                    class="btn btn-sm btn-secondary w-full mt-2 d-none"
+                    class="btn btn-sm btn-secondary w-full mt-2 d-none js-back-to-top-button"
                 >
                     {{ 'Back to top'|trans }}
                 </button>
             </div>
+        </div>
+    </div>
+
+    <button
+        type="button"
+        class="js-mobile-toc-button mobile-toc-button btn btn-secondary d-xxl-none d-none"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobile-toc-menu"
+    >
+        {{ ux_icon('toc') }}
+    </button>
+
+    <div
+        class="offcanvas offcanvas-end"
+        id="mobile-toc-menu"
+    >
+        <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="mobileTocMenuLabel">{{ 'Table of Contents'|trans }}</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="{{ 'Close'|trans }}"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="nav nav-vertical" id="mobile-toc">
+                {# TOC will be cloned here by JavaScript #}
+            </div>
+            <button
+                type="button"
+                class="btn btn-sm btn-secondary w-full mt-2 d-none js-back-to-top-button"
+            >
+                {{ 'Back to top'|trans }}
+            </button>
         </div>
     </div>
 {% endblock %}
