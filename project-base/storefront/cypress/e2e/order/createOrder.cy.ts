@@ -137,7 +137,11 @@ describe('Create Order Tests', () => {
         fillInNoteInThirdStep(staticData.orderNote);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
+            blackout: [
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
+                { tid: TIDs.opening_hours },
+            ],
         });
 
         clickOnSendOrderButton();
