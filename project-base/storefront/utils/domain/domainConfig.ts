@@ -71,6 +71,19 @@ export function getDomainConfig(context: GetServerSidePropsContext | NextPageCon
         }
     }
 
+    // Fallback for default locale when only locale-suffixed domains exist
+    if (isDefaultLocale) {
+        const requestUrl = new URL(`http://${normalizedDomain}`);
+        const fallbackDomain = domainsConfig.find((domainConfig) => {
+            const configDomainHost = new URL(domainConfig.url || '').host;
+            return configDomainHost === requestUrl.host;
+        });
+
+        if (fallbackDomain) {
+            return fallbackDomain;
+        }
+    }
+
     if (cdnDomain.length > 0) {
         const cdnDomainHost = getBaseUrlWithLocale(new URL(cdnDomain).host, locale);
         if (hostWithLocale === cdnDomainHost) {
