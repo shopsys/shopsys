@@ -71,9 +71,16 @@ textarea.form-control.is-invalid {
 }
 
 .navbar-collapse.collapse.show {
-    position: static;
+    position: fixed;
     overflow-y: scroll;
-    height: calc(100vh - 63px);
+    height: 100%;
+    padding-bottom: 5rem;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: var(--tblr-bg-surface);
+    padding-left: calc(var(--tblr-gutter-x) * 0.5);
+    padding-right: calc(var(--tblr-gutter-x) * 0.5);
 }
 
 .card-header {
