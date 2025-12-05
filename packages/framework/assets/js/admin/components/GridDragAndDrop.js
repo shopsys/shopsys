@@ -9,7 +9,7 @@ export default class GridDragAndDrop {
     constructor($content) {
         const _this = this;
 
-        $content.find('.js-drag-and-drop-grid-rows').each(function () {
+        $content.find('.js-drag-and-drop-grid-rows').each(function (_index) {
             Sortable.create(this, {
                 handle: '.js-move-handle',
                 draggable: '.js-grid-row',

@@ -77,9 +77,9 @@ class PromoCodeGridFactory implements GridFactoryInterface
         $grid = $this->gridFactory->create('promoCodeList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('code');
         $grid->addColumn('code', 'pc.code', t('Code'), true);
+        $grid->addColumn('active', 'pc.enabled', t('Active'), true);
         $grid->addColumn('percent', 'pc.percent', t('Discount'));
         $grid->addColumn('prefix', 'pc.prefix', t('Prefix'));
-        $grid->addColumn('active', 'pc.enabled', t('Active'), true);
 
         if ($withEditButton === true) {
             $grid->addEditActionColumn('admin_promocode_edit', ['id' => 'pc.id']);

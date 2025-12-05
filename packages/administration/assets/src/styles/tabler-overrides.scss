@@ -38,7 +38,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-input[type=number] {
+input[type='number'] {
     -moz-appearance: textfield;
 }
 
@@ -46,7 +46,7 @@ input[type=number] {
 .form-control.is-invalid,
 .was-validated .form-control:invalid,
 textarea.form-control.is-invalid {
-    background-position: right calc(.375em + .1875rem) center;
+    background-position: right calc(0.375em + 0.1875rem) center;
 }
 
 // visually distinguish readonly input
@@ -59,4 +59,65 @@ textarea.form-control.is-invalid {
 // fix small icon alignment in table cells
 .table td .icon-sm {
     vertical-align: text-bottom;
+}
+
+.table > :not(caption) > * > *,
+.markdown > table > :not(caption) > * > * {
+    border-right-width: var(--tblr-border-width);
+}
+
+.navbar.navbar-vertical {
+    z-index: 1031 !important;
+}
+
+.navbar-collapse.collapse.show {
+    position: fixed;
+    overflow-y: scroll;
+    height: 100%;
+    padding-bottom: 5rem;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: var(--tblr-bg-surface);
+    padding-left: calc(var(--tblr-gutter-x) * 0.5);
+    padding-right: calc(var(--tblr-gutter-x) * 0.5);
+}
+
+.card-header {
+    background-color: var(--tblr-gray-200);
+}
+
+.card-header-light {
+    background-color: var(--tblr-gray-50);
+}
+
+.card-header-no-bg {
+    background-color: transparent;
+}
+
+.card-footer-no-bg {
+    background-color: transparent;
+}
+
+.fixed-alert {
+    position: fixed;
+    z-index: 1099;
+    padding: 1.1rem;
+}
+
+@media (min-width: 768px) {
+    .fixed-alert {
+        width: 500px;
+        top: 40px;
+        right: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .fixed-alert {
+        width: 100%;
+        top: 0;
+        right: 0;
+        border-radius: 0;
+    }
 }

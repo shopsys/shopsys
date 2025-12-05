@@ -6,6 +6,7 @@ export default class Product {
     static init($container) {
         Product.initializeSideNavigation($container);
         Product.initBackToTopButton();
+        Product.initMobileTOC();
         Product.initProductVideos($container);
     }
 
@@ -83,10 +84,48 @@ export default class Product {
         });
     }
 
-    static initBackToTopButton() {
-        const $backToTopButton = $('#back-to-top-button');
+    static initMobileTOC() {
+        const $mobileButton = $('.js-mobile-toc-button');
+        const $mobileToc = $('#mobile-toc');
+        const $desktopToc = $('#toc');
+        const $offcanvas = $('#mobile-toc-menu');
 
-        if ($backToTopButton.length === 0) return;
+        if ($mobileButton.length === 0 || $mobileToc.length === 0) return;
+
+        $offcanvas.on('show.bs.offcanvas', () => {
+            const $clonedItems = $desktopToc.children().clone(true, true);
+
+            $mobileToc.empty().append($clonedItems);
+
+            $mobileToc.find('.nav-link').on('click', _e => {
+                const $closeButton = $offcanvas.find('.btn-close');
+                if ($closeButton.length > 0) {
+                    $closeButton[0].click();
+                }
+            });
+        });
+    }
+
+    static adjustFloatingButtonPosition() {
+        const $floatingButton = $('.js-mobile-toc-button');
+
+        if ($floatingButton.length === 0) return;
+
+        const $sfToolbar = $('[id^="sfToolbarMainContent-"]');
+
+        if ($sfToolbar.length > 0 && $sfToolbar.is(':visible')) {
+            const toolbarHeight = $sfToolbar.outerHeight() || 0;
+            $floatingButton.css('bottom', `${toolbarHeight + 70}px`);
+        } else {
+            $floatingButton.css('bottom', '');
+        }
+    }
+
+    static initBackToTopButton() {
+        const $backToTopButton = $('.js-back-to-top-button');
+        const $mobileTocButton = $('.js-mobile-toc-button');
+
+        if ($backToTopButton.length === 0 && $mobileTocButton.length === 0) return;
 
         const headerHeight = Product.defaultHeaderHeight;
 
@@ -97,6 +136,12 @@ export default class Product {
                 },
                 300,
             );
+
+            const $closeButton = $('#mobile-toc-menu').find('.btn-close');
+
+            if ($closeButton.length > 0) {
+                $closeButton[0].click();
+            }
         });
 
         $(window).on('scroll', () => {
@@ -104,10 +149,30 @@ export default class Product {
 
             if (scrollTop > headerHeight + 100) {
                 $backToTopButton.removeClass('d-none');
+                $mobileTocButton.removeClass('d-none');
+                Product.adjustFloatingButtonPosition();
             } else {
                 $backToTopButton.addClass('d-none');
+                $mobileTocButton.addClass('d-none');
             }
         });
+
+        // Adjust position when Symfony toolbar is toggled
+        $(document).on('click', '[id^="sfToolbarHideButton-"], [id^="sfToolbarMiniToggler-"]', () => {
+            setTimeout(() => {
+                Product.adjustFloatingButtonPosition();
+            }, 100);
+        });
+
+        // Adjust position on window resize
+        $(window).on('resize', () => {
+            Product.adjustFloatingButtonPosition();
+        });
+
+        // Initial position adjustment
+        setTimeout(() => {
+            Product.adjustFloatingButtonPosition();
+        }, 500);
     }
 
     static initProductVideos($container) {

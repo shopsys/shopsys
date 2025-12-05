@@ -5,7 +5,7 @@
 
     <div class="js-roles-grid" data-dependencies="{{ form.vars.permission_dependencies|json_encode|e('html_attr') }}">
         {% if not form.vars.disabled and not isSingleGrid %}
-            <div class="mb-1 text-end">
+            <div class="mb-1 d-flex flex-column flex-md-row align-items-end justify-content-end gap-2">
                 {{ rolesMacros.render_actions('Select all permissions'|trans, 'Deselect all permissions'|trans) }}
             </div>
         {% endif %}

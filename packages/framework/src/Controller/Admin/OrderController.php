@@ -240,23 +240,23 @@ class OrderController extends AdminBaseController
         $grid->enablePaging();
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 
-        $grid->addColumn('preview', 'o.id', t('Preview'))->setClassAttribute('w-1 d-none d-md-table-cell');
         $grid->addColumn('number', 'o.number', t('Order Nr.'), true);
         $grid->addColumn('created_at', 'o.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
-
-        if ($this->domain->isMultidomain()) {
-            $grid->addColumn('domain_id', 'o.domainId', t('Domain'), true);
-        }
         $grid->addColumn('status_name', 'statusName', t('Status'), true);
         $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'), false)
-            ->setClassAttribute('text-right text-no-wrap');
+            ->setClassAttribute('text-end text-nowrap');
+
+        if ($this->domain->isMultidomain()) {
+            $grid->addColumn('domain_id', 'o.domainId', t('Domain'), true)->setClassAttribute('w-1 d-none d-md-table-cell text-center');
+        }
 
 
         $grid->addEditActionColumn('admin_order_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_order_delete', ['id' => 'id'])
             ->setConfirmMessage(t('Do you really want to remove the order?'));
 
+        $grid->setActionColumnClassAttribute('text-center');
         $grid->setTheme('@ShopsysAdministration/content/order/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);

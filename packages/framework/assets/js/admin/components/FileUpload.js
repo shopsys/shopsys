@@ -61,7 +61,7 @@ export default class FileUpload {
     }
 
     updateFileStatus(status, message) {
-        this.$status.parent().stop(true, true).show();
+        this.$status.stop(true, true).show();
         this.$status.text(message).removeClass('error success uploading').addClass(status);
     }
 
@@ -101,7 +101,7 @@ export default class FileUpload {
             this.lastUploadItemId = id;
             this.items[id].setAsUploaded(data.filename, data.iconType, data.imageThumbnailUri);
             this.updateFileStatus('success', Translator.trans('Successfully uploaded'));
-            this.$status.parent().fadeOut(4000);
+            this.$status.fadeOut(4000);
             formChangeInfo.showInfo();
         } else {
             this.items[id].deleteItem();

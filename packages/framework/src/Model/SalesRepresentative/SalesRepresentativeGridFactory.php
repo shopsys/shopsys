@@ -43,10 +43,10 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
         $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $roleConstant);
         $grid->setDefaultOrder('name');
 
-        $grid->addColumn('firstName', 'sr.firstName', t('First name'), true);
         $grid->addColumn('lastName', 'sr.lastName', t('Last name'), true);
-        $grid->addColumn('telephone', 'sr.telephone', t('Telephone'), true);
+        $grid->addColumn('firstName', 'sr.firstName', t('First name'), true);
         $grid->addColumn('email', 'sr.email', t('E-mail'), true);
+        $grid->addColumn('telephone', 'sr.telephone', t('Telephone'), true);
 
         $grid->addEditActionColumn('admin_salesrepresentative_edit', ['id' => 'sr.id']);
         $grid->addDeleteActionColumn('admin_salesrepresentative_deleteconfirm', ['id' => 'sr.id'])

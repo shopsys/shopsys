@@ -64,7 +64,10 @@ final class MultidomainType extends AbstractType
             'entry_options' => [],
             'options_by_domain_id' => [],
             'layout' => null,
+            'display_mode' => 'stacked',
         ]);
+
+        $resolver->setAllowedValues('display_mode', ['stacked', 'columns']);
     }
 
     /**
@@ -78,5 +81,6 @@ final class MultidomainType extends AbstractType
         }
 
         $view->vars['layout'] = $options['layout'];
+        $view->vars['display_mode'] = $options['display_mode'];
     }
 }

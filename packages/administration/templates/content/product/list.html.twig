@@ -68,21 +68,21 @@
                 <div class="tab-pane" id="bulk-edit">
                     {{ form_start(massActionForm) }}
 
-                    <div class="mb-2">
-                        <strong>{{ 'Change for'|trans }}:</strong>
+                    <div class="mb-4">
+                        <strong class="text-body-secondary mb-2 d-inline-block fw-semibold">{{ 'Change for'|trans }}:</strong>
                         {{ form_widget(massActionForm.selectType, { attr: { class: 'js-mass-action-select-type' } , isSimple: true }) }}
                     </div>
 
-                    <div class="mb-2">
-                        <strong>{{ 'Make modification'|trans }}:</strong>
+                    <div class="mb-4">
+                        <strong class="text-body-secondary mb-2 d-inline-block fw-semibold">{{ 'Make modification'|trans }}:</strong>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
                                 {{ form_widget(massActionForm.action , { isSimple: true }) }}
                             </div>
-                            <div class="col">
+                            <div class="col-12 col-lg mb-2 mb-lg-0">
                                 {{ form_widget(massActionForm.subject, { isSimple: true }) }}
                             </div>
-                            <div class="col">
+                            <div class="col-12 col-lg">
                                 {{ form_widget(massActionForm.value, { attr: { class: 'js-mass-action-value' }, isSimple: true }) }}
                             </div>
                         </div>

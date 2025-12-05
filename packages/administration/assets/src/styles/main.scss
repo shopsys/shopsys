@@ -1,35 +1,68 @@
-@import "@tabler/core/scss/tabler";
-@import "tom-select/src/scss/tom-select.bootstrap5";
-@import "@tabler/core/scss/vendor/tom-select";
-@import "@melloware/coloris/dist/coloris.css";
-@import "@tabler/core/scss/vendor/coloris";
-@import "nouislider/dist/nouislider.css";
-@import "~flatpickr/dist/flatpickr.css";
+@import '@tabler/core/scss/tabler';
+@import 'tom-select/src/scss/tom-select.bootstrap5';
+@import '@tabler/core/scss/vendor/tom-select';
+@import '@melloware/coloris/dist/coloris.css';
+@import '@tabler/core/scss/vendor/coloris';
+@import 'nouislider/dist/nouislider.css';
+@import '~flatpickr/dist/flatpickr.css';
 
-@import "ckeditor";
-@import "custom";
-@import "icons";
-@import "tabler-overrides";
-@import "role-grid";
-@import "tree";
-@import "mailer-info";
-@import "toc";
-@import "tom-select";
+@import 'form';
+@import 'ckeditor';
+@import 'custom';
+@import 'icons';
+@import 'tabler-overrides';
+@import 'role-grid';
+@import 'tree';
+@import 'mailer-info';
+@import 'toc';
+@import 'tom-select';
 
 // wrap long menu items in sidebar
-.sidebar .dropdown-menu .dropdown-header, .sidebar .dropdown-menu .dropdown-item {
+.sidebar .dropdown-menu .dropdown-header,
+.sidebar .dropdown-menu .dropdown-item {
     white-space: normal;
+    gap: 0;
 }
 
 .page-body {
-    padding-bottom: var(--page-padding-bottom);
+    padding-bottom: 1.7rem;
 }
 
 .sidebar.navbar-nav {
     gap: 0.2rem;
-    padding-bottom: var(--page-padding-bottom);
+    padding-bottom: 0.6em;
+}
+
+@media (min-width: 992px) {
+    .navbar-vertical.navbar-expand-lg .navbar-brand {
+        justify-content: flex-start;
+        padding: 1rem;
+    }
 }
 
 .navbar-brand-image {
-    height: 3rem;
+    height: 2rem;
+}
+
+@media (min-width: 992px) {
+    .navbar-brand-image {
+        height: 3rem;
+    }
+}
+
+.modal-content > .btn-close {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.status {
+    white-space: nowrap;
+}
+
+.invalid-feedback {
+    text-align: left;
+}
+
+.form-check.form-check-inline {
+    margin-bottom: 0;
 }

@@ -32,6 +32,7 @@ final class GoogleProductFormType extends AbstractType
         $builder->add('show', MultidomainType::class, [
             'label' => $this->translator->trans('Show in feed'),
             'entry_type' => YesNoType::class,
+            'display_mode' => 'columns',
         ])
         ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             // Setting default value of multidomain form "show" to true via event because of dynamic form count

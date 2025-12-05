@@ -43,12 +43,12 @@ class InquiryGridFactory
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt', DataSourceInterface::ORDER_DESC);
 
+        $grid->addColumn('createdAt', 'i.createdAt', t('Created'), true);
         $grid->addColumn('productName', 'productName', t('Product name'), true);
         $grid->addColumn('fullName', 'fullName', t('Full name'), true);
+        $grid->addColumn('company', 'company', t('Company (Company number)'), true);
         $grid->addColumn('email', 'i.email', t('Email'), true);
         $grid->addColumn('telephone', 'i.telephone', t('Phone'));
-        $grid->addColumn('company', 'company', t('Company (Company number)'), true);
-        $grid->addColumn('createdAt', 'i.createdAt', t('Created'), true);
 
         $grid->addActionColumn('file-all', t('Show detail'), 'admin_inquiry_detail', ['id' => 'i.id']);
 

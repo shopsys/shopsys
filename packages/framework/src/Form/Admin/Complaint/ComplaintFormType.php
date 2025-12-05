@@ -59,7 +59,13 @@ final class ComplaintFormType extends AbstractType
     {
         $builder->add($this->createBasicInformationGroup($builder, $options['complaint']));
         $builder->add($this->createDeliveryAddressGroup($builder));
-        $builder->add($this->createItemsGroup($builder));
+        $builder->add('complaintItems', ComplaintItemsType::class, [
+            'label' => false,
+            'entry_type' => ComplaintItemFormType::class,
+            'error_bubbling' => false,
+            'allow_add' => false,
+            'allow_delete' => false,
+        ]);
 
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_complaint_list',
@@ -304,28 +310,6 @@ final class ComplaintFormType extends AbstractType
             ]);
 
         return $builderDeliveryAddressGroup;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function createItemsGroup(FormBuilderInterface $builder): FormBuilderInterface
-    {
-        $builderItemsGroup = $builder->create('itemsGroup', GroupType::class, [
-            'label' => 'Complaint items',
-        ]);
-
-        $builderItemsGroup
-            ->add('complaintItems', ComplaintItemsType::class, [
-                'label' => false,
-                'entry_type' => ComplaintItemFormType::class,
-                'error_bubbling' => false,
-                'allow_add' => false,
-                'allow_delete' => false,
-            ]);
-
-        return $builderItemsGroup;
     }
 
     /**

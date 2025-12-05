@@ -7,6 +7,13 @@ import FormChangeInfo from './FormChangeInfo';
 
 export default class GridMultipleDragAndDrop {
     constructor($content) {
+        // Only initialize if multiple grids mode is active
+        const $multipleGridsContainer = $content.find('.js-multiple-grids-rows-unified');
+
+        if ($multipleGridsContainer.length === 0) {
+            return;
+        }
+
         this.toggleRowHolders($content);
 
         const _this = this;

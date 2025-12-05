@@ -16,7 +16,7 @@
 
 
             {% if grid.title %}
-                <div class="card-header d-flex align-items-center">
+                <div class="card-header card-header-no-bg d-flex align-items-center">
                     <h2 class="card-title">
                         {{ gridView.renderBlock('grid_multiple_drag_and_drop_title', { grid_title: grid.title }) }}
                     </h2>
@@ -24,11 +24,11 @@
             {% endif %}
 
             {% if grid.inlineEdit and grid.inlineEditService.canAddNewRow %}
-                <div class="card-header d-flex align-items-center">
+                <div class="card-header card-header-no-bg d-flex align-items-center">
                     {{ gridView.renderBlock('grid_inline_edit_add_button') }}
                 </div>
             {% elseif grid.enabledPaging %}
-                <div class="card-header d-flex align-items-center">
+                <div class="card-header card-header-no-bg d-flex align-items-center">
                     {{ gridView.renderBlock('grid_pager') }}
                 </div>
             {% endif %}
@@ -41,13 +41,13 @@
             </div>
 
             {% if grid.enabledPaging %}
-                <div class="card-footer d-flex align-items-center">
+                <div class="card-footer card-footer-no-bg d-flex align-items-center">
                     {{ gridView.renderBlock('grid_pager') }}
                 </div>
             {% endif %}
 
             {% if grid.dragAndDrop %}
-                <div class="card-footer d-flex align-items-center" data-js-unsaved-changes-container>
+                <div class="card-footer card-footer-no-bg d-flex align-items-center flex-wrap gap-3" data-js-unsaved-changes-container>
                     <button class="{% if grid.multipleDragAndDrop %}js-drag-and-drop-grid-submit-all{% else %}js-drag-and-drop-grid-submit{% endif%} ms-auto btn" disabled type="button">{{ 'Save changes in order'|trans }}</button>
                 </div>
             {% endif %}
@@ -96,31 +96,33 @@
                 </th>
             {% endfor %}
             {% if grid.actionColumns is not empty or grid.inlineEdit %}
-                <th class="text-end w-1 {{ grid.actionColumnClassAttribute }}">{{ 'Modifications'|trans }}</th>
+                <th class="text-center w-1 {{ grid.actionColumnClassAttribute }}">{{ 'Modifications'|trans }}</th>
             {% endif %}
         </tr>
     </thead>
 {% endblock %}
 
 {% block grid_title_cell %}
-    {% if (column.sortable) %}
-        {% if grid.orderSourceColumnName == column.id and grid.orderDirection == 'asc' %}
-            {% set orderBy = '-' ~ column.id %}
+    <span class="d-inline-flex align-items-center gap-1">
+        {% if (column.sortable) %}
+            {% if grid.orderSourceColumnName == column.id and grid.orderDirection == 'asc' %}
+                {% set orderBy = '-' ~ column.id %}
+            {% else %}
+                {% set orderBy = column.id %}
+            {% endif %}
+            <a href="{{ gridView.url({'order': orderBy}) }}"
+               class="{{ grid.orderSourceColumnName == column.id ? 'table-sort link-primary ' ~ grid.orderDirection : 'table-sort link-secondary' }}"
+            >
+                {{ column.title }}
+            </a>
         {% else %}
-            {% set orderBy = column.id %}
-        {% endif %}
-        <a href="{{ gridView.url({'order': orderBy}) }}"
-           class="{{ grid.orderSourceColumnName == column.id ? 'table-sort link-primary ' ~ grid.orderDirection : 'table-sort link-secondary' }}"
-        >
             {{ column.title }}
-        </a>
-    {% else %}
-        {{ column.title }}
-    {% endif %}
+        {% endif %}
 
-    {% if column.help is not null %}
-        {{ info_icon(column.help) }}
-    {% endif %}
+        {% if column.help is not null %}
+            {{ info_icon(column.help) }}
+        {% endif %}
+    </span>
 {% endblock %}
 
 {% block grid_rows %}
@@ -156,7 +158,7 @@
     >
         {% if (grid.dragAndDrop or grid.multipleDragAndDrop) %}
             <td class="align-middle">
-                {% if (row is not null) %}{{ ux_icon('move', { class: 'js-move-handle cursor-move' }) }}{% endif %}
+                {% if (row is not null) %}{{ ux_icon('move', { class: 'js-move-handle cursor-move icon icon-sm' }) }}{% endif %}
             </td>
         {% endif %}
         {% if grid.enabledSelecting %}
@@ -179,7 +181,7 @@
             </td>
         {% endfor %}
         {% if grid.actionColumns|length > 0 or grid.inlineEdit %}
-            <td class="js-inline-edit-unmatched-inputs text-end w-1 text-nowrap align-middle">
+            <td class="js-inline-edit-unmatched-inputs text-center w-1 text-nowrap align-middle">
                 {% if grid.inlineEdit and form is defined %}
                     <div class="js-inline-edit-buttons">
                         <a href="#" class="btn btn-icon btn-ghost-success js-inline-edit-save test-inline-edit-save" title="{{ 'Save changes'|trans }}">

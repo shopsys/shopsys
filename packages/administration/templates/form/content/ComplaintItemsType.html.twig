@@ -1,63 +1,76 @@
 {% block complaint_items_widget %}
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="w-25">{{ 'Name'|trans }}</th>
-                    <th>{{ 'Catnum'|trans }}</th>
-                    <th>{{ 'Description'|trans }}</th>
-                    <th>{{ 'Quantity'|trans }}</th>
-                    <th>{{ 'Files'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for complaintItemId, complaintItemForm in form.children %}
-                    {% set product = complaintItemForm.vars.value.product %}
-                    {% set files = complaintItemForm.vars.value.files %}
-                    <tr id="{{ complaintItemForm.vars.id }}" data-index="{{ complaintItemId }}">
-                        <td>
-                            <div class="input-group input-group-flat">
-                                {{ form_widget(complaintItemForm.productName) }}
-                                <span class="input-group-text ps-2">
-                                {% if product %}
-                                    <a href="{{ path('admin_product_edit', { id: product.id }) }}" target="_blank">
-                                        {{ ux_icon('forward-page') }}
-                                    </a>
-                                {% else %}
-                                    {{ info_icon('Product not in e-shop.'|trans) }}
-                                {% endif %}
-                                    </span>
-                            </div>
-                            {{ form_errors(complaintItemForm.productName) }}
-                        </td>
-                        <td>
-                            {{ form_widget(complaintItemForm.catnum) }}
-                            {{ form_errors(complaintItemForm.catnum) }}
-
-                        <td>
-                            {{ form_widget(complaintItemForm.description) }}
-                            {{ form_errors(complaintItemForm.description) }}
-                        </td>
-                        <td>
-                            {{ form_widget(complaintItemForm.quantity) }}
-                            {{ form_errors(complaintItemForm.quantity) }}
-                        </td>
-                        <td>
-                            {% for file in files.orderedFiles %}
-                                {% if customerUploadedFileExists(file) %}
-                                    <a class="btn btn-sm" href="{{ customerUploadedFileUrl(file) }}" target="_blank">
-                                        {{ file.name }}.{{ file.extension }}
-                                    </a>
-                                {% else %}
-                                    <span class="btn btn-sm disabled">
-                                        {{ file.name }}.{{ file.extension }}
-                                    </span>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'Complaint items'|trans }}</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-transparent ">
+                    <thead>
+                        <tr>
+                            <th class="w-25">{{ 'Name'|trans }}</th>
+                            <th>{{ 'Catnum'|trans }}</th>
+                            <th>{{ 'Description'|trans }}</th>
+                            <th class="text-end">{{ 'Quantity'|trans }}</th>
+                            <th>{{ 'Files'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaintItemId, complaintItemForm in form.children %}
+                            {% set product = complaintItemForm.vars.value.product %}
+                            {% set files = complaintItemForm.vars.value.files %}
+                            <tr id="{{ complaintItemForm.vars.id }}" data-index="{{ complaintItemId }}">
+                                <td>
+                                    <div class="input-group input-group-flat" style="min-width: 15em">
+                                        {{ form_widget(complaintItemForm.productName) }}
+                                        <span class="input-group-text">
+                                        {% if product %}
+                                            <a href="{{ path('admin_product_edit', { id: product.id }) }}" target="_blank">
+                                                {{ ux_icon('forward-page') }}
+                                            </a>
+                                        {% else %}
+                                            {{ info_icon('Product not in e-shop.'|trans) }}
+                                        {% endif %}
+                                            </span>
+                                    </div>
+                                    {{ form_errors(complaintItemForm.productName) }}
+                                </td>
+                                <td>
+                                    <div class="input-group input-group-flat" style="min-width: 10em">
+                                        {{ form_widget(complaintItemForm.catnum) }}
+                                    </div>
+                                    {{ form_errors(complaintItemForm.catnum) }}
+                                </td>
+                                <td>
+                                    <div class="input-group input-group-flat" style="min-width: 15em">
+                                        {{ form_widget(complaintItemForm.description) }}
+                                    </div>
+                                    {{ form_errors(complaintItemForm.description) }}
+                                </td>
+                                <td class="text-end">
+                                    <div class="input-group input-group-flat" style="min-width: 7em">
+                                        {{ form_widget(complaintItemForm.quantity, {attr: { class: 'text-end' }}) }}
+                                    </div>
+                                    {{ form_errors(complaintItemForm.quantity) }}
+                                </td>
+                                <td>
+                                    {% for file in files.orderedFiles %}
+                                        {% if customerUploadedFileExists(file) %}
+                                            <a class="btn btn-sm" href="{{ customerUploadedFileUrl(file) }}" target="_blank">
+                                                {{ file.name }}.{{ file.extension }}
+                                            </a>
+                                        {% else %}
+                                            <span class="btn btn-sm disabled">
+                                                {{ file.name }}.{{ file.extension }}
+                                            </span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

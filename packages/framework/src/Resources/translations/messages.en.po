@@ -610,9 +610,6 @@ msgstr ""
 msgid "Complaint detail URL"
 msgstr ""
 
-msgid "Complaint items"
-msgstr ""
-
 msgid "Complaint number"
 msgstr ""
 

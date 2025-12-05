@@ -47,17 +47,18 @@ class ComplaintGridFactory
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 
         $grid->addColumn('number', 'cmp.number', t('Complaint Nr.'), true);
-        $grid->addColumn('order_number', 'orderNumber', t('Order Nr.'), true);
         $grid->addColumn('created_at', 'cmp.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
+        $grid->addColumn('order_number', 'orderNumber', t('Order Nr.'), true);
+        $grid->addColumn('status_name', 'statusName', t('Status'), true);
 
         if ($this->domain->isMultidomain()) {
-            $grid->addColumn('domain_id', 'cmp.domainId', t('Domain'), true);
+            $grid->addColumn('domain_id', 'cmp.domainId', t('Domain'), true)->setClassAttribute('w-1 d-none d-md-table-cell text-center');
         }
-        $grid->addColumn('status_name', 'statusName', t('Status'), true);
 
         $grid->addEditActionColumn('admin_complaint_edit', ['id' => 'cmp.id']);
 
+        $grid->setActionColumnClassAttribute('text-center');
         $grid->setTheme('@ShopsysAdministration/content/complaint/listGrid.html.twig');
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);

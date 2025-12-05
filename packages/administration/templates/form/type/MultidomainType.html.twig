@@ -1,39 +1,65 @@
 {% block multidomain_row %}
-    {%- set row_class = (row_attr.class|default('') ~ ' mb-3')|trim -%}
+    {%- set row_class = (row_attr.class|default(''))|trim -%}
     <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
         {{ form_label(form) }}
 
         {{ form_help(form) }}
 
         {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\FormTypeLayout::LAYOUT_INLINE') %}
-            <fieldset>
+            {% set itemCount = form|length %}
+            {% set columnClass = itemCount == 1 ? 'col-12' : (itemCount == 2 ? 'col-12 col-xl-6' : 'col-12 col-xl-4') %}
+            {% set columnSpacing = itemCount > 1 ? ' mb-3 mb-xl-0' : '' %}
+            
+            <div class="row">
                 {% for child in form %}
-                    <div class="mb-3">
+                    <div class="{{ display_mode == 'columns' ? columnClass ~ columnSpacing : 'col-12 mb-3' }}">
                         {{- form_widget(child, { rawSymbolBeforeInput: domain_icon(child.vars.attr['data-domain-id']) }) -}}
                         {{- form_errors(child) -}}
                     </div>
                 {% endfor %}
-            </fieldset>
+            </div>
         {% else %}
-            {% for child in form %}
-                {% set childContent = form_row(child)|trim %}
+            {% set itemCount = form|length %}
+            {% set columnClass = itemCount == 1 ? 'col-12' : (itemCount == 2 ? 'col-12 col-xl-6' : 'col-12 col-xl-4') %}
+            {% set columnSpacing = itemCount > 1 ? ' mb-3 mb-xl-0' : '' %}
+            
+            <div class="row">
+                {% for child in form %}
+                    {% set childContent = form_row(child, {row_attr: {class: "mb-0"}})|trim %}
 
-                {% if childContent is not empty %}
-                    <div class="card mb-3">
-                        <div class="card-header card-header-light py-2">
-                        <span>
-                            {{ domain_icon(child.vars.attr['data-domain-id']) }}
-                            {{ 'Domain'|trans }}
-                            <strong>{{ getDomainName(child.vars.attr['data-domain-id']) }}</strong>
-                        </span>
+                    {% if childContent is not empty %}
+                        <div class="{{ display_mode == 'columns' ? columnClass ~ columnSpacing : 'col-12' }}">
+                            {% if display_mode == 'columns' %}
+                                <div class="card">
+                                    <div class="card-header card-header-light py-2">
+                                        <span>
+                                            {{ domain_icon(child.vars.attr['data-domain-id']) }}
+                                            {{ 'Domain'|trans }}
+                                            <strong>{{ getDomainName(child.vars.attr['data-domain-id']) }}</strong>
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        {{- childContent|raw -}}
+                                        {{- form_errors(child) -}}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="card {{ loop.last ? 'mb-0' : 'mb-3' }}">
+                                    <div class="card-header card-header-light py-2">
+                                        {{ domain_icon(child.vars.attr['data-domain-id']) }}
+                                        {{ 'Domain'|trans }}
+                                        <strong>{{ getDomainName(child.vars.attr['data-domain-id']) }}</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        {{- childContent|raw -}}
+                                        {{- form_errors(child) -}}
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        <div class="card-body">
-                            {{- childContent|raw -}}
-                            {{- form_errors(child) -}}
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endif %}
         {{ form_errors(form) }}
     </div>
