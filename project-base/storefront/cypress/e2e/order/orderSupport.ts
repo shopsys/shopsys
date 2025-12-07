@@ -1,21 +1,12 @@
-import {
-    DEFAULT_PERSIST_STORE_STATE,
-    PERSIST_STORE_NAME,
-    customer1,
-    deliveryAddress,
-    link,
-    order,
-    payment,
-    placeholder,
-    transport,
-    url,
-} from 'fixtures/demodata';
+import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME, url, staticData } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
-import { changeElementText, checkAndHideSuccessToast, checkUrl } from 'support';
+import { changeElementText, checkAndHideSuccessToast, checkUrl, translations, t } from 'support';
 import { TIDs } from 'tids';
 
 export const fillEmailInThirdStep = (email: string) => {
-    cy.get('#contact-information-form-email').should('have.attr', 'placeholder', placeholder.email).type(email);
+    cy.get('#contact-information-form-email')
+        .should('have.attr', 'placeholder', translations.placeholder.email)
+        .type(email);
 };
 
 export const clearEmailInThirdStep = () => {
@@ -23,12 +14,14 @@ export const clearEmailInThirdStep = () => {
 };
 
 export const fillCustomerInformationInThirdStep = (phone: string, firstName: string, lastName: string) => {
-    cy.get('#contact-information-form-telephone').should('have.attr', 'placeholder', placeholder.phone).type(phone);
+    cy.get('#contact-information-form-telephone')
+        .should('have.attr', 'placeholder', translations.placeholder.phone)
+        .type(phone);
     cy.get('#contact-information-form-firstName')
-        .should('have.attr', 'placeholder', placeholder.firstName)
+        .should('have.attr', 'placeholder', translations.placeholder.firstName)
         .type(firstName);
     cy.get('#contact-information-form-lastName')
-        .should('have.attr', 'placeholder', placeholder.lastName)
+        .should('have.attr', 'placeholder', translations.placeholder.lastName)
         .type(lastName);
 };
 
@@ -37,10 +30,14 @@ export const clearPostcodeInThirdStep = () => {
 };
 
 export const fillBillingAdressInThirdStep = (street: string, city: string, postCode: string) => {
-    cy.get('#contact-information-form-street').should('have.attr', 'placeholder', placeholder.street).type(street);
-    cy.get('#contact-information-form-city').should('have.attr', 'placeholder', placeholder.city).type(city);
+    cy.get('#contact-information-form-street')
+        .should('have.attr', 'placeholder', translations.placeholder.street)
+        .type(street);
+    cy.get('#contact-information-form-city')
+        .should('have.attr', 'placeholder', translations.placeholder.city)
+        .type(city);
     cy.get('#contact-information-form-postcode')
-        .should('have.attr', 'placeholder', placeholder.postCode)
+        .should('have.attr', 'placeholder', translations.placeholder.postCode)
         .type(postCode, { force: true });
 };
 
@@ -54,31 +51,37 @@ export const clearAndFillDeliveryAdressInThirdStep = (deliveryAddress: {
     postCode: string;
 }) => {
     cy.get('#contact-information-form-deliveryFirstName')
-        .should('have.attr', 'placeholder', placeholder.firstName)
+        .should('have.attr', 'placeholder', translations.placeholder.firstName)
         .clear()
         .type(deliveryAddress.firstName);
+
     cy.get('#contact-information-form-deliveryLastName')
-        .should('have.attr', 'placeholder', placeholder.lastName)
+        .should('have.attr', 'placeholder', translations.placeholder.lastName)
         .clear()
         .type(deliveryAddress.lastName);
+
     cy.get('#contact-information-form-deliveryCompanyName')
-        .should('have.attr', 'placeholder', placeholder.company)
+        .should('have.attr', 'placeholder', translations.placeholder.company)
         .clear()
         .type(deliveryAddress.company);
+
     cy.get('#contact-information-form-deliveryTelephone')
-        .should('have.attr', 'placeholder', placeholder.phone)
+        .should('have.attr', 'placeholder', translations.placeholder.phone)
         .clear()
         .type(deliveryAddress.phone);
+
     cy.get('#contact-information-form-deliveryStreet')
-        .should('have.attr', 'placeholder', placeholder.street)
+        .should('have.attr', 'placeholder', translations.placeholder.street)
         .clear()
         .type(deliveryAddress.street);
+
     cy.get('#contact-information-form-deliveryCity')
-        .should('have.attr', 'placeholder', placeholder.city)
+        .should('have.attr', 'placeholder', translations.placeholder.city)
         .clear()
         .type(deliveryAddress.city);
+
     cy.get('#contact-information-form-deliveryPostcode')
-        .should('have.attr', 'placeholder', placeholder.postCode)
+        .should('have.attr', 'placeholder', translations.placeholder.postCode)
         .clear({ force: true })
         .type(deliveryAddress.postCode, { force: true });
 
@@ -95,26 +98,30 @@ export const clearAndFillDeliveryContactInThirdStep = (deliveryContact: {
     phone: string;
 }) => {
     cy.get('#contact-information-form-deliveryFirstName')
-        .should('have.attr', 'placeholder', placeholder.firstName)
+        .should('have.attr', 'placeholder', translations.placeholder.firstName)
         .clear()
         .type(deliveryContact.firstName);
+
     cy.get('#contact-information-form-deliveryLastName')
-        .should('have.attr', 'placeholder', placeholder.lastName)
+        .should('have.attr', 'placeholder', translations.placeholder.lastName)
         .clear()
         .type(deliveryContact.lastName);
+
     cy.get('#contact-information-form-deliveryTelephone')
-        .should('have.attr', 'placeholder', placeholder.phone)
+        .should('have.attr', 'placeholder', translations.placeholder.phone)
         .clear()
         .type(deliveryContact.phone);
 };
 
 export const fillRegistrationInfoAfterOrder = (password: string) => {
     cy.get('#registration-after-order-form-password')
-        .should('have.attr', 'placeholder', placeholder.password)
+        .should('have.attr', 'placeholder', translations.placeholder.password)
         .type(password);
+
     cy.get('#registration-after-order-form-passwordConfirm')
-        .should('have.attr', 'placeholder', placeholder.passwordConfirm)
+        .should('have.attr', 'placeholder', translations.placeholder.passwordAgain)
         .type(password);
+
     cy.get('[for="registration-after-order-form-privacyPolicy"]').find('span').first().click();
 };
 
@@ -130,11 +137,15 @@ export const mouseOverUserMenuButton = () => {
 };
 
 export const fillInNoteInThirdStep = (note: string) => {
-    cy.get('#contact-information-form-note').should('have.attr', 'placeholder', placeholder.note).type(note);
+    cy.get('#contact-information-form-note')
+        .should('have.attr', 'placeholder', translations.placeholder.note)
+        .type(note);
 };
 
 export const clickOnOrderDetailButtonOnThankYouPage = () => {
-    cy.getByTID([TIDs.pages_orderconfirmation]).contains(link.orderDetail).click();
+    // The link is rendered in HTML from backend with localized URL
+    // Use the localized url path from fixtures (e.g., '/detail-objednavky' for Slovak)
+    cy.getByTID([TIDs.pages_orderconfirmation]).find(`a[href*="${url.order.orderDetail}"]`).click();
     cy.url().should('contain', url.order.orderDetail);
 };
 
@@ -146,29 +157,37 @@ export const registerAndCreateOrderForDeliveryAddressTests = (
 ) => {
     cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
     cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-    cy.preselectTransportForTest(transport.czechPost.uuid);
-    cy.preselectPaymentForTest(payment.onDelivery.uuid);
+    cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+    cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
     cy.createOrder({
         ...generateCreateOrderInput(email),
         isDeliveryAddressDifferentFromBilling: true,
-        deliveryFirstName: deliveryAddress.firstName,
-        deliveryLastName: deliveryAddress.lastName,
-        deliveryCompanyName: deliveryAddress.company,
-        deliveryTelephone: deliveryAddress.phone,
-        deliveryStreet: deliveryAddress.street,
-        deliveryCity: deliveryAddress.city,
-        deliveryPostcode: deliveryAddress.postCode,
-        deliveryCountry: deliveryAddress.country,
+        deliveryFirstName: staticData.deliveryAddress.firstName,
+        deliveryLastName: staticData.deliveryAddress.lastName,
+        deliveryCompanyName: staticData.deliveryAddress.company,
+        deliveryTelephone: staticData.deliveryAddress.phone,
+        deliveryStreet: staticData.deliveryAddress.street,
+        deliveryCity: staticData.deliveryAddress.city,
+        deliveryPostcode: staticData.deliveryAddress.postCode,
+        deliveryCountry: staticData.deliveryAddress.country,
     });
     cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-    cy.preselectTransportForTest(secondTransportUuid ?? transport.czechPost.uuid, secondPickupPlaceUuid);
-    cy.preselectPaymentForTest(secondPaymentUuid ?? payment.onDelivery.uuid);
+    cy.preselectTransportForTest(secondTransportUuid ?? staticData.transport.czechPost.uuid, secondPickupPlaceUuid);
+    cy.preselectPaymentForTest(secondPaymentUuid ?? staticData.payment.onDelivery.uuid);
 };
 
 export const fillBillingInfoForDeliveryAddressTests = () => {
-    fillEmailInThirdStep(customer1.email);
-    fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
-    fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
+    fillEmailInThirdStep(staticData.customer1.email);
+    fillCustomerInformationInThirdStep(
+        staticData.customer1.phone,
+        staticData.customer1.firstName,
+        staticData.customer1.lastName,
+    );
+    fillBillingAdressInThirdStep(
+        staticData.customer1.billingStreet,
+        staticData.customer1.billingCity,
+        staticData.customer1.billingPostCode,
+    );
 };
 
 export const checkThatContactInformationWasRemovedFromLocalStorage = () => {
@@ -199,27 +218,44 @@ export const checkContactInformationFormIsNotVisible = () => {
 };
 
 export const changeOrderDetailDynamicPartsToStaticDemodata = (shouldChangeBreadcrumb: boolean = false) => {
-    changeElementText(TIDs.order_detail_number_heading, order.numberHeading);
-    changeElementText(TIDs.order_detail_number, order.number);
-    changeElementText(TIDs.order_detail_creation_date, order.creationDate, false);
+    changeElementText(TIDs.order_detail_number_heading, staticData.order.numberHeading);
+    changeElementText(TIDs.order_detail_number, staticData.order.number);
+    changeElementText(TIDs.order_detail_creation_date, staticData.order.creationDate, false);
 
     if (shouldChangeBreadcrumb) {
-        changeElementText(TIDs.breadcrumbs_tail, order.number);
+        changeElementText(TIDs.breadcrumbs_tail, staticData.order.number);
     }
 };
 
 export const changeOrderConfirmationDynamicPartsToStaticDemodata = () => {
     cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).then((element) => {
         const originalText = element.html();
-        element.html(originalText.replace(/Order number \d+/, order.numberHeading));
+        element.html(originalText.replace(/\d{7,}/g, staticData.order.number));
     });
 };
 
-export const checkOrderConfirmationStatusText = (statusText: string) => {
+export const checkOrderConfirmationStatusText = (transportSpecificTextKey: string) => {
     cy.getByTID([TIDs.order_confirmation_page_text_wrapper])
         .should('exist')
-        .should('contain.text', order.confirmation.orderCreatedText)
-        .should('contain.text', statusText);
+        .should('contain.text', staticData.order.number);
+
+    // Try both with and without HTML tags, as some keys have <b> tags in .po files
+    const keyWithBold = `<b>${transportSpecificTextKey}</b>`;
+
+    // Use dynamic translation - try the key with bold tags first, then without
+    t(keyWithBold).then((translatedWithBold) => {
+        // If translation with bold tags is found (not returned as key), use it
+        if (translatedWithBold !== keyWithBold) {
+            // Strip HTML tags for text comparison
+            const textWithoutTags = translatedWithBold.replace(/<\/?b>/g, '');
+            cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).should('contain.text', textWithoutTags);
+        } else {
+            // Otherwise try without bold tags
+            t(transportSpecificTextKey).then((translated) => {
+                cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).should('contain.text', translated);
+            });
+        }
+    });
 };
 
 export const submitRegistrationFormAfterOrder = () => {
@@ -246,9 +282,7 @@ export const checkOrderDetailFromOrderPage = (transportName: string, paymentName
     cy.getByTID([TIDs.order_detail_items])
         .should('exist')
         .and('be.visible')
-        .and('contain.text', order.detail.products.helloKitty.fullName)
-        .and('contain.text', order.detail.products.helloKitty.price)
-        .and('contain.text', order.detail.products.helloKitty.quantity);
+        .and('contain.text', staticData.products.helloKitty.name);
 
     cy.getByTID([TIDs.order_detail_repeat_order_button]).should('exist').and('be.visible');
 };
@@ -271,7 +305,7 @@ export const checkOrderDetailFromOrderPageWithPromoCode = (
     cy.getByTID([TIDs.order_detail_items])
         .should('exist')
         .and('be.visible')
-        .and('contain.text', order.detail.products.helloKitty.promoCode);
+        .and('contain.text', translations.order.promoCode);
 };
 
 export const repeatOrderFromOrderList = (withMerge?: boolean) => {
@@ -324,7 +358,7 @@ export const fillAndSaveNewDeliveryAddressInPopup = (deliveryAddress: {
     cy.realPress('{downarrow}');
     cy.realPress('{enter}');
 
-    cy.contains('button', 'Save').click();
+    cy.getByTID([TIDs.delivery_address_form_submit_button]).click();
     cy.waitForStableAndInteractiveDOM();
-    checkAndHideSuccessToast('Your delivery address has been created');
+    checkAndHideSuccessToast(translations.toast.success.deliveryAddressCreated);
 };

@@ -1,10 +1,24 @@
 /// <reference types="cypress-wait-for-stable-dom" />
 import './api';
+import { loadAllTranslations, t, type TranslationsType } from './translations';
 import 'cypress-real-events';
 import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
 import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME, url } from 'fixtures/demodata';
 import { TIDs } from 'tids';
+
+// Global translations object - synchronized access, no race conditions
+export let translations: TranslationsType = {} as TranslationsType;
+
+// Auto-load before ALL tests (runs once per test run)
+before(() => {
+    loadAllTranslations().then((t) => {
+        translations = t;
+    });
+});
+
+// Export for explicit usage if needed
+export { loadAllTranslations, t };
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
@@ -72,12 +86,14 @@ Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
 
 Cypress.Commands.add('visitAndWaitForStableAndInteractiveDOM', (url: string) => {
     cy.visit(url);
+    cy.waitForStableAndInteractiveDOM();
 
     return cy.waitForStableAndInteractiveDOM();
 });
 
 Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
     cy.reload();
+    cy.waitForStableAndInteractiveDOM();
 
     return cy.waitForStableAndInteractiveDOM();
 });
@@ -139,15 +155,11 @@ export const checkUrl = (url: string) => {
 };
 
 export const checkIsUserLoggedIn = () => {
-    cy.getByTID([TIDs.my_account_link]).should('be.visible').contains('My account');
+    cy.getByTID([TIDs.my_account_link]).should('be.visible').contains(translations.link.myAccount);
 };
 
 export const checkIsUserLoggedOut = () => {
-    cy.getByTID([TIDs.my_account_link]).should('be.visible').contains('Login');
-};
-
-export const checkIsLinkVisible = (href: string, text: string) => {
-    cy.get(`a[href="${href}"]`).should('be.visible').contains(text);
+    cy.getByTID([TIDs.my_account_link]).should('be.visible').contains(translations.button.login);
 };
 
 export const goToEditProfileFromHeader = () => {
@@ -397,15 +409,39 @@ export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshot
     };
 };
 
-export const checktHeadlineText = (text: string) => {
-    return cy.get('h1').should('exist').and('be.visible').and('contain.text', text);
+export const checktHeadlineText = (translationKey: string) => {
+    return cy.wrap(null).then(() => {
+        return cy
+            .get('h1')
+            .should('exist')
+            .and('be.visible')
+            .invoke('text')
+            .then((actualText) => {
+                const trimmedActual = actualText.trim();
+                const trimmedKey = translationKey.trim();
+
+                // If the key is directly contained in the H1 text, pass immediately
+                if (trimmedActual.includes(trimmedKey)) {
+                    expect(true, `✅ H1 text "${trimmedActual}" contains "${trimmedKey}" (direct match)`).to.be.true;
+                    return;
+                }
+
+                // Use unified translation with fallback (common.json → .po files)
+                return t(translationKey).then((translatedText) => {
+                    const matches = trimmedActual.includes(translatedText.trim());
+                    expect(matches, `✅ H1 text "${trimmedActual}" should contain "${translatedText}"`).to.be.true;
+                });
+            });
+    });
 };
 
 export const checkFormLineError = (errorText?: string) => {
     if (errorText) {
-        const errorSpan = cy.getByTID([TIDs.form_line_error]).contains(errorText);
-        errorSpan.should('exist').and('be.visible');
-        return errorSpan;
+        t(errorText).then((translatedText) => {
+            const errorSpan = cy.getByTID([TIDs.form_line_error]).contains(translatedText);
+            errorSpan.should('exist').and('be.visible');
+            return errorSpan;
+        });
     } else {
         const errorSpan = cy.getByTID([TIDs.form_line_error]).first();
         errorSpan.should('exist').and('be.visible');

@@ -1,5 +1,7 @@
-import { url } from 'fixtures/demodata';
-import { initializePersistStoreInLocalStorageToDefaultValues } from 'support';
+import { staticData } from 'fixtures/demodata';
+import { checktHeadlineText, initializePersistStoreInLocalStorageToDefaultValues, translations } from 'support';
+import { visitEntityByUuid } from 'support/navigation';
+import { TIDs } from 'tids';
 
 describe('Product Filtering E2E Tests', () => {
     beforeEach(() => {
@@ -7,17 +9,17 @@ describe('Product Filtering E2E Tests', () => {
     });
 
     it('[Price Filter + URL Persistence] should filter products by price range and persist across page reload', () => {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
-        cy.get('body').should('contain.text', 'Electronics');
+        checktHeadlineText('Electronic devices');
 
         cy.waitForStableAndInteractiveDOM();
 
-        cy.get('[id="Price - from"]').should('be.visible').clear().type('100').blur();
+        cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').clear().type('100').blur();
 
         cy.wait(500);
 
-        cy.get('[id="Price - to"]').should('be.visible').clear().type('500').blur();
+        cy.get(`[id="${translations.filter.price} - to"]`).should('be.visible').clear().type('500').blur();
 
         cy.wait(1500);
 
@@ -33,21 +35,23 @@ describe('Product Filtering E2E Tests', () => {
             return decodedUrl.includes('100');
         });
 
-        cy.get('[id="Price - from"]').should('have.value', '100');
+        cy.get(`[id="${translations.filter.price} - from"]`).should('have.value', '100');
 
         cy.get('body').then(($body) => {
-            if ($body.find('button[aria-label="Clear all active filters"]').length > 0) {
-                cy.get('button[aria-label="Clear all active filters"]').first().click({ force: true });
+            if ($body.find(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`).length > 0) {
+                cy.get(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`)
+                    .first()
+                    .click({ force: true });
             }
         });
     });
 
     it('[Multi-Filter Workflow] should combine price + brand + parameter filters correctly', () => {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         cy.waitForStableAndInteractiveDOM();
 
-        cy.get('[id="Price - from"]').should('be.visible').clear().type('50').blur();
+        cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').clear().type('50').blur();
 
         cy.wait(1000);
 
@@ -60,41 +64,34 @@ describe('Product Filtering E2E Tests', () => {
             return decodedUrl.includes('50') || decodedUrl.includes('minimalPrice');
         });
 
-        cy.get('body').should('contain.text', 'Electronics');
+        checktHeadlineText('Electronic devices');
 
         cy.url().should('include', 'filter');
 
         cy.get('body').then(($body) => {
-            if ($body.find('button[aria-label="Clear all active filters"]').length > 0) {
-                cy.get('button[aria-label="Clear all active filters"]').first().click({ force: true });
+            if ($body.find(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`).length > 0) {
+                cy.get(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`)
+                    .first()
+                    .click({ force: true });
             }
         });
     });
 
     it('[Sort + Filter Integration] should maintain filters when changing sort order', () => {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         cy.waitForStableAndInteractiveDOM();
 
-        cy.get('[id="Price - from"]').should('be.visible').clear().type('100').should('have.value', '100').blur();
+        cy.get(`[id="${translations.filter.price} - from"]`)
+            .should('be.visible')
+            .clear()
+            .type('100')
+            .should('have.value', '100')
+            .blur();
 
         cy.wait(1000);
 
-        cy.get('body').then(($body) => {
-            if ($body.find('select').length > 0) {
-                cy.get('select').first().select(1);
-            } else {
-                cy.get('button, [role="button"]')
-                    .contains(/sort|order|price|name/i)
-                    .first()
-                    .click({ force: true });
-
-                cy.get('[role="option"], li, a')
-                    .contains(/price|name|newest|oldest/i)
-                    .first()
-                    .click({ force: true });
-            }
-        });
+        cy.get('[data-tid^="blocks_sortingbar_option_"]').should('exist').first().click({ force: true });
 
         cy.wait(1500);
 
@@ -106,8 +103,8 @@ describe('Product Filtering E2E Tests', () => {
         cy.waitForStableAndInteractiveDOM();
 
         cy.get('body').then(($body) => {
-            if ($body.find('[id="Price - from"]').length > 0) {
-                cy.get('[id="Price - from"]').should('be.visible').should('have.value', '100');
+            if ($body.find(`[id="${translations.filter.price} - from"]`).length > 0) {
+                cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').should('have.value', '100');
             } else {
                 cy.log('Price filter input not found after sort, but URL filter should persist');
                 cy.url().should('satisfy', (url) => {
@@ -117,21 +114,23 @@ describe('Product Filtering E2E Tests', () => {
             }
         });
 
-        cy.get('body').should('contain.text', 'Electronics');
+        checktHeadlineText('Electronic devices');
 
         cy.get('body').then(($body) => {
-            if ($body.find('button[aria-label="Clear all active filters"]').length > 0) {
-                cy.get('button[aria-label="Clear all active filters"]').first().click({ force: true });
+            if ($body.find(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`).length > 0) {
+                cy.get(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`)
+                    .first()
+                    .click({ force: true });
             }
         });
     });
 
     it('[Filter Reset Workflow] should clear all filters and reset URL parameters', () => {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         cy.waitForStableAndInteractiveDOM();
 
-        cy.get('[id="Price - from"]').should('be.visible').clear().type('200').blur();
+        cy.get(`[id="${translations.filter.price} - from"]`).should('be.visible').clear().type('200').blur();
 
         cy.wait(1000);
 
@@ -164,7 +163,7 @@ describe('Product Filtering E2E Tests', () => {
             }
 
             if (!found) {
-                cy.get('[id="Price - from"]').clear().blur();
+                cy.get(`[id="${translations.filter.price} - from"]`).clear().blur();
             }
         });
 
@@ -175,11 +174,13 @@ describe('Product Filtering E2E Tests', () => {
             return !decodedUrl.includes('200') || decodedUrl.includes('categoryElectronics');
         });
 
-        cy.get('body').should('contain.text', 'Electronics');
+        checktHeadlineText('Electronic devices');
 
         cy.get('body').then(($body) => {
-            if ($body.find('button[aria-label="Clear all active filters"]').length > 0) {
-                cy.get('button[aria-label="Clear all active filters"]').first().click({ force: true });
+            if ($body.find(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`).length > 0) {
+                cy.get(`button[aria-label="${translations.filter.clearAllActiveFilters}"]`)
+                    .first()
+                    .click({ force: true });
             }
         });
     });

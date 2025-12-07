@@ -1,5 +1,6 @@
-import { user } from 'fixtures/demodata';
+import { staticData } from 'fixtures/demodata';
 import { checktHeadlineText } from 'support';
+import { visitEntityByUuid } from 'support/navigation';
 import { TIDs } from 'tids';
 
 type RoutesForSmokeTestsType = {
@@ -13,9 +14,12 @@ type RoutesForSmokeTestsType = {
     params?: {
         [key: string]: string;
     };
+    uuid?: string;
+    entityType?: string;
 };
 
 context('Smoke tests', () => {
+    const TEST_LOCALE = Cypress.env('TEST_LOCALE');
     const { routes } = require('/config/routes');
     const translatedRoutes = routes[0];
     const projectPages = Cypress.env('projectPages');
@@ -133,7 +137,7 @@ context('Smoke tests', () => {
             skip: false,
             params: { ['q']: 'television' },
             test: () => {
-                checktHeadlineText('Search results for "television"');
+                checktHeadlineText('Search results for');
             },
         },
         ['/social-login']: { skip: true },
@@ -171,61 +175,73 @@ context('Smoke tests', () => {
         ['/order-withdrawal/:orderUrlHash']: { skip: true },
         ['/order-withdrawal-success/:orderUrlHash']: { skip: true },
 
-        // custom routes
-        ['/electronics']: {
+        // UUID-based routes
+        // Use 'slug' field for regular entities (category, product, brand, flag, store) that return the slug
+        // Use 'link' field for blog entities (blogCategory, blogArticle, article) that return the full URL
+        ['category']: {
             skip: false,
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.category,
+            entityType: 'category',
             test: () => {
                 checktHeadlineText('Electronic devices');
             },
         },
-        ['/television-22-sencor-sle-22f46dm4-hello-kitty-plasma']: {
+        ['product-detail']: {
             skip: false,
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.product,
+            entityType: 'product',
             test: () => {
-                checktHeadlineText('22" Sencor SLE 22F46DM4 HELLO KITTY plasma');
+                checktHeadlineText('22" Sencor SLE 22F46DM4 HELLO KITTY');
             },
         },
-        ['/about-us']: {
+        ['main-blog-page']: {
             skip: false,
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.blogCategory,
+            entityType: 'blogCategory',
             test: () => {
-                checktHeadlineText('About us');
+                const expectedText = 'Main blog page - ' + TEST_LOCALE;
+                checktHeadlineText(expectedText);
             },
         },
-        ['/main-blog-page-en']: {
+        ['blog-article']: {
             skip: false,
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.blogArticle,
+            entityType: 'blogArticle',
             test: () => {
-                checktHeadlineText('Main blog page - en');
+                const expectedText = 'Blog article example 1 ' + TEST_LOCALE + ' - H1';
+                checktHeadlineText(expectedText);
             },
         },
-        ['/blog-article-example-1-en']: {
+        ['brand']: {
             skip: false,
-            logged: false,
-            test: () => {
-                checktHeadlineText('Blog article example 1 en - H1');
-            },
-        },
-        ['/apple']: {
-            skip: false,
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.brand,
+            entityType: 'brand',
             test: () => {
                 checktHeadlineText('Apple SEO H1');
             },
         },
-        ['/action']: {
+        ['flag']: {
             skip: false,
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.flag,
+            entityType: 'flag',
             test: () => {
                 checktHeadlineText('Action');
             },
         },
-        ['/ostrava']: {
+        ['store']: {
             skip: true, // set to false when stores query is fixed
-            logged: false,
+            uuid: staticData.smokeTestRoutesUuids.store,
+            entityType: 'store',
             test: () => {
                 checktHeadlineText('Ostrava');
+            },
+        },
+        ['/article']: {
+            skip: false,
+            uuid: staticData.smokeTestRoutesUuids.article,
+            entityType: 'article',
+            test: () => {
+                checktHeadlineText('About us');
             },
         },
     };
@@ -236,7 +252,7 @@ context('Smoke tests', () => {
         const testConfig = filteredRoutes[routeName];
 
         if (!testConfig) {
-            it(`💨 Smoke test - ${routeName}`, () => {
+            it(`💨 Smoke test [${TEST_LOCALE}] - ${routeName}`, () => {
                 cy.wrap(null).then(() => {
                     throw new Error(
                         `❗ Missing smoke test configuration for route: ${routeName}. Please add a definition to the filteredRoutes object.`,
@@ -248,11 +264,34 @@ context('Smoke tests', () => {
 
         const checkRouteCyFn = testConfig?.skip ? it.skip : it;
 
-        checkRouteCyFn(`💨 Smoke test - ${routeName}`, () => {
+        checkRouteCyFn(`💨 Smoke test [${TEST_LOCALE}] - ${routeName}`, () => {
             const isCustomRoute = routeName in filteredRoutes;
 
             if (isCustomRoute && filteredRoutes[routeName]?.logged) {
-                cy.login(user.email, user.password);
+                cy.login(staticData.user.email, staticData.user.password);
+            }
+
+            // Check if this is a UUID-based route
+            if (isCustomRoute && filteredRoutes[routeName]?.entityType && filteredRoutes[routeName]?.uuid) {
+                const entityType = filteredRoutes[routeName].entityType;
+                const uuid = filteredRoutes[routeName].uuid;
+
+                if (entityType && uuid) {
+                    visitEntityByUuid(entityType, uuid);
+
+                    cy.wait(2000);
+
+                    cy.document().then((doc) => {
+                        const bodyContent = doc.body.innerText.trim();
+                        expect(bodyContent.length, '❌ Page should not be blank').to.be.above(0);
+
+                        if (isCustomRoute && filteredRoutes[routeName]?.test) {
+                            filteredRoutes[routeName].test?.();
+                        }
+                    });
+
+                    return;
+                }
             }
 
             let routeToRequest = (translatedRoutes[routeName as keyof typeof translatedRoutes] ?? routeName) as string;
@@ -288,7 +327,17 @@ context('Smoke tests', () => {
                     win.console.error = (...args) => {
                         // log the error so we can still see it in test output
                         originalConsoleError.apply(win.console, args);
-                        consoleErrors.push(args.join(' '));
+                        const serializedArgs = args.map((arg) => {
+                            if (typeof arg === 'object' && arg !== null) {
+                                try {
+                                    return JSON.stringify(arg, null, 2);
+                                } catch {
+                                    return String(arg);
+                                }
+                            }
+                            return String(arg);
+                        });
+                        consoleErrors.push(serializedArgs.join(' '));
                     };
 
                     // intercept unhandled errors

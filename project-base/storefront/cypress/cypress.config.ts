@@ -1,6 +1,8 @@
 import { defineConfig } from 'cypress';
 import { configureVisualRegression } from 'cypress-visual-regression';
+import * as fs from 'fs';
 import { globSync } from 'glob';
+import * as path from 'path';
 
 const getProjectPages = () => {
     const files = globSync('**/*.tsx', {
@@ -35,6 +37,7 @@ export default defineConfig({
     videosFolder: 'videos',
     trashAssetsBeforeRuns: true,
     env: {
+        TEST_LOCALE: process.env.TEST_LOCALE,
         skipSnapshots: false,
         visualRegressionErrorThreshold: 0.005,
         visualRegressionFailSilently: false,
@@ -44,6 +47,47 @@ export default defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
             configureVisualRegression(on);
+
+            // Dynamically get available dataFixtures.locale.po file for translations
+            on('task', {
+                getAvailablePoLocales() {
+                    // Standard Docker mount path where translations are mounted
+                    const candidatePaths = ['/app/app-translations'];
+
+                    try {
+                        const translationsDir = candidatePaths.find((p) => {
+                            try {
+                                return fs.existsSync(p) && fs.statSync(p).isDirectory();
+                            } catch {
+                                return false;
+                            }
+                        });
+
+                        if (!translationsDir) {
+                            console.warn('🟡 Translations directory not found in any of candidate paths.');
+                            return ['en'];
+                        }
+
+                        const files = fs.readdirSync(translationsDir);
+                        const poFiles = files.filter(
+                            (file) => file.startsWith('dataFixtures.') && file.endsWith('.po'),
+                        );
+
+                        // Extract locales from filenames (e.g., "dataFixtures.cs.po" -> "cs")
+                        const locales = poFiles
+                            .map((file) => {
+                                const match = file.match(/^dataFixtures\.([a-z]{2})\.po$/);
+                                return match ? match[1] : null;
+                            })
+                            .filter(Boolean) as string[];
+
+                        return locales.length > 0 ? locales : ['en']; // Fallback to English if no files found
+                    } catch (error) {
+                        console.error('❌ Error reading translations directory:', error);
+                        return ['en'];
+                    }
+                },
+            });
 
             const { globSync } = require('glob');
             const group = process.env.GROUP || 'default-group';

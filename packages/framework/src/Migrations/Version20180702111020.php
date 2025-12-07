@@ -85,15 +85,17 @@ class Version20180702111020 extends AbstractMigration implements ContainerAwareI
                 return;
             }
 
-            $orderSubmittedText = t('
-                <p>
-                    Order number {number} has been sent, thank you for your purchase.
-                    We will contact you about next order status. <br /><br />
-                    <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
-                    {transport_instructions} <br />
-                    {payment_instructions} <br />
-                </p>
-            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getDomainLocale($domainId));
+            $orderSubmittedText = t(
+                '
+                <p>Order number {number} has been sent, thank you for your purchase.
+                We will contact you about next order status. <br /><br />
+                <a href="{order_detail_url}" tabindex="0">Track</a> the status of your order. <br />
+                {transport_instructions} <br />
+                {payment_instructions} <br /></p>',
+                [],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $this->getDomainLocale($domainId),
+            );
 
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'orderSubmittedText\', :domainId, :text, \'string\')',

@@ -10,6 +10,7 @@ import {
     useDeliveryAddressForm,
     useDeliveryAddressFormMeta,
 } from 'components/Pages/Customer/EditProfile/deliveryAddressFormMeta';
+import { TIDs } from 'cypress/tids';
 import { useCreateDeliveryAddressMutation } from 'graphql/requests/customer/mutations/CreateDeliveryAddressMutation.generated';
 import { useEditDeliveryAddressMutation } from 'graphql/requests/customer/mutations/EditDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -241,6 +242,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                         <FormButtonWrapper>
                             <SubmitButton
                                 aria-label={t('Submit form to save delivery address', { ns: 'accessibility' })}
+                                tid={TIDs.delivery_address_form_submit_button}
                             >
                                 {t('Save')}
                             </SubmitButton>

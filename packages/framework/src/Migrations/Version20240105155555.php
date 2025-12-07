@@ -21,6 +21,8 @@ class Version20240105155555 extends AbstractMigration
             $this->sql('UPDATE blog_categories SET uuid = uuid_generate_v4()');
             $this->sql('ALTER TABLE blog_categories ALTER uuid SET NOT NULL');
             $this->sql('CREATE UNIQUE INDEX UNIQ_DC356481D17F50A6 ON blog_categories (uuid)');
+
+            $this->sql('UPDATE blog_categories SET uuid = \'f8129edb-3f92-5dfc-b6e5-261d85279485\' WHERE level = 1');
         }
 
         if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20230313113336')) {

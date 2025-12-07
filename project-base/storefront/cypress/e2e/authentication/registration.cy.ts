@@ -6,14 +6,12 @@ import {
     clearAndFillInRegistrationFormPasswords,
     checkRegistrationValidationErrors,
 } from './authenticationSupport';
-import { password, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
-    checkAndHideErrorToast,
     checkAndHideSuccessToast,
     checkFormLineError,
     checkIsUserLoggedIn,
-    checkPopupIsVisible,
     checkUrl,
     getSnapshotIndexingFunction,
     goToEditProfileFromHeader,
@@ -21,6 +19,7 @@ import {
     loseFocus,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -36,9 +35,9 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
     it('[Register B2C] should register as a B2C customer', function () {
         goToRegistrationPageFromHeader();
         const email = 'register-as-b2c@shopsys.com';
-        clearAndFillInRegstrationFormEmail(email);
+        clearAndFillInRegstrationFormEmail(email, translations.placeholder.email);
         fillInRegstrationForm('commonCustomer', email);
-        clearAndFillInRegistrationFormPasswords(password);
+        clearAndFillInRegistrationFormPasswords(staticData.user.password);
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled registration form', {
             blackout: [
@@ -49,7 +48,7 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
         });
 
         submitRegistrationForm();
-        checkAndHideSuccessToast('Your account has been created and you are logged in now');
+        checkAndHideSuccessToast(translations.toast.success.accountCreated);
         checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
 
@@ -83,11 +82,11 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         });
 
         const email = 'invalid-registration-then-correct-and-try-again@shopsys.com';
-        clearAndFillInRegstrationFormEmail(email);
+        clearAndFillInRegstrationFormEmail(email, translations.placeholder.email);
         fillInRegstrationForm('commonCustomer', email);
-        clearAndFillInRegistrationFormPasswords(password);
+        clearAndFillInRegistrationFormPasswords(staticData.user.password);
         submitRegistrationForm();
-        checkAndHideSuccessToast('Your account has been created and you are logged in now');
+        checkAndHideSuccessToast(translations.toast.success.accountCreated);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
     });
@@ -96,16 +95,19 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         const email = 'registration-with-existing-email@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email), false);
 
-        clearAndFillInRegstrationFormEmail(email);
+        clearAndFillInRegstrationFormEmail(email, translations.placeholder.email);
         fillInRegstrationForm('commonCustomer', email);
-        clearAndFillInRegistrationFormPasswords(password);
+        clearAndFillInRegistrationFormPasswords(staticData.user.password);
         submitRegistrationForm();
         checkFormLineError('This email is already registered');
 
-        clearAndFillInRegstrationFormEmail('registration-with-existing-email-different-email@shopsys.com');
-        clearAndFillInRegistrationFormPasswords(password);
+        clearAndFillInRegstrationFormEmail(
+            'registration-with-existing-email-different-email@shopsys.com',
+            translations.placeholder.email,
+        );
+        clearAndFillInRegistrationFormPasswords(staticData.user.password);
         submitRegistrationForm();
-        checkAndHideSuccessToast('Your account has been created and you are logged in now');
+        checkAndHideSuccessToast(translations.toast.success.accountCreated);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
     });

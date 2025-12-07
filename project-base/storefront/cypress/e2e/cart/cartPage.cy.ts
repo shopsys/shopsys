@@ -13,7 +13,7 @@ import {
 } from './cartSupport';
 import { checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import { changeSelectionOfTransportByName } from 'e2e/transportAndPayment/transportAndPaymentSupport';
-import { products, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import {
     checkAndHideInfoToast,
     checkAndHideSuccessToast,
@@ -24,6 +24,7 @@ import {
     loseFocus,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -33,20 +34,20 @@ const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.
 describe('Cart Page Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
-        cy.addProductToCartForTest(products.helloKitty.uuid, 2).then((cart) =>
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 2).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
-        cy.addProductToCartForTest(products.philips32PFL4308.uuid);
+        cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
     });
 
     it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
         cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
 
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         loseFocus();
 
         cy.wait('@addToCartMutation');
@@ -59,8 +60,8 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
-        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        decreaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
+        decreaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         loseFocus();
 
         cy.wait('@addToCartMutation');
@@ -77,19 +78,19 @@ describe('Cart Page Tests', () => {
     it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
         cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
 
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
-        increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
@@ -103,11 +104,11 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        decreaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
-        decreaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
+        decreaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
@@ -123,7 +124,7 @@ describe('Cart Page Tests', () => {
     });
 
     it('[Remove Products] should remove products from cart', function () {
-        removeProductFromCartPage(products.philips32PFL4308.catnum);
+        removeProductFromCartPage(staticData.products.philips32PFL4308.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first removal', {
             blackout: [
@@ -134,7 +135,7 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        removeProductFromCartPage(products.helloKitty.catnum);
+        removeProductFromCartPage(staticData.products.helloKitty.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty cart after second removal', {
             blackout: [
@@ -146,31 +147,31 @@ describe('Cart Page Tests', () => {
     });
 
     it('[Quantity Spinbox Decrease] min spinbox button should not be clickable if it cannot be used due to min quantity', function () {
-        checkCartItemSpinboxDecreaseButtonIsDisabled(products.philips32PFL4308.catnum);
-        cy.getByTID([[TIDs.pages_cart_list_item_, products.philips32PFL4308.catnum], TIDs.spinbox_input])
+        checkCartItemSpinboxDecreaseButtonIsDisabled(staticData.products.philips32PFL4308.catnum);
+        cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
             .type('50')
             .trigger('input')
             .blur();
         cy.wait(200);
-        checkCartItemSpinboxDecreaseButtonIsEnabled(products.philips32PFL4308.catnum);
+        checkCartItemSpinboxDecreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
     });
 
     it('[Quantity Spinbox Increase] max spinbox button should be always clickable', function () {
-        checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
-        cy.getByTID([[TIDs.pages_cart_list_item_, products.philips32PFL4308.catnum], TIDs.spinbox_input])
+        checkCartItemSpinboxIncreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
+        cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
             .type('50')
             .trigger('input')
             .blur();
         cy.wait(200);
-        checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
+        checkCartItemSpinboxIncreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
     });
 
     it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
         clickOnPromoCodeButton();
         applyPromoCodeOnCartPage('test');
-        checkAndHideSuccessToast('Promo code was added to the order.');
+        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after applying first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -198,7 +199,7 @@ describe('Cart Page Tests', () => {
         goToPreviousOrderStep();
         checkUrl(url.cart);
         removePromoCodeOnCartPage();
-        checkAndHideSuccessToast('Promo code was removed from the order.');
+        checkAndHideSuccessToast(translations.toast.success.promoCodeRemoved);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after removing first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -209,7 +210,7 @@ describe('Cart Page Tests', () => {
         });
 
         applyPromoCodeOnCartPage('test-product2');
-        checkAndHideSuccessToast('Promo code was added to the order.');
+        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after removing second promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -224,7 +225,7 @@ describe('Cart Page Tests', () => {
         clickOnPromoCodeButton();
 
         applyPromoCodeOnCartPage('test');
-        checkAndHideSuccessToast('Promo code was added to the order.');
+        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after applying promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -234,8 +235,8 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        removeProductFromCartPage(products.helloKitty.catnum);
-        checkAndHideInfoToast('The promo code test is no longer applicable.');
+        removeProductFromCartPage(staticData.products.helloKitty.catnum);
+        checkAndHideInfoToast(translations.toast.info.promoCodeNotApplicable.replace('{{ promoCode }}', 'test'));
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing product that allows promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -247,12 +248,12 @@ describe('Cart Page Tests', () => {
     });
 
     it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', function () {
-        cy.addProductToCartForTest(products.helloKitty.uuid, 10);
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 10);
         cy.reloadAndWaitForStableAndInteractiveDOM();
 
         clickOnPromoCodeButton();
         applyPromoCodeOnCartPage('test');
-        checkAndHideSuccessToast('Promo code was added to the order.');
+        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),
             'cart page with non-free transport after applying promocode',
@@ -267,7 +268,7 @@ describe('Cart Page Tests', () => {
         );
 
         goToNextOrderStep();
-        changeSelectionOfTransportByName(transport.ppl.name);
+        changeSelectionOfTransportByName(translations.transport.ppl);
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),
             'transport and payment page with non-free options after applying promocode',

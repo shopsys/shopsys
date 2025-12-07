@@ -560,7 +560,7 @@ jobs:
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress smoke tests
-                run: docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress;
+                run: docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress;
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -635,6 +635,7 @@ jobs:
                 run: docker compose run cypress
                 env:
                     GROUP: ${{ matrix.group }}
+                    TEST_LOCALE: en
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
@@ -731,6 +732,7 @@ jobs:
                     docker compose run cypress-regenerate
                 env:
                     GROUP: ${{ matrix.group }}
+                    TEST_LOCALE: en
             -   name: Upload generated snapshots for ${{ matrix.group }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 uses: actions/upload-artifact@v4
@@ -1034,9 +1036,9 @@ jobs:
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
                     if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                        docker compose run cypress-regenerate
+                        docker compose run -e TEST_LOCALE=en cypress-regenerate
                     else
-                        docker compose run cypress
+                        docker compose run -e TEST_LOCALE=en cypress
                     fi
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}

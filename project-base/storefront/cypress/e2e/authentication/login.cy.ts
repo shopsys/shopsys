@@ -1,17 +1,18 @@
 import {
     fillInEmailAndPasswordOnLoginPage,
     loginFromHeader,
-    logoutFromCustomerPage,
+    logoutFromCustomerMenu,
     logoutFromHeader,
     submitLoginForm,
 } from './authenticationSupport';
-import { customer1, password, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import {
     checkAndHideSuccessToast,
     checkIsUserLoggedIn,
     checkIsUserLoggedOut,
     checkUrl,
     initializePersistStoreInLocalStorageToDefaultValues,
+    translations,
 } from 'support';
 
 describe('Login Tests', () => {
@@ -22,16 +23,16 @@ describe('Login Tests', () => {
     it('[Login Page] should login from login page and then log out', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.login);
 
-        fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, password);
+        fillInEmailAndPasswordOnLoginPage(staticData.customer1.emailRegistered, staticData.user.password);
         submitLoginForm();
-        checkAndHideSuccessToast('Successfully logged in');
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
 
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
-        logoutFromCustomerPage();
-        checkAndHideSuccessToast('Successfully logged out');
-        checkUrl(url.loginWithCustomerRedirect);
+        logoutFromCustomerMenu();
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
+        checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();
     });
@@ -39,13 +40,13 @@ describe('Login Tests', () => {
     it('[Header] should login from header and then log out', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
-        loginFromHeader(customer1.emailRegistered, password);
-        checkAndHideSuccessToast('Successfully logged in');
+        loginFromHeader(staticData.customer1.emailRegistered, staticData.user.password);
+        checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
 
         logoutFromHeader();
-        checkAndHideSuccessToast('Successfully logged out');
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
         checkUrl('/');
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedOut();

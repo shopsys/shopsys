@@ -96,6 +96,8 @@ services:
             - ./storefront/cypress:/app
             - ./storefront/config:/app/config
             - ./storefront/pages:/app/pages
+            - ./storefront/public/locales:/app/public/locales:delegated
+            - ./app/translations:/app/app-translations:delegated
             - node_modules:/app/node_modules
         profiles:
             - storefront-acceptance-tests

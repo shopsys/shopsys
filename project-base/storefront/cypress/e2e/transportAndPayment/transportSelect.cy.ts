@@ -7,7 +7,7 @@ import {
 } from './transportAndPaymentSupport';
 import { goToNextOrderStep } from 'e2e/cart/cartSupport';
 import { checkEmptyCartTextIsVisible, checkTransportSelectionIsNotVisible } from 'e2e/order/orderSupport';
-import { products, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
@@ -16,6 +16,7 @@ import {
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -31,7 +32,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -48,7 +49,10 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
+        chooseTransportPersonalCollectionAndStore(
+            staticData.transport.personalCollection.storeOstrava.name,
+            translations.transport.personalCollection,
+        );
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -63,11 +67,11 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        changeSelectionOfTransportByName(transport.ppl.name);
+        changeSelectionOfTransportByName(translations.transport.ppl);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting, deselecting, and selecting again', {
             blackout: [
@@ -82,7 +86,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -92,7 +96,7 @@ describe('Transport Select Tests', () => {
             ],
         });
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -107,7 +111,7 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -163,7 +167,7 @@ describe('Transport Select Tests', () => {
             ],
         });
 
-        cy.addProductToCartForTest(products.helloKitty.uuid, 998);
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 998);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page with enough products', {
             blackout: [
@@ -175,7 +179,7 @@ describe('Transport Select Tests', () => {
         });
 
         goToNextOrderStep();
-        changeSelectionOfTransportByName(transport.ppl.name);
+        changeSelectionOfTransportByName(translations.transport.ppl);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page with enough products', {
             blackout: [

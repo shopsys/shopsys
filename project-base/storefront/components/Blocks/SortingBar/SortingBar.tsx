@@ -4,6 +4,7 @@ import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
+import { TIDs } from 'cypress/tids';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
@@ -111,6 +112,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                             key={sortOption}
                             href={sortHref}
                             isActive={isSelectedSortOption}
+                            tid={`${TIDs.blocks_sortingbar_option_}${sortOption}`}
                             ariaLabel={
                                 isSelectedSortOption
                                     ? t('Sorted by {{ sortOption }}', {

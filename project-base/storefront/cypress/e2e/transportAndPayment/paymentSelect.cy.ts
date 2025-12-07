@@ -5,7 +5,7 @@ import {
     removeTransportSelectionUsingButton,
 } from './transportAndPaymentSupport';
 import { goToNextOrderStep } from 'e2e/cart/cartSupport';
-import { payment, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import {
     checkCanGoToNextOrderStep,
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
@@ -14,6 +14,7 @@ import {
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -25,12 +26,12 @@ describe('Payment Select Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.ppl.uuid);
+        cy.preselectTransportForTest(staticData.transport.ppl.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
     });
 
     it('[Select Payment] should select payment on delivery', function () {
-        changeSelectionOfPaymentByName(payment.onDelivery.name);
+        changeSelectionOfPaymentByName(translations.payment.onDelivery);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         checkCanGoToNextOrderStep();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after payment selection', {
@@ -46,11 +47,11 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', function () {
-        changeSelectionOfPaymentByName(payment.onDelivery.name);
+        changeSelectionOfPaymentByName(translations.payment.onDelivery);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        changeSelectionOfPaymentByName(payment.onDelivery.name);
+        changeSelectionOfPaymentByName(translations.payment.onDelivery);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        changeSelectionOfPaymentByName(payment.creditCard.name);
+        changeSelectionOfPaymentByName(translations.payment.creditCard);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         checkCanGoToNextOrderStep();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after changing payment selection', {
@@ -66,7 +67,7 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Remove Payment Repeated Click] should remove payment using repeated clicks', function () {
-        changeSelectionOfPaymentByName(payment.creditCard.name);
+        changeSelectionOfPaymentByName(translations.payment.creditCard);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -76,7 +77,7 @@ describe('Payment Select Tests', () => {
             ],
         });
 
-        changeSelectionOfPaymentByName(payment.creditCard.name);
+        changeSelectionOfPaymentByName(translations.payment.creditCard);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -88,7 +89,7 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Remove Payment Button Click] should remove payment using reset button', function () {
-        changeSelectionOfPaymentByName(payment.creditCard.name);
+        changeSelectionOfPaymentByName(translations.payment.creditCard);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -110,7 +111,7 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', function () {
-        changeSelectionOfPaymentByName(payment.creditCard.name);
+        changeSelectionOfPaymentByName(translations.payment.creditCard);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -130,7 +131,7 @@ describe('Payment Select Tests', () => {
             ],
         });
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),

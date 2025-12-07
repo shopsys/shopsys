@@ -3,7 +3,7 @@ import {
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
 } from './transportAndPaymentSupport';
-import { payment, transport, url } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import { generateCreateOrderInput, generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
@@ -11,6 +11,7 @@ import {
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -24,8 +25,8 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput);
         cy.addProductToCartForTest();
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
+        cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.createOrder(generateCreateOrderInput(registrationInput.email));
         cy.addProductToCartForTest();
     });
@@ -45,11 +46,11 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
     it('[Change T&P And Preserve On Refresh] should change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeSelectionOfTransportByName(transport.czechPost.name);
+        changeSelectionOfTransportByName(translations.transport.czechPost);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
-        changeSelectionOfTransportByName(transport.ppl.name);
+        changeSelectionOfTransportByName(translations.transport.ppl);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
-        changeSelectionOfPaymentByName(payment.onDelivery.name);
+        changeSelectionOfPaymentByName(translations.payment.onDelivery);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first change and refresh', {
@@ -60,11 +61,14 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
             ],
         });
 
-        changeSelectionOfTransportByName(transport.ppl.name);
+        changeSelectionOfTransportByName(translations.transport.ppl);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
-        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storePardubice.name);
+        chooseTransportPersonalCollectionAndStore(
+            staticData.transport.personalCollection.storePardubice.name,
+            translations.transport.personalCollection,
+        );
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
-        changeSelectionOfPaymentByName(payment.cash.name);
+        changeSelectionOfPaymentByName(translations.payment.cash);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(1000);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second change and refresh', {

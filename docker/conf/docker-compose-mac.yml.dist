@@ -88,6 +88,8 @@ services:
             - ./project-base/storefront/cypress:/app:delegated
             - ./project-base/storefront/config:/app/config
             - ./project-base/storefront/pages:/app/pages
+            - ./project-base/storefront/public/locales:/app/public/locales:delegated
+            - ./project-base/app/translations:/app/app-translations:delegated
             - node_modules:/app/node_modules
         profiles:
             - storefront-acceptance-tests

@@ -1,7 +1,7 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
-import { PERSIST_STORE_NAME, products, user } from 'fixtures/demodata';
+import { PERSIST_STORE_NAME, staticData } from 'fixtures/demodata';
 
 Cypress.Commands.add('checkGQL', { prevSubject: true }, (subject: Cypress.Response<any>, operationName: string) => {
     // Defer all work into Cypress chain so cy.log entries render in GUI before any throw
@@ -126,7 +126,7 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
                     variables: {
                         input: {
                             cartUuid,
-                            productUuid: productUuid ?? products.helloKitty.uuid,
+                            productUuid: productUuid ?? staticData.products.helloKitty.uuid,
                             quantity: quantity ?? 1,
                         },
                     },
@@ -342,7 +342,7 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
 
 let accessToken = null as string | null;
 let refreshToken = null as string | null;
-Cypress.Commands.add('login', (email = user.email, password = user.password) => {
+Cypress.Commands.add('login', (email = staticData.user.email, password = staticData.user.password) => {
     if (accessToken === null || refreshToken === null) {
         cy.request({
             method: 'POST',
@@ -379,7 +379,7 @@ Cypress.Commands.add('login', (email = user.email, password = user.password) => 
                 accessToken = data.Login.tokens.accessToken;
                 refreshToken = data.Login.tokens.refreshToken;
 
-                cy.log('Customer login - ' + user.email);
+                cy.log('Customer login - ' + staticData.user.email);
                 if (accessToken) {
                     cy.setCookie('accessToken-1', accessToken, { log: false });
                 }
@@ -391,7 +391,7 @@ Cypress.Commands.add('login', (email = user.email, password = user.password) => 
         return;
     }
 
-    cy.log('Customer login - ' + user.email);
+    cy.log('Customer login - ' + email);
     cy.setCookie('accessToken-1', accessToken, { log: false });
     cy.setCookie('refreshToken-1', refreshToken, { log: false });
 });

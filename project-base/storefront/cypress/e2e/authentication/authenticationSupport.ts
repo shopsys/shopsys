@@ -1,6 +1,7 @@
-import { buttonName, placeholder, url } from 'fixtures/demodata';
+import { url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkFormLineError, checkUrl } from 'support';
+import { checkFormLineError, checkUrl, translations } from 'support';
+import { t } from 'support/translations';
 import { TIDs } from 'tids';
 
 export const goToRegistrationPageFromHeader = () => {
@@ -22,7 +23,7 @@ export const submitLoginForm = () => {
     cy.getByTID([TIDs.login_form_submit_button]).click();
 };
 
-export const logoutFromCustomerPage = () => {
+export const logoutFromCustomerMenu = () => {
     cy.getByTID([TIDs.user_menu_logout]).click();
 };
 
@@ -55,21 +56,23 @@ export const fillInEmailAndPasswordOnLoginPage = (email: string, password: strin
     cy.get('#login-form-password').type(password, { force: true });
 };
 
-export const clearAndFillInRegstrationFormEmail = (email: string) => {
-    cy.get('#registration-form-email').should('have.attr', 'placeholder', placeholder.email).clear().type(email);
+export const clearAndFillInRegstrationFormEmail = (email: string, placeholderEmail: string) => {
+    cy.get('#registration-form-email').should('have.attr', 'placeholder', placeholderEmail).clear().type(email);
 };
 
 export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCustomer', email: string) => {
     const generatedData = generateCustomerRegistrationData(custmerType, email);
 
     cy.get('#registration-form-firstName')
-        .should('have.attr', 'placeholder', placeholder.firstName)
+        .should('have.attr', 'placeholder', translations.placeholder.firstName)
         .type(generatedData.firstName);
+
     cy.get('#registration-form-lastName')
-        .should('have.attr', 'placeholder', placeholder.lastName)
+        .should('have.attr', 'placeholder', translations.placeholder.lastName)
         .type(generatedData.lastName);
+
     cy.get('#registration-form-telephone')
-        .should('have.attr', 'placeholder', placeholder.phone)
+        .should('have.attr', 'placeholder', translations.placeholder.phone)
         .type(generatedData.telephone);
 
     if (
@@ -81,24 +84,30 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
         cy.get('[for="registration-formcustomer1"]').click();
 
         cy.get('#registration-form-companyName')
-            .should('have.attr', 'placeholder', placeholder.companyName)
-            .type(generatedData.companyName);
+            .should('have.attr', 'placeholder', translations.placeholder.companyName)
+            .type(generatedData.companyName!);
+
         cy.get('#registration-form-companyNumber')
-            .should('have.attr', 'placeholder', placeholder.companyNumber)
-            .type(generatedData.companyNumber);
+            .should('have.attr', 'placeholder', translations.placeholder.companyNumber)
+            .type(generatedData.companyNumber!);
+
         cy.get('#registration-form-companyTaxNumber')
-            .should('have.attr', 'placeholder', placeholder.companyTaxNumber)
-            .type(generatedData.companyTaxNumber);
+            .should('have.attr', 'placeholder', translations.placeholder.companyTaxNumber)
+            .type(generatedData.companyTaxNumber!);
     } else {
         cy.get('[for="registration-formcustomer0"]').click();
     }
 
     cy.get('#registration-form-street')
-        .should('have.attr', 'placeholder', placeholder.street)
+        .should('have.attr', 'placeholder', translations.placeholder.street)
         .type(generatedData.street);
-    cy.get('#registration-form-city').should('have.attr', 'placeholder', placeholder.city).type(generatedData.city);
+
+    cy.get('#registration-form-city')
+        .should('have.attr', 'placeholder', translations.placeholder.city)
+        .type(generatedData.city);
+
     cy.get('#registration-form-postcode')
-        .should('have.attr', 'placeholder', placeholder.postCode)
+        .should('have.attr', 'placeholder', translations.placeholder.postCode)
         .type(generatedData.postcode, { force: true });
 
     cy.get('[for="registration-form-gdprAgreement"]').find('span').first().click();
@@ -106,11 +115,12 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
 
 export const clearAndFillInRegistrationFormPasswords = (password: string) => {
     cy.get('#registration-form-password')
-        .should('have.attr', 'placeholder', placeholder.password)
+        .should('have.attr', 'placeholder', translations.placeholder.password)
         .clear()
         .type(password);
+
     cy.get('#registration-form-passwordConfirm')
-        .should('have.attr', 'placeholder', placeholder.passwordAgain)
+        .should('have.attr', 'placeholder', translations.placeholder.passwordAgain)
         .clear({ force: true })
         .type(password);
 };

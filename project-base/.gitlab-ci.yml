@@ -182,7 +182,7 @@ test:storefront-acceptance:
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
         - cd storefront
-        - GROUP=$GROUP docker compose run cypress
+        - GROUP=$GROUP TEST_LOCALE=en docker compose run cypress
     after_script:
         - docker compose logs php-fpm > php-fpm-log.txt
         - docker compose logs webserver > webserver-log.txt
@@ -210,7 +210,7 @@ test:cypress-smoke:
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
         - cd storefront
-        - docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress
+        - docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress
     after_script:
         - docker compose logs php-fpm > php-fpm-log.txt
         - docker compose logs webserver > webserver-log.txt
@@ -262,7 +262,7 @@ regenerate-storefront-screenshots:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
-        - GROUP=$GROUP docker compose run cypress-regenerate-screenshots
+        - GROUP=$GROUP TEST_LOCALE=en docker compose run cypress-regenerate-screenshots
         - git add ./storefront/cypress/snapshots/e2e
         - git status
         - |
