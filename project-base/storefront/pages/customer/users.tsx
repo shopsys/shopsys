@@ -71,7 +71,7 @@ const UsersPage: FC = () => {
                     )}
                 />
 
-                <div className="flex w-full flex-col gap-4">
+                <div className="flex w-full flex-col items-center gap-4">
                     <Button
                         aria-haspopup="dialog"
                         className="w-fit"

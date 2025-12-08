@@ -14,7 +14,7 @@ export const SkeletonModuleCustomerUsers: FC = () => (
     <SkeletonModuleCustomer>
         <SkeletonModulePageHero />
 
-        <Skeleton className="h-9 w-36" />
+        <Skeleton className="h-9 w-36 self-center" />
 
         <SkeletonCustomerUsersTable />
     </SkeletonModuleCustomer>
