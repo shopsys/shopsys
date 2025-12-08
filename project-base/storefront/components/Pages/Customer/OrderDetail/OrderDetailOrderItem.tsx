@@ -89,8 +89,8 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                         />
                     </div>
 
-                    {orderItem.product?.isVisible ? (
-                        <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
+                        {orderItem.product?.isVisible ? (
                             <ExtendedNextLink
                                 className="vl:w-fit text-text-default hover:text-text-hovered w-full text-sm no-underline hover:underline"
                                 href={orderItem.product.slug}
@@ -102,30 +102,27 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                             >
                                 {orderItem.name}
                             </ExtendedNextLink>
+                        ) : (
+                            <span className="text-text-default text-sm">{orderItem.name}</span>
+                        )}
 
-                            {canCreateComplaint &&
-                                isUserLoggedIn &&
-                                orderItem.order.withdrawalRequest === null &&
-                                orderItem.type === TypeOrderItemTypeEnum.Product && (
-                                    <button
-                                        aria-haspopup="dialog"
-                                        className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
-                                        data-tid={TIDs.order_detail_create_complaint_button}
-                                        tabIndex={0}
-                                        aria-label={t('Create complaint for product {{ productName }}', {
-                                            ns: 'accessibility',
-                                            productName: orderItem.name,
-                                        })}
-                                        onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
-                                    >
-                                        <FillIcon className="mr-2 size-6" />
-                                        {t('Create complaint')}
-                                    </button>
-                                )}
-                        </div>
-                    ) : (
-                        <span className="text-text-default text-sm">{orderItem.name}</span>
-                    )}
+                        {canCreateComplaint && isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
+                            <button
+                                aria-haspopup="dialog"
+                                className="text-link-default hover:text-link-hovered cursor-pointer self-baseline rounded-sm text-sm whitespace-nowrap underline outline-none"
+                                data-tid={TIDs.order_detail_create_complaint_button}
+                                tabIndex={0}
+                                aria-label={t('Create complaint for product {{ productName }}', {
+                                    ns: 'accessibility',
+                                    productName: orderItem.name,
+                                })}
+                                onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
+                            >
+                                <FillIcon className="mr-2 size-6" />
+                                {t('Create complaint')}
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 <span className="text-text-less vl:w-auto w-full text-sm">
