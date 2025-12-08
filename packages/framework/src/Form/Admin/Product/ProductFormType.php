@@ -277,7 +277,7 @@ final class ProductFormType extends AbstractType
                 'label' => 'Flags',
                 'display_mode' => 'columns',
                 'row_attr' => [
-                    'class' => 'mb-3',
+                    'class' => 'mb-3 form-check-hoverable',
                 ],
             ])
             ->add('brand', ChoiceType::class, [
