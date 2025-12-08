@@ -149,6 +149,9 @@ final class PromoCodeFormType extends AbstractType
             ->add('remainingUses', IntegerType::class, [
                 'label' => 'Remaining number of uses',
                 'required' => false,
+                'constraints' => [
+                    new Constraints\GreaterThanOrEqual('0'),
+                ],
             ])
             ->add('enabled', YesNoType::class, [
                 'label' => 'Enabled',
